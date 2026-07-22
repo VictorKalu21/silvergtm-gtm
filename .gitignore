@@ -1,0 +1,8 @@
+# Data outputs — this repo holds process, not deliverables.
+# Client lists, contacts, and PII never get committed.
+*.csv
+*.json
+!scripts/**/*.json   # allow config/fixtures if ever needed
+/data/
+/out/
+*.xlsx
