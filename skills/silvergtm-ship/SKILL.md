@@ -29,19 +29,24 @@ Run the steps in order. Don't skip the commit (it's the rollback target) or the 
 | Source dir | `C:\Users\victo\gtme_analysis\silvergtm_site` (a git repo) |
 | Cloudflare Pages project | `silver-gtm` (domains: silvergtm.com, www.silvergtm.com, silver-gtm.pages.dev) |
 | Deploy dir | `dist/` — **build output, git-ignored**, assembled by `build.sh` |
-| Production branch | `main` |
+| Production branch | `main` (deploy here, never a preview branch — see the gotcha below) |
+| Secondary domains | 13 cold-email sending domains, each serving a **per-domain accent color** of the homepage via `_worker.js`. See "Secondary domains" below. |
 
 **Source → URL map** (this is why we build into clean-URL folders, not raw files):
 
 | Source file | Built to | Live URL |
 |---|---|---|
-| `index.html` | `dist/index.html` | `/` |
+| `index.html` | `dist/index.html` + `dist/<color>/index.html` (recolored) | `/` (per-domain color) |
 | `clay.html` | `dist/clay/index.html` | `/clay` |
 | `clay-playbook.html` | `dist/clay-playbook/index.html` | `/clay-playbook` |
-| `clay-og.png`, `clay-playbook-og.png`, `victor.jpg` | `dist/` (root) | `/clay-og.png`, etc. |
+| `sample.html` | `dist/sample/index.html` | `/sample` |
+| `_worker.js` | `dist/_worker.js` | (host→color router; Pages advanced mode) |
+| `victor.jpg`, `logos/`, `clay-og.png`, `clay-playbook-og.png` | `dist/` (root) | `/victor.jpg`, `/logos/…`, etc. |
 
 When you add a **new page** `foo.html`, it must build to `dist/foo/index.html` to serve at `/foo`.
-Update `build.sh` to copy it, and add its OG image to the root copy line.
+Update `build.sh` to copy it, and add its OG image to the root copy line. **Assets referenced by
+the homepage must be absolute** (`/victor.jpg`, `/logos/…`) — the worker keeps the browser URL at
+`/` while serving a `/<color>/` file, so relative paths would break in the color variants.
 
 ## The ship pipeline
 
@@ -119,6 +124,43 @@ Two clean ways back, in order of preference:
 
 Tell the user what broke, which restore point you used, and what you'll fix before re-shipping.
 
+## Secondary domains — per-domain color variants
+
+The site is fronted by 13 cold-email **sending domains** (bring/come/find/get/got/work/workwith-
+prefixed, `.co`/`.info`), plus `silvergtm.com` as the main/control. All are attached as custom
+domains to the **same** `silver-gtm` project, and each one serves its **own accent color** of the
+homepage. This lets every sending domain look distinct without a second project or codebase.
+
+**How it works** (`_worker.js` at the dist root, Pages advanced mode):
+- The worker host-routes **only** `/` (and `/index.html`): strips a leading `www.`, looks up
+  `HOST_TO_VARIANT[host]`, then server-side `env.ASSETS.fetch('/<color>/')` and returns it as the
+  response to `/`. Everything else (`/clay`, `/sample`, assets) passes straight through.
+- `build.sh` generates one `dist/<color>/index.html` per color by `sed`-swapping the accent hexes
+  (`--emerald #157A4D` / `--emerald-d #0f5e3b`, which also covers the Cal.com `cal-brand`). The
+  control color (`emerald`) is also the `DEFAULT` for any unmapped host.
+- Preview any color on the live control domain or the `*.pages.dev` URL with `?v=<color>`.
+
+**⚠️ THE GOTCHA — deploy variant workers to `--branch main`, always.** The `HOST_TO_VARIANT` map
+only takes effect for a host once (a) that custom domain is **live** and (b) the worker carrying
+the map is on the **production branch**. If you deploy to a *preview* branch (e.g. `--branch master`
+→ `master.<proj>.pages.dev`), production keeps running an **older/empty map and every domain falls
+back to DEFAULT — i.e. all domains show one color.** This is invisible to the usual checks: `?v=`
+and `/<color>/` both work regardless of the host map, and bare-host routing can't be tested while
+domains are still `pending` (no DNS). **The only proof is: after go-live, curl a NON-control domain
+bare and confirm it returns its OWN color, not the default.** (This exact bug hit Atlas — fixed by
+re-deploying the same worker to `--branch main`.)
+
+**Adding / wiring a secondary domain:**
+1. Add its `hostname → color` entry to `_worker.js` (`HOST_TO_VARIANT` + the `VARIANTS` set) and a
+   `color base dark` row to `build.sh`. Rebuild, `?v=<color>` to eyeball it.
+2. Register it as a custom domain on the project (Pages API):
+   `POST /accounts/<acct>/pages/projects/silver-gtm/domains  {"name":"<domain>"}`
+   (or dashboard → Pages → silver-gtm → Custom domains). It lands `pending` / "CNAME record not set".
+3. Ship normally (steps 2–6) — **`--branch main`**.
+4. **Send the provider the CNAME message** (these domains' mailboxes run on the inbox provider's
+   Cloudflare, so we can't set their DNS). The ready-to-send message + the domain→color map + the
+   post-go-live verification are in **`references/secondary-domains.md`**. Do NOT touch MX/SPF/DKIM/DMARC.
+
 ## Guardrails (why these matter)
 - **Commit before deploy, every time.** A solo site with no CI has no other safety net — the
   prior commit and the prior CF deployment are the only undo buttons. Protect them.
@@ -128,4 +170,6 @@ Tell the user what broke, which restore point you used, and what you'll fix befo
 - **Verify the exact URLs you changed.** "It deployed" ≠ "it works" — a build that copied the
   wrong file or an OG image that 404s both pass the deploy step and fail the user.
 
-See `references/build.sh` for the canonical build script if you need to recreate it.
+See `references/build.sh` for the canonical build script if you need to recreate it, and
+`references/secondary-domains.md` for the per-domain color-variant playbook, the domain→color map,
+and the exact CNAME message to send the inbox provider.
