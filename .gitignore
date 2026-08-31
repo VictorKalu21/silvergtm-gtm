@@ -1,3 +1,7 @@
+# Secrets — API keys never get committed (public repo).
+*.env
+!*.env.example
+
 # Data outputs — this repo holds process, not deliverables.
 # Client lists, contacts, and PII never get committed.
 *.csv

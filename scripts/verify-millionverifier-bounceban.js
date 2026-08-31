@@ -4,16 +4,16 @@
 // Env vars:
 //   IN        - input CSV path (must have an "Email" column). Required.
 //   OUT_DIR   - output directory (default: "verify" relative to CWD)
-// Keys loaded automatically from ~/.claude/skills/email-verify-millionverifier-bounceban/.env
+// Keys loaded from C:\Users\victo\Silver GTM Systems\ENVs-Secrets\email-verification.env
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
-const ENVP = path.join(process.env.USERPROFILE || process.env.HOME, '.claude/skills/email-verify-millionverifier-bounceban/.env');
+const ENVP = path.join(process.env.USERPROFILE || process.env.HOME, 'Silver GTM Systems', 'ENVs-Secrets', 'email-verification.env');
 for (const l of fs.readFileSync(ENVP, 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m) process.env[m[1]] = m[2].trim(); }
 const MVKEY = process.env.MILLIONVERIFIER_KEY, BKEY = process.env.BOUNCEBAN_KEY;
-if (!MVKEY) { console.error('Missing MILLIONVERIFIER_KEY in skill .env'); process.exit(1); }
-if (!BKEY) { console.error('Missing BOUNCEBAN_KEY in skill .env'); process.exit(1); }
+if (!MVKEY) { console.error('Missing MILLIONVERIFIER_KEY in email-verification.env'); process.exit(1); }
+if (!BKEY) { console.error('Missing BOUNCEBAN_KEY in email-verification.env'); process.exit(1); }
 
 const IN = process.env.IN; if (!IN) { console.error('Set IN=<path-to-csv>'); process.exit(1); }
 const DIR = process.env.OUT_DIR || 'verify';
