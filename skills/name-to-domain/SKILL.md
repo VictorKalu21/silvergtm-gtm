@@ -41,8 +41,23 @@ Two tiers. The whole point is to spend as little model time as possible on what 
 
 2. **Tier 1 — parallel Haiku web-verify subagents (cheap).** Only cache misses go here. Split them into
    batches and dispatch one subagent **per batch on the Haiku model** (`model: haiku`). Each subagent
-   web-searches with the harness `WebSearch`/`WebFetch` tools — these are keyless, so no SERP key or
-   scraper.tech key is needed — resolves the real company, and returns `{domain, resolved, confidence}`.
+   web-searches with the harness `WebSearch` tool, resolves the real company, and returns
+   `{domain, resolved, confidence}`.
+
+   **Only up to ~2 concurrent agents / a few hundred companies.** `WebSearch` has a per-session budget
+   of roughly 200 calls that subagents share. Measured on one run: 84% fill with 2 agents, 47% with 20,
+   31% with 20 on a second pass — agents reporting "web search budget exhausted (200 calls/session)" and
+   blanking companies as findable as Axonius and Protect AI. Fill collapsing is a quota symptom, not a
+   prompt problem; no rewording recovers it.
+
+   **`WebFetch` is not usable for this in a cloud session** — it enforces a narrower allowlist than the
+   container and returns `EGRESS_BLOCKED` for most company domains. `curl` via Bash reaches them.
+
+3. **Tier 2 — a scripted search API, for anything above a few hundred.** One resumable script, no quota,
+   no per-agent variance, and it survives a container reclaim. Firecrawl `/v2/search` works
+   (`{query, limit}`, Bearer key); Brave's free tier is the cheaper option. Pace the requests and honour
+   `Retry-After` — at concurrency 3 with short backoff, ~30% of rows came back 429; paced to ~20/min it
+   was 95/100 with zero errors. Note `s.jina.ai` is **no longer keyless** (401 as of 2026-09).
 
 Why not a big model? The first version of this ran general-purpose subagents on the session model doing
 agentic browsing and burned ~270k tokens on 145 rows. The task doesn't need that horsepower — Haiku
@@ -92,7 +107,33 @@ This joins cache hits + all `batch-*-out.json` back to the source rows, writes t
 company to the cache (under both the input key and the resolved brand, to maximize future hits). It prints
 the fill rate and lists any rows left blank.
 
-### 5. QA the residue
+### 5. Verify the domains in code — do not trust the confidence field
+A resolver that cannot find a site will guess `<name>.com`. Parking pages answer **HTTP 200**, so the
+guess looks verified and gets recorded as high confidence. Confirmed on real runs: `doppel.io` (real
+`doppel.com`), `olipop.co` (`drinkolipop.com`), `decagonai.com` (`decagon.ai`), `nitricity.com`
+(`nitricity.co`). A wrong domain mails the wrong company — worse than a blank.
+
+Run a deterministic pass that fetches each domain and checks the company name is really on the page
+(`ai-reserve/formd/verify-resolved.js` is a working implementation). Four things it must get right,
+each learned by getting it wrong first:
+
+- **Reject parking pages.** Signature: a ~100-byte body doing `window.onload=...href="/lander"`, or
+  sedoparking / afternic / "this domain is for sale".
+- **Two distinct name tokens, not one.** "BLACK AGENDA NOW" matched `cdf.coop` on the token "black".
+  One common word is not evidence; downgrade it to a `weak` verdict for review.
+- **Check the resolved brand as well as the input name, and the domain root against the name.**
+  Checking only the legal name marks every rebrand wrong — `Lyniate US Holdings LP` is correctly
+  `rhapsody.health`, which never says "Lyniate". And `celestial.ai` never writes "Celestial" in text
+  (it is a logo image), so root-vs-name has to be its own accepted signal.
+- **Search the whole page text, not a leading window.** On a large page the first 20k stripped
+  characters can be all CSS class names, which failed `databricks.com`.
+
+Beware the failure that looks like success: an early version of that verifier used Node's `https`
+module, which bypasses the cloud egress proxy and returns `Host not in allowlist: <domain>`. That error
+text contains the domain, the domain contains the company name, so it "verified" everything and
+reported 92% precision. **Test any verifier against known-answer rows before believing its numbers.**
+
+### 6. QA the residue
 Look at the blanks and the `medium`-confidence rows. Blanks are usually genuine (defunct site, brand
 collision, a placename false-positive) — resolve by hand or drop. This is also the natural place to flag
 rows that resolved fine but aren't real target accounts (the tool company itself, recruiters posting for
