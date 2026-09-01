@@ -1,7 +1,10 @@
 // Find companies hiring with "Clay" in the JD, via scraper.tech Google Search. v2: more sites, keywords, pagination.
 const https = require('https');
 const fs = require('fs');
-const ENV = 'C:/Users/victo/.claude/skills/google-maps-scrape/.env';
+// Key file: SERP_ENV, else the google-maps-scrape skill's .env beside this one in ~/.claude/skills/.
+const path = require('path');
+const HOME = process.env.USERPROFILE || process.env.HOME;
+const ENV = process.env.SERP_ENV || path.join(HOME, '.claude', 'skills', 'google-maps-scrape', '.env');
 const KEY = Object.fromEntries(fs.readFileSync(ENV,'utf8').split(/\r?\n/).filter(Boolean).map(l=>{const i=l.indexOf('=');return [l.slice(0,i).trim(), l.slice(i+1).trim()];})).SCRAPER_TECH_SEARCH_KEY;
 if(!KEY){console.error('no key');process.exit(1);}
 
@@ -44,6 +47,6 @@ function companyFromUrl(u){let m;
   }
   const arr=[...found.values()];
   const esc=v=>{v=(v==null)?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
-  fs.writeFileSync('C:/Users/victo/gtme_analysis/clay_jobs_serp.csv',['company,title,url'].concat(arr.map(r=>[r.company,r.title,r.url].map(esc).join(','))).join('\n'));
+  fs.writeFileSync(process.env.OUT || 'clay_jobs_serp.csv',['company,title,url'].concat(arr.map(r=>[r.company,r.title,r.url].map(esc).join(','))).join('\n'));
   console.error(`\nDONE. ${ok}/${calls} ok${quotaHit?' (stopped on quota)':''}. ${arr.length} unique companies -> clay_jobs_serp.csv`);
 })();

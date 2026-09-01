@@ -74,8 +74,8 @@ function parseCards(html){
   const high=rows.filter(r=>r.high_ticket!=='low'); // keep high + unknown, drop clear low-ticket
   const cols=['name','budget','team','rating','reviews','completed','high_ticket','categories','countries','profile','id'];
   const esc=v=>{v=(v==null)?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
-  fs.writeFileSync('C:/Users/victo/gtme_analysis/designrush_agencies.csv',[cols.join(',')].concat(rows.map(r=>cols.map(c=>esc(r[c])).join(','))).join('\n'));
-  fs.writeFileSync('C:/Users/victo/gtme_analysis/designrush_agencies_highticket.csv',[cols.join(',')].concat(high.map(r=>cols.map(c=>esc(r[c])).join(','))).join('\n'));
+  fs.writeFileSync(process.env.OUT || 'designrush_agencies.csv',[cols.join(',')].concat(rows.map(r=>cols.map(c=>esc(r[c])).join(','))).join('\n'));
+  fs.writeFileSync(process.env.OUT_HIGH || 'designrush_agencies_highticket.csv',[cols.join(',')].concat(high.map(r=>cols.map(c=>esc(r[c])).join(','))).join('\n'));
   const n=t=>rows.filter(r=>r.high_ticket===t).length;
   console.error(`\nDONE. ${rows.length} unique agencies | high:${n('high')} unknown:${n('unknown')} low(dropped from HT file):${n('low')}`);
   console.error(`-> designrush_agencies.csv (all) + designrush_agencies_highticket.csv (${high.length})`);
