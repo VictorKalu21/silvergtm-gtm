@@ -6,7 +6,8 @@
 # Client lists, contacts, and PII never get committed.
 *.csv
 *.json
-!scripts/**/*.json   # allow config/fixtures if ever needed
+# allow config/fixtures next to any scripts dir (root or skill-owned)
+!**/scripts/**/*.json
 /data/
 /out/
 *.xlsx

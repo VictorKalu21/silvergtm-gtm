@@ -13,6 +13,11 @@
 - One or more niche job boards with a machine-readable feed.
 - An ICP definition: demand-side, size band, geo policy, business-model gate.
 
+> **See also:** [`skills/directory-lead-sourcing`](../skills/directory-lead-sourcing/) — the same
+> outcome (an ICP-qualified list handed to Apollo) sourced from *business directories* rather than
+> job boards. Different signal: firmographics and budget bracket, not a hire-trigger. The Apollo
+> handoff at Step 7 is common to both.
+
 ## Sources (GTM-engineer boards, methods verified)
 
 | Board | Access method | Yield | Notes |

@@ -49,5 +49,10 @@ Rank on `confirmed-deal-size (gate) × team-size-sweet-spot × has-sales-team ×
 ## No directory? Source by signal instead
 When the target isn't in a directory (e.g. "companies that use tool X"), pivot to SERP: Google public ATS boards for job posts naming the tool, harvest the company from the ATS URL. → `scripts/clay-jobs-serp.js` (scraper.tech Search key; `<tool> "<role>" site:jobs.lever.co|boards.greenhouse.io|jobs.ashbyhq.com`). Then enrich + Apollo the same way.
 
+## See also
+`processes/01-job-board-trigger-sourcing.md` in the silvergtm-gtm repo — same outcome, sourced
+from niche job boards on a hire-trigger instead of a directory on firmographics. Reach for that
+one when the ICP is defined by what a company is *doing right now* rather than what it is.
+
 ## Guardrails
 Politeness + resume-safe writes + dedup-by-domain + filter-cheap-enrich-expensive (all per web-scrape-triage). Directory scraping violates ToS — proceed knowingly. Don't sell a raw list as the product; the fit-scoring + verified contacts are what make it worth paying for.
