@@ -15,5 +15,7 @@
 
 # Client process files (config, runsheet) are process, not deliverables — allow them.
 # Run outputs under clients/ (leads*.csv, clay.csv, *.jsonl, reports) stay ignored by the rules above.
-!clients/**/*-config.json
-!clients/**/*-runsheet.csv
+# Only the CLIENT-ROOT config + runsheet are process. One level deep on purpose: '**' also
+# matched run-folder artifacts (heal-N-runsheet.csv, border-runsheet.csv), which are regenerable.
+!clients/*/*-config.json
+!clients/*/*-runsheet.csv
