@@ -1,0 +1,75 @@
+{
+  "_comment": "Atlas Growth :: foundation repair, 10 states + 3 border metros. Engine config for google-maps-scrape. Job-specific values live ONLY here — never edit an engine script to tune this run.",
+
+  "geo": {
+    "country": "us",
+    "footprint": { "mode": "areas" },
+    "region_from_city": ",\\s*([A-Z]{2})\\b",
+    "region_default": "US"
+  },
+
+  "categories": {
+    "foundation": ["foundation repair", "foundation contractor", "foundation repair company"],
+    "adjacent": ["basement waterproofing", "crawl space repair", "crawl space encapsulation",
+                 "concrete leveling", "mudjacking", "house leveling", "structural repair"]
+  },
+
+  "qualify_rules": [
+    {"_r": "1. Must-drop entity types. deny matches the PRIMARY google_type by default, which is what we want here: a foundation firm carrying an incidental secondary tag should survive, but a business whose PRIMARY identity is one of these is not the ICP.",
+     "field": "google_types", "op": "deny", "label": "off_icp_type", "value": [
+       "auto body shop", "car repair", "truck repair", "auto repair shop", "auto parts store",
+       "home improvement store", "building materials supplier", "concrete product supplier",
+       "ready mix concrete supplier", "hardware store", "tool rental service", "lumber store",
+       "structural engineer", "engineering consultant", "civil engineer",
+       "home inspector", "real estate inspector", "surveyor",
+       "water damage restoration service", "fire damage restoration service", "mold remediation service",
+       "mover", "moving company", "moving and storage service",
+       "pest control service", "plumber", "septic system service",
+       "non-profit organization", "charity", "community center", "religious organization",
+       "real estate agency", "property management company", "insurance agency", "lawyer"]},
+
+    {"_r": "2. Must-drop by NAME (exact, always fires regardless of primary/secondary type). Covers this vertical's three traps: collision shops answering 'structural repair', charitable foundations answering 'foundation', and restoration/pest franchises answering the waterproofing + crawl-space queries.",
+     "field": "name", "op": "not_contains_any", "label": "name_deny", "value": [
+       "collision", "auto body", "body shop", "frame & alignment", "frame and alignment", "autobody",
+       "community foundation", "family foundation", "charitable", "scholarship", "ministries", "church",
+       "home depot", "lowe's", "lowes", "menards", "ace hardware",
+       "ready mix", "ready-mix", "redi-mix", "readymix", "sand & gravel", "sand and gravel", "quarry",
+       "servpro", "paul davis", "911 restoration", "rainbow restoration", "servicemaster", "belfor",
+       "terminix", "orkin", "arrow exterminators", "massey services",
+       "moving", "movers", "van lines", "u-haul", "storage",
+       "roto-rooter", "mr. rooter", "benjamin franklin plumbing"]},
+
+    {"_r": "3. Positive allow on google_types-ANY (never primary_type — Google mis-primaries real firms; a 'Contractor | Foundation' must survive). NOTE the deliberate absence of a bare 'concrete contractor', 'contractor', 'construction company' and 'general contractor': in the Houston calibration call 79/150 records for 'foundation repair' were typed Concrete contractor, most of them flatwork. Allowing those buckets floods the list. They are recovered instead by recover-generic-config.json, which pairs the generic type WITH a foundation/leveling NAME token.",
+     "field": "google_types", "op": "allow", "label": "not_in_icp", "value": [
+       "foundation", "waterproofing", "basement", "crawl space", "concrete leveling",
+       "mudjacking", "slabjacking", "structural", "piling", "pier", "underpinning",
+       "helical", "drainage", "shoring", "soil"]},
+
+    {"_r": "4. Size floor. Residential foundation repair is CONSUMER-facing, so review volume genuinely tracks size (the engine's rule reserves review floors for exactly this case and forbids them for B2B ICPs). 10 drops the one-truck operator without touching a real small firm. Tunable at GATE 3.",
+     "field": "review_count", "op": ">=", "value": 10, "label": "too_small"}
+  ],
+
+  "_no_website_rule": "Deliberately NO {website, exists} rule, unlike the schema example in SKILL STEP 3. collapse-domains.js (STEP 5c-dom) classifies website as site/shared_host/none AFTER the geo gate and dedupe, so every row — including the no-website and Facebook-only ones — passes through the category and name denies first. This structurally fixes SKILL 5d gotcha (b) (a blocklisted chain riding in via the recovery track) instead of patching it with a re-qualify at the end.",
+
+  "_no_gov_deny": "Deliberately NO government deny. The engine's standing gov deny is for distress/institutional-intent verticals ('IRS tax help', 'tax debt relief') whose queries surface public bodies. None of these 10 queries do. The charity risk that DOES exist here — a non-profit named '<X> Foundation' — is handled by the non-profit/charity type deny plus the name deny above.",
+
+  "brand_families": {
+    "_r": "Verified against the web 2026-09-11. Groundworks (Cortec/Kohlberg) trades under regional OPERATING brands, not its own name, so the brand name is what appears on Maps — those are listed individually. Matching is a lowercase substring test against '<name> <root_domain>', so every term must be distinctive enough not to false-match an independent. KNOWN GAP: Trivest's 'Foundation Repair Services' platform is deliberately absent — that phrase occurs inside ordinary independent names ('Smith Foundation Repair Services LLC') and would mislabel them. A wrong brand label is worse than none; raise it at GATE 3 if the domain can be pinned down.",
+    "Groundworks": ["groundworks", "afs foundation", "afs waterproofing", "afsrepair",
+                    "foundation recovery systems", "foundation support specialists",
+                    "alpha foundations", "supportworks"],
+    "Olshan (Alpine Investors)": ["olshan"],
+    "Ram Jack": ["ram jack", "ramjack"],
+    "Anchorpoint (Oridian)": ["anchorpoint"],
+    "Basement Systems": ["basement systems"],
+    "Perma-Pier": ["perma pier", "perma-pier", "permapier"],
+    "Du-West": ["du-west", "duwest"],
+    "Abry Brothers": ["abry"]
+  },
+
+  "owner_query": {
+    "_r": "use_linkedin false: LinkedIn is a weak rung for owner-operator residential trades and doubles SERP cost (engine note, LH trade-vertical validation). Moot this run — no SERP vendor, site_text only.",
+    "bias_terms": ["owner", "president", "general manager", "marketing manager"],
+    "use_linkedin": false
+  }
+}

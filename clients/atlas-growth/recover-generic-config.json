@@ -1,0 +1,18 @@
+{
+  "_comment": "Atlas Growth :: RECOVERY pass over excluded_officp.csv (RUN-PLAN 4.2 step 2). The main config deliberately refuses the generic contractor buckets because they flood. This pass takes them back ONLY when the business NAME says foundation work — the pairing that qualify-leads.js cannot express as a single rule. Deterministic, $0, no re-scrape.",
+  "geo": { "country": "us", "footprint": { "mode": "areas" }, "region_from_city": ",\\s*([A-Z]{2})\\b", "region_default": "US" },
+  "qualify_rules": [
+    {"_r": "Broadened beyond the plan's original 'concrete contractor' only: a real foundation firm typed just 'Contractor' or 'Construction company' was being dropped as not_in_icp with no way back. Same name gate, wider type net.",
+     "field": "google_types", "op": "allow", "label": "not_generic_contractor", "value": [
+       "concrete contractor", "contractor", "general contractor", "construction company",
+       "masonry contractor", "repair service", "service establishment", "paving contractor",
+       "landscaper", "excavating contractor"]},
+    {"_r": "The name must actually claim foundation/leveling work. This is the precision half of the pair — keep it strict.",
+     "field": "name", "op": "contains_any", "label": "name_not_foundation", "value": [
+       "foundation", "leveling", "levelling", "lifting", "mudjack", "mud jack", "slabjack", "slab jack",
+       "pier", "piering", "underpinning", "stabiliz", "raising", "void fill", "polyjack", "poly jack",
+       "crawl space", "crawlspace", "basement", "waterproof", "house level", "slab repair", "shoring"]},
+    {"_r": "Same size floor as the main pass so the recovery cannot sneak sub-floor rows in.",
+     "field": "review_count", "op": ">=", "value": 10, "label": "too_small"}
+  ]
+}
