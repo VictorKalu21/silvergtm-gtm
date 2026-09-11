@@ -3,6 +3,8 @@
 !*.env.example
 
 # Data outputs — this repo holds process, not deliverables.
+# Run logs are regenerable scrape output (swept to _archive/ by run hygiene), never deliverables.
+*.log
 # Client lists, contacts, and PII never get committed.
 *.csv
 *.json
