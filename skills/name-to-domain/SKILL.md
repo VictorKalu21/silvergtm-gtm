@@ -33,13 +33,23 @@ pull this feeds, not this step), or when you need firmographics (size/revenue) r
 
 ## The design, and why it is cheap
 
-Two tiers. The whole point is to spend as little model time as possible on what is a mechanical lookup.
+Three tiers. The whole point is to spend as little model time as possible on what is a mechanical lookup.
 
 1. **Cache first (free).** A persistent `domain_cache.csv` keyed by a normalized company name. Companies
    recur across list builds, so over time most rows are answered for zero cost and zero latency. Always
    pass `--cache` so each run both reads and grows the same file.
 
-2. **Tier 1 — parallel Haiku web-verify subagents (cheap).** Only cache misses go here. Split them into
+2. **Tier 0.5 — free HTTP guess-and-verify (no model tokens, no API keys).** Before spending any model
+   time, run `scripts/script-resolve.mjs` on the cache misses. It's a pure guess-and-verify loop: derive
+   a brand slug, try the common domain patterns (`brand.com/.io/.ai/.co/.app/.so`, `getbrand.com`,
+   `brandhq.com`, `brand.tech`), fetch each over HTTPS (follow up to 3 redirects), reject parked-domain
+   pages, and **accept a candidate only if the brand token actually appears in the page body or `<title>`**.
+   That brand-in-page guard is what makes accepting a *guessed* domain safe — it kills lookalike/wrong-company
+   hits. A real RB2B run cleared **623/961 (65%)** of misses here for zero cost; anything it can't verify
+   falls through to Tier 1. It works because most real companies sit on `brand.com` (or an obvious variant)
+   whose homepage echoes their own name. Runs 24-way concurrent; leaves the rest blank for the LLM pass.
+
+3. **Tier 1 — parallel Haiku web-verify subagents (cheap).** Only cache misses go here. Split them into
    batches and dispatch one subagent **per batch on the Haiku model** (`model: haiku`). Each subagent
    web-searches with the harness `WebSearch`/`WebFetch` tools — these are keyless, so no SERP key or
    scraper.tech key is needed — resolves the real company, and returns `{domain, resolved, confidence}`.
@@ -67,7 +77,20 @@ This normalizes names, answers what it can from the cache, and writes the remain
 `<workdir>/batches/batch-<N>-in.json` (arrays of `{key,name,<context...>}`). It prints how many were
 cache hits vs. misses and how many batches it created.
 
-### 3. Dispatch one Haiku subagent per batch (in parallel, same turn)
+### 3. Free HTTP pre-pass (Tier 0.5, no model tokens)
+Before dispatching any subagents, run the free resolver over the batch inputs to skim off the easy ~60–65%:
+```
+node scripts/script-resolve.mjs        # writes script_resolved.json keyed by entry .key
+```
+It reads the batch input files and writes `script_resolved.json` — a `{key: {domain, resolved, confidence:"script"}}`
+map. Merge those keys out of the queue; only the entries it *couldn't* verify need the Haiku pass below.
+
+Note: the shipped script is the original RB2B-shaped reference (it reads a brand from a LinkedIn `@headline`
+and `dbatch-<N>-in.json` files). Two adaptation points, both flagged in the file header: `brandOf()` (point it
+at your context column) and the input glob (point it at `batches/batch-<N>-in.json`). The reusable core —
+candidate generation, parked-domain reject, the brand-token-in-page guard, the concurrency pool — stays intact.
+
+### 4. Dispatch one Haiku subagent per batch (in parallel, same turn)
 For each `batch-<N>-in.json`, spawn a subagent with `model: haiku`. Use the prompt in
 `references/subagent-prompt.md` — it tells the subagent to read its input file, resolve the real company,
 web-verify the domain, and **write** `<workdir>/batches/batch-<N>-out.json` keyed by `key`. Launch all
@@ -82,7 +105,7 @@ Key instructions that keep accuracy high (all spelled out in the reference promp
 - **Blanks, not guesses.** If it can't be confidently verified, leave `domain` empty. A wrong domain is
   worse than a blank one downstream — it sends mail to the wrong company. Mark `confidence` high/medium.
 
-### 4. Merge and update the cache
+### 5. Merge and update the cache
 ```
 node scripts/merge_domains.js --in <input.csv> --name <name_col> \
   --work <workdir> --cache <path/to/domain_cache.csv> --out <output.csv> --passthrough <title,url>
@@ -92,7 +115,7 @@ This joins cache hits + all `batch-*-out.json` back to the source rows, writes t
 company to the cache (under both the input key and the resolved brand, to maximize future hits). It prints
 the fill rate and lists any rows left blank.
 
-### 5. QA the residue
+### 6. QA the residue
 Look at the blanks and the `medium`-confidence rows. Blanks are usually genuine (defunct site, brand
 collision, a placename false-positive) — resolve by hand or drop. This is also the natural place to flag
 rows that resolved fine but aren't real target accounts (the tool company itself, recruiters posting for
@@ -108,5 +131,6 @@ an unnamed client, staffing shops) — a domain being found doesn't make a row i
 
 ## Files
 - `scripts/prep_batches.js` — cache check + split misses into batch input files.
+- `scripts/script-resolve.mjs` — Tier 0.5 free HTTP guess-and-verify resolver (no model tokens, no API keys).
 - `scripts/merge_domains.js` — merge results back to source rows + write output + grow the cache.
 - `references/subagent-prompt.md` — the exact prompt template for the Haiku web-verify subagents.
