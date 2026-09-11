@@ -45,8 +45,8 @@
        "mudjacking", "slabjacking", "structural", "piling", "pier", "underpinning",
        "helical", "drainage", "shoring", "soil"]},
 
-    {"_r": "4. Size floor. Residential foundation repair is CONSUMER-facing, so review volume genuinely tracks size (the engine's rule reserves review floors for exactly this case and forbids them for B2B ICPs). 10 drops the one-truck operator without touching a real small firm. Tunable at GATE 3.",
-     "field": "review_count", "op": ">=", "value": 10, "label": "too_small"}
+    {"_r": "4. Size floor. Residential foundation repair is CONSUMER-facing, so review volume genuinely tracks size (the engine reserves review floors for exactly this case and forbids them for B2B ICPs). Set to 50 by operator decision at GATE 1: in the Houston calibration sample 50 keeps 37/150 (25%) vs 86/150 (57%) at 10. Deliberately aggressive - the Maps floor is a SIZE gate only; real fit is judged from site_text plus the Clay pass downstream. RISK: review counts run lower in sparse states (KS/MS/AR), so a flat 50 cuts harder there. Check per-state counts at GATE 3 and, if a state is starved, run a zero-cost recovery pass at a lower floor scoped by city token, not a re-scrape.",
+     "field": "review_count", "op": ">=", "value": 50, "label": "too_small"}
   ],
 
   "_no_website_rule": "Deliberately NO {website, exists} rule, unlike the schema example in SKILL STEP 3. collapse-domains.js (STEP 5c-dom) classifies website as site/shared_host/none AFTER the geo gate and dedupe, so every row — including the no-website and Facebook-only ones — passes through the category and name denies first. This structurally fixes SKILL 5d gotcha (b) (a blocklisted chain riding in via the recovery track) instead of patching it with a re-qualify at the end.",

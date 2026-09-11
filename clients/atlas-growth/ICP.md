@@ -29,14 +29,14 @@ it is admitted only when the business name also claims foundation/leveling work.
 ## Qualification, in plain language
 
 **Kept:** businesses whose Google categories place them in foundation / waterproofing / crawl space /
-concrete-leveling / piering / drainage work, open, inside the footprint, with **10+ reviews**.
+concrete-leveling / piering / drainage work, open, inside the footprint, with **50+ reviews**.
 Generic "Contractor" or "Concrete contractor" listings are recovered when the name says foundation.
 
 **Dropped, and why:** collision shops (they answer "structural repair" — in the auto trade that
 means frame work) · charitable foundations (they answer "foundation") · restoration and pest
 franchises (they answer the waterproofing and crawl-space queries) · suppliers, ready-mix plants and
 big-box stores · structural engineers and home inspectors (referral sources, not buyers of this
-offer) · movers (they answer "house leveling") · plumbers · sub-10-review one-truck operators.
+offer) · movers (they answer "house leveling") · plumbers · sub-50-review one-truck operators.
 
 **Roll-ups and franchises are KEPT and flagged**, not dropped — client directive. Each row carries
 `brand_family` (Groundworks and its regional operating brands, Olshan, Ram Jack, Anchorpoint,

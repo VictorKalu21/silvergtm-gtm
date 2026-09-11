@@ -13,6 +13,6 @@
        "pier", "piering", "underpinning", "stabiliz", "raising", "void fill", "polyjack", "poly jack",
        "crawl space", "crawlspace", "basement", "waterproof", "house level", "slab repair", "shoring"]},
     {"_r": "Same size floor as the main pass so the recovery cannot sneak sub-floor rows in.",
-     "field": "review_count", "op": ">=", "value": 10, "label": "too_small"}
+     "field": "review_count", "op": ">=", "value": 50, "label": "too_small"}
   ]
 }
