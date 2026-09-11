@@ -1,0 +1,111 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+co-denver-q5,adjacent,crawl space encapsulation,39.7392,-104.9903,13,P2
+co-colorado-springs-q3,adjacent,basement waterproofing,38.8339,-104.8214,13,P2
+co-fort-collins-q1,foundation,foundation contractor,40.5853,-105.0844,13,P1
+co-fort-collins-q9,adjacent,structural repair,40.5853,-105.0844,13,P2
+co-boulder-q7,adjacent,mudjacking,40.015,-105.2705,13,P2
+co-pueblo-q5,adjacent,crawl space encapsulation,38.2544,-104.6091,13,P2
+co-greeley-q3,adjacent,basement waterproofing,40.4233,-104.7091,13,P2
+co-grand-junction-q1,foundation,foundation contractor,39.0639,-108.5506,13,P1
+co-grand-junction-q9,adjacent,structural repair,39.0639,-108.5506,13,P2
+co-loveland-q7,adjacent,mudjacking,40.3978,-105.075,13,P2
+co-longmont-q5,adjacent,crawl space encapsulation,40.1672,-105.1019,13,P2
+co-castle-rock-q3,adjacent,basement waterproofing,39.3722,-104.8561,13,P2
+mo-st-louis-q1,foundation,foundation contractor,38.627,-90.1994,13,P1
+mo-st-louis-q9,adjacent,structural repair,38.627,-90.1994,13,P2
+mo-kansas-city-mo-q7,adjacent,mudjacking,39.0997,-94.5786,13,P2
+mo-springfield-mo-q5,adjacent,crawl space encapsulation,37.209,-93.2923,13,P2
+mo-columbia-mo-q3,adjacent,basement waterproofing,38.9517,-92.3341,13,P2
+mo-joplin-q1,foundation,foundation contractor,37.0842,-94.5133,13,P1
+mo-joplin-q9,adjacent,structural repair,37.0842,-94.5133,13,P2
+mo-jefferson-city-q7,adjacent,mudjacking,38.5767,-92.1735,13,P2
+mo-st-joseph-q5,adjacent,crawl space encapsulation,39.7675,-94.8467,13,P2
+mo-cape-girardeau-q3,adjacent,basement waterproofing,37.3059,-89.5181,13,P2
+mo-branson-q1,foundation,foundation contractor,36.6437,-93.2185,13,P1
+mo-branson-q9,adjacent,structural repair,36.6437,-93.2185,13,P2
+la-new-orleans-q7,adjacent,mudjacking,29.9511,-90.0715,13,P2
+la-baton-rouge-q5,adjacent,crawl space encapsulation,30.4515,-91.1871,13,P2
+la-shreveport-q3,adjacent,basement waterproofing,32.5252,-93.7502,13,P2
+la-lafayette-la-q1,foundation,foundation contractor,30.2241,-92.0198,13,P1
+la-lafayette-la-q9,adjacent,structural repair,30.2241,-92.0198,13,P2
+la-lake-charles-q7,adjacent,mudjacking,30.2266,-93.2174,13,P2
+la-monroe-la-q5,adjacent,crawl space encapsulation,32.5093,-92.1193,13,P2
+la-alexandria-la-q3,adjacent,basement waterproofing,31.3113,-92.4451,13,P2
+la-houma-q1,foundation,foundation contractor,29.5958,-90.7195,13,P1
+la-houma-q9,adjacent,structural repair,29.5958,-90.7195,13,P2
+la-slidell-covington-q7,adjacent,mudjacking,30.2752,-89.7812,13,P2
+ar-little-rock-q5,adjacent,crawl space encapsulation,34.7465,-92.2896,13,P2
+ar-nw-arkansas-q3,adjacent,basement waterproofing,36.0626,-94.1574,13,P2
+ar-fort-smith-q1,foundation,foundation contractor,35.3859,-94.3985,13,P1
+ar-fort-smith-q9,adjacent,structural repair,35.3859,-94.3985,13,P2
+ar-jonesboro-q7,adjacent,mudjacking,35.8423,-90.7043,13,P2
+ar-conway-q5,adjacent,crawl space encapsulation,35.0887,-92.4421,13,P2
+ar-hot-springs-q3,adjacent,basement waterproofing,34.5037,-93.0552,13,P2
+ar-pine-bluff-q1,foundation,foundation contractor,34.2284,-92.0032,13,P1
+ar-pine-bluff-q9,adjacent,structural repair,34.2284,-92.0032,13,P2
+ar-texarkana-q7,adjacent,mudjacking,33.4418,-94.0377,13,P2
+ar-russellville-q5,adjacent,crawl space encapsulation,35.2784,-93.1338,13,P2
+ok-oklahoma-city-q3,adjacent,basement waterproofing,35.4676,-97.5164,13,P2
+ok-tulsa-q1,foundation,foundation contractor,36.154,-95.9928,13,P1
+ok-tulsa-q9,adjacent,structural repair,36.154,-95.9928,13,P2
+ok-lawton-q7,adjacent,mudjacking,34.6036,-98.3959,13,P2
+ok-stillwater-q5,adjacent,crawl space encapsulation,36.1156,-97.0584,13,P2
+ok-enid-q3,adjacent,basement waterproofing,36.3956,-97.8784,13,P2
+ok-muskogee-q1,foundation,foundation contractor,35.7479,-95.3697,13,P1
+ok-muskogee-q9,adjacent,structural repair,35.7479,-95.3697,13,P2
+ok-ardmore-q7,adjacent,mudjacking,34.1743,-97.1436,13,P2
+ok-bartlesville-q5,adjacent,crawl space encapsulation,36.7473,-95.9808,13,P2
+ks-wichita-q3,adjacent,basement waterproofing,37.6872,-97.3301,13,P2
+ks-overland-park-q1,foundation,foundation contractor,38.9822,-94.6708,13,P1
+ks-overland-park-q9,adjacent,structural repair,38.9822,-94.6708,13,P2
+ks-topeka-q7,adjacent,mudjacking,39.0473,-95.6752,13,P2
+ks-lawrence-ks-q5,adjacent,crawl space encapsulation,38.9717,-95.2353,13,P2
+ks-manhattan-ks-q3,adjacent,basement waterproofing,39.1836,-96.5717,13,P2
+ks-salina-q1,foundation,foundation contractor,38.8403,-97.6114,13,P1
+ks-salina-q9,adjacent,structural repair,38.8403,-97.6114,13,P2
+ks-hutchinson-q7,adjacent,mudjacking,38.0608,-97.9298,13,P2
+tn-memphis-q5,adjacent,crawl space encapsulation,35.1495,-90.049,13,P2
+tn-chattanooga-q3,adjacent,basement waterproofing,35.0456,-85.3097,13,P2
+fl-jacksonville-q1,foundation,foundation contractor,30.3322,-81.6557,13,P1
+fl-jacksonville-q9,adjacent,structural repair,30.3322,-81.6557,13,P2
+tx-houston-spring-q7,adjacent,mudjacking,30.08,-95.42,13,P2
+tx-houston-katy-q5,adjacent,crawl space encapsulation,29.79,-95.82,13,P2
+tx-houston-sugar-land-q3,adjacent,basement waterproofing,29.62,-95.63,13,P2
+tx-houston-pasadena-q1,foundation,foundation contractor,29.69,-95.21,13,P1
+tx-houston-pasadena-q9,adjacent,structural repair,29.69,-95.21,13,P2
+tx-houston-humble-q7,adjacent,mudjacking,29.99,-95.26,13,P2
+tx-dallas-plano-q5,adjacent,crawl space encapsulation,33.02,-96.7,13,P2
+tx-dallas-mesquite-q3,adjacent,basement waterproofing,32.81,-96.62,13,P2
+tx-dallas-irving-q1,foundation,foundation contractor,32.81,-96.95,13,P1
+tx-dallas-irving-q9,adjacent,structural repair,32.81,-96.95,13,P2
+tx-fw-arlington-q7,adjacent,mudjacking,32.74,-97.11,13,P2
+tx-fw-keller-q5,adjacent,crawl space encapsulation,32.93,-97.25,13,P2
+tx-sa-stone-oak-q3,adjacent,basement waterproofing,29.62,-98.49,13,P2
+tx-sa-west-q1,foundation,foundation contractor,29.45,-98.68,13,P1
+tx-sa-west-q9,adjacent,structural repair,29.45,-98.68,13,P2
+tx-austin-round-rock-q7,adjacent,mudjacking,30.51,-97.68,13,P2
+tx-austin-kyle-q5,adjacent,crawl space encapsulation,30.09,-97.83,13,P2
+ga-atl-marietta-q3,adjacent,basement waterproofing,33.95,-84.55,13,P2
+ga-atl-alpharetta-q1,foundation,foundation contractor,34.07,-84.29,13,P1
+ga-atl-alpharetta-q9,adjacent,structural repair,34.07,-84.29,13,P2
+ga-atl-decatur-q7,adjacent,mudjacking,33.79,-84.2,13,P2
+ga-atl-jonesboro-q5,adjacent,crawl space encapsulation,33.52,-84.35,13,P2
+ga-atl-douglasville-q3,adjacent,basement waterproofing,33.75,-84.75,13,P2
+co-den-aurora-q1,foundation,foundation contractor,39.71,-104.81,13,P1
+co-den-aurora-q9,adjacent,structural repair,39.71,-104.81,13,P2
+co-den-lakewood-q7,adjacent,mudjacking,39.7,-105.08,13,P2
+co-den-littleton-q5,adjacent,crawl space encapsulation,39.56,-104.99,13,P2
+mo-stl-st-charles-q3,adjacent,basement waterproofing,38.78,-90.51,13,P2
+mo-stl-south-county-q1,foundation,foundation contractor,38.52,-90.32,13,P1
+mo-stl-south-county-q9,adjacent,structural repair,38.52,-90.32,13,P2
+mo-kc-independence-q7,adjacent,mudjacking,39.09,-94.42,13,P2
+mo-kc-north-q5,adjacent,crawl space encapsulation,39.24,-94.58,13,P2
+ok-okc-norman-q3,adjacent,basement waterproofing,35.22,-97.44,13,P2
+ok-okc-edmond-q1,foundation,foundation contractor,35.65,-97.48,13,P1
+ok-okc-edmond-q9,adjacent,structural repair,35.65,-97.48,13,P2
+ok-tulsa-broken-arrow-q7,adjacent,mudjacking,36.05,-95.79,13,P2
+la-nola-metairie-q5,adjacent,crawl space encapsulation,30,-90.25,13,P2
+al-bham-hoover-q3,adjacent,basement waterproofing,33.4,-86.8,13,P2
+tn-memphis-bartlett-q1,foundation,foundation contractor,35.2,-89.87,13,P1
+tn-memphis-bartlett-q9,adjacent,structural repair,35.2,-89.87,13,P2
+fl-jax-orange-park-q7,adjacent,mudjacking,30.17,-81.71,13,P2

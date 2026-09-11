@@ -10,6 +10,11 @@ const fs = require('fs'), path = require('path');
 const RUN = __dirname, N = 8;
 function pc(t){const R=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++;}else q=false;}else c+=ch;}else{if(ch==='"')q=true;else if(ch===','){r.push(c);c='';}else if(ch==='\n'){r.push(c);R.push(r);r=[];c='';}else if(ch==='\r'){}else c+=ch;}}if(c!==''||r.length){r.push(c);R.push(r);}return R;}
 const esc=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
+// MUST rejoin with '|' — scrape.js:196 joins google_types/icp_type with '|', and qualify-leads.js
+// derives the PRIMARY type as google_types.split('|')[0]. Rejoining with any other separator makes
+// that split return the WHOLE string, silently converting the primary-only `deny` into an any-match
+// deny and dropping real ICP firms that carry an off-ICP secondary tag. Cost a full re-qualify once.
+const SEP='|';
 const uniq=s=>[...new Set(String(s||'').split(/\s*[;|]\s*/).filter(Boolean))];
 
 let HEAD=null; const rows=new Map(); const perShard=[]; let dupes=0;
@@ -25,8 +30,8 @@ for(let i=0;i<N;i++){
     const prev=rows.get(pid);
     if(!prev){rows.set(pid,o);}
     else{ dupes++;
-      prev.google_types=uniq(prev.google_types+';'+o.google_types).join('; ');
-      prev.icp_type   =uniq(prev.icp_type   +';'+o.icp_type   ).join('; ');
+      prev.google_types=uniq(prev.google_types+SEP+o.google_types).join(SEP);
+      prev.icp_type   =uniq(prev.icp_type   +SEP+o.icp_type   ).join(SEP);
       if(!prev.website&&o.website)prev.website=o.website;           // keep the richer record
       if(!prev.phone_number&&o.phone_number)prev.phone_number=o.phone_number;
     }

@@ -1,0 +1,101 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+co-longmont-q0,foundation,foundation repair,40.1672,-105.1019,13,P1
+co-longmont-q8,adjacent,house leveling,40.1672,-105.1019,13,P2
+co-castle-rock-q6,adjacent,concrete leveling,39.3722,-104.8561,13,P2
+mo-st-louis-q4,adjacent,crawl space repair,38.627,-90.1994,13,P2
+mo-kansas-city-mo-q2,foundation,foundation repair company,39.0997,-94.5786,13,P1
+mo-springfield-mo-q0,foundation,foundation repair,37.209,-93.2923,13,P1
+mo-springfield-mo-q8,adjacent,house leveling,37.209,-93.2923,13,P2
+mo-columbia-mo-q6,adjacent,concrete leveling,38.9517,-92.3341,13,P2
+mo-joplin-q4,adjacent,crawl space repair,37.0842,-94.5133,13,P2
+mo-jefferson-city-q2,foundation,foundation repair company,38.5767,-92.1735,13,P1
+mo-st-joseph-q0,foundation,foundation repair,39.7675,-94.8467,13,P1
+mo-st-joseph-q8,adjacent,house leveling,39.7675,-94.8467,13,P2
+mo-cape-girardeau-q6,adjacent,concrete leveling,37.3059,-89.5181,13,P2
+mo-branson-q4,adjacent,crawl space repair,36.6437,-93.2185,13,P2
+la-new-orleans-q2,foundation,foundation repair company,29.9511,-90.0715,13,P1
+la-baton-rouge-q0,foundation,foundation repair,30.4515,-91.1871,13,P1
+la-baton-rouge-q8,adjacent,house leveling,30.4515,-91.1871,13,P2
+la-shreveport-q6,adjacent,concrete leveling,32.5252,-93.7502,13,P2
+la-lafayette-la-q4,adjacent,crawl space repair,30.2241,-92.0198,13,P2
+la-lake-charles-q2,foundation,foundation repair company,30.2266,-93.2174,13,P1
+la-monroe-la-q0,foundation,foundation repair,32.5093,-92.1193,13,P1
+la-monroe-la-q8,adjacent,house leveling,32.5093,-92.1193,13,P2
+la-alexandria-la-q6,adjacent,concrete leveling,31.3113,-92.4451,13,P2
+la-houma-q4,adjacent,crawl space repair,29.5958,-90.7195,13,P2
+la-slidell-covington-q2,foundation,foundation repair company,30.2752,-89.7812,13,P1
+ar-little-rock-q0,foundation,foundation repair,34.7465,-92.2896,13,P1
+ar-little-rock-q8,adjacent,house leveling,34.7465,-92.2896,13,P2
+ar-nw-arkansas-q6,adjacent,concrete leveling,36.0626,-94.1574,13,P2
+ar-fort-smith-q4,adjacent,crawl space repair,35.3859,-94.3985,13,P2
+ar-jonesboro-q2,foundation,foundation repair company,35.8423,-90.7043,13,P1
+ar-conway-q0,foundation,foundation repair,35.0887,-92.4421,13,P1
+ar-conway-q8,adjacent,house leveling,35.0887,-92.4421,13,P2
+ar-hot-springs-q6,adjacent,concrete leveling,34.5037,-93.0552,13,P2
+ar-pine-bluff-q4,adjacent,crawl space repair,34.2284,-92.0032,13,P2
+ar-texarkana-q2,foundation,foundation repair company,33.4418,-94.0377,13,P1
+ar-russellville-q0,foundation,foundation repair,35.2784,-93.1338,13,P1
+ar-russellville-q8,adjacent,house leveling,35.2784,-93.1338,13,P2
+ok-oklahoma-city-q6,adjacent,concrete leveling,35.4676,-97.5164,13,P2
+ok-tulsa-q4,adjacent,crawl space repair,36.154,-95.9928,13,P2
+ok-lawton-q2,foundation,foundation repair company,34.6036,-98.3959,13,P1
+ok-stillwater-q0,foundation,foundation repair,36.1156,-97.0584,13,P1
+ok-stillwater-q8,adjacent,house leveling,36.1156,-97.0584,13,P2
+ok-enid-q6,adjacent,concrete leveling,36.3956,-97.8784,13,P2
+ok-muskogee-q4,adjacent,crawl space repair,35.7479,-95.3697,13,P2
+ok-ardmore-q2,foundation,foundation repair company,34.1743,-97.1436,13,P1
+ok-bartlesville-q0,foundation,foundation repair,36.7473,-95.9808,13,P1
+ok-bartlesville-q8,adjacent,house leveling,36.7473,-95.9808,13,P2
+ks-wichita-q6,adjacent,concrete leveling,37.6872,-97.3301,13,P2
+ks-overland-park-q4,adjacent,crawl space repair,38.9822,-94.6708,13,P2
+ks-topeka-q2,foundation,foundation repair company,39.0473,-95.6752,13,P1
+ks-lawrence-ks-q0,foundation,foundation repair,38.9717,-95.2353,13,P1
+ks-lawrence-ks-q8,adjacent,house leveling,38.9717,-95.2353,13,P2
+ks-manhattan-ks-q6,adjacent,concrete leveling,39.1836,-96.5717,13,P2
+ks-salina-q4,adjacent,crawl space repair,38.8403,-97.6114,13,P2
+ks-hutchinson-q2,foundation,foundation repair company,38.0608,-97.9298,13,P1
+tn-memphis-q0,foundation,foundation repair,35.1495,-90.049,13,P1
+tn-memphis-q8,adjacent,house leveling,35.1495,-90.049,13,P2
+tn-chattanooga-q6,adjacent,concrete leveling,35.0456,-85.3097,13,P2
+fl-jacksonville-q4,adjacent,crawl space repair,30.3322,-81.6557,13,P2
+tx-houston-spring-q2,foundation,foundation repair company,30.08,-95.42,13,P1
+tx-houston-katy-q0,foundation,foundation repair,29.79,-95.82,13,P1
+tx-houston-katy-q8,adjacent,house leveling,29.79,-95.82,13,P2
+tx-houston-sugar-land-q6,adjacent,concrete leveling,29.62,-95.63,13,P2
+tx-houston-pasadena-q4,adjacent,crawl space repair,29.69,-95.21,13,P2
+tx-houston-humble-q2,foundation,foundation repair company,29.99,-95.26,13,P1
+tx-dallas-plano-q0,foundation,foundation repair,33.02,-96.7,13,P1
+tx-dallas-plano-q8,adjacent,house leveling,33.02,-96.7,13,P2
+tx-dallas-mesquite-q6,adjacent,concrete leveling,32.81,-96.62,13,P2
+tx-dallas-irving-q4,adjacent,crawl space repair,32.81,-96.95,13,P2
+tx-fw-arlington-q2,foundation,foundation repair company,32.74,-97.11,13,P1
+tx-fw-keller-q0,foundation,foundation repair,32.93,-97.25,13,P1
+tx-fw-keller-q8,adjacent,house leveling,32.93,-97.25,13,P2
+tx-sa-stone-oak-q6,adjacent,concrete leveling,29.62,-98.49,13,P2
+tx-sa-west-q4,adjacent,crawl space repair,29.45,-98.68,13,P2
+tx-austin-round-rock-q2,foundation,foundation repair company,30.51,-97.68,13,P1
+tx-austin-kyle-q0,foundation,foundation repair,30.09,-97.83,13,P1
+tx-austin-kyle-q8,adjacent,house leveling,30.09,-97.83,13,P2
+ga-atl-marietta-q6,adjacent,concrete leveling,33.95,-84.55,13,P2
+ga-atl-alpharetta-q4,adjacent,crawl space repair,34.07,-84.29,13,P2
+ga-atl-decatur-q2,foundation,foundation repair company,33.79,-84.2,13,P1
+ga-atl-jonesboro-q0,foundation,foundation repair,33.52,-84.35,13,P1
+ga-atl-jonesboro-q8,adjacent,house leveling,33.52,-84.35,13,P2
+ga-atl-douglasville-q6,adjacent,concrete leveling,33.75,-84.75,13,P2
+co-den-aurora-q4,adjacent,crawl space repair,39.71,-104.81,13,P2
+co-den-lakewood-q2,foundation,foundation repair company,39.7,-105.08,13,P1
+co-den-littleton-q0,foundation,foundation repair,39.56,-104.99,13,P1
+co-den-littleton-q8,adjacent,house leveling,39.56,-104.99,13,P2
+mo-stl-st-charles-q6,adjacent,concrete leveling,38.78,-90.51,13,P2
+mo-stl-south-county-q4,adjacent,crawl space repair,38.52,-90.32,13,P2
+mo-kc-independence-q2,foundation,foundation repair company,39.09,-94.42,13,P1
+mo-kc-north-q0,foundation,foundation repair,39.24,-94.58,13,P1
+mo-kc-north-q8,adjacent,house leveling,39.24,-94.58,13,P2
+ok-okc-norman-q6,adjacent,concrete leveling,35.22,-97.44,13,P2
+ok-okc-edmond-q4,adjacent,crawl space repair,35.65,-97.48,13,P2
+ok-tulsa-broken-arrow-q2,foundation,foundation repair company,36.05,-95.79,13,P1
+la-nola-metairie-q0,foundation,foundation repair,30,-90.25,13,P1
+la-nola-metairie-q8,adjacent,house leveling,30,-90.25,13,P2
+al-bham-hoover-q6,adjacent,concrete leveling,33.4,-86.8,13,P2
+tn-memphis-bartlett-q4,adjacent,crawl space repair,35.2,-89.87,13,P2
+fl-jax-orange-park-q2,foundation,foundation repair company,30.17,-81.71,13,P1
