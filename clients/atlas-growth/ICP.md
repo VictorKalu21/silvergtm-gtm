@@ -92,3 +92,44 @@ by email before sending.
 `clay.csv` carries the identity fields for entity-matching plus `site_text`; personalisation variables
 available are `review_count`, `rating`, `city`, `neighborhood`, `brand_family`, `location_count`.
 Owner-finding v1 is **website text only** — no SERP vendor is wired (see STATE.md).
+
+---
+
+## Site-text fit classification (STEP 5e) — the rubric
+
+Maps data cannot tell residential from commercial, or a genuine specialist from a general remodeler.
+That judgement is made from the business's own site text, in-session (no API), via
+`prep-classify.js` → verdicts → `apply-classify.js` → a `business_type` qualify rule.
+
+| verdict | meaning | gate |
+|---|---|---|
+| `residential_foundation` | residential foundation / crawl-space / waterproofing / concrete-leveling work is a real service, not an afterthought | **KEEP** |
+| `commercial_only` | genuine specialist, but commercial & industrial only — no homeowner offer to make | drop |
+| `general_contractor` | lists foundations among many unrelated trades; no foundation specialism | drop |
+| `not_foundation` | wrong business entirely (roofing, flatwork concrete, lead-gen aggregator) | drop |
+| `unclear` | site unreadable or too thin to judge | drop — **EXCEPT** when `brand_family` is set |
+
+### Standing rules (apply to every batch, so verdicts stay consistent)
+
+1. **A restoration-led company counts as `residential_foundation` if it genuinely does crawl space
+   repair, basement waterproofing, or foundation work for homeowners** — even when disaster
+   restoration, mold or radon is the headline service. *Operator ruling 2026-09-11, on Olympic
+   Restoration Systems (crawl space repair + basement waterproofing + mold/radon/fire).* The adjacent
+   categories in the brief exist precisely to catch firms that self-label differently.
+   The limit: pure water-extraction and remediation outfits with **no** structural or crawl-space
+   offering are still `not_foundation` (AdvantaClean, Water Extraction Experts, Dry Effect).
+2. **Never drop `unclear` when `brand_family` is set.** Six of the first 60 had no readable site, and
+   two were Olshan and Ram Jack — companies we already know are in-ICP. Blocking a scraper must not
+   cost a known lead.
+3. **A site that is a lead-generation aggregator is `not_foundation`**, whatever the business name
+   says. *Guatex Foundation & Structural Solutions* serves a "pick your trade: roofing / electrician
+   / HVAC" call-routing page. Nothing in the Maps data catches this — only the site text does.
+4. **Concrete *construction* is not foundation repair.** A driveway-and-flatwork company carrying an
+   incidental `Foundation` google_type is `not_foundation` (*RL Concrete*).
+5. Judge the **whole** service list, not the business name. Names are the least reliable signal here:
+   "Foundation Chevrolet Service" and "Foundation Building Materials" both carry the word.
+
+### Measured, batch_000 (60 rows, 2026-09-11)
+
+83% `residential_foundation` overall · 93% among rows that had site text · 4 `not_foundation` ·
+6 `unclear` (every one of them a site that returned no text).
