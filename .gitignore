@@ -10,3 +10,8 @@
 /data/
 /out/
 *.xlsx
+
+# Client process files (config, runsheet) are process, not deliverables — allow them.
+# Run outputs under clients/ (leads*.csv, clay.csv, *.jsonl, reports) stay ignored by the rules above.
+!clients/**/*-config.json
+!clients/**/*-runsheet.csv

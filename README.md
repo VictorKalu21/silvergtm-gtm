@@ -10,6 +10,7 @@ Repeatable, documented go-to-market processes. Each file in `processes/` is one 
 - Reusable scripts live in `scripts/`, referenced by the process that uses them.
 - **Data outputs (client lists, contacts, PII) are gitignored** — this repo holds *process*, not deliverables. Run outputs stay in the client working dir.
 - Each SOP ends with a **worked example** (real numbers from a real run) so the process is proven, not theoretical.
+- Client-specific *process* (a run plan, the config, the runsheet generator, the owner-prompt library, `STATE.md`) lives in `clients/<client>/`. Run **outputs** in those folders stay gitignored.
 
 ## Index
 
