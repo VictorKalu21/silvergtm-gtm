@@ -27,6 +27,7 @@ const IN = arg('in'), OUT = arg('out', '.');
 const LIMIT = Number(arg('limit', 'Infinity')); // process ALL by default; old default 50 silently truncated runs
 const CONC = parseInt(arg('concurrency', '10'), 10);
 const CFG = arg('config', '');
+const { isSharedHost } = require('./shared-hosts');
 const PAGE_TIMEOUT = 8000;     // per-request abort (main pass)
 const MAX_L2 = 6;              // how many second-level pages to follow
 const HOME_CAP = 6000, L2_CAP = 2800, TOTAL_CAP = 18000; // char caps
@@ -146,7 +147,12 @@ async function processLead(lead, timeout) {
 (async () => {
   const rows = parseCsv(fs.readFileSync(IN, 'utf8')).filter(r => r.length > 1);
   const H = rows.shift(); const ix = n => H.indexOf(n);
-  const leads = rows.map(r => Object.fromEntries(H.map((h, i) => [h, r[i]]))).filter(l => l.website && /^https?:\/\//i.test(l.website)).slice(0, LIMIT);
+  const all = rows.map(r => Object.fromEntries(H.map((h, i) => [h, r[i]]))).filter(l => l.website && /^https?:\/\//i.test(l.website));
+  // a shared host (facebook.com, sites.google.com, wixsite.com, ...) is not the business's own site: nothing to
+  // read there, and the lead belongs on the no-website recovery track (collapse-domains.js routes it; this is the guard).
+  const sharedSkipped = all.filter(l => isSharedHost(l.website)).length;
+  const leads = all.filter(l => !isSharedHost(l.website)).slice(0, LIMIT);
+  if (sharedSkipped) console.log(`skipping ${sharedSkipped} lead(s) whose website is a shared host (shared-hosts.js) — route them to the no-website track`);
   fs.mkdirSync(OUT, { recursive: true });
   const outFile = path.join(OUT, 'site_text.jsonl');
   fs.writeFileSync(outFile, '');
