@@ -17,6 +17,7 @@ writing any script for a capability, find the skill that covers it:
 | a page 403s, Cloudflare, a hidden API, a free SERP, the cheapest fetch | `web-scrape-triage` |
 | a domain for a business name | `name-to-domain` |
 | a keep/drop classifier over page text (Haiku per batch, never regex) | `web-visitor-deid-qualify` has the pattern |
+| a work email for a named contact at a known domain (finder cascade, verified per rung) | `email-waterfall` |
 | emails verified before a send | `email-verify-debounce-bounceban` |
 | review a live cold-outreach account | `campaign-review` |
 | build a HeyReach LinkedIn campaign | `heyreach-campaign-build` |
