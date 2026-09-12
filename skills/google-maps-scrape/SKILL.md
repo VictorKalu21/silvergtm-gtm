@@ -49,6 +49,13 @@ overlaps — reach for these, do not rebuild them:
 | resolving a business name to its real domain | `name-to-domain` | domain-guess |
 | deciding where a vertical's leads even live | `icp-source-planner`, `directory-lead-sourcing` | assume Maps is the only source |
 
+The skills are registered under `.claude/skills/` (symlinks to `skills/`), listed into context at
+session start by `.claude/hooks/session-start.sh`, and enforced by `.claude/hooks/guard.py`: a
+script inside a dated run folder is not created or run until `<run>/.skill-check` exists (write it
+only after reading the sibling skills), and nothing under `<run>/owner/` is touched until
+`<run>/owner-prompt.md` exists. A blocked call is not an obstacle to route around; it is the step
+you skipped.
+
 Why this step exists: on the Atlas Growth run (IMPROVEMENTS.md, "Session review") two SERP plans
 were bought, a nav-pruner and an email waterfall were written from scratch, and 7 pages were written
 off as unreachable — every one of which a sibling skill already covered. "I did not know it existed"
@@ -169,6 +176,8 @@ Instead of paying Clay credits to identify owners, run the scripted owner-finder
 
 ### STEP 6a — Build the decision-maker prompt for THIS sub-scrape (REQUIRED — gated)
 
+**Build it at STEP 3 time, before the first API call.** It needs only the STEP 1 inputs (business types, target role, offer, footprint), and both `fetch-sites.js` and the repo hook refuse to touch `<run>/owner/` until it exists, so a run that reaches owner-finding without it stops there.
+
 **A sub-scrape's `clay.csv` is NOT shippable until `<client>/<subscrape-slug>/owner-prompt.md` exists and passes the per-vertical checklist.** The prompt is built **per vertical, every time** — it is never a static or copied file. `build-clay-csv.js` enforces this: it **refuses to build** (`exit 1`) if `owner-prompt.md` is missing next to the output `clay.csv` (escape hatch: `--no-prompt-ok`, only for a deliberate prompt-less build).
 
 **Why per-vertical (not boilerplate):** the EXCLUDE/support roles are where verticals genuinely differ and where the small model goes wrong — it will output a `roofer`/`electrician`/`hygienist`/`salesperson` as the "owner" if the prompt isn't reasoned for the actual trade. A wrong owner is worse than no owner.
@@ -188,6 +197,7 @@ Flow (this skill builds the Clay feed, then **the pipeline ends — Clay is the 
 
 1. `node fetch-sites.js --in <out>/leads_domains.csv --out <out>/owner --concurrency 12` → `site_text.jsonl` (homepage + L2 pages incl. "Our Staff / Meet the Team"). Input is the STEP 5c-dom representatives file — one fetch per root domain; shared-host rows are skipped with a warning if one slips in.
 2. `node search-owner.js --leads <out>/leads_domains.csv --config <client>-config.json --out <out>/owner --concurrency 6 [--resume]` → `serp_text.jsonl`. Runs the **SERP cascade** per lead: BIASED (`<biz> <area> <ST> ("owner" OR "general manager" OR ...)`) → **`site:linkedin.com <biz> <area> <ST>`** (strongest source) → BROAD (email/phone fallback, only if both empty). `<ST>` is a region token resolved per-lead via `geo.region_from_city` (US state from `city`; empty for regionless geos like the UK, `geo.region_default` as fallback). Retry on transients; resumable; emits all three texts + the **full lead identity** (name, address, ZIP, neighborhood, phone, website) for entity-matching. Key `SCRAPER_TECH_SEARCH_KEY`.
+2b. **In-session read (a pilot, or when the operator wants names before Clay):** `node prep-owner-batches.js --leads <out>/leads_icp.csv --dir <out>/owner --out <out>/owner/read --batch 40` builds one `batch-N-in.json` per 40 leads from the text already on disk (site text with people pages first, dedicated owner page, SERP snippets, earlier web-search evidence). Dispatch **one Haiku subagent per batch, all in one message**, with the prompt in `owner-read-subagent.md`: it reads `owner-prompt.md` and writes `batch-N-out.json`. Then `node merge-owner-reads.js --dir <out>/owner/read` → `<out>/owner/contacts_read.jsonl` + `.csv` + `read_report.json` (drops counted: evidence without the name, bad bucket, role word in a name). **The model is the only reader. A regex or keyword parser never names a person** (Atlas Growth banked 24 business names as people that way). Cost is ~1 Haiku read per lead on pre-scraped text; it does not search.
 3. `node build-clay-csv.js --leads <out>/leads_annotated.csv --dir <out>/owner --out <out>/clay.csv --siblings <out>/domain_siblings.json` → one upload-ready CSV: full lead identity + `site_text` + `serp_text` (LinkedIn-first), every cell under Clay's 8KB cap. Spine = ALL rows (`leads_annotated.csv`); `--siblings` gives each fanned branch its representative's text. Five columns are **appended at the end** (never reordered — the Clay table maps by name/position): `root_domain, location_count, brand_family, fanned_from, evidence_tier`. **`evidence_tier`** is `SITE+SERP` / `SITE_ONLY` / `SERP_ONLY` / `CH_ONLY` / `NONE` — computed locally, before Clay.
 4. **In Clay (final step, no return):** upload `clay.csv`; **filter `evidence_tier != NONE` before running anything paid** — a `NONE` row has no text for the column to read and can only return nothing; `build-clay` prints the count. Then create ONE nano Claygent column pasting this job's `owner-prompt.md` and mapping ALL source columns into it (`{{site_text}}` + `{{serp_text}}`, plus `{{ch_directors}}` when present); it reads all sources in one pass and emits ONE deduped `contacts` JSON array → contacts table → email waterfall (name + domain), employee count, founding date. The `## DECISIONS` block at the top of the prompt is what makes the entity-match + KEEP/EXCLUDE logic auditable. Done — there is no `owners_final.csv` produced locally.
 
@@ -202,6 +212,7 @@ The deliverable handed to Clay is **`<out>/clay.csv`**. The scrape settled activ
 - The active gate (`is_permanently_closed`/`is_temporarily_closed`) is free here — don't pay an enrichment tool to recheck "is it open."
 - Tile centers are starting points; the coverage-gap report is the source of truth for whether the footprint is fully covered. Don't claim a complete list until gaps are zero.
 - Corporate exclusion by name blocklist is the cheap ~80%; the final DSO/independent call is Clay + the human builder.
+- **Probe before you claim.** Any statement about a tool or vendor that decides a design (it parallelises, it returns the field, it is keyless, it clears a 403, it will cost N calls) is preceded by a 3-call probe, and the probe's output is pasted into the transcript before the design is built on it. On the Atlas Growth run the untested claims were: WebSearch "serialises one per turn" (false: 10 parallel), Jina "keyless" (401), a "7,000-call" spend alarm (from the first 110 s of dense tiles), and a SERP vendor that "returns results" (titles only, `url` empty). Each cost hours or money.
 - **Fan-out subagent prompts** (classify batches, AI-competitor WebSearch fan-outs) MUST include: *"Do the searches/work YOURSELF. Do NOT spawn, launch, or delegate to other agents. You personally write the output file."* — ~10% of fan-out agents otherwise delegate and return prose instead of the file, leaving silent gaps. And any script that reads agent-authored JSON must strip a possible UTF-8 BOM before `JSON.parse` (agents on Windows emit it inconsistently).
 
 ## Self-improvement protocol (run at the END of every run)

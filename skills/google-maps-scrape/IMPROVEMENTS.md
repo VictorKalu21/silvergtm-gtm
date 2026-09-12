@@ -485,3 +485,28 @@ Measured on the session transcript (27 h wall clock, 501 assistant messages, 578
 - `campaign-review` has the same three-store write-back and the same n=1 / n≥2 promotion gate. The protocol is consistent across skills; the failure is that no skill's protocol ran at the end of this run.
 
 **Shipped in this review:** README.md (from a table of contents); owner-finding.md parallel-search correction; STATE.md brought current; planner library profile + index line + observations entry; this section.
+
+## DONE 2026-09-12 (process, repo-wide): skills registered + hooks enforce STEP 0 and STEP 6a
+
+- `.claude/skills/<name>` → symlink to `skills/<name>` for all 10 skills (`email-verify-debounce-bounceban/skill.md` renamed to `SKILL.md`). They now appear in the harness skill list; before this they were only files.
+- Root `CLAUDE.md`: the skill table, the three enforced rules, the probe rule, engine-change and PII rules.
+- `.claude/hooks/session-start.sh`: prints the skill inventory into context at session start.
+- `.claude/hooks/guard.py` (PreToolUse on Bash|Write|Edit): denies creating or running `*.js|*.sh|*.py` inside `clients/<client>/YYYY-MM-DD_*/` without `<run>/.skill-check`; denies any command or write touching `<run>/owner/` or `owner_new/` without `<run>/owner-prompt.md`. Fails open on internal error. Pipe-tested on 8 cases.
+- `.claude/hooks/stop-state-check.py` (Stop): blocks a stop once when a client `STATE.md` is more than 4 h older than the newest file in one of its run folders. `stop_hook_active` prevents a loop.
+- Caveat: hooks written mid-session are picked up by the settings watcher only if `.claude/` had a settings file at session start; a fresh session or `/hooks` reloads them.
+
+## DONE 2026-09-12 (engine): owner-prompt gate moved to the first owner-finding command
+
+`fetch-sites.js` now refuses to write without `owner-prompt.md` in `--out`, its parent, or grandparent (batch sub-dirs allowed); `--no-prompt-ok` bypasses. `build-clay-csv.js` keeps its gate. SKILL STEP 6a now says: build the prompt at STEP 3 time. Test: `tests/fetch-sites-gate.test.js`.
+
+## DONE 2026-09-12 (engine): `prep-owner-batches.js` + `merge-owner-reads.js` + `owner-read-subagent.md` (SKILL STEP 6 flow 2b)
+
+The in-session read path the Atlas run should have used instead of regex: deterministic Node assembles per-lead evidence (site text with people pages ranked first, dedicated owner page, SERP snippets, earlier web-search evidence; caps per source; BOM-safe; `--only-missing` to top up), one Haiku subagent per batch applies `owner-prompt.md`, merge enforces the template's fixed guardrails as checks (evidence contains the name, bucket in enum, no role word in a name, dedupe) and reports every drop. Test: `tests/prep-owner-batches.test.js` (12 checks).
+
+## OPEN: `directory-lead-sourcing/scripts/clay-jobs-serp.js` uses the dead scraper.tech Search key
+
+Same discontinued product as `search-owner.js`. Not this skill's file; flagged for the owner of that skill.
+
+## NOTE: `email-verify-debounce-bounceban` runners are not in the repo
+
+Its SKILL.md points at `C:/Users/victo/gtm-processes/scripts/verify-*.js` on the operator's machine. The skill folder holds the procedure only. Verification therefore always runs off-container.

@@ -40,6 +40,18 @@ const ENVPATH = arg('env', path.join(__dirname, '.env'));
 function loadEnv(f){const o={};if(fs.existsSync(f))for(const l of fs.readFileSync(f,'utf8').split(/\r?\n/)){const m=l.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/i);if(m)o[m[1]]=m[2].replace(/^["']|["']$/g,'');}return o;}
 const FIRECRAWL_KEY = loadEnv(ENVPATH).FIRECRAWL_KEY;
 if (!IN) { console.error('ERROR: --in <csv> required'); process.exit(1); }
+// --- owner-prompt gate (SKILL STEP 6a): owner-finding output is not written until the per-vertical
+// prompt exists in the run folder. Checks OUT, its parent and grandparent (batch sub-dirs allowed).
+if (!process.argv.includes('--no-prompt-ok')) {
+  const cands = [path.resolve(OUT), path.dirname(path.resolve(OUT)), path.dirname(path.dirname(path.resolve(OUT)))].map(d => path.join(d, 'owner-prompt.md'));
+  if (!cands.some(f => fs.existsSync(f))) {
+    console.error('\nERROR: per-vertical owner-prompt.md required before fetching owner text (SKILL STEP 6a).');
+    console.error('  looked for: ' + cands.join(' | '));
+    console.error('  Build it from owner-prompt.template.md (or copy <client>/owner-prompts/<vertical>.md) at STEP 3 time,');
+    console.error('  save it in the run folder, then re-run. (Deliberate prompt-less fetch: pass --no-prompt-ok.)\n');
+    process.exit(1);
+  }
+}
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36';
 const L2_DEFAULT = ['about', 'team', 'meet', 'our-story', 'story', 'staff', 'provider', 'providers', 'doctor', 'doctors', 'dentist', 'owner', 'founder', 'leadership', 'who-we-are', 'about-us', 'our-team', 'meet-the'];
