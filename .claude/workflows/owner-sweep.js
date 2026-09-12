@@ -7,7 +7,7 @@ const RUN = args.run
 const DIR = args.dir || 'sweep2'   // sub-folder under <run>/owner holding batches/
 const N = args.batches
 // args.batchIds (explicit list) wins over args.batches (count from 0). A workflow run has a 200-WebSearch budget:
-// keep each run to <= 8 batches of 20 leads (worst case 2 searches per lead = 320, typical ~1.3 = 210) — 6 is safe.
+// keep each run to <= 6 batches of 20 leads and run ONE sweep at a time: the budget is shared by concurrent runs.
 const idx = Array.isArray(args.batchIds) ? args.batchIds : Array.from({ length: N }, (_, i) => i)
 const results = await pipeline(idx, i => agent(
 `Read \`${RUN}/owner-prompt.md\` in full and apply it exactly (KEEP / EXCLUDE roles, ENTITY-MATCH, guardrails, few-shots).

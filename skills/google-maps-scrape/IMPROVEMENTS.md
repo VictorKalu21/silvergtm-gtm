@@ -542,3 +542,10 @@ batches, some with a text explanation instead of a file, none with an error. Rul
 batches of 20 and launch several runs; the saved `owner-sweep` workflow takes `args.batchIds` for that. Second
 lesson from the same hour: the saved workflow counted from 0 when given `batches: 4`, which would have overwritten
 finished batches 0–3; it was stopped in time. Explicit ids, always.
+
+## FACT 2026-09-12 (harness limit, refined): the 200-WebSearch budget is SHARED by workflows running at the same time
+
+Three sweep runs launched together (5 + 5 + 4 batches) used 65 + 70 + 70 searches and then every remaining agent got
+0; a run launched after the others finished got a fresh 200. So: **one sweep run at a time, ≤6 batches of 20 each,
+launch the next when the previous reports.** A starved batch shows as "0 searches, 0 with contacts" or as prose
+about CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION instead of a file; re-run those ids.
