@@ -282,3 +282,117 @@ loop empty and exited while workers were still awaiting. Symptom to recognise: e
 log line, partial output. Rule of thumb for these small fetchers — never `.unref()` the deadline,
 and prefer a sequential `for await` loop unless concurrency is genuinely needed; 85 pages
 sequentially cost ~3 minutes, which was cheaper than debugging the pool.
+
+---
+
+# Session review — Atlas Growth foundation-repair run (2026-09-11/12)
+
+Logged for review. The engine bugs are above; this section is about **process failures that cost
+money and accuracy**, and the measurements that came out of them.
+
+## P1 — The operator's OTHER SKILLS were never checked before improvising (ROOT CAUSE)
+
+Three skills already in the repo covered work that got hand-rolled instead:
+
+**`web-scrape-triage`** — its Tier 2 says, verbatim, *"Never pay a SERP key (serper / scraper.tech)
+for this — the free rungs cover it"*, and lists: the built-in WebSearch tool, **Jina
+`s.jina.ai/?q=` (free, keyless, ~20 RPM, 500 RPM with a free key)**, and Brave's free tier (~2k/mo).
+Two scraper.tech SERP plans were bought and exhausted instead. Worse, the session concluded that
+"turns are the binding constraint" for owner-finding and proposed grinding ~86 batches of parallel
+WebSearch — **that conclusion is wrong**: Jina is a *scriptable* free SERP, so the whole sweep could
+have run in Node at 6-way concurrency with no turn cost and no key. The binding constraint was
+never turns; it was not having read the skill.
+
+Its Tier 3 covers the 403s that were written off as unreachable (BBB profile pages, 24 of 118
+owner/team pages, the whole Groundworks-network domain set): `curl_cffi` TLS/JA3 impersonation,
+`Scrapling.StealthyFetcher(solve_cloudflare=True)`, `crawl4ai` — all free rungs to try before
+declaring a page unfetchable. None were attempted.
+
+Its Tier 1 prescribes pruning page content by **text-density + link-density scoring** before
+char-capping or feeding a model (crawl4ai `PruningContentFilter`). A bespoke "strip the shared
+nav by diffing a site's pages against each other" fix was written from scratch for exactly this
+problem — after first shipping a scoring heuristic that threw away "Darren Crotchett President".
+
+**`email-verify-debounce-bounceban`** — documents the two-stage MillionVerifier -> BounceBan gate
+as a non-negotiable pre-campaign step, with the runner already committed at
+`scripts/verify-millionverifier-bounceban.js`. The session designed an email waterfall from
+scratch and asked the operator for an API key it already had a documented home for
+(`$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env`).
+
+**Rule going forward:** before improvising any capability, list the available skills and read the
+ones whose description overlaps. "I did not know it existed" is a process failure, not an excuse —
+the skills were one `ls` away.
+
+## P2 — Owner extraction used regex where the skill prescribes a prompt + model read
+
+SKILL.md STEP 6a says: fill `owner-prompt.template.md` into a job-specific `owner-prompt.md`, then
+let a model read `site_text`/`serp_text` with the honesty guardrails (evidence quote must contain
+the name; entity-match on full identity; never guess). **That prompt was never generated** for this
+run. Instead three regex extractors were written (`extract-serp-contacts.js`,
+`extract-roster-contacts.js`, plus an ad-hoc site-text sweep).
+
+Measured cost of that choice:
+- **24 business names were banked as people** — `'Basement Waterproofing'`, `'Royal Foundation'`,
+  `'Cascade Mudjacking'`, `'Repair Robert'` — and had to be purged. In a first-line-personalised
+  campaign those send "Hi Basement,".
+- The roster parser produced **wrong names twice**, each needing a fix: branch rosters interleave a
+  location ("Paul Phillips **Nashville** General Manager" -> captured "Phillips Nashville", losing
+  the first name), and "&" joins titles as well as couples ("President & Owner" vs "Melanie & John
+  Chaney") so a name run swallowed the next person on the roster.
+- The site-text sweep produced a **~35% artifact rate** ("Party Labor", "Meet Our", "Regardless Of",
+  "Owner-Led Estimates"), so all 85 candidates had to be read by hand anyway. The regex bought
+  nothing over the prep -> read -> apply pattern the skill already defines.
+
+The guardrail that would have caught every one of these is already written in the template: *the
+evidence quote must contain the person's name, or drop them.*
+
+## P3 — What the run actually established (keep these)
+
+- **BBB is the owner registry for home-services trades.** Already written into `owner-finding.md`.
+  `allowed_domains:["bbb.org"]` on a web search converted dead leads into named owners (a lead that
+  the whole SERP harvest failed on returned "Robert Michael Trotter, Owner / Angela May, CEO").
+- **Branch mis-attribution is the dominant failure mode on multi-location companies** and is worse
+  than same-name bleed because the company name matches *exactly* — only the city differs. Observed:
+  JES Virginia Beach returning the Manassas and Salem presidents; U.S. Waterproofing Schaumburg
+  returning the Valparaiso owner; Crawlspace Medic Charlotte returning the Morrisville owner (the
+  Charlotte owner, Jon Dando, was on their own website all along). Any owner-finding pass over a
+  franchise/branch vertical must check city per contact, not just company name.
+- **Web search results are non-deterministic.** The same domain-scoped query returned two named
+  officers on one run and nothing on another. A single miss is not evidence of absence — record
+  misses for one retry rather than writing the lead off.
+- **Parallel WebSearch works**: 10 calls in one message all execute. An earlier claim in this run
+  that it serialises one-per-turn was asserted without testing and was false.
+- **BBB's own surface**: `www.bbb.org/api/search` returns clean JSON (name, address, phone,
+  categories, service areas) but **contains no people**; the principal is only on the profile page,
+  which 403s a plain fetch. That is precisely the Tier-3 case `web-scrape-triage` exists for.
+
+## P4 — Email verification: tier before you spend
+
+298 on-site emails were found across 273 ICP leads. Verifying all of them would have wasted most of
+the credits, because verification proves deliverability, not reachability:
+
+| bucket | n | action |
+|---|---|---|
+| local-part matches a decision-maker we named | 8 | verify |
+| personal-shaped on own/alternate domain | 57 | verify |
+| personal on free-mail | 20 | verify |
+| role/generic (`info@`, `office@`, `estimates@`) | 133 | **skip** — valid but reaches a receptionist |
+| business-name mailbox (`kennedyfoundationrepair@gmail.com`) | 61 | **skip** — company inbox in personal shape |
+| template placeholder (`mymail@mailservice.com` on 3 unrelated firms) | 7 | **skip** |
+| unclear | 14 | eyeball |
+
+**81 worth verifying, not 298 — 217 credits saved.** Two classifier traps found while tiering:
+a business name concatenated into the local part looks personal, and an "alternate domain" is not a
+mismatch (`lsanderson@sqccolorado.com` IS Sanderson Quality Construction; `...ofga.com` IS
+`...ofgeorgia.com`). Both were initially mis-filtered and had to be corrected.
+
+## P5 — Smaller operational notes
+
+- **PII slipped past `.gitignore` on file extension.** `verify_emails.txt` (81 live addresses) and
+  `*.bak` copies of contact files matched none of the `*.csv`/`*.json`/`*.jsonl` data rules. Fixed
+  by ignoring `clients/**/owner/` wholesale. Ignore data DIRECTORIES, not extensions.
+- **`pgrep -f <pattern>` in a wait loop matches the loop's own command string**, so
+  `until ! pgrep -f 'run-scrape.js'; do sleep 15; done` never terminates — it sees itself. Two such
+  waiters span for hours. Use a marker file or exclude `$$`.
+- **Do not extrapolate API cost from the first minutes of a run** (logged earlier in this file, hit
+  again): the 7,000-call projection from dense TX metros came in at ~2.2 calls/tile overall.
