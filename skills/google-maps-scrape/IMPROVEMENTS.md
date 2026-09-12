@@ -534,3 +534,11 @@ MV: 55 ok · 19 catch_all · 6 unknown · 1 invalid (7 role, 19 free-mail). Boun
 deliverable (recovered) · 3 risky · 1 undeliverable · 3 empty responses on the first pass (re-run individually).
 **Net: 73 sendable / 7 risky / 1 dropped = 90% sendable.** MV charged 56 credits for 80 calls; BounceBan 1 per call.
 Runner now lives in `skills/email-verify-debounce-bounceban/scripts/`.
+
+## FACT 2026-09-12 (harness limit, measured): a workflow run gets 200 WebSearch calls in total
+
+Sweep tranche 2 (16 batches of 20) spent the budget on batches 0–8 (199 searches); batches 9–15 returned empty
+batches, some with a text explanation instead of a file, none with an error. Rule: size a sweep workflow at ≤6
+batches of 20 and launch several runs; the saved `owner-sweep` workflow takes `args.batchIds` for that. Second
+lesson from the same hour: the saved workflow counted from 0 when given `batches: 4`, which would have overwritten
+finished batches 0–3; it was stopped in time. Explicit ids, always.
