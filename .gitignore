@@ -14,6 +14,13 @@
 /data/
 /out/
 *.xlsx
+# Editor/script backups of data files carry the same PII as the originals.
+*.bak
+# Owner-finding output is entirely enrichment data — contact names, email addresses,
+# verification shortlists. No process files live here, so ignore the whole tree.
+# (verify_emails.txt slipped past the *.csv/*.json/*.jsonl rules on extension alone.)
+clients/**/owner/
+clients/**/owner_new/
 
 # Client process files (config, runsheet) are process, not deliverables — allow them.
 # Run outputs under clients/ (leads*.csv, clay.csv, *.jsonl, reports) stay ignored by the rules above.
