@@ -23,7 +23,7 @@
 | **Named decision-maker, combined** | `owner/contacts_final.{jsonl,csv}` | **845 of 1,104 (76.5%)**, 807 owner-level, 1,034 contacts |
 | Unnamed | `owner/leads_unnamed.csv` | 259 (phone + generic mailbox only) |
 | Email verification | complete via MillionVerifier → BounceBan | 81 tiered addresses → **73 sendable**, 7 risky, 1 dropped; 49 of the sendable belong to a named lead |
-| Enrichment waterfall (QuickEnrich → TryKitt) | **not built**, keys not provided | 796 named leads still need an email found |
+| Email waterfall (`email-waterfall` skill) | **100-contact test in progress**: QuickEnrich done, AI Ark rerun executing (first run was rate-limited and misread), TryKitt idle (0 trial credits + needs a public callbackURL) | QuickEnrich: 21 real emails / 100, 12 sendable after MillionVerifier, 7 catch-all kept as risky (BounceBan off by operator decision), 8 empty records free. 21 QE + 22 MV credits spent. 796 named leads still need an email |
 | `clay.csv` | **not built** | — |
 
 Precision audit (30 random sweep-named leads re-searched independently): 25 confirmed, 3 consistent on partial name, 2 unconfirmable, 0 wrong. Read grounding 99% (evidence verbatim in source). Every contact carries a verbatim evidence quote and passed the merge guardrails (evidence contains the name, role in the
@@ -52,12 +52,14 @@ or stand up the durable ledger** (a `place_id, website_host, run_slug` table + a
 - **Footprint is HQ address**, with Memphis / Chattanooga / Jacksonville admitted as border metros. Keep all US spillover; drop only non-US.
 - **Review floor 30.** Residential-focused only. Olympic Restoration counts as ICP.
 - **No Anthropic API spend** — session usage only.
-- **Do not spend verification or enrichment credits without an explicit go.**
+- **Do not spend verification or enrichment credits without an explicit go.** (Go given 2026-09-12 for the 100-contact waterfall test: QuickEnrich ≤100, AI Ark ≤100, MillionVerifier ~150; BounceBan removed from the test.)
+- **No Clay.** Not as the owner reader, not as the email waterfall, not as a hand-off (operator, 2026-09-12).
 - **SERP vendor:** two scraper.tech SERP plans were bought this run; the product returns titles only (empty `url`/`description`) and is not fit for owner-finding. `search-owner.js` has no working backend. Do not wire another vendor without sign-off; walk `web-scrape-triage` Tier 2 first.
 
 ## Open items carried
 
-- **Find emails for the 796 named leads without one**: QuickEnrich (name + domain → email + mobile) then TryKitt, one lookup per root domain, on the operator's keys; then verify through the same two-stage gate.
+- **Finish the 100-contact waterfall test** (AI Ark rerun), read cost per sendable email per rung, then decide the rung order and whether to run the remaining ~700 named leads. TryKitt needs credits and a public webhook receiver on the operator's machine.
+- Owner-finding rung order is PROPOSED, not approved (see google-maps-scrape IMPROVEMENTS); the operator chose option 1 (cheap read + cheap sweep + double-check on shaky rows, no session-model rung) in discussion, not yet written into the skill.
 - Build `clay.csv` (`build-clay-csv.js`) once the operator decides whether Clay still runs the owner column or takes `contacts_final` as-is.
 - 7 corporate roll-up owner pages that 403 need a Tier-3 fetch off-container (low value: brand-flagged).
 - Hand-off package + sweep shards/logs to `_archive/` at close-out.
