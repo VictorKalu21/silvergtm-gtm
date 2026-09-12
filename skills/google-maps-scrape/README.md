@@ -40,9 +40,9 @@ It does **not**:
 - find email addresses, verify them, or send anything (Clay, then `email-verify-debounce-bounceban`);
 - resolve a business name to a domain when Maps has no website (`name-to-domain`);
 - get past a 403 or a Cloudflare wall (`web-scrape-triage`);
-- run the model that reads the text and names the owner. That runs in Clay, on the file this skill produces.
+- pay a vendor for search results. The free rungs (on-disk read, then a registry-restricted web-search sweep) named 76.5% on the first full run.
 
-The pipeline ends at `clay.csv`. It does not come back from Clay.
+The pipeline ends at `contacts_final.csv` plus the verified-email file. A Clay column is optional.
 
 ## 2. When to use it, and the front door
 
@@ -75,7 +75,7 @@ vertical, so the next run of the same vertical starts from zero.
 | 6 (2b) | Model read of the on-disk evidence | `prep-owner-batches.js` → Haiku per batch → `merge-owner-reads.js` | owner texts, `owner-prompt.md` | `contacts_read.jsonl`, `read_report.json` | no |
 | 6 (2c) | Web-search sweep for still-unnamed leads | `prep-sweep-batches.js` → Haiku per batch → `merge-owner-reads.js` | unnamed leads, `owner-prompt.md` | `contacts_sweep.jsonl` | measure the first tranche's cost |
 | 6 | Build the Clay feed | `build-clay-csv.js` | annotated leads + owner texts | `clay.csv` | refuses without `owner-prompt.md` |
-| 7 | Hand off | none | `clay.csv` | Clay | final report |
+| 7 | Hand off | `combine-owner-contacts.js` | read + sweep files | `contacts_final.csv`, `leads_unnamed.csv`, verified emails | final report |
 
 Step 0 sits after step 1 in `SKILL.md` because it needs the intake answers to know which
 capabilities the run will touch.
@@ -150,9 +150,10 @@ The design separates two jobs on purpose:
 - **A model reads the text** and names the people, using the job's `owner-prompt.md`.
 
 The prompt is generated per vertical from the template, with a `## DECISIONS` block that says in
-plain language why each role is kept or excluded. The production reader is one Clay nano column
-over `clay.csv`. For a pilot of under about a hundred leads, a Haiku subagent per batch reading the
-same prompt is acceptable. **A regex or keyword parser is never the reader.** It cannot tell
+plain language why each role is kept or excluded. The reader is a Haiku subagent per batch of 40,
+run as the saved `owner-read` workflow; the web-search sweep (`owner-sweep`) follows for leads it
+leaves unnamed, one run of six batches at a time. A Clay nano column can run the same prompt if the
+operator wants it, but it is optional. **A regex or keyword parser is never the reader.** It cannot tell
 "Rick & Anna Lee Woods, Owners" from "Royal Foundation Repair, Inc.", and it cannot apply an
 EXCLUDE list. That failure happened on the Atlas Growth run and is logged in `IMPROVEMENTS.md`.
 
