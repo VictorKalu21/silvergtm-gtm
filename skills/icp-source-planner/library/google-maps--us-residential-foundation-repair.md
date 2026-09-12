@@ -1,7 +1,7 @@
 ---
 source: Google Maps (scraper.tech searchmaps.php)
 vertical: US residential foundation repair / basement waterproofing contractors (home services)
-verdict: partial
+verdict: validated
 last_validated: 2026-09-12
 access: Maps tiling via google-maps-scrape; owner names via BBB (SERP discovery, WA-08) + dealer-network team pages (plain fetch)
 dispatch: google-maps-scrape
@@ -10,7 +10,7 @@ cost_tier: paid (Maps API per tile); owner registry free
 
 # Google Maps × US residential foundation repair
 
-**Verdict:** PARTIAL. Scrape + qualify validated; owner-finding method established but not run to completion. `last_validated: 2026-09-12`. Client first run: Atlas Growth (offer: Facebook lead-gen for inspection appointments).
+**Verdict:** VALIDATED. Scrape + qualify + owner-finding run to completion (845/1,104 named, 76.5%). `last_validated: 2026-09-12`. Client first run: Atlas Growth (offer: Facebook lead-gen for inspection appointments).
 
 ## ICP
 Residential foundation repair, piering, basement waterproofing, crawlspace, mudjacking/slab lifting contractors. Keep roll-ups and franchise branches (flag `brand_family`); drop commercial-only, general contractors, waterproofing product suppliers, engineers.
@@ -26,7 +26,7 @@ Residential foundation repair, piering, basement waterproofing, crawlspace, mudj
 - **BBB Business Profiles are the owner registry** (principal + title). Ranked #1 for `"<business>" <city> <ST> owner` across TX/CO/OK/MS; resolved 8/8 leads the site had failed on. Profile pages 403 to a plain fetch; the SERP snippet carries the name.
 - **Branch mis-attribution:** BBB returns a real president for the WRONG branch of an exact-name multi-location company. Reject on city mismatch.
 - **Dealer networks** (Basement Systems / Supportworks / Groundworks) publish a full roster on `about-us/meet-the-team.html`, at the bottom, past `fetch-sites.js`'s 2,800-char L2 cap. Corporate roll-up domains (groundworks.com, afsrepair.com, aquaguard.net, helitechonline.com, foundationrecoverysystems.com) 403 a plain fetch.
-- In-session WebSearch sweep: 72 leads, **81% hit**, 10 parallel calls per message. Combined with rosters + site text: 357/1,104 leads named (32%) at the point the run paused.
+- Final method: Haiku model read of on-disk text (24.5% of leads with evidence) + Haiku web-search sweep with BBB as registry (70.7% of swept leads). **Combined 845/1,104 named (76.5%), 807 owner-level**, ~6.3M Haiku tokens, 0 vendor SERP spend.
 - On-site emails: 298 found → 81 worth verifying after tiering (named-match / personal-shaped / free-mail / role-generic / template placeholder). Verification not yet run.
 
 ## Cost actuals
@@ -38,4 +38,4 @@ Residential foundation repair, piering, basement waterproofing, crawlspace, mudj
 - `readRunsheet` quoting, `L2_CAP`, run_log-at-end, fetch-sites exception leak: all OPEN in google-maps-scrape IMPROVEMENTS.md.
 
 ## Runs
-- 2026-09-11 — Atlas Growth — 1,104 ICP / 1,521 spine — scrape complete; owner-finding partial; clay.csv not built.
+- 2026-09-11 — Atlas Growth — 1,104 ICP / 1,521 spine — scrape complete; 845 named (76.5%); 73 verified emails; enrichment waterfall + clay.csv pending.

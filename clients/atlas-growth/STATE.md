@@ -10,22 +10,27 @@
 | Runs shipped | none |
 | Live campaigns | none |
 
-## Where the 2026-09-11 run stands (2026-09-12)
+## Where the 2026-09-11 run stands (2026-09-12, end of session)
 
 | Stage | State | Numbers |
 |---|---|---|
 | Scrape | complete, 8/8 shards, 0 unhealed tiles | 1,410 tiles |
-| Qualify + geo + dedupe + collapse | complete | 1,624 representatives → **1,104 ICP** (site-text fit, 68%) |
+| Qualify + geo + dedupe + collapse | complete | 1,624 representatives → **1,104 ICP** (68%) |
 | Clay feed spine | built | 1,521 rows |
-| Owner prompt (STEP 6a) | built late, saved to `owner-prompts/foundation-repair.md` | — |
-| Owner-finding | partial: rosters + SERP harvest + WebSearch sweep 72/856 + site-text recovery | 357/1,104 leads with a named decision-maker (32%) |
-| Email prep | 298 on-site emails tiered → 81 worth verifying; **not verified** (no keys in container) | `owner/verify_input.csv` |
-| Enrichment waterfall | not built; QuickEnrich / TryKitt keys not provided | — |
+| Owner prompt (STEP 6a) | built, in `owner-prompts/foundation-repair.md` and the run folder | — |
+| Owner-finding, model read of on-disk text (flow 2b) | complete, 23 Haiku batches | 221 named of 901 with evidence |
+| Owner-finding, web-search sweep (flow 2c) | complete, 5 tranches, 64 Haiku batches | 624 named of the 883 swept |
+| **Named decision-maker, combined** | `owner/contacts_final.{jsonl,csv}` | **845 of 1,104 (76.5%)**, 807 owner-level, 1,034 contacts |
+| Unnamed | `owner/leads_unnamed.csv` | 259 (phone + generic mailbox only) |
+| Email verification | complete via MillionVerifier → BounceBan | 81 tiered addresses → **73 sendable**, 7 risky, 1 dropped; 49 of the sendable belong to a named lead |
+| Enrichment waterfall (QuickEnrich → TryKitt) | **not built**, keys not provided | 796 named leads still need an email found |
 | `clay.csv` | **not built** | — |
 
-The owner contacts produced locally were extracted by regex parsers, not by a model reading
-`owner-prompt.md`. Treat them as a draft to re-read, not a deliverable. See
-`skills/google-maps-scrape/IMPROVEMENTS.md`, "Session review — Atlas Growth".
+Every contact carries a verbatim evidence quote and passed the merge guardrails (evidence contains the name, role in the
+enum, no role or trade word in a name, full name, EXCLUDE title dropped). The earlier regex-extracted contact files
+(`contacts_all.*`, `roster_contacts`, `serp_contacts`, `sweep.jsonl`, `site_recovered.jsonl`) are superseded; do not ship them.
+
+Spend this session: ~6.3M Haiku subagent tokens (read 2.1M, sweeps 4.1M), 56 MillionVerifier credits, 28 BounceBan credits.
 
 ## Dedupe memory — READ THIS BEFORE RUN 2
 
@@ -52,11 +57,10 @@ or stand up the durable ledger** (a `place_id, website_host, run_slug` table + a
 
 ## Open items carried
 
-- Finish the WebSearch sweep (784 of 856 leads remain) or dispatch it to a cheaper reader.
-- Re-read all owner text with `owner-prompt.md` (model, not regex) before anything ships.
-- Verify the 81 addresses via `email-verify-debounce-bounceban` on the operator's machine.
-- 7 owner pages that 403 (corporate roll-ups) need a Tier-3 fetch off-container.
-- Build `clay.csv` and the hand-off package; sweep shards/logs to `_archive/`.
+- **Find emails for the 796 named leads without one**: QuickEnrich (name + domain → email + mobile) then TryKitt, one lookup per root domain, on the operator's keys; then verify through the same two-stage gate.
+- Build `clay.csv` (`build-clay-csv.js`) once the operator decides whether Clay still runs the owner column or takes `contacts_final` as-is.
+- 7 corporate roll-up owner pages that 403 need a Tier-3 fetch off-container (low value: brand-flagged).
+- Hand-off package + sweep shards/logs to `_archive/` at close-out.
 
 ## Deliverables ledger
 

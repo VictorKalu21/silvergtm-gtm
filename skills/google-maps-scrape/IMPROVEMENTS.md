@@ -563,3 +563,16 @@ Read this against the sweep: on the same trade the web search names ~70% of the 
 per lead, the on-disk read ~25% at ~2.4k. For home-services the registry tier is the primary source and the site
 read is the cheap first pass, exactly as `owner-finding.md` says. The regex pass this replaced had banked 242
 "named" leads, 24 of which were business names.
+
+## RESULT 2026-09-12 (Atlas Growth, foundation repair): owner-finding done the skill's way, end to end
+
+| step | leads | named | cost |
+|---|---|---|---|
+| model read of on-disk text (2b), 23 batches | 901 | 221 (24.5%) | 2.1M Haiku tokens, 62 min |
+| web-search sweep (2c), 5 tranches, 64 batches | 883 | 624 (70.7%) | 4.1M Haiku tokens, ~1,150 searches |
+| **combined** | **1,104** | **845 (76.5%)**, 807 owner-level | ~6.3M Haiku tokens, 0 session-model reading |
+
+Against the regex pass it replaced: 242 "named" (24 were business names; of 188 leads both name, 127 agree).
+Guardrail drops across all merges: 30 single-token names, 9 evidence mismatches, 5 role-word names, 2 trade-word
+names, 2 EXCLUDE titles. Three batch files needed a hand repair for an unescaped quote inside an evidence string.
+Verification: 81 → 73 sendable (90%). The 796 named leads without an email are the enrichment waterfall's input.
