@@ -53,7 +53,10 @@ function candidates(brand) {
   return [...new Set(c)];
 }
 
-const PARK = /(domain (is )?for sale|buy this domain|parked (free|domain)|godaddy\.com\/domainfind|hugedomains|this domain (may be|is) for sale|sedoparking|dan\.com\b)/i;
+// Parked/for-sale detection. NOTE: must cover non-English landers too — an English-only
+// pattern silently accepts e.g. "steht zum Verkauf" / "Domain available" pages, and because
+// those landers echo the domain name they also satisfy the brand-token guard below.
+const PARK = /(domain (is )?for sale|buy this domain|parked (free|domain)|godaddy\.com\/domainfind|hugedomains|this domain (may be|is) for sale|sedoparking|dan\.com\b|afternic|parkingcrew|domain available|steht zum verkauf|zum verkauf|domain kaufen|è in vendita|in vendita|te koop|está en venta|est à vendre|\/lander)/i;
 
 function fetchOnce(host, path = "/", redirects = 0) {
   return new Promise((resolve) => {
