@@ -38,3 +38,15 @@ checkpoints only. Test: `node tests/waterfall-dry-run.test.js`.
   `EMPLOYEE_NOT_FOUND` / `totalElements: 0` on the first probes — these databases skew to LinkedIn-present people.
 - Never re-query a vendor for a person already in its checkpoint. Never raise AI Ark `size` above 1.
 - Report cost per SENDABLE email per rung, not per lookup; that number decides the rung order for the next vertical.
+
+## Facts from the first 100-contact test (Atlas Growth, 2026-09-12)
+- **QuickEnrich** returns a full record and `credits_used: 0` when the email field is `"N/A"` (8 of 29 records on the
+  first run). Treat only a real address as `found`; a record without one is `record_no_email` and costs nothing.
+  21 real emails from 100 owner-level contacts; 12 sendable after MillionVerifier, 7 catch-all (risky without
+  BounceBan), 2 invalid. Credits: 1 per real email. `meta.remaining_credits` is the only balance readout.
+- **AI Ark** rate limit (5/s, 300/min) is returned as `{"message":"API rate limit exceeded"}` with HTTP 200 and no
+  `content`; read as a miss it silently zeroes the rung (81 of 81 on the first run). The runner now paces calls at
+  ≤2.5/s, retries with backoff, records `error` instead of `miss`, and retries `error` rows on rerun.
+- **TryKitt** `POST /job/find_email` answers `400 "must set callbackURL parameter"` even with `fastMode`: it needs a
+  public webhook, which this container cannot provide, and the trial key reports `{"credits":0}`. Rung stays idle
+  until both exist; a receiver on the operator's machine is the way to run it.

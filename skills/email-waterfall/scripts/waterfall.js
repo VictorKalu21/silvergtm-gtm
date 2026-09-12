@@ -38,11 +38,25 @@ async function rungQuickEnrich(r) {
   const data = Array.isArray(body.data) ? body.data : (body.data ? [body.data] : []);
   const used = Number(body.meta?.credits_used || 0); spend.quickenrich += used;
   if (status === 402 || /credit/i.test(String(body.message || '')) && !data.length && used === 0 && body.success === false) return { status: 'no_credits', emails: [], raw: body };
-  const emails = [...new Set(data.map(d => (d.email || d.work_email || '').toLowerCase()).filter(Boolean))];
-  const phone = data.map(d => d.employee_phone || d.phone || '').find(Boolean) || '';
-  return { status: emails.length ? 'found' : 'miss', emails, phone, remaining: body.meta?.remaining_credits, raw: body };
+  // QuickEnrich returns a RECORD (and charges 1 credit) even when the email field is "N/A"; only keep real addresses.
+  const isEmail = e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
+  const emails = [...new Set(data.map(d => String(d.email || d.work_email || '').trim().toLowerCase()).filter(isEmail))];
+  const phone = data.map(d => String(d.employee_phone || d.phone || '').trim()).find(v => v && !/^n\/?a$/i.test(v)) || '';
+  const recordNoEmail = data.length && !emails.length;
+  return { status: emails.length ? 'found' : (recordNoEmail ? 'record_no_email' : 'miss'), emails, phone, remaining: body.meta?.remaining_credits, raw: body };
 }
-async function arkSearch(bodyObj) { return http('https://api.ai-ark.com/api/developer-portal/v1/people', { method: 'POST', headers: { 'X-TOKEN': K.ark, 'Content-Type': 'application/json' }, body: JSON.stringify(bodyObj) }); }
+// AI Ark allows 5 req/s and 300/min per key; a rate-limited reply is {message:"API rate limit exceeded"} with no content.
+let arkLast = 0;
+async function arkSearch(bodyObj) {
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const wait = 400 - (Date.now() - arkLast); if (wait > 0) await sleep(wait); arkLast = Date.now();
+    const r = await http('https://api.ai-ark.com/api/developer-portal/v1/people', { method: 'POST', headers: { 'X-TOKEN': K.ark, 'Content-Type': 'application/json' }, body: JSON.stringify(bodyObj) });
+    const limited = r.status === 429 || /rate limit/i.test(String(r.body?.message || ''));
+    if (!limited) return r;
+    await sleep(15000 * (attempt + 1));
+  }
+  return { status: 429, body: { message: 'API rate limit exceeded (after retries)' } };
+}
 function arkPersonMatches(p, r) { const co = (p.company?.name || '') + ' ' + (p.company?.domain || '') + ' ' + JSON.stringify(p.position_groups || '').slice(0, 2000); const dom = r.root_domain.toLowerCase(); const biz = (r.business_name || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(t => t.length > 3 && !/^(foundation|repair|waterproofing|basement|systems|services|solutions|company|concrete|crawl|space)$/.test(t)); return co.toLowerCase().includes(dom) || biz.some(t => co.toLowerCase().includes(t)); }
 async function rungAiArk(r) {
   if (!K.ark) return { status: 'error', emails: [], raw: 'no key' };
@@ -50,10 +64,12 @@ async function rungAiArk(r) {
   let s = await arkSearch({ contact: { fullName }, account: { domain: { any: { include: [r.root_domain] } } }, page: 0, size: 1 });
   let via = 'domain';
   if (s.status === 402 || s.status === 403) return { status: 'no_credits', emails: [], raw: s.body };
+  if (s.status >= 400 || !Array.isArray(s.body.content)) return { status: 'error', emails: [], via, raw: { http: s.status, body: s.body } };
   let people = s.body.content || [];
   spend.aiark += 0.5 * people.length;
   if (!people.length && r.business_name) {
     s = await arkSearch({ contact: { fullName }, account: { name: { any: { include: [r.business_name] } } }, page: 0, size: 1 }); via = 'company_name';
+    if (s.status >= 400 || !Array.isArray(s.body.content)) return { status: 'error', emails: [], via, raw: { http: s.status, body: s.body } };
     people = (s.body.content || []); spend.aiark += 0.5 * people.length;
     people = people.filter(p => arkPersonMatches(p, r));
   }
@@ -100,11 +116,12 @@ async function cascade(r) {
   const key = keyOf(r); const trail = []; let best = null, risky = null, phone = '';
   for (const name of RUNGS) {
     let res = CK[name].m.get(key);
+    if (res && res.status === 'error') res = null;   // errors are retried on rerun; misses are final
     if (!res) { if (DRY) { trail.push(`${name}:not_run`); continue; } try { res = { key, ...(await RUNG[name](r)), at: new Date().toISOString() }; } catch (e) { res = { key, status: 'error', emails: [], raw: String(e.message) }; } CK[name].add(res); }
     if (res.phone && !phone) phone = res.phone;
     if (res.status !== 'found') { trail.push(`${name}:${res.status}`); continue; }
     let stop = false;
-    for (const email of res.emails) {
+    for (const email of (res.emails || []).filter(e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(e)))) {
       const v = await verify(email); trail.push(`${name}:${email}:${v.verdict}`);
       if (v.verdict === 'sendable') { best = { email, rung: name, detail: v.detail }; stop = true; break; }
       if (v.verdict === 'risky' && !risky) { risky = { email, rung: name, detail: v.detail }; stop = true; }
