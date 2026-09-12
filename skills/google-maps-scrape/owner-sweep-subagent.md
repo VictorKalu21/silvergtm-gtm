@@ -12,7 +12,9 @@ guardrails, few-shots).
 
 Then read `<run>/owner/sweep2/batches/batch-<N>-in.json`: an array of leads with
 `business_name`, `city`, `state`, `zip`, `website`, `brand_family`, a ready-made `query`, and a
-`registry` domain. For EACH lead:
+`registry` domain. Before anything else, load the search tool: call `ToolSearch` with query `select:WebSearch` (it is
+a deferred tool for subagents and is not callable until loaded; batches that skipped this returned
+nothing). Then, for EACH lead:
 
 1. Run `WebSearch` with the lead's `query`. If the results name nobody for THIS business, run it
    once more restricted to the registry: the same query with `allowed_domains: ["<registry>"]`.
