@@ -79,3 +79,8 @@ normalised company name + city, then verify. For an LA/AR-heavy list this rung g
 - Company mailboxes on the same list: 69 of 82 sendable (MV 82 + BB 35). Registry (LA + AR, 22 in-state leads):
   11 strict matches, 9 sendable. A loose token join first produced 6 wrong companies out of 14; the join must
   require the whole normalised name or ≥2 distinctive tokens plus city.
+- **AI Ark, second attempt after the quota reset (2026-09-12 21:57Z):** 36 contacts, every people-search returned
+  `400 {"error":"request not readable"}` from the runner's JSON body (the same shape worked from curl earlier in the
+  day) and the key hit 429 again after ~40 requests, so the trial allowance is roughly one 40-request batch per hour.
+  Net measured contribution: 0 found, 1 credit spent, 99 left. **Rung parked**: not runnable at test scale on a trial
+  key, and the 400 needs a side-by-side diff of the runner body against a working curl before any paid key is tried.
