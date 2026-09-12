@@ -518,3 +518,19 @@ The Bash tool's cwd persists between calls and is often deep inside the repo, so
 ## NOTE 2026-09-12 (workflow scale): the harness caps a workflow at min(16, CPUs−2) concurrent agents
 
 This container has 4 CPUs → 2 agents at a time. A 23-batch Haiku read at ~9 min per 40-lead batch is ~100 min wall clock, not 10. Plan batch counts against the CPU count of the machine the run is on, or run two independent workflows side by side (each gets its own cap).
+
+## FACT 2026-09-12 (cost, measured): the Haiku web-search sweep (flow 2c) on 203 no-evidence leads
+
+11 batches of 20, Haiku, at most 2 WebSearch calls per lead. The 8 batches whose agents loaded WebSearch: 160 leads,
+203 searches (1.3 per lead), **116 named (72%)**. Whole tranche: 716k subagent tokens, 276 tool calls, 12.7 min wall
+clock at 2 concurrent agents → **~4.4k Haiku tokens and ~1.3 searches per lead, ~6k tokens per NAMED lead.** Three
+batches returned nothing because the agent never loaded the deferred WebSearch tool (fixed: the prompt now says
+`ToolSearch select:WebSearch` first). Compare: the in-session sweep on the session model was ~1,100 tokens of
+*main-context* reading per lead plus the operator's turns; this runs off the main context entirely.
+
+## FACT 2026-09-12 (verification, measured): 81 tiered addresses through MillionVerifier → BounceBan
+
+MV: 55 ok · 19 catch_all · 6 unknown · 1 invalid (7 role, 19 free-mail). BounceBan on the 25 catch_all/unknown: 18
+deliverable (recovered) · 3 risky · 1 undeliverable · 3 empty responses on the first pass (re-run individually).
+**Net: 73 sendable / 7 risky / 1 dropped = 90% sendable.** MV charged 56 credits for 80 calls; BounceBan 1 per call.
+Runner now lives in `skills/email-verify-debounce-bounceban/scripts/`.
