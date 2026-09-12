@@ -52,13 +52,20 @@ Order the run cheapest-first, but measure cost in the currency that is actually 
 |---|---|---|---|---|---|
 | 1a | dedicated owner/team page (re-fetched uncapped) | 0 | ~700 read | ~100% of pages that fetch | ~12 |
 | 1b | general site text already on disk | 0 | ~600 read | ~16% (home-services) | ~15 |
-| 2  | web search | 0 (in-session) / SERP key | ~1,100 | ~100% | **1** |
+| 2  | web search | 0 (in-session) / SERP key | ~1,100 | ~80–100% | ~10 (parallel calls in one message) |
 
-Per owner FOUND, tier 2 beats a blanket tier-1b read. But an in-session web search costs one
-conversation TURN per lead and does not parallelize, so 750 leads is 750 turns. **Tokens are not
-the binding constraint — turns are.** Use in-session search for pilots, for the high-value head of
-the list, and to fill gaps; use a SERP key + `search-owner.js` (6 concurrent) or the Clay column
-for the bulk. Tier 1a is the one tier that is cheap in BOTH: parallel HTTP plus batch reading.
+Per owner FOUND, tier 2 beats a blanket tier-1b read. In-session `WebSearch` calls issued in ONE
+message run in parallel — ten at a time is tested (Atlas Growth, 2026-09-12: 72 leads swept, 81%
+hit). An earlier version of this file said "one turn per lead, does not parallelize"; that was an
+untested claim and it was wrong. The real limits are (a) results are non-deterministic between
+runs, (b) every result is read in the main context, so 800 leads is roughly 80 messages of ~10
+searches each, and (c) the model doing the reading is the session model, the most expensive
+reader there is. So: in-session search is right for pilots, the high-value head, and gap-filling;
+for the bulk, dispatch batches to a cheaper reader (Haiku subagent per batch, the same shape as
+`name-to-domain`; or the Clay column). Do not buy a SERP key before walking `web-scrape-triage`
+Tier 2, and confirm on 3 leads that a vendor returns the FIELD you need — one plan bought on
+this run returned titles with empty `url`/`description` and was useless for owner-finding.
+Tier 1a is the one tier that is cheap in every currency: parallel HTTP plus batch reading.
 
 ## Principle (proven in real testing)
 

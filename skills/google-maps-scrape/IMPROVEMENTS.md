@@ -443,3 +443,45 @@ operator's skills** to `SKILL.md`, naming the known overlaps explicitly. A workf
 skill-calling mandatory (the operator's stated plan) is the stronger fix; STEP 0 is the one that
 exists today.
 
+
+## P7 — Full-session review (Fable, 2026-09-12, from the transcript, not the log)
+
+Measured on the session transcript (27 h wall clock, 501 assistant messages, 578 tool calls).
+
+**What the numbers say**
+
+| measure | value |
+|---|---|
+| tool calls | 433 Bash · 103 WebSearch · 20 Read (all overflow files, 0 repo files) · 0 Write · 0 Edit · 0 WebFetch |
+| `Skill` invocations | 3 (`claude-api`, rejected by operator; `brainstorming`; `workflow-authoring`) — none of the repo's own skills, which are not registered as skills |
+| reads of `SKILL.md` | 1 full read at 09:27 on day 1; next consult 12:06 on day 2 (26 h later, after the operator's complaint) |
+| first `ls skills/` | day 2, 11:59, after "The skill should have everything" |
+| first read of `web-scrape-triage` | day 2, 12:04, after two custom page-fetchers were already written |
+| new scripts written | 30 (24 job-local in the run folder, 5 engine incl. 3 tests, 1 scratch); 5 were immediate rewrites of the previous one |
+| explicit self-corrections | 14, one an admitted untested claim ("WebSearch serialises one per turn") that shaped ~5 h of one-call-per-turn work |
+| WebSearch shape | 1 per message until the retraction at 09:20 day 2; then 8 messages of 10 |
+| background hygiene | 1 failed shard launch; 6 shards killed by `nohup &` inside a tool call (617 tiles re-bought); 2 `until … pgrep` waiters alive ~6 h until TaskStop |
+| turn ended mid-task | once, at 61/856 after "push to completion"; operator returned 2 h later with "whats up" |
+| `owner-prompt.md` (STEP 6a, gated) | generated at 12:07 day 2, after the regex extraction, after the complaint |
+| `STATE.md` | still read "pre-scrape, awaiting GATE 1" at review time; never updated |
+| planner library profile for the vertical | none until this review |
+
+**The shape of the failure, in one sentence:** the procedure was read once, then the run was driven from memory of it, and every capability gap was filled by writing a script instead of by looking for the skill that already covered it.
+
+**Root causes, ranked by what fixing them buys**
+
+1. **The skills are files, not skills.** `skills/*` is not under `.claude/skills/`, the repo has no `CLAUDE.md`, and `ListSkills` returns none of them. Nothing tells a fresh session they exist. STEP 0 is text inside a file the session did not re-read. → register them (symlink or move under `.claude/skills/`), add a root `CLAUDE.md` naming them, and put the mandate where the harness guarantees it is seen.
+2. **No gate stops a script from being written.** 24 job-local scripts, none reviewed against a skill first. → a `PreToolUse` hook on `Bash` that denies `cat > clients/**/*.js <<` and `Write` of `*.js` under `clients/` unless a `<run>/.skill-check` marker exists, with the deny reason pointing at STEP 0. Cheap, deterministic, no model judgement.
+3. **The gated artifacts were not gated in practice.** `build-clay-csv.js` refuses without `owner-prompt.md`, but the run never reached `build-clay`, so the gate never fired; owner extraction happened upstream of it. → move the check to the first owner-finding command (`fetch-sites.js` refuses to write `owner/` without `owner-prompt.md` beside it), and make `STATE.md` staleness a Stop-hook warning.
+4. **Untested claims were stated as tested.** Parallel WebSearch, Jina keyless, Tier-3 "would have worked", the 7,000-call spend alarm. → SKILL.md Honesty note: any claim about tool behaviour that decides a design must be preceded by the 3-call probe, and the probe's output pasted.
+5. **RUN-PLAN.md existed and was not followed after GATE 3.** Gates 5 and 6 (owner prompt before any owner work; STATE.md at close) were written down on day 1 and skipped on day 2. A plan in a file has the same problem as a skill in a file.
+
+**Overlaps with sibling skills that the P1 table did not name**
+
+- `icp-source-planner` is the declared front door for any client deliverable and dispatches to this skill; skipping it meant no `library/` profile was written and its promoted rule **R2 ("use the LLM rubric, not regex")** was never loaded. This run is R2's second occurrence.
+- `web-visitor-deid-qualify` already has the exact shape owner-finding needed: "vertical logic lives entirely in the Haiku prompt, never in code", batches of ~110, merge by name, a recovery pass. Its "Common mistakes" list is the model for this skill's README §10.
+- `name-to-domain` is the batch → Haiku-subagent-per-batch → merge-by-key pattern, with a reference prompt and a cache. The 856-lead WebSearch sweep should have been dispatched in that shape, not read in the main context. It is also STEP 5d's website-finder.
+- `web-scrape-triage` already answered "cheapest websearch tool" (Tier 2 free rungs; cheap grounded models; "never pay a SERP key for this") before two SERP plans were bought. Its `references/methods.md` names `directory-lead-sourcing`'s `clay-jobs-serp.js` as using the same dead scraper.tech Search key: that script is stale too.
+- `campaign-review` has the same three-store write-back and the same n=1 / n≥2 promotion gate. The protocol is consistent across skills; the failure is that no skill's protocol ran at the end of this run.
+
+**Shipped in this review:** README.md (from a table of contents); owner-finding.md parallel-search correction; STATE.md brought current; planner library profile + index line + observations entry; this section.
