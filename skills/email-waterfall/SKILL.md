@@ -47,6 +47,13 @@ checkpoints only. Test: `node tests/waterfall-dry-run.test.js`.
 - **AI Ark** rate limit (5/s, 300/min) is returned as `{"message":"API rate limit exceeded"}` with HTTP 200 and no
   `content`; read as a miss it silently zeroes the rung (81 of 81 on the first run). The runner now paces calls at
   ≤2.5/s, retries with backoff, records `error` instead of `miss`, and retries `error` rows on rerun.
-- **TryKitt** `POST /job/find_email` answers `400 "must set callbackURL parameter"` even with `fastMode`: it needs a
-  public webhook, which this container cannot provide, and the trial key reports `{"credits":0}`. Rung stays idle
-  until both exist; a receiver on the operator's machine is the way to run it.
+- **TryKitt** `POST /job/find_email` answers `400 "must set callbackURL parameter"` even with `fastMode`, but a
+  placeholder URL is accepted (`{"job_id":"…"}`) and the job is readable by polling `GET /job?id=` → `[{status:
+  "pending-queued"|…, results:{email}}]`, so no public webhook is needed (`TRYKITT_CALLBACK_URL` env overrides the
+  placeholder). The trial key reports `{"credits":0}` yet the job still completed (`bot_type: "freemium"`,
+  `status: "completed"`, `outcome: "no-results-found"`), so a zero balance is NOT a reason to skip the rung; the
+  runner no longer gates on it.
+- **AI Ark trial quota:** after ~160 searches in one run, every call (including the free credits endpoint) returned
+  `429 {"message":"API rate limit exceeded"}` for many minutes, not just the documented 5/s and 300/min windows.
+  Treat a trial key as a small daily/hourly allowance: probe with 3 searches, then batch in groups of ≤50 spaced an
+  hour apart, and never let a 429 be recorded as a miss.

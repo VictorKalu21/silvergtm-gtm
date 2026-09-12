@@ -86,15 +86,19 @@ async function rungAiArk(r) {
 }
 async function rungTryKitt(r) {
   if (!K.kitt) return { status: 'error', emails: [], raw: 'no key' };
+  // A zero balance does NOT block jobs: the free tier ("bot_type":"freemium") still runs them (verified 2026-09-12,
+  // job 89252825 completed with credits 0). So no credit gate; the balance is recorded for the report.
   const c = await http('https://api.trykitt.ai/credit', { headers: { 'x-api-key': K.kitt } });
-  if (!(Number(c.body.credits) > 0)) return { status: 'no_credits', emails: [], raw: c.body };
-  const j = await http('https://api.trykitt.ai/job/find_email', { method: 'POST', headers: { 'x-api-key': K.kitt, 'Content-Type': 'application/json' }, body: JSON.stringify({ fullName: r.full_name, domainOrWebsite: r.root_domain, companyName: r.business_name || undefined, fastMode: true }) });
-  const id = j.body.id || j.body.jobId || j.body._id; if (!id) return { status: 'error', emails: [], raw: j.body };
-  let st = null;
-  for (let i = 0; i < 12; i++) { await sleep(8000); st = (await http(`https://api.trykitt.ai/job?id=${encodeURIComponent(id)}`, { headers: { 'x-api-key': K.kitt } })).body; if (/(done|complet|finish|success|fail|error)/i.test(String(st.status || st.state || ''))) break; }
-  const email = (st?.email || st?.result?.email || st?.data?.email || '').toLowerCase();
+  // TryKitt insists on a callbackURL but the job is readable by polling GET /job?id= (verified 2026-09-12), so a
+  // placeholder satisfies the parameter and no public webhook is needed.
+  const j = await http('https://api.trykitt.ai/job/find_email', { method: 'POST', headers: { 'x-api-key': K.kitt, 'Content-Type': 'application/json' }, body: JSON.stringify({ fullName: r.full_name, domainOrWebsite: r.root_domain, companyName: r.business_name || undefined, fastMode: true, callbackURL: ENV.TRYKITT_CALLBACK_URL || 'https://example.com/trykitt-callback' }) });
+  const id = j.body.job_id || j.body.id || j.body.jobId; if (!id) return { status: 'error', emails: [], raw: j.body };
+  let job = null;
+  for (let i = 0; i < 15; i++) { await sleep(8000); const g = (await http(`https://api.trykitt.ai/job?id=${encodeURIComponent(id)}`, { headers: { 'x-api-key': K.kitt } })).body; job = Array.isArray(g) ? g[0] : g; const st = String(job?.status || ''); if (st && !/pending|queued|running|processing/i.test(st)) break; }
+  const em = String(job?.results?.email || '').toLowerCase();
+  const email = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em) ? em : '';
   spend.trykitt += email ? 1 : 0;
-  return { status: email ? 'found' : 'miss', emails: email ? [email] : [], raw: st };
+  return { status: email ? 'found' : (/pending|queued/i.test(String(job?.status || '')) ? 'error' : 'miss'), emails: email ? [email] : [], raw: { job_id: id, status: job?.status, outcome: job?.outcome, bot_type: job?.bot_type, credits_before: c.body.credits, results: job?.results } };
 }
 const RUNG = { quickenrich: rungQuickEnrich, aiark: rungAiArk, trykitt: rungTryKitt };
 
