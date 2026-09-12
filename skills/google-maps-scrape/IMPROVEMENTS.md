@@ -295,18 +295,27 @@ money and accuracy**, and the measurements that came out of them.
 Three skills already in the repo covered work that got hand-rolled instead:
 
 **`web-scrape-triage`** — its Tier 2 says, verbatim, *"Never pay a SERP key (serper / scraper.tech)
-for this — the free rungs cover it"*, and lists: the built-in WebSearch tool, **Jina
-`s.jina.ai/?q=` (free, keyless, ~20 RPM, 500 RPM with a free key)**, and Brave's free tier (~2k/mo).
-Two scraper.tech SERP plans were bought and exhausted instead. Worse, the session concluded that
-"turns are the binding constraint" for owner-finding and proposed grinding ~86 batches of parallel
-WebSearch — **that conclusion is wrong**: Jina is a *scriptable* free SERP, so the whole sweep could
-have run in Node at 6-way concurrency with no turn cost and no key. The binding constraint was
-never turns; it was not having read the skill.
+for this — the free rungs cover it"*, and lists: the built-in WebSearch tool, Jina `s.jina.ai`, and
+Brave's free tier (~2k/mo). Two scraper.tech SERP plans were bought and exhausted instead.
 
-Its Tier 3 covers the 403s that were written off as unreachable (BBB profile pages, 24 of 118
-owner/team pages, the whole Groundworks-network domain set): `curl_cffi` TLS/JA3 impersonation,
-`Scrapling.StealthyFetcher(solve_cloudflare=True)`, `crawl4ai` — all free rungs to try before
-declaring a page unfetchable. None were attempted.
+**Reviewer correction (Fable, 2026-09-12):** the first draft of this entry claimed Jina was "free,
+keyless and scriptable" and that "the whole sweep could have run in Node with no key" — *asserted
+without testing*, which is the exact failure this section is logging. Tested: `s.jina.ai` now returns
+`401 AuthenticationRequiredError` — **it requires an API key**, so the triage skill's "keyless" claim
+is stale (corrected there). A free key may still make it the cheapest scriptable rung, but that has
+to be *tested per vertical*: WebSearch's value here was its **synthesis reading BBB profile pages
+that 403 a plain fetch**, and whether Jina's raw results carry the principal's name is unknown. The
+defensible lesson is narrower: a scriptable SERP (Jina with a key, Brave, or a $1/1K paid key) beats
+grinding turns — but confirm it returns the *field you need* on 3 leads before designing around it.
+
+Its Tier 3 covers the 403s that were written off as unreachable (BBB profile pages, **7** of 118
+owner/team pages — the other 16 failures were transient `ECONNRESET`, not anti-bot — and the
+Groundworks-network domain set): `curl_cffi` TLS/JA3 impersonation, `Scrapling` with
+`solve_cloudflare=True`, `crawl4ai`. None were attempted, **and on review they cannot run in this
+remote container**: `curl_cffi impersonate="chrome"` resets on `example.com` too, because it bypasses
+the system CA and the session sits behind a TLS-intercepting proxy. Tier-3 rungs are an
+operator's-own-machine step. The failure was not skipping them here; it was not *recording* the 7
+true 403s as a queue for that step.
 
 Its Tier 1 prescribes pruning page content by **text-density + link-density scoring** before
 char-capping or feeding a model (crawl4ai `PruningContentFilter`). A bespoke "strip the shared
@@ -373,15 +382,16 @@ the credits, because verification proves deliverability, not reachability:
 
 | bucket | n | action |
 |---|---|---|
-| local-part matches a decision-maker we named | 8 | verify |
-| personal-shaped on own/alternate domain | 57 | verify |
+| personal-shaped on own/alternate domain (8 of these match a decision-maker we already named) | 57 | verify |
 | personal on free-mail | 20 | verify |
+| alternate-domain, hand-adjudicated | 4 | verify |
 | role/generic (`info@`, `office@`, `estimates@`) | 133 | **skip** — valid but reaches a receptionist |
 | business-name mailbox (`kennedyfoundationrepair@gmail.com`) | 61 | **skip** — company inbox in personal shape |
 | template placeholder (`mymail@mailservice.com` on 3 unrelated firms) | 7 | **skip** |
 | unclear | 14 | eyeball |
 
-**81 worth verifying, not 298 — 217 credits saved.** Two classifier traps found while tiering:
+**81 worth verifying, not 298 — 217 credits saved.** (Reviewer note: the first draft of this table
+listed the 8 name-matches as a separate row *and* inside the 57, summing to 300. Fixed.) Two classifier traps found while tiering:
 a business name concatenated into the local part looks personal, and an "alternate domain" is not a
 mismatch (`lsanderson@sqccolorado.com` IS Sanderson Quality Construction; `...ofga.com` IS
 `...ofgeorgia.com`). Both were initially mis-filtered and had to be corrected.
@@ -396,3 +406,40 @@ mismatch (`lsanderson@sqccolorado.com` IS Sanderson Quality Construction; `...of
   waiters span for hours. Use a marker file or exclude `$$`.
 - **Do not extrapolate API cost from the first minutes of a run** (logged earlier in this file, hit
   again): the 7,000-call projection from dense TX metros came in at ~2.2 calls/tile overall.
+
+## P6 — Added on review (Fable): unlogged engine bugs and environment facts
+
+- **`fetch-sites.js` leaks JavaScript exceptions into its status field.** Across the two site fetches
+  13 leads carry `home_failed:TypeError` and 1 carries `home_failed:AbortError`. A `TypeError` is a bug
+  in the fetcher, not a property of the site, and it currently reads as if the site failed. OPEN:
+  catch and log the stack, and status the lead as `fetch_error` so it is retried rather than written
+  off.
+- **`search-owner.js` degrades silently when the SERP vendor omits `url`/`description`.** `bundle()`
+  interpolates `${x.url||''}` and `${(x.description||'').trim()}`, so a title-only response (which is
+  what scraper.tech's google-search endpoint returns — `url` always empty, `description` on 2–3 of
+  9) produces thin text with no warning. Downstream entity-matching then has nothing to corroborate a
+  city against, which is how the branch mis-attributions became possible. OPEN: warn once per run when
+  >80% of results have empty `url`; the operator should know the vendor is not delivering the field
+  the guardrails depend on.
+- **BBB profiles carry an `out of business` flag** (EverDry Acworth GA was returned with one) and the
+  scraper.tech Maps payload carries closed-business flags too (per the triage skill's README). Neither
+  is currently gated on. A contact at a closed business is a wasted send. OPEN: surface the flag as a
+  column and exclude by default.
+- **Dealer-network founders appear as "Owner" of many dealers.** Larry Janesky is listed as Owner of
+  Connecticut Basement Systems, Basement Systems of Indiana *and* Mid-State Basement Systems because
+  he founded the network. Correct data, wrong prospect — three "owners" that are one person who is not
+  the local buyer. The `brand_family` flag exists for exactly this; the contact layer should inherit it
+  and demote a network founder below the local GM.
+- **This remote container cannot run TLS-impersonating fetchers** (curl_cffi, Scrapling stealth):
+  they bypass the system CA and the session's HTTPS proxy resets the connection. Tier-3 work must be
+  handed to the operator's machine, so a run should *emit* the confirmed-403 queue as a file rather
+  than treat those pages as dead.
+
+## Decision on the root cause (Fable): STEP 0 added to SKILL.md
+
+The P1 failure is not fixable by a note in a log that a future session may not read before it starts
+improvising. It is fixable by a step the skill itself forces. Added **STEP 0 — Inventory the
+operator's skills** to `SKILL.md`, naming the known overlaps explicitly. A workflow that makes
+skill-calling mandatory (the operator's stated plan) is the stronger fix; STEP 0 is the one that
+exists today.
+

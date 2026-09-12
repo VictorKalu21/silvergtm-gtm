@@ -35,6 +35,25 @@ Use `AskUserQuestion` to lock these before anything else. The geography decision
 
 Only once geography + categories + DQ rules + offer + target role are confirmed, proceed.
 
+## STEP 0 — Inventory the operator's skills before improvising anything
+
+This skill covers scrape → qualify → owner-finding → Clay feed. It does **not** cover everything a
+run touches, and the operator keeps sibling skills that do. **Before writing any script for a
+capability this skill lacks, `ls skills/` and read every skill whose description overlaps.** Known
+overlaps — reach for these, do not rebuild them:
+
+| need | skill | do not |
+|---|---|---|
+| a page 403s / Cloudflare / "blocked"; choosing a fetch method; finding a hidden JSON API; a free or paid SERP | `web-scrape-triage` | pay for a SERP key, write a nav-stripper, or declare a page unfetchable before walking its ladder |
+| verifying emails before any send | `email-verify-debounce-bounceban` (runner in `scripts/`) | design a verification waterfall or ask for a key it already has a home for |
+| resolving a business name to its real domain | `name-to-domain` | domain-guess |
+| deciding where a vertical's leads even live | `icp-source-planner`, `directory-lead-sourcing` | assume Maps is the only source |
+
+Why this step exists: on the Atlas Growth run (IMPROVEMENTS.md, "Session review") two SERP plans
+were bought, a nav-pruner and an email waterfall were written from scratch, and 7 pages were written
+off as unreachable — every one of which a sibling skill already covered. "I did not know it existed"
+is a process failure; the skills are one directory listing away.
+
 ## STEP 2 — Map ICP types to Google's native categories
 
 Query Google's taxonomy, not the ICP label. One ICP type → one or more Google category terms (e.g. Dental → `Dentist`, `Cosmetic dentist`, `Pediatric dentist`; Veterinary → `Veterinarian`, `Animal hospital`). Dedup on `place_id` later absorbs the heavy overlap between terms.

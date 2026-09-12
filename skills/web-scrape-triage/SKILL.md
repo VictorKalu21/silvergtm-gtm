@@ -45,7 +45,7 @@ If the data is server-rendered into the document, a plain `curl -A "<real browse
 ### Tier 2 — Free-first search-driven discovery (cheap → $0)
 When you don't have one site to hit but need to *find* pages (companies hiring with tool X, an entity's real domain, profile pages). **Never pay a SERP key (serper / scraper.tech) for this — the free rungs cover it:**
 - **Built-in WebSearch tool** — title/description/url results, no API key. First choice, interactive.
-- **Jina search `https://s.jina.ai/?q=<query>`** — free, keyless (~20 RPM; free key → 500 RPM), LLM-ready results. The scriptable free SERP for *pipelines* (when you need it in code, not just interactively).
+- **Jina search `https://s.jina.ai/?q=<query>`** — LLM-ready results; the scriptable SERP for *pipelines* (when you need it in code, not just interactively). **Now requires an API key** (tested 2026-09-12: a keyless call returns `401 AuthenticationRequiredError`); a free key still gets the free tier. Confirm on 3 leads that it returns the *field you need* before building a sweep on it — its raw results are not the same as a synthesising search tool that reads pages behind an anti-bot wall.
 - **Brave Search API** — free tier (~2k queries/mo), a real structured REST endpoint when you need higher-volume SERP without a paid scraper.
 - Reach for a paid SERP (serper/scraper.tech) ONLY after blowing past those free tiers at real volume — most jobs never do.
 - Patterns: `<tool> "<role>" site:jobs.lever.co`; resolve a domain via `<name> <city>` → take the company's own site, not an aggregator (linkedin/crunchbase/etc.). **Never domain-guess** — guessing fabricates confident-but-wrong domains; search ranks the real entity.
