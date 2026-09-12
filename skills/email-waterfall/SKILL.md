@@ -57,3 +57,11 @@ checkpoints only. Test: `node tests/waterfall-dry-run.test.js`.
   `429 {"message":"API rate limit exceeded"}` for many minutes, not just the documented 5/s and 300/min windows.
   Treat a trial key as a small daily/hourly allowance: probe with 3 searches, then batch in groups of ≤50 spaced an
   hour apart, and never let a 429 be recorded as a miss.
+- **TryKitt free tier, measured:** 81 jobs submitted at zero balance; 58 completed, **0 found** (`outcome:
+  "no-results-found"` on every one, `results.domain` comes back null even though `domainOrWebsite` was sent), 16
+  refused at submission with `418 "The free tier API is busy right now"`, 7 still queued after 2 min of polling.
+  Conclusion: the freemium bot is not a usable rung; TryKitt only counts once the account is funded (paid bot).
+- **First-run totals (QuickEnrich + TryKitt free, MillionVerifier only, 100 owner-level contacts):** 12 sendable,
+  7 risky (catch-all), 81 none. **Names read off the company's own site enriched 3× better than names found by
+  web search** (9 sendable of 50 vs 3 of 50): a searched name is more often a sole proprietor with no company
+  mailbox in any database. AI Ark still untested (trial quota); retry scheduled.
