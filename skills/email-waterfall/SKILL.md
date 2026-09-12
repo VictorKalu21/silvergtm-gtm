@@ -71,3 +71,11 @@ Some state contractor licence boards publish the licensee's email: **Louisiana**
 qualifying party) and **Arkansas** (nightly CSV, 98% filled, with officers). Mississippi and Alabama do not.
 Full grammar in `icp-source-planner/library/state-contractor-licence-boards--home-services-emails.md`. Join by
 normalised company name + city, then verify. For an LA/AR-heavy list this rung goes first; it costs nothing.
+- **BounceBan on + pattern rung, same 100 owners (2026-09-12):** 33 sendable (QuickEnrich 18 incl. BounceBan-recovered
+  catch-alls, pattern 15), 1 risky, 66 none. Cost: 337 MillionVerifier + 31 BounceBan credits on top of the 21
+  QuickEnrich. **The pattern rung alone found 15 of 81, more than QuickEnrich found in raw terms once BounceBan
+  resolves the catch-all domains, for ~4 MV credits per owner.** Order for this vertical: registry (LA/AR) → on-site
+  → QuickEnrich → pattern → AI Ark, with BounceBan always on.
+- Company mailboxes on the same list: 69 of 82 sendable (MV 82 + BB 35). Registry (LA + AR, 22 in-state leads):
+  11 strict matches, 9 sendable. A loose token join first produced 6 wrong companies out of 14; the join must
+  require the whole normalised name or ≥2 distinctive tokens plus city.
