@@ -65,3 +65,9 @@ checkpoints only. Test: `node tests/waterfall-dry-run.test.js`.
   7 risky (catch-all), 81 none. **Names read off the company's own site enriched 3× better than names found by
   web search** (9 sendable of 50 vs 3 of 50): a searched name is more often a sole proprietor with no company
   mailbox in any database. AI Ark still untested (trial quota); retry scheduled.
+
+## Registry rung (free, state-specific) — check BEFORE any vendor
+Some state contractor licence boards publish the licensee's email: **Louisiana** (record + roster CSV, with
+qualifying party) and **Arkansas** (nightly CSV, 98% filled, with officers). Mississippi and Alabama do not.
+Full grammar in `icp-source-planner/library/state-contractor-licence-boards--home-services-emails.md`. Join by
+normalised company name + city, then verify. For an LA/AR-heavy list this rung goes first; it costs nothing.
