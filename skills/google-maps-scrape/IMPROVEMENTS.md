@@ -549,3 +549,17 @@ Three sweep runs launched together (5 + 5 + 4 batches) used 65 + 70 + 70 searche
 0; a run launched after the others finished got a fresh 200. So: **one sweep run at a time, ≤6 batches of 20 each,
 launch the next when the previous reports.** A starved batch shows as "0 searches, 0 with contacts" or as prose
 about CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION instead of a file; re-run those ids.
+
+## FACT 2026-09-12 (yield, measured): the on-disk model read (flow 2b) on 901 foundation-repair leads
+
+23 batches of 40, Haiku, 2.12M subagent tokens, 62 min at 2 concurrent (~2.4k tokens per lead). **221 of 901 named
+(24.5%)**, 331 contacts, 223 owner-level. By source of the kept contact: website 102 · web-search evidence 108 ·
+SERP snippet 63 · dedicated owner page 58. Guardrail drops: 24 single-token names (Haiku returns a first name alone
+when that is all the page says; the template forbids it), 2 role-word names, 1 trade-word name, 1 evidence
+mismatch, 1 EXCLUDE title. Two batches wrote unescaped quotes inside an evidence string (invalid JSON, repaired by
+hand); the sweep prompt now says to use single quotes inside evidence.
+
+Read this against the sweep: on the same trade the web search names ~70% of the leads it touches at ~4.4k tokens
+per lead, the on-disk read ~25% at ~2.4k. For home-services the registry tier is the primary source and the site
+read is the cheap first pass, exactly as `owner-finding.md` says. The regex pass this replaced had banked 242
+"named" leads, 24 of which were business names.
