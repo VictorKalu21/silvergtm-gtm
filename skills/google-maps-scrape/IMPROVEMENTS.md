@@ -510,3 +510,11 @@ Same discontinued product as `search-owner.js`. Not this skill's file; flagged f
 ## NOTE: `email-verify-debounce-bounceban` runners are not in the repo
 
 Its SKILL.md points at `C:/Users/victo/gtm-processes/scripts/verify-*.js` on the operator's machine. The skill folder holds the procedure only. Verification therefore always runs off-container.
+
+## DONE 2026-09-12 (hook bug, found live): `guard.py` resolved relative `clients/…` paths against the hook's cwd
+
+The Bash tool's cwd persists between calls and is often deep inside the repo, so a relative run path did not resolve and the owner gate denied a legitimate `ls` (it blocked the reviewer's own command). Fixed: resolve against `$CLAUDE_PROJECT_DIR`, else the hook file's repo root; absolute prefixes first. Re-tested from `/tmp`. Two facts learned: the hook went live mid-session without a restart, and the hook scans the WHOLE command text, so a test payload that spells out a run-folder script path inside a heredoc trips it too (build test strings from a variable).
+
+## NOTE 2026-09-12 (workflow scale): the harness caps a workflow at min(16, CPUs−2) concurrent agents
+
+This container has 4 CPUs → 2 agents at a time. A 23-batch Haiku read at ~9 min per 40-lead batch is ~100 min wall clock, not 10. Plan batch counts against the CPU count of the machine the run is on, or run two independent workflows side by side (each gets its own cap).

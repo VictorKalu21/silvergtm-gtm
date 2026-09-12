@@ -6,6 +6,8 @@
  *        [--batch 20] [--limit N] [--registry bbb.org]
  *
  * --have may repeat: any lead with >=1 contact in any of those files is excluded.
+ * --only <json file holding an array of place_ids> restricts the queue to those leads (e.g. the
+ *   read step's skipped_none.json, which can never be named from on-disk text).
  * Writes <out>/batches/batch-<N>-in.json ([{place_id, business_name, city, state, zip, website,
  * brand_family, query, registry}]), <out>/manifest.json. The model does the searching and the
  * reading; nothing here names a person.
@@ -22,7 +24,8 @@ function csv(f) { const L = strip(fs.readFileSync(f, 'utf8')).split(/\r?\n/).fil
 const have = new Set();
 for (const f of args('have')) { if (!fs.existsSync(f)) continue; for (const l of strip(fs.readFileSync(f, 'utf8')).split(/\r?\n/)) { if (!l.trim()) continue; try { const d = JSON.parse(l); if (d.place_id && Array.isArray(d.contacts) && d.contacts.length) have.add(d.place_id); } catch (e) { } } }
 const leads = csv(LEADS);
-let items = leads.filter(r => !have.has(r.place_id)).map(r => {
+const ONLY = arg('only', '') ? new Set(JSON.parse(strip(fs.readFileSync(arg('only'), 'utf8')))) : null;
+let items = leads.filter(r => !have.has(r.place_id) && (!ONLY || ONLY.has(r.place_id))).map(r => {
   const st = r.state || (r.city.match(/,\s*([A-Z]{2})\b/) || [])[1] || '';
   const town = (r.city || '').split(',')[0].trim();
   return { place_id: r.place_id, business_name: r.name, city: r.city, state: st, zip: r.zip, website: r.website, brand_family: r.brand_family || '',
@@ -31,6 +34,6 @@ let items = leads.filter(r => !have.has(r.place_id)).map(r => {
 if (LIMIT > 0) items = items.slice(0, LIMIT);
 fs.mkdirSync(path.join(OUT, 'batches'), { recursive: true });
 let n = 0; for (let i = 0; i < items.length; i += BATCH) { fs.writeFileSync(path.join(OUT, 'batches', `batch-${n}-in.json`), JSON.stringify(items.slice(i, i + BATCH), null, 1)); n++; }
-const manifest = { leads: leads.length, already_named: have.size, queued: items.length, batches: n, batch_size: BATCH, registry: REG };
+const manifest = { leads: leads.length, already_named: have.size, only: ONLY ? ONLY.size : null, queued: items.length, batches: n, batch_size: BATCH, registry: REG };
 fs.writeFileSync(path.join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2));
 console.log(JSON.stringify(manifest));

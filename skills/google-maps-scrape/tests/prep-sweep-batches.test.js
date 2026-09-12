@@ -15,5 +15,8 @@ check('state derived from city when column empty', b0.place_id === 'B' && b0.sta
 check('query shape', b0.query === '"Bravo Foundation" Tulsa OK owner' && b0.registry === 'bbb.org');
 const m2 = JSON.parse(execFileSync('node', [S, '--leads', path.join(tmp, 'leads.csv'), '--out', path.join(tmp, 'o2'), '--limit', '1', '--registry', 'zoominfo.com'], { encoding: 'utf8' }));
 check('--limit and --registry', m2.queued === 1 && m2.registry === 'zoominfo.com');
+fs.writeFileSync(path.join(tmp, 'only.json'), '﻿["C","D"]');
+const m3 = JSON.parse(execFileSync('node', [S, '--leads', path.join(tmp, 'leads.csv'), '--out', path.join(tmp, 'o3'), '--only', path.join(tmp, 'only.json')], { encoding: 'utf8' }));
+check('--only restricts the queue (BOM-safe)', m3.queued === 2 && m3.only === 2);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fails ? 1 : 0);
