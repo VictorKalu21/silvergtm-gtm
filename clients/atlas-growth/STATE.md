@@ -26,7 +26,7 @@
 | Enrichment waterfall (QuickEnrich → TryKitt) | **not built**, keys not provided | 796 named leads still need an email found |
 | `clay.csv` | **not built** | — |
 
-Every contact carries a verbatim evidence quote and passed the merge guardrails (evidence contains the name, role in the
+Precision audit (30 random sweep-named leads re-searched independently): 25 confirmed, 3 consistent on partial name, 2 unconfirmable, 0 wrong. Read grounding 99% (evidence verbatim in source). Every contact carries a verbatim evidence quote and passed the merge guardrails (evidence contains the name, role in the
 enum, no role or trade word in a name, full name, EXCLUDE title dropped). The earlier regex-extracted contact files
 (`contacts_all.*`, `roster_contacts`, `serp_contacts`, `sweep.jsonl`, `site_recovered.jsonl`) are superseded; do not ship them.
 

@@ -576,3 +576,30 @@ Against the regex pass it replaced: 242 "named" (24 were business names; of 188 
 Guardrail drops across all merges: 30 single-token names, 9 evidence mismatches, 5 role-word names, 2 trade-word
 names, 2 EXCLUDE titles. Three batch files needed a hand repair for an unescaped quote inside an evidence string.
 Verification: 81 → 73 sendable (90%). The 796 named leads without an email are the enrichment waterfall's input.
+
+## AUDIT 2026-09-12 (precision, measured): the "owner column" run locally on Atlas Growth
+
+**Read (flow 2b), grounding check, deterministic:** 317 of 331 kept contacts have their evidence quote verbatim in the
+lead's own source text; the other 14 are roster-page contacts whose quote spans line breaks. 329 of 331 names occur in
+the source. Grounding ≈ 99%. Possible misses: of 187 unnamed leads that had site text, 4 name a founder/owner in plain
+"<Name>, founder" form that Haiku did not return (recall loss on site text ≈ 2%).
+
+**Sweep (flow 2c), independent re-search of a random sample of 30 named leads (session model, fresh WebSearch):**
+
+| outcome | n |
+|---|---|
+| confirmed, full name and role | 25 |
+| consistent, partial (first name or diminutive only in results: Dylan; "Darek S."; Cole Gardner as 3rd-gen lead) | 3 |
+| not confirmable from search (AlphaLift managing member; Reliable Foundations "Matthew Smith", results name a co-owner Vincent Castillo instead) | 2 |
+| contradicted | 0 |
+
+Hard-confirmed precision ≥ 83%, consistent ≥ 93%, 0 of 30 wrong. A transcript-based check was attempted first and is
+NOT usable: large WebSearch results go to overflow files, so "name not in transcript" proves nothing.
+
+**Entity match:** 642 of 845 primary evidence quotes contain a distinctive token of the business name; the 203 without
+are mostly website quotes of the form "Owner: Pat Kirby" where the business is implicit. Multi-location brands: 32 of
+41 named, at the branch level.
+
+**Against the Clay column as a method:** identical prompt, identical guardrails, run on Haiku off the main context;
+2b+2c together named 76.5% (Clay pilots on this skill: healthcare 84%, used-car 44%). Difference from Clay: the sweep
+tier is built in, and every drop is counted rather than silently absent.
