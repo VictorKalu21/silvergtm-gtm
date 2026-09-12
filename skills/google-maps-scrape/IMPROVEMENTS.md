@@ -603,3 +603,14 @@ are mostly website quotes of the form "Owner: Pat Kirby" where the business is i
 **Against the Clay column as a method:** identical prompt, identical guardrails, run on Haiku off the main context;
 2b+2c together named 76.5% (Clay pilots on this skill: healthcare 84%, used-car 44%). Difference from Clay: the sweep
 tier is built in, and every drop is counted rather than silently absent.
+
+## PROPOSED 2026-09-12 (method, NOT approved): owner-finding rung order, cheapest-first, Clay optional
+
+Proposal put to the operator after the Atlas Growth run; written into SKILL.md prematurely and reverted the same
+hour. Not method until the operator signs off. The proposal: (1) aggregate on-disk evidence; (2) one Haiku read,
+yield-gated after three batches; (3) registry-restricted sweep on still-unnamed leads, one run of ≤6 batches at a
+time; (4) second opinion on medium/low-confidence rows; (5) session-model search for the head and gap-fill only;
+(6) Tier-3 fetch for brand-flagged 403s only; (7) no paid vendor SERP. Hand-off would become
+`contacts_final` + verified emails, with `build-clay-csv.js` optional. Measured basis in the RESULT and AUDIT
+entries above. Open questions for the operator: whether Clay stays the reader for any vertical; whether the yield
+gate belongs in code (`prep-owner-batches.js` filter) or stays a judgement call.
