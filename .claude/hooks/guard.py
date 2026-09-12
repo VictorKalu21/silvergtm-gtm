@@ -17,13 +17,20 @@ def deny(reason):
         "permissionDecision": "deny", "permissionDecisionReason": reason}}))
     sys.exit(0)
 
+PROJECT = os.environ.get('CLAUDE_PROJECT_DIR') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 def run_root(prefix, client, run):
-    # resolve the run folder on disk from whatever prefix the path used
-    p = os.path.join(prefix, 'clients', client, run) if prefix else os.path.join('clients', client, run)
-    if not os.path.isdir(p):
-        alt = os.path.join(os.getcwd(), 'clients', client, run)
-        p = alt if os.path.isdir(alt) else p
-    return p
+    """Resolve the run folder on disk. Relative paths resolve against the PROJECT root, never the
+    hook's cwd (the Bash tool's cwd persists between calls and is often deep inside the repo)."""
+    cands = []
+    if prefix.startswith('/'):
+        cands.append(os.path.join(prefix, 'clients', client, run))
+    cands.append(os.path.join(PROJECT, 'clients', client, run))
+    cands.append(os.path.join(os.getcwd(), prefix, 'clients', client, run))
+    for p in cands:
+        if os.path.isdir(p):
+            return p
+    return cands[-2]
 
 def main():
     try:

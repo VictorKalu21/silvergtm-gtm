@@ -34,12 +34,16 @@ fs.writeFileSync(path.join(read, 'batches', 'batch-0-out.json'), '﻿' + JSON.st
     { name: 'Bob Smith', title: 'Estimator', role_bucket: 'estimator', evidence: 'Bob Smith, Estimator.', source: 'website' },
     { name: 'Nobody Here', title: 'GM', role_bucket: 'gm', evidence: 'no such quote', source: 'website' },
     { name: 'Royal Foundation Owner', title: 'Owner', role_bucket: 'owner_or_partner', evidence: 'Royal Foundation Owner', source: 'website' },
-    { name: 'jane acme', title: 'Owner', role_bucket: 'owner_or_partner', evidence: 'Jane Acme, Owner.', source: 'website' } ], confidence: 'high' },
+    { name: 'jane acme', title: 'Owner', role_bucket: 'owner_or_partner', evidence: 'Jane Acme, Owner.', source: 'website' },
+    { name: 'Horton', title: 'CDO', role_bucket: 'other', evidence: 'Horton', source: 'serp' },
+    { name: 'Free Resources', title: 'Top Secret', role_bucket: 'other', evidence: 'Free Resources', source: 'serp' },
+    { name: 'Brian Bohannan', title: 'Vice President of Sales', role_bucket: 'owner_or_partner', evidence: 'Brian Bohannan - Vice President of Sales', source: 'serp' } ], confidence: 'high' },
   L2: { contacts: [], confidence: 'low', needs_review: true },
   ZZ: { contacts: [] } }));
 const rep = JSON.parse(execFileSync('node', [MERGE, '--dir', read], { encoding: 'utf8' }));
 check('one lead with one deduped contact', rep.leads === 2 && rep.leads_with_contacts === 1 && rep.contacts === 1 && rep.owner_level === 1);
 check('drops counted: evidence, bucket, roleword, unknown id', rep.dropped_no_evidence_name === 1 && rep.dropped_bad_bucket === 1 && rep.dropped_roleword_name === 1 && rep.dropped_unknown_place_id === 1);
+check('single-token, trade-word and EXCLUDE-title contacts dropped and counted', rep.dropped_single_token_name === 1 && rep.dropped_tradeword_name === 1 && rep.excluded_by_title === 1);
 check('missing out file reported', rep.batches_missing_out.length === 1);
 const out = fs.readFileSync(path.join(owner, 'contacts_read.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
 check('primary + best_send_email fallback to site emails', out[0].primary_name === 'Jane Acme' && out[0].best_send_email === 'info@acme.com' && out[1].needs_review === true);
