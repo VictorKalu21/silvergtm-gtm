@@ -30,9 +30,11 @@ IN=<list.csv> OUT_DIR=<dir> node skills/email-verify-debounce-bounceban/scripts/
 **API facts (verified 2026-09-12, one probe each):** MillionVerifier `GET https://api.millionverifier.com/api/v3/?api=KEY&email=&timeout=20`
 → `result` ∈ `ok | catch_all | unknown | disposable | invalid | error`, plus `role`, `free`, `subresult`; credits at
 `/api/v3/credits?api=KEY` (free). BounceBan `GET https://api.bounceban.com/v1/verify/single?email=` with header
-`Authorization: KEY` (no `Bearer`) is **synchronous**: `result` ∈ `deliverable | undeliverable | risky | unknown`,
-`is_accept_all`, `is_role`, `credits_consumed`, `credits_remaining`; account at `/v1/account`. Rate limit 100/s on
-single verify.
+`Authorization: KEY` (no `Bearer`) answers inline MOST of the time: `result` ∈ `deliverable | undeliverable | risky |
+unknown`, `is_accept_all`, `is_role`, `credits_consumed`, `credits_remaining`. About 1 in 8 calls instead returns
+`{status:"verifying", id, try_again_at}` and must be polled at `GET /v1/verify/single/status?id=<id>` (same header)
+until `result` appears; the runner does this. (The single-address probe said "synchronous"; 25 calls said otherwise.
+Probe with more than one address before writing a fact down.) Account at `/v1/account`. Rate limit 100/s.
 
 ## Keys (one file, auto-loaded by scripts)
 

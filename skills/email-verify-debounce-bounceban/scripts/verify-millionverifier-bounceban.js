@@ -12,8 +12,9 @@
  *
  * Verified 2026-09-12: MV `GET api.millionverifier.com/api/v3/?api=KEY&email=&timeout=20` → {result: ok|catch_all|
  * unknown|disposable|invalid|error, role, free, credits}. BounceBan `GET api.bounceban.com/v1/verify/single?email=`
- * with header `Authorization: KEY` is SYNCHRONOUS → {result: deliverable|undeliverable|risky|unknown, is_accept_all,
- * is_role, credits_consumed, credits_remaining, status:"success"}.
+ * with header `Authorization: KEY` → {result: deliverable|undeliverable|risky|unknown, is_accept_all, is_role,
+ * credits_consumed, credits_remaining, status:"success"}; OR {status:"verifying", id, try_again_at} → poll
+ * GET /v1/verify/single/status?id=<id> (same header) until `result` appears.
  */
 const fs = require('fs'), path = require('path');
 const argv = process.argv;
@@ -41,7 +42,20 @@ const append = (f, d) => fs.appendFileSync(f, JSON.stringify(d) + '\n');
 
 async function getJSON(url, headers) { const r = await fetch(url, { headers }); const t = await r.text(); try { return JSON.parse(t); } catch (e) { return { error: 'non-json ' + r.status + ' ' + t.slice(0, 120) }; } }
 async function mvVerify(email) { const d = await getJSON(`https://api.millionverifier.com/api/v3/?api=${encodeURIComponent(MV_KEY)}&email=${encodeURIComponent(email)}&timeout=20`); d.email = d.email || email; d.checked_at = new Date().toISOString(); return d; }
-async function bbVerify(email) { const d = await getJSON(`https://api.bounceban.com/v1/verify/single?email=${encodeURIComponent(email)}`, { Authorization: BB_KEY }); d.email = d.email || email; d.checked_at = new Date().toISOString(); return d; }
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+// BounceBan usually answers inline, but ~10% of calls return {status:"verifying", id, try_again_at} and must be polled
+// on /v1/verify/single/status?id= (observed 2026-09-12: 3 of 25). Poll up to 8 times, 8 s apart.
+async function bbVerify(email) {
+  let d = await getJSON(`https://api.bounceban.com/v1/verify/single?email=${encodeURIComponent(email)}`, { Authorization: BB_KEY });
+  for (let i = 0; i < 8 && d && d.status === 'verifying' && d.id; i++) {
+    const wait = Math.max(8000, (Number(d.try_again_at) * 1000 - Date.now()) || 0);
+    await sleep(Math.min(wait, 20000));
+    const s = await getJSON(`https://api.bounceban.com/v1/verify/single/status?id=${encodeURIComponent(d.id)}`, { Authorization: BB_KEY });
+    if (s && s.result) { d = { ...s, id: d.id, polled: i + 1 }; break; }
+    if (s && s.status && s.status !== 'verifying') { d = { ...s, id: d.id, polled: i + 1 }; break; }
+  }
+  d.email = d.email || email; d.checked_at = new Date().toISOString(); return d;
+}
 
 const NEEDS_BB = new Set(['catch_all', 'unknown', 'error', '']);
 function classify(m, b) {
