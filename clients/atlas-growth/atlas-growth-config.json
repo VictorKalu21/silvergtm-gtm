@@ -68,8 +68,11 @@
   },
 
   "owner_query": {
-    "_r": "use_linkedin false: LinkedIn is a weak rung for owner-operator residential trades and doubles SERP cost (engine note, LH trade-vertical validation). Moot this run — no SERP vendor, site_text only.",
+    "_r": "use_linkedin TRUE, reversing the earlier note. Measured against the scraper.tech google-search endpoint 2026-09-12: it returns {title,url,description} but url is ALWAYS empty and description lands on only 2-3 of 9 results. Titles are the only signal, and LinkedIn titles are the one format shaped 'Name - Title at Employer'. On a title-only endpoint the LinkedIn rung stops being the weak rung and becomes the richest harvest: 12-lead pilot gave 26 Name-Title lines from the linkedin leg vs 9 from bias_terms. Worth the doubled call count.",
+    "_entity_match_caveat": "url empty means we cannot see WHICH domain corroborates a name, so entity-match leans on site_text plus the lead identity fields. Two real traps seen in the pilot: a 'Former CEO' title (do not output a departed exec) and a founder of a DIFFERENT company bleeding into a lead's results. LinkedIn titles usually name the employer, which partly substitutes for the missing url - reject any contact whose title names another company.",
+    "_no_website_recovery": "best_website recovery cannot run off this endpoint (it needs urls). Leave that to WebSearch or the Clay column.",
     "bias_terms": ["owner", "president", "general manager", "marketing manager"],
-    "use_linkedin": false
+    "use_linkedin": true,
+    "country": "US"
   }
 }
