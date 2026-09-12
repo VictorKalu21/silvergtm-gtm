@@ -222,3 +222,46 @@ LH-496 failure mix: 202 AbortError (many are dead/connection-reset, not just slo
 ## LOW (operator): don't pipe long-running scripts through `head`
 
 **Status:** WONTFIX/note · found 2026-07-03. Piping `competitor-maps.js | head -N` SIGPIPE-kills the node process mid-run (it writes progress every 10 combos; head closing the pipe kills it after ~20). Resumable state saved it, but the reflex is bad. Use `| tail` or run in background and Read the output file.
+
+---
+
+## 2026-09-12 — run-scrape.js `--resume` (SHIPPED, approved)
+
+An interrupted run (scraper.tech tariff exhausted mid-flight) had to re-scrape the WHOLE runsheet
+to continue, re-billing tiles already paid for. `--resume` reads every `run_log.json` under `--out`
+(top-level + `heal-` + `resume-` subdirs), unions the tiles that reached `status:'ok'`, and scrapes
+only the remainder into a fresh `resume-N` dir. Default behaviour unchanged without the flag.
+Verified against the real interrupted Atlas run: 590 skipped / 820 scraped, exactly the known state.
+Covered by `tests/run-scrape-resume.test.js` (8 checks).
+
+Note the final coverage report now unions `per_cell` across ALL logs — reading only
+`<out>/run_log.json` on a resumed run would report on the FIRST pass's tiles alone.
+
+## 2026-09-12 — `readRunsheet` does not honour `writeRunsheet` quoting (OPEN, not fixed)
+
+`writeRunsheet` correctly quotes a field containing a comma; `readRunsheet` splits on `,` with no
+quote handling. A query CONTAINING a comma therefore round-trips corrupted — and the heal loop and
+`--resume` both write a runsheet and read it back, so a comma-bearing query would silently heal the
+WRONG query. Not hit by Atlas (all 10 queries comma-free); found by the resume test, which now
+asserts only the comma-free round-trip and carries a comment pointing here. Fix is a real CSV parse
+in `readRunsheet` (`scrape.js` and `search-owner.js` already have one worth reusing) — needs
+approval, same class as the `google_types` separator bug below.
+
+## 2026-09-12 — `L2_CAP` truncates the roster off dealer-network team pages (OPEN, not fixed)
+
+`fetch-sites.js` caps each L2 page at 2,800 chars. Basement Systems / Supportworks dealer sites put
+a site-wide service menu at the top of `about-us/meet-the-team.html` and the actual roster at the
+BOTTOM, so the cap keeps the menu and drops every name. 20 such pages read by hand showed only 4
+rosters; re-fetching the same URLs uncapped (median 7.3k chars) showed a roster on 33/33. Candidate
+fixes: a larger cap for owner-priority paths, or a tail-biased slice for pages whose URL matches the
+owner/team pattern. Worked around job-locally in the Atlas run
+(`clients/atlas-growth/2026-09-11_foundation-repair/fetch-owner-pages2.js`).
+
+## 2026-09-12 — worker-pool fetchers can exit silently with promises pending (NOTE)
+
+A job-local pool fetcher exited code 0 mid-run with ~80 leads unprocessed and no error. Cause: the
+only thing left holding the event loop was an `.unref()`'d deadline timer, so node considered the
+loop empty and exited while workers were still awaiting. Symptom to recognise: exit 0, no final
+log line, partial output. Rule of thumb for these small fetchers — never `.unref()` the deadline,
+and prefer a sequential `for await` loop unless concurrency is genuinely needed; 85 pages
+sequentially cost ~3 minutes, which was cheaper than debugging the pool.

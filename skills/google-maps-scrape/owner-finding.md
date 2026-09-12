@@ -12,6 +12,54 @@ Deferred: no-website leads (in `excluded.csv`, dropped on no-website alone — n
 
 **Pilot result (50 ICP-1 healthcare leads): 84% decision-makers found (18 website + 24 SERP), 0 fabrications, ~$0 AI cost.** Named yield is vertical-dependent: healthcare ≈84%; used-car/high-ticket retail ≈44% (dealers don't publish owners; reviews name salespeople, who are excluded). The rest fall back to on-site generic email + GMaps phone.
 
+## WHERE the names live, per vertical (fill this in every job — it is the whole ballgame)
+
+The pilot yields above (healthcare ≈84%, used-car ≈44%) are a *consequence* of this, not a
+property of the vertical's difficulty: a vertical's yield is set by whether its trade publishes
+owners, and WHICH third-party registry does when it doesn't. Decide this in STEP 1 and write it
+into the job folder, the same way KEEP/EXCLUDE roles are decided per job.
+
+**Home-services trades (foundation repair, roofing, HVAC, plumbing, restoration) — measured on
+Atlas Growth, 871 leads:**
+- The company's own site is a WEAK source. 871 ICP sites yielded a title-adjacent name on only
+  ~16%. These firms say "family-owned since 1987" and name nobody — the phrase is marketing copy,
+  not a contact. Do not budget site text as the primary source for this vertical.
+- **BBB Business Profiles are the owner registry.** A BBB profile lists the principal by name and
+  title. In testing, BBB ranked #1 for the plain `"<business>" <city> <ST> owner` query on
+  unrelated leads in TX/CO/OK/MS, and resolved owners the website never mentioned (8/8 leads that
+  site text had failed on). Secondary registries, in observed order of usefulness: ZoomInfo person
+  pages, LinkedIn company/person pages, local chamber-of-commerce member profiles, Procore.
+- **Dealer networks are a separate, richer seam.** Basement Systems / Supportworks / Groundworks
+  dealers run a templated `about-us/meet-the-team.html` that lists the WHOLE roster with titles —
+  owner, GM, Director of Marketing, Sales Manager. For an offer sold to marketing or the GM this
+  is better than an owner name alone. Two cautions, both hit in the Atlas run:
+  (a) the roster sits at the BOTTOM of the page, past `fetch-sites.js`'s 2,800-char `L2_CAP`, so
+      the capped capture truncates the names off — re-fetch those pages uncapped;
+  (b) the corporate roll-up domains (groundworks.com, afsrepair.com, aquaguard.net,
+      helitechonline.com, foundationrecoverysystems.com) return **HTTP 403** to a plain fetch.
+      Independents generally do not. Losing the roll-ups matters little: they are `brand_family`
+      flagged and corporate-owned, so they are the weakest buyers for a local offer anyway.
+
+**How to decide it for a NEW vertical:** take 3 leads the site text failed on, run the plain
+`"<business>" <city> <ST> owner` query, and read WHICH domains rank. That is the registry. It cost
+3 searches to establish for foundation repair and it set the whole pipeline design.
+
+## Tier the sources by cost — and know which budget binds
+
+Order the run cheapest-first, but measure cost in the currency that is actually scarce:
+
+| tier | source | vendor $ | tokens/lead | yield | leads per turn |
+|---|---|---|---|---|---|
+| 1a | dedicated owner/team page (re-fetched uncapped) | 0 | ~700 read | ~100% of pages that fetch | ~12 |
+| 1b | general site text already on disk | 0 | ~600 read | ~16% (home-services) | ~15 |
+| 2  | web search | 0 (in-session) / SERP key | ~1,100 | ~100% | **1** |
+
+Per owner FOUND, tier 2 beats a blanket tier-1b read. But an in-session web search costs one
+conversation TURN per lead and does not parallelize, so 750 leads is 750 turns. **Tokens are not
+the binding constraint — turns are.** Use in-session search for pilots, for the high-value head of
+the list, and to fill gaps; use a SERP key + `search-owner.js` (6 concurrent) or the Clay column
+for the bulk. Tier 1a is the one tier that is cheap in BOTH: parallel HTTP plus batch reading.
+
 ## Principle (proven in real testing)
 
 Separate **deterministic scraping** from **AI reasoning**. Crawl in cheap Node; let a small model read clean *text* and name the people. Never make the model navigate pages — that's where small models fail and token costs explode. Lean queries for recall; full-identity entity-match for precision.
