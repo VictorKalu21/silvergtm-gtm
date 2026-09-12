@@ -70,8 +70,10 @@ vertical, so the next run of the same vertical starts from zero.
 | 5c-dom | Collapse domains, route shared hosts | `collapse-domains.js` | netnew | `leads_domains.csv`, `leads_nowebsite.csv`, `domain_siblings.json` | no |
 | 5d | No-website recovery | `prep-website-recovery.js`, `apply-*.js` | nowebsite | recovered domains | no |
 | 5e | Site-text fit classification | `prep-classify.js`, `apply-classify.js` | site text | `leads_icp.csv` | no |
-| 6a | Build the owner prompt | none (reasoning from template) | `owner-prompt.template.md`, ICP | `owner-prompt.md` | yes, approve DECISIONS |
-| 6 | Fetch site text (+ SERP if a backend exists) | `fetch-sites.js`, `search-owner.js` | `leads_domains.csv` | `site_text.jsonl`, `serp_text.jsonl` | no |
+| 6a (built at step 3 time) | Build the owner prompt | none (reasoning from template) | `owner-prompt.template.md`, ICP | `owner-prompt.md` | yes, approve DECISIONS |
+| 6 | Fetch site text (+ SERP if a backend exists) | `fetch-sites.js`, `search-owner.js` | `leads_domains.csv` | `site_text.jsonl`, `serp_text.jsonl` | refuses without `owner-prompt.md` |
+| 6 (2b) | Model read of the on-disk evidence | `prep-owner-batches.js` → Haiku per batch → `merge-owner-reads.js` | owner texts, `owner-prompt.md` | `contacts_read.jsonl`, `read_report.json` | no |
+| 6 (2c) | Web-search sweep for still-unnamed leads | `prep-sweep-batches.js` → Haiku per batch → `merge-owner-reads.js` | unnamed leads, `owner-prompt.md` | `contacts_sweep.jsonl` | measure the first tranche's cost |
 | 6 | Build the Clay feed | `build-clay-csv.js` | annotated leads + owner texts | `clay.csv` | refuses without `owner-prompt.md` |
 | 7 | Hand off | none | `clay.csv` | Clay | final report |
 
@@ -119,6 +121,7 @@ A gate is a stop. The run does not proceed past one on its own.
 | `HANDOFF.md` | the intake form and glossary for a non-technical operator |
 | `IMPROVEMENTS.md` | the bug and lesson backlog; read the OPEN items before a big run |
 | `*.js` | the engine scripts named in section 3 |
+| `owner-read-subagent.md`, `owner-sweep-subagent.md` | the prompts for the Haiku readers in flows 2b and 2c |
 | `tests/` | the engine's test suite; run it after any engine change |
 | `.env` | `SCRAPER_TECH_KEY` and, if a SERP backend exists, its key; never committed |
 
@@ -191,8 +194,11 @@ field you need before building a sweep on it.
 | a directory (Clutch, DesignRush) instead of Maps | `directory-lead-sourcing` | force it through Maps |
 | a review of the live campaign this list fed | `campaign-review` | judge targeting without the client's ICP doc |
 
-These live in `skills/` as folders, not as registered Claude Code skills. Invoking one means
-reading its `SKILL.md`. `SKILL.md` STEP 0 makes the inventory a required step.
+They live in `skills/` and are registered under `.claude/skills/`, so the harness lists them at
+session start. `SKILL.md` STEP 0 makes the inventory a required step, and two hooks in
+`.claude/settings.json` enforce it: a script inside a run folder is not created or run until
+`<run>/.skill-check` exists, and nothing under `<run>/owner/` is touched until `owner-prompt.md`
+exists.
 
 ## 10. Known landmines
 
