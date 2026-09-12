@@ -257,6 +257,23 @@ fixes: a larger cap for owner-priority paths, or a tail-biased slice for pages w
 owner/team pattern. Worked around job-locally in the Atlas run
 (`clients/atlas-growth/2026-09-11_foundation-repair/fetch-owner-pages2.js`).
 
+## 2026-09-12 — scrape.js writes run_log.json only at the END, so a killed run loses its tiles (OPEN)
+
+Six of eight shards were killed mid-run (launch mistake, below). Because `scrape.js` persists
+`run_log.json` only when it finishes, every tile those workers had already scraped was unrecorded,
+so `--resume` correctly re-bought them: ~617 tiles of API spend thrown away. `--resume` works, but
+its granularity is only as good as how often the log is written. Candidate fix: append per-cell
+status incrementally (or checkpoint every N tiles) so a kill costs minutes, not hours. Until then,
+a long scrape should be treated as all-or-nothing per shard.
+
+## 2026-09-12 — NOTE: launch long jobs through the harness, never `nohup ... &` in a tool call
+
+Twice in one session a `nohup <job> &` inside a Bash tool call was killed when the call returned and
+its parent shell went away — first an 85-page fetcher (stopped at 5), then 6 of 8 scrape shards
+(cost: the 617 tiles above). The harness's own background mode (`run_in_background: true`) keeps the
+process alive across calls and reports its exit; use it for anything that outlives one call. The
+giveaway is a job whose output file stops growing while its "launched" line looks fine.
+
 ## 2026-09-12 — worker-pool fetchers can exit silently with promises pending (NOTE)
 
 A job-local pool fetcher exited code 0 mid-run with ~80 leads unprocessed and no error. Cause: the
