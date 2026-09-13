@@ -49,6 +49,16 @@ These are caught today, but as `far_from_hubs`, not `wrong_country` — `footpri
 
 **Fix.** Add an `offset` loop to `fetchTile`: page at `limit=150` until an empty array or a `max_pages` guard, THEN fall back to quadrant-split only if the viewport is still saturated at exhaustion. Gate it behind `scrape_tuning.paginate: true` so existing runs are reproducible. Engine change = needs operator approval per the skill's self-improvement protocol; NOT done in this run. Until then, dense-footprint jobs should treat any single-pass list as ~86% complete.
 
+## LOW (reporting): `run_log.json` counts are PASS-0 ONLY and understate `leads_clean.csv` after any heal
+
+**Status:** OPEN (documentation, not a bug) · found 2026-09-13 (Altivox Lagos pilot), LOW impact — but it looks exactly like a data-loss bug and costs time to chase.
+
+**Problem.** The Altivox pilot's `run_log.json` reported `unique_businesses: 11286` while `leads_clean.csv` held **11,438 distinct place_ids**. Nothing is wrong: `run-scrape.js` merges each heal pass into the top-level `leads_clean.csv` via `mergeLeads` (`:133`) but re-reads and keeps **pass 0's** `run_log.json` (`:139`). One tile ("Attorney") failed on a deep offset, healed, and its 348-record refill contributed 152 places pass 0 never saw.
+
+So whenever `coverage_report.heal_passes > 0`, `run_log.unique_businesses` / `kept` are a LOWER BOUND on the final file. `coverage_report.json` is the run-level truth; `run_log.json` describes pass 0 only.
+
+**Fix options** (neither done): have `run-scrape.js` write a `run_summary.json` with post-merge totals, or add `final_unique` to `coverage_report.json`. Until then, count rows in `leads_clean.csv` rather than trusting `run_log` after a heal.
+
 ## HIGH (method, non-Western geos): local business-name idiom must be verified locally — Google's type tag is not a translator
 
 **Status:** OPEN (process rule) · found 2026-09-13 (Altivox Lagos), HIGH impact — two segment-level errors in one config, neither visible without local knowledge.
