@@ -43,9 +43,18 @@ Returns `{ status:"ok", data:[ {...business} ] }`. Field map (one call gives eve
 
 ## The two behaviors that drive the geo strategy
 
-1. **`offset` pagination is BROKEN.** `offset=20` and `offset=100` return `status:"failed"`. You cannot page deeper into one viewport. So each search is a single shot — set `limit` high (we use 150) and take the viewport.
+1. **~~`offset` pagination is BROKEN.~~ CORRECTED 2026-09-13 — `offset` PAGINATION WORKS.**
+   The June-2026 claim below was re-tested on 2026-09-13 against a live key and is **no longer true** (scraper.tech evidently fixed it). Measured on VI core / `Law firm` / zoom 14, `country=ng`:
+   - `offset=0/20/40/100` all return `status:"ok"` with **zero `place_id` overlap** between pages.
+   - Paging exhausts naturally — the result set ends with an empty `data` array (at `offset=320` in that test), it does not error.
+   - `limit` up to **150 works and combines with `offset`**, so a full viewport crawl is ~4 calls, not ~17.
+   - **One viewport, one category, fully paginated = 348 unique businesses.**
+   *(Original, now-false text: "`offset=20` and `offset=100` return `status:"failed"`. You cannot page deeper into one viewport. So each search is a single shot.")*
+   **`scrape.js` still does not paginate** — it takes one call per tile and quadrant-splits on saturation, so it leaves the long tail on the floor on every dense tile. See `IMPROVEMENTS.md`. Re-verify this behaviour before relying on it; it has changed once already.
 2. **The geo lever is `lat/lng + zoom`, not city strings or offset.**
-   - Wide zoom (12) over the whole metro returns only the prominent ~76–100 results and **silently drops the long tail** + bleeds outside the footprint (saw central-Phoenix ZIPs appear).
+   - Wide zoom (12) over the whole metro returns only the prominent ~76–100 results and **silently drops the long tail** + bleeds outside the footprint (saw central-Phoenix ZIPs appear). **NOTE (2026-09-13): the ~100 ceiling is a per-CALL cap, not a per-viewport cap** — paginating the same viewport with `offset` returned 348 unique. The long tail is reachable; this engine just doesn't reach for it.
+
+   **Non-determinism (measured 2026-09-13, matters for any repeat-scrape/delta job):** the same query+viewport+params run minutes apart returns a materially different set — two fully-paginated passes gave 314 and 308 unique with a **union of 354**, i.e. a **single pass captures only ~86%** and ~13% of one pass is absent from the other. Unioning repeated passes converges at **3 passes** (pass 2 +13.2%, pass 3 +0.9%). Any process that diffs runs over time MUST union ≥3 passes per run or the noise swamps the signal — see `processes/05-new-premises-delta.md`.
    - Tighter zoom (14) over a sub-area returns a fuller set for that smaller viewport.
    - **Completeness = tiling tighter zooms over sub-areas, then dedup on `place_id`.**
 

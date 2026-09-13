@@ -9,6 +9,21 @@ Technical backlog for the skill's engine. Not operator-facing (see HANDOFF.md fo
 **Workaround (proven, shipped in the LH septic run folder).** `serper-owner.js` — a serper.dev backend: `POST google.serper.dev/search`, header `X-API-KEY`, body `{q,gl:"us",num:10}` → `organic[]`. Runs the biased owner-title query ONLY (1 serper credit/lead; the biased rung is what carried 6/9 in the trade-vertical validation — LinkedIn rung dropped for trades: weak + doubles cost). Emits the SAME `serp_text.jsonl` shape as `search-owner.js` (biased_text filled) so `build-clay-csv.js`/`merge-serp.js` consume it unchanged. Has `--key` override (chain multiple keys/accounts) and treats a missing `organic` key as failed (not no_results) so credit-exhaustion re-queues correctly on `--resume`. serper cost ≈ $1/1,000 (2,500 free/account).
 **Fix (later).** Fold a serper (or pluggable SERP) backend into `search-owner.js` proper — e.g. `owner_query.serp_backend: "serper"` + `SERPER_KEY` in .env — so the engine isn't hardwired to a dead endpoint. Keep the scraper.tech path only if/when they restore the product. Note the trade-vertical lesson while there: LinkedIn is a weak rung for owner-operators; order BBB→/about→Facebook→reviews for residential trades, LinkedIn-first only for B2B.
 
+## CRITICAL (engine + runbook): `offset` pagination WORKS now — scrape.js doesn't use it and leaves the long tail on the floor
+
+**Status:** OPEN · found 2026-09-13 (Altivox Lagos offices), **HIGH impact — silent under-collection on every dense tile, in every run to date.**
+
+**Problem.** `runbook.md` has stated since June 2026 that `offset` pagination is broken (`status:"failed"`) and that completeness must therefore come from tiling + quadrant splits alone. **Re-tested against a live key on 2026-09-13: that is no longer true.** On VI core / `Law firm` / zoom 14 / `country=ng`:
+- `offset=0/20/40/100` all return `status:"ok"` with **zero place_id overlap** between pages; paging exhausts cleanly with an empty array.
+- `limit=150` works and combines with `offset` — a full viewport crawl is ~4 calls.
+- **One viewport, one category, paginated = 348 unique** vs the ~100 the runbook calls a hard cap. The ~100 ceiling is per-CALL, not per-viewport.
+
+`scrape.js::fetchTile` issues ONE call per tile and then quadrant-splits on saturation. So on every dense tile it (a) misses most of the long tail and (b) spends 4 extra calls on splits that drift outside the footprint (see the QUAD_OFFSET item) to recover a fraction of what one more `offset` call would return cleanly. Every list this engine has produced for a dense footprint is under-collected by an unknown margin.
+
+**Related finding — non-determinism.** The same query+viewport+params minutes apart returns different sets: two fully-paginated passes = 314 / 308 unique, **union 354**; a single pass captures only **86.2%** of a 5-pass union (single-pass miss ~13.8%). Union converges at **3 passes** (pass2 +13.2%, pass3 +0.9%, pass4 +0.3%). This is fatal to any month-over-month delta job unless passes are unioned — written up as `processes/05-new-premises-delta.md`.
+
+**Fix.** Add an `offset` loop to `fetchTile`: page at `limit=150` until an empty array or a `max_pages` guard, THEN fall back to quadrant-split only if the viewport is still saturated at exhaustion. Gate it behind `scrape_tuning.paginate: true` so existing runs are reproducible. Engine change = needs operator approval per the skill's self-improvement protocol; NOT done in this run. Until then, dense-footprint jobs should treat any single-pass list as ~86% complete.
+
 ## HIGH (qualify engine gotcha): `deny` is a SUBSTRING match — short terms silently delete whole ICPs
 
 **Status:** OPEN (documented; no code change) · found 2026-09-13 (Altivox Lagos offices), HIGH impact — silent false-drops, no warning.
