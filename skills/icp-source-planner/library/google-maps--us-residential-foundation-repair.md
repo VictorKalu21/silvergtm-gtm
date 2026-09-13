@@ -38,4 +38,4 @@ Residential foundation repair, piering, basement waterproofing, crawlspace, mudj
 - `readRunsheet` quoting, `L2_CAP`, run_log-at-end, fetch-sites exception leak: all OPEN in google-maps-scrape IMPROVEMENTS.md.
 
 ## Runs
-- 2026-09-11 — Atlas Growth — 1,104 ICP / 1,521 spine — scrape complete; 845 named (76.5%); 73 verified emails; enrichment waterfall + clay.csv pending.
+- 2026-09-11 — Atlas Growth — 1,104 ICP / 1,521 spine — 845 named (76.5%); emails: 236 leads with a verified sendable address (21%), 172 personal (16%), via on-site + QuickEnrich + LA/AR licence boards + seeded pattern; closed out 2026-09-13.

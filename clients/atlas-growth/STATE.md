@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-11_foundation-repair` — scrape COMPLETE, qualified, owner-finding partial, **no `clay.csv` built yet** |
+| Current run | `2026-09-11_foundation-repair` — **closed out 2026-09-13**: scraped, qualified, owners found, emails found and verified; deliverables handed over |
 | Runs shipped | none |
 | Live campaigns | none |
 
@@ -57,6 +57,11 @@ or stand up the durable ledger** (a `place_id, website_host, run_slug` table + a
 - **No Clay.** Not as the owner reader, not as the email waterfall, not as a hand-off (operator, 2026-09-12).
 - **SERP vendor:** two scraper.tech SERP plans were bought this run; the product returns titles only (empty `url`/`description`) and is not fit for owner-finding. `search-owner.js` has no working backend. Do not wire another vendor without sign-off; walk `web-scrape-triage` Tier 2 first.
 
+## Next run (decided in principle, not started)
+Operator wants ~1,000 leads; at this run's rates that is ~4,700 ICP leads if "leads" means emailable, or a wider
+footprint/category pull if it means scraped. Needs: QuickEnrich paid plan (152 trial credits left), a 50-contact probe
+of one paid finder on the misses before widening, and the registry rung first in any LA/AR-heavy footprint.
+
 ## Open items carried
 
 - **Finish the full waterfall run** and rebuild `emails_final.csv` (currently 183 sendable addresses on 172 leads before the full run). Paid finders (TryKitt paid bot, Hunter, Findymail) are the next rungs when budget allows: 50-contact probe each, fed only the misses. AI Ark parked (trial quota + 400s). BounceBan is ON for the full run.
@@ -69,4 +74,5 @@ or stand up the durable ledger** (a `place_id, website_host, run_slug` table + a
 
 | Date | Run | Rows shipped | Where |
 |---|---|---|---|
-| — | — | — | — |
+| 2026-09-12 | 2026-09-11_foundation-repair | `contacts_final.csv` (845 named leads, 1,034 contacts), `leads_unnamed.csv` (259) | sent in session |
+| 2026-09-13 | 2026-09-11_foundation-repair | `emails_final.csv` (275 verified sendable addresses on 236 leads; 172 personal) | sent in session |
