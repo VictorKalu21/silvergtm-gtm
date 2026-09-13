@@ -22,11 +22,11 @@ let rows = L.map(l => { const c = parse(l); return Object.fromEntries(H.map((h, 
 if (LIMIT > 0) rows = rows.slice(0, LIMIT);
 fs.mkdirSync(OUT_DIR, { recursive: true });
 const ck = name => { const f = path.join(OUT_DIR, name + '.jsonl'); const m = new Map(); if (fs.existsSync(f)) for (const l of fs.readFileSync(f, 'utf8').split(/\r?\n/)) { if (!l.trim()) continue; try { const d = JSON.parse(l); if (d.key) m.set(d.key, d); } catch (e) { } } return { m, add(d) { m.set(d.key, d); fs.appendFileSync(f, JSON.stringify(d) + '\n'); } }; };
-const CK = { quickenrich: ck('quickenrich'), aiark: ck('aiark'), trykitt: ck('trykitt'), pattern: ck('pattern'), mv: ck('mv'), bb: ck('bb') };
+const CK = { quickenrich: ck('quickenrich'), aiark: ck('aiark'), trykitt: ck('trykitt'), pattern: ck('pattern'), pattern_seeded: ck('pattern_seeded'), mv: ck('mv'), bb: ck('bb') };
 const keyOf = r => `${(r.place_id || '')}|${r.full_name.trim().toLowerCase()}|${r.root_domain.trim().toLowerCase()}`;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function http(url, opt = {}) { const r = await fetch(url, opt); const t = await r.text(); let j; try { j = JSON.parse(t); } catch (e) { j = { _nonjson: t.slice(0, 300) }; } return { status: r.status, body: j }; }
-const spend = { quickenrich: 0, aiark: 0, trykitt: 0, pattern: 0, mv: 0, bb: 0 };
+const spend = { quickenrich: 0, aiark: 0, trykitt: 0, pattern: 0, pattern_seeded: 0, mv: 0, bb: 0 };
 const names = r => { const first = r.first_name || r.full_name.split(/\s+/)[0]; const toks = r.full_name.replace(/\./g, '').split(/\s+/).filter(t => !/^(jr|sr|ii|iii)$/i.test(t)); const last = r.last_name || toks[toks.length - 1]; return { first, last }; };
 
 // ---------- rungs: each returns {status:'found'|'miss'|'no_credits'|'error', emails:[...], phone, raw} ----------
@@ -110,7 +110,26 @@ async function rungPattern(r) {
   const emails = [...new Set(PATTERNS.map(k => gen[k]).filter(Boolean).map(x => x + r.root_domain.toLowerCase()))];
   return { status: 'found', emails, raw: { patterns: PATTERNS } };
 }
-const RUNG = { quickenrich: rungQuickEnrich, aiark: rungAiArk, trykitt: rungTryKitt, pattern: rungPattern };
+// pattern_seeded: NO blind guessing. Learn the company's address pattern from an address at the SAME domain that is
+// already verified sendable (this run's QuickEnrich hits, or a --seeds CSV of email,first_name,last_name), then apply
+// that pattern to the other named people at the company and verify. A domain with no seed yields nothing.
+const SEEDS = new Map();   // domain -> [{first,last,email}]
+function addSeed(domain, first, last, email) { if (!domain || !email) return; const l = SEEDS.get(domain) || []; l.push({ first: (first || '').toLowerCase().replace(/[^a-z]/g, ''), last: (last || '').toLowerCase().replace(/[^a-z]/g, ''), email: email.toLowerCase() }); SEEDS.set(domain, l); }
+if (arg('seeds', '')) { const SL = strip(fs.readFileSync(arg('seeds'), 'utf8')).split(/\r?\n/).filter(l => l.trim()); const SH = parse(SL.shift()); for (const l of SL) { const c = Object.fromEntries(SH.map((h, i) => [h, parse(l)[i] ?? ''])); const d = (c.domain || (c.email || '').split('@')[1] || '').toLowerCase(); addSeed(d, c.first_name, c.last_name, c.email); } }
+function detectPattern(seed) { const local = seed.email.split('@')[0]; const { first: f, last: l } = seed; if (!f || !l || !local) return null;
+  const forms = { first: f, 'first.last': `${f}.${l}`, firstlast: `${f}${l}`, flast: `${f[0]}${l}`, last: l, first_last: `${f}_${l}`, lastfirst: `${l}${f}`, firstl: `${f}${l[0]}`, 'f.last': `${f[0]}.${l}`, 'first-last': `${f}-${l}`, lastf: `${l}${f[0]}` };
+  for (const [k, v] of Object.entries(forms)) if (v === local) return k; return null; }
+function applyPattern(k, f, l) { const forms = { first: f, 'first.last': `${f}.${l}`, firstlast: `${f}${l}`, flast: `${f[0]}${l}`, last: l, first_last: `${f}_${l}`, lastfirst: `${l}${f}`, firstl: `${f}${l[0]}`, 'f.last': `${f[0]}.${l}`, 'first-last': `${f}-${l}`, lastf: `${l}${f[0]}` }; return forms[k]; }
+async function rungPatternSeeded(r) {
+  const dom = r.root_domain.toLowerCase(); const seeds = SEEDS.get(dom) || [];
+  const { first, last } = names(r); const f = first.toLowerCase().replace(/[^a-z]/g, ''), l = last.toLowerCase().replace(/[^a-z]/g, '');
+  if (!seeds.length) return { status: 'miss', emails: [], raw: 'no seed at domain' };
+  const pats = [...new Set(seeds.map(detectPattern).filter(Boolean))];
+  if (!pats.length) return { status: 'miss', emails: [], raw: { seeds: seeds.map(x => x.email), note: 'seed does not follow a name pattern' } };
+  const emails = [...new Set(pats.map(k => applyPattern(k, f, l)).filter(Boolean).map(x => `${x}@${dom}`))].filter(e => !seeds.some(x => x.email === e));
+  return { status: emails.length ? 'found' : 'miss', emails, raw: { patterns: pats, seeds: seeds.map(x => x.email) } };
+}
+const RUNG = { quickenrich: rungQuickEnrich, aiark: rungAiArk, trykitt: rungTryKitt, pattern: rungPattern, pattern_seeded: rungPatternSeeded };
 
 // ---------- verify ----------
 async function mv(email) { const d = (await http(`https://api.millionverifier.com/api/v3/?api=${encodeURIComponent(K.mv)}&email=${encodeURIComponent(email)}&timeout=20`)).body; spend.mv++; return d; }
@@ -131,17 +150,18 @@ async function cascade(r) {
   for (const name of RUNGS) {
     let res = CK[name].m.get(key);
     if (res && res.status === 'error') res = null;   // errors are retried on rerun; misses are final
+    if (name === 'pattern_seeded') res = null;        // seeds change between runs; always recompute (costs nothing)
     // pattern costs nothing to generate, so it runs in dry-run too; its candidates still only verify from cache
-    if (!res) { if (DRY && name !== 'pattern') { trail.push(`${name}:not_run`); continue; } try { res = { key, ...(await RUNG[name](r)), at: new Date().toISOString() }; } catch (e) { res = { key, status: 'error', emails: [], raw: String(e.message) }; } CK[name].add(res); }
+    if (!res) { if (DRY && name !== 'pattern' && name !== 'pattern_seeded') { trail.push(`${name}:not_run`); continue; } try { res = { key, ...(await RUNG[name](r)), at: new Date().toISOString() }; } catch (e) { res = { key, status: 'error', emails: [], raw: String(e.message) }; } CK[name].add(res); }
     if (res.phone && !phone) phone = res.phone;
     if (res.status !== 'found') { trail.push(`${name}:${res.status}`); continue; }
     let stop = false;
     for (const email of (res.emails || []).filter(e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(e)))) {
       const v = await verify(email); trail.push(`${name}:${email}:${v.verdict}`);
-      if (v.verdict === 'sendable') { best = { email, rung: name, detail: v.detail }; stop = true; break; }
-      if (v.verdict === 'risky' && name === 'pattern') { stop = true; break; }   // a catch-all domain cannot confirm a guessed pattern; never keep it, stop probing this domain
+      if (v.verdict === 'sendable') { best = { email, rung: name, detail: v.detail }; stop = true; if (name === 'quickenrich') { const { first, last } = names(r); addSeed(r.root_domain.toLowerCase(), first, last, email); } break; }
+      if (v.verdict === 'risky' && (name === 'pattern' || name === 'pattern_seeded')) { stop = true; break; }   // a catch-all domain cannot confirm a guessed pattern; never keep it, stop probing this domain
       if (v.verdict === 'risky' && !risky) { risky = { email, rung: name, detail: v.detail }; stop = true; }
-      if (v.verdict === 'unverified') { if (name === 'pattern') continue; risky = risky || { email, rung: name, detail: v.detail }; stop = true; }   // an unverified guess is nothing
+      if (v.verdict === 'unverified') { if (name === 'pattern' || name === 'pattern_seeded') continue; risky = risky || { email, rung: name, detail: v.detail }; stop = true; }   // an unverified guess is nothing
     }
     if (stop) break;
   }

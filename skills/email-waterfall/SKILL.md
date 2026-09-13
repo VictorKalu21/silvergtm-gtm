@@ -84,3 +84,11 @@ normalised company name + city, then verify. For an LA/AR-heavy list this rung g
   day) and the key hit 429 again after ~40 requests, so the trial allowance is roughly one 40-request batch per hour.
   Net measured contribution: 0 found, 1 credit spent, 99 left. **Rung parked**: not runnable at test scale on a trial
   key, and the 400 needs a side-by-side diff of the runner body against a working curl before any paid key is tried.
+
+## `pattern_seeded` rung (operator rule 2026-09-13: no blind guessing)
+Blind pattern guessing had quality problems in the operator's past runs. The seeded rung only fires where the SAME
+domain already has a verified sendable address with a known person (this run's QuickEnrich hits, on-site personal
+addresses, licence-board addresses with a qualifying party, or `--seeds email,first_name,last_name[,domain]`): it
+reads the pattern off that address (`first`, `first.last`, `flast`, …) and applies it to the company's other named
+people, then verifies. No seed → nothing. Use `--rungs quickenrich,pattern_seeded`; keep the blind `pattern` rung
+for explicit probes only.
