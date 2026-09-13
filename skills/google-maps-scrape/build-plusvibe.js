@@ -102,13 +102,16 @@ if (cmd === 'base') {
   // consistency flags (deterministic, reported, never auto-corrected): the visit must not repeat the whole trade
   // phrase, and the outcome noun must belong to the trade (a foundation-repair shop does not sell 'waterproofing jobs')
   const OUTCOME = { 'foundation repair': ['repair'], 'basement waterproofing': ['waterproofing'], 'crawl space repair': ['repair', 'encapsulation'], 'concrete leveling': ['leveling', 'lifting'], 'house leveling': ['leveling', 'lifting'], 'slab repair': ['repair', 'leveling'] };
-  const rep = { rows: base.length, personalized: 0, fallback_only: 0, blank_city: 0, flag_visit_repeats_trade: [], flag_outcome_off_trade: [] };
+  const rep = { rows: base.length, personalized: 0, fallback_only: 0, blank_city: 0, flag_visit_repeats_trade: [], flag_outcome_off_trade: [], flag_word_used_3x: [], flag_free_in_visit: [] };
   for (const r of base) {
     const v = vals.get(r.place_id); if (v) rep.personalized++; else rep.fallback_only++;
     const filled = {}; for (const k of Object.keys(cfg.fallbacks)) filled[k] = clean(k, v?.[k], k === 'city' ? r.city : ''); 
     if (!filled.city) rep.blank_city++;
     if (filled.inspection_type.includes(filled.business_type)) rep.flag_visit_repeats_trade.push(r.place_id);
     if (OUTCOME[filled.business_type] && !OUTCOME[filled.business_type].includes(filled.project_type)) rep.flag_outcome_off_trade.push(r.place_id);
+    const words = (filled.business_type + ' ' + filled.inspection_type + ' ' + filled.project_type).toLowerCase().split(/\s+/);
+    if (words.some(w => words.filter(x => x === w).length >= 3)) rep.flag_word_used_3x.push(r.place_id);   // 'concrete leveling / leveling estimates / leveling jobs'
+    if (/\bfree\b/i.test(filled.inspection_type)) rep.flag_free_in_visit.push(r.place_id);
     for (const k of Object.keys(filled)) if (k in r) r[k] = filled[k];
     r.personalized_email = cfg.template.replace(/\{\{(\w+)\}\}/g, (_, k) => filled[k] ?? '');
   }
