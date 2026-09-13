@@ -62,11 +62,22 @@ Operator wants ~1,000 leads; at this run's rates that is ~4,700 ICP leads if "le
 footprint/category pull if it means scraped. Needs: QuickEnrich paid plan (152 trial credits left), a 50-contact probe
 of one paid finder on the misses before widening, and the registry rung first in any LA/AR-heavy footprint.
 
+## Plusvibe upload (2026-09-13, done)
+
+Built with `google-maps-scrape/build-plusvibe.js` (STEP 7b): `base` → `prep` → Haiku subagent per batch on
+`clients/atlas-growth/personalize-config.json` → `fill` → `redo` until empty → `check`. Final: 236 rows, 142 named
+(`name_basis=local_match`; a name rides an address only when the local part is built from it — role mailboxes and
+free-mail company inboxes are nameless by rule), 0 name-rule violations, 0 flags, 0 blank cities. 10 batches: 0-6
+first pass (batch 4 gave 26 foundation-repair shops 'waterproofing'; batch 3 repeated the trade phrase), 7-9 redos
+from the fill flags. Job tuning kept in the run: `owner/city_overrides.json` (tile labels like 'Houston Spring' →
+metro; 17 no-address listings from the model's site read, else a keyless Nominatim reverse-geocode at town level,
+else the county). 36 leads had no site text and carry the config fallbacks ('foundation repair / foundation
+inspections / repair') — they are counted, not hidden. The config's per-trade tables now carry every correction the
+redo prompts needed, so the next run's first pass should flag stragglers, not batches.
+
 ## Open items carried
 
-- **Finish the full waterfall run** and rebuild `emails_final.csv` (currently 183 sendable addresses on 172 leads before the full run). Paid finders (TryKitt paid bot, Hunter, Findymail) are the next rungs when budget allows: 50-contact probe each, fed only the misses. AI Ark parked (trial quota + 400s). BounceBan is ON for the full run.
-- Owner-finding rung order is PROPOSED, not approved (see google-maps-scrape IMPROVEMENTS); the operator chose option 1 (cheap read + cheap sweep + double-check on shaky rows, no session-model rung) in discussion, not yet written into the skill.
-- Build `clay.csv` (`build-clay-csv.js`) once the operator decides whether Clay still runs the owner column or takes `contacts_final` as-is.
+- Paid finders (TryKitt paid bot, Hunter, Findymail) are the next rungs when budget allows: 50-contact probe each, fed only the misses. AI Ark parked (trial quota + 400s). BounceBan is ON for the full run.
 - 7 corporate roll-up owner pages that 403 need a Tier-3 fetch off-container (low value: brand-flagged).
 - Hand-off package + sweep shards/logs to `_archive/` at close-out.
 
@@ -76,3 +87,4 @@ of one paid finder on the misses before widening, and the registry rung first in
 |---|---|---|---|
 | 2026-09-12 | 2026-09-11_foundation-repair | `contacts_final.csv` (845 named leads, 1,034 contacts), `leads_unnamed.csv` (259) | sent in session |
 | 2026-09-13 | 2026-09-11_foundation-repair | `emails_final.csv` (275 verified sendable addresses on 236 leads; 172 personal) | sent in session |
+| 2026-09-13 | 2026-09-11_foundation-repair | `plusvibe_upload.csv` (236 rows, one per lead; 142 with first/last; personalized_email on every row, 200 from site text, 36 fallbacks) | sent in session |
