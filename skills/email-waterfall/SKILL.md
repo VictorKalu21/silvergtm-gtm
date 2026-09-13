@@ -92,3 +92,8 @@ addresses, licence-board addresses with a qualifying party, or `--seeds email,fi
 reads the pattern off that address (`first`, `first.last`, `flast`, …) and applies it to the company's other named
 people, then verifies. No seed → nothing. Use `--rungs quickenrich,pattern_seeded`; keep the blind `pattern` rung
 for explicit probes only.
+- **Full run (2026-09-13, 791 named contacts at 681 domains, QuickEnrich → seeded pattern, MV + BB):** QuickEnrich
+  found 127 real emails (+77 records with no email, free), 120 sendable after both verifiers → **1.06 QuickEnrich
+  credits per sendable**; 138 MV + 41 BB credits. Seeded pattern fired on 10 contacts, 2 sendable: with ~20% vendor
+  coverage there are few seeds, so the fan-out is small by construction. Owners 98/678 sendable, colleagues 23/106.
+  Names read off sites: 19%; names from search sweeps: 15%.

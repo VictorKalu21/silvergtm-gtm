@@ -23,7 +23,7 @@
 | **Named decision-maker, combined** | `owner/contacts_final.{jsonl,csv}` | **845 of 1,104 (76.5%)**, 807 owner-level, 1,034 contacts |
 | Unnamed | `owner/leads_unnamed.csv` | 259 (phone + generic mailbox only) |
 | Email verification | complete via MillionVerifier → BounceBan | 81 tiered addresses → **73 sendable**, 7 risky, 1 dropped; 49 of the sendable belong to a named lead |
-| Email waterfall, FULL RUN (go given 2026-09-13) | **running**: QuickEnrich → seeded pattern (no blind guessing) → MillionVerifier + BounceBan on all 785 named contacts (679 owners + 106 colleagues, 681 domains); results land in `owner/waterfall_full/`. Then merge into `owner/emails_final.csv` | — |
+| Email waterfall, FULL RUN | **done 2026-09-13**: 791 contacts → 122 sendable (QuickEnrich 120, seeded pattern 2); 127 QE + 138 MV + 41 BB credits. QuickEnrich 152 credits left | `owner/emails_final.csv` rebuilt |
 | Email waterfall, 100-contact test | **100-contact test complete; AI Ark parked** (retry returned 400 on every search and re-hit the trial quota after ~40 requests, 99 credits left): QuickEnrich 18 + pattern 15 = **33 sendable of 100** with BounceBan on; TryKitt free tier 0/58 (needs funding). Company mailboxes 69/82 sendable. LA/AR licence boards 9/11 sendable. All in `owner/emails_final.csv` | QuickEnrich: 21 real emails / 100, 12 sendable after MillionVerifier, 7 catch-all kept as risky (BounceBan off by operator decision), 8 empty records free. 21 QE + 22 MV credits spent. 796 named leads still need an email |
 | `clay.csv` | **not built** | — |
 
