@@ -49,6 +49,20 @@ These are caught today, but as `far_from_hubs`, not `wrong_country` — `footpri
 
 **Fix.** Add an `offset` loop to `fetchTile`: page at `limit=150` until an empty array or a `max_pages` guard, THEN fall back to quadrant-split only if the viewport is still saturated at exhaustion. Gate it behind `scrape_tuning.paginate: true` so existing runs are reproducible. Engine change = needs operator approval per the skill's self-improvement protocol; NOT done in this run. Until then, dense-footprint jobs should treat any single-pass list as ~86% complete.
 
+## HIGH (qualify engine gotcha): `scope:"any"` on a fuzzy deny list deletes real targets via their SECONDARY tags
+
+**Status:** OPEN (documented; no code change — the engine already warns) · found 2026-09-13 (Altivox Lagos), HIGH impact — silent, and it deleted the client's highest-value segment.
+
+**Problem.** `deny` defaults to matching the PRIMARY google_type; `scope:"any"` opts into matching ANY tag. `qualify-leads.js:72-73` warns that "scope:any can also drop a real firm carrying an incidental off-ICP secondary tag, so opt in [only] for unambiguous must-drop entities." The Altivox config applied `scope:"any"` to a 45-term fuzzy list anyway.
+
+Measured on the pilot (11,438 rows): **71 real bank branches deleted** — `Zenith Bank`, `Guaranty Trust Bank PLC`, `Standard Chartered Bank Nigeria`, `Fidelity Bank Plc - Corporate Branch`, `Polaris Bank Limited` — every one because Google tags a branch `Bank|ATM` and the deny list contained a bare `atm`. Simultaneously **77 POS agents were KEPT** (`Enterprise Bank POS Munchies Fastfoods`, primary type `Bank`) because the name rule's `pos agent` term does not match `Bank POS <merchant>`. The rule deleted the branches and retained the card terminals — exactly inverted, and banks were the single highest-value segment in the brief.
+
+Also collateral: coworking spaces carrying a `Cafe`/`Pharmacy` secondary, and `Corporate office|Apartment building` towers.
+
+**Fix (process).** Split every deny into two rules: `scope:"any"` reserved for terms that can never appear on a real target (`bus stop`, `bus station`, `taxi stand`, `parking lot`, `parking garage`, `cemetery`), everything else primary-only. Filter entity kinds that share a type with a target — ATMs, POS agents — **by name**, not by type. After the fix: 542 bank primaries kept, POS agents down from 77 to 1.
+
+**Author's note.** This is the same class as the substring gotcha above and it landed in the same config. Both are invisible without a dry-run: the lead just appears in `excluded_officp.csv` under a plausible `drop_reason`. **Always dry-run a new rule set against a fixture that includes a known-good instance of the most valuable segment** — for Altivox that fixture row is a `Bank|ATM` branch, and it now exists.
+
 ## HIGH (qualify engine gotcha): `deny` is a SUBSTRING match — short terms silently delete whole ICPs
 
 **Status:** OPEN (documented; no code change) · found 2026-09-13 (Altivox Lagos offices), HIGH impact — silent false-drops, no warning.
