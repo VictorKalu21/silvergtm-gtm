@@ -27,8 +27,8 @@ New lesson? Find the section it belongs to in this list. If none fits, the lesso
 ## 1. What this skill does, and what it does not do
 
 It turns a client's ICP ("residential foundation repair contractors in ten states") into a
-Clay-ready CSV of open, in-footprint, qualified local businesses, each with the text a model
-needs to name the decision-maker.
+sequencer-ready CSV of open, in-footprint, qualified local businesses, each with a named
+decision-maker, a verified email, and personalized copy variables.
 
 It does this by tiling Google Maps searches over a footprint through the scraper.tech
 `searchmaps.php` endpoint, deduping on `place_id`, gating on open / in-footprint / qualified, and
@@ -37,12 +37,12 @@ then fetching each business's website text for owner-finding.
 It does **not**:
 
 - decide where a vertical's leads live (that is `icp-source-planner`);
-- find email addresses, verify them, or send anything (Clay, then `email-verify-debounce-bounceban`);
+- find the addresses itself or send anything (`email-waterfall` finds, `email-verify-debounce-bounceban` verifies, the sequencer sends);
 - resolve a business name to a domain when Maps has no website (`name-to-domain`);
 - get past a 403 or a Cloudflare wall (`web-scrape-triage`);
 - pay a vendor for search results. The free rungs (on-disk read, then a registry-restricted web-search sweep) named 76.5% on the first full run.
 
-The pipeline ends at `contacts_final.csv` plus `emails_final.csv`. No Clay.
+The pipeline ends at `contacts_final.csv`, `emails_final.csv` and the sequencer upload (`plusvibe_upload.csv`). Clay is not a step anywhere in it (operator, 2026-09-12).
 
 ## 2. When to use it, and the front door
 
@@ -75,8 +75,8 @@ vertical, so the next run of the same vertical starts from zero.
 | 6 (2b) | Model read of the on-disk evidence | `prep-owner-batches.js` → Haiku per batch → `merge-owner-reads.js` | owner texts, `owner-prompt.md` | `contacts_read.jsonl`, `read_report.json` | no |
 | 6 (2c) | Web-search sweep for still-unnamed leads | `prep-sweep-batches.js` → Haiku per batch → `merge-owner-reads.js` | unnamed leads, `owner-prompt.md` | `contacts_sweep.jsonl` | measure the first tranche's cost |
 | 6e | Emails: registry → on-site → QuickEnrich → seeded pattern → verify | `email-waterfall` skill | `contacts_final`, seeds | `emails_final.csv` | credits: explicit go |
-| 6 | Build the Clay feed | `build-clay-csv.js` | annotated leads + owner texts | `clay.csv` | refuses without `owner-prompt.md` |
-| 7 | Hand off | `combine-owner-contacts.js` | read + sweep files | `contacts_final.csv`, `leads_unnamed.csv`, verified emails | final report |
+| 7 | Hand off | `combine-owner-contacts.js` | read + sweep files | `contacts_final.csv`, `leads_unnamed.csv`, `emails_final.csv` | final report |
+| 7b | Sequencer upload | `build-plusvibe.js base/prep/fill/redo/check` + Haiku per batch on the client's `personalize-config.json` | `emails_final.csv`, `contacts_final.jsonl`, site text | `plusvibe_upload.csv` | `check` must pass; `redo` must report 0 |
 
 Step 0 sits after step 1 in `SKILL.md` because it needs the intake answers to know which
 capabilities the run will touch.
@@ -101,7 +101,7 @@ The config and runsheet are read back to the operator before the first API call.
 | Gate | What is shown | Why it exists |
 |---|---|---|
 | Read-back (STEP 3) | footprint, categories, tile count | a wrong city costs real API calls |
-| Drop-reason audit (STEP 5b) | counts per drop reason, samples | a bad category map shows here, not in Clay |
+| Drop-reason audit (STEP 5b) | counts per drop reason, samples | a bad category map shows here, not in the owner read |
 | Dedupe check (STEP 5c) | `ref files used: N` | N = 0 on a repeat client means the history is missing |
 | Owner prompt (STEP 6a) | the `## DECISIONS` block, KEEP and EXCLUDE lists | a wrong owner is worse than no owner |
 | Final report (STEP 7) | the funnel with real numbers, what shipped, what did not | the operator hands this to the client |
@@ -153,8 +153,7 @@ The design separates two jobs on purpose:
 The prompt is generated per vertical from the template, with a `## DECISIONS` block that says in
 plain language why each role is kept or excluded. The reader is a Haiku subagent per batch of 40,
 run as the saved `owner-read` workflow; the web-search sweep (`owner-sweep`) follows for leads it
-leaves unnamed, one run of six batches at a time. A Clay nano column can run the same prompt if the
-operator wants it, but it is optional. **A regex or keyword parser is never the reader.** It cannot tell
+leaves unnamed, one run of six batches at a time. **A regex or keyword parser is never the reader.** It cannot tell
 "Rick & Anna Lee Woods, Owners" from "Royal Foundation Repair, Inc.", and it cannot apply an
 EXCLUDE list. That failure happened on the Atlas Growth run and is logged in `IMPROVEMENTS.md`.
 
@@ -178,7 +177,7 @@ Three searches on leads the site failed on tell you which registry a vertical us
 | Model reading | tokens | pay once per lead, on pre-scraped text, never let the model browse |
 | In-session WebSearch | tokens, no key | calls in one message run in parallel; ten at a time is tested. Results vary between runs |
 | SERP vendor | per query | only after the free rungs in `web-scrape-triage` are exhausted at real volume |
-| Clay | credits per row | filter `evidence_tier != NONE` before anything paid |
+| Email finders (QuickEnrich, then paid finders as 50-contact probes) | credits per found address | `email-waterfall`; never spent without an explicit go |
 
 The cheapest source per owner found is a dedicated team page. The most expensive is a paid
 vendor whose results turn out to be title-only. Confirm on three leads that a source returns the
@@ -240,5 +239,5 @@ vertical, so the next run of the same trade starts from evidence.
 - **Representative**: the one row per root domain that gets fetched. Siblings read its text.
 - **Owner prompt**: the per-vertical instructions a model follows to name decision-makers.
 - **KEEP / EXCLUDE**: the roles that can say yes to the offer, and the roles that will be mistaken for them.
-- **Evidence tier**: whether a row carries site text, SERP text, both, or nothing, computed before Clay.
+- **Evidence tier**: whether a row carries site text, SERP text, both, or nothing, computed before any model read.
 - **Gate**: a point where the run stops and shows the operator its work.

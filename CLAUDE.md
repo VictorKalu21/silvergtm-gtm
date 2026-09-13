@@ -12,7 +12,7 @@ writing any script for a capability, find the skill that covers it:
 | need | skill |
 |---|---|
 | decide where a vertical's leads live; any client sample / pilot / Data Foundation run | `icp-source-planner` (the front door; dispatches to the scrapers) |
-| Google Maps list build → qualify → owner-finding → Clay feed | `google-maps-scrape` (start with its `README.md`) |
+| Google Maps list build → qualify → owner-finding → emails → sequencer upload | `google-maps-scrape` (start with its `README.md`) |
 | a directory (Clutch, DesignRush) instead of Maps | `directory-lead-sourcing` |
 | a page 403s, Cloudflare, a hidden API, a free SERP, the cheapest fetch | `web-scrape-triage` |
 | a domain for a business name | `name-to-domain` |

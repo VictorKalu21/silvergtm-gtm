@@ -633,3 +633,12 @@ Growth: 159 named rows under the loose rule → 126 under the strict local-part 
 the 17 that stay nameless are other people's addresses (`erica@` for Daniel McCoy), role mailboxes tagged personal,
 and free-mail company inboxes (`okfoundations@gmail.com`) whose owner is named on the site but not in the address.
 Operator approved the rule 2026-09-13 ("yup lets do it").
+
+## DONE 2026-09-13 (docs): Clay removed as a step everywhere
+
+Operator, 2026-09-13: "the pipeline still reads that clay is a step here." The README pipeline table had a step 6
+"Build the Clay feed", SKILL.md STEP 5b/6/6a and the flow's rungs 3-4 described the Clay column, and the owner-prompt
+template, employee-count template, runbook, HANDOFF and owner-finding.md all called the reader "a Clay nano column".
+Rewritten: the pipeline is scrape → qualify → owner-finding (Haiku per batch) → email waterfall → sequencer upload
+(STEP 7b, `build-plusvibe.js`); the owner-prompt gate is the PreToolUse hook, not `build-clay-csv.js`. That script
+and `owner-prompts.md` stay as legacy, labelled so. The word now appears only in negations and in history.

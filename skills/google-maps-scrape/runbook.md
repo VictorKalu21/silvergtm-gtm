@@ -31,7 +31,7 @@ Returns `{ status:"ok", data:[ {...business} ] }`. Field map (one call gives eve
 | `business_id` (`0x…:0x…`) | key for `place.php` / `reviews.php` |
 | `name` | — |
 | `types[]` | category labels (multi). One practice can be Dentist + Orthodontist → why dedup is mandatory |
-| `is_permanently_closed`, `is_temporarily_closed` | **active gate — free; do not pay Clay for this** |
+| `is_permanently_closed`, `is_temporarily_closed` | **active gate — free; never pay an enrichment tool for this** |
 | `latitude`, `longitude` | geo-exclusivity (5-mile rule) map |
 | `full_address` | postal code parsed via `geo.footprint.postal_regex` (default generic US-ZIP `\b\d{5}\b`; set `postal_group` for non-US captures like UK area letters) → matched against `geo.footprint.postal_allow` (exact or prefix). → footprint filter + area label |
 | `city` | locality; US is "City, ST" (region parsed via `geo.region_from_city`), other countries vary |
@@ -66,11 +66,11 @@ After a run, `run_log.json` lists `footprint_codes_with_no_results` (postal mode
 4. **Area label:** map postal code → label (`{{neighborhood}}`) via `geo.area_label`.
 5. Output: `leads_clean.csv` (the in-footprint, open **universe**), `excluded.csv` (closed / out-of-footprint, with reason), `leads_raw.json` (archive), `run_log.json` (per-cell counts, splits, `footprint_codes_with_no_results`).
 
-scrape.js no longer drops on website / chains / category / size — those are **`qualify_rules`**, applied next by `qualify-leads.js` (SKILL STEP 5b). What scraper.tech does NOT give at all (→ Clay): owner/decision-maker name, verified email, employee count, founding date.
+scrape.js no longer drops on website / chains / category / size — those are **`qualify_rules`**, applied next by `qualify-leads.js` (SKILL STEP 5b). What scraper.tech does NOT give at all (→ owner-finding STEP 6, the email waterfall STEP 6e): owner/decision-maker name, verified email, employee count, founding date.
 
-## Owner-prompt gate (before clay.csv)
+## Owner-prompt gate (before anything under `owner/`)
 
-`build-clay-csv.js` **will not build `clay.csv`** unless a per-vertical `owner-prompt.md` sits in the same folder (SKILL STEP 6a). Build it per vertical from `owner-prompt.template.md` — reason the KEEP/EXCLUDE decision-maker roles for THIS trade (an electrician ≠ an owner; a hygienist ≠ a dentist-owner) and run the PER-VERTICAL CHECKLIST. If you see `ERROR: per-vertical owner-prompt.md required`, that's the gate — write the prompt, don't bypass it (the `--no-prompt-ok` flag exists only for a deliberate prompt-less build).
+The PreToolUse hook **blocks every read or write under `<run>/owner/`** until a per-vertical `<run>/owner-prompt.md` exists (SKILL STEP 6a). Build it per vertical from `owner-prompt.template.md` — reason the KEEP/EXCLUDE decision-maker roles for THIS trade (an electrician ≠ an owner; a hygienist ≠ a dentist-owner) and run the PER-VERTICAL CHECKLIST. If the hook denies a command with an owner-prompt message, that's the gate — write the prompt, don't bypass it.
 
 ## Cost note
 

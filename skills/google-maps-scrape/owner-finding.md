@@ -2,11 +2,11 @@
 
 Goal = capture **all decision-makers** per business (owners/partners + each provider + office/practice manager + any other KEEP role for the offer), not a single owner — e.g. the office manager is a primary target for a sponsorship offer, not a fallback. The KEEP/EXCLUDE roles are decided per job in STEP 1 and written into the generated `owner-prompt.md` (SKILL.md STEP 6a).
 
-**Pipeline (build the Clay feed, then Clay is the last mile — we don't come back):**
-1. `fetch-sites.js` on `leads_clean_qualified.csv` → `site_text.jsonl` (homepage + L2 pages incl. About / Team / Meet-the-Team).
-2. `search-owner.js` on ALL qualified leads (query is `"<business> <area> <ST>"` — state read per-lead from `city` — NOT "...owner", so results name the whole team). → `serp_text.jsonl`.
-3. `build-clay-csv.js --leads <out>/leads_clean_qualified.csv --dir <out>/owner --out <out>/clay.csv` → one upload-ready CSV, `site_text`/`serp_text` signal-first & under Clay's 8KB cell cap.
-4. **In Clay:** ONE nano Claygent column — paste the job's `owner-prompt.md` and map ALL source columns into it (`{{site_text}}` + `{{serp_text}}`, plus `{{ch_directors}}` when present). It reads all sources in one pass and emits ONE deduped JSON array of contacts → contacts table → email waterfall. `best_send_email` falls back to the on-site `emails` column so every lead has a target (no manual review).
+**Pipeline (in-session, no Clay — operator decision 2026-09-12):**
+1. `fetch-sites.js` on `leads_icp.csv` → `site_text.jsonl` (homepage + L2 pages incl. About / Team / Meet-the-Team).
+2. `prep-owner-batches.js` → one Haiku subagent per batch applying the job's `owner-prompt.md` → `merge-owner-reads.js` → `contacts_read.jsonl` (SKILL STEP 6, 2b).
+3. `prep-sweep-batches.js` on the still-unnamed leads → Haiku with WebSearch, registry-restricted → `merge-owner-reads.js` → `contacts_sweep*.jsonl` (2c).
+4. `combine-owner-contacts.js` → `contacts_final.jsonl` → the `email-waterfall` skill (STEP 6e) → `emails_final.csv` → `build-plusvibe.js` (STEP 7b).
 
 Deferred: no-website leads (in `excluded.csv`, dropped on no-website alone — not yet qualified for social presence; separate track).
 
@@ -62,7 +62,7 @@ runs, (b) every result is read in the main context, so 800 leads is roughly 80 m
 searches each, and (c) the model doing the reading is the session model, the most expensive
 reader there is. So: in-session search is right for pilots, the high-value head, and gap-filling;
 for the bulk, dispatch batches to a cheaper reader (Haiku subagent per batch, the same shape as
-`name-to-domain`; or the Clay column). Do not buy a SERP key before walking `web-scrape-triage`
+`name-to-domain`). Do not buy a SERP key before walking `web-scrape-triage`
 Tier 2, and confirm on 3 leads that a vendor returns the FIELD you need — one plan bought on
 this run returned titles with empty `url`/`description` and was useless for owner-finding.
 Tier 1a is the one tier that is cheap in every currency: parallel HTTP plus batch reading.
@@ -81,9 +81,7 @@ candidate is right, and keep only what it can quote. The web-search sweep (`prep
 pass on medium/low-confidence rows is the last. Full rung table with measured cost and yield: SKILL.md STEP 6.
 
 Measured on Atlas Growth (foundation repair, 1,104 leads): read 221 named at ~2.4k tokens/lead and 99% grounding;
-sweep 624 named at ~4.4k tokens/lead, 0 of 30 contradicted on independent re-search; combined 76.5%. A Clay nano
-column runs the identical prompt and is still available (`build-clay-csv.js`), but it is optional: it returns
-nothing silently where this path returns a counted reason.
+sweep 624 named at ~4.4k tokens/lead, 0 of 30 contradicted on independent re-search; combined 76.5%. Every drop is a counted reason, never a silent blank.
 
 ## Guardrails that keep a small model honest (baked into the template)
 
