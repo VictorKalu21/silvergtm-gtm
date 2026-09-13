@@ -31,7 +31,13 @@ const path = require('path');
 const { pageTile, isOk } = require('./paginate');
 
 // ---------------- tunables ----------------
-const API_HOST = 'api.scraper.tech';
+// TEST SEAM: default unchanged. run-scrape.js:42 hardcodes SCRAPE_JS with no --engine
+// override, so without an env-level host override the self-healing path cannot be tested
+// at all — and the heal path is exactly what the pagination roll-up events exist to serve.
+// Overridden only by tests pointing at a local fake searchmaps.php.
+const API_HOST = process.env.SCRAPER_API_HOST || 'api.scraper.tech';
+const API_PORT = process.env.SCRAPER_API_PORT || null;
+const TRANSPORT = process.env.SCRAPER_API_PROTO === 'http' ? require('http') : https;
 const API_PATH = '/searchmaps.php';
 let LIMIT = 150;            // max records requested per call
 let SATURATION = 90;        // >= this in one tile => likely incomplete => quadrant-split
@@ -111,8 +117,9 @@ function apiCall(query, lat, lng, zoom, offset) {
     query, limit: LIMIT, country: COUNTRY, lang: LANG, lat, lng, offset: offset || 0, zoom
   }).toString();
   const opts = { host: API_HOST, path: `${API_PATH}?${qs}`, headers: { 'scraper-key': KEY }, timeout: 30000 };
+  if (API_PORT) opts.port = API_PORT;
   return new Promise(resolve => {
-    const req = https.get(opts, res => {
+    const req = TRANSPORT.get(opts, res => {
       let b = '';
       res.on('data', d => b += d);
       res.on('end', () => { try { resolve(JSON.parse(b)); } catch { resolve({ status: 'parse_error', data: [] }); } });
