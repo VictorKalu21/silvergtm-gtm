@@ -52,13 +52,18 @@ check('prep is resumable: second run adds nothing', pr2.items === 0 && pr2.alrea
 fs.writeFileSync(P('cfg.json'), JSON.stringify({ template: 'Hi,\n\nYou handle {{business_type}} in {{city}}. We book {{inspection_type}}; one {{inspection_singular}} into {{project_type}} jobs.',
   fallbacks: { business_type: 'foundation repair', inspection_type: 'foundation inspections', inspection_singular: 'foundation inspection', project_type: 'repair', city: '' }, max_value_len: 30 }));
 fs.writeFileSync(P('pz/batches/batch-0-out.json'), JSON.stringify({ L1: { business_type: '"concrete leveling."', inspection_type: 'leveling estimates', inspection_singular: 'leveling estimate', project_type: 'lifting', city: 'Gainesville, GA' } }));
-fs.writeFileSync(P('pz/batches/batch-1-out.json'), JSON.stringify({ L2: { business_type: 'a value that is far too long to be a trade name at all', inspection_type: 'cannot determine', inspection_singular: '', project_type: 'encapsulation', city: '' } }));
+fs.writeFileSync(P('pz/batches/batch-1-out.json'), JSON.stringify({ L4: { business_type: 'foundation repair', inspection_type: 'foundation repair inspections', inspection_singular: 'foundation repair inspection', project_type: 'waterproofing', city: '' }, L2: { business_type: 'a value that is far too long to be a trade name at all', inspection_type: 'cannot determine', inspection_singular: '', project_type: 'encapsulation', city: '' } }));
 const fr = JSON.parse(execFileSync('node', [SCRIPT, 'fill', '--base', P('base.csv'), '--config', P('cfg.json'), '--dir', P('pz'), '--out', P('upload.csv')], { encoding: 'utf8' }));
 const up = Object.fromEntries(csv(P('upload.csv')).map(r => [r.place_id, r]));
 check('fill: quotes/period stripped, template filled', up.L1.business_type === 'concrete leveling' && up.L1.personalized_email.includes('You handle concrete leveling in Gainesville. We book leveling estimates; one leveling estimate into lifting jobs.'));
 check('fill: known city wins over the model city', up.L1.city === 'Gainesville');
 check('fill: too-long / cannot / blank values take the fallback', up.L2.business_type === 'foundation repair' && up.L2.inspection_type === 'foundation inspections' && up.L2.inspection_singular === 'foundation inspection' && up.L2.project_type === 'encapsulation');
-check('fill: leads with no batch output get the fallbacks, counted', fr.fallback_only === 2 && up.L4.personalized_email.includes('foundation repair in Colorado Springs'));
+check('fill: leads with no batch output get the fallbacks, counted', fr.fallback_only === 1 && up.L3.personalized_email.includes('foundation repair in Naperville'));
+check('fill: visit repeating the trade phrase and off-trade outcome are flagged by place_id', fr.flag_visit_repeats_trade.join() === 'L4' && fr.flag_outcome_off_trade.join() === 'L2,L4' /* L2: fallback trade + encapsulation */);
+// a redo batch with a higher number overrides the earlier value
+fs.writeFileSync(P('pz/batches/batch-10-out.json'), JSON.stringify({ L4: { business_type: 'foundation repair', inspection_type: 'foundation inspections', inspection_singular: 'foundation inspection', project_type: 'repair', city: '' } }));
+const fr2 = JSON.parse(execFileSync('node', [SCRIPT, 'fill', '--base', P('base.csv'), '--config', P('cfg.json'), '--dir', P('pz'), '--out', P('upload.csv')], { encoding: 'utf8' }));
+check('fill: redo batch (numeric order) overrides and clears the flags', fr2.flag_outcome_off_trade.join() === 'L2' && fr2.flag_visit_repeats_trade.length === 0 && csv(P('upload.csv')).find(r => r.place_id === 'L4').project_type === 'repair');
 check('fill: no unfilled placeholder anywhere', Object.values(up).every(r => !/\{\{/.test(r.personalized_email)));
 // check: a hand edit that puts a name on the wrong address is caught; fill refuses to write it
 check('check passes on the built upload', spawnSync('node', [SCRIPT, 'check', '--csv', P('upload.csv')]).status === 0);
