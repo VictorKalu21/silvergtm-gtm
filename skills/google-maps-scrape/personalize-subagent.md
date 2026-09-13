@@ -1,9 +1,8 @@
 # Personalize subagent — prompt template (SKILL STEP 7b)
 
 One Haiku subagent per `batch-<N>-in.json`, `model: haiku`, all launched in one message. It applies the
-client's `personalize-config.json` to on-disk website text. No API, no web, no spawning. After every batch
-run `build-plusvibe.js fill` and read the two flag lists; redo the flagged leads as a higher-numbered batch
-(its values override). Substitute `<config>`, `<in>`, `<out>`, `<N>`, `<n>`.
+client's `personalize-config.json` to on-disk website text. No API, no web, no spawning. The loop is mechanical: `fill` → `redo` (writes the next batch-N-in.json from every flag) → one subagent →
+`fill` again, until `redo` reports nothing to redo. No eyeballing; the flags are the review. Substitute `<config>`, `<in>`, `<out>`, `<N>`, `<n>`.
 
 ---
 
@@ -18,17 +17,12 @@ Website content: the website_text field.
 Task: Determine one value per placeholder — business_type, inspection_type, inspection_singular,
 project_type, city — following each instruction in the config VERBATIM.
 
-The four trade values must agree with each other. Decide business_type first, then derive the others
-FROM IT:
-- inspection_type = the TRADE NOUN of business_type + "inspections" or "estimates" (whichever word the
-  company uses). Trade nouns: foundation, basement, crawl space, leveling, concrete. NEVER the whole
-  business_type phrase ("basement waterproofing inspections" is wrong; "basement inspections" is right).
-  Never the word "free".
-- inspection_singular = the singular of inspection_type.
-- project_type = the outcome noun OF THAT SAME TRADE, singular, homeowner wording, reads before "jobs":
-  foundation repair → repair; basement waterproofing → waterproofing; crawl space repair → repair or
-  encapsulation; concrete leveling → leveling or lifting; house leveling → leveling. A foundation repair
-  company does NOT get "waterproofing" because waterproofing appears somewhere on its site.
+The trade values must agree with each other and NO single word may appear in more than one of
+business_type, inspection_type, project_type. Decide business_type first (EXACTLY one of the config's
+allowed list), then derive the other two from the config's per-trade tables (trade noun for the visit,
+outcome noun for the job). Never the word "free". Never the whole business_type phrase inside
+inspection_type. A foundation repair company does NOT get "waterproofing" because waterproofing appears
+somewhere on its site.
 Rules:
 - Base every value on the facts above — do not invent details.
 - Each value is a short phrase (1-4 words) dropped directly into a sentence; lowercase except the city.

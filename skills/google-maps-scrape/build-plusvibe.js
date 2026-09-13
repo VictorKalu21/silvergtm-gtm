@@ -4,6 +4,7 @@
  *   node build-plusvibe.js base  --leads <leads_icp.csv> --emails <owner/emails_final.csv> --contacts <owner/contacts_final.jsonl> --out <owner/plusvibe_base.csv>
  *   node build-plusvibe.js prep  --base <plusvibe_base.csv> --site <owner/site_text.jsonl> --dir <owner/personalize> [--batch 40] [--cap 4000]
  *   node build-plusvibe.js fill  --base <plusvibe_base.csv> --config <personalize-config.json> --dir <owner/personalize> --out <owner/plusvibe_upload.csv>
+ *   node build-plusvibe.js redo  --dir <owner/personalize>              (next batch-N-in.json from the last fill's flags; exits 2 when nothing to redo)
  *   node build-plusvibe.js check --csv <any plusvibe csv>          (exit 1 if any name rides an address it does not own)
  *
  * THE NAME RULE (the bug this file exists to prevent): a first/last name is attached to an address
@@ -118,7 +119,19 @@ if (cmd === 'base') {
   // the name rule again, on the finished rows, so nothing upstream can reintroduce the bug
   const bad = base.filter(r => r.first_name && !localOwns(r.email, r.first_name, r.last_name));
   if (bad.length) { console.error('NAME RULE VIOLATION on ' + bad.length + ' rows:\n' + bad.map(r => `  ${r.first_name} ${r.last_name} <${r.email}>`).join('\n')); process.exit(1); }
+  fs.writeFileSync(path.join(dir, 'fill_report.json'), JSON.stringify(rep, null, 2));
   writeCsv(arg('out'), COLS, base); console.log(JSON.stringify(rep));
+} else if (cmd === 'redo') {
+  // every flagged place_id from the last fill becomes the next batch; its values override on the next fill
+  const dir = arg('dir'), bdir = path.join(dir, 'batches'), rep = JSON.parse(strip(fs.readFileSync(path.join(dir, 'fill_report.json'), 'utf8')));
+  const ids = new Set(Object.entries(rep).filter(([k]) => k.startsWith('flag_')).flatMap(([, v]) => v));
+  const items = new Map(); let next = 0;
+  for (const f of fs.readdirSync(bdir)) { const m = /^batch-(\d+)-in\.json$/.exec(f); if (!m) continue; next = Math.max(next, +m[1] + 1); for (const it of JSON.parse(strip(fs.readFileSync(path.join(bdir, f), 'utf8')))) items.set(it.place_id, it); }
+  const redo = [...ids].filter(id => items.has(id)).map(id => items.get(id));
+  const noSite = [...ids].filter(id => !items.has(id));
+  if (!redo.length) { console.log(JSON.stringify({ redo: 0, flagged_without_site_text: noSite })); process.exit(2); }
+  fs.writeFileSync(path.join(bdir, `batch-${next}-in.json`), JSON.stringify(redo, null, 1));
+  console.log(JSON.stringify({ redo: redo.length, batch: next, flagged_without_site_text: noSite }));
 } else if (cmd === 'check') {
   const rows = csv(arg('csv'));
   const bad = rows.filter(r => r.first_name && !localOwns(r.email, r.first_name, r.last_name));

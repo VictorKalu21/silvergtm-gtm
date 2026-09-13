@@ -60,10 +60,14 @@ check('fill: known city wins over the model city', up.L1.city === 'Gainesville')
 check('fill: too-long / cannot / blank values take the fallback', up.L2.business_type === 'foundation repair' && up.L2.inspection_type === 'foundation inspections' && up.L2.inspection_singular === 'foundation inspection' && up.L2.project_type === 'encapsulation');
 check('fill: a word used three times across the trade values, and free in the visit, are flagged', fr.flag_word_used_3x.join() === 'L3' && fr.flag_free_in_visit.join() === 'L3' && fr.fallback_only === 0);
 check('fill: visit repeating the trade phrase and off-trade outcome are flagged by place_id', fr.flag_visit_repeats_trade.join() === 'L4' && fr.flag_outcome_off_trade.join() === 'L2,L4' /* L2: fallback trade + encapsulation */);
+// redo: the flags become the next batch (L3 + L4 + L2), and nothing to redo exits 2
+const rd = JSON.parse(execFileSync('node', [SCRIPT, 'redo', '--dir', P('pz')], { encoding: 'utf8' }));
+check('redo: flagged leads with site text become the next batch; flagged fallback rows are listed', rd.redo === 1 && rd.batch === 2 && rd.flagged_without_site_text.sort().join() === 'L3,L4' /* never batched: no site text */ && JSON.parse(fs.readFileSync(P('pz/batches/batch-2-in.json'), 'utf8')).map(i => i.place_id).join() === 'L2');
 // a redo batch with a higher number overrides the earlier value
 fs.writeFileSync(P('pz/batches/batch-10-out.json'), JSON.stringify({ L4: { business_type: 'foundation repair', inspection_type: 'foundation inspections', inspection_singular: 'foundation inspection', project_type: 'repair', city: '' } }));
+fs.writeFileSync(P('pz/batches/batch-11-out.json'), JSON.stringify({ L2: { business_type: 'crawl space repair', inspection_type: 'crawl space inspections', inspection_singular: 'crawl space inspection', project_type: 'encapsulation', city: '' }, L3: { business_type: 'concrete leveling', inspection_type: 'concrete estimates', inspection_singular: 'concrete estimate', project_type: 'lifting', city: '' } }));
 const fr2 = JSON.parse(execFileSync('node', [SCRIPT, 'fill', '--base', P('base.csv'), '--config', P('cfg.json'), '--dir', P('pz'), '--out', P('upload.csv')], { encoding: 'utf8' }));
-check('fill: redo batch (numeric order) overrides and clears the flags', fr2.flag_outcome_off_trade.join() === 'L2' && fr2.flag_visit_repeats_trade.length === 0 && csv(P('upload.csv')).find(r => r.place_id === 'L4').project_type === 'repair');
+check('fill: redo batch (numeric order) overrides and clears the flags', fr2.flag_outcome_off_trade.length === 0 && fr2.flag_word_used_3x.length === 0 && fr2.flag_free_in_visit.length === 0 && fr2.flag_visit_repeats_trade.length === 0 && fr2.flag_visit_repeats_trade.length === 0 && csv(P('upload.csv')).find(r => r.place_id === 'L4').project_type === 'repair');
 check('fill: no unfilled placeholder anywhere', Object.values(up).every(r => !/\{\{/.test(r.personalized_email)));
 // check: a hand edit that puts a name on the wrong address is caught; fill refuses to write it
 check('check passes on the built upload', spawnSync('node', [SCRIPT, 'check', '--csv', P('upload.csv')]).status === 0);
@@ -72,5 +76,6 @@ const ck = spawnSync('node', [SCRIPT, 'check', '--csv', P('edited.csv')], { enco
 check('check fails on Jim Briley <nathan@> and names the row', ck.status === 1 && /VIOLATION Jim Briley <nathan@/.test(ck.stdout));
 const ff = spawnSync('node', [SCRIPT, 'fill', '--base', P('edited.csv'), '--config', P('cfg.json'), '--dir', P('pz'), '--out', P('never.csv')], { encoding: 'utf8' });
 check('fill refuses to write a violating file', ff.status === 1 && /NAME RULE VIOLATION/.test(ff.stderr) && !fs.existsSync(P('never.csv')));
+check('redo: nothing left to redo exits 2', spawnSync('node', [SCRIPT, 'redo', '--dir', P('pz')]).status === 2);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fails ? 1 : 0);
