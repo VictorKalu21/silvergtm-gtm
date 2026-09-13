@@ -222,6 +222,17 @@ Named-principal yield is vertical-dependent: healthcare ≈84%; used-car/high-ti
 
 The deliverable is **`<out>/owner/contacts_final.{jsonl,csv}`** (`combine-owner-contacts.js` over the rung-2 read and every sweep tranche, first file wins) plus **`<out>/owner/emails_final.csv`** (every verified address with the rung that found it and both verifiers' detail) and **`<out>/owner/leads_unnamed.csv`**. Every contact carries a verbatim evidence quote, a role bucket, and the file it came from; every drop is counted in the merge reports. No Clay anywhere (operator, 2026-09-12). `build-clay-csv.js` stays in the folder for a client that insists, but it is not a step.
 
+### STEP 7b — Sequencer upload (Plusvibe), `build-plusvibe.js` (added 2026-09-13)
+
+Four sub-commands, all deterministic, tested in `tests/build-plusvibe.test.js`:
+
+1. `base` — one row per lead from `emails_final.csv` (personal > registry > company, then a named row before an unnamed one), city from the listing (trailing state token stripped) or parsed from the address. **The name rule:** a first/last name rides an address ONLY when the local part is built from that person's name (`f`, `fl`, `f.l`, `fil`, `fli`, `l`, `lf`, `fi+li`, a common nickname of the first name, first-initial + last, last-name prefix). A role mailbox (`info@`, `office@`, `frontdesk@`, `leads@` …) is always nameless, whatever an upstream "personal" tag says. Every row carries `name_basis` (`local_match` | `none`). Bug this prevents: on Atlas Growth the lead's primary owner rode on any address at the company (Jim Briley on `nathan@`, "Signature" as a first name, Tyler Nelson on `frontdesk@`).
+2. `prep` — `personalize/batches/batch-N-in.json` (≤40 leads, website text capped) for every base row not yet batched; resumable.
+3. A Haiku subagent per batch applies the client's `personalize-config.json` (template, one instruction per placeholder, fallbacks) and writes `batch-N-out.json` keyed by place_id. Run in-session; no API. The config is agreed with the operator on a 3-lead then a 7-lead test before the full set — every test surfaced a wording problem the previous one had not.
+4. `fill` — cleans each value (quotes, trailing period, too long, "cannot" → fallback), fills the template, and **refuses to write** if any row breaks the name rule. `check --csv` re-applies the rule and the unfilled-placeholder check to any CSV, so a hand edit or a merge is caught before upload.
+
+Leads with no site text take the fallbacks and are counted (`fallback_only`); the operator sees that number before upload.
+
 ## Honesty notes
 
 - The active gate (`is_permanently_closed`/`is_temporarily_closed`) is free here — don't pay an enrichment tool to recheck "is it open."

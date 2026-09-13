@@ -192,6 +192,8 @@ field you need before building a sweep on it.
 | a page 403s, Cloudflare, a hidden API, a free SERP | `web-scrape-triage` | buy a SERP key or write a nav-stripper |
 | a domain for a business with no website | `name-to-domain` | guess from the name |
 | emails verified before a send | `email-verify-debounce-bounceban` | design a waterfall |
+| a work email for a named contact | `email-waterfall` | Clay, or blind pattern guessing |
+| the Plusvibe upload with first/last/email + personalized copy | `build-plusvibe.js` here (STEP 7b; the name rule is tested) | attach the lead's owner name to every address |
 | a keep/drop classifier on page text | the Haiku-per-batch pattern in `web-visitor-deid-qualify` | keyword rules |
 | a directory (Clutch, DesignRush) instead of Maps | `directory-lead-sourcing` | force it through Maps |
 | a review of the live campaign this list fed | `campaign-review` | judge targeting without the client's ICP doc |

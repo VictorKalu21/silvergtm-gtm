@@ -620,3 +620,16 @@ time; (4) second opinion on medium/low-confidence rows; (5) session-model search
 `contacts_final` + verified emails, with `build-clay-csv.js` optional. Measured basis in the RESULT and AUDIT
 entries above. Open questions for the operator: whether Clay stays the reader for any vertical; whether the yield
 gate belongs in code (`prep-owner-batches.js` filter) or stays a judgement call.
+
+## DONE 2026-09-13 (bug → engine): wrong name on the wrong address in the Plusvibe upload — `build-plusvibe.js`
+
+The inline build of `plusvibe_base.csv` attached the lead's primary owner name to any address at the company (Jim
+Briley on `nathan@`, Nathan Simpson on `steve@`, "Signature" as a first name). A second rule trusted the waterfall's
+"personal" tag, which let Tyler Nelson ride on `frontdesk@`. Fix: the name rule lives in one engine script,
+recomputable from the row alone (local part built from that person's name, nicknames/initials included; role
+mailboxes always nameless), with a `name_basis` column, `check` for any CSV, and `fill` refusing to write a
+violating file. Test: `tests/build-plusvibe.test.js` (20 checks, the four real cases as fixtures). Measured on Atlas
+Growth: 159 named rows under the loose rule → 126 under the strict local-part rule → 142 with nicknames and initials;
+the 17 that stay nameless are other people's addresses (`erica@` for Daniel McCoy), role mailboxes tagged personal,
+and free-mail company inboxes (`okfoundations@gmail.com`) whose owner is named on the site but not in the address.
+Operator approved the rule 2026-09-13 ("yup lets do it").
