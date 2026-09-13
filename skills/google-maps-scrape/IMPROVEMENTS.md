@@ -9,9 +9,34 @@ Technical backlog for the skill's engine. Not operator-facing (see HANDOFF.md fo
 **Workaround (proven, shipped in the LH septic run folder).** `serper-owner.js` — a serper.dev backend: `POST google.serper.dev/search`, header `X-API-KEY`, body `{q,gl:"us",num:10}` → `organic[]`. Runs the biased owner-title query ONLY (1 serper credit/lead; the biased rung is what carried 6/9 in the trade-vertical validation — LinkedIn rung dropped for trades: weak + doubles cost). Emits the SAME `serp_text.jsonl` shape as `search-owner.js` (biased_text filled) so `build-clay-csv.js`/`merge-serp.js` consume it unchanged. Has `--key` override (chain multiple keys/accounts) and treats a missing `organic` key as failed (not no_results) so credit-exhaustion re-queues correctly on `--resume`. serper cost ≈ $1/1,000 (2,500 free/account).
 **Fix (later).** Fold a serper (or pluggable SERP) backend into `search-owner.js` proper — e.g. `owner_query.serp_backend: "serper"` + `SERPER_KEY` in .env — so the engine isn't hardwired to a dead endpoint. Keep the scraper.tech path only if/when they restore the product. Note the trade-vertical lesson while there: LinkedIn is a weak rung for owner-operators; order BBB→/about→Facebook→reviews for residential trades, LinkedIn-first only for B2B.
 
+## DONE 2026-09-13: offset pagination shipped (gated) — first live run confirms the engine was truncating 99% of dense tiles
+
+**Status:** DONE 2026-09-13 (`scrape_tuning.paginate`, default off; `paginate.js` + `tests/paginate.test.js`) · found 2026-09-13 (Altivox Lagos), HIGH impact.
+
+**Live pilot result (P1 x 4 Victoria Island tiles, 160 runsheet rows, `paginate: true`):**
+- 466 API calls, **avg 2.91 calls/row**, page-depth histogram `{1:2, 2:34, 3:100, 4:24}`.
+- **158 of 160 rows (99%) needed more than one page.** Every one of those was a tile the old single-call engine truncated. This is the clearest measure yet of the historical under-collection.
+- 11,286 unique businesses, 24.2 unique/call. Coverage COMPLETE after 1 heal pass.
+
+**Why the June-2026 "offset is broken" note was wrong, and how it fooled someone.** One tile ("Attorney" @ vi-eko-atlantic) returned `status:"failed"` on a deep offset. The roll-up marked the tile not-ok, `run-scrape.js` healed it, and the retry returned 348 records across 4 pages. So deep-offset `failed` is **intermittent, not structural** — exactly what you would see if you probed `offset=20` once, got `failed`, and concluded pagination was dead. Any future "endpoint X is broken" note should be re-probed before being designed around.
+
+**Roll-up events validated in anger:** that single failed tile is precisely the case that would have scored `ok` under per-call events (its page 0 succeeded), been skipped by `failedTiles`, and shipped as a silent hole.
+
+## MEDIUM (areas mode): `country=ng` returns ~10% US businesses — the footprint gate is load-bearing, not a safety net
+
+**Status:** OPEN (mitigated by footprint-gate.js) · found 2026-09-13 (Altivox Lagos), MEDIUM impact.
+
+**Problem.** A `country=ng` scrape of Victoria Island returned **1,105 US businesses** out of 11,012 qualified (~10%) — Waukegan IL, Troy MI, Northbrook IL, Grand Rapids MI, Chicago, Minneapolis, Green Bay. Generic office queries ("Executive Suites", "Office space rental agency", "Virtual office rental service") are the worst offenders: brand-heavy US chains (Regus, Opus Virtual Offices) outrank local results even with `country=ng` and Lagos coordinates. The `country` parameter is a hint, not a filter.
+
+These are caught today, but as `far_from_hubs`, not `wrong_country` — `footprint-gate.js` tests hub distance first and the first failing check wins, so the reason label understates how much of the drop is foreign contamination. Not a bug; worth knowing when reading `excluded_geo.csv`.
+
+**Implication.** In `areas` mode the footprint gate is doing primary work, not cleanup. Never ship an `areas`-mode list that has not been through it, and always read the drop count as a contamination signal.
+
+**Radius calibration does NOT transfer between runsheets.** Measured on the 4-tile VI pilot: 1.0deg keeps 9,505 / drops 1,505; 0.10deg keeps 7,394; 0.05deg keeps 6,854; 0.03deg keeps 5,838. But at 0.05deg the pilot also drops 178 legitimate **Lekki** businesses — correctly, since no pilot tile is within 5.5km of Lekki. On the full 17-tile sheet those same leads are in-footprint. **Tune `--hub-radius-deg` against the runsheet you will actually ship, never a subset.**
+
 ## CRITICAL (engine + runbook): `offset` pagination WORKS now — scrape.js doesn't use it and leaves the long tail on the floor
 
-**Status:** OPEN · found 2026-09-13 (Altivox Lagos offices), **HIGH impact — silent under-collection on every dense tile, in every run to date.**
+**Status:** DONE 2026-09-13 — shipped gated behind `scrape_tuning.paginate` (paginate.js, tests/paginate.test.js); see the pilot results logged above. · found 2026-09-13 (Altivox Lagos offices), **HIGH impact — silent under-collection on every dense tile, in every run to date.**
 
 **Problem.** `runbook.md` has stated since June 2026 that `offset` pagination is broken (`status:"failed"`) and that completeness must therefore come from tiling + quadrant splits alone. **Re-tested against a live key on 2026-09-13: that is no longer true.** On VI core / `Law firm` / zoom 14 / `country=ng`:
 - `offset=0/20/40/100` all return `status:"ok"` with **zero place_id overlap** between pages; paging exhausts cleanly with an empty array.
@@ -38,7 +63,7 @@ Nothing warns: the lead just lands in `excluded_officp.csv` under a plausible-lo
 
 ## MEDIUM (engine): `QUAD_OFFSET` is FIXED across split depths and its default is US-metro-scaled
 
-**Status:** OPEN (workaround = per-job `scrape_tuning.quad_offset`) · found 2026-09-13 (Altivox Lagos offices), MEDIUM impact.
+**Status:** DONE 2026-09-13 — `quadCenters()` now scales the offset by depth; applied unconditionally (no-op at MAX_DEPTH=1). · found 2026-09-13 (Altivox Lagos offices), MEDIUM impact.
 
 **Problem.** In `scrape.js::fetchTile`, the quadrant split uses `const o = QUAD_OFFSET` at EVERY depth — it does not halve as it recurses. So with `max_depth: 2` the depth-2 sub-tiles land `2 x QUAD_OFFSET` from the original center, spreading OUTWARD instead of subdividing. With the 0.025 default (~2.8km) that is ~5.5km of drift. On compact/island footprints this is actively wrong: Victoria Island is only ~3km across, so a saturated VI tile splits into the lagoon and across into Ikoyi — wasted calls plus footprint bleed that `footprint-gate.js` then has to clean up.
 
