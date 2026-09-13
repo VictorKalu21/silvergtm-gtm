@@ -1,0 +1,12 @@
+{
+  "template": "Hi,\n\nNoticed that you handle {{business_type}} in {{city}}.\n\nWe help {{business_type}} companies generate 10 qualified {{inspection_type}} that can convert into {{project_type}} projects, in under 30 days.\n\nThere's no pay unless I book you a qualified, confirmed inspection.\n\nOpen to a 15-minute chat?",
+  "instructions": {
+    "business_type": "the trade this company leads with on its website, lowercase, 2-3 words, chosen from: foundation repair, basement waterproofing, crawl space repair, concrete leveling, house leveling, slab repair. Use the one they put first, not the one they list among many.",
+    "inspection_type": "what this company calls its first visit to a homeowner, plural, 2-4 words, matching their own wording, e.g. foundation inspections, free basement inspections, crawl space inspections, concrete lifting estimates.",
+    "project_type": "what this company calls the paid job that follows, 1-3 words, e.g. foundation repair, waterproofing, crawl space encapsulation, concrete lifting.",
+    "city": "ONLY if the 'city' known fact is blank: the city this company is based in, from the website. Otherwise repeat the known city exactly."
+  },
+  "fallbacks": { "business_type": "foundation repair", "inspection_type": "foundation inspections", "project_type": "foundation repair", "city": "" },
+  "context_cols": ["city", "state", "google_types", "business_name"],
+  "max_value_len": 60
+}
