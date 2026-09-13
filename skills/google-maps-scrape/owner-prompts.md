@@ -5,7 +5,7 @@
 > few-shots below as a reference for what a good *filled* prompt looks like — do not paste
 > them verbatim for a different vertical.
 
-# Clay nano prompts — multi-contact extraction WITH exclusions (EXAMPLE: LNP healthcare/auto)
+# Reader prompts — multi-contact extraction WITH exclusions (EXAMPLE: LNP healthcare/auto; written for a Clay column in 2025, kept as a worked example only — the reader is now a Haiku subagent per batch)
 
 Design philosophy: a small model is good at **extracting** named people and **excluding** obvious non-decision roles by keyword, but bad at **reasoning out which provider "owns" the practice**. So: extract every named decision-maker + the licensed providers, **EXCLUDE support/non-decision staff by role**, and emit `is_likely_owner` as a HINT (not a hard filter). Downstream you target `is_likely_owner=true` + `office_manager`; other providers are backups.
 
@@ -78,6 +78,6 @@ FEW-SHOT:
 3) only generic directory listings, no person named → []
 
 ================================================================
-MERGE (in Clay)
+MERGE (now `merge-owner-reads.js`; this is the 2025 hand-merge it replaced)
 ================================================================
 all_contacts = dedupe(w_contacts + s_contacts) by FULL name. primary = w_primary if found & (w_primary_is_owner OR w_confidence != low) → else s_primary → else w_primary. best_send_email = first contact email present, else the {{emails}} column (office@/info@), else blank. greeting uses first_name; title kept separate so "Dr." never leaks into the name.

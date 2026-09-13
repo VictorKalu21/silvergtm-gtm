@@ -26,10 +26,11 @@ Claude will then ask you the intake questions below. Answer them; Claude does th
 - **ICP** = the kinds of businesses you want (Ideal Customer Profile).
 - **Target role** = which person at the business is the buyer (owner / manager / etc.).
 - **Qualification** = Claude automatically drops businesses that came back but don't fit (e.g. a repair shop that showed up under "car dealer"). Expect ~30–40% to drop here — that's normal and good.
-- **Owner-finding** = Claude searches the web (LinkedIn, BBB, the company site) to name the decision-maker. Claude first writes a **per-vertical decision-maker prompt** for your trade — the rules for who counts as the owner differ by industry (an electrician isn't the owner; a dental hygienist isn't the dentist-owner), so this is built fresh each job. Claude won't build the final Clay file until that prompt exists.
-- **Clay** = the tool that turns names + websites into email addresses for sending.
+- **Owner-finding** = Claude searches the web (LinkedIn, BBB, the company site) to name the decision-maker. Claude first writes a **per-vertical decision-maker prompt** for your trade — the rules for who counts as the owner differ by industry (an electrician isn't the owner; a dental hygienist isn't the dentist-owner), so this is built fresh each job. Claude won't start owner-finding until that prompt exists.
+- **Email waterfall** = the step that turns names + websites into verified email addresses, cheapest source first.
+- **Sequencer upload** = the final CSV for your sending tool (Plusvibe): name, email, city, and the personalization variables.
 
-## What good looks like (check before you hand the list to Clay)
+## What good looks like (check before you upload the list to your sending tool)
 - Claude reports a **qualified count** and shows you the **drop reasons** (repair shops, chains, off-category). Skim them — do they look right?
 - Spot-check 5–10 rows in the final CSV: real business, address inside your footprint, has a website, not a national chain.
 - Owner-finding reports a **named-decision-maker rate**. Healthcare runs high (~80%); used-car/retail runs lower (~40%) — that's expected, not a bug. The ones without a name still get a generic email + phone to contact.
