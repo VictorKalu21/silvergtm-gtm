@@ -9,6 +9,26 @@ Technical backlog for the skill's engine. Not operator-facing (see HANDOFF.md fo
 **Workaround (proven, shipped in the LH septic run folder).** `serper-owner.js` — a serper.dev backend: `POST google.serper.dev/search`, header `X-API-KEY`, body `{q,gl:"us",num:10}` → `organic[]`. Runs the biased owner-title query ONLY (1 serper credit/lead; the biased rung is what carried 6/9 in the trade-vertical validation — LinkedIn rung dropped for trades: weak + doubles cost). Emits the SAME `serp_text.jsonl` shape as `search-owner.js` (biased_text filled) so `build-clay-csv.js`/`merge-serp.js` consume it unchanged. Has `--key` override (chain multiple keys/accounts) and treats a missing `organic` key as failed (not no_results) so credit-exhaustion re-queues correctly on `--resume`. serper cost ≈ $1/1,000 (2,500 free/account).
 **Fix (later).** Fold a serper (or pluggable SERP) backend into `search-owner.js` proper — e.g. `owner_query.serp_backend: "serper"` + `SERPER_KEY` in .env — so the engine isn't hardwired to a dead endpoint. Keep the scraper.tech path only if/when they restore the product. Note the trade-vertical lesson while there: LinkedIn is a weak rung for owner-operators; order BBB→/about→Facebook→reviews for residential trades, LinkedIn-first only for B2B.
 
+## HIGH (qualify engine gotcha): `deny` is a SUBSTRING match — short terms silently delete whole ICPs
+
+**Status:** OPEN (documented; no code change) · found 2026-09-13 (Altivox Lagos offices), HIGH impact — silent false-drops, no warning.
+
+**Problem.** `qualify-leads.js` `deny`/`contains_any` match by substring, so a short deny term collides with legitimate category names. On the Altivox config two collisions were caught only because the config was dry-run against a fixture first:
+- `"spa"` matches **"Coworking space"** and **"Office space rental agency"** — would have deleted the single highest-intent P1 segment (coworking/serviced offices) from a list built for a WiFi installer.
+- `"market"` matches **"Marketing agency"** — would have silently deleted the entire marketing/media ICP.
+- `"park"` matches "business park"; `"bar"` matches "barber" (intended) but is one keystroke from collateral.
+Nothing warns: the lead just lands in `excluded_officp.csv` under a plausible-looking `drop_reason`, and the operator sees a smaller list, not a bug.
+
+**Fix (process, until the engine changes).** ALWAYS dry-run a new `qualify_rules` block against a hand-built fixture CSV carrying the real `leads_clean` header + 10-15 rows that deliberately probe the deny terms, BEFORE the scrape. Cost: $0 and two minutes. Prefer multi-word deny terms (`"day spa"`, `"flea market"`, `"parking lot"`) over bare stems. Engine-side option for later: support `"match":"word"` on deny/contains_any to anchor on token boundaries.
+
+## MEDIUM (engine): `QUAD_OFFSET` is FIXED across split depths and its default is US-metro-scaled
+
+**Status:** OPEN (workaround = per-job `scrape_tuning.quad_offset`) · found 2026-09-13 (Altivox Lagos offices), MEDIUM impact.
+
+**Problem.** In `scrape.js::fetchTile`, the quadrant split uses `const o = QUAD_OFFSET` at EVERY depth — it does not halve as it recurses. So with `max_depth: 2` the depth-2 sub-tiles land `2 x QUAD_OFFSET` from the original center, spreading OUTWARD instead of subdividing. With the 0.025 default (~2.8km) that is ~5.5km of drift. On compact/island footprints this is actively wrong: Victoria Island is only ~3km across, so a saturated VI tile splits into the lagoon and across into Ikoyi — wasted calls plus footprint bleed that `footprint-gate.js` then has to clean up.
+
+**Fix.** Per-job workaround in config (Altivox uses `quad_offset: 0.010` for island-scale tiles) — no script edit. Engine-side later: scale the offset by depth (`o = QUAD_OFFSET / 2**depth`) so a split actually subdivides the parent viewport, which is what the "quadrant split" name implies.
+
 ## MEDIUM (fetch-sites): large runs (10k+ distinct hosts) saturate the home network → capture collapses; needs batch-with-pauses
 
 **Status:** OPEN (workaround proven) · found 2026-07-10 (db2b house, 48k US agency sites), MEDIUM impact.
