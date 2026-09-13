@@ -49,6 +49,22 @@ These are caught today, but as `far_from_hubs`, not `wrong_country` — `footpri
 
 **Fix.** Add an `offset` loop to `fetchTile`: page at `limit=150` until an empty array or a `max_pages` guard, THEN fall back to quadrant-split only if the viewport is still saturated at exhaustion. Gate it behind `scrape_tuning.paginate: true` so existing runs are reproducible. Engine change = needs operator approval per the skill's self-improvement protocol; NOT done in this run. Until then, dense-footprint jobs should treat any single-pass list as ~86% complete.
 
+## HIGH (method, non-Western geos): local business-name idiom must be verified locally — Google's type tag is not a translator
+
+**Status:** OPEN (process rule) · found 2026-09-13 (Altivox Lagos), HIGH impact — two segment-level errors in one config, neither visible without local knowledge.
+
+**Problem.** Two category calls in the Lagos job were wrong because a term means something different in Nigeria than the model assumed, and Google's `types` field did not disambiguate either one:
+
+1. **"Business center"** was treated as flexible office space and put in the top tier. In Nigeria it is a **photocopy / typing / cybercafe shop**: 319 pilot rows at 6% website and 68% zero reviews — `Goddey Business Centre`, `Bitoks Business Centre & Cybercafe`, `Xerox Business Center`. Caught only by profiling the query's output.
+2. **"POS shop"** was read as a point-of-sale hardware retailer and kept. In Nigeria a POS shop is an **agent-banking kiosk** (cash-in/cash-out, transfers, bill payments) — tiny, ubiquitous, never a network buyer. Google tagged `POS Shop Ltd` as `Computer hardware manufacturer`, and that mis-tag was taken at face value. Caught only by the operator.
+
+**Rules.**
+- For any non-Western geography, **profile a query's actual output before trusting the category label** — website rate, review distribution and a dozen real names take a minute and would have caught both.
+- **Never infer what a business is from Google's `types`.** The tag is frequently wrong and is not a translation of local usage. Prefer the name pattern plus the operator's knowledge.
+- **Ask the operator to sanity-check the category list** before freezing a run sheet. Both errors were obvious to someone who works the market.
+
+**Related substring trap, third instance.** The fix for POS agents cannot use a bare `pos` term: it would delete `Nigeria Deposit Insurance Corporation`, `Compos Mentis Legal Practitioners` and `Positive Cashflow Consulting` (10 such rows in the pilot). Nor is `' pos '` sufficient — it cannot match a name that STARTS with POS, which is exactly how `POS Shop Ltd` survived the first rewrite. Use compound terms (`pos shop`, `pos agent`, `pos centre`, `bank pos`). That is now three separate segment-eating substring bugs in one config; `deny`/`not_contains_any` terms should be treated as hostile by default.
+
 ## HIGH (qualify engine gotcha): `scope:"any"` on a fuzzy deny list deletes real targets via their SECONDARY tags
 
 **Status:** OPEN (documented; no code change — the engine already warns) · found 2026-09-13 (Altivox Lagos), HIGH impact — silent, and it deleted the client's highest-value segment.
