@@ -1,5 +1,9 @@
 # 05 — New-premises delta (monthly Google Maps re-scrape)
 
+> **Scope note.** The trigger is a business at a **new location** — not specifically a new *office*. Two distinct events hide under that phrase and the mechanism sees only one of them cleanly:
+> - **New branch / additional site** — the original stays open, a new premises appears. **New `place_id`**, so the monthly delta catches it. This is the common case and it spans every category.
+> - **Relocation / moving office** — one address replaces another. Google keeps the **same `place_id`** and edits the address, so the delta is structurally blind to it. Caught instead by the relocation detector in Step 5.
+
 **Use when:** you sell something every business buys *once, on arrival at a new address* — connectivity, ISP/WiFi install, office fit-out, access control, furniture, cleaning contracts. The trigger is "this business just appeared at this address," and you want it monthly, repeatably, for a fixed geographic footprint.
 
 **Origin:** Altivox (business network + WiFi installer, Lagos) — all offices in Victoria Island, Ikoyi, the Lekki corridor and Ajah, re-scraped monthly, month-over-month `place_id` delta as the outbound list.
@@ -65,32 +69,64 @@ This is the core of the process. A single pass is ~86% complete; the union conve
 
 Target: **residual miss ~1–2%**, down from ~14%. That is a 10x cut in the false-new rate and it is what makes the delta usable.
 
-### Step 4 — Gate on coverage, then qualify, then geo-gate
-Unchanged from the skill: `run-scrape.js` must exit 0 on every pass, then `qualify-leads.js`, then `footprint-gate.js` (REQUIRED — the only geo gate in `areas` mode).
+### Step 4 — Gate on coverage, then union, then qualify, then geo-gate
 
-### Step 5 — Diff against the rolling baseline, with a confirmation rule
-`build-netnew.js` against every prior month gives the candidate delta. Then apply:
+```
+# 3 passes into separate dirs (shard by tile via run-batch.js on a real footprint)
+node run-scrape.js --runsheet <sheet>.csv --config <client>-config.json --out <run>/pass-1
+node run-scrape.js --runsheet <sheet>.csv --config <client>-config.json --out <run>/pass-2
+node run-scrape.js --runsheet <sheet>.csv --config <client>-config.json --out <run>/pass-3
 
-> **A place counts as NEW only if it is absent from all prior months AND present in ≥2 of this month's 3 passes.**
+node union-passes.js --pass <run>/pass-1 --pass <run>/pass-2 --pass <run>/pass-3 \
+                     --out <run> --cycle 2026-09 \
+                     --prior <prev-cycle>/leads_clean_union.csv
 
-A place that appears in only one of three passes is far more likely to be a flickering long-tail result than a new business. This is a free second filter on top of the union and it costs nothing to compute.
+node qualify-leads.js  --in <run>/leads_delta_confirmed.csv --config <client>-config.json --out <run>
+node footprint-gate.js --in <run>/leads_clean_qualified.csv --runsheet <sheet>.csv \
+                       --config <client>-config.json --out <run> --hub-radius-deg 0.05
+```
+
+Every pass must exit 0. `union-passes.js` **refuses** a pass dir whose `coverage_report.json` is not `COMPLETE` — `run-scrape.js` writes `leads_clean.csv` *before* its exit-1 decision, so an INCOMPLETE pass still leaves rows on disk and `run-batch.js`'s row-count skip-guard would mark it `done` on a resumed cycle. Unioning that hole manufactures next cycle's fake-new.
+
+### Step 5 — The delta, the deferral queue, and relocations
+
+`union-passes.js` emits four files:
+
+| File | What it is |
+|---|---|
+| `leads_clean_union.csv` | **The canonical memory.** Pre-qualify, every place including single-hit ones. Feed it forward as next cycle's `--prior`. |
+| `leads_delta_confirmed.csv` | New places confirmed this cycle — the outbound list. |
+| `leads_delta_pending.csv` | New places seen in only **one** of three passes. **Deferred, not dropped.** |
+| `leads_changed.csv` | Relocations, renames, category changes, claim flips. |
+
+> **A place is CONFIRMED when it is absent from every prior cycle AND seen in ≥2 of this cycle's passes** (or reaches 2 cumulative hits across adjacent cycles).
+
+**Why pending exists.** A genuinely new place that flickers into only one pass would otherwise be excluded from the delta *and* absorbed into the baseline — never surfaced at all. And the flicker-prone population (low prominence, no reviews, unclaimed) is precisely the new-premises profile, so the loss would concentrate on the target. Pending places promote the next cycle they reappear.
+
+**Why the memory must be the union file, not the delta.** `build-netnew.js` discovers prior refs matching only `/^clay.*\.csv$|_netnew\.csv$/i`, which makes the *shipped feed* the memory — so anything filtered out of it is also forgotten and returns as fake-new. It also dedupes on **website host**, which deletes every new branch of a multi-site operator (all branches share one domain). `union-passes.js` replaces it for this job and dedupes on `place_id` only. `build-netnew.js` is unchanged for other clients.
 
 ### Step 6 — Rank the delta before it goes out
-Not a filter, a sort. Real new offices skew toward: `review_count` 0–3, `is_claimed` false or recently true, sparse `working_hours`, no website. Established firms that merely leaked through the baseline skew the other way. **Sort the delta by `review_count` ascending** and work the top.
 
-Track `first_seen_run` on every place from month 1 so the delta is auditable later.
+Not a filter, a sort — and **it differs by segment**:
+
+- **Consumer / hospitality / retail rows:** real new premises skew to `review_count` 0–3, unclaimed, sparse hours, no website. Sort ascending by `review_count` and work the top.
+- **B2B office rows: this sort barely discriminates.** 48–60% of the Lagos B2B baseline has **zero** reviews and 21% is zero-and-unclaimed, so a fifteen-year-old firm looks identical to a new one. Use `first_seen_cycle`, `pass_hits` and the change flags instead.
+- **Building-level rows** (`co_tenant_count` high, `floors_hint` set): here review counts *are* meaningful — buildings accumulate reviews where SMEs do not.
+
+Also read `leads_changed.csv`: a `relocated_*m` flag is a firm that just moved, which for many ICPs is a stronger trigger than a brand-new listing.
 
 ## Honest limits
 
 - **This is a trailing signal.** Google Maps listings typically appear weeks-to-months *after* a business moves in, often after the connectivity decision is made. It finds "recently *listed*", not "moving in". It still converts in Lagos (plenty of offices run on MiFi or consumer broadband for months), but do not sell it internally as a move-in alert.
 - **`place_id` churn** creates irreducible false positives — re-created, merged or re-claimed listings get new ids. Low volume, non-zero, not removable by any amount of passes.
-- **No historical backtest is possible from Maps.** Neither `searchmaps.php` nor `place.php` exposes any listing-creation, opening or establishment date (confirmed 2026-09-13 — full field list checked on both). `reviews.php` is not a usable proxy: most B2B offices have zero reviews, and review dates lag listing creation anyway. **You cannot reconstruct last year's delta.** A retrospective backtest would need an external register that is *enumerable* by filing date and address — and for Nigeria there isn't one. CAC publishes a name-verification lookup, not a queryable or bulk register: you can confirm a company you already know about, you cannot ask which companies registered in Lagos last month. (This is where the UK pattern misleads — `companies-house.js` works because Companies House ships a real API. That does not transfer.) **So there is no retrospective validation available at all, and the 7-day zero-signal test below is not a nice-to-have — it is the only way to get an error rate before shipping.**
+- **No historical backtest is possible from Maps.** Neither `searchmaps.php` nor `place.php` exposes any listing-creation, opening or establishment date (confirmed 2026-09-13 — full field list checked on both). `reviews.php` is not a usable proxy **for B2B** — most offices have zero reviews and review dates lag listing creation. It may be usable for consumer segments, where reviews accumulate within weeks, as a second noise filter (an oldest-review date >6 months on a "new" place marks it a baseline leak). Untested; treat as a candidate, not a method. **You cannot reconstruct last year's delta.** A retrospective backtest would need an external register that is *enumerable* by filing date and address — and for Nigeria there isn't one. CAC publishes a name-verification lookup, not a queryable or bulk register: you can confirm a company you already know about, you cannot ask which companies registered in Lagos last month. (This is where the UK pattern misleads — `companies-house.js` works because Companies House ships a real API. That does not transfer.) **So there is no retrospective validation available at all, and the 7-day zero-signal test below is not a nice-to-have — it is the only way to get an error rate before shipping.**
 - **Leading alternatives**, if the trailing lag hurts. Each needs a source that can be *enumerated* monthly, not just looked up — that is the filter that rules out CAC, and it should be applied before building against any of these. **None below are verified for accessibility; confirm with someone who knows the local sources before committing effort.** Commercial property portals (diff office listings month over month — a listing that disappears is plausibly a letting, though withdrawals add noise); fit-out and interior contractors' project posts (very leading — they are on site before the tenant); job ads naming a new office location (the `processes/01-job-board-trigger-sourcing.md` machinery already handles this shape); new commercial building completions (low volume and trackable by hand, and the highest-value case for a network installer — one new tower is many arriving tenants and a possible building-wide contract).
 
 ## How to validate it before trusting a month
 
 You cannot backtest historically, but you **can** measure the mechanism's error rate directly, today:
 
+0. **Positive control — do this first, it costs nothing.** Take the client's last 20–30 actual sales. For each: is it on Maps, when did its first review appear, was the listing claimed, and how long after opening did they buy? This measures Maps lag against *purchase timing for the real buyer population*, which is the assumption the whole process rests on. Every category exclusion is a hypothesis until this runs — on the Altivox job, two review rounds confidently excluded segments that one question to the operator ("have you sold to a bank?") reversed.
 1. **Noise floor (minutes).** Run one viewport's crawl twice back-to-back and diff. Every id in the diff is a false positive. This is the number in the table above — re-run it on your own footprint, it is ~10 API calls.
 2. **Convergence (minutes).** Repeat passes until the union stops growing. That sets N for Step 3 — do not assume 3 transfers to a different footprint or category mix.
 3. **Protocol validation (7 days).** With the 3-pass union protocol running, execute a full cycle, wait a week, execute another. Essentially no real offices open in 7 days, so whatever survives the Step 5 confirmation rule is residual noise. If that is small, the monthly delta is trustworthy. **Do this before month 1 ships to anyone.**
