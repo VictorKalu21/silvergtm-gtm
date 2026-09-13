@@ -71,11 +71,19 @@ Tier 1a is the one tier that is cheap in every currency: parallel HTTP plus batc
 
 Separate **deterministic scraping** from **AI reasoning**. Crawl in cheap Node; let a small model read clean *text* and name the people. Never make the model navigate pages — that's where small models fail and token costs explode. Lean queries for recall; full-identity entity-match for precision.
 
-## Running the AI step — Clay is the path
+## Running the AI step — in-session, cheapest rung first
 
-The job's `owner-prompt.md` runs **as ONE Clay nano Claygent column** (all sources mapped into it — `{{site_text}}` + `{{serp_text}}`, plus `{{ch_directors}}` when present) over the uploaded `clay.csv`, emitting one deduped contacts array. That's the production path and the operator already has a Clay account — there is no local batch script and none is needed. Clay also does the downstream email waterfall, so the pipeline ends there.
+The job's `owner-prompt.md` is applied by a **Haiku subagent per batch**, off the main context, over evidence that
+deterministic Node assembled (`prep-owner-batches.js` → `owner-read-subagent.md` → `merge-owner-reads.js`). That
+is the adjudication step the operator originally designed: aggregate every source, let one model read argue which
+candidate is right, and keep only what it can quote. The web-search sweep (`prep-sweep-batches.js` →
+`owner-sweep-subagent.md`, registry-restricted, still-unnamed leads only) is the next rung, and a second-opinion
+pass on medium/low-confidence rows is the last. Full rung table with measured cost and yield: SKILL.md STEP 6.
 
-Alternatives (not built / not for the operator flow): a Claude Code Haiku **subagent** works for a ≤~100-lead pilot but burns Claude Code credits ("credit bonfire" — don't use it to scale); a direct Haiku API batch would be the cheap-at-scale option but isn't implemented because Clay covers it.
+Measured on Atlas Growth (foundation repair, 1,104 leads): read 221 named at ~2.4k tokens/lead and 99% grounding;
+sweep 624 named at ~4.4k tokens/lead, 0 of 30 contradicted on independent re-search; combined 76.5%. A Clay nano
+column runs the identical prompt and is still available (`build-clay-csv.js`), but it is optional: it returns
+nothing silently where this path returns a counted reason.
 
 ## Guardrails that keep a small model honest (baked into the template)
 

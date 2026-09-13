@@ -604,7 +604,13 @@ are mostly website quotes of the form "Owner: Pat Kirby" where the business is i
 2b+2c together named 76.5% (Clay pilots on this skill: healthcare 84%, used-car 44%). Difference from Clay: the sweep
 tier is built in, and every drop is counted rather than silently absent.
 
-## PROPOSED 2026-09-12 (method, NOT approved): owner-finding rung order, cheapest-first, Clay optional
+## APPROVED 2026-09-13 (method): owner-finding rung order, cheapest-first, no Clay, email waterfall as STEP 6e
+
+Operator decisions on 2026-09-12/13, in discussion: no Clay anywhere; option 1 for owners (cheap read + registry
+sweep + double-check on every shaky row, no session-model rung); the email waterfall is part of owner-finding.
+Written into SKILL.md STEP 6/7, owner-finding.md and README on 2026-09-13. The entry below is the proposal as it stood.
+
+## (was) PROPOSED 2026-09-12: owner-finding rung order, cheapest-first, Clay optional
 
 Proposal put to the operator after the Atlas Growth run; written into SKILL.md prematurely and reverted the same
 hour. Not method until the operator signs off. The proposal: (1) aggregate on-disk evidence; (2) one Haiku read,
