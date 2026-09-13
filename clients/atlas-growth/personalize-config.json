@@ -2,8 +2,8 @@
   "template": "Hi,\n\nNoticed that you handle {{business_type}} in {{city}}.\n\nWe help you generate 10 qualified {{inspection_type}} that turn into paid {{project_type}} jobs, in under 30 days.\n\nThere's no pay unless I book you a qualified, confirmed {{inspection_singular}}.\n\nOpen to a 15-minute chat?",
   "instructions": {
     "business_type": "the trade this company leads with on its website, lowercase, 2-3 words, chosen from: foundation repair, basement waterproofing, crawl space repair, concrete leveling, house leveling, slab repair. Use the one they put first, not the one they list among many.",
-    "inspection_type": "the first visit to a homeowner, plural, 1-3 words, in the company's own wording: e.g. foundation inspections, basement inspections, crawl space inspections, free estimates. Must NOT repeat the full business_type phrase.",
-    "inspection_singular": "the singular of inspection_type, e.g. foundation inspection, basement inspection, free estimate.",
+    "inspection_type": "the first visit to a homeowner, plural, 2-3 words: the TRADE NOUN plus 'inspections' or 'estimates' according to which word the company itself uses, e.g. foundation inspections, basement inspections, crawl space inspections, leveling estimates, concrete estimates. Never the word 'free'. Must NOT repeat the full business_type phrase.",
+    "inspection_singular": "the singular of inspection_type, e.g. foundation inspection, basement inspection, leveling estimate.",
     "project_type": "a SINGULAR noun that reads naturally before the word 'jobs', using the trade's own outcome word: repair, waterproofing, lifting, encapsulation, leveling. Never plural, never the full business_type phrase, never a technical term the homeowner would not use (say repair, not stabilization).",
     "city": "ONLY if the 'city' known fact is blank: the city this company is based in, from the website. Otherwise repeat the known city exactly."
   },
