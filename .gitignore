@@ -3,10 +3,28 @@
 !*.env.example
 
 # Data outputs — this repo holds process, not deliverables.
+# Run logs are regenerable scrape output (swept to _archive/ by run hygiene), never deliverables.
+*.log
 # Client lists, contacts, and PII never get committed.
 *.csv
+# site_text / serp_text / companies_house / classify batches — scraped page text + business PII.
+*.jsonl
 *.json
 !scripts/**/*.json   # allow config/fixtures if ever needed
 /data/
 /out/
 *.xlsx
+# Editor/script backups of data files carry the same PII as the originals.
+*.bak
+# Owner-finding output is entirely enrichment data — contact names, email addresses,
+# verification shortlists. No process files live here, so ignore the whole tree.
+# (verify_emails.txt slipped past the *.csv/*.json/*.jsonl rules on extension alone.)
+clients/**/owner/
+clients/**/owner_new/
+
+# Client process files (config, runsheet) are process, not deliverables — allow them.
+# Run outputs under clients/ (leads*.csv, clay.csv, *.jsonl, reports) stay ignored by the rules above.
+# Only the CLIENT-ROOT config + runsheet are process. One level deep on purpose: '**' also
+# matched run-folder artifacts (heal-N-runsheet.csv, border-runsheet.csv), which are regenerable.
+!clients/*/*-config.json
+!clients/*/*-runsheet.csv

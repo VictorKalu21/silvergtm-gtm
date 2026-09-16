@@ -17,9 +17,29 @@ Before uploading any contact list to a cold-email campaign. Non-negotiable gate.
 
 Stage 2 is always **BounceBan** — it SMTP-probes the catch-alls and recovers ~60–70% as sendable.
 
+## The runner lives in this skill folder
+
+`scripts/verify-millionverifier-bounceban.js` (added 2026-09-12; resumable; `--dry-run` classifies from the
+checkpoints without spending; test in `tests/verify-dry-run.test.js`). The older copies under
+`C:/Users/victo/gtm-processes/scripts/` are the same interface. Run from any machine:
+
+```
+IN=<list.csv> OUT_DIR=<dir> node skills/email-verify-debounce-bounceban/scripts/verify-millionverifier-bounceban.js [--concurrency 4]
+```
+
+**API facts (verified 2026-09-12, one probe each):** MillionVerifier `GET https://api.millionverifier.com/api/v3/?api=KEY&email=&timeout=20`
+→ `result` ∈ `ok | catch_all | unknown | disposable | invalid | error`, plus `role`, `free`, `subresult`; credits at
+`/api/v3/credits?api=KEY` (free). BounceBan `GET https://api.bounceban.com/v1/verify/single?email=` with header
+`Authorization: KEY` (no `Bearer`) answers inline MOST of the time: `result` ∈ `deliverable | undeliverable | risky |
+unknown`, `is_accept_all`, `is_role`, `credits_consumed`, `credits_remaining`. About 1 in 8 calls instead returns
+`{status:"verifying", id, try_again_at}` and must be polled at `GET /v1/verify/single/status?id=<id>` (same header)
+until `result` appears; the runner does this. (The single-address probe said "synchronous"; 25 calls said otherwise.
+Probe with more than one address before writing a fact down.) Account at `/v1/account`. Rate limit 100/s.
+
 ## Keys (one file, auto-loaded by scripts)
 
-`C:/Users/victo/Silver GTM Systems/ENVs-Secrets/email-verification.env`:
+`C:/Users/victo/Silver GTM Systems/ENVs-Secrets/email-verification.env` on Windows, `$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env`
+elsewhere, or `EMAIL_VERIFY_ENV=<path>`; the two keys may also be plain env vars:
 ```
 DEBOUNCE_KEY=...
 MILLIONVERIFIER_KEY=...

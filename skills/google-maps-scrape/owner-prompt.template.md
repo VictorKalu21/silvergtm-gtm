@@ -1,7 +1,7 @@
 # Owner-prompt TEMPLATE (scaffold — do NOT edit per job)
 
 This file is the **stable scaffold** for the decision-maker extraction prompt. It never
-changes per job and never gets shipped to Clay/Haiku as-is. At the start of each
+changes per job and never gets shipped to the reader (Haiku per batch) as-is. At the start of each
 sub-scrape, Claude reads this scaffold + the job's ICP / target role / offer and writes a
 **filled, job-specific** prompt to the sub-scrape's own folder:
 
@@ -26,14 +26,14 @@ so the choices are auditable by a non-technical operator.
 
 ## ONE SHAPE — single column, all sources (every country)
 
-There is ONE output shape regardless of country: **a single Clay nano column that reads ALL
-available sources in one pass and returns ONE deduped `contacts` array.** Map every source the
-job has into that one column — the model does the cross-source corroboration itself, and the
-operator sets up only ONE Clay column. Source priority:
+There is ONE output shape regardless of country: **a single reader prompt that reads ALL
+available sources in one pass and returns ONE deduped `contacts` array.** `prep-owner-batches.js`
+puts every source the job has into one batch item — the model does the cross-source corroboration
+itself, and there is only ONE prompt. Source priority:
 
 1. **`{{ch_directors}}` — Companies House (AUTHORITATIVE), when present.** Companies-House
-   countries only; `build-clay-csv.js` loads `companies_house.jsonl` so the CSV carries
-   `ch_directors` when available. Empty for non-registry countries (e.g. US) — just skip it.
+   countries only; `prep-owner-batches.js` carries `companies_house.jsonl` as `ch_directors`
+   when available. Empty for non-registry countries (e.g. US) — just skip it.
 2. **`{{site_text}}` — the company's own website.**
 3. **`{{serp_text}}` — web / LinkedIn search snippets** (corroborate + entity-match).
 
@@ -121,11 +121,11 @@ EXCLUDE, one empty `[]`).
 
 ---
 
-## FIXED — output contract (single column, all sources). Copy verbatim.
+## FIXED — output contract (single reader, all sources). Copy verbatim.
 
-ONE Clay nano column. Map `{{business_name}}`, `{{full_address}}`, `{{zip}}`,
+ONE reader prompt. Its inputs are `{{business_name}}`, `{{full_address}}`, `{{zip}}`,
 `{{neighborhood}}`, `{{city}}`, `{{emails}}`, `{{ch_directors}}` (if present), `{{site_text}}`,
-`{{serp_text}}` into it. Read ALL sources in one pass and return ONE deduped `contacts` array.
+`{{serp_text}}` (the batch item's fields). Read ALL sources in one pass and return ONE deduped `contacts` array.
 
 ROLE: extract EVERY named person whose role is in the job's KEEP set, corroborating across the
 sources. We want MULTIPLE contacts. EXCLUDE the job's EXCLUDE roles. NEVER invent.
