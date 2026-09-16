@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 /* TDD test for collapse-domains.js + shared-hosts.js.
  * Fixture: a 3-branch roll-up on subdomains of one domain (rep = most reviews), an independent,
- * a Facebook-only lead, a wixsite lead, a no-website lead, a g.page short link, and a UK co.uk pair.
+ * a Facebook-only lead, a wixsite lead, a no-website lead, a g.page short link, a UK co.uk pair,
+ * and four UNRELATED firms sitting on site-builder platforms (3 on *.sitelift.site, 1 on
+ * *.netlify.app) — the live defect this list exists to prevent.
  * Asserts: grouping by ROOT domain (subdomains collapse), rep selection, sibling map, shared hosts
  * never grouped and routed to the no-website file, brand_family from config, row conservation.
  */
@@ -21,6 +23,14 @@ check('isSharedHost m.facebook subdomain', SH.isSharedHost('https://m.facebook.c
 check('isSharedHost wixsite subdomain', SH.isSharedHost('https://acme.wixsite.com/site') === true);
 check('isSharedHost bare host accepted', SH.isSharedHost('sites.google.com') === true);
 check('isSharedHost real site false', SH.isSharedHost('https://www.acmefoundationrepair.com') === false);
+// site-builder platforms: matched by SUFFIX, so any business subdomain on them counts
+check('isSharedHost sitelift subdomain', SH.isSharedHost('https://sundridge.sitelift.site/') === true);
+check('isSharedHost sitelift bare host', SH.isSharedHost('sitelift.site') === true);
+check('isSharedHost netlify subdomain', SH.isSharedHost('https://rhodes.netlify.app/about') === true);
+check('isSharedHost localo/brand/lovable/replit subdomains', ['https://a.localo.site', 'https://b.brand.site', 'https://c.lovable.app', 'https://d.replit.app'].every(u => SH.isSharedHost(u) === true));
+// and NOT so broad they swallow a real site on a .site / .app TLD
+check('bare .site TLD is NOT shared', SH.isSharedHost('https://acme-plastering.site') === false && SH.classifyWebsite('https://acme-plastering.site') === 'site');
+check('bare .app TLD is NOT shared', SH.isSharedHost('https://acmefoundations.app') === false);
 check('classifyWebsite none/shared/site', SH.classifyWebsite('') === 'none' && SH.classifyWebsite('https://g.page/acme') === 'shared_host' && SH.classifyWebsite('https://acme.com') === 'site');
 
 // --- integration: collapse-domains.js ---
@@ -38,6 +48,11 @@ const rows = [
   'nw1,No Site Slabjacking,,3,"Lubbock, TX"',
   'uk1,Acme Piling Ltd,https://www.acme-piling.co.uk/,20,London',
   'uk2,Acme Piling North,https://north.acme-piling.co.uk/,25,Leeds',
+  // four UNRELATED firms whose only web presence is a subdomain on a site-builder platform
+  'sl1,Sundridge Homes and Gardens,https://sundridge.sitelift.site/,12,Bromley',
+  'sl2,No Fuss Plastering,https://nofussplastering.sitelift.site/,7,Maidstone',
+  'sl3,Fixzen Services,https://fixzen.sitelift.site/,5,London',
+  'nf1,Rhodes to Improvement,https://rhodes.netlify.app/,31,Guildford',
 ];
 fs.writeFileSync(path.join(tmp, 'in.csv'), [head, ...rows].join('\n') + '\n');
 fs.writeFileSync(path.join(tmp, 'cfg.json'), JSON.stringify({ brand_families: { Groundworks: ['groundworks', 'alpha foundations'], 'Perma-Pier': ['perma-pier', 'permapier'] } }));
@@ -60,13 +75,20 @@ check('reps file: gw2, ind1, uk rep only (3 rows)', reps.length === 3 && reps.so
 check('UK co.uk pair grouped, rep = uk2', by('uk1').root_domain === 'acme-piling.co.uk' && by('uk1').rep_place_id === 'uk2');
 check('independent is its own rep, count 1', by('ind1').rep_place_id === 'ind1' && by('ind1').location_count === '1' && by('ind1').is_multi_location === 'no');
 check('facebook leads NOT grouped together', by('fb1').website_class === 'shared_host' && by('fb1').rep_place_id === 'fb1' && by('fb2').rep_place_id === 'fb2' && by('fb1').location_count === '1');
-check('no-website file = fb1,fb2,wx1,gp1,nw1', nos.length === 5 && ['fb1', 'fb2', 'wx1', 'gp1', 'nw1'].every(id => nos.some(r => r.place_id === id)));
+check('no-website file = fb1,fb2,wx1,gp1,nw1 + the 4 builder-platform firms', nos.length === 9 && ['fb1', 'fb2', 'wx1', 'gp1', 'nw1', 'sl1', 'sl2', 'sl3', 'nf1'].every(id => nos.some(r => r.place_id === id)));
+// the live defect: 4 unrelated firms on builder platforms must never become one "brand"
+check('builder-platform leads classed shared_host', ['sl1', 'sl2', 'sl3', 'nf1'].every(id => by(id).website_class === 'shared_host'));
+check('builder-platform leads NOT grouped (each its own rep, count 1)', ['sl1', 'sl2', 'sl3', 'nf1'].every(id => by(id).rep_place_id === id && by(id).location_count === '1' && by(id).is_multi_location === 'no'));
+check('builder-platform leads have no root_domain group + no siblings', !['sl1', 'sl2', 'sl3', 'nf1'].some(id => id in sib.sibling_of || id in sib.reps) && !Object.values(sib.reps).some(r => /sitelift\.site|netlify\.app/.test(r.root_domain)));
+check('builder-platform leads never reach the spend file', !reps.some(r => ['sl1', 'sl2', 'sl3', 'nf1'].includes(r.place_id)));
+check('real co.uk site + its subdomain still collapse together', by('uk2').root_domain === 'acme-piling.co.uk' && by('uk1').root_domain === by('uk2').root_domain && sib.sibling_of.uk1 === 'uk2');
 check('none vs shared_host classes', by('nw1').website_class === 'none' && by('wx1').website_class === 'shared_host' && by('gp1').website_class === 'shared_host');
 check('brand_family from name', by('gw1').brand_family === 'Groundworks' && by('gw3').brand_family === 'Groundworks');
 check('brand_family from name on shared-host lead too', by('gp1').brand_family === 'Perma-Pier');
 check('brand_family blank on independent', by('ind1').brand_family === '');
 check('report: spend rows 6 -> 3, saved 3', rep.spend_rows_before === 6 && rep.spend_rows_after === 3 && rep.spend_rows_saved === 3);
 check('report: fanned siblings = 3', rep.fanned_siblings === 3);
+check('report: shared_host count includes the 4 builder-platform firms', rep.website_class.shared_host === 8 && rep.website_class.none === 1);
 
 console.log(fails ? `\n${fails} FAILURE(S)` : '\nALL PASS');
 process.exit(fails ? 1 : 0);

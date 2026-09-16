@@ -755,3 +755,47 @@ a second pass accepting (a) normalised-title equality (strip ltd/limited/llp/plc
 (b) title-contains-all-core-tokens AND registered-office outward postcode or town = lead's, recovered 17 with active
 directors and no wrong matches on review. Fix: add rule (a) as an accept before the overlap score, and normalise `&`.
 Also worth a `--town` fallback when `lead_postcode` is empty (this export had no postcode on 30% of rows).
+
+## DONE 2026-09-16 (engine bug): `shared-hosts.js` didn't know site-builder platforms — `collapse-domains.js` merged UNRELATED firms into one root domain
+
+**Status:** DONE 2026-09-16 — 14 site-builder / deploy platforms added to `SHARED_HOSTS` (suffix-matched, so every
+business subdomain on them counts): `sitelift.site, localo.site, brand.site, square.site, netlify.app, vercel.app,
+lovable.app, replit.app, pages.dev, framer.website, framer.app, glitch.me, weeblysite.com, jimdofree.com`
+(`blogspot.com, wixsite.com, godaddysites.com, weebly.com, wordpress.com, strikingly.com, mystrikingly.com,
+jimdosite.com, webflow.io, github.io, carrd.co, yolasite.com` were already there). Operator-approved 2026-09-16.
+TDD'd in `tests/collapse-domains.test.js` (now 38 checks; 13 of them fail against the pre-fix list) — the new
+fixture is four unrelated firms on `*.sitelift.site` ×3 + `*.netlify.app`, checks
+`builder-platform leads classed shared_host`, `builder-platform leads NOT grouped (each its own rep, count 1)`,
+`builder-platform leads have no root_domain group + no siblings`, `builder-platform leads never reach the spend
+file`, plus `bare .site TLD is NOT shared` / `bare .app TLD is NOT shared` and
+`real co.uk site + its subdomain still collapse together`. · found 2026-09-16 (Atlas Growth UK foundation-repair
+Maps run, GATE 3 P9), **HIGH impact — it ships WRONG OWNER NAMES, silently.**
+
+**Problem.** `sitelift.site` was classed `site`, so `collapse-domains.js` grouped **4 unrelated UK trades** —
+*Sundridge Homes and Gardens*, *No Fuss Plastering*, *Fixzen Services*, *Rhodes to Improvement* — under one
+`root_domain`, elected one representative, and would have fanned that one firm's site text **and its owner** to the
+other three at build time: three wrong names on three wrong companies, with nothing downstream to catch it. The
+same defect was latent at `location_count 1` in that run on `localo.site`, `netlify.app`, `lovable.app`,
+`replit.app` and `brand.site` — invisible until two firms happen to land on the same platform. A business whose
+only web presence is a subdomain on a builder platform has no site of its own; the platform domain is not a brand.
+
+**Fix.** Data-only change in the one shared list, matched by suffix (`h === s || h.endsWith('.' + s)`), so
+`a.sitelift.site` and `b.sitelift.site` are both `shared_host`: never grouped, never fetched by `fetch-sites.js`,
+routed to `leads_nowebsite.csv` for the STEP 5d recovery track. **Never add a bare TLD** (`.site`, `.app`) — real
+businesses own those; only the platform's registrable domain goes in the list.
+
+## LOW-MEDIUM (coverage blind spot): `run-scrape.js` heals only `status != ok`, so an `ok` result with 0 rows is invisible
+
+**Status:** OPEN (not implemented) · found 2026-09-16 (Atlas Growth UK foundation repair), LOW-MEDIUM impact —
+unmeasured under-collection, cheap to close.
+
+**Problem.** The heal loop re-buys a `(tile, query)` event only when its `status != ok`. A tile-query that returns
+`status: ok` with **count 0** while the same tile's other queries return hundreds of rows is not a real zero — it is
+an empty page the endpoint handed back — and nothing in the coverage report flags it. **36 such pairs on the UK
+run**, e.g. `damp proofing` = 0 at Guildford while `structural repair` at the same centre = 288; also basement
+waterproofing at Kingston and Ealing, mini piling at Liverpool. ~21 of the 36 are high-volume queries at dense
+tiles.
+
+**Candidate fix.** After pass 0, flag `ok`+0 events at centres whose other queries returned > N rows, and re-buy
+them once (same runsheet, same heal machinery). Surface the count in the coverage summary either way so the hole is
+visible even when the re-buy is declined. Cost is ~36–90 calls on a run of this size.

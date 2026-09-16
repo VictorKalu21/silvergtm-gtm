@@ -30,6 +30,13 @@ const SHARED_HOSTS = [
   'jimdosite.com', 'webflow.io', 'github.io', 'notion.site', 'carrd.co', 'site123.me',
   'ueniweb.com', 'homestead.com', 'yolasite.com', 'bizland.com', 'mystrikingly.com',
   'wordpress.org', 'tumblr.com', 'weebly.net',
+  // newer site-builder / deploy / "free site for your GMB listing" platforms. A business whose only
+  // web presence is a subdomain here has no site of its own: grouping by that domain merges
+  // UNRELATED firms into one "brand" (seen live: 4 unrelated UK trades on *.sitelift.site collapsed
+  // to one root domain, so one firm's site text and owner would have been fanned to the other three).
+  'sitelift.site', 'localo.site', 'brand.site', 'square.site', 'netlify.app', 'vercel.app',
+  'lovable.app', 'replit.app', 'pages.dev', 'framer.website', 'framer.app', 'glitch.me',
+  'weeblysite.com', 'jimdofree.com',
   // directories / lead marketplaces / review sites listed as "website"
   'yelp.com', 'angi.com', 'angieslist.com', 'homeadvisor.com', 'houzz.com', 'thumbtack.com',
   'porch.com', 'bark.com', 'bbb.org', 'yellowpages.com', 'superpages.com', 'manta.com',
