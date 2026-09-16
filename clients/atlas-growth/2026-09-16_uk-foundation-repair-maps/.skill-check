@@ -1,0 +1,2 @@
+checked: google-maps-scrape (README, SKILL, runbook, IMPROVEMENTS), web-scrape-triage, name-to-domain, email-verify-debounce-bounceban, email-waterfall, icp-source-planner (uk-foundation-repair profile)
+need: UK Maps scrape of foundation-repair/damp/underpinning trades, 177 tiles x 10 queries, 8 shards via run-scrape.js; qualify -> geo -> dedupe vs 2026-09-16 export run -> collapse -> site text (triage ladder) -> adjudicate -> CH/Haiku owners -> on-site emails -> MV/BB verify -> Plusvibe

@@ -1,0 +1,1771 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+eng-london-centre-q0,foundation,underpinning,51.5074,-0.1278,13,P1
+eng-london-centre-q1,foundation,subsidence repair,51.5074,-0.1278,13,P1
+eng-london-centre-q2,foundation,structural repair,51.5074,-0.1278,13,P1
+eng-london-centre-q3,foundation,foundation repair,51.5074,-0.1278,13,P1
+eng-london-centre-q4,adjacent,damp proofing,51.5074,-0.1278,13,P2
+eng-london-centre-q5,adjacent,basement waterproofing,51.5074,-0.1278,13,P2
+eng-london-centre-q6,adjacent,structural waterproofing,51.5074,-0.1278,13,P2
+eng-london-centre-q7,adjacent,cellar tanking,51.5074,-0.1278,13,P2
+eng-london-centre-q8,adjacent,mini piling,51.5074,-0.1278,13,P2
+eng-london-centre-q9,adjacent,wall tie replacement,51.5074,-0.1278,13,P2
+eng-birmingham-q0,foundation,underpinning,52.4862,-1.8904,13,P1
+eng-birmingham-q1,foundation,subsidence repair,52.4862,-1.8904,13,P1
+eng-birmingham-q2,foundation,structural repair,52.4862,-1.8904,13,P1
+eng-birmingham-q3,foundation,foundation repair,52.4862,-1.8904,13,P1
+eng-birmingham-q4,adjacent,damp proofing,52.4862,-1.8904,13,P2
+eng-birmingham-q5,adjacent,basement waterproofing,52.4862,-1.8904,13,P2
+eng-birmingham-q6,adjacent,structural waterproofing,52.4862,-1.8904,13,P2
+eng-birmingham-q7,adjacent,cellar tanking,52.4862,-1.8904,13,P2
+eng-birmingham-q8,adjacent,mini piling,52.4862,-1.8904,13,P2
+eng-birmingham-q9,adjacent,wall tie replacement,52.4862,-1.8904,13,P2
+eng-wolverhampton-q0,foundation,underpinning,52.5862,-2.1288,13,P1
+eng-wolverhampton-q1,foundation,subsidence repair,52.5862,-2.1288,13,P1
+eng-wolverhampton-q2,foundation,structural repair,52.5862,-2.1288,13,P1
+eng-wolverhampton-q3,foundation,foundation repair,52.5862,-2.1288,13,P1
+eng-wolverhampton-q4,adjacent,damp proofing,52.5862,-2.1288,13,P2
+eng-wolverhampton-q5,adjacent,basement waterproofing,52.5862,-2.1288,13,P2
+eng-wolverhampton-q6,adjacent,structural waterproofing,52.5862,-2.1288,13,P2
+eng-wolverhampton-q7,adjacent,cellar tanking,52.5862,-2.1288,13,P2
+eng-wolverhampton-q8,adjacent,mini piling,52.5862,-2.1288,13,P2
+eng-wolverhampton-q9,adjacent,wall tie replacement,52.5862,-2.1288,13,P2
+eng-coventry-q0,foundation,underpinning,52.4068,-1.5197,13,P1
+eng-coventry-q1,foundation,subsidence repair,52.4068,-1.5197,13,P1
+eng-coventry-q2,foundation,structural repair,52.4068,-1.5197,13,P1
+eng-coventry-q3,foundation,foundation repair,52.4068,-1.5197,13,P1
+eng-coventry-q4,adjacent,damp proofing,52.4068,-1.5197,13,P2
+eng-coventry-q5,adjacent,basement waterproofing,52.4068,-1.5197,13,P2
+eng-coventry-q6,adjacent,structural waterproofing,52.4068,-1.5197,13,P2
+eng-coventry-q7,adjacent,cellar tanking,52.4068,-1.5197,13,P2
+eng-coventry-q8,adjacent,mini piling,52.4068,-1.5197,13,P2
+eng-coventry-q9,adjacent,wall tie replacement,52.4068,-1.5197,13,P2
+eng-stoke-on-trent-q0,foundation,underpinning,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-q1,foundation,subsidence repair,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-q2,foundation,structural repair,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-q3,foundation,foundation repair,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-q4,adjacent,damp proofing,53.0027,-2.1794,13,P2
+eng-stoke-on-trent-q5,adjacent,basement waterproofing,53.0027,-2.1794,13,P2
+eng-stoke-on-trent-q6,adjacent,structural waterproofing,53.0027,-2.1794,13,P2
+eng-stoke-on-trent-q7,adjacent,cellar tanking,53.0027,-2.1794,13,P2
+eng-stoke-on-trent-q8,adjacent,mini piling,53.0027,-2.1794,13,P2
+eng-stoke-on-trent-q9,adjacent,wall tie replacement,53.0027,-2.1794,13,P2
+eng-telford-q0,foundation,underpinning,52.6784,-2.4453,13,P1
+eng-telford-q1,foundation,subsidence repair,52.6784,-2.4453,13,P1
+eng-telford-q2,foundation,structural repair,52.6784,-2.4453,13,P1
+eng-telford-q3,foundation,foundation repair,52.6784,-2.4453,13,P1
+eng-telford-q4,adjacent,damp proofing,52.6784,-2.4453,13,P2
+eng-telford-q5,adjacent,basement waterproofing,52.6784,-2.4453,13,P2
+eng-telford-q6,adjacent,structural waterproofing,52.6784,-2.4453,13,P2
+eng-telford-q7,adjacent,cellar tanking,52.6784,-2.4453,13,P2
+eng-telford-q8,adjacent,mini piling,52.6784,-2.4453,13,P2
+eng-telford-q9,adjacent,wall tie replacement,52.6784,-2.4453,13,P2
+eng-shrewsbury-q0,foundation,underpinning,52.7069,-2.7527,13,P1
+eng-shrewsbury-q1,foundation,subsidence repair,52.7069,-2.7527,13,P1
+eng-shrewsbury-q2,foundation,structural repair,52.7069,-2.7527,13,P1
+eng-shrewsbury-q3,foundation,foundation repair,52.7069,-2.7527,13,P1
+eng-shrewsbury-q4,adjacent,damp proofing,52.7069,-2.7527,13,P2
+eng-shrewsbury-q5,adjacent,basement waterproofing,52.7069,-2.7527,13,P2
+eng-shrewsbury-q6,adjacent,structural waterproofing,52.7069,-2.7527,13,P2
+eng-shrewsbury-q7,adjacent,cellar tanking,52.7069,-2.7527,13,P2
+eng-shrewsbury-q8,adjacent,mini piling,52.7069,-2.7527,13,P2
+eng-shrewsbury-q9,adjacent,wall tie replacement,52.7069,-2.7527,13,P2
+eng-hereford-q0,foundation,underpinning,52.0567,-2.716,13,P1
+eng-hereford-q1,foundation,subsidence repair,52.0567,-2.716,13,P1
+eng-hereford-q2,foundation,structural repair,52.0567,-2.716,13,P1
+eng-hereford-q3,foundation,foundation repair,52.0567,-2.716,13,P1
+eng-hereford-q4,adjacent,damp proofing,52.0567,-2.716,13,P2
+eng-hereford-q5,adjacent,basement waterproofing,52.0567,-2.716,13,P2
+eng-hereford-q6,adjacent,structural waterproofing,52.0567,-2.716,13,P2
+eng-hereford-q7,adjacent,cellar tanking,52.0567,-2.716,13,P2
+eng-hereford-q8,adjacent,mini piling,52.0567,-2.716,13,P2
+eng-hereford-q9,adjacent,wall tie replacement,52.0567,-2.716,13,P2
+eng-worcester-q0,foundation,underpinning,52.1936,-2.2216,13,P1
+eng-worcester-q1,foundation,subsidence repair,52.1936,-2.2216,13,P1
+eng-worcester-q2,foundation,structural repair,52.1936,-2.2216,13,P1
+eng-worcester-q3,foundation,foundation repair,52.1936,-2.2216,13,P1
+eng-worcester-q4,adjacent,damp proofing,52.1936,-2.2216,13,P2
+eng-worcester-q5,adjacent,basement waterproofing,52.1936,-2.2216,13,P2
+eng-worcester-q6,adjacent,structural waterproofing,52.1936,-2.2216,13,P2
+eng-worcester-q7,adjacent,cellar tanking,52.1936,-2.2216,13,P2
+eng-worcester-q8,adjacent,mini piling,52.1936,-2.2216,13,P2
+eng-worcester-q9,adjacent,wall tie replacement,52.1936,-2.2216,13,P2
+eng-gloucester-q0,foundation,underpinning,51.8642,-2.238,13,P1
+eng-gloucester-q1,foundation,subsidence repair,51.8642,-2.238,13,P1
+eng-gloucester-q2,foundation,structural repair,51.8642,-2.238,13,P1
+eng-gloucester-q3,foundation,foundation repair,51.8642,-2.238,13,P1
+eng-gloucester-q4,adjacent,damp proofing,51.8642,-2.238,13,P2
+eng-gloucester-q5,adjacent,basement waterproofing,51.8642,-2.238,13,P2
+eng-gloucester-q6,adjacent,structural waterproofing,51.8642,-2.238,13,P2
+eng-gloucester-q7,adjacent,cellar tanking,51.8642,-2.238,13,P2
+eng-gloucester-q8,adjacent,mini piling,51.8642,-2.238,13,P2
+eng-gloucester-q9,adjacent,wall tie replacement,51.8642,-2.238,13,P2
+eng-cheltenham-q0,foundation,underpinning,51.8994,-2.0783,13,P1
+eng-cheltenham-q1,foundation,subsidence repair,51.8994,-2.0783,13,P1
+eng-cheltenham-q2,foundation,structural repair,51.8994,-2.0783,13,P1
+eng-cheltenham-q3,foundation,foundation repair,51.8994,-2.0783,13,P1
+eng-cheltenham-q4,adjacent,damp proofing,51.8994,-2.0783,13,P2
+eng-cheltenham-q5,adjacent,basement waterproofing,51.8994,-2.0783,13,P2
+eng-cheltenham-q6,adjacent,structural waterproofing,51.8994,-2.0783,13,P2
+eng-cheltenham-q7,adjacent,cellar tanking,51.8994,-2.0783,13,P2
+eng-cheltenham-q8,adjacent,mini piling,51.8994,-2.0783,13,P2
+eng-cheltenham-q9,adjacent,wall tie replacement,51.8994,-2.0783,13,P2
+eng-bristol-q0,foundation,underpinning,51.4545,-2.5879,13,P1
+eng-bristol-q1,foundation,subsidence repair,51.4545,-2.5879,13,P1
+eng-bristol-q2,foundation,structural repair,51.4545,-2.5879,13,P1
+eng-bristol-q3,foundation,foundation repair,51.4545,-2.5879,13,P1
+eng-bristol-q4,adjacent,damp proofing,51.4545,-2.5879,13,P2
+eng-bristol-q5,adjacent,basement waterproofing,51.4545,-2.5879,13,P2
+eng-bristol-q6,adjacent,structural waterproofing,51.4545,-2.5879,13,P2
+eng-bristol-q7,adjacent,cellar tanking,51.4545,-2.5879,13,P2
+eng-bristol-q8,adjacent,mini piling,51.4545,-2.5879,13,P2
+eng-bristol-q9,adjacent,wall tie replacement,51.4545,-2.5879,13,P2
+eng-bath-q0,foundation,underpinning,51.3811,-2.359,13,P1
+eng-bath-q1,foundation,subsidence repair,51.3811,-2.359,13,P1
+eng-bath-q2,foundation,structural repair,51.3811,-2.359,13,P1
+eng-bath-q3,foundation,foundation repair,51.3811,-2.359,13,P1
+eng-bath-q4,adjacent,damp proofing,51.3811,-2.359,13,P2
+eng-bath-q5,adjacent,basement waterproofing,51.3811,-2.359,13,P2
+eng-bath-q6,adjacent,structural waterproofing,51.3811,-2.359,13,P2
+eng-bath-q7,adjacent,cellar tanking,51.3811,-2.359,13,P2
+eng-bath-q8,adjacent,mini piling,51.3811,-2.359,13,P2
+eng-bath-q9,adjacent,wall tie replacement,51.3811,-2.359,13,P2
+eng-weston-super-mare-q0,foundation,underpinning,51.346,-2.977,13,P1
+eng-weston-super-mare-q1,foundation,subsidence repair,51.346,-2.977,13,P1
+eng-weston-super-mare-q2,foundation,structural repair,51.346,-2.977,13,P1
+eng-weston-super-mare-q3,foundation,foundation repair,51.346,-2.977,13,P1
+eng-weston-super-mare-q4,adjacent,damp proofing,51.346,-2.977,13,P2
+eng-weston-super-mare-q5,adjacent,basement waterproofing,51.346,-2.977,13,P2
+eng-weston-super-mare-q6,adjacent,structural waterproofing,51.346,-2.977,13,P2
+eng-weston-super-mare-q7,adjacent,cellar tanking,51.346,-2.977,13,P2
+eng-weston-super-mare-q8,adjacent,mini piling,51.346,-2.977,13,P2
+eng-weston-super-mare-q9,adjacent,wall tie replacement,51.346,-2.977,13,P2
+eng-taunton-q0,foundation,underpinning,51.015,-3.1,13,P1
+eng-taunton-q1,foundation,subsidence repair,51.015,-3.1,13,P1
+eng-taunton-q2,foundation,structural repair,51.015,-3.1,13,P1
+eng-taunton-q3,foundation,foundation repair,51.015,-3.1,13,P1
+eng-taunton-q4,adjacent,damp proofing,51.015,-3.1,13,P2
+eng-taunton-q5,adjacent,basement waterproofing,51.015,-3.1,13,P2
+eng-taunton-q6,adjacent,structural waterproofing,51.015,-3.1,13,P2
+eng-taunton-q7,adjacent,cellar tanking,51.015,-3.1,13,P2
+eng-taunton-q8,adjacent,mini piling,51.015,-3.1,13,P2
+eng-taunton-q9,adjacent,wall tie replacement,51.015,-3.1,13,P2
+eng-yeovil-q0,foundation,underpinning,50.941,-2.632,13,P1
+eng-yeovil-q1,foundation,subsidence repair,50.941,-2.632,13,P1
+eng-yeovil-q2,foundation,structural repair,50.941,-2.632,13,P1
+eng-yeovil-q3,foundation,foundation repair,50.941,-2.632,13,P1
+eng-yeovil-q4,adjacent,damp proofing,50.941,-2.632,13,P2
+eng-yeovil-q5,adjacent,basement waterproofing,50.941,-2.632,13,P2
+eng-yeovil-q6,adjacent,structural waterproofing,50.941,-2.632,13,P2
+eng-yeovil-q7,adjacent,cellar tanking,50.941,-2.632,13,P2
+eng-yeovil-q8,adjacent,mini piling,50.941,-2.632,13,P2
+eng-yeovil-q9,adjacent,wall tie replacement,50.941,-2.632,13,P2
+eng-exeter-q0,foundation,underpinning,50.7184,-3.5339,13,P1
+eng-exeter-q1,foundation,subsidence repair,50.7184,-3.5339,13,P1
+eng-exeter-q2,foundation,structural repair,50.7184,-3.5339,13,P1
+eng-exeter-q3,foundation,foundation repair,50.7184,-3.5339,13,P1
+eng-exeter-q4,adjacent,damp proofing,50.7184,-3.5339,13,P2
+eng-exeter-q5,adjacent,basement waterproofing,50.7184,-3.5339,13,P2
+eng-exeter-q6,adjacent,structural waterproofing,50.7184,-3.5339,13,P2
+eng-exeter-q7,adjacent,cellar tanking,50.7184,-3.5339,13,P2
+eng-exeter-q8,adjacent,mini piling,50.7184,-3.5339,13,P2
+eng-exeter-q9,adjacent,wall tie replacement,50.7184,-3.5339,13,P2
+eng-torquay-q0,foundation,underpinning,50.4619,-3.5253,13,P1
+eng-torquay-q1,foundation,subsidence repair,50.4619,-3.5253,13,P1
+eng-torquay-q2,foundation,structural repair,50.4619,-3.5253,13,P1
+eng-torquay-q3,foundation,foundation repair,50.4619,-3.5253,13,P1
+eng-torquay-q4,adjacent,damp proofing,50.4619,-3.5253,13,P2
+eng-torquay-q5,adjacent,basement waterproofing,50.4619,-3.5253,13,P2
+eng-torquay-q6,adjacent,structural waterproofing,50.4619,-3.5253,13,P2
+eng-torquay-q7,adjacent,cellar tanking,50.4619,-3.5253,13,P2
+eng-torquay-q8,adjacent,mini piling,50.4619,-3.5253,13,P2
+eng-torquay-q9,adjacent,wall tie replacement,50.4619,-3.5253,13,P2
+eng-plymouth-q0,foundation,underpinning,50.3755,-4.1427,13,P1
+eng-plymouth-q1,foundation,subsidence repair,50.3755,-4.1427,13,P1
+eng-plymouth-q2,foundation,structural repair,50.3755,-4.1427,13,P1
+eng-plymouth-q3,foundation,foundation repair,50.3755,-4.1427,13,P1
+eng-plymouth-q4,adjacent,damp proofing,50.3755,-4.1427,13,P2
+eng-plymouth-q5,adjacent,basement waterproofing,50.3755,-4.1427,13,P2
+eng-plymouth-q6,adjacent,structural waterproofing,50.3755,-4.1427,13,P2
+eng-plymouth-q7,adjacent,cellar tanking,50.3755,-4.1427,13,P2
+eng-plymouth-q8,adjacent,mini piling,50.3755,-4.1427,13,P2
+eng-plymouth-q9,adjacent,wall tie replacement,50.3755,-4.1427,13,P2
+eng-barnstaple-q0,foundation,underpinning,51.08,-4.06,13,P1
+eng-barnstaple-q1,foundation,subsidence repair,51.08,-4.06,13,P1
+eng-barnstaple-q2,foundation,structural repair,51.08,-4.06,13,P1
+eng-barnstaple-q3,foundation,foundation repair,51.08,-4.06,13,P1
+eng-barnstaple-q4,adjacent,damp proofing,51.08,-4.06,13,P2
+eng-barnstaple-q5,adjacent,basement waterproofing,51.08,-4.06,13,P2
+eng-barnstaple-q6,adjacent,structural waterproofing,51.08,-4.06,13,P2
+eng-barnstaple-q7,adjacent,cellar tanking,51.08,-4.06,13,P2
+eng-barnstaple-q8,adjacent,mini piling,51.08,-4.06,13,P2
+eng-barnstaple-q9,adjacent,wall tie replacement,51.08,-4.06,13,P2
+eng-st-austell-q0,foundation,underpinning,50.34,-4.79,13,P1
+eng-st-austell-q1,foundation,subsidence repair,50.34,-4.79,13,P1
+eng-st-austell-q2,foundation,structural repair,50.34,-4.79,13,P1
+eng-st-austell-q3,foundation,foundation repair,50.34,-4.79,13,P1
+eng-st-austell-q4,adjacent,damp proofing,50.34,-4.79,13,P2
+eng-st-austell-q5,adjacent,basement waterproofing,50.34,-4.79,13,P2
+eng-st-austell-q6,adjacent,structural waterproofing,50.34,-4.79,13,P2
+eng-st-austell-q7,adjacent,cellar tanking,50.34,-4.79,13,P2
+eng-st-austell-q8,adjacent,mini piling,50.34,-4.79,13,P2
+eng-st-austell-q9,adjacent,wall tie replacement,50.34,-4.79,13,P2
+eng-truro-q0,foundation,underpinning,50.2632,-5.051,13,P1
+eng-truro-q1,foundation,subsidence repair,50.2632,-5.051,13,P1
+eng-truro-q2,foundation,structural repair,50.2632,-5.051,13,P1
+eng-truro-q3,foundation,foundation repair,50.2632,-5.051,13,P1
+eng-truro-q4,adjacent,damp proofing,50.2632,-5.051,13,P2
+eng-truro-q5,adjacent,basement waterproofing,50.2632,-5.051,13,P2
+eng-truro-q6,adjacent,structural waterproofing,50.2632,-5.051,13,P2
+eng-truro-q7,adjacent,cellar tanking,50.2632,-5.051,13,P2
+eng-truro-q8,adjacent,mini piling,50.2632,-5.051,13,P2
+eng-truro-q9,adjacent,wall tie replacement,50.2632,-5.051,13,P2
+eng-penzance-q0,foundation,underpinning,50.1186,-5.537,13,P1
+eng-penzance-q1,foundation,subsidence repair,50.1186,-5.537,13,P1
+eng-penzance-q2,foundation,structural repair,50.1186,-5.537,13,P1
+eng-penzance-q3,foundation,foundation repair,50.1186,-5.537,13,P1
+eng-penzance-q4,adjacent,damp proofing,50.1186,-5.537,13,P2
+eng-penzance-q5,adjacent,basement waterproofing,50.1186,-5.537,13,P2
+eng-penzance-q6,adjacent,structural waterproofing,50.1186,-5.537,13,P2
+eng-penzance-q7,adjacent,cellar tanking,50.1186,-5.537,13,P2
+eng-penzance-q8,adjacent,mini piling,50.1186,-5.537,13,P2
+eng-penzance-q9,adjacent,wall tie replacement,50.1186,-5.537,13,P2
+eng-weymouth-q0,foundation,underpinning,50.614,-2.457,13,P1
+eng-weymouth-q1,foundation,subsidence repair,50.614,-2.457,13,P1
+eng-weymouth-q2,foundation,structural repair,50.614,-2.457,13,P1
+eng-weymouth-q3,foundation,foundation repair,50.614,-2.457,13,P1
+eng-weymouth-q4,adjacent,damp proofing,50.614,-2.457,13,P2
+eng-weymouth-q5,adjacent,basement waterproofing,50.614,-2.457,13,P2
+eng-weymouth-q6,adjacent,structural waterproofing,50.614,-2.457,13,P2
+eng-weymouth-q7,adjacent,cellar tanking,50.614,-2.457,13,P2
+eng-weymouth-q8,adjacent,mini piling,50.614,-2.457,13,P2
+eng-weymouth-q9,adjacent,wall tie replacement,50.614,-2.457,13,P2
+eng-bournemouth-poole-q0,foundation,underpinning,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-q1,foundation,subsidence repair,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-q2,foundation,structural repair,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-q3,foundation,foundation repair,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-q4,adjacent,damp proofing,50.7192,-1.8808,13,P2
+eng-bournemouth-poole-q5,adjacent,basement waterproofing,50.7192,-1.8808,13,P2
+eng-bournemouth-poole-q6,adjacent,structural waterproofing,50.7192,-1.8808,13,P2
+eng-bournemouth-poole-q7,adjacent,cellar tanking,50.7192,-1.8808,13,P2
+eng-bournemouth-poole-q8,adjacent,mini piling,50.7192,-1.8808,13,P2
+eng-bournemouth-poole-q9,adjacent,wall tie replacement,50.7192,-1.8808,13,P2
+eng-salisbury-q0,foundation,underpinning,51.0688,-1.7945,13,P1
+eng-salisbury-q1,foundation,subsidence repair,51.0688,-1.7945,13,P1
+eng-salisbury-q2,foundation,structural repair,51.0688,-1.7945,13,P1
+eng-salisbury-q3,foundation,foundation repair,51.0688,-1.7945,13,P1
+eng-salisbury-q4,adjacent,damp proofing,51.0688,-1.7945,13,P2
+eng-salisbury-q5,adjacent,basement waterproofing,51.0688,-1.7945,13,P2
+eng-salisbury-q6,adjacent,structural waterproofing,51.0688,-1.7945,13,P2
+eng-salisbury-q7,adjacent,cellar tanking,51.0688,-1.7945,13,P2
+eng-salisbury-q8,adjacent,mini piling,51.0688,-1.7945,13,P2
+eng-salisbury-q9,adjacent,wall tie replacement,51.0688,-1.7945,13,P2
+eng-swindon-q0,foundation,underpinning,51.5685,-1.7722,13,P1
+eng-swindon-q1,foundation,subsidence repair,51.5685,-1.7722,13,P1
+eng-swindon-q2,foundation,structural repair,51.5685,-1.7722,13,P1
+eng-swindon-q3,foundation,foundation repair,51.5685,-1.7722,13,P1
+eng-swindon-q4,adjacent,damp proofing,51.5685,-1.7722,13,P2
+eng-swindon-q5,adjacent,basement waterproofing,51.5685,-1.7722,13,P2
+eng-swindon-q6,adjacent,structural waterproofing,51.5685,-1.7722,13,P2
+eng-swindon-q7,adjacent,cellar tanking,51.5685,-1.7722,13,P2
+eng-swindon-q8,adjacent,mini piling,51.5685,-1.7722,13,P2
+eng-swindon-q9,adjacent,wall tie replacement,51.5685,-1.7722,13,P2
+eng-southampton-q0,foundation,underpinning,50.9097,-1.4044,13,P1
+eng-southampton-q1,foundation,subsidence repair,50.9097,-1.4044,13,P1
+eng-southampton-q2,foundation,structural repair,50.9097,-1.4044,13,P1
+eng-southampton-q3,foundation,foundation repair,50.9097,-1.4044,13,P1
+eng-southampton-q4,adjacent,damp proofing,50.9097,-1.4044,13,P2
+eng-southampton-q5,adjacent,basement waterproofing,50.9097,-1.4044,13,P2
+eng-southampton-q6,adjacent,structural waterproofing,50.9097,-1.4044,13,P2
+eng-southampton-q7,adjacent,cellar tanking,50.9097,-1.4044,13,P2
+eng-southampton-q8,adjacent,mini piling,50.9097,-1.4044,13,P2
+eng-southampton-q9,adjacent,wall tie replacement,50.9097,-1.4044,13,P2
+eng-portsmouth-q0,foundation,underpinning,50.8198,-1.088,13,P1
+eng-portsmouth-q1,foundation,subsidence repair,50.8198,-1.088,13,P1
+eng-portsmouth-q2,foundation,structural repair,50.8198,-1.088,13,P1
+eng-portsmouth-q3,foundation,foundation repair,50.8198,-1.088,13,P1
+eng-portsmouth-q4,adjacent,damp proofing,50.8198,-1.088,13,P2
+eng-portsmouth-q5,adjacent,basement waterproofing,50.8198,-1.088,13,P2
+eng-portsmouth-q6,adjacent,structural waterproofing,50.8198,-1.088,13,P2
+eng-portsmouth-q7,adjacent,cellar tanking,50.8198,-1.088,13,P2
+eng-portsmouth-q8,adjacent,mini piling,50.8198,-1.088,13,P2
+eng-portsmouth-q9,adjacent,wall tie replacement,50.8198,-1.088,13,P2
+eng-basingstoke-q0,foundation,underpinning,51.2665,-1.087,13,P1
+eng-basingstoke-q1,foundation,subsidence repair,51.2665,-1.087,13,P1
+eng-basingstoke-q2,foundation,structural repair,51.2665,-1.087,13,P1
+eng-basingstoke-q3,foundation,foundation repair,51.2665,-1.087,13,P1
+eng-basingstoke-q4,adjacent,damp proofing,51.2665,-1.087,13,P2
+eng-basingstoke-q5,adjacent,basement waterproofing,51.2665,-1.087,13,P2
+eng-basingstoke-q6,adjacent,structural waterproofing,51.2665,-1.087,13,P2
+eng-basingstoke-q7,adjacent,cellar tanking,51.2665,-1.087,13,P2
+eng-basingstoke-q8,adjacent,mini piling,51.2665,-1.087,13,P2
+eng-basingstoke-q9,adjacent,wall tie replacement,51.2665,-1.087,13,P2
+eng-reading-q0,foundation,underpinning,51.4543,-0.9781,13,P1
+eng-reading-q1,foundation,subsidence repair,51.4543,-0.9781,13,P1
+eng-reading-q2,foundation,structural repair,51.4543,-0.9781,13,P1
+eng-reading-q3,foundation,foundation repair,51.4543,-0.9781,13,P1
+eng-reading-q4,adjacent,damp proofing,51.4543,-0.9781,13,P2
+eng-reading-q5,adjacent,basement waterproofing,51.4543,-0.9781,13,P2
+eng-reading-q6,adjacent,structural waterproofing,51.4543,-0.9781,13,P2
+eng-reading-q7,adjacent,cellar tanking,51.4543,-0.9781,13,P2
+eng-reading-q8,adjacent,mini piling,51.4543,-0.9781,13,P2
+eng-reading-q9,adjacent,wall tie replacement,51.4543,-0.9781,13,P2
+eng-slough-q0,foundation,underpinning,51.5105,-0.595,13,P1
+eng-slough-q1,foundation,subsidence repair,51.5105,-0.595,13,P1
+eng-slough-q2,foundation,structural repair,51.5105,-0.595,13,P1
+eng-slough-q3,foundation,foundation repair,51.5105,-0.595,13,P1
+eng-slough-q4,adjacent,damp proofing,51.5105,-0.595,13,P2
+eng-slough-q5,adjacent,basement waterproofing,51.5105,-0.595,13,P2
+eng-slough-q6,adjacent,structural waterproofing,51.5105,-0.595,13,P2
+eng-slough-q7,adjacent,cellar tanking,51.5105,-0.595,13,P2
+eng-slough-q8,adjacent,mini piling,51.5105,-0.595,13,P2
+eng-slough-q9,adjacent,wall tie replacement,51.5105,-0.595,13,P2
+eng-oxford-q0,foundation,underpinning,51.752,-1.2577,13,P1
+eng-oxford-q1,foundation,subsidence repair,51.752,-1.2577,13,P1
+eng-oxford-q2,foundation,structural repair,51.752,-1.2577,13,P1
+eng-oxford-q3,foundation,foundation repair,51.752,-1.2577,13,P1
+eng-oxford-q4,adjacent,damp proofing,51.752,-1.2577,13,P2
+eng-oxford-q5,adjacent,basement waterproofing,51.752,-1.2577,13,P2
+eng-oxford-q6,adjacent,structural waterproofing,51.752,-1.2577,13,P2
+eng-oxford-q7,adjacent,cellar tanking,51.752,-1.2577,13,P2
+eng-oxford-q8,adjacent,mini piling,51.752,-1.2577,13,P2
+eng-oxford-q9,adjacent,wall tie replacement,51.752,-1.2577,13,P2
+eng-aylesbury-q0,foundation,underpinning,51.8156,-0.8084,13,P1
+eng-aylesbury-q1,foundation,subsidence repair,51.8156,-0.8084,13,P1
+eng-aylesbury-q2,foundation,structural repair,51.8156,-0.8084,13,P1
+eng-aylesbury-q3,foundation,foundation repair,51.8156,-0.8084,13,P1
+eng-aylesbury-q4,adjacent,damp proofing,51.8156,-0.8084,13,P2
+eng-aylesbury-q5,adjacent,basement waterproofing,51.8156,-0.8084,13,P2
+eng-aylesbury-q6,adjacent,structural waterproofing,51.8156,-0.8084,13,P2
+eng-aylesbury-q7,adjacent,cellar tanking,51.8156,-0.8084,13,P2
+eng-aylesbury-q8,adjacent,mini piling,51.8156,-0.8084,13,P2
+eng-aylesbury-q9,adjacent,wall tie replacement,51.8156,-0.8084,13,P2
+eng-high-wycombe-q0,foundation,underpinning,51.6287,-0.7482,13,P1
+eng-high-wycombe-q1,foundation,subsidence repair,51.6287,-0.7482,13,P1
+eng-high-wycombe-q2,foundation,structural repair,51.6287,-0.7482,13,P1
+eng-high-wycombe-q3,foundation,foundation repair,51.6287,-0.7482,13,P1
+eng-high-wycombe-q4,adjacent,damp proofing,51.6287,-0.7482,13,P2
+eng-high-wycombe-q5,adjacent,basement waterproofing,51.6287,-0.7482,13,P2
+eng-high-wycombe-q6,adjacent,structural waterproofing,51.6287,-0.7482,13,P2
+eng-high-wycombe-q7,adjacent,cellar tanking,51.6287,-0.7482,13,P2
+eng-high-wycombe-q8,adjacent,mini piling,51.6287,-0.7482,13,P2
+eng-high-wycombe-q9,adjacent,wall tie replacement,51.6287,-0.7482,13,P2
+eng-milton-keynes-q0,foundation,underpinning,52.0406,-0.7594,13,P1
+eng-milton-keynes-q1,foundation,subsidence repair,52.0406,-0.7594,13,P1
+eng-milton-keynes-q2,foundation,structural repair,52.0406,-0.7594,13,P1
+eng-milton-keynes-q3,foundation,foundation repair,52.0406,-0.7594,13,P1
+eng-milton-keynes-q4,adjacent,damp proofing,52.0406,-0.7594,13,P2
+eng-milton-keynes-q5,adjacent,basement waterproofing,52.0406,-0.7594,13,P2
+eng-milton-keynes-q6,adjacent,structural waterproofing,52.0406,-0.7594,13,P2
+eng-milton-keynes-q7,adjacent,cellar tanking,52.0406,-0.7594,13,P2
+eng-milton-keynes-q8,adjacent,mini piling,52.0406,-0.7594,13,P2
+eng-milton-keynes-q9,adjacent,wall tie replacement,52.0406,-0.7594,13,P2
+eng-northampton-q0,foundation,underpinning,52.2405,-0.9027,13,P1
+eng-northampton-q1,foundation,subsidence repair,52.2405,-0.9027,13,P1
+eng-northampton-q2,foundation,structural repair,52.2405,-0.9027,13,P1
+eng-northampton-q3,foundation,foundation repair,52.2405,-0.9027,13,P1
+eng-northampton-q4,adjacent,damp proofing,52.2405,-0.9027,13,P2
+eng-northampton-q5,adjacent,basement waterproofing,52.2405,-0.9027,13,P2
+eng-northampton-q6,adjacent,structural waterproofing,52.2405,-0.9027,13,P2
+eng-northampton-q7,adjacent,cellar tanking,52.2405,-0.9027,13,P2
+eng-northampton-q8,adjacent,mini piling,52.2405,-0.9027,13,P2
+eng-northampton-q9,adjacent,wall tie replacement,52.2405,-0.9027,13,P2
+eng-kettering-corby-q0,foundation,underpinning,52.393,-0.729,13,P1
+eng-kettering-corby-q1,foundation,subsidence repair,52.393,-0.729,13,P1
+eng-kettering-corby-q2,foundation,structural repair,52.393,-0.729,13,P1
+eng-kettering-corby-q3,foundation,foundation repair,52.393,-0.729,13,P1
+eng-kettering-corby-q4,adjacent,damp proofing,52.393,-0.729,13,P2
+eng-kettering-corby-q5,adjacent,basement waterproofing,52.393,-0.729,13,P2
+eng-kettering-corby-q6,adjacent,structural waterproofing,52.393,-0.729,13,P2
+eng-kettering-corby-q7,adjacent,cellar tanking,52.393,-0.729,13,P2
+eng-kettering-corby-q8,adjacent,mini piling,52.393,-0.729,13,P2
+eng-kettering-corby-q9,adjacent,wall tie replacement,52.393,-0.729,13,P2
+eng-bedford-q0,foundation,underpinning,52.136,-0.467,13,P1
+eng-bedford-q1,foundation,subsidence repair,52.136,-0.467,13,P1
+eng-bedford-q2,foundation,structural repair,52.136,-0.467,13,P1
+eng-bedford-q3,foundation,foundation repair,52.136,-0.467,13,P1
+eng-bedford-q4,adjacent,damp proofing,52.136,-0.467,13,P2
+eng-bedford-q5,adjacent,basement waterproofing,52.136,-0.467,13,P2
+eng-bedford-q6,adjacent,structural waterproofing,52.136,-0.467,13,P2
+eng-bedford-q7,adjacent,cellar tanking,52.136,-0.467,13,P2
+eng-bedford-q8,adjacent,mini piling,52.136,-0.467,13,P2
+eng-bedford-q9,adjacent,wall tie replacement,52.136,-0.467,13,P2
+eng-luton-q0,foundation,underpinning,51.8787,-0.42,13,P1
+eng-luton-q1,foundation,subsidence repair,51.8787,-0.42,13,P1
+eng-luton-q2,foundation,structural repair,51.8787,-0.42,13,P1
+eng-luton-q3,foundation,foundation repair,51.8787,-0.42,13,P1
+eng-luton-q4,adjacent,damp proofing,51.8787,-0.42,13,P2
+eng-luton-q5,adjacent,basement waterproofing,51.8787,-0.42,13,P2
+eng-luton-q6,adjacent,structural waterproofing,51.8787,-0.42,13,P2
+eng-luton-q7,adjacent,cellar tanking,51.8787,-0.42,13,P2
+eng-luton-q8,adjacent,mini piling,51.8787,-0.42,13,P2
+eng-luton-q9,adjacent,wall tie replacement,51.8787,-0.42,13,P2
+eng-stevenage-q0,foundation,underpinning,51.9038,-0.2018,13,P1
+eng-stevenage-q1,foundation,subsidence repair,51.9038,-0.2018,13,P1
+eng-stevenage-q2,foundation,structural repair,51.9038,-0.2018,13,P1
+eng-stevenage-q3,foundation,foundation repair,51.9038,-0.2018,13,P1
+eng-stevenage-q4,adjacent,damp proofing,51.9038,-0.2018,13,P2
+eng-stevenage-q5,adjacent,basement waterproofing,51.9038,-0.2018,13,P2
+eng-stevenage-q6,adjacent,structural waterproofing,51.9038,-0.2018,13,P2
+eng-stevenage-q7,adjacent,cellar tanking,51.9038,-0.2018,13,P2
+eng-stevenage-q8,adjacent,mini piling,51.9038,-0.2018,13,P2
+eng-stevenage-q9,adjacent,wall tie replacement,51.9038,-0.2018,13,P2
+eng-cambridge-q0,foundation,underpinning,52.2053,0.1218,13,P1
+eng-cambridge-q1,foundation,subsidence repair,52.2053,0.1218,13,P1
+eng-cambridge-q2,foundation,structural repair,52.2053,0.1218,13,P1
+eng-cambridge-q3,foundation,foundation repair,52.2053,0.1218,13,P1
+eng-cambridge-q4,adjacent,damp proofing,52.2053,0.1218,13,P2
+eng-cambridge-q5,adjacent,basement waterproofing,52.2053,0.1218,13,P2
+eng-cambridge-q6,adjacent,structural waterproofing,52.2053,0.1218,13,P2
+eng-cambridge-q7,adjacent,cellar tanking,52.2053,0.1218,13,P2
+eng-cambridge-q8,adjacent,mini piling,52.2053,0.1218,13,P2
+eng-cambridge-q9,adjacent,wall tie replacement,52.2053,0.1218,13,P2
+eng-peterborough-q0,foundation,underpinning,52.5695,-0.2405,13,P1
+eng-peterborough-q1,foundation,subsidence repair,52.5695,-0.2405,13,P1
+eng-peterborough-q2,foundation,structural repair,52.5695,-0.2405,13,P1
+eng-peterborough-q3,foundation,foundation repair,52.5695,-0.2405,13,P1
+eng-peterborough-q4,adjacent,damp proofing,52.5695,-0.2405,13,P2
+eng-peterborough-q5,adjacent,basement waterproofing,52.5695,-0.2405,13,P2
+eng-peterborough-q6,adjacent,structural waterproofing,52.5695,-0.2405,13,P2
+eng-peterborough-q7,adjacent,cellar tanking,52.5695,-0.2405,13,P2
+eng-peterborough-q8,adjacent,mini piling,52.5695,-0.2405,13,P2
+eng-peterborough-q9,adjacent,wall tie replacement,52.5695,-0.2405,13,P2
+eng-kings-lynn-q0,foundation,underpinning,52.752,0.402,13,P1
+eng-kings-lynn-q1,foundation,subsidence repair,52.752,0.402,13,P1
+eng-kings-lynn-q2,foundation,structural repair,52.752,0.402,13,P1
+eng-kings-lynn-q3,foundation,foundation repair,52.752,0.402,13,P1
+eng-kings-lynn-q4,adjacent,damp proofing,52.752,0.402,13,P2
+eng-kings-lynn-q5,adjacent,basement waterproofing,52.752,0.402,13,P2
+eng-kings-lynn-q6,adjacent,structural waterproofing,52.752,0.402,13,P2
+eng-kings-lynn-q7,adjacent,cellar tanking,52.752,0.402,13,P2
+eng-kings-lynn-q8,adjacent,mini piling,52.752,0.402,13,P2
+eng-kings-lynn-q9,adjacent,wall tie replacement,52.752,0.402,13,P2
+eng-norwich-q0,foundation,underpinning,52.6309,1.2974,13,P1
+eng-norwich-q1,foundation,subsidence repair,52.6309,1.2974,13,P1
+eng-norwich-q2,foundation,structural repair,52.6309,1.2974,13,P1
+eng-norwich-q3,foundation,foundation repair,52.6309,1.2974,13,P1
+eng-norwich-q4,adjacent,damp proofing,52.6309,1.2974,13,P2
+eng-norwich-q5,adjacent,basement waterproofing,52.6309,1.2974,13,P2
+eng-norwich-q6,adjacent,structural waterproofing,52.6309,1.2974,13,P2
+eng-norwich-q7,adjacent,cellar tanking,52.6309,1.2974,13,P2
+eng-norwich-q8,adjacent,mini piling,52.6309,1.2974,13,P2
+eng-norwich-q9,adjacent,wall tie replacement,52.6309,1.2974,13,P2
+eng-great-yarmouth-q0,foundation,underpinning,52.6083,1.73,13,P1
+eng-great-yarmouth-q1,foundation,subsidence repair,52.6083,1.73,13,P1
+eng-great-yarmouth-q2,foundation,structural repair,52.6083,1.73,13,P1
+eng-great-yarmouth-q3,foundation,foundation repair,52.6083,1.73,13,P1
+eng-great-yarmouth-q4,adjacent,damp proofing,52.6083,1.73,13,P2
+eng-great-yarmouth-q5,adjacent,basement waterproofing,52.6083,1.73,13,P2
+eng-great-yarmouth-q6,adjacent,structural waterproofing,52.6083,1.73,13,P2
+eng-great-yarmouth-q7,adjacent,cellar tanking,52.6083,1.73,13,P2
+eng-great-yarmouth-q8,adjacent,mini piling,52.6083,1.73,13,P2
+eng-great-yarmouth-q9,adjacent,wall tie replacement,52.6083,1.73,13,P2
+eng-lowestoft-q0,foundation,underpinning,52.48,1.75,13,P1
+eng-lowestoft-q1,foundation,subsidence repair,52.48,1.75,13,P1
+eng-lowestoft-q2,foundation,structural repair,52.48,1.75,13,P1
+eng-lowestoft-q3,foundation,foundation repair,52.48,1.75,13,P1
+eng-lowestoft-q4,adjacent,damp proofing,52.48,1.75,13,P2
+eng-lowestoft-q5,adjacent,basement waterproofing,52.48,1.75,13,P2
+eng-lowestoft-q6,adjacent,structural waterproofing,52.48,1.75,13,P2
+eng-lowestoft-q7,adjacent,cellar tanking,52.48,1.75,13,P2
+eng-lowestoft-q8,adjacent,mini piling,52.48,1.75,13,P2
+eng-lowestoft-q9,adjacent,wall tie replacement,52.48,1.75,13,P2
+eng-ipswich-q0,foundation,underpinning,52.0567,1.1482,13,P1
+eng-ipswich-q1,foundation,subsidence repair,52.0567,1.1482,13,P1
+eng-ipswich-q2,foundation,structural repair,52.0567,1.1482,13,P1
+eng-ipswich-q3,foundation,foundation repair,52.0567,1.1482,13,P1
+eng-ipswich-q4,adjacent,damp proofing,52.0567,1.1482,13,P2
+eng-ipswich-q5,adjacent,basement waterproofing,52.0567,1.1482,13,P2
+eng-ipswich-q6,adjacent,structural waterproofing,52.0567,1.1482,13,P2
+eng-ipswich-q7,adjacent,cellar tanking,52.0567,1.1482,13,P2
+eng-ipswich-q8,adjacent,mini piling,52.0567,1.1482,13,P2
+eng-ipswich-q9,adjacent,wall tie replacement,52.0567,1.1482,13,P2
+eng-bury-st-edmunds-q0,foundation,underpinning,52.245,0.711,13,P1
+eng-bury-st-edmunds-q1,foundation,subsidence repair,52.245,0.711,13,P1
+eng-bury-st-edmunds-q2,foundation,structural repair,52.245,0.711,13,P1
+eng-bury-st-edmunds-q3,foundation,foundation repair,52.245,0.711,13,P1
+eng-bury-st-edmunds-q4,adjacent,damp proofing,52.245,0.711,13,P2
+eng-bury-st-edmunds-q5,adjacent,basement waterproofing,52.245,0.711,13,P2
+eng-bury-st-edmunds-q6,adjacent,structural waterproofing,52.245,0.711,13,P2
+eng-bury-st-edmunds-q7,adjacent,cellar tanking,52.245,0.711,13,P2
+eng-bury-st-edmunds-q8,adjacent,mini piling,52.245,0.711,13,P2
+eng-bury-st-edmunds-q9,adjacent,wall tie replacement,52.245,0.711,13,P2
+eng-colchester-q0,foundation,underpinning,51.8959,0.8919,13,P1
+eng-colchester-q1,foundation,subsidence repair,51.8959,0.8919,13,P1
+eng-colchester-q2,foundation,structural repair,51.8959,0.8919,13,P1
+eng-colchester-q3,foundation,foundation repair,51.8959,0.8919,13,P1
+eng-colchester-q4,adjacent,damp proofing,51.8959,0.8919,13,P2
+eng-colchester-q5,adjacent,basement waterproofing,51.8959,0.8919,13,P2
+eng-colchester-q6,adjacent,structural waterproofing,51.8959,0.8919,13,P2
+eng-colchester-q7,adjacent,cellar tanking,51.8959,0.8919,13,P2
+eng-colchester-q8,adjacent,mini piling,51.8959,0.8919,13,P2
+eng-colchester-q9,adjacent,wall tie replacement,51.8959,0.8919,13,P2
+eng-chelmsford-q0,foundation,underpinning,51.7356,0.4685,13,P1
+eng-chelmsford-q1,foundation,subsidence repair,51.7356,0.4685,13,P1
+eng-chelmsford-q2,foundation,structural repair,51.7356,0.4685,13,P1
+eng-chelmsford-q3,foundation,foundation repair,51.7356,0.4685,13,P1
+eng-chelmsford-q4,adjacent,damp proofing,51.7356,0.4685,13,P2
+eng-chelmsford-q5,adjacent,basement waterproofing,51.7356,0.4685,13,P2
+eng-chelmsford-q6,adjacent,structural waterproofing,51.7356,0.4685,13,P2
+eng-chelmsford-q7,adjacent,cellar tanking,51.7356,0.4685,13,P2
+eng-chelmsford-q8,adjacent,mini piling,51.7356,0.4685,13,P2
+eng-chelmsford-q9,adjacent,wall tie replacement,51.7356,0.4685,13,P2
+eng-southend-on-sea-q0,foundation,underpinning,51.54,0.71,13,P1
+eng-southend-on-sea-q1,foundation,subsidence repair,51.54,0.71,13,P1
+eng-southend-on-sea-q2,foundation,structural repair,51.54,0.71,13,P1
+eng-southend-on-sea-q3,foundation,foundation repair,51.54,0.71,13,P1
+eng-southend-on-sea-q4,adjacent,damp proofing,51.54,0.71,13,P2
+eng-southend-on-sea-q5,adjacent,basement waterproofing,51.54,0.71,13,P2
+eng-southend-on-sea-q6,adjacent,structural waterproofing,51.54,0.71,13,P2
+eng-southend-on-sea-q7,adjacent,cellar tanking,51.54,0.71,13,P2
+eng-southend-on-sea-q8,adjacent,mini piling,51.54,0.71,13,P2
+eng-southend-on-sea-q9,adjacent,wall tie replacement,51.54,0.71,13,P2
+eng-medway-chatham-q0,foundation,underpinning,51.38,0.52,13,P1
+eng-medway-chatham-q1,foundation,subsidence repair,51.38,0.52,13,P1
+eng-medway-chatham-q2,foundation,structural repair,51.38,0.52,13,P1
+eng-medway-chatham-q3,foundation,foundation repair,51.38,0.52,13,P1
+eng-medway-chatham-q4,adjacent,damp proofing,51.38,0.52,13,P2
+eng-medway-chatham-q5,adjacent,basement waterproofing,51.38,0.52,13,P2
+eng-medway-chatham-q6,adjacent,structural waterproofing,51.38,0.52,13,P2
+eng-medway-chatham-q7,adjacent,cellar tanking,51.38,0.52,13,P2
+eng-medway-chatham-q8,adjacent,mini piling,51.38,0.52,13,P2
+eng-medway-chatham-q9,adjacent,wall tie replacement,51.38,0.52,13,P2
+eng-maidstone-q0,foundation,underpinning,51.272,0.529,13,P1
+eng-maidstone-q1,foundation,subsidence repair,51.272,0.529,13,P1
+eng-maidstone-q2,foundation,structural repair,51.272,0.529,13,P1
+eng-maidstone-q3,foundation,foundation repair,51.272,0.529,13,P1
+eng-maidstone-q4,adjacent,damp proofing,51.272,0.529,13,P2
+eng-maidstone-q5,adjacent,basement waterproofing,51.272,0.529,13,P2
+eng-maidstone-q6,adjacent,structural waterproofing,51.272,0.529,13,P2
+eng-maidstone-q7,adjacent,cellar tanking,51.272,0.529,13,P2
+eng-maidstone-q8,adjacent,mini piling,51.272,0.529,13,P2
+eng-maidstone-q9,adjacent,wall tie replacement,51.272,0.529,13,P2
+eng-canterbury-q0,foundation,underpinning,51.2802,1.0789,13,P1
+eng-canterbury-q1,foundation,subsidence repair,51.2802,1.0789,13,P1
+eng-canterbury-q2,foundation,structural repair,51.2802,1.0789,13,P1
+eng-canterbury-q3,foundation,foundation repair,51.2802,1.0789,13,P1
+eng-canterbury-q4,adjacent,damp proofing,51.2802,1.0789,13,P2
+eng-canterbury-q5,adjacent,basement waterproofing,51.2802,1.0789,13,P2
+eng-canterbury-q6,adjacent,structural waterproofing,51.2802,1.0789,13,P2
+eng-canterbury-q7,adjacent,cellar tanking,51.2802,1.0789,13,P2
+eng-canterbury-q8,adjacent,mini piling,51.2802,1.0789,13,P2
+eng-canterbury-q9,adjacent,wall tie replacement,51.2802,1.0789,13,P2
+eng-dover-q0,foundation,underpinning,51.1279,1.3134,13,P1
+eng-dover-q1,foundation,subsidence repair,51.1279,1.3134,13,P1
+eng-dover-q2,foundation,structural repair,51.1279,1.3134,13,P1
+eng-dover-q3,foundation,foundation repair,51.1279,1.3134,13,P1
+eng-dover-q4,adjacent,damp proofing,51.1279,1.3134,13,P2
+eng-dover-q5,adjacent,basement waterproofing,51.1279,1.3134,13,P2
+eng-dover-q6,adjacent,structural waterproofing,51.1279,1.3134,13,P2
+eng-dover-q7,adjacent,cellar tanking,51.1279,1.3134,13,P2
+eng-dover-q8,adjacent,mini piling,51.1279,1.3134,13,P2
+eng-dover-q9,adjacent,wall tie replacement,51.1279,1.3134,13,P2
+eng-ashford-kent-q0,foundation,underpinning,51.1465,0.875,13,P1
+eng-ashford-kent-q1,foundation,subsidence repair,51.1465,0.875,13,P1
+eng-ashford-kent-q2,foundation,structural repair,51.1465,0.875,13,P1
+eng-ashford-kent-q3,foundation,foundation repair,51.1465,0.875,13,P1
+eng-ashford-kent-q4,adjacent,damp proofing,51.1465,0.875,13,P2
+eng-ashford-kent-q5,adjacent,basement waterproofing,51.1465,0.875,13,P2
+eng-ashford-kent-q6,adjacent,structural waterproofing,51.1465,0.875,13,P2
+eng-ashford-kent-q7,adjacent,cellar tanking,51.1465,0.875,13,P2
+eng-ashford-kent-q8,adjacent,mini piling,51.1465,0.875,13,P2
+eng-ashford-kent-q9,adjacent,wall tie replacement,51.1465,0.875,13,P2
+eng-hastings-q0,foundation,underpinning,50.8543,0.5735,13,P1
+eng-hastings-q1,foundation,subsidence repair,50.8543,0.5735,13,P1
+eng-hastings-q2,foundation,structural repair,50.8543,0.5735,13,P1
+eng-hastings-q3,foundation,foundation repair,50.8543,0.5735,13,P1
+eng-hastings-q4,adjacent,damp proofing,50.8543,0.5735,13,P2
+eng-hastings-q5,adjacent,basement waterproofing,50.8543,0.5735,13,P2
+eng-hastings-q6,adjacent,structural waterproofing,50.8543,0.5735,13,P2
+eng-hastings-q7,adjacent,cellar tanking,50.8543,0.5735,13,P2
+eng-hastings-q8,adjacent,mini piling,50.8543,0.5735,13,P2
+eng-hastings-q9,adjacent,wall tie replacement,50.8543,0.5735,13,P2
+eng-eastbourne-q0,foundation,underpinning,50.7687,0.29,13,P1
+eng-eastbourne-q1,foundation,subsidence repair,50.7687,0.29,13,P1
+eng-eastbourne-q2,foundation,structural repair,50.7687,0.29,13,P1
+eng-eastbourne-q3,foundation,foundation repair,50.7687,0.29,13,P1
+eng-eastbourne-q4,adjacent,damp proofing,50.7687,0.29,13,P2
+eng-eastbourne-q5,adjacent,basement waterproofing,50.7687,0.29,13,P2
+eng-eastbourne-q6,adjacent,structural waterproofing,50.7687,0.29,13,P2
+eng-eastbourne-q7,adjacent,cellar tanking,50.7687,0.29,13,P2
+eng-eastbourne-q8,adjacent,mini piling,50.7687,0.29,13,P2
+eng-eastbourne-q9,adjacent,wall tie replacement,50.7687,0.29,13,P2
+eng-tunbridge-wells-q0,foundation,underpinning,51.1324,0.2637,13,P1
+eng-tunbridge-wells-q1,foundation,subsidence repair,51.1324,0.2637,13,P1
+eng-tunbridge-wells-q2,foundation,structural repair,51.1324,0.2637,13,P1
+eng-tunbridge-wells-q3,foundation,foundation repair,51.1324,0.2637,13,P1
+eng-tunbridge-wells-q4,adjacent,damp proofing,51.1324,0.2637,13,P2
+eng-tunbridge-wells-q5,adjacent,basement waterproofing,51.1324,0.2637,13,P2
+eng-tunbridge-wells-q6,adjacent,structural waterproofing,51.1324,0.2637,13,P2
+eng-tunbridge-wells-q7,adjacent,cellar tanking,51.1324,0.2637,13,P2
+eng-tunbridge-wells-q8,adjacent,mini piling,51.1324,0.2637,13,P2
+eng-tunbridge-wells-q9,adjacent,wall tie replacement,51.1324,0.2637,13,P2
+eng-crawley-q0,foundation,underpinning,51.1092,-0.1872,13,P1
+eng-crawley-q1,foundation,subsidence repair,51.1092,-0.1872,13,P1
+eng-crawley-q2,foundation,structural repair,51.1092,-0.1872,13,P1
+eng-crawley-q3,foundation,foundation repair,51.1092,-0.1872,13,P1
+eng-crawley-q4,adjacent,damp proofing,51.1092,-0.1872,13,P2
+eng-crawley-q5,adjacent,basement waterproofing,51.1092,-0.1872,13,P2
+eng-crawley-q6,adjacent,structural waterproofing,51.1092,-0.1872,13,P2
+eng-crawley-q7,adjacent,cellar tanking,51.1092,-0.1872,13,P2
+eng-crawley-q8,adjacent,mini piling,51.1092,-0.1872,13,P2
+eng-crawley-q9,adjacent,wall tie replacement,51.1092,-0.1872,13,P2
+eng-brighton-hove-q0,foundation,underpinning,50.8225,-0.1372,13,P1
+eng-brighton-hove-q1,foundation,subsidence repair,50.8225,-0.1372,13,P1
+eng-brighton-hove-q2,foundation,structural repair,50.8225,-0.1372,13,P1
+eng-brighton-hove-q3,foundation,foundation repair,50.8225,-0.1372,13,P1
+eng-brighton-hove-q4,adjacent,damp proofing,50.8225,-0.1372,13,P2
+eng-brighton-hove-q5,adjacent,basement waterproofing,50.8225,-0.1372,13,P2
+eng-brighton-hove-q6,adjacent,structural waterproofing,50.8225,-0.1372,13,P2
+eng-brighton-hove-q7,adjacent,cellar tanking,50.8225,-0.1372,13,P2
+eng-brighton-hove-q8,adjacent,mini piling,50.8225,-0.1372,13,P2
+eng-brighton-hove-q9,adjacent,wall tie replacement,50.8225,-0.1372,13,P2
+eng-guildford-q0,foundation,underpinning,51.2362,-0.5704,13,P1
+eng-guildford-q1,foundation,subsidence repair,51.2362,-0.5704,13,P1
+eng-guildford-q2,foundation,structural repair,51.2362,-0.5704,13,P1
+eng-guildford-q3,foundation,foundation repair,51.2362,-0.5704,13,P1
+eng-guildford-q4,adjacent,damp proofing,51.2362,-0.5704,13,P2
+eng-guildford-q5,adjacent,basement waterproofing,51.2362,-0.5704,13,P2
+eng-guildford-q6,adjacent,structural waterproofing,51.2362,-0.5704,13,P2
+eng-guildford-q7,adjacent,cellar tanking,51.2362,-0.5704,13,P2
+eng-guildford-q8,adjacent,mini piling,51.2362,-0.5704,13,P2
+eng-guildford-q9,adjacent,wall tie replacement,51.2362,-0.5704,13,P2
+eng-leicester-q0,foundation,underpinning,52.6369,-1.1398,13,P1
+eng-leicester-q1,foundation,subsidence repair,52.6369,-1.1398,13,P1
+eng-leicester-q2,foundation,structural repair,52.6369,-1.1398,13,P1
+eng-leicester-q3,foundation,foundation repair,52.6369,-1.1398,13,P1
+eng-leicester-q4,adjacent,damp proofing,52.6369,-1.1398,13,P2
+eng-leicester-q5,adjacent,basement waterproofing,52.6369,-1.1398,13,P2
+eng-leicester-q6,adjacent,structural waterproofing,52.6369,-1.1398,13,P2
+eng-leicester-q7,adjacent,cellar tanking,52.6369,-1.1398,13,P2
+eng-leicester-q8,adjacent,mini piling,52.6369,-1.1398,13,P2
+eng-leicester-q9,adjacent,wall tie replacement,52.6369,-1.1398,13,P2
+eng-nottingham-q0,foundation,underpinning,52.9548,-1.1581,13,P1
+eng-nottingham-q1,foundation,subsidence repair,52.9548,-1.1581,13,P1
+eng-nottingham-q2,foundation,structural repair,52.9548,-1.1581,13,P1
+eng-nottingham-q3,foundation,foundation repair,52.9548,-1.1581,13,P1
+eng-nottingham-q4,adjacent,damp proofing,52.9548,-1.1581,13,P2
+eng-nottingham-q5,adjacent,basement waterproofing,52.9548,-1.1581,13,P2
+eng-nottingham-q6,adjacent,structural waterproofing,52.9548,-1.1581,13,P2
+eng-nottingham-q7,adjacent,cellar tanking,52.9548,-1.1581,13,P2
+eng-nottingham-q8,adjacent,mini piling,52.9548,-1.1581,13,P2
+eng-nottingham-q9,adjacent,wall tie replacement,52.9548,-1.1581,13,P2
+eng-derby-q0,foundation,underpinning,52.9225,-1.4746,13,P1
+eng-derby-q1,foundation,subsidence repair,52.9225,-1.4746,13,P1
+eng-derby-q2,foundation,structural repair,52.9225,-1.4746,13,P1
+eng-derby-q3,foundation,foundation repair,52.9225,-1.4746,13,P1
+eng-derby-q4,adjacent,damp proofing,52.9225,-1.4746,13,P2
+eng-derby-q5,adjacent,basement waterproofing,52.9225,-1.4746,13,P2
+eng-derby-q6,adjacent,structural waterproofing,52.9225,-1.4746,13,P2
+eng-derby-q7,adjacent,cellar tanking,52.9225,-1.4746,13,P2
+eng-derby-q8,adjacent,mini piling,52.9225,-1.4746,13,P2
+eng-derby-q9,adjacent,wall tie replacement,52.9225,-1.4746,13,P2
+eng-mansfield-q0,foundation,underpinning,53.145,-1.198,13,P1
+eng-mansfield-q1,foundation,subsidence repair,53.145,-1.198,13,P1
+eng-mansfield-q2,foundation,structural repair,53.145,-1.198,13,P1
+eng-mansfield-q3,foundation,foundation repair,53.145,-1.198,13,P1
+eng-mansfield-q4,adjacent,damp proofing,53.145,-1.198,13,P2
+eng-mansfield-q5,adjacent,basement waterproofing,53.145,-1.198,13,P2
+eng-mansfield-q6,adjacent,structural waterproofing,53.145,-1.198,13,P2
+eng-mansfield-q7,adjacent,cellar tanking,53.145,-1.198,13,P2
+eng-mansfield-q8,adjacent,mini piling,53.145,-1.198,13,P2
+eng-mansfield-q9,adjacent,wall tie replacement,53.145,-1.198,13,P2
+eng-chesterfield-q0,foundation,underpinning,53.235,-1.421,13,P1
+eng-chesterfield-q1,foundation,subsidence repair,53.235,-1.421,13,P1
+eng-chesterfield-q2,foundation,structural repair,53.235,-1.421,13,P1
+eng-chesterfield-q3,foundation,foundation repair,53.235,-1.421,13,P1
+eng-chesterfield-q4,adjacent,damp proofing,53.235,-1.421,13,P2
+eng-chesterfield-q5,adjacent,basement waterproofing,53.235,-1.421,13,P2
+eng-chesterfield-q6,adjacent,structural waterproofing,53.235,-1.421,13,P2
+eng-chesterfield-q7,adjacent,cellar tanking,53.235,-1.421,13,P2
+eng-chesterfield-q8,adjacent,mini piling,53.235,-1.421,13,P2
+eng-chesterfield-q9,adjacent,wall tie replacement,53.235,-1.421,13,P2
+eng-lincoln-q0,foundation,underpinning,53.2307,-0.5406,13,P1
+eng-lincoln-q1,foundation,subsidence repair,53.2307,-0.5406,13,P1
+eng-lincoln-q2,foundation,structural repair,53.2307,-0.5406,13,P1
+eng-lincoln-q3,foundation,foundation repair,53.2307,-0.5406,13,P1
+eng-lincoln-q4,adjacent,damp proofing,53.2307,-0.5406,13,P2
+eng-lincoln-q5,adjacent,basement waterproofing,53.2307,-0.5406,13,P2
+eng-lincoln-q6,adjacent,structural waterproofing,53.2307,-0.5406,13,P2
+eng-lincoln-q7,adjacent,cellar tanking,53.2307,-0.5406,13,P2
+eng-lincoln-q8,adjacent,mini piling,53.2307,-0.5406,13,P2
+eng-lincoln-q9,adjacent,wall tie replacement,53.2307,-0.5406,13,P2
+eng-grimsby-q0,foundation,underpinning,53.5675,-0.08,13,P1
+eng-grimsby-q1,foundation,subsidence repair,53.5675,-0.08,13,P1
+eng-grimsby-q2,foundation,structural repair,53.5675,-0.08,13,P1
+eng-grimsby-q3,foundation,foundation repair,53.5675,-0.08,13,P1
+eng-grimsby-q4,adjacent,damp proofing,53.5675,-0.08,13,P2
+eng-grimsby-q5,adjacent,basement waterproofing,53.5675,-0.08,13,P2
+eng-grimsby-q6,adjacent,structural waterproofing,53.5675,-0.08,13,P2
+eng-grimsby-q7,adjacent,cellar tanking,53.5675,-0.08,13,P2
+eng-grimsby-q8,adjacent,mini piling,53.5675,-0.08,13,P2
+eng-grimsby-q9,adjacent,wall tie replacement,53.5675,-0.08,13,P2
+eng-scunthorpe-q0,foundation,underpinning,53.59,-0.65,13,P1
+eng-scunthorpe-q1,foundation,subsidence repair,53.59,-0.65,13,P1
+eng-scunthorpe-q2,foundation,structural repair,53.59,-0.65,13,P1
+eng-scunthorpe-q3,foundation,foundation repair,53.59,-0.65,13,P1
+eng-scunthorpe-q4,adjacent,damp proofing,53.59,-0.65,13,P2
+eng-scunthorpe-q5,adjacent,basement waterproofing,53.59,-0.65,13,P2
+eng-scunthorpe-q6,adjacent,structural waterproofing,53.59,-0.65,13,P2
+eng-scunthorpe-q7,adjacent,cellar tanking,53.59,-0.65,13,P2
+eng-scunthorpe-q8,adjacent,mini piling,53.59,-0.65,13,P2
+eng-scunthorpe-q9,adjacent,wall tie replacement,53.59,-0.65,13,P2
+eng-kingston-upon-hull-q0,foundation,underpinning,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-q1,foundation,subsidence repair,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-q2,foundation,structural repair,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-q3,foundation,foundation repair,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-q4,adjacent,damp proofing,53.7457,-0.3367,13,P2
+eng-kingston-upon-hull-q5,adjacent,basement waterproofing,53.7457,-0.3367,13,P2
+eng-kingston-upon-hull-q6,adjacent,structural waterproofing,53.7457,-0.3367,13,P2
+eng-kingston-upon-hull-q7,adjacent,cellar tanking,53.7457,-0.3367,13,P2
+eng-kingston-upon-hull-q8,adjacent,mini piling,53.7457,-0.3367,13,P2
+eng-kingston-upon-hull-q9,adjacent,wall tie replacement,53.7457,-0.3367,13,P2
+eng-york-q0,foundation,underpinning,53.96,-1.0873,13,P1
+eng-york-q1,foundation,subsidence repair,53.96,-1.0873,13,P1
+eng-york-q2,foundation,structural repair,53.96,-1.0873,13,P1
+eng-york-q3,foundation,foundation repair,53.96,-1.0873,13,P1
+eng-york-q4,adjacent,damp proofing,53.96,-1.0873,13,P2
+eng-york-q5,adjacent,basement waterproofing,53.96,-1.0873,13,P2
+eng-york-q6,adjacent,structural waterproofing,53.96,-1.0873,13,P2
+eng-york-q7,adjacent,cellar tanking,53.96,-1.0873,13,P2
+eng-york-q8,adjacent,mini piling,53.96,-1.0873,13,P2
+eng-york-q9,adjacent,wall tie replacement,53.96,-1.0873,13,P2
+eng-scarborough-q0,foundation,underpinning,54.283,-0.399,13,P1
+eng-scarborough-q1,foundation,subsidence repair,54.283,-0.399,13,P1
+eng-scarborough-q2,foundation,structural repair,54.283,-0.399,13,P1
+eng-scarborough-q3,foundation,foundation repair,54.283,-0.399,13,P1
+eng-scarborough-q4,adjacent,damp proofing,54.283,-0.399,13,P2
+eng-scarborough-q5,adjacent,basement waterproofing,54.283,-0.399,13,P2
+eng-scarborough-q6,adjacent,structural waterproofing,54.283,-0.399,13,P2
+eng-scarborough-q7,adjacent,cellar tanking,54.283,-0.399,13,P2
+eng-scarborough-q8,adjacent,mini piling,54.283,-0.399,13,P2
+eng-scarborough-q9,adjacent,wall tie replacement,54.283,-0.399,13,P2
+eng-leeds-q0,foundation,underpinning,53.8008,-1.5491,13,P1
+eng-leeds-q1,foundation,subsidence repair,53.8008,-1.5491,13,P1
+eng-leeds-q2,foundation,structural repair,53.8008,-1.5491,13,P1
+eng-leeds-q3,foundation,foundation repair,53.8008,-1.5491,13,P1
+eng-leeds-q4,adjacent,damp proofing,53.8008,-1.5491,13,P2
+eng-leeds-q5,adjacent,basement waterproofing,53.8008,-1.5491,13,P2
+eng-leeds-q6,adjacent,structural waterproofing,53.8008,-1.5491,13,P2
+eng-leeds-q7,adjacent,cellar tanking,53.8008,-1.5491,13,P2
+eng-leeds-q8,adjacent,mini piling,53.8008,-1.5491,13,P2
+eng-leeds-q9,adjacent,wall tie replacement,53.8008,-1.5491,13,P2
+eng-bradford-q0,foundation,underpinning,53.796,-1.7594,13,P1
+eng-bradford-q1,foundation,subsidence repair,53.796,-1.7594,13,P1
+eng-bradford-q2,foundation,structural repair,53.796,-1.7594,13,P1
+eng-bradford-q3,foundation,foundation repair,53.796,-1.7594,13,P1
+eng-bradford-q4,adjacent,damp proofing,53.796,-1.7594,13,P2
+eng-bradford-q5,adjacent,basement waterproofing,53.796,-1.7594,13,P2
+eng-bradford-q6,adjacent,structural waterproofing,53.796,-1.7594,13,P2
+eng-bradford-q7,adjacent,cellar tanking,53.796,-1.7594,13,P2
+eng-bradford-q8,adjacent,mini piling,53.796,-1.7594,13,P2
+eng-bradford-q9,adjacent,wall tie replacement,53.796,-1.7594,13,P2
+eng-huddersfield-q0,foundation,underpinning,53.645,-1.785,13,P1
+eng-huddersfield-q1,foundation,subsidence repair,53.645,-1.785,13,P1
+eng-huddersfield-q2,foundation,structural repair,53.645,-1.785,13,P1
+eng-huddersfield-q3,foundation,foundation repair,53.645,-1.785,13,P1
+eng-huddersfield-q4,adjacent,damp proofing,53.645,-1.785,13,P2
+eng-huddersfield-q5,adjacent,basement waterproofing,53.645,-1.785,13,P2
+eng-huddersfield-q6,adjacent,structural waterproofing,53.645,-1.785,13,P2
+eng-huddersfield-q7,adjacent,cellar tanking,53.645,-1.785,13,P2
+eng-huddersfield-q8,adjacent,mini piling,53.645,-1.785,13,P2
+eng-huddersfield-q9,adjacent,wall tie replacement,53.645,-1.785,13,P2
+eng-barnsley-q0,foundation,underpinning,53.5526,-1.4797,13,P1
+eng-barnsley-q1,foundation,subsidence repair,53.5526,-1.4797,13,P1
+eng-barnsley-q2,foundation,structural repair,53.5526,-1.4797,13,P1
+eng-barnsley-q3,foundation,foundation repair,53.5526,-1.4797,13,P1
+eng-barnsley-q4,adjacent,damp proofing,53.5526,-1.4797,13,P2
+eng-barnsley-q5,adjacent,basement waterproofing,53.5526,-1.4797,13,P2
+eng-barnsley-q6,adjacent,structural waterproofing,53.5526,-1.4797,13,P2
+eng-barnsley-q7,adjacent,cellar tanking,53.5526,-1.4797,13,P2
+eng-barnsley-q8,adjacent,mini piling,53.5526,-1.4797,13,P2
+eng-barnsley-q9,adjacent,wall tie replacement,53.5526,-1.4797,13,P2
+eng-doncaster-q0,foundation,underpinning,53.5228,-1.1285,13,P1
+eng-doncaster-q1,foundation,subsidence repair,53.5228,-1.1285,13,P1
+eng-doncaster-q2,foundation,structural repair,53.5228,-1.1285,13,P1
+eng-doncaster-q3,foundation,foundation repair,53.5228,-1.1285,13,P1
+eng-doncaster-q4,adjacent,damp proofing,53.5228,-1.1285,13,P2
+eng-doncaster-q5,adjacent,basement waterproofing,53.5228,-1.1285,13,P2
+eng-doncaster-q6,adjacent,structural waterproofing,53.5228,-1.1285,13,P2
+eng-doncaster-q7,adjacent,cellar tanking,53.5228,-1.1285,13,P2
+eng-doncaster-q8,adjacent,mini piling,53.5228,-1.1285,13,P2
+eng-doncaster-q9,adjacent,wall tie replacement,53.5228,-1.1285,13,P2
+eng-sheffield-q0,foundation,underpinning,53.3811,-1.4701,13,P1
+eng-sheffield-q1,foundation,subsidence repair,53.3811,-1.4701,13,P1
+eng-sheffield-q2,foundation,structural repair,53.3811,-1.4701,13,P1
+eng-sheffield-q3,foundation,foundation repair,53.3811,-1.4701,13,P1
+eng-sheffield-q4,adjacent,damp proofing,53.3811,-1.4701,13,P2
+eng-sheffield-q5,adjacent,basement waterproofing,53.3811,-1.4701,13,P2
+eng-sheffield-q6,adjacent,structural waterproofing,53.3811,-1.4701,13,P2
+eng-sheffield-q7,adjacent,cellar tanking,53.3811,-1.4701,13,P2
+eng-sheffield-q8,adjacent,mini piling,53.3811,-1.4701,13,P2
+eng-sheffield-q9,adjacent,wall tie replacement,53.3811,-1.4701,13,P2
+eng-manchester-q0,foundation,underpinning,53.4808,-2.2426,13,P1
+eng-manchester-q1,foundation,subsidence repair,53.4808,-2.2426,13,P1
+eng-manchester-q2,foundation,structural repair,53.4808,-2.2426,13,P1
+eng-manchester-q3,foundation,foundation repair,53.4808,-2.2426,13,P1
+eng-manchester-q4,adjacent,damp proofing,53.4808,-2.2426,13,P2
+eng-manchester-q5,adjacent,basement waterproofing,53.4808,-2.2426,13,P2
+eng-manchester-q6,adjacent,structural waterproofing,53.4808,-2.2426,13,P2
+eng-manchester-q7,adjacent,cellar tanking,53.4808,-2.2426,13,P2
+eng-manchester-q8,adjacent,mini piling,53.4808,-2.2426,13,P2
+eng-manchester-q9,adjacent,wall tie replacement,53.4808,-2.2426,13,P2
+eng-rochdale-q0,foundation,underpinning,53.616,-2.155,13,P1
+eng-rochdale-q1,foundation,subsidence repair,53.616,-2.155,13,P1
+eng-rochdale-q2,foundation,structural repair,53.616,-2.155,13,P1
+eng-rochdale-q3,foundation,foundation repair,53.616,-2.155,13,P1
+eng-rochdale-q4,adjacent,damp proofing,53.616,-2.155,13,P2
+eng-rochdale-q5,adjacent,basement waterproofing,53.616,-2.155,13,P2
+eng-rochdale-q6,adjacent,structural waterproofing,53.616,-2.155,13,P2
+eng-rochdale-q7,adjacent,cellar tanking,53.616,-2.155,13,P2
+eng-rochdale-q8,adjacent,mini piling,53.616,-2.155,13,P2
+eng-rochdale-q9,adjacent,wall tie replacement,53.616,-2.155,13,P2
+eng-bolton-q0,foundation,underpinning,53.5769,-2.4282,13,P1
+eng-bolton-q1,foundation,subsidence repair,53.5769,-2.4282,13,P1
+eng-bolton-q2,foundation,structural repair,53.5769,-2.4282,13,P1
+eng-bolton-q3,foundation,foundation repair,53.5769,-2.4282,13,P1
+eng-bolton-q4,adjacent,damp proofing,53.5769,-2.4282,13,P2
+eng-bolton-q5,adjacent,basement waterproofing,53.5769,-2.4282,13,P2
+eng-bolton-q6,adjacent,structural waterproofing,53.5769,-2.4282,13,P2
+eng-bolton-q7,adjacent,cellar tanking,53.5769,-2.4282,13,P2
+eng-bolton-q8,adjacent,mini piling,53.5769,-2.4282,13,P2
+eng-bolton-q9,adjacent,wall tie replacement,53.5769,-2.4282,13,P2
+eng-wigan-q0,foundation,underpinning,53.545,-2.6318,13,P1
+eng-wigan-q1,foundation,subsidence repair,53.545,-2.6318,13,P1
+eng-wigan-q2,foundation,structural repair,53.545,-2.6318,13,P1
+eng-wigan-q3,foundation,foundation repair,53.545,-2.6318,13,P1
+eng-wigan-q4,adjacent,damp proofing,53.545,-2.6318,13,P2
+eng-wigan-q5,adjacent,basement waterproofing,53.545,-2.6318,13,P2
+eng-wigan-q6,adjacent,structural waterproofing,53.545,-2.6318,13,P2
+eng-wigan-q7,adjacent,cellar tanking,53.545,-2.6318,13,P2
+eng-wigan-q8,adjacent,mini piling,53.545,-2.6318,13,P2
+eng-wigan-q9,adjacent,wall tie replacement,53.545,-2.6318,13,P2
+eng-warrington-q0,foundation,underpinning,53.39,-2.597,13,P1
+eng-warrington-q1,foundation,subsidence repair,53.39,-2.597,13,P1
+eng-warrington-q2,foundation,structural repair,53.39,-2.597,13,P1
+eng-warrington-q3,foundation,foundation repair,53.39,-2.597,13,P1
+eng-warrington-q4,adjacent,damp proofing,53.39,-2.597,13,P2
+eng-warrington-q5,adjacent,basement waterproofing,53.39,-2.597,13,P2
+eng-warrington-q6,adjacent,structural waterproofing,53.39,-2.597,13,P2
+eng-warrington-q7,adjacent,cellar tanking,53.39,-2.597,13,P2
+eng-warrington-q8,adjacent,mini piling,53.39,-2.597,13,P2
+eng-warrington-q9,adjacent,wall tie replacement,53.39,-2.597,13,P2
+eng-liverpool-q0,foundation,underpinning,53.4084,-2.9916,13,P1
+eng-liverpool-q1,foundation,subsidence repair,53.4084,-2.9916,13,P1
+eng-liverpool-q2,foundation,structural repair,53.4084,-2.9916,13,P1
+eng-liverpool-q3,foundation,foundation repair,53.4084,-2.9916,13,P1
+eng-liverpool-q4,adjacent,damp proofing,53.4084,-2.9916,13,P2
+eng-liverpool-q5,adjacent,basement waterproofing,53.4084,-2.9916,13,P2
+eng-liverpool-q6,adjacent,structural waterproofing,53.4084,-2.9916,13,P2
+eng-liverpool-q7,adjacent,cellar tanking,53.4084,-2.9916,13,P2
+eng-liverpool-q8,adjacent,mini piling,53.4084,-2.9916,13,P2
+eng-liverpool-q9,adjacent,wall tie replacement,53.4084,-2.9916,13,P2
+eng-southport-q0,foundation,underpinning,53.648,-3.01,13,P1
+eng-southport-q1,foundation,subsidence repair,53.648,-3.01,13,P1
+eng-southport-q2,foundation,structural repair,53.648,-3.01,13,P1
+eng-southport-q3,foundation,foundation repair,53.648,-3.01,13,P1
+eng-southport-q4,adjacent,damp proofing,53.648,-3.01,13,P2
+eng-southport-q5,adjacent,basement waterproofing,53.648,-3.01,13,P2
+eng-southport-q6,adjacent,structural waterproofing,53.648,-3.01,13,P2
+eng-southport-q7,adjacent,cellar tanking,53.648,-3.01,13,P2
+eng-southport-q8,adjacent,mini piling,53.648,-3.01,13,P2
+eng-southport-q9,adjacent,wall tie replacement,53.648,-3.01,13,P2
+eng-chester-q0,foundation,underpinning,53.1934,-2.8931,13,P1
+eng-chester-q1,foundation,subsidence repair,53.1934,-2.8931,13,P1
+eng-chester-q2,foundation,structural repair,53.1934,-2.8931,13,P1
+eng-chester-q3,foundation,foundation repair,53.1934,-2.8931,13,P1
+eng-chester-q4,adjacent,damp proofing,53.1934,-2.8931,13,P2
+eng-chester-q5,adjacent,basement waterproofing,53.1934,-2.8931,13,P2
+eng-chester-q6,adjacent,structural waterproofing,53.1934,-2.8931,13,P2
+eng-chester-q7,adjacent,cellar tanking,53.1934,-2.8931,13,P2
+eng-chester-q8,adjacent,mini piling,53.1934,-2.8931,13,P2
+eng-chester-q9,adjacent,wall tie replacement,53.1934,-2.8931,13,P2
+eng-preston-q0,foundation,underpinning,53.7632,-2.7031,13,P1
+eng-preston-q1,foundation,subsidence repair,53.7632,-2.7031,13,P1
+eng-preston-q2,foundation,structural repair,53.7632,-2.7031,13,P1
+eng-preston-q3,foundation,foundation repair,53.7632,-2.7031,13,P1
+eng-preston-q4,adjacent,damp proofing,53.7632,-2.7031,13,P2
+eng-preston-q5,adjacent,basement waterproofing,53.7632,-2.7031,13,P2
+eng-preston-q6,adjacent,structural waterproofing,53.7632,-2.7031,13,P2
+eng-preston-q7,adjacent,cellar tanking,53.7632,-2.7031,13,P2
+eng-preston-q8,adjacent,mini piling,53.7632,-2.7031,13,P2
+eng-preston-q9,adjacent,wall tie replacement,53.7632,-2.7031,13,P2
+eng-blackpool-q0,foundation,underpinning,53.8175,-3.0357,13,P1
+eng-blackpool-q1,foundation,subsidence repair,53.8175,-3.0357,13,P1
+eng-blackpool-q2,foundation,structural repair,53.8175,-3.0357,13,P1
+eng-blackpool-q3,foundation,foundation repair,53.8175,-3.0357,13,P1
+eng-blackpool-q4,adjacent,damp proofing,53.8175,-3.0357,13,P2
+eng-blackpool-q5,adjacent,basement waterproofing,53.8175,-3.0357,13,P2
+eng-blackpool-q6,adjacent,structural waterproofing,53.8175,-3.0357,13,P2
+eng-blackpool-q7,adjacent,cellar tanking,53.8175,-3.0357,13,P2
+eng-blackpool-q8,adjacent,mini piling,53.8175,-3.0357,13,P2
+eng-blackpool-q9,adjacent,wall tie replacement,53.8175,-3.0357,13,P2
+eng-blackburn-q0,foundation,underpinning,53.7486,-2.482,13,P1
+eng-blackburn-q1,foundation,subsidence repair,53.7486,-2.482,13,P1
+eng-blackburn-q2,foundation,structural repair,53.7486,-2.482,13,P1
+eng-blackburn-q3,foundation,foundation repair,53.7486,-2.482,13,P1
+eng-blackburn-q4,adjacent,damp proofing,53.7486,-2.482,13,P2
+eng-blackburn-q5,adjacent,basement waterproofing,53.7486,-2.482,13,P2
+eng-blackburn-q6,adjacent,structural waterproofing,53.7486,-2.482,13,P2
+eng-blackburn-q7,adjacent,cellar tanking,53.7486,-2.482,13,P2
+eng-blackburn-q8,adjacent,mini piling,53.7486,-2.482,13,P2
+eng-blackburn-q9,adjacent,wall tie replacement,53.7486,-2.482,13,P2
+eng-burnley-q0,foundation,underpinning,53.789,-2.248,13,P1
+eng-burnley-q1,foundation,subsidence repair,53.789,-2.248,13,P1
+eng-burnley-q2,foundation,structural repair,53.789,-2.248,13,P1
+eng-burnley-q3,foundation,foundation repair,53.789,-2.248,13,P1
+eng-burnley-q4,adjacent,damp proofing,53.789,-2.248,13,P2
+eng-burnley-q5,adjacent,basement waterproofing,53.789,-2.248,13,P2
+eng-burnley-q6,adjacent,structural waterproofing,53.789,-2.248,13,P2
+eng-burnley-q7,adjacent,cellar tanking,53.789,-2.248,13,P2
+eng-burnley-q8,adjacent,mini piling,53.789,-2.248,13,P2
+eng-burnley-q9,adjacent,wall tie replacement,53.789,-2.248,13,P2
+eng-lancaster-q0,foundation,underpinning,54.0466,-2.8007,13,P1
+eng-lancaster-q1,foundation,subsidence repair,54.0466,-2.8007,13,P1
+eng-lancaster-q2,foundation,structural repair,54.0466,-2.8007,13,P1
+eng-lancaster-q3,foundation,foundation repair,54.0466,-2.8007,13,P1
+eng-lancaster-q4,adjacent,damp proofing,54.0466,-2.8007,13,P2
+eng-lancaster-q5,adjacent,basement waterproofing,54.0466,-2.8007,13,P2
+eng-lancaster-q6,adjacent,structural waterproofing,54.0466,-2.8007,13,P2
+eng-lancaster-q7,adjacent,cellar tanking,54.0466,-2.8007,13,P2
+eng-lancaster-q8,adjacent,mini piling,54.0466,-2.8007,13,P2
+eng-lancaster-q9,adjacent,wall tie replacement,54.0466,-2.8007,13,P2
+eng-kendal-q0,foundation,underpinning,54.328,-2.746,13,P1
+eng-kendal-q1,foundation,subsidence repair,54.328,-2.746,13,P1
+eng-kendal-q2,foundation,structural repair,54.328,-2.746,13,P1
+eng-kendal-q3,foundation,foundation repair,54.328,-2.746,13,P1
+eng-kendal-q4,adjacent,damp proofing,54.328,-2.746,13,P2
+eng-kendal-q5,adjacent,basement waterproofing,54.328,-2.746,13,P2
+eng-kendal-q6,adjacent,structural waterproofing,54.328,-2.746,13,P2
+eng-kendal-q7,adjacent,cellar tanking,54.328,-2.746,13,P2
+eng-kendal-q8,adjacent,mini piling,54.328,-2.746,13,P2
+eng-kendal-q9,adjacent,wall tie replacement,54.328,-2.746,13,P2
+eng-barrow-in-furness-q0,foundation,underpinning,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-q1,foundation,subsidence repair,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-q2,foundation,structural repair,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-q3,foundation,foundation repair,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-q4,adjacent,damp proofing,54.1108,-3.2261,13,P2
+eng-barrow-in-furness-q5,adjacent,basement waterproofing,54.1108,-3.2261,13,P2
+eng-barrow-in-furness-q6,adjacent,structural waterproofing,54.1108,-3.2261,13,P2
+eng-barrow-in-furness-q7,adjacent,cellar tanking,54.1108,-3.2261,13,P2
+eng-barrow-in-furness-q8,adjacent,mini piling,54.1108,-3.2261,13,P2
+eng-barrow-in-furness-q9,adjacent,wall tie replacement,54.1108,-3.2261,13,P2
+eng-workington-q0,foundation,underpinning,54.642,-3.544,13,P1
+eng-workington-q1,foundation,subsidence repair,54.642,-3.544,13,P1
+eng-workington-q2,foundation,structural repair,54.642,-3.544,13,P1
+eng-workington-q3,foundation,foundation repair,54.642,-3.544,13,P1
+eng-workington-q4,adjacent,damp proofing,54.642,-3.544,13,P2
+eng-workington-q5,adjacent,basement waterproofing,54.642,-3.544,13,P2
+eng-workington-q6,adjacent,structural waterproofing,54.642,-3.544,13,P2
+eng-workington-q7,adjacent,cellar tanking,54.642,-3.544,13,P2
+eng-workington-q8,adjacent,mini piling,54.642,-3.544,13,P2
+eng-workington-q9,adjacent,wall tie replacement,54.642,-3.544,13,P2
+eng-carlisle-q0,foundation,underpinning,54.8925,-2.9329,13,P1
+eng-carlisle-q1,foundation,subsidence repair,54.8925,-2.9329,13,P1
+eng-carlisle-q2,foundation,structural repair,54.8925,-2.9329,13,P1
+eng-carlisle-q3,foundation,foundation repair,54.8925,-2.9329,13,P1
+eng-carlisle-q4,adjacent,damp proofing,54.8925,-2.9329,13,P2
+eng-carlisle-q5,adjacent,basement waterproofing,54.8925,-2.9329,13,P2
+eng-carlisle-q6,adjacent,structural waterproofing,54.8925,-2.9329,13,P2
+eng-carlisle-q7,adjacent,cellar tanking,54.8925,-2.9329,13,P2
+eng-carlisle-q8,adjacent,mini piling,54.8925,-2.9329,13,P2
+eng-carlisle-q9,adjacent,wall tie replacement,54.8925,-2.9329,13,P2
+eng-middlesbrough-q0,foundation,underpinning,54.5742,-1.235,13,P1
+eng-middlesbrough-q1,foundation,subsidence repair,54.5742,-1.235,13,P1
+eng-middlesbrough-q2,foundation,structural repair,54.5742,-1.235,13,P1
+eng-middlesbrough-q3,foundation,foundation repair,54.5742,-1.235,13,P1
+eng-middlesbrough-q4,adjacent,damp proofing,54.5742,-1.235,13,P2
+eng-middlesbrough-q5,adjacent,basement waterproofing,54.5742,-1.235,13,P2
+eng-middlesbrough-q6,adjacent,structural waterproofing,54.5742,-1.235,13,P2
+eng-middlesbrough-q7,adjacent,cellar tanking,54.5742,-1.235,13,P2
+eng-middlesbrough-q8,adjacent,mini piling,54.5742,-1.235,13,P2
+eng-middlesbrough-q9,adjacent,wall tie replacement,54.5742,-1.235,13,P2
+eng-hartlepool-q0,foundation,underpinning,54.6858,-1.212,13,P1
+eng-hartlepool-q1,foundation,subsidence repair,54.6858,-1.212,13,P1
+eng-hartlepool-q2,foundation,structural repair,54.6858,-1.212,13,P1
+eng-hartlepool-q3,foundation,foundation repair,54.6858,-1.212,13,P1
+eng-hartlepool-q4,adjacent,damp proofing,54.6858,-1.212,13,P2
+eng-hartlepool-q5,adjacent,basement waterproofing,54.6858,-1.212,13,P2
+eng-hartlepool-q6,adjacent,structural waterproofing,54.6858,-1.212,13,P2
+eng-hartlepool-q7,adjacent,cellar tanking,54.6858,-1.212,13,P2
+eng-hartlepool-q8,adjacent,mini piling,54.6858,-1.212,13,P2
+eng-hartlepool-q9,adjacent,wall tie replacement,54.6858,-1.212,13,P2
+eng-darlington-q0,foundation,underpinning,54.5235,-1.5598,13,P1
+eng-darlington-q1,foundation,subsidence repair,54.5235,-1.5598,13,P1
+eng-darlington-q2,foundation,structural repair,54.5235,-1.5598,13,P1
+eng-darlington-q3,foundation,foundation repair,54.5235,-1.5598,13,P1
+eng-darlington-q4,adjacent,damp proofing,54.5235,-1.5598,13,P2
+eng-darlington-q5,adjacent,basement waterproofing,54.5235,-1.5598,13,P2
+eng-darlington-q6,adjacent,structural waterproofing,54.5235,-1.5598,13,P2
+eng-darlington-q7,adjacent,cellar tanking,54.5235,-1.5598,13,P2
+eng-darlington-q8,adjacent,mini piling,54.5235,-1.5598,13,P2
+eng-darlington-q9,adjacent,wall tie replacement,54.5235,-1.5598,13,P2
+eng-durham-q0,foundation,underpinning,54.7767,-1.5757,13,P1
+eng-durham-q1,foundation,subsidence repair,54.7767,-1.5757,13,P1
+eng-durham-q2,foundation,structural repair,54.7767,-1.5757,13,P1
+eng-durham-q3,foundation,foundation repair,54.7767,-1.5757,13,P1
+eng-durham-q4,adjacent,damp proofing,54.7767,-1.5757,13,P2
+eng-durham-q5,adjacent,basement waterproofing,54.7767,-1.5757,13,P2
+eng-durham-q6,adjacent,structural waterproofing,54.7767,-1.5757,13,P2
+eng-durham-q7,adjacent,cellar tanking,54.7767,-1.5757,13,P2
+eng-durham-q8,adjacent,mini piling,54.7767,-1.5757,13,P2
+eng-durham-q9,adjacent,wall tie replacement,54.7767,-1.5757,13,P2
+eng-sunderland-q0,foundation,underpinning,54.9069,-1.3838,13,P1
+eng-sunderland-q1,foundation,subsidence repair,54.9069,-1.3838,13,P1
+eng-sunderland-q2,foundation,structural repair,54.9069,-1.3838,13,P1
+eng-sunderland-q3,foundation,foundation repair,54.9069,-1.3838,13,P1
+eng-sunderland-q4,adjacent,damp proofing,54.9069,-1.3838,13,P2
+eng-sunderland-q5,adjacent,basement waterproofing,54.9069,-1.3838,13,P2
+eng-sunderland-q6,adjacent,structural waterproofing,54.9069,-1.3838,13,P2
+eng-sunderland-q7,adjacent,cellar tanking,54.9069,-1.3838,13,P2
+eng-sunderland-q8,adjacent,mini piling,54.9069,-1.3838,13,P2
+eng-sunderland-q9,adjacent,wall tie replacement,54.9069,-1.3838,13,P2
+eng-newcastle-upon-tyne-q0,foundation,underpinning,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-q1,foundation,subsidence repair,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-q2,foundation,structural repair,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-q3,foundation,foundation repair,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-q4,adjacent,damp proofing,54.9783,-1.6178,13,P2
+eng-newcastle-upon-tyne-q5,adjacent,basement waterproofing,54.9783,-1.6178,13,P2
+eng-newcastle-upon-tyne-q6,adjacent,structural waterproofing,54.9783,-1.6178,13,P2
+eng-newcastle-upon-tyne-q7,adjacent,cellar tanking,54.9783,-1.6178,13,P2
+eng-newcastle-upon-tyne-q8,adjacent,mini piling,54.9783,-1.6178,13,P2
+eng-newcastle-upon-tyne-q9,adjacent,wall tie replacement,54.9783,-1.6178,13,P2
+eng-hexham-q0,foundation,underpinning,54.971,-2.101,13,P1
+eng-hexham-q1,foundation,subsidence repair,54.971,-2.101,13,P1
+eng-hexham-q2,foundation,structural repair,54.971,-2.101,13,P1
+eng-hexham-q3,foundation,foundation repair,54.971,-2.101,13,P1
+eng-hexham-q4,adjacent,damp proofing,54.971,-2.101,13,P2
+eng-hexham-q5,adjacent,basement waterproofing,54.971,-2.101,13,P2
+eng-hexham-q6,adjacent,structural waterproofing,54.971,-2.101,13,P2
+eng-hexham-q7,adjacent,cellar tanking,54.971,-2.101,13,P2
+eng-hexham-q8,adjacent,mini piling,54.971,-2.101,13,P2
+eng-hexham-q9,adjacent,wall tie replacement,54.971,-2.101,13,P2
+eng-ashington-morpeth-q0,foundation,underpinning,55.181,-1.568,13,P1
+eng-ashington-morpeth-q1,foundation,subsidence repair,55.181,-1.568,13,P1
+eng-ashington-morpeth-q2,foundation,structural repair,55.181,-1.568,13,P1
+eng-ashington-morpeth-q3,foundation,foundation repair,55.181,-1.568,13,P1
+eng-ashington-morpeth-q4,adjacent,damp proofing,55.181,-1.568,13,P2
+eng-ashington-morpeth-q5,adjacent,basement waterproofing,55.181,-1.568,13,P2
+eng-ashington-morpeth-q6,adjacent,structural waterproofing,55.181,-1.568,13,P2
+eng-ashington-morpeth-q7,adjacent,cellar tanking,55.181,-1.568,13,P2
+eng-ashington-morpeth-q8,adjacent,mini piling,55.181,-1.568,13,P2
+eng-ashington-morpeth-q9,adjacent,wall tie replacement,55.181,-1.568,13,P2
+eng-berwick-upon-tweed-q0,foundation,underpinning,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-q1,foundation,subsidence repair,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-q2,foundation,structural repair,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-q3,foundation,foundation repair,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-q4,adjacent,damp proofing,55.771,-2.005,13,P2
+eng-berwick-upon-tweed-q5,adjacent,basement waterproofing,55.771,-2.005,13,P2
+eng-berwick-upon-tweed-q6,adjacent,structural waterproofing,55.771,-2.005,13,P2
+eng-berwick-upon-tweed-q7,adjacent,cellar tanking,55.771,-2.005,13,P2
+eng-berwick-upon-tweed-q8,adjacent,mini piling,55.771,-2.005,13,P2
+eng-berwick-upon-tweed-q9,adjacent,wall tie replacement,55.771,-2.005,13,P2
+sct-glasgow-q0,foundation,underpinning,55.8642,-4.2518,13,P1
+sct-glasgow-q1,foundation,subsidence repair,55.8642,-4.2518,13,P1
+sct-glasgow-q2,foundation,structural repair,55.8642,-4.2518,13,P1
+sct-glasgow-q3,foundation,foundation repair,55.8642,-4.2518,13,P1
+sct-glasgow-q4,adjacent,damp proofing,55.8642,-4.2518,13,P2
+sct-glasgow-q5,adjacent,basement waterproofing,55.8642,-4.2518,13,P2
+sct-glasgow-q6,adjacent,structural waterproofing,55.8642,-4.2518,13,P2
+sct-glasgow-q7,adjacent,cellar tanking,55.8642,-4.2518,13,P2
+sct-glasgow-q8,adjacent,mini piling,55.8642,-4.2518,13,P2
+sct-glasgow-q9,adjacent,wall tie replacement,55.8642,-4.2518,13,P2
+sct-edinburgh-q0,foundation,underpinning,55.9533,-3.1883,13,P1
+sct-edinburgh-q1,foundation,subsidence repair,55.9533,-3.1883,13,P1
+sct-edinburgh-q2,foundation,structural repair,55.9533,-3.1883,13,P1
+sct-edinburgh-q3,foundation,foundation repair,55.9533,-3.1883,13,P1
+sct-edinburgh-q4,adjacent,damp proofing,55.9533,-3.1883,13,P2
+sct-edinburgh-q5,adjacent,basement waterproofing,55.9533,-3.1883,13,P2
+sct-edinburgh-q6,adjacent,structural waterproofing,55.9533,-3.1883,13,P2
+sct-edinburgh-q7,adjacent,cellar tanking,55.9533,-3.1883,13,P2
+sct-edinburgh-q8,adjacent,mini piling,55.9533,-3.1883,13,P2
+sct-edinburgh-q9,adjacent,wall tie replacement,55.9533,-3.1883,13,P2
+sct-aberdeen-q0,foundation,underpinning,57.1497,-2.0943,13,P1
+sct-aberdeen-q1,foundation,subsidence repair,57.1497,-2.0943,13,P1
+sct-aberdeen-q2,foundation,structural repair,57.1497,-2.0943,13,P1
+sct-aberdeen-q3,foundation,foundation repair,57.1497,-2.0943,13,P1
+sct-aberdeen-q4,adjacent,damp proofing,57.1497,-2.0943,13,P2
+sct-aberdeen-q5,adjacent,basement waterproofing,57.1497,-2.0943,13,P2
+sct-aberdeen-q6,adjacent,structural waterproofing,57.1497,-2.0943,13,P2
+sct-aberdeen-q7,adjacent,cellar tanking,57.1497,-2.0943,13,P2
+sct-aberdeen-q8,adjacent,mini piling,57.1497,-2.0943,13,P2
+sct-aberdeen-q9,adjacent,wall tie replacement,57.1497,-2.0943,13,P2
+sct-dundee-q0,foundation,underpinning,56.462,-2.9707,13,P1
+sct-dundee-q1,foundation,subsidence repair,56.462,-2.9707,13,P1
+sct-dundee-q2,foundation,structural repair,56.462,-2.9707,13,P1
+sct-dundee-q3,foundation,foundation repair,56.462,-2.9707,13,P1
+sct-dundee-q4,adjacent,damp proofing,56.462,-2.9707,13,P2
+sct-dundee-q5,adjacent,basement waterproofing,56.462,-2.9707,13,P2
+sct-dundee-q6,adjacent,structural waterproofing,56.462,-2.9707,13,P2
+sct-dundee-q7,adjacent,cellar tanking,56.462,-2.9707,13,P2
+sct-dundee-q8,adjacent,mini piling,56.462,-2.9707,13,P2
+sct-dundee-q9,adjacent,wall tie replacement,56.462,-2.9707,13,P2
+sct-montrose-arbroath-q0,foundation,underpinning,56.71,-2.47,13,P1
+sct-montrose-arbroath-q1,foundation,subsidence repair,56.71,-2.47,13,P1
+sct-montrose-arbroath-q2,foundation,structural repair,56.71,-2.47,13,P1
+sct-montrose-arbroath-q3,foundation,foundation repair,56.71,-2.47,13,P1
+sct-montrose-arbroath-q4,adjacent,damp proofing,56.71,-2.47,13,P2
+sct-montrose-arbroath-q5,adjacent,basement waterproofing,56.71,-2.47,13,P2
+sct-montrose-arbroath-q6,adjacent,structural waterproofing,56.71,-2.47,13,P2
+sct-montrose-arbroath-q7,adjacent,cellar tanking,56.71,-2.47,13,P2
+sct-montrose-arbroath-q8,adjacent,mini piling,56.71,-2.47,13,P2
+sct-montrose-arbroath-q9,adjacent,wall tie replacement,56.71,-2.47,13,P2
+sct-perth-q0,foundation,underpinning,56.395,-3.4308,13,P1
+sct-perth-q1,foundation,subsidence repair,56.395,-3.4308,13,P1
+sct-perth-q2,foundation,structural repair,56.395,-3.4308,13,P1
+sct-perth-q3,foundation,foundation repair,56.395,-3.4308,13,P1
+sct-perth-q4,adjacent,damp proofing,56.395,-3.4308,13,P2
+sct-perth-q5,adjacent,basement waterproofing,56.395,-3.4308,13,P2
+sct-perth-q6,adjacent,structural waterproofing,56.395,-3.4308,13,P2
+sct-perth-q7,adjacent,cellar tanking,56.395,-3.4308,13,P2
+sct-perth-q8,adjacent,mini piling,56.395,-3.4308,13,P2
+sct-perth-q9,adjacent,wall tie replacement,56.395,-3.4308,13,P2
+sct-stirling-q0,foundation,underpinning,56.1165,-3.9369,13,P1
+sct-stirling-q1,foundation,subsidence repair,56.1165,-3.9369,13,P1
+sct-stirling-q2,foundation,structural repair,56.1165,-3.9369,13,P1
+sct-stirling-q3,foundation,foundation repair,56.1165,-3.9369,13,P1
+sct-stirling-q4,adjacent,damp proofing,56.1165,-3.9369,13,P2
+sct-stirling-q5,adjacent,basement waterproofing,56.1165,-3.9369,13,P2
+sct-stirling-q6,adjacent,structural waterproofing,56.1165,-3.9369,13,P2
+sct-stirling-q7,adjacent,cellar tanking,56.1165,-3.9369,13,P2
+sct-stirling-q8,adjacent,mini piling,56.1165,-3.9369,13,P2
+sct-stirling-q9,adjacent,wall tie replacement,56.1165,-3.9369,13,P2
+sct-falkirk-q0,foundation,underpinning,56.0019,-3.7839,13,P1
+sct-falkirk-q1,foundation,subsidence repair,56.0019,-3.7839,13,P1
+sct-falkirk-q2,foundation,structural repair,56.0019,-3.7839,13,P1
+sct-falkirk-q3,foundation,foundation repair,56.0019,-3.7839,13,P1
+sct-falkirk-q4,adjacent,damp proofing,56.0019,-3.7839,13,P2
+sct-falkirk-q5,adjacent,basement waterproofing,56.0019,-3.7839,13,P2
+sct-falkirk-q6,adjacent,structural waterproofing,56.0019,-3.7839,13,P2
+sct-falkirk-q7,adjacent,cellar tanking,56.0019,-3.7839,13,P2
+sct-falkirk-q8,adjacent,mini piling,56.0019,-3.7839,13,P2
+sct-falkirk-q9,adjacent,wall tie replacement,56.0019,-3.7839,13,P2
+sct-livingston-q0,foundation,underpinning,55.883,-3.523,13,P1
+sct-livingston-q1,foundation,subsidence repair,55.883,-3.523,13,P1
+sct-livingston-q2,foundation,structural repair,55.883,-3.523,13,P1
+sct-livingston-q3,foundation,foundation repair,55.883,-3.523,13,P1
+sct-livingston-q4,adjacent,damp proofing,55.883,-3.523,13,P2
+sct-livingston-q5,adjacent,basement waterproofing,55.883,-3.523,13,P2
+sct-livingston-q6,adjacent,structural waterproofing,55.883,-3.523,13,P2
+sct-livingston-q7,adjacent,cellar tanking,55.883,-3.523,13,P2
+sct-livingston-q8,adjacent,mini piling,55.883,-3.523,13,P2
+sct-livingston-q9,adjacent,wall tie replacement,55.883,-3.523,13,P2
+sct-dunfermline-q0,foundation,underpinning,56.0719,-3.4393,13,P1
+sct-dunfermline-q1,foundation,subsidence repair,56.0719,-3.4393,13,P1
+sct-dunfermline-q2,foundation,structural repair,56.0719,-3.4393,13,P1
+sct-dunfermline-q3,foundation,foundation repair,56.0719,-3.4393,13,P1
+sct-dunfermline-q4,adjacent,damp proofing,56.0719,-3.4393,13,P2
+sct-dunfermline-q5,adjacent,basement waterproofing,56.0719,-3.4393,13,P2
+sct-dunfermline-q6,adjacent,structural waterproofing,56.0719,-3.4393,13,P2
+sct-dunfermline-q7,adjacent,cellar tanking,56.0719,-3.4393,13,P2
+sct-dunfermline-q8,adjacent,mini piling,56.0719,-3.4393,13,P2
+sct-dunfermline-q9,adjacent,wall tie replacement,56.0719,-3.4393,13,P2
+sct-kirkcaldy-q0,foundation,underpinning,56.113,-3.16,13,P1
+sct-kirkcaldy-q1,foundation,subsidence repair,56.113,-3.16,13,P1
+sct-kirkcaldy-q2,foundation,structural repair,56.113,-3.16,13,P1
+sct-kirkcaldy-q3,foundation,foundation repair,56.113,-3.16,13,P1
+sct-kirkcaldy-q4,adjacent,damp proofing,56.113,-3.16,13,P2
+sct-kirkcaldy-q5,adjacent,basement waterproofing,56.113,-3.16,13,P2
+sct-kirkcaldy-q6,adjacent,structural waterproofing,56.113,-3.16,13,P2
+sct-kirkcaldy-q7,adjacent,cellar tanking,56.113,-3.16,13,P2
+sct-kirkcaldy-q8,adjacent,mini piling,56.113,-3.16,13,P2
+sct-kirkcaldy-q9,adjacent,wall tie replacement,56.113,-3.16,13,P2
+sct-greenock-q0,foundation,underpinning,55.95,-4.76,13,P1
+sct-greenock-q1,foundation,subsidence repair,55.95,-4.76,13,P1
+sct-greenock-q2,foundation,structural repair,55.95,-4.76,13,P1
+sct-greenock-q3,foundation,foundation repair,55.95,-4.76,13,P1
+sct-greenock-q4,adjacent,damp proofing,55.95,-4.76,13,P2
+sct-greenock-q5,adjacent,basement waterproofing,55.95,-4.76,13,P2
+sct-greenock-q6,adjacent,structural waterproofing,55.95,-4.76,13,P2
+sct-greenock-q7,adjacent,cellar tanking,55.95,-4.76,13,P2
+sct-greenock-q8,adjacent,mini piling,55.95,-4.76,13,P2
+sct-greenock-q9,adjacent,wall tie replacement,55.95,-4.76,13,P2
+sct-kilmarnock-q0,foundation,underpinning,55.611,-4.496,13,P1
+sct-kilmarnock-q1,foundation,subsidence repair,55.611,-4.496,13,P1
+sct-kilmarnock-q2,foundation,structural repair,55.611,-4.496,13,P1
+sct-kilmarnock-q3,foundation,foundation repair,55.611,-4.496,13,P1
+sct-kilmarnock-q4,adjacent,damp proofing,55.611,-4.496,13,P2
+sct-kilmarnock-q5,adjacent,basement waterproofing,55.611,-4.496,13,P2
+sct-kilmarnock-q6,adjacent,structural waterproofing,55.611,-4.496,13,P2
+sct-kilmarnock-q7,adjacent,cellar tanking,55.611,-4.496,13,P2
+sct-kilmarnock-q8,adjacent,mini piling,55.611,-4.496,13,P2
+sct-kilmarnock-q9,adjacent,wall tie replacement,55.611,-4.496,13,P2
+sct-ayr-q0,foundation,underpinning,55.4586,-4.6292,13,P1
+sct-ayr-q1,foundation,subsidence repair,55.4586,-4.6292,13,P1
+sct-ayr-q2,foundation,structural repair,55.4586,-4.6292,13,P1
+sct-ayr-q3,foundation,foundation repair,55.4586,-4.6292,13,P1
+sct-ayr-q4,adjacent,damp proofing,55.4586,-4.6292,13,P2
+sct-ayr-q5,adjacent,basement waterproofing,55.4586,-4.6292,13,P2
+sct-ayr-q6,adjacent,structural waterproofing,55.4586,-4.6292,13,P2
+sct-ayr-q7,adjacent,cellar tanking,55.4586,-4.6292,13,P2
+sct-ayr-q8,adjacent,mini piling,55.4586,-4.6292,13,P2
+sct-ayr-q9,adjacent,wall tie replacement,55.4586,-4.6292,13,P2
+sct-stranraer-q0,foundation,underpinning,54.902,-5.027,13,P1
+sct-stranraer-q1,foundation,subsidence repair,54.902,-5.027,13,P1
+sct-stranraer-q2,foundation,structural repair,54.902,-5.027,13,P1
+sct-stranraer-q3,foundation,foundation repair,54.902,-5.027,13,P1
+sct-stranraer-q4,adjacent,damp proofing,54.902,-5.027,13,P2
+sct-stranraer-q5,adjacent,basement waterproofing,54.902,-5.027,13,P2
+sct-stranraer-q6,adjacent,structural waterproofing,54.902,-5.027,13,P2
+sct-stranraer-q7,adjacent,cellar tanking,54.902,-5.027,13,P2
+sct-stranraer-q8,adjacent,mini piling,54.902,-5.027,13,P2
+sct-stranraer-q9,adjacent,wall tie replacement,54.902,-5.027,13,P2
+sct-dumfries-q0,foundation,underpinning,55.07,-3.603,13,P1
+sct-dumfries-q1,foundation,subsidence repair,55.07,-3.603,13,P1
+sct-dumfries-q2,foundation,structural repair,55.07,-3.603,13,P1
+sct-dumfries-q3,foundation,foundation repair,55.07,-3.603,13,P1
+sct-dumfries-q4,adjacent,damp proofing,55.07,-3.603,13,P2
+sct-dumfries-q5,adjacent,basement waterproofing,55.07,-3.603,13,P2
+sct-dumfries-q6,adjacent,structural waterproofing,55.07,-3.603,13,P2
+sct-dumfries-q7,adjacent,cellar tanking,55.07,-3.603,13,P2
+sct-dumfries-q8,adjacent,mini piling,55.07,-3.603,13,P2
+sct-dumfries-q9,adjacent,wall tie replacement,55.07,-3.603,13,P2
+sct-galashiels-borders-q0,foundation,underpinning,55.618,-2.808,13,P1
+sct-galashiels-borders-q1,foundation,subsidence repair,55.618,-2.808,13,P1
+sct-galashiels-borders-q2,foundation,structural repair,55.618,-2.808,13,P1
+sct-galashiels-borders-q3,foundation,foundation repair,55.618,-2.808,13,P1
+sct-galashiels-borders-q4,adjacent,damp proofing,55.618,-2.808,13,P2
+sct-galashiels-borders-q5,adjacent,basement waterproofing,55.618,-2.808,13,P2
+sct-galashiels-borders-q6,adjacent,structural waterproofing,55.618,-2.808,13,P2
+sct-galashiels-borders-q7,adjacent,cellar tanking,55.618,-2.808,13,P2
+sct-galashiels-borders-q8,adjacent,mini piling,55.618,-2.808,13,P2
+sct-galashiels-borders-q9,adjacent,wall tie replacement,55.618,-2.808,13,P2
+sct-inverness-q0,foundation,underpinning,57.4778,-4.2247,13,P1
+sct-inverness-q1,foundation,subsidence repair,57.4778,-4.2247,13,P1
+sct-inverness-q2,foundation,structural repair,57.4778,-4.2247,13,P1
+sct-inverness-q3,foundation,foundation repair,57.4778,-4.2247,13,P1
+sct-inverness-q4,adjacent,damp proofing,57.4778,-4.2247,13,P2
+sct-inverness-q5,adjacent,basement waterproofing,57.4778,-4.2247,13,P2
+sct-inverness-q6,adjacent,structural waterproofing,57.4778,-4.2247,13,P2
+sct-inverness-q7,adjacent,cellar tanking,57.4778,-4.2247,13,P2
+sct-inverness-q8,adjacent,mini piling,57.4778,-4.2247,13,P2
+sct-inverness-q9,adjacent,wall tie replacement,57.4778,-4.2247,13,P2
+sct-elgin-q0,foundation,underpinning,57.65,-3.315,13,P1
+sct-elgin-q1,foundation,subsidence repair,57.65,-3.315,13,P1
+sct-elgin-q2,foundation,structural repair,57.65,-3.315,13,P1
+sct-elgin-q3,foundation,foundation repair,57.65,-3.315,13,P1
+sct-elgin-q4,adjacent,damp proofing,57.65,-3.315,13,P2
+sct-elgin-q5,adjacent,basement waterproofing,57.65,-3.315,13,P2
+sct-elgin-q6,adjacent,structural waterproofing,57.65,-3.315,13,P2
+sct-elgin-q7,adjacent,cellar tanking,57.65,-3.315,13,P2
+sct-elgin-q8,adjacent,mini piling,57.65,-3.315,13,P2
+sct-elgin-q9,adjacent,wall tie replacement,57.65,-3.315,13,P2
+sct-fort-william-q0,foundation,underpinning,56.8198,-5.1052,13,P1
+sct-fort-william-q1,foundation,subsidence repair,56.8198,-5.1052,13,P1
+sct-fort-william-q2,foundation,structural repair,56.8198,-5.1052,13,P1
+sct-fort-william-q3,foundation,foundation repair,56.8198,-5.1052,13,P1
+sct-fort-william-q4,adjacent,damp proofing,56.8198,-5.1052,13,P2
+sct-fort-william-q5,adjacent,basement waterproofing,56.8198,-5.1052,13,P2
+sct-fort-william-q6,adjacent,structural waterproofing,56.8198,-5.1052,13,P2
+sct-fort-william-q7,adjacent,cellar tanking,56.8198,-5.1052,13,P2
+sct-fort-william-q8,adjacent,mini piling,56.8198,-5.1052,13,P2
+sct-fort-william-q9,adjacent,wall tie replacement,56.8198,-5.1052,13,P2
+sct-oban-q0,foundation,underpinning,56.415,-5.47,13,P1
+sct-oban-q1,foundation,subsidence repair,56.415,-5.47,13,P1
+sct-oban-q2,foundation,structural repair,56.415,-5.47,13,P1
+sct-oban-q3,foundation,foundation repair,56.415,-5.47,13,P1
+sct-oban-q4,adjacent,damp proofing,56.415,-5.47,13,P2
+sct-oban-q5,adjacent,basement waterproofing,56.415,-5.47,13,P2
+sct-oban-q6,adjacent,structural waterproofing,56.415,-5.47,13,P2
+sct-oban-q7,adjacent,cellar tanking,56.415,-5.47,13,P2
+sct-oban-q8,adjacent,mini piling,56.415,-5.47,13,P2
+sct-oban-q9,adjacent,wall tie replacement,56.415,-5.47,13,P2
+sct-wick-caithness-q0,foundation,underpinning,58.439,-3.094,13,P1
+sct-wick-caithness-q1,foundation,subsidence repair,58.439,-3.094,13,P1
+sct-wick-caithness-q2,foundation,structural repair,58.439,-3.094,13,P1
+sct-wick-caithness-q3,foundation,foundation repair,58.439,-3.094,13,P1
+sct-wick-caithness-q4,adjacent,damp proofing,58.439,-3.094,13,P2
+sct-wick-caithness-q5,adjacent,basement waterproofing,58.439,-3.094,13,P2
+sct-wick-caithness-q6,adjacent,structural waterproofing,58.439,-3.094,13,P2
+sct-wick-caithness-q7,adjacent,cellar tanking,58.439,-3.094,13,P2
+sct-wick-caithness-q8,adjacent,mini piling,58.439,-3.094,13,P2
+sct-wick-caithness-q9,adjacent,wall tie replacement,58.439,-3.094,13,P2
+wls-cardiff-q0,foundation,underpinning,51.4816,-3.1791,13,P1
+wls-cardiff-q1,foundation,subsidence repair,51.4816,-3.1791,13,P1
+wls-cardiff-q2,foundation,structural repair,51.4816,-3.1791,13,P1
+wls-cardiff-q3,foundation,foundation repair,51.4816,-3.1791,13,P1
+wls-cardiff-q4,adjacent,damp proofing,51.4816,-3.1791,13,P2
+wls-cardiff-q5,adjacent,basement waterproofing,51.4816,-3.1791,13,P2
+wls-cardiff-q6,adjacent,structural waterproofing,51.4816,-3.1791,13,P2
+wls-cardiff-q7,adjacent,cellar tanking,51.4816,-3.1791,13,P2
+wls-cardiff-q8,adjacent,mini piling,51.4816,-3.1791,13,P2
+wls-cardiff-q9,adjacent,wall tie replacement,51.4816,-3.1791,13,P2
+wls-newport-q0,foundation,underpinning,51.5842,-2.9977,13,P1
+wls-newport-q1,foundation,subsidence repair,51.5842,-2.9977,13,P1
+wls-newport-q2,foundation,structural repair,51.5842,-2.9977,13,P1
+wls-newport-q3,foundation,foundation repair,51.5842,-2.9977,13,P1
+wls-newport-q4,adjacent,damp proofing,51.5842,-2.9977,13,P2
+wls-newport-q5,adjacent,basement waterproofing,51.5842,-2.9977,13,P2
+wls-newport-q6,adjacent,structural waterproofing,51.5842,-2.9977,13,P2
+wls-newport-q7,adjacent,cellar tanking,51.5842,-2.9977,13,P2
+wls-newport-q8,adjacent,mini piling,51.5842,-2.9977,13,P2
+wls-newport-q9,adjacent,wall tie replacement,51.5842,-2.9977,13,P2
+wls-swansea-q0,foundation,underpinning,51.6214,-3.9436,13,P1
+wls-swansea-q1,foundation,subsidence repair,51.6214,-3.9436,13,P1
+wls-swansea-q2,foundation,structural repair,51.6214,-3.9436,13,P1
+wls-swansea-q3,foundation,foundation repair,51.6214,-3.9436,13,P1
+wls-swansea-q4,adjacent,damp proofing,51.6214,-3.9436,13,P2
+wls-swansea-q5,adjacent,basement waterproofing,51.6214,-3.9436,13,P2
+wls-swansea-q6,adjacent,structural waterproofing,51.6214,-3.9436,13,P2
+wls-swansea-q7,adjacent,cellar tanking,51.6214,-3.9436,13,P2
+wls-swansea-q8,adjacent,mini piling,51.6214,-3.9436,13,P2
+wls-swansea-q9,adjacent,wall tie replacement,51.6214,-3.9436,13,P2
+wls-bridgend-q0,foundation,underpinning,51.504,-3.577,13,P1
+wls-bridgend-q1,foundation,subsidence repair,51.504,-3.577,13,P1
+wls-bridgend-q2,foundation,structural repair,51.504,-3.577,13,P1
+wls-bridgend-q3,foundation,foundation repair,51.504,-3.577,13,P1
+wls-bridgend-q4,adjacent,damp proofing,51.504,-3.577,13,P2
+wls-bridgend-q5,adjacent,basement waterproofing,51.504,-3.577,13,P2
+wls-bridgend-q6,adjacent,structural waterproofing,51.504,-3.577,13,P2
+wls-bridgend-q7,adjacent,cellar tanking,51.504,-3.577,13,P2
+wls-bridgend-q8,adjacent,mini piling,51.504,-3.577,13,P2
+wls-bridgend-q9,adjacent,wall tie replacement,51.504,-3.577,13,P2
+wls-merthyr-tydfil-q0,foundation,underpinning,51.748,-3.381,13,P1
+wls-merthyr-tydfil-q1,foundation,subsidence repair,51.748,-3.381,13,P1
+wls-merthyr-tydfil-q2,foundation,structural repair,51.748,-3.381,13,P1
+wls-merthyr-tydfil-q3,foundation,foundation repair,51.748,-3.381,13,P1
+wls-merthyr-tydfil-q4,adjacent,damp proofing,51.748,-3.381,13,P2
+wls-merthyr-tydfil-q5,adjacent,basement waterproofing,51.748,-3.381,13,P2
+wls-merthyr-tydfil-q6,adjacent,structural waterproofing,51.748,-3.381,13,P2
+wls-merthyr-tydfil-q7,adjacent,cellar tanking,51.748,-3.381,13,P2
+wls-merthyr-tydfil-q8,adjacent,mini piling,51.748,-3.381,13,P2
+wls-merthyr-tydfil-q9,adjacent,wall tie replacement,51.748,-3.381,13,P2
+wls-llanelli-q0,foundation,underpinning,51.681,-4.162,13,P1
+wls-llanelli-q1,foundation,subsidence repair,51.681,-4.162,13,P1
+wls-llanelli-q2,foundation,structural repair,51.681,-4.162,13,P1
+wls-llanelli-q3,foundation,foundation repair,51.681,-4.162,13,P1
+wls-llanelli-q4,adjacent,damp proofing,51.681,-4.162,13,P2
+wls-llanelli-q5,adjacent,basement waterproofing,51.681,-4.162,13,P2
+wls-llanelli-q6,adjacent,structural waterproofing,51.681,-4.162,13,P2
+wls-llanelli-q7,adjacent,cellar tanking,51.681,-4.162,13,P2
+wls-llanelli-q8,adjacent,mini piling,51.681,-4.162,13,P2
+wls-llanelli-q9,adjacent,wall tie replacement,51.681,-4.162,13,P2
+wls-carmarthen-q0,foundation,underpinning,51.856,-4.31,13,P1
+wls-carmarthen-q1,foundation,subsidence repair,51.856,-4.31,13,P1
+wls-carmarthen-q2,foundation,structural repair,51.856,-4.31,13,P1
+wls-carmarthen-q3,foundation,foundation repair,51.856,-4.31,13,P1
+wls-carmarthen-q4,adjacent,damp proofing,51.856,-4.31,13,P2
+wls-carmarthen-q5,adjacent,basement waterproofing,51.856,-4.31,13,P2
+wls-carmarthen-q6,adjacent,structural waterproofing,51.856,-4.31,13,P2
+wls-carmarthen-q7,adjacent,cellar tanking,51.856,-4.31,13,P2
+wls-carmarthen-q8,adjacent,mini piling,51.856,-4.31,13,P2
+wls-carmarthen-q9,adjacent,wall tie replacement,51.856,-4.31,13,P2
+wls-haverfordwest-q0,foundation,underpinning,51.801,-4.97,13,P1
+wls-haverfordwest-q1,foundation,subsidence repair,51.801,-4.97,13,P1
+wls-haverfordwest-q2,foundation,structural repair,51.801,-4.97,13,P1
+wls-haverfordwest-q3,foundation,foundation repair,51.801,-4.97,13,P1
+wls-haverfordwest-q4,adjacent,damp proofing,51.801,-4.97,13,P2
+wls-haverfordwest-q5,adjacent,basement waterproofing,51.801,-4.97,13,P2
+wls-haverfordwest-q6,adjacent,structural waterproofing,51.801,-4.97,13,P2
+wls-haverfordwest-q7,adjacent,cellar tanking,51.801,-4.97,13,P2
+wls-haverfordwest-q8,adjacent,mini piling,51.801,-4.97,13,P2
+wls-haverfordwest-q9,adjacent,wall tie replacement,51.801,-4.97,13,P2
+wls-aberystwyth-q0,foundation,underpinning,52.414,-4.081,13,P1
+wls-aberystwyth-q1,foundation,subsidence repair,52.414,-4.081,13,P1
+wls-aberystwyth-q2,foundation,structural repair,52.414,-4.081,13,P1
+wls-aberystwyth-q3,foundation,foundation repair,52.414,-4.081,13,P1
+wls-aberystwyth-q4,adjacent,damp proofing,52.414,-4.081,13,P2
+wls-aberystwyth-q5,adjacent,basement waterproofing,52.414,-4.081,13,P2
+wls-aberystwyth-q6,adjacent,structural waterproofing,52.414,-4.081,13,P2
+wls-aberystwyth-q7,adjacent,cellar tanking,52.414,-4.081,13,P2
+wls-aberystwyth-q8,adjacent,mini piling,52.414,-4.081,13,P2
+wls-aberystwyth-q9,adjacent,wall tie replacement,52.414,-4.081,13,P2
+wls-newtown-powys-q0,foundation,underpinning,52.515,-3.313,13,P1
+wls-newtown-powys-q1,foundation,subsidence repair,52.515,-3.313,13,P1
+wls-newtown-powys-q2,foundation,structural repair,52.515,-3.313,13,P1
+wls-newtown-powys-q3,foundation,foundation repair,52.515,-3.313,13,P1
+wls-newtown-powys-q4,adjacent,damp proofing,52.515,-3.313,13,P2
+wls-newtown-powys-q5,adjacent,basement waterproofing,52.515,-3.313,13,P2
+wls-newtown-powys-q6,adjacent,structural waterproofing,52.515,-3.313,13,P2
+wls-newtown-powys-q7,adjacent,cellar tanking,52.515,-3.313,13,P2
+wls-newtown-powys-q8,adjacent,mini piling,52.515,-3.313,13,P2
+wls-newtown-powys-q9,adjacent,wall tie replacement,52.515,-3.313,13,P2
+wls-wrexham-q0,foundation,underpinning,53.0428,-2.9927,13,P1
+wls-wrexham-q1,foundation,subsidence repair,53.0428,-2.9927,13,P1
+wls-wrexham-q2,foundation,structural repair,53.0428,-2.9927,13,P1
+wls-wrexham-q3,foundation,foundation repair,53.0428,-2.9927,13,P1
+wls-wrexham-q4,adjacent,damp proofing,53.0428,-2.9927,13,P2
+wls-wrexham-q5,adjacent,basement waterproofing,53.0428,-2.9927,13,P2
+wls-wrexham-q6,adjacent,structural waterproofing,53.0428,-2.9927,13,P2
+wls-wrexham-q7,adjacent,cellar tanking,53.0428,-2.9927,13,P2
+wls-wrexham-q8,adjacent,mini piling,53.0428,-2.9927,13,P2
+wls-wrexham-q9,adjacent,wall tie replacement,53.0428,-2.9927,13,P2
+wls-rhyl-colwyn-bay-q0,foundation,underpinning,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-q1,foundation,subsidence repair,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-q2,foundation,structural repair,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-q3,foundation,foundation repair,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-q4,adjacent,damp proofing,53.319,-3.489,13,P2
+wls-rhyl-colwyn-bay-q5,adjacent,basement waterproofing,53.319,-3.489,13,P2
+wls-rhyl-colwyn-bay-q6,adjacent,structural waterproofing,53.319,-3.489,13,P2
+wls-rhyl-colwyn-bay-q7,adjacent,cellar tanking,53.319,-3.489,13,P2
+wls-rhyl-colwyn-bay-q8,adjacent,mini piling,53.319,-3.489,13,P2
+wls-rhyl-colwyn-bay-q9,adjacent,wall tie replacement,53.319,-3.489,13,P2
+wls-bangor-gwynedd-q0,foundation,underpinning,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-q1,foundation,subsidence repair,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-q2,foundation,structural repair,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-q3,foundation,foundation repair,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-q4,adjacent,damp proofing,53.2274,-4.1293,13,P2
+wls-bangor-gwynedd-q5,adjacent,basement waterproofing,53.2274,-4.1293,13,P2
+wls-bangor-gwynedd-q6,adjacent,structural waterproofing,53.2274,-4.1293,13,P2
+wls-bangor-gwynedd-q7,adjacent,cellar tanking,53.2274,-4.1293,13,P2
+wls-bangor-gwynedd-q8,adjacent,mini piling,53.2274,-4.1293,13,P2
+wls-bangor-gwynedd-q9,adjacent,wall tie replacement,53.2274,-4.1293,13,P2
+nir-belfast-q0,foundation,underpinning,54.5973,-5.9301,13,P1
+nir-belfast-q1,foundation,subsidence repair,54.5973,-5.9301,13,P1
+nir-belfast-q2,foundation,structural repair,54.5973,-5.9301,13,P1
+nir-belfast-q3,foundation,foundation repair,54.5973,-5.9301,13,P1
+nir-belfast-q4,adjacent,damp proofing,54.5973,-5.9301,13,P2
+nir-belfast-q5,adjacent,basement waterproofing,54.5973,-5.9301,13,P2
+nir-belfast-q6,adjacent,structural waterproofing,54.5973,-5.9301,13,P2
+nir-belfast-q7,adjacent,cellar tanking,54.5973,-5.9301,13,P2
+nir-belfast-q8,adjacent,mini piling,54.5973,-5.9301,13,P2
+nir-belfast-q9,adjacent,wall tie replacement,54.5973,-5.9301,13,P2
+nir-lisburn-q0,foundation,underpinning,54.5162,-6.058,13,P1
+nir-lisburn-q1,foundation,subsidence repair,54.5162,-6.058,13,P1
+nir-lisburn-q2,foundation,structural repair,54.5162,-6.058,13,P1
+nir-lisburn-q3,foundation,foundation repair,54.5162,-6.058,13,P1
+nir-lisburn-q4,adjacent,damp proofing,54.5162,-6.058,13,P2
+nir-lisburn-q5,adjacent,basement waterproofing,54.5162,-6.058,13,P2
+nir-lisburn-q6,adjacent,structural waterproofing,54.5162,-6.058,13,P2
+nir-lisburn-q7,adjacent,cellar tanking,54.5162,-6.058,13,P2
+nir-lisburn-q8,adjacent,mini piling,54.5162,-6.058,13,P2
+nir-lisburn-q9,adjacent,wall tie replacement,54.5162,-6.058,13,P2
+nir-craigavon-q0,foundation,underpinning,54.447,-6.387,13,P1
+nir-craigavon-q1,foundation,subsidence repair,54.447,-6.387,13,P1
+nir-craigavon-q2,foundation,structural repair,54.447,-6.387,13,P1
+nir-craigavon-q3,foundation,foundation repair,54.447,-6.387,13,P1
+nir-craigavon-q4,adjacent,damp proofing,54.447,-6.387,13,P2
+nir-craigavon-q5,adjacent,basement waterproofing,54.447,-6.387,13,P2
+nir-craigavon-q6,adjacent,structural waterproofing,54.447,-6.387,13,P2
+nir-craigavon-q7,adjacent,cellar tanking,54.447,-6.387,13,P2
+nir-craigavon-q8,adjacent,mini piling,54.447,-6.387,13,P2
+nir-craigavon-q9,adjacent,wall tie replacement,54.447,-6.387,13,P2
+nir-newry-q0,foundation,underpinning,54.1751,-6.3402,13,P1
+nir-newry-q1,foundation,subsidence repair,54.1751,-6.3402,13,P1
+nir-newry-q2,foundation,structural repair,54.1751,-6.3402,13,P1
+nir-newry-q3,foundation,foundation repair,54.1751,-6.3402,13,P1
+nir-newry-q4,adjacent,damp proofing,54.1751,-6.3402,13,P2
+nir-newry-q5,adjacent,basement waterproofing,54.1751,-6.3402,13,P2
+nir-newry-q6,adjacent,structural waterproofing,54.1751,-6.3402,13,P2
+nir-newry-q7,adjacent,cellar tanking,54.1751,-6.3402,13,P2
+nir-newry-q8,adjacent,mini piling,54.1751,-6.3402,13,P2
+nir-newry-q9,adjacent,wall tie replacement,54.1751,-6.3402,13,P2
+nir-ballymena-q0,foundation,underpinning,54.8643,-6.2758,13,P1
+nir-ballymena-q1,foundation,subsidence repair,54.8643,-6.2758,13,P1
+nir-ballymena-q2,foundation,structural repair,54.8643,-6.2758,13,P1
+nir-ballymena-q3,foundation,foundation repair,54.8643,-6.2758,13,P1
+nir-ballymena-q4,adjacent,damp proofing,54.8643,-6.2758,13,P2
+nir-ballymena-q5,adjacent,basement waterproofing,54.8643,-6.2758,13,P2
+nir-ballymena-q6,adjacent,structural waterproofing,54.8643,-6.2758,13,P2
+nir-ballymena-q7,adjacent,cellar tanking,54.8643,-6.2758,13,P2
+nir-ballymena-q8,adjacent,mini piling,54.8643,-6.2758,13,P2
+nir-ballymena-q9,adjacent,wall tie replacement,54.8643,-6.2758,13,P2
+nir-coleraine-q0,foundation,underpinning,55.132,-6.668,13,P1
+nir-coleraine-q1,foundation,subsidence repair,55.132,-6.668,13,P1
+nir-coleraine-q2,foundation,structural repair,55.132,-6.668,13,P1
+nir-coleraine-q3,foundation,foundation repair,55.132,-6.668,13,P1
+nir-coleraine-q4,adjacent,damp proofing,55.132,-6.668,13,P2
+nir-coleraine-q5,adjacent,basement waterproofing,55.132,-6.668,13,P2
+nir-coleraine-q6,adjacent,structural waterproofing,55.132,-6.668,13,P2
+nir-coleraine-q7,adjacent,cellar tanking,55.132,-6.668,13,P2
+nir-coleraine-q8,adjacent,mini piling,55.132,-6.668,13,P2
+nir-coleraine-q9,adjacent,wall tie replacement,55.132,-6.668,13,P2
+nir-londonderry-q0,foundation,underpinning,54.9966,-7.3086,13,P1
+nir-londonderry-q1,foundation,subsidence repair,54.9966,-7.3086,13,P1
+nir-londonderry-q2,foundation,structural repair,54.9966,-7.3086,13,P1
+nir-londonderry-q3,foundation,foundation repair,54.9966,-7.3086,13,P1
+nir-londonderry-q4,adjacent,damp proofing,54.9966,-7.3086,13,P2
+nir-londonderry-q5,adjacent,basement waterproofing,54.9966,-7.3086,13,P2
+nir-londonderry-q6,adjacent,structural waterproofing,54.9966,-7.3086,13,P2
+nir-londonderry-q7,adjacent,cellar tanking,54.9966,-7.3086,13,P2
+nir-londonderry-q8,adjacent,mini piling,54.9966,-7.3086,13,P2
+nir-londonderry-q9,adjacent,wall tie replacement,54.9966,-7.3086,13,P2
+nir-omagh-q0,foundation,underpinning,54.598,-7.31,13,P1
+nir-omagh-q1,foundation,subsidence repair,54.598,-7.31,13,P1
+nir-omagh-q2,foundation,structural repair,54.598,-7.31,13,P1
+nir-omagh-q3,foundation,foundation repair,54.598,-7.31,13,P1
+nir-omagh-q4,adjacent,damp proofing,54.598,-7.31,13,P2
+nir-omagh-q5,adjacent,basement waterproofing,54.598,-7.31,13,P2
+nir-omagh-q6,adjacent,structural waterproofing,54.598,-7.31,13,P2
+nir-omagh-q7,adjacent,cellar tanking,54.598,-7.31,13,P2
+nir-omagh-q8,adjacent,mini piling,54.598,-7.31,13,P2
+nir-omagh-q9,adjacent,wall tie replacement,54.598,-7.31,13,P2
+nir-enniskillen-q0,foundation,underpinning,54.344,-7.631,13,P1
+nir-enniskillen-q1,foundation,subsidence repair,54.344,-7.631,13,P1
+nir-enniskillen-q2,foundation,structural repair,54.344,-7.631,13,P1
+nir-enniskillen-q3,foundation,foundation repair,54.344,-7.631,13,P1
+nir-enniskillen-q4,adjacent,damp proofing,54.344,-7.631,13,P2
+nir-enniskillen-q5,adjacent,basement waterproofing,54.344,-7.631,13,P2
+nir-enniskillen-q6,adjacent,structural waterproofing,54.344,-7.631,13,P2
+nir-enniskillen-q7,adjacent,cellar tanking,54.344,-7.631,13,P2
+nir-enniskillen-q8,adjacent,mini piling,54.344,-7.631,13,P2
+nir-enniskillen-q9,adjacent,wall tie replacement,54.344,-7.631,13,P2
+eng-london-north-wood-green-q0,foundation,underpinning,51.597,-0.11,13,P1
+eng-london-north-wood-green-q1,foundation,subsidence repair,51.597,-0.11,13,P1
+eng-london-north-wood-green-q2,foundation,structural repair,51.597,-0.11,13,P1
+eng-london-north-wood-green-q3,foundation,foundation repair,51.597,-0.11,13,P1
+eng-london-north-wood-green-q4,adjacent,damp proofing,51.597,-0.11,13,P2
+eng-london-north-wood-green-q5,adjacent,basement waterproofing,51.597,-0.11,13,P2
+eng-london-north-wood-green-q6,adjacent,structural waterproofing,51.597,-0.11,13,P2
+eng-london-north-wood-green-q7,adjacent,cellar tanking,51.597,-0.11,13,P2
+eng-london-north-wood-green-q8,adjacent,mini piling,51.597,-0.11,13,P2
+eng-london-north-wood-green-q9,adjacent,wall tie replacement,51.597,-0.11,13,P2
+eng-london-south-streatham-q0,foundation,underpinning,51.428,-0.123,13,P1
+eng-london-south-streatham-q1,foundation,subsidence repair,51.428,-0.123,13,P1
+eng-london-south-streatham-q2,foundation,structural repair,51.428,-0.123,13,P1
+eng-london-south-streatham-q3,foundation,foundation repair,51.428,-0.123,13,P1
+eng-london-south-streatham-q4,adjacent,damp proofing,51.428,-0.123,13,P2
+eng-london-south-streatham-q5,adjacent,basement waterproofing,51.428,-0.123,13,P2
+eng-london-south-streatham-q6,adjacent,structural waterproofing,51.428,-0.123,13,P2
+eng-london-south-streatham-q7,adjacent,cellar tanking,51.428,-0.123,13,P2
+eng-london-south-streatham-q8,adjacent,mini piling,51.428,-0.123,13,P2
+eng-london-south-streatham-q9,adjacent,wall tie replacement,51.428,-0.123,13,P2
+eng-london-east-stratford-q0,foundation,underpinning,51.5416,-0.0042,13,P1
+eng-london-east-stratford-q1,foundation,subsidence repair,51.5416,-0.0042,13,P1
+eng-london-east-stratford-q2,foundation,structural repair,51.5416,-0.0042,13,P1
+eng-london-east-stratford-q3,foundation,foundation repair,51.5416,-0.0042,13,P1
+eng-london-east-stratford-q4,adjacent,damp proofing,51.5416,-0.0042,13,P2
+eng-london-east-stratford-q5,adjacent,basement waterproofing,51.5416,-0.0042,13,P2
+eng-london-east-stratford-q6,adjacent,structural waterproofing,51.5416,-0.0042,13,P2
+eng-london-east-stratford-q7,adjacent,cellar tanking,51.5416,-0.0042,13,P2
+eng-london-east-stratford-q8,adjacent,mini piling,51.5416,-0.0042,13,P2
+eng-london-east-stratford-q9,adjacent,wall tie replacement,51.5416,-0.0042,13,P2
+eng-london-west-ealing-q0,foundation,underpinning,51.513,-0.304,13,P1
+eng-london-west-ealing-q1,foundation,subsidence repair,51.513,-0.304,13,P1
+eng-london-west-ealing-q2,foundation,structural repair,51.513,-0.304,13,P1
+eng-london-west-ealing-q3,foundation,foundation repair,51.513,-0.304,13,P1
+eng-london-west-ealing-q4,adjacent,damp proofing,51.513,-0.304,13,P2
+eng-london-west-ealing-q5,adjacent,basement waterproofing,51.513,-0.304,13,P2
+eng-london-west-ealing-q6,adjacent,structural waterproofing,51.513,-0.304,13,P2
+eng-london-west-ealing-q7,adjacent,cellar tanking,51.513,-0.304,13,P2
+eng-london-west-ealing-q8,adjacent,mini piling,51.513,-0.304,13,P2
+eng-london-west-ealing-q9,adjacent,wall tie replacement,51.513,-0.304,13,P2
+eng-london-croydon-q0,foundation,underpinning,51.3762,-0.0982,13,P1
+eng-london-croydon-q1,foundation,subsidence repair,51.3762,-0.0982,13,P1
+eng-london-croydon-q2,foundation,structural repair,51.3762,-0.0982,13,P1
+eng-london-croydon-q3,foundation,foundation repair,51.3762,-0.0982,13,P1
+eng-london-croydon-q4,adjacent,damp proofing,51.3762,-0.0982,13,P2
+eng-london-croydon-q5,adjacent,basement waterproofing,51.3762,-0.0982,13,P2
+eng-london-croydon-q6,adjacent,structural waterproofing,51.3762,-0.0982,13,P2
+eng-london-croydon-q7,adjacent,cellar tanking,51.3762,-0.0982,13,P2
+eng-london-croydon-q8,adjacent,mini piling,51.3762,-0.0982,13,P2
+eng-london-croydon-q9,adjacent,wall tie replacement,51.3762,-0.0982,13,P2
+eng-london-bromley-q0,foundation,underpinning,51.406,0.015,13,P1
+eng-london-bromley-q1,foundation,subsidence repair,51.406,0.015,13,P1
+eng-london-bromley-q2,foundation,structural repair,51.406,0.015,13,P1
+eng-london-bromley-q3,foundation,foundation repair,51.406,0.015,13,P1
+eng-london-bromley-q4,adjacent,damp proofing,51.406,0.015,13,P2
+eng-london-bromley-q5,adjacent,basement waterproofing,51.406,0.015,13,P2
+eng-london-bromley-q6,adjacent,structural waterproofing,51.406,0.015,13,P2
+eng-london-bromley-q7,adjacent,cellar tanking,51.406,0.015,13,P2
+eng-london-bromley-q8,adjacent,mini piling,51.406,0.015,13,P2
+eng-london-bromley-q9,adjacent,wall tie replacement,51.406,0.015,13,P2
+eng-london-romford-q0,foundation,underpinning,51.575,0.183,13,P1
+eng-london-romford-q1,foundation,subsidence repair,51.575,0.183,13,P1
+eng-london-romford-q2,foundation,structural repair,51.575,0.183,13,P1
+eng-london-romford-q3,foundation,foundation repair,51.575,0.183,13,P1
+eng-london-romford-q4,adjacent,damp proofing,51.575,0.183,13,P2
+eng-london-romford-q5,adjacent,basement waterproofing,51.575,0.183,13,P2
+eng-london-romford-q6,adjacent,structural waterproofing,51.575,0.183,13,P2
+eng-london-romford-q7,adjacent,cellar tanking,51.575,0.183,13,P2
+eng-london-romford-q8,adjacent,mini piling,51.575,0.183,13,P2
+eng-london-romford-q9,adjacent,wall tie replacement,51.575,0.183,13,P2
+eng-london-enfield-q0,foundation,underpinning,51.652,-0.081,13,P1
+eng-london-enfield-q1,foundation,subsidence repair,51.652,-0.081,13,P1
+eng-london-enfield-q2,foundation,structural repair,51.652,-0.081,13,P1
+eng-london-enfield-q3,foundation,foundation repair,51.652,-0.081,13,P1
+eng-london-enfield-q4,adjacent,damp proofing,51.652,-0.081,13,P2
+eng-london-enfield-q5,adjacent,basement waterproofing,51.652,-0.081,13,P2
+eng-london-enfield-q6,adjacent,structural waterproofing,51.652,-0.081,13,P2
+eng-london-enfield-q7,adjacent,cellar tanking,51.652,-0.081,13,P2
+eng-london-enfield-q8,adjacent,mini piling,51.652,-0.081,13,P2
+eng-london-enfield-q9,adjacent,wall tie replacement,51.652,-0.081,13,P2
+eng-london-harrow-q0,foundation,underpinning,51.58,-0.342,13,P1
+eng-london-harrow-q1,foundation,subsidence repair,51.58,-0.342,13,P1
+eng-london-harrow-q2,foundation,structural repair,51.58,-0.342,13,P1
+eng-london-harrow-q3,foundation,foundation repair,51.58,-0.342,13,P1
+eng-london-harrow-q4,adjacent,damp proofing,51.58,-0.342,13,P2
+eng-london-harrow-q5,adjacent,basement waterproofing,51.58,-0.342,13,P2
+eng-london-harrow-q6,adjacent,structural waterproofing,51.58,-0.342,13,P2
+eng-london-harrow-q7,adjacent,cellar tanking,51.58,-0.342,13,P2
+eng-london-harrow-q8,adjacent,mini piling,51.58,-0.342,13,P2
+eng-london-harrow-q9,adjacent,wall tie replacement,51.58,-0.342,13,P2
+eng-london-kingston-q0,foundation,underpinning,51.412,-0.3,13,P1
+eng-london-kingston-q1,foundation,subsidence repair,51.412,-0.3,13,P1
+eng-london-kingston-q2,foundation,structural repair,51.412,-0.3,13,P1
+eng-london-kingston-q3,foundation,foundation repair,51.412,-0.3,13,P1
+eng-london-kingston-q4,adjacent,damp proofing,51.412,-0.3,13,P2
+eng-london-kingston-q5,adjacent,basement waterproofing,51.412,-0.3,13,P2
+eng-london-kingston-q6,adjacent,structural waterproofing,51.412,-0.3,13,P2
+eng-london-kingston-q7,adjacent,cellar tanking,51.412,-0.3,13,P2
+eng-london-kingston-q8,adjacent,mini piling,51.412,-0.3,13,P2
+eng-london-kingston-q9,adjacent,wall tie replacement,51.412,-0.3,13,P2
+eng-london-uxbridge-q0,foundation,underpinning,51.546,-0.478,13,P1
+eng-london-uxbridge-q1,foundation,subsidence repair,51.546,-0.478,13,P1
+eng-london-uxbridge-q2,foundation,structural repair,51.546,-0.478,13,P1
+eng-london-uxbridge-q3,foundation,foundation repair,51.546,-0.478,13,P1
+eng-london-uxbridge-q4,adjacent,damp proofing,51.546,-0.478,13,P2
+eng-london-uxbridge-q5,adjacent,basement waterproofing,51.546,-0.478,13,P2
+eng-london-uxbridge-q6,adjacent,structural waterproofing,51.546,-0.478,13,P2
+eng-london-uxbridge-q7,adjacent,cellar tanking,51.546,-0.478,13,P2
+eng-london-uxbridge-q8,adjacent,mini piling,51.546,-0.478,13,P2
+eng-london-uxbridge-q9,adjacent,wall tie replacement,51.546,-0.478,13,P2
+eng-london-watford-q0,foundation,underpinning,51.6565,-0.3903,13,P1
+eng-london-watford-q1,foundation,subsidence repair,51.6565,-0.3903,13,P1
+eng-london-watford-q2,foundation,structural repair,51.6565,-0.3903,13,P1
+eng-london-watford-q3,foundation,foundation repair,51.6565,-0.3903,13,P1
+eng-london-watford-q4,adjacent,damp proofing,51.6565,-0.3903,13,P2
+eng-london-watford-q5,adjacent,basement waterproofing,51.6565,-0.3903,13,P2
+eng-london-watford-q6,adjacent,structural waterproofing,51.6565,-0.3903,13,P2
+eng-london-watford-q7,adjacent,cellar tanking,51.6565,-0.3903,13,P2
+eng-london-watford-q8,adjacent,mini piling,51.6565,-0.3903,13,P2
+eng-london-watford-q9,adjacent,wall tie replacement,51.6565,-0.3903,13,P2
+eng-bham-solihull-q0,foundation,underpinning,52.412,-1.778,13,P1
+eng-bham-solihull-q1,foundation,subsidence repair,52.412,-1.778,13,P1
+eng-bham-solihull-q2,foundation,structural repair,52.412,-1.778,13,P1
+eng-bham-solihull-q3,foundation,foundation repair,52.412,-1.778,13,P1
+eng-bham-solihull-q4,adjacent,damp proofing,52.412,-1.778,13,P2
+eng-bham-solihull-q5,adjacent,basement waterproofing,52.412,-1.778,13,P2
+eng-bham-solihull-q6,adjacent,structural waterproofing,52.412,-1.778,13,P2
+eng-bham-solihull-q7,adjacent,cellar tanking,52.412,-1.778,13,P2
+eng-bham-solihull-q8,adjacent,mini piling,52.412,-1.778,13,P2
+eng-bham-solihull-q9,adjacent,wall tie replacement,52.412,-1.778,13,P2
+eng-bham-sutton-coldfield-q0,foundation,underpinning,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-q1,foundation,subsidence repair,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-q2,foundation,structural repair,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-q3,foundation,foundation repair,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-q4,adjacent,damp proofing,52.563,-1.824,13,P2
+eng-bham-sutton-coldfield-q5,adjacent,basement waterproofing,52.563,-1.824,13,P2
+eng-bham-sutton-coldfield-q6,adjacent,structural waterproofing,52.563,-1.824,13,P2
+eng-bham-sutton-coldfield-q7,adjacent,cellar tanking,52.563,-1.824,13,P2
+eng-bham-sutton-coldfield-q8,adjacent,mini piling,52.563,-1.824,13,P2
+eng-bham-sutton-coldfield-q9,adjacent,wall tie replacement,52.563,-1.824,13,P2
+eng-bham-walsall-q0,foundation,underpinning,52.586,-1.982,13,P1
+eng-bham-walsall-q1,foundation,subsidence repair,52.586,-1.982,13,P1
+eng-bham-walsall-q2,foundation,structural repair,52.586,-1.982,13,P1
+eng-bham-walsall-q3,foundation,foundation repair,52.586,-1.982,13,P1
+eng-bham-walsall-q4,adjacent,damp proofing,52.586,-1.982,13,P2
+eng-bham-walsall-q5,adjacent,basement waterproofing,52.586,-1.982,13,P2
+eng-bham-walsall-q6,adjacent,structural waterproofing,52.586,-1.982,13,P2
+eng-bham-walsall-q7,adjacent,cellar tanking,52.586,-1.982,13,P2
+eng-bham-walsall-q8,adjacent,mini piling,52.586,-1.982,13,P2
+eng-bham-walsall-q9,adjacent,wall tie replacement,52.586,-1.982,13,P2
+eng-mcr-altrincham-q0,foundation,underpinning,53.387,-2.351,13,P1
+eng-mcr-altrincham-q1,foundation,subsidence repair,53.387,-2.351,13,P1
+eng-mcr-altrincham-q2,foundation,structural repair,53.387,-2.351,13,P1
+eng-mcr-altrincham-q3,foundation,foundation repair,53.387,-2.351,13,P1
+eng-mcr-altrincham-q4,adjacent,damp proofing,53.387,-2.351,13,P2
+eng-mcr-altrincham-q5,adjacent,basement waterproofing,53.387,-2.351,13,P2
+eng-mcr-altrincham-q6,adjacent,structural waterproofing,53.387,-2.351,13,P2
+eng-mcr-altrincham-q7,adjacent,cellar tanking,53.387,-2.351,13,P2
+eng-mcr-altrincham-q8,adjacent,mini piling,53.387,-2.351,13,P2
+eng-mcr-altrincham-q9,adjacent,wall tie replacement,53.387,-2.351,13,P2
+eng-mcr-bury-q0,foundation,underpinning,53.593,-2.297,13,P1
+eng-mcr-bury-q1,foundation,subsidence repair,53.593,-2.297,13,P1
+eng-mcr-bury-q2,foundation,structural repair,53.593,-2.297,13,P1
+eng-mcr-bury-q3,foundation,foundation repair,53.593,-2.297,13,P1
+eng-mcr-bury-q4,adjacent,damp proofing,53.593,-2.297,13,P2
+eng-mcr-bury-q5,adjacent,basement waterproofing,53.593,-2.297,13,P2
+eng-mcr-bury-q6,adjacent,structural waterproofing,53.593,-2.297,13,P2
+eng-mcr-bury-q7,adjacent,cellar tanking,53.593,-2.297,13,P2
+eng-mcr-bury-q8,adjacent,mini piling,53.593,-2.297,13,P2
+eng-mcr-bury-q9,adjacent,wall tie replacement,53.593,-2.297,13,P2
+eng-mcr-ashton-under-lyne-q0,foundation,underpinning,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-q1,foundation,subsidence repair,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-q2,foundation,structural repair,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-q3,foundation,foundation repair,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-q4,adjacent,damp proofing,53.49,-2.097,13,P2
+eng-mcr-ashton-under-lyne-q5,adjacent,basement waterproofing,53.49,-2.097,13,P2
+eng-mcr-ashton-under-lyne-q6,adjacent,structural waterproofing,53.49,-2.097,13,P2
+eng-mcr-ashton-under-lyne-q7,adjacent,cellar tanking,53.49,-2.097,13,P2
+eng-mcr-ashton-under-lyne-q8,adjacent,mini piling,53.49,-2.097,13,P2
+eng-mcr-ashton-under-lyne-q9,adjacent,wall tie replacement,53.49,-2.097,13,P2
+eng-leeds-north-moortown-q0,foundation,underpinning,53.838,-1.548,13,P1
+eng-leeds-north-moortown-q1,foundation,subsidence repair,53.838,-1.548,13,P1
+eng-leeds-north-moortown-q2,foundation,structural repair,53.838,-1.548,13,P1
+eng-leeds-north-moortown-q3,foundation,foundation repair,53.838,-1.548,13,P1
+eng-leeds-north-moortown-q4,adjacent,damp proofing,53.838,-1.548,13,P2
+eng-leeds-north-moortown-q5,adjacent,basement waterproofing,53.838,-1.548,13,P2
+eng-leeds-north-moortown-q6,adjacent,structural waterproofing,53.838,-1.548,13,P2
+eng-leeds-north-moortown-q7,adjacent,cellar tanking,53.838,-1.548,13,P2
+eng-leeds-north-moortown-q8,adjacent,mini piling,53.838,-1.548,13,P2
+eng-leeds-north-moortown-q9,adjacent,wall tie replacement,53.838,-1.548,13,P2
+eng-bradford-keighley-q0,foundation,underpinning,53.867,-1.911,13,P1
+eng-bradford-keighley-q1,foundation,subsidence repair,53.867,-1.911,13,P1
+eng-bradford-keighley-q2,foundation,structural repair,53.867,-1.911,13,P1
+eng-bradford-keighley-q3,foundation,foundation repair,53.867,-1.911,13,P1
+eng-bradford-keighley-q4,adjacent,damp proofing,53.867,-1.911,13,P2
+eng-bradford-keighley-q5,adjacent,basement waterproofing,53.867,-1.911,13,P2
+eng-bradford-keighley-q6,adjacent,structural waterproofing,53.867,-1.911,13,P2
+eng-bradford-keighley-q7,adjacent,cellar tanking,53.867,-1.911,13,P2
+eng-bradford-keighley-q8,adjacent,mini piling,53.867,-1.911,13,P2
+eng-bradford-keighley-q9,adjacent,wall tie replacement,53.867,-1.911,13,P2
+sct-glasgow-paisley-q0,foundation,underpinning,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-q1,foundation,subsidence repair,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-q2,foundation,structural repair,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-q3,foundation,foundation repair,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-q4,adjacent,damp proofing,55.8456,-4.4239,13,P2
+sct-glasgow-paisley-q5,adjacent,basement waterproofing,55.8456,-4.4239,13,P2
+sct-glasgow-paisley-q6,adjacent,structural waterproofing,55.8456,-4.4239,13,P2
+sct-glasgow-paisley-q7,adjacent,cellar tanking,55.8456,-4.4239,13,P2
+sct-glasgow-paisley-q8,adjacent,mini piling,55.8456,-4.4239,13,P2
+sct-glasgow-paisley-q9,adjacent,wall tie replacement,55.8456,-4.4239,13,P2
+sct-glasgow-east-kilbride-q0,foundation,underpinning,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-q1,foundation,subsidence repair,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-q2,foundation,structural repair,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-q3,foundation,foundation repair,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-q4,adjacent,damp proofing,55.7644,-4.177,13,P2
+sct-glasgow-east-kilbride-q5,adjacent,basement waterproofing,55.7644,-4.177,13,P2
+sct-glasgow-east-kilbride-q6,adjacent,structural waterproofing,55.7644,-4.177,13,P2
+sct-glasgow-east-kilbride-q7,adjacent,cellar tanking,55.7644,-4.177,13,P2
+sct-glasgow-east-kilbride-q8,adjacent,mini piling,55.7644,-4.177,13,P2
+sct-glasgow-east-kilbride-q9,adjacent,wall tie replacement,55.7644,-4.177,13,P2
+eng-liverpool-south-garston-q0,foundation,underpinning,53.355,-2.88,13,P1
+eng-liverpool-south-garston-q1,foundation,subsidence repair,53.355,-2.88,13,P1
+eng-liverpool-south-garston-q2,foundation,structural repair,53.355,-2.88,13,P1
+eng-liverpool-south-garston-q3,foundation,foundation repair,53.355,-2.88,13,P1
+eng-liverpool-south-garston-q4,adjacent,damp proofing,53.355,-2.88,13,P2
+eng-liverpool-south-garston-q5,adjacent,basement waterproofing,53.355,-2.88,13,P2
+eng-liverpool-south-garston-q6,adjacent,structural waterproofing,53.355,-2.88,13,P2
+eng-liverpool-south-garston-q7,adjacent,cellar tanking,53.355,-2.88,13,P2
+eng-liverpool-south-garston-q8,adjacent,mini piling,53.355,-2.88,13,P2
+eng-liverpool-south-garston-q9,adjacent,wall tie replacement,53.355,-2.88,13,P2
+eng-sheffield-north-q0,foundation,underpinning,53.46,-1.47,13,P1
+eng-sheffield-north-q1,foundation,subsidence repair,53.46,-1.47,13,P1
+eng-sheffield-north-q2,foundation,structural repair,53.46,-1.47,13,P1
+eng-sheffield-north-q3,foundation,foundation repair,53.46,-1.47,13,P1
+eng-sheffield-north-q4,adjacent,damp proofing,53.46,-1.47,13,P2
+eng-sheffield-north-q5,adjacent,basement waterproofing,53.46,-1.47,13,P2
+eng-sheffield-north-q6,adjacent,structural waterproofing,53.46,-1.47,13,P2
+eng-sheffield-north-q7,adjacent,cellar tanking,53.46,-1.47,13,P2
+eng-sheffield-north-q8,adjacent,mini piling,53.46,-1.47,13,P2
+eng-sheffield-north-q9,adjacent,wall tie replacement,53.46,-1.47,13,P2
+eng-bristol-north-filton-q0,foundation,underpinning,51.51,-2.57,13,P1
+eng-bristol-north-filton-q1,foundation,subsidence repair,51.51,-2.57,13,P1
+eng-bristol-north-filton-q2,foundation,structural repair,51.51,-2.57,13,P1
+eng-bristol-north-filton-q3,foundation,foundation repair,51.51,-2.57,13,P1
+eng-bristol-north-filton-q4,adjacent,damp proofing,51.51,-2.57,13,P2
+eng-bristol-north-filton-q5,adjacent,basement waterproofing,51.51,-2.57,13,P2
+eng-bristol-north-filton-q6,adjacent,structural waterproofing,51.51,-2.57,13,P2
+eng-bristol-north-filton-q7,adjacent,cellar tanking,51.51,-2.57,13,P2
+eng-bristol-north-filton-q8,adjacent,mini piling,51.51,-2.57,13,P2
+eng-bristol-north-filton-q9,adjacent,wall tie replacement,51.51,-2.57,13,P2
+eng-newcastle-gateshead-sth-q0,foundation,underpinning,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-q1,foundation,subsidence repair,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-q2,foundation,structural repair,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-q3,foundation,foundation repair,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-q4,adjacent,damp proofing,54.9,-1.52,13,P2
+eng-newcastle-gateshead-sth-q5,adjacent,basement waterproofing,54.9,-1.52,13,P2
+eng-newcastle-gateshead-sth-q6,adjacent,structural waterproofing,54.9,-1.52,13,P2
+eng-newcastle-gateshead-sth-q7,adjacent,cellar tanking,54.9,-1.52,13,P2
+eng-newcastle-gateshead-sth-q8,adjacent,mini piling,54.9,-1.52,13,P2
+eng-newcastle-gateshead-sth-q9,adjacent,wall tie replacement,54.9,-1.52,13,P2
+sct-edinburgh-west-q0,foundation,underpinning,55.92,-3.28,13,P1
+sct-edinburgh-west-q1,foundation,subsidence repair,55.92,-3.28,13,P1
+sct-edinburgh-west-q2,foundation,structural repair,55.92,-3.28,13,P1
+sct-edinburgh-west-q3,foundation,foundation repair,55.92,-3.28,13,P1
+sct-edinburgh-west-q4,adjacent,damp proofing,55.92,-3.28,13,P2
+sct-edinburgh-west-q5,adjacent,basement waterproofing,55.92,-3.28,13,P2
+sct-edinburgh-west-q6,adjacent,structural waterproofing,55.92,-3.28,13,P2
+sct-edinburgh-west-q7,adjacent,cellar tanking,55.92,-3.28,13,P2
+sct-edinburgh-west-q8,adjacent,mini piling,55.92,-3.28,13,P2
+sct-edinburgh-west-q9,adjacent,wall tie replacement,55.92,-3.28,13,P2

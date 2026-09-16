@@ -1,0 +1,27 @@
+{
+  "_comment": "Atlas Growth UK :: RECOVERY pass over excluded_officp.csv, mirroring clients/atlas-growth/recover-generic-config.json. The main config deliberately refuses the generic construction buckets because in the UK they are mostly general builders and would flood the list. This pass takes them back ONLY when the business NAME says foundation/damp/structural work — the pairing qualify-leads.js cannot express as a single rule. Deterministic, $0, no re-scrape. Run: qualify-leads.js --in <run>/excluded_officp.csv --config recover-generic-uk-config.json --out <run>/recover, then append recover/leads_clean_qualified.csv to the main qualified list (dedupe on place_id).",
+
+  "geo": { "country": "gb", "footprint": { "mode": "areas" }, "region_from_city": null, "region_default": "UK" },
+
+  "qualify_rules": [
+    {"_r": "0. RECOVERY SCOPE GATE — recover ONLY rows the main pass dropped at its positive allow (drop_reason 'not_in_icp'). This is the rule that keeps a recovery pass honest: without it, the generic type net below readmits entities the main config removed ON PURPOSE. Concretely, a drain-jetting firm named 'Structural Drainage Solutions' typed 'Drainage service | Contractor' matches the generic type 'contractor' AND the name token 'structural', so it would come straight back through the front door it was just shown out of. Ditto a bodyshop typed 'Auto body shop | Contractor'. This works because excluded_officp.csv carries the drop_reason column that qualify-leads.js appends. CAVEAT: if this config is ever pointed at a file WITHOUT a drop_reason column (e.g. leads_clean.csv), qualify-leads.js skips the rule with a WARN on stderr and the pass silently degrades to type+name only — read the WARN line, it is not decoration.",
+     "field": "drop_reason", "op": "in", "label": "not_a_recovery_candidate", "value": ["not_in_icp"]},
+
+    {"_r": "1. The generic type net. These are the buckets the main config's allow deliberately omits. In the 2026-09-16 UK profile, general builders with a structural-repairs line are ~17% of the real ICP — the single biggest segment the Maps-stage allow cannot see, because Google types them 'Construction company' and nothing else. Note this is an ALLOW, not a deny: a row carrying none of these types is simply not a recovery candidate and stays excluded.",
+     "field": "google_types", "op": "allow", "label": "not_generic_contractor", "value": [
+       "construction company", "contractor", "general contractor", "building firm",
+       "builder", "home builder", "building company", "concrete contractor",
+       "civil engineering contractor", "groundworks", "excavating contractor",
+       "repair service", "building consultant", "property maintenance"]},
+
+    {"_r": "2. The NAME must actually claim the work. This is the precision half of the pair — keep it strict. Tokens are the UK vocabulary from stageA_prefilter.py's NAMEKW plus the operator's list. 'wall tie' and 'crack' are in because crack-stitching and cavity-wall-tie replacement are how a UK general builder advertises structural repair. 'preservation' and 'remedial' are this trade's own words for the damp/timber side. Deliberately NOT included: 'restoration' (too broad — every stonework and water-damage firm), 'building' (matches everything), and 'groundwork' as a NAME token (a groundworks firm lays NEW foundations, which adjudicate/PROMPT.md classes as 'no'; it stays a TYPE-level candidate only).",
+     "field": "name", "op": "contains_any", "label": "name_not_icp", "value": [
+       "damp", "underpin", "subsidence", "structural", "waterproof", "tanking",
+       "piling", "pile ", "preservation", "remedial", "foundation", "basement",
+       "cellar", "wall tie", "crack", "helibar", "resin inject", "stabilis", "stabiliz",
+       "timber treatment", "dry rot", "woodworm", "rising damp", "condensation control"]},
+
+    {"_r": "3. Same ghost-listing floor as the main pass so the recovery cannot sneak sub-floor rows in by the back door. (Rule 0 already blocks too_small rows; this is belt and braces for the degraded-run case described there.)",
+     "field": "review_count", "op": ">=", "value": 5, "label": "too_small"}
+  ]
+}

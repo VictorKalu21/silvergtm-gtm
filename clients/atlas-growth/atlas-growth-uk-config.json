@@ -1,0 +1,127 @@
+{
+  "_comment": "Atlas Growth :: UK foundation repair / structural + damp remediation. Engine config for google-maps-scrape. Mirrors clients/atlas-growth/atlas-growth-config.json (the US run) with UK geo, UK vocabulary and a VOLUME-SAFE rule posture: the real ICP gate is the downstream site-text adjudication (adjudicate/PROMPT.md), so nothing here may drop a plausible trade firm. Job-specific values live ONLY here — never edit an engine script to tune this run.",
+
+  "geo": {
+    "_r": "areas mode: the runsheet tiles ARE the footprint (whole UK, metro-anchored — 150 anchors + 27 densify). region_from_city is null because the UK has no state token to parse out of `city` (SKILL STEP 3: 'null for regionless geos like the UK'), so footprint-gate.js runs its hub-distance + foreign-country checks only and never the region check. region_default 'UK' matters: footprint-gate.js deletes the whole alias group ['united kingdom','uk','england','scotland','wales'] from its foreign-country blocklist, so an address ending in any of those is never dropped as wrong_country. KNOWN EDGE: 'northern ireland' is not in that COUNTRIES set at all, so Belfast/Derry addresses are safe either way — but 'ireland' IS in it, which is correct (Republic of Ireland pins must drop) and is the reason a Derry address ending '...Londonderry, United Kingdom' survives while one ending '...Donegal, Ireland' does not.",
+    "country": "gb",
+    "footprint": { "mode": "areas" },
+    "region_from_city": null,
+    "region_default": "UK"
+  },
+
+  "categories": {
+    "_r": "The 10 runsheet queries, grouped by icp_type. P1 = direct structural-repair intent; P2 = the labels this trade actually uses in the UK (damp-proofing / structural waterproofing is ~60% of the universe per skills/icp-source-planner/library/google-maps--uk-foundation-repair.md). 'underpinning' is deliberately bare — see gen-runsheet-uk.js WORDING NOTE. 'foundation repair' is kept even though it barely exists as a UK trade label: one query is cheap insurance and it is the phrase Atlas Growth's US creative is built on.",
+    "foundation": ["underpinning", "subsidence repair", "structural repair", "foundation repair"],
+    "adjacent": ["damp proofing", "basement waterproofing", "structural waterproofing",
+                 "cellar tanking", "mini piling", "wall tie replacement"]
+  },
+
+  "scrape_tuning": {
+    "_r": "paginate:true pages each viewport via `offset` to exhaustion (shipped 2026-09-13, sharp-shannon IMPROVEMENTS: the old 'offset is broken' note was stale). The Lagos pilot measured ~2.91 calls/runsheet row on dense tiles and found 99% of rows needed more than one page — i.e. every single-call run to date under-collected. max_pages 6 x limit 150 = up to 900 records per tile, which is far above anything a UK town will hold; 6 (not the engine default 8) caps the worst-case London spend. saturation 90 is effectively INERT under paginate (a split now needs max_pages*limit records) and is left at the default rather than removed, so the config still reads correctly if paginate is ever turned off. max_depth 1 = at most one quadrant split. quad_offset 0.02 (~2.2km) is UK-town scale, not the US-metro 0.025 default; QUAD_OFFSET now scales by depth (fixed 2026-09-13) so a split genuinely subdivides the parent viewport instead of drifting outward. London is densified with 12 EXPLICIT tiles rather than relying on splits, because a split lands wherever the maths puts it and the boroughs are where the subsidence market is.",
+    "paginate": true,
+    "max_pages": 6,
+    "limit": 150,
+    "saturation": 90,
+    "max_depth": 1,
+    "quad_offset": 0.02
+  },
+
+  "qualify_rules": [
+    {"_r": "1. HARD entity deny, scope:'any' — the ONLY rule allowed to match a secondary google_type. Per the sharp-shannon 2026-09-13 lesson (a bare 'atm' under scope:any deleted 71 real bank branches), scope:'any' is reserved for terms that can NEVER appear on a real foundation/damp contractor: a charity, a college, a hospital, a place of worship, an estate agency, a funeral home, a car body shop. These are the entity kinds our own queries drag in — 'foundation repair' surfaces charitable Foundations and Foundation Colleges; 'structural repair' surfaces accident-repair bodyshops. Terms are multi-word wherever a bare stem would collide (no bare 'school', which would hit 'Driving school'/'Trade school'; no bare 'care', 'club', 'park'). Deliberately ABSENT from this list: 'pest control service' — see rule 2.",
+     "field": "google_types", "op": "deny", "scope": "any", "label": "hard_off_icp_type", "value": [
+       "auto body shop", "car repair and maintenance", "car repair", "truck repair", "motorcycle repair",
+       "car dealer", "used car dealer", "tyre shop", "car wash",
+       "non-profit organization", "charity", "charitable organization", "social services organization",
+       "college", "university", "primary school", "secondary school", "high school", "sixth form",
+       "hospital", "medical clinic", "hospice", "nursing home", "dental clinic", "veterinary",
+       "church", "mosque", "synagogue", "hindu temple", "place of worship", "monastery", "cathedral",
+       "funeral home", "cemetery", "crematorium",
+       "real estate agency", "estate agent", "letting agency", "property management company",
+       "insurance agency", "law firm", "solicitor", "recruiter", "travel agency"]},
+
+    {"_r": "2. PRIMARY-type deny (the engine default: matches google_types[0] only). These entity kinds DO legitimately appear as a secondary tag on a real target, so they may only be judged on their primary identity. Engineers and surveyors are referral sources, not buyers of a Facebook lead-gen retainer, and the UK export is full of them; they are denied on primary but a real contractor carrying 'Structural engineer' as a SECOND tag survives. Merchants/manufacturers/hire are the UK 'supplier not contractor' bucket from stageA_prefilter.py. DELIBERATE OMISSIONS, each one a volume-safety call: (a) NO 'pest control service' — UK damp-and-timber firms are routinely PRIMARIED as Pest control service (woodworm, dry rot), and Rentokil Property Care branches are exactly that; denying it would delete a whole real segment, the inverse of the Lagos bank-branch bug. A pure pest-control firm dies at the rule-4 allow instead, because it carries no ICP type. (b) NO bare 'surveyor' — 'damp and timber surveyors' is a real UK trading style; only the qualified compounds are denied, and a pure surveying practice dies at the allow gate anyway. (c) 'plumber' and 'drainage service' ARE denied on primary, unlike pest control, because UK plumbers and drain firms carry 'Drainage service' tags that rule 4 would otherwise admit — and no damp/underpinning firm is ever primaried Plumber. (d) NO 'roofing contractor' / 'insulation contractor' — plausible trade firms, left for the site-text adjudication.",
+     "field": "google_types", "op": "deny", "label": "off_icp_primary", "value": [
+       "structural engineer", "civil engineer", "engineering consultant", "consulting engineer",
+       "chartered surveyor", "quantity surveyor", "land surveyor", "building inspector",
+       "home inspector", "property inspector",
+       "building materials supplier", "building materials store", "home improvement store",
+       "hardware store", "concrete product supplier", "ready mix concrete supplier",
+       "lumber store", "timber merchant", "paint store", "tile store",
+       "tool rental service", "equipment rental agency", "plant hire",
+       "manufacturer", "wholesaler", "distribution service",
+       "plumber", "drainage service", "septic system service",
+       "water damage restoration service", "fire damage restoration service",
+       "mover", "moving company", "moving and storage service",
+       "architect", "interior designer", "kitchen remodeler", "bathroom remodeler",
+       "waste management service", "skip rental service"]},
+
+    {"_r": "3. NAME deny (exact substring, always fires regardless of primary/secondary — the fallback for everything the type denies cannot see). Every term is multi-word or unambiguous, per the sharp-shannon 2026-09-13 substring lesson ('spa' ate 'Coworking space'; 'market' ate 'Marketing agency'). Explicit traps this vertical has: charities and NHS trusts answering 'foundation'; builders merchants and product brands answering every P2 query; accident-repair bodyshops answering 'structural repair'; drain-lining firms selling 'structural repair' of a pipe. DELIBERATE OMISSIONS: (a) no bare 'college' or 'academy' — 'College Road Builders' and 'Academy Damp Proofing' are plausible real names; colleges are caught by the type deny in rule 1. (b) no bare 'pest control' or 'drain'/'drainage' — both appear in real damp/structural firms' names; only unambiguous drain-ONLY jargon ('drain jetting', 'blocked drains', 'drain lining', 'cctv drain survey') is denied. (c) no 'preservation', 'restoration' or 'timber treatment' — those ARE the UK trade. (d) no chain/franchise names at all: the operator's standing directive is keep the roll-up, flag the brand (brand_families), never a chain drop.",
+     "field": "name", "op": "not_contains_any", "label": "name_deny", "value": [
+       "community foundation", "charitable trust", "charitable incorporated", "charity shop",
+       "foundation trust", "nhs foundation", "almshouse", "housing association", "hospice",
+       "air ambulance", "food bank", "scout group", "rotary club", "parish council",
+       "town council", "borough council", "county council", "city council", "church of england",
+       "methodist church", "baptist church", "parish church", "islamic centre", "gurdwara",
+       "collision", "auto body", "autobody", "body shop", "bodyshop", "accident repair",
+       "crash repair", "panel beater", "car body", "vehicle repair", "mot centre",
+       "builders merchant", "builders merchants", "building supplies", "timber merchant",
+       "plant hire", "tool hire", "scaffolding hire", "skip hire", "hire centre",
+       "travis perkins", "jewson", "buildbase", "huws gray", "selco builders", "mkm building",
+       "screwfix", "toolstation", "wickes", "howdens",
+       "ready mix", "ready-mix", "readymix", "sand & gravel", "sand and gravel", "quarry products",
+       "chartered surveyor", "quantity surveyor", "consulting engineer", "engineering consultants",
+       "drain jetting", "drain unblocking", "blocked drains", "drain clearance", "drain lining",
+       "drain survey", "cctv drain", "24 hour drainage", "emergency drainage",
+       "plumbing & heating", "plumbing and heating", "boiler repair", "boiler service",
+       "exterminator", "wasp nest", "bed bug", "vermin control", "rodent control",
+       "estate agents", "lettings", "sales & lettings", "mortgage advice"]},
+
+    {"_r": "4. Positive allow on google_types-ANY (never primary_type — Google mis-primaries real UK firms constantly: a damp specialist comes back 'Contractor | Waterproofing service', an underpinning firm 'Construction company | Foundation'). These are the type stems that carry this trade in the UK export. 'damp', 'basement', 'cellar', 'tanking', 'underpinning', 'piling' are included even where they are thin as Google categories, because they cost nothing and the export does surface them. 'drainage' is here deliberately although rule 2 denies drainage PRIMARY: a damp firm with a secondary Drainage tag is a real target; a drainage firm is not, and rule 2 has already removed it — this ordering is what makes both true at once. Note the DELIBERATE ABSENCE of the generic buckets ('construction company', 'contractor', 'general contractor', 'builder', 'home builder', 'concrete contractor'): in the UK those are ~17% general builders with a structural-repairs line and a very long tail of everything else, so allowing them floods the list. They are recovered instead by recover-generic-uk-config.json, which pairs the generic type WITH an ICP token in the NAME — the pairing qualify-leads.js cannot express as one rule.",
+     "field": "google_types", "op": "allow", "label": "not_in_icp", "value": [
+       "foundation", "waterproofing", "damp", "basement", "cellar", "tanking",
+       "structural", "piling", "underpinning", "masonry", "stonemason",
+       "building restoration", "preservation", "remedial", "drainage"]},
+
+    {"_r": "5. Review floor 5, label too_small. This is a GHOST-LISTING FILTER, not a size gate — the US run's floor of 30 is wrong for the UK, where this trade is dominated by 3-to-10-person owner-operated damp/underpinning firms with single-digit review counts (the 2026-09-16 UK export: 175 ICP firms, most well under 30). The real ICP gate is the downstream site-text adjudication, so the Maps stage is deliberately volume-safe. 5 removes unclaimed, zero-activity duplicate pins and nothing else. RISK: it will also drop a handful of genuinely new firms — accepted, and re-checkable at $0 by re-running qualify at 0 over excluded_officp.csv.",
+     "field": "review_count", "op": ">=", "value": 5, "label": "too_small"}
+  ],
+
+  "_no_website_rule": "Deliberately NO {website, exists} rule, as in the US config. collapse-domains.js (STEP 5c-dom) classifies website as site/shared_host/none AFTER the geo gate and dedupe, so every row — including no-website and Facebook-only firms — passes the category and name denies first. This matters more in the UK than the US: the 2026-09-16 export showed a large no-website tail among real owner-operated damp firms, and they are the recovery track (STEP 5d), not junk.",
+
+  "_no_gov_deny": "Deliberately NO standing government deny. The engine's gov deny exists for distress/institutional-intent verticals ('IRS tax help'); none of these 10 queries carries that intent. The UK institutional risk that DOES exist — a charity or NHS trust named '<X> Foundation', a council building-control office answering 'structural repair' — is covered by the rule-1 scope:any type deny (non-profit / charity / college / hospital) plus the council and NHS terms in the rule-3 name deny. Stated here so it is a visible decision at GATE 1, not an omission.",
+
+  "_no_chain_drop": "Deliberately NO chain/franchise name deny anywhere in qualify_rules. Operator directive, carried over from the US run: keep roll-ups and franchises, FLAG the brand. The flag is brand_families below (applied by collapse-domains.js as brand_family) plus the free location_count signal. A branch of Peter Cox or Rentokil Property Care is a real target row.",
+
+  "brand_families": {
+    "_r": "UK brand/roll-up families. Matching is a lowercase SUBSTRING test against '<name> <root_domain>' (collapse-domains.js:56), so every term must be distinctive enough that it cannot false-match an independent. Four operator-listed terms were LENGTHENED for that reason: 'abbey' -> 'abbey pynford' (abbey is a common UK trading name and a place name), 'sovereign' -> 'sovereign chemicals' (Sovereign Housing Association, 'Sovereign Damp Proofing'), 'safeguard' -> 'safeguard europe' ('Safeguard Damp Proofing' is a common independent name), 'kenwood' -> 'kenwood damp' (Kenwood is a kitchen-appliance brand). Two were DROPPED entirely: HELIFIX and PERMAGARD. Both are product manufacturers whose names appear inside independents' Maps names as an ACCREDITATION ('Helifix approved installer', 'Permagard approved contractor'), so the substring test would relabel dozens of independents as a brand. Per the US config's own standing note, a wrong brand label is worse than none. 'brick tie' (spaced) is likewise excluded as a generic service phrase; only the hyphenated/joined company spellings are matched. 'woodrot' is excluded for the same reason (it is a condition, not only a trading name) — Richardson & Starling is matched on its full name.",
+    "Peter Cox": ["peter cox", "petercox"],
+    "Rentokil Property Care": ["rentokil"],
+    "Timberwise": ["timberwise"],
+    "Kenwood Damp Proofing": ["kenwood damp"],
+    "Prokil": ["prokil"],
+    "DampMaster": ["dampmaster"],
+    "Preservation Treatments": ["preservation treatments"],
+    "Mainmark": ["mainmark"],
+    "Geobear / Uretek": ["geobear", "uretek"],
+    "Abbey Pynford": ["abbey pynford"],
+    "Protectahome": ["protectahome"],
+    "Wise Property Care": ["wise property care"],
+    "Sovereign Chemicals": ["sovereign chemicals"],
+    "Richardson & Starling": ["richardson & starling", "richardson and starling", "richardsonandstarling"],
+    "Brick-Tie": ["brick-tie", "bricktie"],
+    "Twistfix": ["twistfix"],
+    "Safeguard Europe": ["safeguard europe"]
+  },
+  "_brand_terms_dropped_deliberately": "helifix, permagard, brick tie (spaced), woodrot, and the bare forms abbey / sovereign / safeguard / kenwood. Kept OUT of brand_families on purpose: collapse-domains.js would stamp the label on independents. Listed here as prose, never as an array inside brand_families — an array there becomes a brand label of its own.",
+
+  "_r_site_l2_keywords": "NOTE: fetch-sites.js reads site_l2_keywords as a flat ARRAY (fetch-sites.js:59) — the rationale therefore lives here, in this sibling key, and the array itself is site_l2_keywords below. Engine default L2 paths are about/team/meet/our-story/staff/owner/founder/leadership/who-we-are/about-us/our-team. The operator wants on-site EMAILS harvested as well as owner names, and on a UK trade site the mailbox lives on the contact page, not the about page (the 2026-09-16 run added an email for 211 companies that had none, purely from on-site harvest). These paths add the UK spellings of that page.",
+  "site_l2_keywords": ["contact", "contact-us", "contactus", "get-in-touch", "enquiries", "enquiry",
+                       "request-a-survey", "free-survey", "book-a-survey", "about", "about-us", "our-team", "meet-the-team"],
+
+  "owner_query": {
+    "_r": "UK bias terms, not the US set: 'president' and 'GM' are American; the UK budget holder at an owner-operated damp/underpinning firm is the MANAGING DIRECTOR or a named DIRECTOR (Companies House titles), or the founder/proprietor at a sole trader. country 'GB' so the SERP is localised. use_linkedin TRUE, same finding as the US run: on a title-only SERP endpoint LinkedIn titles are the richest Name-Title source. CAVEAT specific to the UK: the 2026-09-16 run measured that own-site text names someone on only ~4% of UK ICP sites (vs 16% US) and that the real registry is COMPANIES HOUSE (directors named for 64% of the list at $0 via companies-house.js). Treat owner_query as the residue pass, not the primary rung, and run Companies House first.",
+    "bias_terms": ["owner", "managing director", "director", "founder"],
+    "use_linkedin": true,
+    "country": "GB"
+  }
+}
