@@ -14,8 +14,9 @@
 
 1. Read root `CLAUDE.md`, then `skills/google-maps-scrape/README.md`, then this file.
 2. The run's gitignored data (site text, owner batches, contacts, emails, the Plusvibe upload) is NOT in the repo. It was
-   sent to the operator as `atlas-growth_2026-09-11_foundation-repair_rundata.tar.gz` (106 MB, 731 files) on 2026-09-16.
-   Unpack it into `clients/atlas-growth/` before touching the run; without it, owner-finding and the waterfall start from zero.
+   sent to the operator as `atlas-growth_rundata_essentials.tar.gz` (19 MB) on 2026-09-16: everything except the raw
+   scrape shards (`shard-*`, `recover/`, ~370 MB, recreatable by re-running the scrape at API cost). Unpack it into
+   `clients/atlas-growth/` before touching the run; without it, owner-finding and the waterfall start from zero.
 3. API keys are in the operator's gitignored env file, never in the repo. Credits are never spent without an explicit go.
 4. Open decisions: the second Plusvibe email needs a `company_short` variable (plan agreed, not built); paid email finders
    as 50-contact probes; the ~1,000-lead pull. Standing directives are in "Client directives" below.
