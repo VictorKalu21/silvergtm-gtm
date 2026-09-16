@@ -62,6 +62,21 @@ for r in rows:
     r2['email_type']=best[2] if best else ''
     r2['email_own_domain']='Y' if best and best[3] else ''
     r2['all_emails']='; '.join(x[1] for x in ranked)
+    # --- compare Maps-listed email vs what the site actually publishes ---
+    site_set={e.lower() for e in (s.get('emails') or [])}
+    maps_e=r['email_maps']
+    r2['site_emails_all']='; '.join(sorted(site_set))
+    r2['maps_email_on_site']=('Y' if maps_e in site_set else 'N') if (maps_e and s.get('status')=='ok') else ''
+    if best:
+        src=('both' if (best[1]==maps_e and best[1] in site_set) else 'maps' if best[1]==maps_e else 'site')
+    else: src=''
+    r2['email_source']=src
+    if not maps_e and best: r2['email_change']='new_from_site'
+    elif maps_e and best and best[1]!=maps_e: r2['email_change']='replaced_by_site_'+best[2]
+    elif maps_e and best: r2['email_change']='kept_maps'
+    elif maps_e and not best: r2['email_change']='maps_email_rejected'
+    else: r2['email_change']='none'
+    stats['had_maps_email']+=bool(maps_e); stats['new_from_site']+=(r2['email_change']=='new_from_site'); stats['maps_confirmed_on_site']+=(r2['maps_email_on_site']=='Y')
     # name hint from email
     fn=ln=conf=ev=''
     if best and best[4]:
