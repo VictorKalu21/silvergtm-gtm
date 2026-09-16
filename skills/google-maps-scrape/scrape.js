@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /*
  * google-maps-scrape :: scraper.tech executor
- * One search call per (category x geo tile). Auto-densifies a tile when it
- * saturates (offset pagination is broken on this API, so we split the
- * viewport into quadrants at zoom+1 instead). Dedups on place_id, applies
+ * One search call per (category x geo tile) by default; with scrape_tuning.paginate
+ * it pages the viewport to exhaustion via `offset` (CORRECTED 2026-09-13: offset
+ * pagination WORKS — the old "it's broken" note was stale, see paginate.js). Falls
+ * back to quadrant-splitting at zoom+1 when a tile still saturates. Dedups on place_id, applies
  * the client footprint / DQ filters, and writes a clean list for enrichment.
  *
  * Usage:
@@ -15,21 +16,35 @@
  * Config JSON (geo block; qualification is done separately by qualify-leads.js):
  *   { geo:{ country, footprint:{ mode:"postal"|"areas", postal_allow:[...], postal_match:"exact"|"prefix",
  *           postal_regex, postal_group, area_names:[...] }, area_label:{code:label} },
- *     scrape_tuning?:{ saturation, max_depth, quad_offset, limit } }
+ *     scrape_tuning?:{ saturation, max_depth, quad_offset, limit, paginate, max_pages } }
+ * NOTE: with paginate:true, SATURATION is effectively inert — a split then needs
+ * max_pages*limit records. run_log.per_cell also becomes ONE roll-up event per runsheet
+ * row (status 'ok' only if every page AND every sub-tile succeeded), which is what keeps
+ * run-scrape.js's failedTiles() honest: it marks a tile ok if ANY event with that
+ * query|lat|lng key is ok, and paginated pages share that key exactly.
  * NOTE: this stage only gates on closed + footprint. website / chains / category / size live in
  * qualify_rules (qualify-leads.js) so the clean list = the in-footprint, open universe.
  */
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const { pageTile, isOk } = require('./paginate');
 
 // ---------------- tunables ----------------
-const API_HOST = 'api.scraper.tech';
+// TEST SEAM: default unchanged. run-scrape.js:42 hardcodes SCRAPE_JS with no --engine
+// override, so without an env-level host override the self-healing path cannot be tested
+// at all — and the heal path is exactly what the pagination roll-up events exist to serve.
+// Overridden only by tests pointing at a local fake searchmaps.php.
+const API_HOST = process.env.SCRAPER_API_HOST || 'api.scraper.tech';
+const API_PORT = process.env.SCRAPER_API_PORT || null;
+const TRANSPORT = process.env.SCRAPER_API_PROTO === 'http' ? require('http') : https;
 const API_PATH = '/searchmaps.php';
 let LIMIT = 150;            // max records requested per call
 let SATURATION = 90;        // >= this in one tile => likely incomplete => quadrant-split
 let MAX_DEPTH = 1;          // levels of auto quadrant split (1 => up to 4 sub-tiles)
 let QUAD_OFFSET = 0.025;    // deg offset for sub-tile centers (~2.8km)
+let PAGINATE = false;       // opt-in: page each viewport via offset until exhausted (see paginate.js)
+let MAX_PAGES = 8;          // guard on the offset loop (only used when PAGINATE)
 const CALL_DELAY_MS = 350;  // politeness gap between calls
 let COUNTRY = 'us';
 const LANG = 'en';
@@ -97,13 +112,14 @@ function parseZip(addr) {
   return m ? m[m.length - 1].slice(0, 5) : null; // last zip token in the string = the real one (zip is last in a US address); 5-digit core
 }
 
-function apiCall(query, lat, lng, zoom) {
+function apiCall(query, lat, lng, zoom, offset) {
   const qs = new URLSearchParams({
-    query, limit: LIMIT, country: COUNTRY, lang: LANG, lat, lng, offset: 0, zoom
+    query, limit: LIMIT, country: COUNTRY, lang: LANG, lat, lng, offset: offset || 0, zoom
   }).toString();
   const opts = { host: API_HOST, path: `${API_PATH}?${qs}`, headers: { 'scraper-key': KEY }, timeout: 30000 };
+  if (API_PORT) opts.port = API_PORT;
   return new Promise(resolve => {
-    const req = https.get(opts, res => {
+    const req = TRANSPORT.get(opts, res => {
       let b = '';
       res.on('data', d => b += d);
       res.on('end', () => { try { resolve(JSON.parse(b)); } catch { resolve({ status: 'parse_error', data: [] }); } });
@@ -113,6 +129,17 @@ function apiCall(query, lat, lng, zoom) {
   });
 }
 
+// Sub-tile centers for a quadrant split. QUAD_OFFSET is scaled by depth so a split
+// actually SUBDIVIDES the parent viewport. It previously used a fixed offset at every
+// depth, so max_depth>=2 spread sub-tiles OUTWARD by 2x the offset instead of inward.
+// No-op for the shipped default (MAX_DEPTH=1 => only depth 0 splits => /2**0 === /1).
+function quadCenters(lat, lng, depth) {
+  const o = QUAD_OFFSET / Math.pow(2, depth);
+  return [[o, o], [o, -o], [-o, o], [-o, -o]]
+    .map(([dla, dln]) => [+(+lat + dla).toFixed(5), +(+lng + dln).toFixed(5)]);
+}
+
+// LEGACY PATH (PAGINATE off) — behaviour and run_log.json output are unchanged.
 async function fetchTile(query, lat, lng, zoom, depth, log) {
   await sleep(CALL_DELAY_MS);
   const r = await apiCall(query, lat, lng, zoom);
@@ -122,11 +149,67 @@ async function fetchTile(query, lat, lng, zoom, depth, log) {
   log.events.push({ query, lat, lng, zoom, status: r.status, count: recs.length, split: saturated });
   let all = recs.slice();
   if (saturated) {
-    const o = QUAD_OFFSET;
-    for (const [dla, dln] of [[o, o], [o, -o], [-o, o], [-o, -o]]) {
-      const sub = await fetchTile(query, +(+lat + dla).toFixed(5), +(+lng + dln).toFixed(5), zoom + 1, depth + 1, log);
+    for (const [sla, sln] of quadCenters(lat, lng, depth)) {
+      const sub = await fetchTile(query, sla, sln, zoom + 1, depth + 1, log);
       all = all.concat(sub);
     }
+  }
+  return all;
+}
+
+// PAGED PATH (PAGINATE on). Emits exactly ONE roll-up event per runsheet row, covering
+// every page and every descendant sub-tile:
+//   status: 'ok' ONLY if every page of every sub-tile succeeded
+//   count:  summed across pages + descendants
+// Two reasons this must be a roll-up rather than one event per call:
+//  (a) run-scrape.js::failedTiles marks a tile healthy if ANY event with key
+//      query|lat|lng (2dp) is ok. Paginated pages share that key EXACTLY, so a tile
+//      whose page 0 succeeded and page 2 timed out would score ok and never heal —
+//      reintroducing the silent-coverage-hole class run-scrape.js exists to prevent.
+//  (b) That key rounds to ~1.1km, so sub-tile centers frequently collide with OTHER
+//      runsheet tiles' keys (with quad_offset 0.01, vi-core's child lands on vi-south's
+//      key). Not emitting child events stops tile A's sub-tile from masking tile B's
+//      genuine failure.
+async function fetchTilePaged(query, lat, lng, zoom, depth, log, roll) {
+  const isRoot = !roll;
+  if (isRoot) roll = { ok: true, count: 0, pages: 0, splits: 0, statuses: [] };
+
+  const res = await pageTile({
+    call: off => apiCall(query, lat, lng, zoom, off),
+    limit: LIMIT,
+    paginate: true,
+    maxPages: MAX_PAGES,
+    delay: () => sleep(CALL_DELAY_MS),
+  });
+
+  log.calls += res.pages;
+  roll.pages += res.pages;
+  roll.count += res.records.length;
+  for (const s of res.statuses) roll.statuses.push(s);
+  if (!res.allOk) roll.ok = false;
+
+  // Pagination exhausts the viewport, so a split is only warranted when the page guard
+  // was actually hit — SATURATION cannot fire here (it would need max_pages*limit records).
+  const saturated = res.pages >= MAX_PAGES && res.allOk && depth < MAX_DEPTH;
+  let all = res.records.slice();
+  if (saturated) {
+    roll.splits++;
+    for (const [sla, sln] of quadCenters(lat, lng, depth)) {
+      const sub = await fetchTilePaged(query, sla, sln, zoom + 1, depth + 1, log, roll);
+      all = all.concat(sub);
+    }
+  }
+
+  if (isRoot) {
+    log.events.push({
+      query, lat, lng, zoom,
+      status: roll.ok ? 'ok' : (roll.statuses.find(s => !isOk(s)) || 'error'),
+      count: roll.count,
+      split: roll.splits > 0,
+      pages: roll.pages,
+      splits: roll.splits,
+      page_statuses: roll.statuses,
+    });
   }
   return all;
 }
@@ -149,6 +232,8 @@ if (!KEY) { console.error('ERROR: SCRAPER_TECH_KEY not found in ' + ENVPATH); pr
   if (tune.max_depth != null) MAX_DEPTH = tune.max_depth;
   if (tune.quad_offset != null) QUAD_OFFSET = tune.quad_offset;
   if (tune.limit != null) LIMIT = tune.limit;
+  if (tune.paginate != null) PAGINATE = tune.paginate;
+  if (tune.max_pages != null) MAX_PAGES = tune.max_pages;
   const footprint = new Set((fp.postal_allow || []).map(s => String(s).toUpperCase()));
   const labels = geo.area_label || {};
   const inFootprint = (zip) => {
@@ -165,7 +250,9 @@ if (!KEY) { console.error('ERROR: SCRAPER_TECH_KEY not found in ' + ENVPATH); pr
 
   for (const row of rows) {
     if (!row.query || !row.lat || !row.lng) continue;
-    const recs = await fetchTile(row.query, row.lat, row.lng, Number(row.zoom) || 13, 0, log);
+    const recs = PAGINATE
+      ? await fetchTilePaged(row.query, row.lat, row.lng, Number(row.zoom) || 13, 0, log)
+      : await fetchTile(row.query, row.lat, row.lng, Number(row.zoom) || 13, 0, log);
     for (const rec of recs) {
       const id = rec.place_id;
       if (!id) continue;

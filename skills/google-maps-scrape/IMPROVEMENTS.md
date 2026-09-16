@@ -43,6 +43,106 @@ Technical backlog for the skill's engine. Not operator-facing (see HANDOFF.md fo
 **Workaround (proven, shipped in the LH septic run folder).** `serper-owner.js` — a serper.dev backend: `POST google.serper.dev/search`, header `X-API-KEY`, body `{q,gl:"us",num:10}` → `organic[]`. Runs the biased owner-title query ONLY (1 serper credit/lead; the biased rung is what carried 6/9 in the trade-vertical validation — LinkedIn rung dropped for trades: weak + doubles cost). Emits the SAME `serp_text.jsonl` shape as `search-owner.js` (biased_text filled) so `build-clay-csv.js`/`merge-serp.js` consume it unchanged. Has `--key` override (chain multiple keys/accounts) and treats a missing `organic` key as failed (not no_results) so credit-exhaustion re-queues correctly on `--resume`. serper cost ≈ $1/1,000 (2,500 free/account).
 **Fix (later).** Fold a serper (or pluggable SERP) backend into `search-owner.js` proper — e.g. `owner_query.serp_backend: "serper"` + `SERPER_KEY` in .env — so the engine isn't hardwired to a dead endpoint. Keep the scraper.tech path only if/when they restore the product. Note the trade-vertical lesson while there: LinkedIn is a weak rung for owner-operators; order BBB→/about→Facebook→reviews for residential trades, LinkedIn-first only for B2B.
 
+## DONE 2026-09-13: offset pagination shipped (gated) — first live run confirms the engine was truncating 99% of dense tiles
+
+**Status:** DONE 2026-09-13 (`scrape_tuning.paginate`, default off; `paginate.js` + `tests/paginate.test.js`) · found 2026-09-13 (Altivox Lagos), HIGH impact.
+
+**Live pilot result (P1 x 4 Victoria Island tiles, 160 runsheet rows, `paginate: true`):**
+- 466 API calls, **avg 2.91 calls/row**, page-depth histogram `{1:2, 2:34, 3:100, 4:24}`.
+- **158 of 160 rows (99%) needed more than one page.** Every one of those was a tile the old single-call engine truncated. This is the clearest measure yet of the historical under-collection.
+- 11,286 unique businesses, 24.2 unique/call. Coverage COMPLETE after 1 heal pass.
+
+**Why the June-2026 "offset is broken" note was wrong, and how it fooled someone.** One tile ("Attorney" @ vi-eko-atlantic) returned `status:"failed"` on a deep offset. The roll-up marked the tile not-ok, `run-scrape.js` healed it, and the retry returned 348 records across 4 pages. So deep-offset `failed` is **intermittent, not structural** — exactly what you would see if you probed `offset=20` once, got `failed`, and concluded pagination was dead. Any future "endpoint X is broken" note should be re-probed before being designed around.
+
+**Roll-up events validated in anger:** that single failed tile is precisely the case that would have scored `ok` under per-call events (its page 0 succeeded), been skipped by `failedTiles`, and shipped as a silent hole.
+
+## MEDIUM (areas mode): `country=ng` returns ~10% US businesses — the footprint gate is load-bearing, not a safety net
+
+**Status:** OPEN (mitigated by footprint-gate.js) · found 2026-09-13 (Altivox Lagos), MEDIUM impact.
+
+**Problem.** A `country=ng` scrape of Victoria Island returned **1,105 US businesses** out of 11,012 qualified (~10%) — Waukegan IL, Troy MI, Northbrook IL, Grand Rapids MI, Chicago, Minneapolis, Green Bay. Generic office queries ("Executive Suites", "Office space rental agency", "Virtual office rental service") are the worst offenders: brand-heavy US chains (Regus, Opus Virtual Offices) outrank local results even with `country=ng` and Lagos coordinates. The `country` parameter is a hint, not a filter.
+
+These are caught today, but as `far_from_hubs`, not `wrong_country` — `footprint-gate.js` tests hub distance first and the first failing check wins, so the reason label understates how much of the drop is foreign contamination. Not a bug; worth knowing when reading `excluded_geo.csv`.
+
+**Implication.** In `areas` mode the footprint gate is doing primary work, not cleanup. Never ship an `areas`-mode list that has not been through it, and always read the drop count as a contamination signal.
+
+**Radius calibration does NOT transfer between runsheets.** Measured on the 4-tile VI pilot: 1.0deg keeps 9,505 / drops 1,505; 0.10deg keeps 7,394; 0.05deg keeps 6,854; 0.03deg keeps 5,838. But at 0.05deg the pilot also drops 178 legitimate **Lekki** businesses — correctly, since no pilot tile is within 5.5km of Lekki. On the full 17-tile sheet those same leads are in-footprint. **Tune `--hub-radius-deg` against the runsheet you will actually ship, never a subset.**
+
+## CRITICAL (engine + runbook): `offset` pagination WORKS now — scrape.js doesn't use it and leaves the long tail on the floor
+
+**Status:** DONE 2026-09-13 — shipped gated behind `scrape_tuning.paginate` (paginate.js, tests/paginate.test.js); see the pilot results logged above. · found 2026-09-13 (Altivox Lagos offices), **HIGH impact — silent under-collection on every dense tile, in every run to date.**
+
+**Problem.** `runbook.md` has stated since June 2026 that `offset` pagination is broken (`status:"failed"`) and that completeness must therefore come from tiling + quadrant splits alone. **Re-tested against a live key on 2026-09-13: that is no longer true.** On VI core / `Law firm` / zoom 14 / `country=ng`:
+- `offset=0/20/40/100` all return `status:"ok"` with **zero place_id overlap** between pages; paging exhausts cleanly with an empty array.
+- `limit=150` works and combines with `offset` — a full viewport crawl is ~4 calls.
+- **One viewport, one category, paginated = 348 unique** vs the ~100 the runbook calls a hard cap. The ~100 ceiling is per-CALL, not per-viewport.
+
+`scrape.js::fetchTile` issues ONE call per tile and then quadrant-splits on saturation. So on every dense tile it (a) misses most of the long tail and (b) spends 4 extra calls on splits that drift outside the footprint (see the QUAD_OFFSET item) to recover a fraction of what one more `offset` call would return cleanly. Every list this engine has produced for a dense footprint is under-collected by an unknown margin.
+
+**Related finding — non-determinism.** The same query+viewport+params minutes apart returns different sets: two fully-paginated passes = 314 / 308 unique, **union 354**; a single pass captures only **86.2%** of a 5-pass union (single-pass miss ~13.8%). Union converges at **3 passes** (pass2 +13.2%, pass3 +0.9%, pass4 +0.3%). This is fatal to any month-over-month delta job unless passes are unioned — written up as `processes/05-new-premises-delta.md`.
+
+**Fix.** Add an `offset` loop to `fetchTile`: page at `limit=150` until an empty array or a `max_pages` guard, THEN fall back to quadrant-split only if the viewport is still saturated at exhaustion. Gate it behind `scrape_tuning.paginate: true` so existing runs are reproducible. Engine change = needs operator approval per the skill's self-improvement protocol; NOT done in this run. Until then, dense-footprint jobs should treat any single-pass list as ~86% complete.
+
+## LOW (reporting): `run_log.json` counts are PASS-0 ONLY and understate `leads_clean.csv` after any heal
+
+**Status:** OPEN (documentation, not a bug) · found 2026-09-13 (Altivox Lagos pilot), LOW impact — but it looks exactly like a data-loss bug and costs time to chase.
+
+**Problem.** The Altivox pilot's `run_log.json` reported `unique_businesses: 11286` while `leads_clean.csv` held **11,438 distinct place_ids**. Nothing is wrong: `run-scrape.js` merges each heal pass into the top-level `leads_clean.csv` via `mergeLeads` (`:133`) but re-reads and keeps **pass 0's** `run_log.json` (`:139`). One tile ("Attorney") failed on a deep offset, healed, and its 348-record refill contributed 152 places pass 0 never saw.
+
+So whenever `coverage_report.heal_passes > 0`, `run_log.unique_businesses` / `kept` are a LOWER BOUND on the final file. `coverage_report.json` is the run-level truth; `run_log.json` describes pass 0 only.
+
+**Fix options** (neither done): have `run-scrape.js` write a `run_summary.json` with post-merge totals, or add `final_unique` to `coverage_report.json`. Until then, count rows in `leads_clean.csv` rather than trusting `run_log` after a heal.
+
+## HIGH (method, non-Western geos): local business-name idiom must be verified locally — Google's type tag is not a translator
+
+**Status:** OPEN (process rule) · found 2026-09-13 (Altivox Lagos), HIGH impact — two segment-level errors in one config, neither visible without local knowledge.
+
+**Problem.** Two category calls in the Lagos job were wrong because a term means something different in Nigeria than the model assumed, and Google's `types` field did not disambiguate either one:
+
+1. **"Business center"** was treated as flexible office space and put in the top tier. In Nigeria it is a **photocopy / typing / cybercafe shop**: 319 pilot rows at 6% website and 68% zero reviews — `Goddey Business Centre`, `Bitoks Business Centre & Cybercafe`, `Xerox Business Center`. Caught only by profiling the query's output.
+2. **"POS shop"** was read as a point-of-sale hardware retailer and kept. In Nigeria a POS shop is an **agent-banking kiosk** (cash-in/cash-out, transfers, bill payments) — tiny, ubiquitous, never a network buyer. Google tagged `POS Shop Ltd` as `Computer hardware manufacturer`, and that mis-tag was taken at face value. Caught only by the operator.
+
+**Rules.**
+- For any non-Western geography, **profile a query's actual output before trusting the category label** — website rate, review distribution and a dozen real names take a minute and would have caught both.
+- **Never infer what a business is from Google's `types`.** The tag is frequently wrong and is not a translation of local usage. Prefer the name pattern plus the operator's knowledge.
+- **Ask the operator to sanity-check the category list** before freezing a run sheet. Both errors were obvious to someone who works the market.
+
+**Related substring trap, third instance.** The fix for POS agents cannot use a bare `pos` term: it would delete `Nigeria Deposit Insurance Corporation`, `Compos Mentis Legal Practitioners` and `Positive Cashflow Consulting` (10 such rows in the pilot). Nor is `' pos '` sufficient — it cannot match a name that STARTS with POS, which is exactly how `POS Shop Ltd` survived the first rewrite. Use compound terms (`pos shop`, `pos agent`, `pos centre`, `bank pos`). That is now three separate segment-eating substring bugs in one config; `deny`/`not_contains_any` terms should be treated as hostile by default.
+
+## HIGH (qualify engine gotcha): `scope:"any"` on a fuzzy deny list deletes real targets via their SECONDARY tags
+
+**Status:** OPEN (documented; no code change — the engine already warns) · found 2026-09-13 (Altivox Lagos), HIGH impact — silent, and it deleted the client's highest-value segment.
+
+**Problem.** `deny` defaults to matching the PRIMARY google_type; `scope:"any"` opts into matching ANY tag. `qualify-leads.js:72-73` warns that "scope:any can also drop a real firm carrying an incidental off-ICP secondary tag, so opt in [only] for unambiguous must-drop entities." The Altivox config applied `scope:"any"` to a 45-term fuzzy list anyway.
+
+Measured on the pilot (11,438 rows): **71 real bank branches deleted** — `Zenith Bank`, `Guaranty Trust Bank PLC`, `Standard Chartered Bank Nigeria`, `Fidelity Bank Plc - Corporate Branch`, `Polaris Bank Limited` — every one because Google tags a branch `Bank|ATM` and the deny list contained a bare `atm`. Simultaneously **77 POS agents were KEPT** (`Enterprise Bank POS Munchies Fastfoods`, primary type `Bank`) because the name rule's `pos agent` term does not match `Bank POS <merchant>`. The rule deleted the branches and retained the card terminals — exactly inverted, and banks were the single highest-value segment in the brief.
+
+Also collateral: coworking spaces carrying a `Cafe`/`Pharmacy` secondary, and `Corporate office|Apartment building` towers.
+
+**Fix (process).** Split every deny into two rules: `scope:"any"` reserved for terms that can never appear on a real target (`bus stop`, `bus station`, `taxi stand`, `parking lot`, `parking garage`, `cemetery`), everything else primary-only. Filter entity kinds that share a type with a target — ATMs, POS agents — **by name**, not by type. After the fix: 542 bank primaries kept, POS agents down from 77 to 1.
+
+**Author's note.** This is the same class as the substring gotcha above and it landed in the same config. Both are invisible without a dry-run: the lead just appears in `excluded_officp.csv` under a plausible `drop_reason`. **Always dry-run a new rule set against a fixture that includes a known-good instance of the most valuable segment** — for Altivox that fixture row is a `Bank|ATM` branch, and it now exists.
+
+## HIGH (qualify engine gotcha): `deny` is a SUBSTRING match — short terms silently delete whole ICPs
+
+**Status:** OPEN (documented; no code change) · found 2026-09-13 (Altivox Lagos offices), HIGH impact — silent false-drops, no warning.
+
+**Problem.** `qualify-leads.js` `deny`/`contains_any` match by substring, so a short deny term collides with legitimate category names. On the Altivox config two collisions were caught only because the config was dry-run against a fixture first:
+- `"spa"` matches **"Coworking space"** and **"Office space rental agency"** — would have deleted the single highest-intent P1 segment (coworking/serviced offices) from a list built for a WiFi installer.
+- `"market"` matches **"Marketing agency"** — would have silently deleted the entire marketing/media ICP.
+- `"park"` matches "business park"; `"bar"` matches "barber" (intended) but is one keystroke from collateral.
+Nothing warns: the lead just lands in `excluded_officp.csv` under a plausible-looking `drop_reason`, and the operator sees a smaller list, not a bug.
+
+**Fix (process, until the engine changes).** ALWAYS dry-run a new `qualify_rules` block against a hand-built fixture CSV carrying the real `leads_clean` header + 10-15 rows that deliberately probe the deny terms, BEFORE the scrape. Cost: $0 and two minutes. Prefer multi-word deny terms (`"day spa"`, `"flea market"`, `"parking lot"`) over bare stems. Engine-side option for later: support `"match":"word"` on deny/contains_any to anchor on token boundaries.
+
+## MEDIUM (engine): `QUAD_OFFSET` is FIXED across split depths and its default is US-metro-scaled
+
+**Status:** DONE 2026-09-13 — `quadCenters()` now scales the offset by depth; applied unconditionally (no-op at MAX_DEPTH=1). · found 2026-09-13 (Altivox Lagos offices), MEDIUM impact.
+
+**Problem.** In `scrape.js::fetchTile`, the quadrant split uses `const o = QUAD_OFFSET` at EVERY depth — it does not halve as it recurses. So with `max_depth: 2` the depth-2 sub-tiles land `2 x QUAD_OFFSET` from the original center, spreading OUTWARD instead of subdividing. With the 0.025 default (~2.8km) that is ~5.5km of drift. On compact/island footprints this is actively wrong: Victoria Island is only ~3km across, so a saturated VI tile splits into the lagoon and across into Ikoyi — wasted calls plus footprint bleed that `footprint-gate.js` then has to clean up.
+
+**Fix.** Per-job workaround in config (Altivox uses `quad_offset: 0.010` for island-scale tiles) — no script edit. Engine-side later: scale the offset by depth (`o = QUAD_OFFSET / 2**depth`) so a split actually subdivides the parent viewport, which is what the "quadrant split" name implies.
+
 ## MEDIUM (fetch-sites): large runs (10k+ distinct hosts) saturate the home network → capture collapses; needs batch-with-pauses
 
 **Status:** OPEN (workaround proven) · found 2026-07-10 (db2b house, 48k US agency sites), MEDIUM impact.

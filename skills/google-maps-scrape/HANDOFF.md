@@ -35,6 +35,8 @@ Claude will then ask you the intake questions below. Answer them; Claude does th
 - Spot-check 5–10 rows in the final CSV: real business, address inside your footprint, has a website, not a national chain.
 - Owner-finding reports a **named-decision-maker rate**. Healthcare runs high (~80%); used-car/retail runs lower (~40%) — that's expected, not a bug. The ones without a name still get a generic email + phone to contact.
 - If Claude flags **coverage gaps** (areas with no results) it will offer to re-run them — say yes.
+- **On a monthly "new location" job, Claude runs the same sheet 3 times on purpose.** Google returns a different slice of results each time it is asked — one pass finds only about 86% of what is there. Three passes combined gets it to ~99%. The repeat is not a fault or a double-charge; it is what stops last month's misses from showing up next month looking like brand-new businesses.
+- On that same job, expect **two lists**: the confirmed one to work now, and a smaller "pending" one Claude is holding back because it only saw those places once. They are not discarded — they get promoted if they show up again.
 
 ## Cost awareness
 Each web search spends a credit from a shared budget. Claude qualifies the list **before** spending owner-finding credits, so you're not paying to research businesses you'd drop. If you only need a quick count, ask Claude for "scrape only, no owner-finding."
