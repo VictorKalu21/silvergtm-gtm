@@ -2,6 +2,40 @@
 
 Technical backlog for the skill's engine. Not operator-facing (see HANDOFF.md for that).
 
+## DONE 2026-09-11 (owner-finding spend): domain dedupe + ONE shared-host list + shared-host routing to the recovery track
+
+**Status:** DONE 2026-09-11 — shipped `collapse-domains.js` + `shared-hosts.js`; wired as SKILL **STEP 5c-dom**; `build-clay-csv.js --siblings` fans text to sibling branches; `fetch-sites.js` skips shared hosts; `prep-website-recovery.js` also honors the shared list (additive to its `DIR` regex). TDD'd in `tests/collapse-domains.test.js` (26 checks) + `tests/build-clay-evidence.test.js`. · found 2026-09-11 (Atlas Growth foundation-repair scoping, reviewing an external enrichment pipeline), HIGH impact on any run that keeps multi-location brands.
+**Problem.** (a) Owner-finding spent once per `place_id`: every branch of one brand shares one website, so N branches = N paid lookups for 1 answer (external measurement: 109 locations on one domain → 43 distinct answers, 66 paid twice). `build-netnew.js` dedupes by host only ACROSS runs, never within one. (b) No shared-host concept anywhere in the with-website track: a lead whose `website` is `facebook.com/…` / `sites.google.com/…` / `*.wixsite.com` / `g.page/…` passed the `website exists` qualify rule, rode the with-website track, and `fetch-sites` fetched nothing from it — while the no-website recovery track (where the website-finder runs) never saw it. The directory denylist that did exist (`DIR` in `prep-website-recovery.js`) served only the SERP-text path. (c) The "keep roll-ups, flag the brand" ask had no mechanism: `qualify-leads.js` is drop-only (`label` names the `drop_reason`).
+**Fix.** `shared-hosts.js` = one data list (social, Google short links, site builders, directories) + `hostOf / rootDomain / isSharedHost / classifyWebsite`; three consumers. `collapse-domains.js` classifies every row (`site`/`shared_host`/`none`), groups `site` rows by ROOT domain (subdomains collapse; `co.uk`-style suffixes kept), picks the most-reviewed branch as representative, and emits `leads_domains.csv` (spend), `leads_nowebsite.csv` (recovery; empty OR shared host), `leads_annotated.csv` (all rows + `website_class, root_domain, location_count, is_multi_location, brand_family, rep_place_id`), `domain_siblings.json`, `collapse_report.json` (`spend_rows_saved`). `brand_family` comes from a new optional config block `brand_families` (label → name/domain substrings). Shared hosts are NEVER grouped (400 Facebook-only firms are not one company). Row count in `clay.csv` is unchanged — only spend collapses.
+**Known limit (by design, stated in SKILL).** Collapsing a PE roll-up loses the per-branch SERP; corporate leadership is what the shared site names and is the same across branches. `location_count` only sees multi-branch presence within the scraped footprint.
+
+## DONE 2026-09-11 (build-clay): `evidence_tier` + `fanned_from` columns — spend the Clay column only where there is something to read
+
+**Status:** DONE 2026-09-11 — five columns appended at the END of `clay.csv` (`root_domain, location_count, brand_family, fanned_from, evidence_tier`); existing 18 kept in order (Clay maps by name/position — guarded by `tests/build-clay-evidence.test.js`). Summary prints tier counts and a NONE warning. · found 2026-09-11, MEDIUM impact (Clay credits).
+**Problem.** `clay.csv` gave no per-row signal of what evidence it carried, so the paid nano column ran on every row — including rows with empty `site_text` AND empty `serp_text`, which can only return nothing. And the pipeline never comes back from Clay, so "what did we actually get" was not answerable from the artifact. A `result_tier` (email found / name only / empty) is only knowable AFTER Clay; a local pre-Clay tier is what we can compute.
+**Fix.** `evidence_tier` ∈ `SITE+SERP | SITE_ONLY | SERP_ONLY | CH_ONLY | NONE`, computed locally; `fanned_from` = representative `place_id` when the row's text came via domain fan-out (blank otherwise) — two orthogonal facts, two columns. Operator filters `evidence_tier != NONE` in Clay before running anything paid. The post-Clay `result_tier` is a Clay formula column, named differently so the two are never conflated.
+
+## FACT (cost planning): `searchmaps.php` saturates at `limit` in SPARSE markets too — and per-tile call cost varies ~2x by geography
+
+**Status:** RECORDED 2026-09-11 (Atlas Growth foundation repair, 10-state US).
+**Measured.** A zoom-13 tile on **Salina, Kansas** — a genuinely thin market — returned **150 records (= `limit`), saturated**, exactly like Houston. Cause is the documented radius expansion: the endpoint widens until it fills ~100+ results, so a thin market is backfilled with pins from the nearest metros rather than returning a short list. Confirmed in the same run that latency does NOT degrade under 8 concurrent workers (4.4s/call at 8-way vs 4.2s single) — per-tile wall time is call COUNT, not throttling.
+**Do not extrapolate call cost from the first minutes of a run.** On this run the first 110s (all dense TX metros, which sort first in the runsheet) measured **5.1 calls/tile**; by 450 tiles the run average had fallen to **~2.2 calls/tile**. An estimate taken early over-projected total spend by ~2x and triggered an unnecessary operator escalation. Measure at >=25% of the runsheet, or take the number from `run_log.json` after the fact.
+**Consequence — densification tiles are largely redundant.** A core tile expands its own radius and `scrape.js` already quadrant-splits on saturation, so hand-added suburb tiles buy mostly duplicate `place_id`s. This run added 33 suburb tiles to 108 anchors (~23% of tiles). Prefer one tile per metro and add suburb tiles only where a coverage gap is actually observed.
+**Not a bug.** Dedupe absorbs the redundancy and the footprint gate removes the bleed; this is a spend/runtime fact only.
+
+## DONE 2026-09-11 (engine, client-neutrality bug): `apply-classify.js` hardcoded ONE CLIENT'S vertical as the no-verdict fallback
+
+**Status:** DONE 2026-09-11 — added `--fallback <label>`, defaulting to the original string so every existing run behaves identically; a fallback row still gets `business_type_confidence='fallback'`, and the script now prints a loud WARN naming the count and the batch dir. TDD'd in `tests/apply-classify.test.js` (7 checks, incl. a backward-compatibility check and a BOM-prefixed batch). · found 2026-09-11 (Atlas Growth foundation repair), MEDIUM-HIGH impact — **silent lead loss, not a visibly wrong label.**
+**Problem.** `apply-classify.js:20` was `const v = bt.get(pid) || 'commercial security company'` — the Link Helpers vertical baked into a shared engine script. Any lead the classifier returned no verdict for (batch never written, batch failed to parse, `place_id` skipped) was silently stamped with that string. This violates the engine's own stated principle that everything client/vertical-specific lives in config. It is worse than a wrong label: on a different vertical the fallback value fails the `business_type` fit gate, so the row is **dropped**, and a spot-check of the kept list never reveals it. The pre-existing BOM bug is the proof it fires in practice — one run lost 48/60 batches to an unstripped BOM, and every one of those leads took this fallback.
+**Fix.** `--fallback` (pass it explicitly on every new vertical; Atlas Growth uses `unclear`, so unclassified rows land in the same auditable bucket as unreadable-site rows). The `confidence='fallback'` marker is the only downstream tell, so it is now documented in the usage block and asserted in the test.
+
+## HIGH (engine fragility): `qualify-leads.js` hardcodes `|` as the `google_types` separator — any other separator silently turns a PRIMARY-only `deny` into an ANY-match deny
+
+**Status:** OPEN (no engine change made — caller was at fault this time) · found 2026-09-11 (Atlas Growth), HIGH impact when it bites: it silently drops real ICP firms.
+**Problem.** `scrape.js:196` writes `google_types` joined with `'|'`. `qualify-leads.js` derives the primary type as `google_types.split('|')[0]` (in `passes()` for the `deny` op, and again in `getField()` for the `primary_type` field). If a caller rewrites the column with any other separator, `split('|')[0]` returns the WHOLE string, so a deny term matching ANY secondary type now fires — the exact asymmetry SKILL STEP 5b warns about, arrived at by accident and in the opposite direction from the documented default. There is no validation and no warning.
+**How it bit.** A run-folder merge script (cross-shard `place_id` dedupe) unioned types and rejoined them with `'; '` for the 3,725 of 15,276 rows that appeared in more than one shard — leaving a file with MIXED separators. Those rows lost 215 legitimate leads: e.g. `Crawl Space Ninja of Alpharetta` (157 reviews, primary `Waterproofing service`, which the allow-list explicitly permits) was dropped `off_icp_type` because `water damage restoration service` appeared later in its type string. Same for `Crawlspace Medic of Columbia` (399 reviews) and `Complete Basement Systems` (58). Fixed caller-side by rejoining with `'|'`; re-qualify then recovered all 215 at $0.
+**Fix (later, engine).** Either split on `/\s*[|;]\s*/` everywhere types are parsed, or have `qualify-leads.js` hard-warn when `google_types` contains `;` but no `|` (a near-certain sign the column was rewritten). A one-line separator constant shared by `scrape.js` and `qualify-leads.js` would be better still. Until then: **any script that rewrites `google_types` MUST rejoin with `'|'`.**
+
 ## CRITICAL (search-owner.js DEAD): scraper.tech discontinued its Google-search product — SERP cascade broken
 
 **Status:** OPEN (workaround shipped: serper.dev backend) · found 2026-07-20 (LH septic owner-finding), HIGH impact — breaks owner-finding for EVERY vertical.
@@ -188,3 +222,423 @@ LH-496 failure mix: 202 AbortError (many are dead/connection-reset, not just slo
 ## LOW (operator): don't pipe long-running scripts through `head`
 
 **Status:** WONTFIX/note · found 2026-07-03. Piping `competitor-maps.js | head -N` SIGPIPE-kills the node process mid-run (it writes progress every 10 combos; head closing the pipe kills it after ~20). Resumable state saved it, but the reflex is bad. Use `| tail` or run in background and Read the output file.
+
+---
+
+## 2026-09-12 — run-scrape.js `--resume` (SHIPPED, approved)
+
+An interrupted run (scraper.tech tariff exhausted mid-flight) had to re-scrape the WHOLE runsheet
+to continue, re-billing tiles already paid for. `--resume` reads every `run_log.json` under `--out`
+(top-level + `heal-` + `resume-` subdirs), unions the tiles that reached `status:'ok'`, and scrapes
+only the remainder into a fresh `resume-N` dir. Default behaviour unchanged without the flag.
+Verified against the real interrupted Atlas run: 590 skipped / 820 scraped, exactly the known state.
+Covered by `tests/run-scrape-resume.test.js` (8 checks).
+
+Note the final coverage report now unions `per_cell` across ALL logs — reading only
+`<out>/run_log.json` on a resumed run would report on the FIRST pass's tiles alone.
+
+## 2026-09-12 — `readRunsheet` does not honour `writeRunsheet` quoting (OPEN, not fixed)
+
+`writeRunsheet` correctly quotes a field containing a comma; `readRunsheet` splits on `,` with no
+quote handling. A query CONTAINING a comma therefore round-trips corrupted — and the heal loop and
+`--resume` both write a runsheet and read it back, so a comma-bearing query would silently heal the
+WRONG query. Not hit by Atlas (all 10 queries comma-free); found by the resume test, which now
+asserts only the comma-free round-trip and carries a comment pointing here. Fix is a real CSV parse
+in `readRunsheet` (`scrape.js` and `search-owner.js` already have one worth reusing) — needs
+approval, same class as the `google_types` separator bug below.
+
+## 2026-09-12 — `L2_CAP` truncates the roster off dealer-network team pages (OPEN, not fixed)
+
+`fetch-sites.js` caps each L2 page at 2,800 chars. Basement Systems / Supportworks dealer sites put
+a site-wide service menu at the top of `about-us/meet-the-team.html` and the actual roster at the
+BOTTOM, so the cap keeps the menu and drops every name. 20 such pages read by hand showed only 4
+rosters; re-fetching the same URLs uncapped (median 7.3k chars) showed a roster on 33/33. Candidate
+fixes: a larger cap for owner-priority paths, or a tail-biased slice for pages whose URL matches the
+owner/team pattern. Worked around job-locally in the Atlas run
+(`clients/atlas-growth/2026-09-11_foundation-repair/fetch-owner-pages2.js`).
+
+## 2026-09-12 — scrape.js writes run_log.json only at the END, so a killed run loses its tiles (OPEN)
+
+Six of eight shards were killed mid-run (launch mistake, below). Because `scrape.js` persists
+`run_log.json` only when it finishes, every tile those workers had already scraped was unrecorded,
+so `--resume` correctly re-bought them: ~617 tiles of API spend thrown away. `--resume` works, but
+its granularity is only as good as how often the log is written. Candidate fix: append per-cell
+status incrementally (or checkpoint every N tiles) so a kill costs minutes, not hours. Until then,
+a long scrape should be treated as all-or-nothing per shard.
+
+## 2026-09-12 — NOTE: launch long jobs through the harness, never `nohup ... &` in a tool call
+
+Twice in one session a `nohup <job> &` inside a Bash tool call was killed when the call returned and
+its parent shell went away — first an 85-page fetcher (stopped at 5), then 6 of 8 scrape shards
+(cost: the 617 tiles above). The harness's own background mode (`run_in_background: true`) keeps the
+process alive across calls and reports its exit; use it for anything that outlives one call. The
+giveaway is a job whose output file stops growing while its "launched" line looks fine.
+
+## 2026-09-12 — worker-pool fetchers can exit silently with promises pending (NOTE)
+
+A job-local pool fetcher exited code 0 mid-run with ~80 leads unprocessed and no error. Cause: the
+only thing left holding the event loop was an `.unref()`'d deadline timer, so node considered the
+loop empty and exited while workers were still awaiting. Symptom to recognise: exit 0, no final
+log line, partial output. Rule of thumb for these small fetchers — never `.unref()` the deadline,
+and prefer a sequential `for await` loop unless concurrency is genuinely needed; 85 pages
+sequentially cost ~3 minutes, which was cheaper than debugging the pool.
+
+---
+
+# Session review — Atlas Growth foundation-repair run (2026-09-11/12)
+
+Logged for review. The engine bugs are above; this section is about **process failures that cost
+money and accuracy**, and the measurements that came out of them.
+
+## P1 — The operator's OTHER SKILLS were never checked before improvising (ROOT CAUSE)
+
+Three skills already in the repo covered work that got hand-rolled instead:
+
+**`web-scrape-triage`** — its Tier 2 says, verbatim, *"Never pay a SERP key (serper / scraper.tech)
+for this — the free rungs cover it"*, and lists: the built-in WebSearch tool, Jina `s.jina.ai`, and
+Brave's free tier (~2k/mo). Two scraper.tech SERP plans were bought and exhausted instead.
+
+**Reviewer correction (Fable, 2026-09-12):** the first draft of this entry claimed Jina was "free,
+keyless and scriptable" and that "the whole sweep could have run in Node with no key" — *asserted
+without testing*, which is the exact failure this section is logging. Tested: `s.jina.ai` now returns
+`401 AuthenticationRequiredError` — **it requires an API key**, so the triage skill's "keyless" claim
+is stale (corrected there). A free key may still make it the cheapest scriptable rung, but that has
+to be *tested per vertical*: WebSearch's value here was its **synthesis reading BBB profile pages
+that 403 a plain fetch**, and whether Jina's raw results carry the principal's name is unknown. The
+defensible lesson is narrower: a scriptable SERP (Jina with a key, Brave, or a $1/1K paid key) beats
+grinding turns — but confirm it returns the *field you need* on 3 leads before designing around it.
+
+Its Tier 3 covers the 403s that were written off as unreachable (BBB profile pages, **7** of 118
+owner/team pages — the other 16 failures were transient `ECONNRESET`, not anti-bot — and the
+Groundworks-network domain set): `curl_cffi` TLS/JA3 impersonation, `Scrapling` with
+`solve_cloudflare=True`, `crawl4ai`. None were attempted, **and on review they cannot run in this
+remote container**: `curl_cffi impersonate="chrome"` resets on `example.com` too, because it bypasses
+the system CA and the session sits behind a TLS-intercepting proxy. Tier-3 rungs are an
+operator's-own-machine step. The failure was not skipping them here; it was not *recording* the 7
+true 403s as a queue for that step.
+
+Its Tier 1 prescribes pruning page content by **text-density + link-density scoring** before
+char-capping or feeding a model (crawl4ai `PruningContentFilter`). A bespoke "strip the shared
+nav by diffing a site's pages against each other" fix was written from scratch for exactly this
+problem — after first shipping a scoring heuristic that threw away "Darren Crotchett President".
+
+**`email-verify-debounce-bounceban`** — documents the two-stage MillionVerifier -> BounceBan gate
+as a non-negotiable pre-campaign step, with the runner already committed at
+`scripts/verify-millionverifier-bounceban.js`. The session designed an email waterfall from
+scratch and asked the operator for an API key it already had a documented home for
+(`$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env`).
+
+**Rule going forward:** before improvising any capability, list the available skills and read the
+ones whose description overlaps. "I did not know it existed" is a process failure, not an excuse —
+the skills were one `ls` away.
+
+## P2 — Owner extraction used regex where the skill prescribes a prompt + model read
+
+SKILL.md STEP 6a says: fill `owner-prompt.template.md` into a job-specific `owner-prompt.md`, then
+let a model read `site_text`/`serp_text` with the honesty guardrails (evidence quote must contain
+the name; entity-match on full identity; never guess). **That prompt was never generated** for this
+run. Instead three regex extractors were written (`extract-serp-contacts.js`,
+`extract-roster-contacts.js`, plus an ad-hoc site-text sweep).
+
+Measured cost of that choice:
+- **24 business names were banked as people** — `'Basement Waterproofing'`, `'Royal Foundation'`,
+  `'Cascade Mudjacking'`, `'Repair Robert'` — and had to be purged. In a first-line-personalised
+  campaign those send "Hi Basement,".
+- The roster parser produced **wrong names twice**, each needing a fix: branch rosters interleave a
+  location ("Paul Phillips **Nashville** General Manager" -> captured "Phillips Nashville", losing
+  the first name), and "&" joins titles as well as couples ("President & Owner" vs "Melanie & John
+  Chaney") so a name run swallowed the next person on the roster.
+- The site-text sweep produced a **~35% artifact rate** ("Party Labor", "Meet Our", "Regardless Of",
+  "Owner-Led Estimates"), so all 85 candidates had to be read by hand anyway. The regex bought
+  nothing over the prep -> read -> apply pattern the skill already defines.
+
+The guardrail that would have caught every one of these is already written in the template: *the
+evidence quote must contain the person's name, or drop them.*
+
+## P3 — What the run actually established (keep these)
+
+- **BBB is the owner registry for home-services trades.** Already written into `owner-finding.md`.
+  `allowed_domains:["bbb.org"]` on a web search converted dead leads into named owners (a lead that
+  the whole SERP harvest failed on returned "Robert Michael Trotter, Owner / Angela May, CEO").
+- **Branch mis-attribution is the dominant failure mode on multi-location companies** and is worse
+  than same-name bleed because the company name matches *exactly* — only the city differs. Observed:
+  JES Virginia Beach returning the Manassas and Salem presidents; U.S. Waterproofing Schaumburg
+  returning the Valparaiso owner; Crawlspace Medic Charlotte returning the Morrisville owner (the
+  Charlotte owner, Jon Dando, was on their own website all along). Any owner-finding pass over a
+  franchise/branch vertical must check city per contact, not just company name.
+- **Web search results are non-deterministic.** The same domain-scoped query returned two named
+  officers on one run and nothing on another. A single miss is not evidence of absence — record
+  misses for one retry rather than writing the lead off.
+- **Parallel WebSearch works**: 10 calls in one message all execute. An earlier claim in this run
+  that it serialises one-per-turn was asserted without testing and was false.
+- **BBB's own surface**: `www.bbb.org/api/search` returns clean JSON (name, address, phone,
+  categories, service areas) but **contains no people**; the principal is only on the profile page,
+  which 403s a plain fetch. That is precisely the Tier-3 case `web-scrape-triage` exists for.
+
+## P4 — Email verification: tier before you spend
+
+298 on-site emails were found across 273 ICP leads. Verifying all of them would have wasted most of
+the credits, because verification proves deliverability, not reachability:
+
+| bucket | n | action |
+|---|---|---|
+| personal-shaped on own/alternate domain (8 of these match a decision-maker we already named) | 57 | verify |
+| personal on free-mail | 20 | verify |
+| alternate-domain, hand-adjudicated | 4 | verify |
+| role/generic (`info@`, `office@`, `estimates@`) | 133 | **skip** — valid but reaches a receptionist |
+| business-name mailbox (`kennedyfoundationrepair@gmail.com`) | 61 | **skip** — company inbox in personal shape |
+| template placeholder (`mymail@mailservice.com` on 3 unrelated firms) | 7 | **skip** |
+| unclear | 14 | eyeball |
+
+**81 worth verifying, not 298 — 217 credits saved.** (Reviewer note: the first draft of this table
+listed the 8 name-matches as a separate row *and* inside the 57, summing to 300. Fixed.) Two classifier traps found while tiering:
+a business name concatenated into the local part looks personal, and an "alternate domain" is not a
+mismatch (`lsanderson@sqccolorado.com` IS Sanderson Quality Construction; `...ofga.com` IS
+`...ofgeorgia.com`). Both were initially mis-filtered and had to be corrected.
+
+## P5 — Smaller operational notes
+
+- **PII slipped past `.gitignore` on file extension.** `verify_emails.txt` (81 live addresses) and
+  `*.bak` copies of contact files matched none of the `*.csv`/`*.json`/`*.jsonl` data rules. Fixed
+  by ignoring `clients/**/owner/` wholesale. Ignore data DIRECTORIES, not extensions.
+- **`pgrep -f <pattern>` in a wait loop matches the loop's own command string**, so
+  `until ! pgrep -f 'run-scrape.js'; do sleep 15; done` never terminates — it sees itself. Two such
+  waiters span for hours. Use a marker file or exclude `$$`.
+- **Do not extrapolate API cost from the first minutes of a run** (logged earlier in this file, hit
+  again): the 7,000-call projection from dense TX metros came in at ~2.2 calls/tile overall.
+
+## P6 — Added on review (Fable): unlogged engine bugs and environment facts
+
+- **`fetch-sites.js` leaks JavaScript exceptions into its status field.** Across the two site fetches
+  13 leads carry `home_failed:TypeError` and 1 carries `home_failed:AbortError`. A `TypeError` is a bug
+  in the fetcher, not a property of the site, and it currently reads as if the site failed. OPEN:
+  catch and log the stack, and status the lead as `fetch_error` so it is retried rather than written
+  off.
+- **`search-owner.js` degrades silently when the SERP vendor omits `url`/`description`.** `bundle()`
+  interpolates `${x.url||''}` and `${(x.description||'').trim()}`, so a title-only response (which is
+  what scraper.tech's google-search endpoint returns — `url` always empty, `description` on 2–3 of
+  9) produces thin text with no warning. Downstream entity-matching then has nothing to corroborate a
+  city against, which is how the branch mis-attributions became possible. OPEN: warn once per run when
+  >80% of results have empty `url`; the operator should know the vendor is not delivering the field
+  the guardrails depend on.
+- **BBB profiles carry an `out of business` flag** (EverDry Acworth GA was returned with one) and the
+  scraper.tech Maps payload carries closed-business flags too (per the triage skill's README). Neither
+  is currently gated on. A contact at a closed business is a wasted send. OPEN: surface the flag as a
+  column and exclude by default.
+- **Dealer-network founders appear as "Owner" of many dealers.** Larry Janesky is listed as Owner of
+  Connecticut Basement Systems, Basement Systems of Indiana *and* Mid-State Basement Systems because
+  he founded the network. Correct data, wrong prospect — three "owners" that are one person who is not
+  the local buyer. The `brand_family` flag exists for exactly this; the contact layer should inherit it
+  and demote a network founder below the local GM.
+- **This remote container cannot run TLS-impersonating fetchers** (curl_cffi, Scrapling stealth):
+  they bypass the system CA and the session's HTTPS proxy resets the connection. Tier-3 work must be
+  handed to the operator's machine, so a run should *emit* the confirmed-403 queue as a file rather
+  than treat those pages as dead.
+
+## Decision on the root cause (Fable): STEP 0 added to SKILL.md
+
+The P1 failure is not fixable by a note in a log that a future session may not read before it starts
+improvising. It is fixable by a step the skill itself forces. Added **STEP 0 — Inventory the
+operator's skills** to `SKILL.md`, naming the known overlaps explicitly. A workflow that makes
+skill-calling mandatory (the operator's stated plan) is the stronger fix; STEP 0 is the one that
+exists today.
+
+
+## P7 — Full-session review (Fable, 2026-09-12, from the transcript, not the log)
+
+Measured on the session transcript (27 h wall clock, 501 assistant messages, 578 tool calls).
+
+**What the numbers say**
+
+| measure | value |
+|---|---|
+| tool calls | 433 Bash · 103 WebSearch · 20 Read (all overflow files, 0 repo files) · 0 Write · 0 Edit · 0 WebFetch |
+| `Skill` invocations | 3 (`claude-api`, rejected by operator; `brainstorming`; `workflow-authoring`) — none of the repo's own skills, which are not registered as skills |
+| reads of `SKILL.md` | 1 full read at 09:27 on day 1; next consult 12:06 on day 2 (26 h later, after the operator's complaint) |
+| first `ls skills/` | day 2, 11:59, after "The skill should have everything" |
+| first read of `web-scrape-triage` | day 2, 12:04, after two custom page-fetchers were already written |
+| new scripts written | 30 (24 job-local in the run folder, 5 engine incl. 3 tests, 1 scratch); 5 were immediate rewrites of the previous one |
+| explicit self-corrections | 14, one an admitted untested claim ("WebSearch serialises one per turn") that shaped ~5 h of one-call-per-turn work |
+| WebSearch shape | 1 per message until the retraction at 09:20 day 2; then 8 messages of 10 |
+| background hygiene | 1 failed shard launch; 6 shards killed by `nohup &` inside a tool call (617 tiles re-bought); 2 `until … pgrep` waiters alive ~6 h until TaskStop |
+| turn ended mid-task | once, at 61/856 after "push to completion"; operator returned 2 h later with "whats up" |
+| `owner-prompt.md` (STEP 6a, gated) | generated at 12:07 day 2, after the regex extraction, after the complaint |
+| `STATE.md` | still read "pre-scrape, awaiting GATE 1" at review time; never updated |
+| planner library profile for the vertical | none until this review |
+
+**The shape of the failure, in one sentence:** the procedure was read once, then the run was driven from memory of it, and every capability gap was filled by writing a script instead of by looking for the skill that already covered it.
+
+**Root causes, ranked by what fixing them buys**
+
+1. **The skills are files, not skills.** `skills/*` is not under `.claude/skills/`, the repo has no `CLAUDE.md`, and `ListSkills` returns none of them. Nothing tells a fresh session they exist. STEP 0 is text inside a file the session did not re-read. → register them (symlink or move under `.claude/skills/`), add a root `CLAUDE.md` naming them, and put the mandate where the harness guarantees it is seen.
+2. **No gate stops a script from being written.** 24 job-local scripts, none reviewed against a skill first. → a `PreToolUse` hook on `Bash` that denies `cat > clients/**/*.js <<` and `Write` of `*.js` under `clients/` unless a `<run>/.skill-check` marker exists, with the deny reason pointing at STEP 0. Cheap, deterministic, no model judgement.
+3. **The gated artifacts were not gated in practice.** `build-clay-csv.js` refuses without `owner-prompt.md`, but the run never reached `build-clay`, so the gate never fired; owner extraction happened upstream of it. → move the check to the first owner-finding command (`fetch-sites.js` refuses to write `owner/` without `owner-prompt.md` beside it), and make `STATE.md` staleness a Stop-hook warning.
+4. **Untested claims were stated as tested.** Parallel WebSearch, Jina keyless, Tier-3 "would have worked", the 7,000-call spend alarm. → SKILL.md Honesty note: any claim about tool behaviour that decides a design must be preceded by the 3-call probe, and the probe's output pasted.
+5. **RUN-PLAN.md existed and was not followed after GATE 3.** Gates 5 and 6 (owner prompt before any owner work; STATE.md at close) were written down on day 1 and skipped on day 2. A plan in a file has the same problem as a skill in a file.
+
+**Overlaps with sibling skills that the P1 table did not name**
+
+- `icp-source-planner` is the declared front door for any client deliverable and dispatches to this skill; skipping it meant no `library/` profile was written and its promoted rule **R2 ("use the LLM rubric, not regex")** was never loaded. This run is R2's second occurrence.
+- `web-visitor-deid-qualify` already has the exact shape owner-finding needed: "vertical logic lives entirely in the Haiku prompt, never in code", batches of ~110, merge by name, a recovery pass. Its "Common mistakes" list is the model for this skill's README §10.
+- `name-to-domain` is the batch → Haiku-subagent-per-batch → merge-by-key pattern, with a reference prompt and a cache. The 856-lead WebSearch sweep should have been dispatched in that shape, not read in the main context. It is also STEP 5d's website-finder.
+- `web-scrape-triage` already answered "cheapest websearch tool" (Tier 2 free rungs; cheap grounded models; "never pay a SERP key for this") before two SERP plans were bought. Its `references/methods.md` names `directory-lead-sourcing`'s `clay-jobs-serp.js` as using the same dead scraper.tech Search key: that script is stale too.
+- `campaign-review` has the same three-store write-back and the same n=1 / n≥2 promotion gate. The protocol is consistent across skills; the failure is that no skill's protocol ran at the end of this run.
+
+**Shipped in this review:** README.md (from a table of contents); owner-finding.md parallel-search correction; STATE.md brought current; planner library profile + index line + observations entry; this section.
+
+## DONE 2026-09-12 (process, repo-wide): skills registered + hooks enforce STEP 0 and STEP 6a
+
+- `.claude/skills/<name>` → symlink to `skills/<name>` for all 10 skills (`email-verify-debounce-bounceban/skill.md` renamed to `SKILL.md`). They now appear in the harness skill list; before this they were only files.
+- Root `CLAUDE.md`: the skill table, the three enforced rules, the probe rule, engine-change and PII rules.
+- `.claude/hooks/session-start.sh`: prints the skill inventory into context at session start.
+- `.claude/hooks/guard.py` (PreToolUse on Bash|Write|Edit): denies creating or running `*.js|*.sh|*.py` inside `clients/<client>/YYYY-MM-DD_*/` without `<run>/.skill-check`; denies any command or write touching `<run>/owner/` or `owner_new/` without `<run>/owner-prompt.md`. Fails open on internal error. Pipe-tested on 8 cases.
+- `.claude/hooks/stop-state-check.py` (Stop): blocks a stop once when a client `STATE.md` is more than 4 h older than the newest file in one of its run folders. `stop_hook_active` prevents a loop.
+- Caveat: hooks written mid-session are picked up by the settings watcher only if `.claude/` had a settings file at session start; a fresh session or `/hooks` reloads them.
+
+## DONE 2026-09-12 (engine): owner-prompt gate moved to the first owner-finding command
+
+`fetch-sites.js` now refuses to write without `owner-prompt.md` in `--out`, its parent, or grandparent (batch sub-dirs allowed); `--no-prompt-ok` bypasses. `build-clay-csv.js` keeps its gate. SKILL STEP 6a now says: build the prompt at STEP 3 time. Test: `tests/fetch-sites-gate.test.js`.
+
+## DONE 2026-09-12 (engine): `prep-owner-batches.js` + `merge-owner-reads.js` + `owner-read-subagent.md` (SKILL STEP 6 flow 2b)
+
+The in-session read path the Atlas run should have used instead of regex: deterministic Node assembles per-lead evidence (site text with people pages ranked first, dedicated owner page, SERP snippets, earlier web-search evidence; caps per source; BOM-safe; `--only-missing` to top up), one Haiku subagent per batch applies `owner-prompt.md`, merge enforces the template's fixed guardrails as checks (evidence contains the name, bucket in enum, no role word in a name, dedupe) and reports every drop. Test: `tests/prep-owner-batches.test.js` (12 checks).
+
+## OPEN: `directory-lead-sourcing/scripts/clay-jobs-serp.js` uses the dead scraper.tech Search key
+
+Same discontinued product as `search-owner.js`. Not this skill's file; flagged for the owner of that skill.
+
+## NOTE: `email-verify-debounce-bounceban` runners are not in the repo
+
+Its SKILL.md points at `C:/Users/victo/gtm-processes/scripts/verify-*.js` on the operator's machine. The skill folder holds the procedure only. Verification therefore always runs off-container.
+
+## DONE 2026-09-12 (hook bug, found live): `guard.py` resolved relative `clients/…` paths against the hook's cwd
+
+The Bash tool's cwd persists between calls and is often deep inside the repo, so a relative run path did not resolve and the owner gate denied a legitimate `ls` (it blocked the reviewer's own command). Fixed: resolve against `$CLAUDE_PROJECT_DIR`, else the hook file's repo root; absolute prefixes first. Re-tested from `/tmp`. Two facts learned: the hook went live mid-session without a restart, and the hook scans the WHOLE command text, so a test payload that spells out a run-folder script path inside a heredoc trips it too (build test strings from a variable).
+
+## NOTE 2026-09-12 (workflow scale): the harness caps a workflow at min(16, CPUs−2) concurrent agents
+
+This container has 4 CPUs → 2 agents at a time. A 23-batch Haiku read at ~9 min per 40-lead batch is ~100 min wall clock, not 10. Plan batch counts against the CPU count of the machine the run is on, or run two independent workflows side by side (each gets its own cap).
+
+## FACT 2026-09-12 (cost, measured): the Haiku web-search sweep (flow 2c) on 203 no-evidence leads
+
+11 batches of 20, Haiku, at most 2 WebSearch calls per lead. The 8 batches whose agents loaded WebSearch: 160 leads,
+203 searches (1.3 per lead), **116 named (72%)**. Whole tranche: 716k subagent tokens, 276 tool calls, 12.7 min wall
+clock at 2 concurrent agents → **~4.4k Haiku tokens and ~1.3 searches per lead, ~6k tokens per NAMED lead.** Three
+batches returned nothing because the agent never loaded the deferred WebSearch tool (fixed: the prompt now says
+`ToolSearch select:WebSearch` first). Compare: the in-session sweep on the session model was ~1,100 tokens of
+*main-context* reading per lead plus the operator's turns; this runs off the main context entirely.
+
+## FACT 2026-09-12 (verification, measured): 81 tiered addresses through MillionVerifier → BounceBan
+
+MV: 55 ok · 19 catch_all · 6 unknown · 1 invalid (7 role, 19 free-mail). BounceBan on the 25 catch_all/unknown: 18
+deliverable (recovered) · 3 risky · 1 undeliverable · 3 empty responses on the first pass (re-run individually).
+**Net: 73 sendable / 7 risky / 1 dropped = 90% sendable.** MV charged 56 credits for 80 calls; BounceBan 1 per call.
+Runner now lives in `skills/email-verify-debounce-bounceban/scripts/`.
+
+## FACT 2026-09-12 (harness limit, measured): a workflow run gets 200 WebSearch calls in total
+
+Sweep tranche 2 (16 batches of 20) spent the budget on batches 0–8 (199 searches); batches 9–15 returned empty
+batches, some with a text explanation instead of a file, none with an error. Rule: size a sweep workflow at ≤6
+batches of 20 and launch several runs; the saved `owner-sweep` workflow takes `args.batchIds` for that. Second
+lesson from the same hour: the saved workflow counted from 0 when given `batches: 4`, which would have overwritten
+finished batches 0–3; it was stopped in time. Explicit ids, always.
+
+## FACT 2026-09-12 (harness limit, refined): the 200-WebSearch budget is SHARED by workflows running at the same time
+
+Three sweep runs launched together (5 + 5 + 4 batches) used 65 + 70 + 70 searches and then every remaining agent got
+0; a run launched after the others finished got a fresh 200. So: **one sweep run at a time, ≤6 batches of 20 each,
+launch the next when the previous reports.** A starved batch shows as "0 searches, 0 with contacts" or as prose
+about CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION instead of a file; re-run those ids.
+
+## FACT 2026-09-12 (yield, measured): the on-disk model read (flow 2b) on 901 foundation-repair leads
+
+23 batches of 40, Haiku, 2.12M subagent tokens, 62 min at 2 concurrent (~2.4k tokens per lead). **221 of 901 named
+(24.5%)**, 331 contacts, 223 owner-level. By source of the kept contact: website 102 · web-search evidence 108 ·
+SERP snippet 63 · dedicated owner page 58. Guardrail drops: 24 single-token names (Haiku returns a first name alone
+when that is all the page says; the template forbids it), 2 role-word names, 1 trade-word name, 1 evidence
+mismatch, 1 EXCLUDE title. Two batches wrote unescaped quotes inside an evidence string (invalid JSON, repaired by
+hand); the sweep prompt now says to use single quotes inside evidence.
+
+Read this against the sweep: on the same trade the web search names ~70% of the leads it touches at ~4.4k tokens
+per lead, the on-disk read ~25% at ~2.4k. For home-services the registry tier is the primary source and the site
+read is the cheap first pass, exactly as `owner-finding.md` says. The regex pass this replaced had banked 242
+"named" leads, 24 of which were business names.
+
+## RESULT 2026-09-12 (Atlas Growth, foundation repair): owner-finding done the skill's way, end to end
+
+| step | leads | named | cost |
+|---|---|---|---|
+| model read of on-disk text (2b), 23 batches | 901 | 221 (24.5%) | 2.1M Haiku tokens, 62 min |
+| web-search sweep (2c), 5 tranches, 64 batches | 883 | 624 (70.7%) | 4.1M Haiku tokens, ~1,150 searches |
+| **combined** | **1,104** | **845 (76.5%)**, 807 owner-level | ~6.3M Haiku tokens, 0 session-model reading |
+
+Against the regex pass it replaced: 242 "named" (24 were business names; of 188 leads both name, 127 agree).
+Guardrail drops across all merges: 30 single-token names, 9 evidence mismatches, 5 role-word names, 2 trade-word
+names, 2 EXCLUDE titles. Three batch files needed a hand repair for an unescaped quote inside an evidence string.
+Verification: 81 → 73 sendable (90%). The 796 named leads without an email are the enrichment waterfall's input.
+
+## AUDIT 2026-09-12 (precision, measured): the "owner column" run locally on Atlas Growth
+
+**Read (flow 2b), grounding check, deterministic:** 317 of 331 kept contacts have their evidence quote verbatim in the
+lead's own source text; the other 14 are roster-page contacts whose quote spans line breaks. 329 of 331 names occur in
+the source. Grounding ≈ 99%. Possible misses: of 187 unnamed leads that had site text, 4 name a founder/owner in plain
+"<Name>, founder" form that Haiku did not return (recall loss on site text ≈ 2%).
+
+**Sweep (flow 2c), independent re-search of a random sample of 30 named leads (session model, fresh WebSearch):**
+
+| outcome | n |
+|---|---|
+| confirmed, full name and role | 25 |
+| consistent, partial (first name or diminutive only in results: Dylan; "Darek S."; Cole Gardner as 3rd-gen lead) | 3 |
+| not confirmable from search (AlphaLift managing member; Reliable Foundations "Matthew Smith", results name a co-owner Vincent Castillo instead) | 2 |
+| contradicted | 0 |
+
+Hard-confirmed precision ≥ 83%, consistent ≥ 93%, 0 of 30 wrong. A transcript-based check was attempted first and is
+NOT usable: large WebSearch results go to overflow files, so "name not in transcript" proves nothing.
+
+**Entity match:** 642 of 845 primary evidence quotes contain a distinctive token of the business name; the 203 without
+are mostly website quotes of the form "Owner: Pat Kirby" where the business is implicit. Multi-location brands: 32 of
+41 named, at the branch level.
+
+**Against the Clay column as a method:** identical prompt, identical guardrails, run on Haiku off the main context;
+2b+2c together named 76.5% (Clay pilots on this skill: healthcare 84%, used-car 44%). Difference from Clay: the sweep
+tier is built in, and every drop is counted rather than silently absent.
+
+## APPROVED 2026-09-13 (method): owner-finding rung order, cheapest-first, no Clay, email waterfall as STEP 6e
+
+Operator decisions on 2026-09-12/13, in discussion: no Clay anywhere; option 1 for owners (cheap read + registry
+sweep + double-check on every shaky row, no session-model rung); the email waterfall is part of owner-finding.
+Written into SKILL.md STEP 6/7, owner-finding.md and README on 2026-09-13. The entry below is the proposal as it stood.
+
+## (was) PROPOSED 2026-09-12: owner-finding rung order, cheapest-first, Clay optional
+
+Proposal put to the operator after the Atlas Growth run; written into SKILL.md prematurely and reverted the same
+hour. Not method until the operator signs off. The proposal: (1) aggregate on-disk evidence; (2) one Haiku read,
+yield-gated after three batches; (3) registry-restricted sweep on still-unnamed leads, one run of ≤6 batches at a
+time; (4) second opinion on medium/low-confidence rows; (5) session-model search for the head and gap-fill only;
+(6) Tier-3 fetch for brand-flagged 403s only; (7) no paid vendor SERP. Hand-off would become
+`contacts_final` + verified emails, with `build-clay-csv.js` optional. Measured basis in the RESULT and AUDIT
+entries above. Open questions for the operator: whether Clay stays the reader for any vertical; whether the yield
+gate belongs in code (`prep-owner-batches.js` filter) or stays a judgement call.
+
+## DONE 2026-09-13 (bug → engine): wrong name on the wrong address in the Plusvibe upload — `build-plusvibe.js`
+
+The inline build of `plusvibe_base.csv` attached the lead's primary owner name to any address at the company (Jim
+Briley on `nathan@`, Nathan Simpson on `steve@`, "Signature" as a first name). A second rule trusted the waterfall's
+"personal" tag, which let Tyler Nelson ride on `frontdesk@`. Fix: the name rule lives in one engine script,
+recomputable from the row alone (local part built from that person's name, nicknames/initials included; role
+mailboxes always nameless), with a `name_basis` column, `check` for any CSV, and `fill` refusing to write a
+violating file. Test: `tests/build-plusvibe.test.js` (20 checks, the four real cases as fixtures). Measured on Atlas
+Growth: 159 named rows under the loose rule → 126 under the strict local-part rule → 142 with nicknames and initials;
+the 17 that stay nameless are other people's addresses (`erica@` for Daniel McCoy), role mailboxes tagged personal,
+and free-mail company inboxes (`okfoundations@gmail.com`) whose owner is named on the site but not in the address.
+Operator approved the rule 2026-09-13 ("yup lets do it").
+
+## DONE 2026-09-13 (docs): Clay removed as a step everywhere
+
+Operator, 2026-09-13: "the pipeline still reads that clay is a step here." The README pipeline table had a step 6
+"Build the Clay feed", SKILL.md STEP 5b/6/6a and the flow's rungs 3-4 described the Clay column, and the owner-prompt
+template, employee-count template, runbook, HANDOFF and owner-finding.md all called the reader "a Clay nano column".
+Rewritten: the pipeline is scrape → qualify → owner-finding (Haiku per batch) → email waterfall → sequencer upload
+(STEP 7b, `build-plusvibe.js`); the owner-prompt gate is the PreToolUse hook, not `build-clay-csv.js`. That script
+and `owner-prompts.md` stay as legacy, labelled so. The word now appears only in negations and in history.

@@ -18,7 +18,13 @@
  *
  * Usage:
  *   node run-scrape.js --runsheet <csv> --config <json> --out <dir>
- *                      [--env <path>] [--max-retries 3] [--stall 30]
+ *                      [--env <path>] [--max-retries 3] [--stall 30] [--resume]
+ *
+ * --resume: skip tiles that already reached status:'ok' in a previous run into this same
+ *   --out dir (reads every run_log.json under it: the top-level one plus any heal- and
+ *   resume- subdirs). A run killed by an outage or an exhausted API plan then costs only the
+ *   tiles it never got, instead of re-billing the whole runsheet. Without the flag the
+ *   behaviour is unchanged: pass 0 always re-scrapes every tile.
  *
  * Exit codes:
  *   0  every runsheet tile reached status:'ok'. <out>/leads_clean.csv is the
@@ -38,6 +44,7 @@ const OUT = arg('out', '.');
 const ENVPATH = arg('env');
 const MAX_RETRIES = Number(arg('max-retries', 3));
 const STALL_N = Number(arg('stall', 30));
+const RESUME = process.argv.includes('--resume');
 if (require.main === module && (!RUNSHEET || !CONFIG)) { console.error('ERROR: --runsheet and --config are required'); process.exit(2); }
 const SCRAPE_JS = path.join(__dirname, 'scrape.js');
 
@@ -83,6 +90,42 @@ function runScrape(runsheet, dir) {
   });
 }
 
+// Every run_log.json under <OUT>: the top-level pass plus any heal- or resume- subdir.
+// Resume correctness depends on reading ALL of them — a tile healed on pass 2 of an earlier
+// run is already paid for and must not be re-scraped.
+function allRunLogs(dir) {
+  const out = [];
+  const top = path.join(dir, 'run_log.json');
+  if (fs.existsSync(top)) out.push(top);
+  if (!fs.existsSync(dir)) return out;
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (!e.isDirectory() || !/^(heal|resume)-/.test(e.name)) continue;
+    const f = path.join(dir, e.name, 'run_log.json');
+    if (fs.existsSync(f)) out.push(f);
+  }
+  return out;
+}
+// Union of tile keys that reached status:'ok' across the given run_logs.
+function okKeysFrom(paths) {
+  const ok = new Set();
+  for (const f of paths) {
+    let log; try { log = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { continue; }
+    for (const e of (log.per_cell || [])) {
+      if (e.status === 'ok' || e.status === 'OK') ok.add(key(e.query, e.lat, e.lng));
+    }
+  }
+  return ok;
+}
+// Every per_cell entry across the given run_logs (for the empty-but-ok report).
+function allPerCell(paths) {
+  const rows = [];
+  for (const f of paths) {
+    let log; try { log = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { continue; }
+    for (const e of (log.per_cell || [])) rows.push(e);
+  }
+  return rows;
+}
+
 // Which runsheet tiles did NOT reach status:'ok' in this run_log? (never-attempted counts as failed too)
 function failedTiles(runLogPath, rows) {
   const log = JSON.parse(fs.readFileSync(runLogPath, 'utf8'));
@@ -107,7 +150,7 @@ function mergeLeads(srcDir) {
   fs.writeFileSync(master, out.join('\n') + '\n');
 }
 
-module.exports = { key, readRunsheet, failedTiles, writeRunsheet };
+module.exports = { key, readRunsheet, failedTiles, writeRunsheet, allRunLogs, okKeysFrom, allPerCell };
 if (require.main !== module) return;
 
 (async () => {
@@ -115,11 +158,35 @@ if (require.main !== module) return;
   fs.mkdirSync(OUT, { recursive: true });
   console.log(`[run-scrape] ${allRows.length} tiles | up to ${MAX_RETRIES} heal passes | hard-fail on unhealable gaps`);
 
-  // pass 0 — full run straight into OUT
-  await runScrape(RUNSHEET, OUT);
-  mergeLeads(OUT); // canonicalize (no-op merge, dedups)
-  let pending = failedTiles(path.join(OUT, 'run_log.json'), allRows);
-  console.log(`[run-scrape] pass 0: ${allRows.length - pending.length}/${allRows.length} tiles ok` + (pending.length ? ` | ${pending.length} failed -> healing` : ''));
+  // pass 0 — full run into OUT, or (with --resume) only the tiles not already ok
+  let pending;
+  let priorOk = 0;
+  if (RESUME) {
+    const ok = okKeysFrom(allRunLogs(OUT));
+    const todo = allRows.filter(r => !ok.has(key(r.query, r.lat, r.lng)));
+    priorOk = allRows.length - todo.length;
+    console.log(`[run-scrape] --resume: ${priorOk}/${allRows.length} tiles already ok from a previous run | ${todo.length} to scrape`);
+    if (!todo.length) {
+      // nothing left to buy — fall through to the report with an empty pending set
+      mergeLeads(OUT);
+      pending = [];
+    } else {
+      // pick a fresh resume-N dir so an earlier run's logs are never overwritten
+      let n = 0; while (fs.existsSync(path.join(OUT, `resume-${n}`))) n++;
+      const rDir = path.join(OUT, `resume-${n}`);
+      const rSheet = path.join(OUT, `resume-${n}-runsheet.csv`);
+      writeRunsheet(todo, rSheet);
+      await runScrape(rSheet, rDir);
+      mergeLeads(rDir);
+      pending = failedTiles(path.join(rDir, 'run_log.json'), todo);
+      console.log(`[run-scrape] resume pass: ${todo.length - pending.length}/${todo.length} new tiles ok` + (pending.length ? ` | ${pending.length} failed -> healing` : ''));
+    }
+  } else {
+    await runScrape(RUNSHEET, OUT);
+    mergeLeads(OUT); // canonicalize (no-op merge, dedups)
+    pending = failedTiles(path.join(OUT, 'run_log.json'), allRows);
+    console.log(`[run-scrape] pass 0: ${allRows.length - pending.length}/${allRows.length} tiles ok` + (pending.length ? ` | ${pending.length} failed -> healing` : ''));
+  }
 
   // heal loop
   let attempt = 0;
@@ -136,9 +203,9 @@ if (require.main !== module) return;
   }
 
   // genuinely-empty-but-ok centers: report for awareness (NOT a failure)
-  const finalLog = JSON.parse(fs.readFileSync(path.join(OUT, 'run_log.json'), 'utf8'));
+  const finalCells = allPerCell(allRunLogs(OUT));
   const byCenter = {};
-  for (const e of finalLog.per_cell) {
+  for (const e of finalCells) {
     const c = `${Number(e.lat).toFixed(2)},${Number(e.lng).toFixed(2)}`;
     (byCenter[c] = byCenter[c] || []).push(e);
   }
@@ -150,6 +217,7 @@ if (require.main !== module) return;
   const report = {
     status: complete ? 'COMPLETE' : 'INCOMPLETE',
     runsheet_tiles: allRows.length,
+    resumed_tiles_skipped: RESUME ? priorOk : 0,
     heal_passes: attempt,
     unhealed_tiles: pending.map(r => ({ query: r.query, lat: r.lat, lng: r.lng })),
     empty_but_ok_centers: emptyOkCenters,
@@ -160,7 +228,7 @@ if (require.main !== module) return;
   fs.writeFileSync(path.join(OUT, 'coverage_report.json'), JSON.stringify(report, null, 2));
 
   console.log('\n==== COVERAGE ' + report.status + ' ====');
-  console.log(`tiles: ${allRows.length} | heal passes: ${attempt} | empty-but-ok centers: ${emptyOkCenters.length}`);
+  console.log(`tiles: ${allRows.length}${RESUME ? ` (${priorOk} skipped by --resume)` : ''} | heal passes: ${attempt} | empty-but-ok centers: ${emptyOkCenters.length}`);
   if (!complete) {
     console.log(`✗ UNHEALED tiles (${pending.length}):`);
     for (const r of pending) console.log(`   ${r.query} @ ${r.lat},${r.lng}`);

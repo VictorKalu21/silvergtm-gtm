@@ -1,0 +1,25 @@
+{
+  "template": "Hi,\n\nNoticed that you handle {{business_type}} in {{city}}.\n\nWe help you generate 10 qualified {{inspection_type}} that turn into paid {{project_type}} jobs, in under 30 days.\n\nThere's no pay unless I book you a qualified, confirmed {{inspection_singular}}.\n\nOpen to a 15-minute chat?",
+  "instructions": {
+    "business_type": "the trade this company leads with on its website, lowercase, EXACTLY one of: foundation repair, basement waterproofing, crawl space repair, concrete leveling, house leveling, slab repair. Use the one they put first, not the one they list among many. Never any other phrase (not 'crawl space encapsulation').",
+    "inspection_type": "the first visit to a homeowner, plural: the TRADE NOUN of business_type plus 'inspections' or 'estimates' according to which word the company itself uses. Trade noun by business_type: foundation repair -> foundation; basement waterproofing -> basement; crawl space repair -> crawl space; concrete leveling -> concrete; house leveling -> foundation; slab repair -> slab. Never the word 'free'. Never the whole business_type phrase. Never 'waterproofing', 'leveling' or 'repair' in this value.",
+    "inspection_singular": "the singular of inspection_type, e.g. foundation inspection, basement inspection, leveling estimate.",
+    "project_type": "the outcome noun of the SAME trade, singular, homeowner wording, reads before the word 'jobs'. By business_type: foundation repair -> repair; basement waterproofing -> waterproofing; crawl space repair -> encapsulation if the site sells encapsulation, else repair; concrete leveling -> lifting; house leveling -> leveling; slab repair -> repair. Never plural, never a technical term (say repair, not stabilization).",
+    "city": "ONLY if the 'city' known fact is blank: the city this company is based in, from the website. Otherwise repeat the known city exactly."
+  },
+  "rules": "Decide business_type first, then derive inspection_type and project_type from it with the tables above. No single word may appear in more than one of business_type, inspection_type, project_type: business_type names the trade once; inspection_type is the visit; project_type is the outcome.",
+  "fallbacks": {
+    "business_type": "foundation repair",
+    "inspection_type": "foundation inspections",
+    "inspection_singular": "foundation inspection",
+    "project_type": "repair",
+    "city": ""
+  },
+  "context_cols": [
+    "city",
+    "state",
+    "google_types",
+    "business_name"
+  ],
+  "max_value_len": 60
+}
