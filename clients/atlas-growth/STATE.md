@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-16_uk-foundation-repair-maps` — scrape COMPLETE (22,193 universe, 4,620 calls incl. 79 re-buy). GATE 3 rules P1–P10 applied 2026-09-16. Funnel v2: 2,842 qualified → 1,969 in-footprint → **1,770 net-new** → 1,469 domains + 146 no-website. Site text: 1,245 ok / 224 no text (Turnstile host blocked from this container's egress; Wayback offline). Tiers A 246 / B 632 / C 117 / D 775. **Adjudication (45 Opus batches) in progress**; owner-finding not started |
+| Current run | `2026-09-16_uk-foundation-repair-maps` — scrape COMPLETE (22,193 universe, 4,620 calls). GATE 3 rules applied; funnel v2 1,770 net-new. Adjudication DONE (45 Opus batches): **686 ICP** (421 yes + 265 unclear) + **174 damp-only segment** + 910 excluded (tier D 0/100 yes → dropped). On-site emails: 240 of 686 (no Maps email field on a live pull). UK owner prompt built (`owner-prompts/uk-foundation-repair.md`) — **at GATE 6**; Companies House pass + contact-page email harvest running; Haiku reads await prompt approval |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
