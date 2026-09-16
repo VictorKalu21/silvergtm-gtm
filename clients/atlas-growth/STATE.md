@@ -6,7 +6,8 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-11_foundation-repair` — **closed out 2026-09-13**: scraped, qualified, owners found, emails found and verified; deliverables handed over |
+| Current run | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; **verification NOT run** (no MillionVerifier/BounceBan keys in the container, no go given) |
+| Previous run | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
 | Live campaigns | none |
 
@@ -20,6 +21,29 @@
 3. API keys are in the operator's gitignored env file, never in the repo. Credits are never spent without an explicit go.
 4. Open decisions: the second Plusvibe email needs a `company_short` variable (plan agreed, not built); paid email finders
    as 50-contact probes; the ~1,000-lead pull. Standing directives are in "Client directives" below.
+
+## Where the 2026-09-16 UK run stands (2026-09-16, end of session)
+
+Input: operator upload `60174952-Uk_Foundation_Repair-all.csv` (5,999 rows). Scripts + `RUN-NOTES.md` in the run
+folder are tracked; data (`leads_*.csv`, `owner/`, `deliverable/`) is gitignored and was sent in session.
+
+| Stage | State | Numbers |
+|---|---|---|
+| Stage A dedupe + non-trade/supplier deny ($0) | done | 5,999 → 2,865 universe (862 dup place/domain, 1,658 not a trade, 524 supplier, 90 non-trade primary) |
+| Site text | done | 2,733 fetched: 2,339 ok, 394 failed (271 × 403 — block the container's egress IP; Scrapling stealth + Wayback + Jina all failed in-container) |
+| Qualify (keyword tiers → Sonnet read of tiers A+B+C + 100-row D sample; geo gate) | done | **175 ICP**: 159 yes + 16 unclear-kept · 37 US pins dropped · 540 adjudicated no · 8 brand-flagged (Peter Cox, Prokil, DampMaster…) · 0 under review floor 30 |
+| Emails (Maps vs on-site, best per company) | done | 151 of 175 have an email (6 person-shaped, 97 named generic, 48 other); universe-wide the site added 211 new emails and confirmed 1,129 of 1,637 Maps emails |
+| Owner-finding (CH engine + low-conf officers + 6 Haiku reads; CH pass 2; LinkedIn-restricted Haiku sweep) | done | **138 of 175 named (79%)**, 133 owner_or_partner; sources: CH 95 + CH pass-2 17 + web search 16 + site 7 + email local part 3; 4 wrong CH matches caught and dropped |
+| Named + email | — | 119 (82 generic mailbox, 31 other, 6 personal) |
+| Verification (MillionVerifier → BounceBan) | **NOT RUN** — needs keys + explicit go | `deliverable/verify_input.csv`: 151 unique emails (~151 MV + ~50 BB credits) |
+
+Deliverables sent 2026-09-16: `deliverable/atlas_uk_foundation_repair_qualified.csv` (175 rows, one per lead, with
+service_bucket, adjudication reason, email comparison columns, primary contact + role bucket + evidence, qa_flags),
+`deliverable/contacts_all.csv` (208 contacts), `deliverable/verify_input.csv`, `excluded_officp.csv` (every drop with a
+reason). QA flags to read before sending: `sweep_named_verify_before_send` (16), `icp_unclear` (16), `brand` (8).
+
+Open: recover the 271 blocked sites off-container (Firecrawl or a residential IP) and re-run stages B–C on them;
+UK owner-prompt variant not yet saved to `owner-prompts/` (run used the US prompt + UK notes in the dispatch).
 
 ## Where the 2026-09-11 run stands (2026-09-12, end of session)
 

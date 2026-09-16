@@ -642,3 +642,16 @@ template, employee-count template, runbook, HANDOFF and owner-finding.md all cal
 Rewritten: the pipeline is scrape → qualify → owner-finding (Haiku per batch) → email waterfall → sequencer upload
 (STEP 7b, `build-plusvibe.js`); the owner-prompt gate is the PreToolUse hook, not `build-clay-csv.js`. That script
 and `owner-prompts.md` stay as legacy, labelled so. The word now appears only in negations and in history.
+
+## MEDIUM (companies-house.js): exact-title matches with punctuation/"&" differences fall to low_confidence
+
+**Status:** OPEN (job-side workaround in `clients/atlas-growth/2026-09-16_uk-foundation-repair/ch_second_pass.py`) ·
+found 2026-09-16 (Atlas Growth UK foundation repair, 180 leads), MEDIUM impact — costs ~10% of the registry's names.
+
+Problem: `nameOverlap` tokenises on words, so "Welba Construction Ltd." vs "WELBA CONSTRUCTION LTD" scores below the
+match threshold when the lead has no postcode to disambiguate, and "Master Waterproofing and Renovations Limited" vs
+"MASTER WATERPROOFING & RENOVATIONS LIMITED" scores 0.75 (`&` vs `and`). 83 of 180 leads came back `low_confidence`;
+a second pass accepting (a) normalised-title equality (strip ltd/limited/llp/plc/the, `&`→and, punctuation) or
+(b) title-contains-all-core-tokens AND registered-office outward postcode or town = lead's, recovered 17 with active
+directors and no wrong matches on review. Fix: add rule (a) as an accept before the overlap score, and normalise `&`.
+Also worth a `--town` fallback when `lead_postcode` is empty (this export had no postcode on 30% of rows).

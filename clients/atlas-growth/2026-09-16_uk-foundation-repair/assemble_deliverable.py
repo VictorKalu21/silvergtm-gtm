@@ -16,6 +16,12 @@ if os.path.exists('owner/companies_house_pass2.jsonl'):
     for l in open('owner/companies_house_pass2.jsonl'):
         if l.strip():
             d=json.loads(l); p2[d['place_id']]=d
+sweep={}
+if os.path.exists('owner/contacts_sweep.jsonl'):
+    for l in open('owner/contacts_sweep.jsonl'):
+        if l.strip():
+            d=json.loads(l)
+            if d.get('contacts'): sweep[d['place_id']]=d
 ch_company={}
 for f in ('owner/companies_house.jsonl','owner/companies_house_lowconf.jsonl'):
     if os.path.exists(f):
@@ -49,6 +55,12 @@ for r in q:
             fn,ln=natural(x['name'])
             cs.append({'name':(fn+' '+ln).strip(),'first_name':fn,'title':'Director','role_bucket':'owner_or_partner','source':'companies_house_pass2','evidence':f"Companies House [{d2['confidence']}]: {d2['ch_company']} ({d2['ch_number']}): {x['name']} — {x['role']} (appointed {x.get('appointed_on','')})"})
         src='ch_pass2'
+    elif r['place_id'] in sweep:
+        for x in sweep[r['place_id']]['contacts']:
+            b=x.get('role_bucket','other'); t=(x.get('title','') or '')
+            if re.search(r"managing director|\bdirector\b|proprietor|owner|founder",t,re.I): b='owner_or_partner'
+            cs.append({'name':x.get('name',''),'first_name':x.get('first_name','') or x.get('name','').split()[0],'title':t,'role_bucket':b,'source':'web_search','evidence':x.get('evidence','')})
+        src='sweep'
     # QA: CH company vs business name overlap; departed; trade word in name
     cs=[x for x in cs if x['name'] and not re.search(r"\b(former|retired|ex-)\b",x['evidence'][:60],re.I)]
     cs.sort(key=lambda x:BUCKET_ORDER.index(x['role_bucket']) if x['role_bucket'] in BUCKET_ORDER else 9)
@@ -69,7 +81,9 @@ for r in q:
     cs=kept
     if r['brand_flag']: qa.append('brand:'+r['brand_flag'])
     if r['adjudication']=='unclear': qa.append('icp_unclear')
-    prim=cs[0] if cs else None
+    prim=next((x for x in cs if x['role_bucket']!='other'),None)
+    if prim and prim['source']=='web_search': qa.append('sweep_named_verify_before_send')
+    if cs and not prim: qa.append('only_non_decision_maker_contact')
     # name for a person-shaped email: prefer the read contact whose surname matches the local part
     if row['email_type']=='person' and cs:
         loc=row['email'].split('@')[0].lower()
