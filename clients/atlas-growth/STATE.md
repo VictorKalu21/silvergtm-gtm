@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-16_uk-foundation-repair-maps` — **scrape COMPLETE** 2026-09-16 (8/8 shards, 1,770 rows, 4,541 calls = 2.57/row, 0 unhealed). Funnel: 21,898 universe → 2,270 qualified (+332 recovery) → 1,494 in-footprint (0.75°) → **1,357 net-new** (137 deduped vs export run) → 1,166 domains + 115 no-website. **At GATE 3**: rule proposals P1–P10 in `REPORT2-GATE3.md` awaiting operator; owner-finding not started |
+| Current run | `2026-09-16_uk-foundation-repair-maps` — scrape COMPLETE (22,193 universe, 4,620 calls incl. 79 re-buy). GATE 3 rules P1–P10 applied 2026-09-16. Funnel v2: 2,842 qualified → 1,969 in-footprint → **1,770 net-new** → 1,469 domains + 146 no-website. Site text: 1,245 ok / 224 no text (Turnstile host blocked from this container's egress; Wayback offline). Tiers A 246 / B 632 / C 117 / D 775. **Adjudication (45 Opus batches) in progress**; owner-finding not started |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
