@@ -3,3 +3,6 @@
 owner/
 adjudicate/batch_*
 adjudicate/out/
+adjudicate2/batch_*
+adjudicate2/out/
+recover/
