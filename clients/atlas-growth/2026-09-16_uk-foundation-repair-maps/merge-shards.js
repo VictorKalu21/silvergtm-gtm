@@ -232,7 +232,9 @@ const t = summary.totals;
 console.log(`merged ${t.rows_in} shard rows -> ${t.unique_place_ids} unique place_ids (${t.cross_shard_duplicates_removed} cross-shard dupes removed)`);
 console.log(`shards: ${summary.shards.map(s => s.shard + '=' + s.status + '(' + s.rows + ')').join(' ')}`);
 console.log(`runsheet tiles: ${t.runsheet_tiles} | heal passes: ${t.heal_passes} | unhealed tiles: ${t.unhealed_tiles}`);
-console.log(`excluded.csv: ${exRows.length} rows`);
+console.log(exHead
+  ? `excluded.csv: ${exRows.length} rows`
+  : `excluded.csv: NOT WRITTEN — no shard produced excluded.csv (0 scrape-stage exclusions); the run folder will not contain one`);
 console.log(`calls: ${calls.total_calls} over ${calls.total_events} events = ${calls.calls_per_runsheet_row} calls/runsheet row | page depth ${JSON.stringify(calls.page_depth_histogram)}`);
 console.log(`zero-count tiles: ${calls.zero_count_tiles} | non-ok events: ${calls.non_ok_events} ${JSON.stringify(calls.non_ok_by_status)}`);
 console.log(summary.all_complete ? '✓ ALL SHARDS COMPLETE -> leads_clean.csv + excluded.csv + coverage_summary.json + calls_summary.json'
