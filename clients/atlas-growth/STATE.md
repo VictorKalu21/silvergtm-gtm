@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-16_uk-foundation-repair-maps` — our own UK Maps scrape (177 tiles × 10 queries = 1,770 rows, 8 shards, pagination on; GATE 1 approved 2026-09-16: review floor 5, 150 anchors). **Scrape IN PROGRESS.** Post-scrape tooling ready in the run folder (`PIPELINE.md`). Dedupe memory = the export run's 175-row deliverable (business_id + host + phone via `dedupe-ref.js`; `build-netnew.js --client` is a no-op here, see PIPELINE.md). Next: merge shards → qualify → footprint gate 0.75° → dedupe → collapse → GATE 3 |
+| Current run | `2026-09-16_uk-foundation-repair-maps` — **scrape COMPLETE** 2026-09-16 (8/8 shards, 1,770 rows, 4,541 calls = 2.57/row, 0 unhealed). Funnel: 21,898 universe → 2,270 qualified (+332 recovery) → 1,494 in-footprint (0.75°) → **1,357 net-new** (137 deduped vs export run) → 1,166 domains + 115 no-website. **At GATE 3**: rule proposals P1–P10 in `REPORT2-GATE3.md` awaiting operator; owner-finding not started |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
