@@ -505,3 +505,231 @@ logging fix are committed.
 **Next gate:** `leads_domains.csv` → SKILL STEP 6 owner-finding (`owner-prompt.md` exists), and
 `leads_nowebsite.csv` → STEP 5d recovery. Do not start either until the §7 proposals are decided —
 P1 alone moves 124 rows, and re-running qualify after owner-finding would mean paying twice.
+
+---
+
+## Funnel v2 (after P1–P10)
+
+Re-run 2026-09-16 after GATE 3 approval: rule changes **P1–P8** applied to the three configs
+(`atlas-growth-uk-config.json`, `recover-generic-uk-config.json`, `recover-unrated-uk-config.json`),
+engine fix **P9** landed in `skills/google-maps-scrape/shared-hosts.js`, and the **P10** re-buy of
+the 36 empty `(tile, query)` rows merged into `leads_clean.csv`. Every stage below was re-run from
+the 22,193-row universe; every number is from the command's own printed summary.
+
+### The funnel, v1 → v2
+
+| stage | v1 | **v2** | delta |
+|---|---:|---:|---:|
+| Universe (merged, deduped on `place_id`) | 21,898 | **22,193** | **+295** (P10 re-buy) |
+| Qualify — main, 5 rules | 1,938 | **2,057** | +119 |
+| Recovery — generic contractors (`recover-generic-uk-config.json`, 4 rules) | +332 | **+441** | +109 (P5, P8) |
+| Recovery — **unrated** (`recover-unrated-uk-config.json`, 3 rules, NEW) | — | **+344** | +344 (P7) |
+| qualified + recovered (place_id overlap 0 across all three, asserted) | 2,270 | **2,842** | **+572** |
+| Footprint gate (177 hubs, `--hub-radius-deg 0.75`, no `--regions`) | 1,494 | **1,969** | +475 |
+| Cross-run dedupe vs the 175-row export deliverable (`ref rows: 175` ✓) | 1,357 | **1,770** | +413 |
+| Collapse domains → spend rows | 1,166 | **1,469** | +303 |
+| Collapse domains → no-website track | 115 | **146** | +31 |
+
+**The three keep counts:** main **2,057** · generic recovery **441** · unrated recovery **344** =
+**2,842**. The append asserted 0 `place_id` overlap across all three files, no blank
+`review_count` outside the unrated pass, and no rated row inside it — so in the merged file
+`review_count == ''` is still exactly the unrated track (344 rows; **258** of them survive to the
+final list).
+
+### Drop reasons, v1 → v2
+
+| qualify `drop_reason` | v1 | **v2** | delta | why |
+|---|---:|---:|---:|---|
+| `not_in_icp` | 15,865 | **16,503** | +638 | bigger universe, plus P3 spill-down and P4 (`drainage` removed from the allow) |
+| `off_icp_primary` | 2,495 | **2,032** | **−463** | **P1** — `water damage restoration service` no longer denied |
+| `too_small` | 1,114 | **1,182** | +68 | bigger universe (the 1–4 band is still the ghost filter) |
+| `name_deny` | 296 | **304** | +8 | bigger universe |
+| `hard_off_icp_type` | 190 | **115** | **−75** | **P3** — `property management company` moved to primary-only |
+
+Generic-recovery drops: `name_not_icp` 12,361 · `not_a_recovery_candidate` 3,633 ·
+`not_generic_contractor` 3,011 (was 3,522 — **P5** added `plasterer`) · `too_small` 690.
+Unrated-recovery drops: `not_an_unrated_candidate` 18,954 (= 20,136 − 1,182 `too_small`, so its
+rule-0 scope gate fired exactly) · `has_review_count` 728 (the 1–4 band, correctly still dropped) ·
+`no_website` 110.
+
+Footprint gate: `far_from_hubs` 872, `wrong_country` 1 (PJ Piling Contracts Ltd, Co. Monaghan —
+the same single Irish row as v1). Dedupe: 199 dropped = **109 id + 89 host + 1 phone** (v1: 137 =
+83 + 54 + 0). Collapse: `website_class` site 1,624 · shared_host 39 · none 107;
+**spend_rows_saved 155**; 58 multi-location domains; 213 rows sit on one.
+
+### Did it match the projection?
+
+§7 projected **+325 / −40** before geo and dedupe, i.e. a net-new list "around 1,600". Actual
+net-new is **1,770** — an overshoot of about **+170** on the projection's ~1,600. Two things
+account for it, and neither is a rule behaving unexpectedly:
+
+1. **P10 was not in the projection.** The re-buy added **295** new `place_id`s to the universe;
+   they run the same funnel and land in the final list at roughly the run's own 8% keep rate.
+2. **P7 was measured narrowly.** The projection counted the **107** blank-`review_count` rows that
+   were UK *and* ICP-named *and* had a live website. The rule as written admits every blank-review
+   row with a website that already passed rules 1–4: **344** pre-geo, **258** in the final list.
+   The extra rows are not junk — they passed the entity denies, the name deny and the ICP allow —
+   but they carry **no review signal at all**, so this is the one cohort worth a sampled look
+   before the client sees the list.
+
+Everything else landed where §7 said. The `−40` of **P4** is visible in the `not_in_icp` rise;
+**P1** shows up as the 463-row fall in `off_icp_primary`; **P3** shrank `hard_off_icp_type` from
+190 to 115, which makes that bucket honest again.
+
+### Foreign check on the kept file — still zero
+
+| signal | kept | `excluded_geo.csv` |
+|---|---:|---:|
+| France | 0 | 15 |
+| Belgium | 0 | 0 |
+| Ireland | **5 — all Northern Irish, listed below** | 3 |
+| Isle of Man / Jersey / Guernsey | 0 | 0 |
+| United States | 0 | 631 |
+| US ZIP `, [A-Z]{2} \d{5}` | 0 | 631 |
+
+The 5 "Ireland" matches in the kept file are all UK: *Platinum Preservation NI* (Belfast BT17),
+*Damp Works NI* (Belfast BT8), *ProDrive Piling | Northern Ireland |* (Omagh BT78, on
+`prodrive-ireland.co.uk`), *Foundation Screws Northern Ireland* (Ballymena BT42) and
+*DampMaster Northern Ireland* (no address, UK brand). **Residual foreign bleed after the gate:
+zero**, as in v1. The Calais residual PIPELINE §4 warns about again did not materialise — all 15
+France rows sit in `excluded_geo.csv`.
+
+### P9 check — site-builder platforms now route to the no-website track
+
+| host | `leads_domains.csv` (spend) | `leads_nowebsite.csv` |
+|---|---:|---:|
+| sitelift.site | **0** | 7 |
+| localo.site | **0** | 2 |
+| netlify.app / lovable.app / replit.app / brand.site | **0** each | 1 each |
+| wixsite.com | 0 | 4 |
+| facebook.com | 0 | 11 |
+| checkatrade.com | 0 | 4 |
+
+The v1 defect is closed: the 7 `sitelift.site` rows (four different firms in v1) can no longer be
+fanned one company's site text at the owner read. 39 rows are now classed `shared_host`, up from 23.
+
+### Per-nation, v1 → v2
+
+| nation | v1 | **v2** | v2 share | tile share |
+|---|---:|---:|---:|---:|
+| ENG | 949 | **1,204** | 68.0% | 73.4% |
+| UNKNOWN (blank `full_address`) | 283 | **396** | 22.4% | — |
+| SCT | 65 | **86** | 4.9% | 14.1% |
+| WLS | 42 | **54** | 3.1% | 7.3% |
+| NIR | 18 | **30** | 1.7% | 5.1% |
+
+NIR nearly doubled (18 → 30) and SCT gained 21, so the v1 "thinnest result in the run" flag is less
+acute — but the shape is unchanged and the v1 read stands: market thinness plus the 0.75° radius
+correctly excluding the islands, not a coverage hole. Top areas: S 38 · SW 36 · BS 35 · B 30 ·
+BN 30 · BT 30 · M 28 · CF 28 · NE 28 · EH 27.
+
+### `brand_family` — v1 3 families, v2 5
+
+| brand | v1 | **v2** |
+|---|---:|---:|
+| Timberwise | 30 | **32** |
+| Rentokil Property Care | 23 | **31** |
+| DampMaster | 0 | **2** |
+| Protectahome | 0 | **2** |
+| Preservation Treatments | 1 | **1** |
+| **branded total** | 54 / 1,357 (4.0%) | **68 / 1,770 (3.8%)** |
+
+**Richardson & Starling did NOT appear, and that is correct.** P1 worked — **9** R&S rows pass
+qualify in v2 (v1: 0) — but all 9 are then dropped by the cross-run dedupe on the
+`richardsonandstarling.co.uk` host key, because the 175-row export deliverable already contains one
+R&S row. They are in a live campaign; re-contacting them is exactly what STEP 5c exists to prevent.
+§7's "Richardson & Starling appearing for the first time" was a projection made before the dedupe
+stage was applied to it.
+
+### Top 15 root domains by `location_count` — and the one visible precision cost of P1
+
+| locations | root domain | brand_family |
+|---:|---|---|
+| 32 | timberwise.co.uk | Timberwise |
+| 31 | rentokil.co.uk | Rentokil Property Care |
+| **8** | **rainbowrestoration.co.uk** | **— unlabeled, see below —** |
+| 6 | advanceddamp.co.uk | — |
+| 6 | dampproofingsolutions.co.uk | — |
+| 6 | dampdetectives.co.uk | — |
+| 6 | neil-marsden.co.uk | — |
+| 6 | waterproofing-group.co.uk | — |
+| 5 | basementsumpandpump.co.uk | — |
+| 4 | allcottassociates.co.uk | — |
+| 4 | dampconsultants.com | — |
+| 3 | targetstructural.co.uk | — |
+| 3 | damptec.co.uk | — |
+| 3 | protenservices.co.uk | — |
+| 3 | pentlandconstruction.com | — |
+
+1,469 distinct root domains; 58 multi-location domains; 213 rows on one.
+
+**`rainbowrestoration.co.uk` — 8 branches — is P1's predicted precision cost, arriving exactly where
+§7 said it would.** Rainbow Restoration is a flood/fire **restoration franchise**, not a
+foundation/damp contractor; it is in the list only because `water damage restoration service` is no
+longer denied and the franchise name carries no ICP token for the name deny to catch. It costs one
+spend row, not eight (collapse fans the other 7 from the representative), and the adjudication pass
+is the right place to kill it — **but if a second run wants it gone at source, the clean fix is a
+`rainbow restoration` term in the main config's name deny, not a re-deny of the type P1 removed.**
+Two more §6 flags survive into v2 and still want an operator call: **`allcottassociates.co.uk`**
+(4 offices, a chartered building-surveying practice — the referral-source category GATE 1 rule 2
+means to drop) and **`neil-marsden.co.uk`** (6 rows, independent damp & timber **surveyors** — the
+same P6 question, still answered "leave as-is").
+
+### Site text (PART 2) — capture, and what the Tier-3 rung could and could not do
+
+`fetch-sites.js` over the 1,469 spend rows (concurrency 12, `site_l2_keywords` from the UK config,
+free 20 s retry on): **1,206 ok / 263 home-fetch failures**, retry recovered 22, **773** leads with
+at least one on-site email. Failure classes: 403 ×163 · TypeError (DNS/TLS) ×41 · 503 ×22 ·
+404 ×16 · 500 ×7 · AbortError ×6 · 400/401 ×2 each · 429/402/307/502 ×1 each. 153 further leads
+came back `ok` but under 300 characters (thin shells).
+
+Branching per `web-scrape-triage` "When Tier 1 fails":
+
+- **Thin shells got NO rung.** Probed first (obsbasements.co.uk / geobond.co.uk /
+  shieldpreservation.co.uk, full Scrapling render with `network_idle=True`): **205 / 63 / 211
+  characters**. They are genuinely near-empty pages, not JS shells a renderer can fill.
+- **403 / challenge subset → one Scrapling `StealthyFetcher` attempt each** (0.4.15,
+  `solve_cloudflare=True`, headless, 60 s, 2 workers, one `StealthySession` per worker so the
+  clearance cookie is reused for that lead's contact/about pages). 196 candidates, ordered by
+  review count; **126 attempted inside the ~90 min cap, 40 recovered** (36 of the 403s, 2 of the
+  401s, 1 502, 1 thin shell tried before the probe above settled that class).
+  `site_text.jsonl` went **1,206 → 1,245 ok** and on-site emails **773 → 781**.
+- **The ceiling on that rung is this container's egress policy, not the sites.** 39 of the 86
+  failed attempts came back `502 upstream request failed`, and the proxy's own status endpoint
+  names the cause: `connect_rejected … "gateway answered 502 to CONNECT", host
+  brunhild.challenges.cloudflare.com:443` — the Turnstile widget host is not allowed out, so a
+  challenge that needs it can never be solved from here however long it is given. Reported, not
+  routed around.
+- **Wayback stayed offline** (re-probed 2026-09-16 21:0x: `cdx/search/cdx` returns the
+  "Internet Archive: Temporarily Offline" page and `archive.org/wayback/available` returns 429),
+  so the residue has no mirror rung either.
+
+**Residue with no site text: 224 of 1,469 spend rows (15.2%)** — 70 challenge-class leads the
+deadline cut (top by reviews: *The Damp Specialists* 14, *WAT Basement Conversions* 14,
+*L&V Underpinning Services* 12), 87 attempted and still blocked, 128 thin shells, 67 dead
+(DNS/reset/404/timeout). They are not dropped: they go to adjudication on name + Google types with
+an empty `text`, which the prompt already maps to `unclear`.
+
+### Keyword tiers (stageB_classify.py) and the adjudication batches
+
+`leads_annotated.csv` (1,770 rows — the whole spine, branches included) joined to
+`owner/site_text.jsonl` through `rep_place_id`; **155 branch rows read their representative's
+text**, which is the collapse saving being spent correctly.
+
+| tier | rows | what it is |
+|---|---:|---|
+| **A** foundation_repair | **246** | underpinning / subsidence / structural repair / crack stitching / remedial mini-piling |
+| **B** waterproofing_damp | **632** | basement & structural waterproofing, tanking, damp proofing |
+| **C** groundworks_new_foundations | **117** | lays NEW foundations / groundworks / piling |
+| **D** unrelated | **775** | no ICP vocabulary at all |
+
+(The Scrapling rung paid for itself here: before the merge the same classifier read A 195 / B 626 /
+C 125 / D 824 — the 40 recovered sites moved **51 rows into tier A**.)
+
+`site_status` over the 1,770 rows: ok 1,382 · 403 139 · no_website 107 · TypeError 44 ·
+shared_host 39 · 503 25 · 404 16 · 500 7 · AbortError 6 · 400/429/402 small.
+
+**Adjudication batches — 45 files of ≤25 rows in `adjudicate/in/`** (`PROMPT.md` copied unchanged
+from the export run): tier A **10**, tier B **26**, tier C **5**, tier D **4** (a seeded 100-row
+random sample of the 775, seed 20260916, as a false-negative check on the keyword tiers, not a list
+to buy). 179 of the 1,095 records carry an empty `text` — the residue above, mostly tier B.
