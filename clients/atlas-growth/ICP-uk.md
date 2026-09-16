@@ -83,26 +83,49 @@ firm; the real ICP judgement is the downstream site-text adjudication (`adjudica
 reads what the business actually says it does. Rules run in order and the first failure is the
 recorded `drop_reason` — denies first, then the positive allow, then the floor.
 
+**Changed 2026-09-16 by operator decision at GATE 3 ("Apply all", proposals P1–P8 of
+`REPORT2-GATE3.md`).** The rule list below is the post-GATE-3 state; every change is marked, and all
+of them were re-validated on a 41-row fixture (`dryrun2-results.md`, 41/41 matched).
+
 1. **Hard entity deny (any tag).** Charities and non-profits, colleges and universities, schools,
    hospitals and hospices, places of worship, funeral homes and cemeteries, estate and letting
    agents, law and insurance offices, car bodyshops and dealers. These are the things our own
    queries drag in: "foundation repair" surfaces charitable Foundations and Foundation Colleges;
    "structural repair" surfaces accident-repair bodyshops. This is the only rule allowed to look at
    a *secondary* Google tag, because none of these can ever be one on a real contractor.
+   **P3 (2026-09-16): `property management company` left this rule** and moved to rule 2. It failed
+   the rule's own test — of its 84 hits only 18 were primary, 66 were a secondary tag and 19 of those
+   carried an ICP allow type, so it was deleting real firms (Heightvale Ltd, 67 reviews; Henderson
+   Wood, 72; Master Builder Services, 56) exactly the way a bare `atm` deleted 71 bank branches on
+   the sharp-shannon run.
 2. **Primary-identity deny.** Structural and civil engineers, chartered and quantity surveyors,
    building inspectors, builders merchants and product manufacturers, tool and plant hire,
    plumbers, drainage firms, removals, architects and kitchen/bathroom fitters — dropped **only
    when that is their primary Google category**. A real damp firm carrying "Structural engineer" or
    "Building materials supplier" as a second tag survives untouched.
+   **P1 (2026-09-16): `water damage restoration service` was REMOVED from this deny.** It was the
+   pest-control mistake one line lower down the same list — the UK damp trade self-labels this way
+   and Google primaries it accordingly, so the rule was deleting 516 rows including all five
+   Richardson & Starling branches and both Rentokil Property Care branches, two of the brand families
+   the operator said to keep and flag. `fire damage restoration service` still stands. **P3: gained
+   `property management company`** (primary-only), which keeps the 18 true property managers dropped
+   and returns the 66 that merely carry the tag.
 3. **Name deny.** The exact-match fallback for what the type denies cannot see: NHS and charitable
    trusts, councils, churches and mosques by name, accident/crash repair, the named builders
    merchants (Travis Perkins, Jewson, Wickes, Screwfix…), ready-mix and quarry, chartered/quantity
    surveyor practices, unambiguous drain-only jargon, plumbing-and-heating, and pest-only terms
    (exterminator, wasp nest, vermin).
 4. **Positive allow (any tag).** A row must carry at least one of: foundation · waterproofing ·
-   damp · basement · cellar · tanking · structural · piling · underpinning · masonry · stonemason ·
-   building restoration · preservation · remedial · drainage.
-5. **Review floor 5**, labelled `too_small`.
+   damp · basement · cellar · tanking · structural · piling · **pile driving** · underpinning ·
+   masonry · stonemason · building restoration · preservation · remedial.
+   **P2 (2026-09-16): `pile driving` added** — Google's category is "Pile driving service", which
+   does not contain "piling", so 42 piling firms were dying here on a pure type-stem gap.
+   **P4: `drainage` removed** — 40 kept rows were handyman generalists whose only ICP signal was a
+   secondary drainage tag, and drainage-PRIMARY firms are already denied by rule 2, so the term only
+   ever admitted noise.
+5. **Review floor 5**, labelled `too_small`. **P7 (2026-09-16):** a blank `review_count` fails this
+   floor exactly as a 0 does, which was deleting unrated listings by accident; they are now taken
+   back by a second recovery pass (see the deliberate calls below).
 
 ### The deliberate calls
 
@@ -116,7 +139,33 @@ recorded `drop_reason` — denies first, then the positive allow, then the floor
   admitting them floods the list. `recover-generic-uk-config.json` takes them back when the **name**
   carries an ICP token (damp, underpin, subsidence, structural, waterproof, tanking, piling,
   preservation, remedial, foundation, basement, cellar, wall tie, crack…). That pass only reverses
-  the `not_in_icp` drop — it can never resurrect something a deny removed.
+  the `not_in_icp` drop — it can never resurrect something a deny removed. **2026-09-16 it gained
+  three things:** the types `plasterer` (P5 — UK damp-proofing is very often primaried Plasterer,
+  and re-plastering is the second half of a damp job) and `surveyor` (P6, below), and **the 17 brand
+  family names as name tokens** (P8 — Protectahome, Prokil, Timberwise and the rest were stranded in
+  `not_in_icp` because a brand name carries no ICP vocabulary, which contradicted the standing
+  keep-and-flag directive).
+- **Damp-survey practices are IN — operator decision, 2026-09-16 (P6).** Until GATE 3 a firm whose
+  Google type was `Surveyor` was dropped at the allow. That was deliberate, not a bug: GATE 1 §4 left
+  bare `surveyor` out of the deny and expected these to die at the allow, on the reasoning that a
+  surveying practice is a referral source rather than a buyer. The GATE 3 audit showed the bucket
+  contains real trading damp firms — **Damp Surveys Ltd** (133 reviews), **Independent Damp & Mould
+  Surveys** (36), **Dampworks** (34), **Kenwood Damp London** (a named brand family), **Damp &
+  Timberguard** — and the operator decided to take them. `surveyor` is therefore a **recovery type**,
+  not a main-pass allow: a surveyor-typed row comes back **only** when its NAME already carries an
+  ICP token, so a general practice with no damp vocabulary still never qualifies. Chartered and
+  quantity surveying practices remain OUT and are unaffected: they are removed by the rule-3 NAME
+  deny and the rule-2 primary deny, which give a `drop_reason` the recovery's scope gate refuses.
+  (Checked against the universe: `Chartered surveyor` is not a Google type on any of the 21,898
+  rows — the name deny is what actually removes those practices, and it fired on 32.)
+- **Unrated listings are a track, not junk (P7, 2026-09-16).** A blank `review_count` fails
+  `>= 5` exactly as a 0 does, so every listing with no review data died as `too_small` — 417 rows,
+  107 of them UK, ICP-named and carrying a live website (*Specialist Structural Waterproofing Ltd*,
+  *Octopus Waterproofing Ltd*, *GO5 LTD*, *National Waterproofing Group*). These are new or
+  unreviewed listings, not ghosts. `recover-unrated-uk-config.json` takes back exactly the rows that
+  are unrated AND have a website; the 1–4 band stays dropped, because that band **is** the ghost
+  filter and the audit confirmed it is working. In the merged list the unrated track is identifiable
+  by `review_count == ''`.
 - **No chain drop, ever.** Roll-ups and franchises are kept and flagged (`brand_family` +
   `location_count`). Operator directive, carried over from the US run.
 - **No government deny.** The engine's standing gov deny is for distress/institutional-intent
@@ -181,6 +230,11 @@ Marketing, Sales, Commercial or Operations.
   director)"). This is the UK twin of the US `Estimator` trap: the offer sells *inspection
   appointments*, and in a UK damp firm the person who performs the inspection is titled **surveyor**.
   It is the single highest-risk false positive on this list.
+  **This is a PERSON-level rule and P6 does not touch it (2026-09-16).** The operator's GATE 3
+  decision admits damp-survey *practices* as target COMPANIES; it says nothing about who to contact
+  inside one. At *Damp Surveys Ltd* the target is still the **Managing Director or a named
+  Director**, and the surveyor who does the inspections is still excluded. The two rules are about
+  different things — which firms get worked, and who gets named — and they stay independent.
 - **Site manager: EXCLUDE.** Same line of the roles doc. Runs the job, holds no marketing budget.
 - **Contracts manager: EXCLUDE as a target; keep only as a last-resort reachable contact**, the tier
   the roles doc reserves for `office_manager`. The roles doc lists "contracts manager" under its UK

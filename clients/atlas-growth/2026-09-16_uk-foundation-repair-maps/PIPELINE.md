@@ -10,6 +10,7 @@ Shorthand used in the prose only — the commands are written out in full:
 | `<run>` | `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps` |
 | config | `clients/atlas-growth/atlas-growth-uk-config.json` |
 | recovery config | `clients/atlas-growth/recover-generic-uk-config.json` |
+| unrated config | `clients/atlas-growth/recover-unrated-uk-config.json` (GATE 3 / P7, added 2026-09-16) |
 | runsheet | `clients/atlas-growth/atlas-growth-uk-runsheet.csv` (1770 rows = 177 tiles × 10 queries) |
 | memory | `clients/atlas-growth/2026-09-16_uk-foundation-repair/deliverable/atlas_uk_foundation_repair_qualified.csv` (175 rows, gitignored) |
 
@@ -66,6 +67,29 @@ override once the gap is understood:
 node clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/merge-shards.js --allow-incomplete
 ```
 
+### The P10 re-buy is folded in here (added 2026-09-16)
+
+`merge-shards.js` **auto-detects `<run>/rebuy/`** when it holds a `leads_clean.csv` and ingests it
+with exactly the shard semantics — same `place_id` dedupe, same `google_types`/`icp_type` union, same
+highest-`review_count` base row, same `|` rejoin — and folds its `run_log.json`s into
+`calls_summary.json`. Any other directory can be added with a repeatable `--extra <dir>`, and
+`--no-extra` turns the auto-detection off. Extras are ingested **last and deliberately so**: the
+shards define the base row and the type ORDER, so a re-buy of a tile the shards already covered can
+never reorder `google_types` underneath the primary-only deny.
+
+An extra does **not** add to `runsheet_rows`: the re-buy re-bought 36 rows the 1,770-row sheet had
+already commissioned, so counting them again would understate calls/row. Calls go up, the
+denominator does not. Measured after the re-buy:
+
+```
+merged 51734 shard rows -> 22193 unique place_ids (29541 cross-shard dupes removed)
+extras: rebuy=COMPLETE(2043 rows, 295 new place_ids, 36 tiles)
+calls: 4620 over 2090 events = 2.61 calls/runsheet row | page depth {"1":87,"2":1498,"3":483,"4":22}
+  of which extras: rebuy=79 calls/37 events
+```
+
+The extra is held to the same COMPLETE gate as a shard — an INCOMPLETE `rebuy/` refuses the merge.
+
 **Read before moving on:** `calls_summary.json` — `calls_per_runsheet_row` (the Lagos pilot
 measured ~2.91 on dense tiles; far below ~1.5 means pagination under-collected), the
 `page_depth_histogram` (a spike at `max_pages` = 6 means tiles hit the page guard and the viewport
@@ -84,8 +108,10 @@ node skills/google-maps-scrape/qualify-leads.js \
 ```
 
 → `leads_clean_qualified.csv` + `excluded_officp.csv`. Expect `rules: 5 active`. The rule set was
-dry-run against `<run>/fixture.csv` (26 rows → 10 keep / 16 drop, re-verified 2026-09-16); if the
-live drop-reason mix looks nothing like `dryrun-results.md`, suspect the merge separator first
+dry-run against `<run>/fixture.csv` — 26 rows → 10 keep / 16 drop before GATE 3
+(`dryrun-results.md`), and **41 rows → 14 keep / 27 drop** after the P1–P8 rule changes were applied
+(`dryrun2-results.md`, 41/41 matched, 2026-09-16); if the live drop-reason mix looks nothing like
+`dryrun2-results.md`, suspect the merge separator first
 (`grep -c ';' leads_clean.csv` should be about the quoted-address count, never a per-row hit in the
 `google_types` column).
 
@@ -108,26 +134,75 @@ node skills/google-maps-scrape/qualify-leads.js \
 `skipping rule on unknown field "drop_reason"`, the input was the wrong file and the pass has
 degraded to type+name — **STOP** and re-point `--in`.
 
-Then append the recovered rows into the main qualified list, **deduped on `place_id` with an
-explicit no-overlap assertion** (the recovery input is the main pass's own drop file, so an overlap
-means one of the two passes read the wrong file):
+Do **not** append yet — STEP 3b adds a second recovery pass, and both are appended together in
+one non-idempotent step.
+
+## 3b. Unrated recovery pass — listings with NO review data (GATE 3 / P7)
+
+The review floor is a **ghost-listing filter**, but a BLANK `review_count` fails `>= 5` exactly as a
+0 does: `qualify-leads.js:92` does `const a=num(raw); if(a==null) return false;` and `num('')` is
+`NaN` → `null`, so the comparison is never reached. Probed 2026-09-16 on a 3-row CSV (blank / 0 / 5):
+`>= 5` kept only the 5, `not_exists` kept only the blank. Full probe output in
+`dryrun2-results.md`. That silently deleted **417** rows in this run — 107 of them UK, ICP-named and
+carrying a live website.
+
+This pass reverses exactly that one accident, and it is only three rules because of the engine's
+first-failing-rule semantics: the review floor is **rule 5, the last rule**, so a row labelled
+`too_small` has ALREADY passed rules 1–4 (the entity denies, the name deny and the ICP allow). There
+is nothing to re-apply.
+
+```bash
+node skills/google-maps-scrape/qualify-leads.js \
+  --in     clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/excluded_officp.csv \
+  --config clients/atlas-growth/recover-unrated-uk-config.json \
+  --out    clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/recover-unrated
+```
+
+→ `<run>/recover-unrated/leads_clean_qualified.csv`. Expect `rules: 3 active`. Same input file as
+STEP 3 — the main pass's drop file, **not** the generic recovery's output. If it warns
+`skipping rule on unknown field "drop_reason"`, the input was the wrong file and the pass has
+degraded to "every unrated row with a website", which readmits charities and merchants wholesale —
+**STOP** and re-point `--in`.
+
+**No track column, and none is needed.** The append below writes every row through the MAIN header
+(that is how it strips `drop_reason`), so a marker column would be discarded, and widening the main
+header would change the spine `footprint-gate.js` / `dedupe-ref.js` / `collapse-domains.js` read.
+The pass admits **only** rows whose `review_count` is empty and the main list contains none, so in
+the merged file **`review_count == ''` is exactly the unrated track**.
+
+### Append BOTH recovery files — once
+
+Deduped on `place_id` with an explicit no-overlap assertion across **all three** files. Both
+recovery inputs are the main pass's own drop file, so an overlap with the main list means a pass read
+the wrong file; an overlap between the two recoveries means their rule-0 scope gates
+(`not_in_icp` vs `too_small`) are no longer disjoint.
 
 ```bash
 cd /home/user/silvergtm-gtm/clients/atlas-growth/2026-09-16_uk-foundation-repair-maps
 node - <<'EOF'
 const fs=require('fs');
-const A='leads_clean_qualified.csv', B='recover/leads_clean_qualified.csv';
+const A='leads_clean_qualified.csv', B='recover/leads_clean_qualified.csv', C='recover-unrated/leads_clean_qualified.csv';
 function pc(t){const R=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++;}else q=false;}else c+=ch;}else{if(ch==='"')q=true;else if(ch===','){r.push(c);c='';}else if(ch==='\n'){r.push(c);R.push(r);r=[];c='';}else if(ch==='\r'){}else c+=ch;}}if(c!==''||r.length){r.push(c);R.push(r);}return R;}
 const esc=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
 const rd=f=>{const R=pc(fs.readFileSync(f,'utf8')).filter(r=>r.length>1);const H=R.shift();return{H,rows:R.map(r=>Object.fromEntries(H.map((h,i)=>[h,r[i]==null?'':r[i]])))};};
-const a=rd(A), b=rd(B);
-const seen=new Set(a.rows.map(r=>r.place_id));
-const overlap=b.rows.filter(r=>seen.has(r.place_id));
-if(overlap.length){console.error('ASSERT FAILED: '+overlap.length+' recovered place_ids are ALREADY in the main pass ('+overlap.slice(0,5).map(r=>r.place_id).join(', ')+') — nothing written');process.exit(1);}
-// write through the MAIN header, so the recovery file's trailing drop_reason column is dropped
-const out=[a.H.map(esc).join(','), ...a.rows.map(r=>a.H.map(h=>esc(r[h])).join(',')), ...b.rows.map(r=>a.H.map(h=>esc(r[h])).join(','))];
+const a=rd(A), b=rd(B), c=rd(C);
+const ids=s=>new Set(s.rows.map(r=>r.place_id));
+const A_=ids(a), B_=ids(b), C_=ids(c);
+function assertDisjoint(nameX,X,nameY,Y){
+  const o=[...Y].filter(p=>X.has(p));
+  if(o.length){console.error('ASSERT FAILED: '+o.length+' place_ids appear in BOTH '+nameX+' and '+nameY+' ('+o.slice(0,5).join(', ')+') — nothing written');process.exit(1);}
+}
+assertDisjoint('main',A_,'recover',B_);
+assertDisjoint('main',A_,'recover-unrated',C_);
+assertDisjoint('recover',B_,'recover-unrated',C_);
+if(b.rows.some(r=>r.review_count==='')||a.rows.some(r=>r.review_count==='')){console.error('ASSERT FAILED: a blank review_count exists OUTSIDE the unrated pass — the review_count marker is no longer unambiguous');process.exit(1);}
+if(c.rows.some(r=>r.review_count!=='')){console.error('ASSERT FAILED: the unrated pass emitted a RATED row');process.exit(1);}
+// write through the MAIN header, so each recovery file's trailing drop_reason column is dropped
+const out=[a.H.map(esc).join(','), ...a.rows.map(r=>a.H.map(h=>esc(r[h])).join(',')),
+                                   ...b.rows.map(r=>a.H.map(h=>esc(r[h])).join(',')),
+                                   ...c.rows.map(r=>a.H.map(h=>esc(r[h])).join(','))];
 fs.writeFileSync(A, out.join('\n')+'\n');
-console.log('appended '+b.rows.length+' recovered + '+a.rows.length+' main = '+(a.rows.length+b.rows.length)+' rows | place_id overlap: 0 (asserted)');
+console.log('main '+a.rows.length+' + generic '+b.rows.length+' + unrated '+c.rows.length+' = '+(a.rows.length+b.rows.length+c.rows.length)+' rows | place_id overlap across all three: 0 (asserted) | unrated track = the '+c.rows.length+' blank-review_count rows');
 EOF
 cd /home/user/silvergtm-gtm
 ```
