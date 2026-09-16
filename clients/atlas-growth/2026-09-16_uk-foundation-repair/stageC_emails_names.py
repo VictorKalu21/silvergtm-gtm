@@ -15,7 +15,7 @@ GENERIC_GOOD=['info','enquiries','enquiry','hello','sales','office','admin','con
 BAD=re.compile(r"noreply|no-reply|donotreply|privacy|webmaster|postmaster|abuse|jobs|careers|recruit|hr@|accounts|invoice|payroll|unsubscribe|example|sentry|wixpress|godaddy|squarespace|@.*\.(png|jpg|gif|webp|svg)$|dpo@|gdpr|complaints|press@|marketing@|newsletter",re.I)
 THIRD=re.compile(r"checkatrade|trustatrader|ratedpeople|mybuilder|yell\.com|facebook|google|nhs\.uk|gov\.uk|\.ac\.uk|fmb\.org|which\.co|trustpilot|houzz|bark\.com|linkedin|fensa|gassafe|nicieic|trustmark",re.I)
 FREE=re.compile(r"@(gmail|googlemail|hotmail|outlook|yahoo|live|aol|icloud|me|btinternet|btconnect|sky|talktalk|virginmedia|ntlworld|blueyonder|hotmail\.co|yahoo\.co|mail|protonmail|msn)\.",re.I)
-ROLE=r"(managing director|director|owner|founder|proprietor|co-founder|co founder|md|ceo|principal|partner|chairman|general manager|operations director|technical director|sales director|company director)"
+ROLE=r"(managing director|operations director|technical director|sales director|commercial director|contracts director|company director|finance director|director|owner|founder|co-founder|co founder|proprietor|md|ceo|principal|partner|chairman|general manager|contracts manager|operations manager|office manager|business development manager|sales manager|project manager|site manager|estimator|surveyor|quantity surveyor|structural engineer|head of [a-z]+)"
 NAME=r"([A-Z][a-z]{1,15}(?:[- ][A-Z][a-z]{1,15})?\s+(?:Mc|Mac|O')?[A-Z][a-z]{1,20}(?:[- ][A-Z][a-z]{1,15})?)"
 P1=re.compile(NAME+r"\s*[,\-–|:]?\s*(?:is\s+(?:the|our)\s+|\(|-\s*)?"+ROLE+r"\b",re.I)
 P2=re.compile(ROLE+r"\s*[,\-–|:]?\s*(?:is\s+|of\s+[A-Za-z&\. ]{2,40}?,?\s+)?"+NAME,re.I)
@@ -101,7 +101,7 @@ for r in rows:
     for nm,role,evd in found:
         k=nm.lower()
         if k not in dedup: dedup[k]=(nm,role,evd)
-    r2['site_owner_candidates']=' || '.join(f"{nm} [{role}]" for nm,role,_ in list(dedup.values())[:4])
+    r2['site_owner_candidates']=' || '.join(f"{nm} [{role}]" for nm,role,_ in list(dedup.values())[:6])
     r2['site_owner_evidence']=' || '.join(evd for _,_,evd in list(dedup.values())[:2])[:600]
     if not fn and dedup:
         nm,role,evd=list(dedup.values())[0]
