@@ -41,12 +41,14 @@ def okname(n):
     if any(t in STOP for t in toks): return False
     if re.search(r"\b(Ltd|Limited|Roofing|Paving|Services?|Group|Construction|Building|Builders|Contractors?|Concrete|Landscap\w*|Fencing|Damp|Solutions?|Repairs?|Installations?|Systems?|Design|Property|Homes?|Waterproof\w*)\b",n): return False
     return True
+GENERIC_ALL=set(GENERIC_GOOD)|{'accounts','support','service','services','help','bookings','booking','orders','office','reception','customerservice','customer','general','main','post','web','site','director','manager','md','boss','owner','company','business','work','home','me','you','us'}
 def name_from_local(local):
     l=local.lower()
-    m=re.match(r"^([a-z]{2,})[._-]([a-z]{2,})$",l)
-    if m and m.group(1) not in GENERIC_GOOD: return (m.group(1).title(),m.group(2).title(),'first.last')
-    m=re.match(r"^([a-z])[._-]?([a-z]{3,})$",l)
-    if m: return (m.group(1).upper()+'.',m.group(2).title(),'f.last')
+    if l in GENERIC_ALL or re.search(r"\d{3,}",l): return None
+    m=re.match(r"^([a-z]{2,})[._-]([a-z]{2,})$",l)          # first.last / first_last / first-last
+    if m and m.group(1) not in GENERIC_ALL and m.group(2) not in GENERIC_ALL: return (m.group(1).title(),m.group(2).title(),'first.last')
+    m=re.match(r"^([a-z])[._-]([a-z]{3,})$",l)              # f.last (separator REQUIRED)
+    if m and m.group(2) not in GENERIC_ALL: return (m.group(1).upper()+'.',m.group(2).title(),'f.last')
     return None
 out=[]; stats=collections.Counter()
 for r in rows:
@@ -66,7 +68,7 @@ for r in rows:
         free=bool(FREE.search('@'+edom+'.'))
         if not own and not free and src=='site': continue   # 3rd-party domain scraped off site = not this business's mailbox
         person=name_from_local(local)
-        kind='person' if person else ('generic' if local in GENERIC_GOOD else 'other')
+        kind='person' if person else ('generic' if local in GENERIC_ALL else 'other')
         score=(3 if person else 2 if kind=='generic' else 1)*10+(3 if own else 2 if src=='maps' else 1)
         ranked.append((score,e,kind,own,person))
     ranked.sort(key=lambda x:-x[0])
