@@ -10,6 +10,16 @@
 | Runs shipped | none |
 | Live campaigns | none |
 
+## How to resume in a new session (written 2026-09-16)
+
+1. Read root `CLAUDE.md`, then `skills/google-maps-scrape/README.md`, then this file.
+2. The run's gitignored data (site text, owner batches, contacts, emails, the Plusvibe upload) is NOT in the repo. It was
+   sent to the operator as `atlas-growth_2026-09-11_foundation-repair_rundata.tar.gz` (106 MB, 731 files) on 2026-09-16.
+   Unpack it into `clients/atlas-growth/` before touching the run; without it, owner-finding and the waterfall start from zero.
+3. API keys are in the operator's gitignored env file, never in the repo. Credits are never spent without an explicit go.
+4. Open decisions: the second Plusvibe email needs a `company_short` variable (plan agreed, not built); paid email finders
+   as 50-contact probes; the ~1,000-lead pull. Standing directives are in "Client directives" below.
+
 ## Where the 2026-09-11 run stands (2026-09-12, end of session)
 
 | Stage | State | Numbers |
