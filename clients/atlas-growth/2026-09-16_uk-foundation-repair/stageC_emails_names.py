@@ -21,6 +21,20 @@ P1=re.compile(NAME+r"\s*[,\-–|:]?\s*(?:is\s+(?:the|our)\s+|\(|-\s*)?"+ROLE+r"\
 P2=re.compile(ROLE+r"\s*[,\-–|:]?\s*(?:is\s+|of\s+[A-Za-z&\. ]{2,40}?,?\s+)?"+NAME,re.I)
 P3=re.compile(r"(?:founded|established|set up|started|run|owned|led|managed|headed)\s+(?:in\s+\d{4}\s+)?by\s+(?:its\s+|the\s+)?(?:owner\s+|founder\s+|director\s+)?"+NAME,re.I)
 STOP=set("The This Our Your We Ltd Limited Company Services Service Group Roofing Paving Building Builders Construction Contact Us About Home Read More Click Here Call Now Get Quote Free Privacy Policy Terms Conditions Copyright All Rights Reserved Monday Tuesday Wednesday Thursday Friday Saturday Sunday January February March April May June July August September October November December North South East West London Manchester Birmingham Leeds Liverpool Bristol United Kingdom England Scotland Wales Company Number Registered Office Email Phone Google Reviews Facebook Instagram Twitter LinkedIn Trustpilot Checkatrade Which Trusted Trader Damp Proofing Foundation Repair Structural Underpinning Basement Waterproofing Concrete Contractor".split())
+BUCKETS=[("owner_or_partner",r"managing director|company director|\bdirector\b|owner|co-owner|founder|co-founder|co founder|president|proprietor|principal|partner|\bceo\b|\bmd\b|chairman"),
+ ("gm",r"general manager|branch manager|operations manager|operations director|contracts manager|contracts director|\bvp\b|\bcoo\b"),
+ ("marketing",r"marketing"),
+ ("sales_manager",r"sales manager|director of sales|inside sales|sales director|commercial director|business development"),
+ ("office_manager",r"office manager")]
+EXCL=re.compile(r"estimator|technician|installer|crew|foreman|labou?rer|apprentice|inspector|production manager|project manager|site manager|dispatcher|scheduler|\bcsr\b|design specialist|advisor|controller|accountant|bookkeeper|recruiter|purchasing|surveyor|structural engineer|head of",re.I)
+DEPARTED=re.compile(r"\b(former|ex-|late|retired|previous|outgoing)\b",re.I)
+def bucket(role):
+    r=role.lower()
+    if EXCL.search(r): return "exclude"
+    for b,p in BUCKETS:
+        if re.search(p,r): return b
+    return "exclude"
+BORDER=[b for b,_ in BUCKETS]
 def okname(n):
     toks=n.replace('-',' ').split()
     if len(toks)<2 or len(toks)>4: return False
@@ -100,12 +114,22 @@ for r in rows:
     dedup={}
     for nm,role,evd in found:
         k=nm.lower()
-        if k not in dedup: dedup[k]=(nm,role,evd)
-    r2['site_owner_candidates']=' || '.join(f"{nm} [{role}]" for nm,role,_ in list(dedup.values())[:6])
-    r2['site_owner_evidence']=' || '.join(evd for _,_,evd in list(dedup.values())[:2])[:600]
-    if not fn and dedup:
-        nm,role,evd=list(dedup.values())[0]
-        parts=nm.split(); fn,ln,conf,ev=parts[0],' '.join(parts[1:]),'site_role_pattern:'+role,evd
+        if DEPARTED.search(evd[:90]): continue                       # "former MD John Smith"
+        b=bucket(role)
+        rank=BORDER.index(b) if b!='exclude' else 99
+        if k not in dedup or rank < dedup[k][4]:
+            dedup[k]=(nm,role,evd,b,rank)
+    kept=sorted([v for v in dedup.values() if v[3]!='exclude'],key=lambda v:v[4])
+    excl=[v for v in dedup.values() if v[3]=='exclude']
+    r2['site_people_keep']=' || '.join(f"{nm} [{role} -> {b}]" for nm,role,_,b,_ in kept[:6])
+    r2['site_people_excluded']=' || '.join(f"{nm} [{role}]" for nm,role,_,_,_ in excl[:4])
+    r2['site_owner_evidence']=' || '.join(evd for _,_,evd,_,_ in kept[:2])[:600]
+    r2['role_bucket']=''
+    if not fn and kept:
+        nm,role,evd,b,_=kept[0]
+        parts=nm.split(); fn,ln,conf,ev=parts[0],' '.join(parts[1:]),'site_role_pattern:'+role,evd; r2['role_bucket']=b
+    elif fn and kept and kept[0][0].lower().split()[-1]==ln.lower().split()[-1]:
+        r2['role_bucket']=kept[0][3]; conf=conf+'+role:'+kept[0][1]
     r2['first_name']=fn; r2['last_name']=ln; r2['name_confidence']=conf; r2['name_evidence']=ev[:300]
     stats['email']+=bool(r2['email']); stats['person_email']+=(r2['email_type']=='person'); stats['name']+=bool(fn); stats['name_confirmed']+=(conf=='email+site')
     out.append(r2)
