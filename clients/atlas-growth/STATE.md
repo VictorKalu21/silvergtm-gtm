@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-16_uk-foundation-repair-maps` — **owner-finding DONE 2026-09-17**: 860 leads (686 ICP + 174 damp-only), **586 named (68%)** — CH 504, web search/SERP 68, site 12; 367 named+email; 444 unique best emails in `deliverable/verify_input.csv` — **verification NOT run (no MillionVerifier/BounceBan keys yet)**; Plusvibe build waits on verification. Deliverables sent 2026-09-17 (qualified list, contacts_all, verify_input, excluded_adjudication, rundata tarball). Write-back applied 2026-09-17 (IMPROVEMENTS, source profile, SKILL facts). Details below |
+| Current run | `2026-09-16_uk-foundation-repair-maps` — owner-finding DONE (586/860 named). **Verification DONE 2026-09-17** (MillionVerifier → BounceBan, keys supplied by operator): 444 unique addresses → **370 sendable**, 39 risky, 35 dropped (20 of the drops are persistent MillionVerifier API errors, unverified not invalid). `deliverable/emails_final.csv` 468 rows (392 sendable incl. shared brand mailboxes). Plusvibe base built: 391 rows, 27 named under the name rule. **At the 3-lead personalisation test** (UK config) — awaiting operator wording sign-off before the 7-lead test and full fill |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
