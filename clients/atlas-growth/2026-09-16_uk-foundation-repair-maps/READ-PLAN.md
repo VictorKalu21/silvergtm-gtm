@@ -260,8 +260,16 @@ whatever it names, and `combine-owner-contacts.js` (step 9).
    this run's output only. The permanent fix belongs in `skills/google-maps-scrape/companies-house.js`
    behind a test and an operator go — a new `IMPROVEMENTS.md` entry, distinct from the OPEN
    2026-09-16 tokenisation entry.
-3. **`ch_second_pass.py` has not run.** It is a post-read step by design (`ch_pipeline.md`'s ordering
-   correction) and needs `COMPANIES_HOUSE_KEY`.
+3. ~~**`ch_second_pass.py` has not run.**~~ **RAN 2026-09-17**, after both reads, as the ordering
+   correction in `ch_pipeline.md` requires. `--have` now repeats (both read files) and "already
+   named" is `contacts` AND `primary_name`; acceptances made on the town name alone get the same
+   `city_only` demotion `demote_city_only_ch.py` applies to the engine's output. **377 unnamed
+   tried → 102 matched with active directors** (96 exact_title, 4 title_contains+postcode, 2
+   title_contains+city → demoted). 55 of the 102 are national-brand branches resolving to the
+   national parent (Timberwise 29, Rentokil 25, Protectahome 1) — the prompt's branch rule already
+   rejected that evidence, so `prep_pass2_batches.py` skips them; **47 queued as 2 CH-only read
+   batches in `owner/read_pass2/`.** STEP C is now written out in full in `SWEEP-PLAN.md`, which
+   also supersedes the `owner/sweep2` path above with `owner/sweep`.
 
 ## Reproducing `owner_read_input.csv`
 

@@ -2,6 +2,18 @@
 
 Technical backlog for the skill's engine. Not operator-facing (see HANDOFF.md for that).
 
+## MEDIUM (owner-finding, three scripts disagree on what "named" means): a read record with `contacts` but no `primary_name` is invisible to the deliverable AND excluded from the sweep
+
+**Status:** OPEN (no engine change made — worked around job-side with `build_have.py` in the run folder) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact: **silent lead loss at the last step**, on exactly the leads a reader half-answered.
+**Problem.** Three engine scripts test "is this lead named" three different ways.
+- `merge-owner-reads.js` writes a record whenever the reader returned anything, and promotes `primary_name` only when a contact qualifies as the primary. A reader that mistakes a page heading or a postal address for a person therefore produces `contacts: [ ... ]` with `primary_name: ""` — the guardrails working as intended.
+- `prep-sweep-batches.js` excludes a lead from the sweep when `Array.isArray(d.contacts) && d.contacts.length` — it sees the junk contact and treats the lead as DONE.
+- `combine-owner-contacts.js` counts a lead as named only when `d.primary_name` is truthy — it sees the blank primary and treats the lead as UNNAMED.
+
+So the lead is dropped from the deliverable AND never swept: the one state in which nothing further is ever attempted. 8 of this run's 598 site-text read records were in it, all `role_bucket: other` / `is_likely_owner: false` — `"West Yorkshire"` (title `"WF12 7QE"`), `"Home About Damptec"`, `"Southeast Preservation"`, `"Timber Decay"`. `read_report.json` does not show it either: its `leads_with_contacts` (380) is the `primary_name` count, while the file holds 388 records with contacts, and no counter names the 8.
+**Fix (later, engine, with a test and an operator go).** One shared predicate for "named", used by all three: `contacts.length > 0 && primary_name`. Then (a) `merge-owner-reads.js` counts these records in `read_report.json` (a `contacts_no_primary` field — they are a reader-quality signal worth watching, not an error), and (b) `prep-sweep-batches.js` queues them. Cheapest correct version is to make the merge drop a contacts array from which nothing could be promoted, so the record is simply "not named" everywhere — but that throws away the evidence of what the reader did, so the counter is the better half of the fix.
+**Until then:** build the sweep's `--have` file from the `primary_name` test, not straight from `contacts_read*.jsonl`. `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/build_have.py` is the 40-line job-side version.
+
 ## DONE 2026-09-11 (owner-finding spend): domain dedupe + ONE shared-host list + shared-host routing to the recovery track
 
 **Status:** DONE 2026-09-11 — shipped `collapse-domains.js` + `shared-hosts.js`; wired as SKILL **STEP 5c-dom**; `build-clay-csv.js --siblings` fans text to sibling branches; `fetch-sites.js` skips shared hosts; `prep-website-recovery.js` also honors the shared list (additive to its `DIR` regex). TDD'd in `tests/collapse-domains.test.js` (26 checks) + `tests/build-clay-evidence.test.js`. · found 2026-09-11 (Atlas Growth foundation-repair scoping, reviewing an external enrichment pipeline), HIGH impact on any run that keeps multi-location brands.

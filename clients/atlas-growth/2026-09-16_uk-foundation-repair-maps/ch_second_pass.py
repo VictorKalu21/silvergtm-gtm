@@ -27,8 +27,27 @@ are dropped, exactly as owner-prompt.md requires.
 Needs the operator's COMPANIES_HOUSE_KEY in skills/google-maps-scrape/.env (read at runtime; never
 printed). Rate limit 600 req / 5 min — two calls per lead plus the 0.25s sleeps stay inside it.
 
+2026-09-17 CHANGES (this run, job-side, engine untouched):
+  * `--have` REPEATS. The MAPS run has two read files — `owner/contacts_read.jsonl` (the 598 leads
+    that carried site text) and `owner/contacts_read_chonly.jsonl` (the 192 whose only evidence was
+    the registry). A lead named in EITHER is already done. Paths may be absolute.
+  * "Already named" is `contacts` non-empty AND `primary_name` non-empty. `merge-owner-reads.js`
+    leaves `primary_name` blank when no contact in the record qualifies as the primary person, and
+    `combine-owner-contacts.js` keys the whole deliverable on `primary_name` — so a record holding
+    only non-person junk ("West Yorkshire", "Home About Damptec") is NOT a named lead and must be
+    retried here. 8 of this run's read records are in exactly that state.
+  * CITY-ONLY DEMOTION, the same rule `demote_city_only_ch.py` applies to the engine's output.
+    Acceptance path (b) (`title_contains+geo`) is satisfied by an outward-postcode match OR a town
+    match, and a UK town name is not a disambiguator in a vertical where every firm is called
+    "<word> Damp Proofing" (CH-REPORT.md measured the engine's town-only path at ~21% wrong). So a
+    record accepted on the TOWN ALONE is written `confidence: low_confidence` +
+    `demoted_reason: city_only`, and `inject_ch_directors.py` / `prep_chonly_batches.py` render it
+    as `[low_confidence match] (DEMOTED: city_only ...)` so owner-prompt.md Companies House rule 3
+    fires on it. Exact-title and title-contains+postcode acceptances are written `matched`.
+    `basis` keeps the unrounded acceptance path for QA; nothing is dropped.
+
 Usage:  python3 ch_second_pass.py [--leads leads_qualified.csv]
-                                  [--have owner/contacts_read.jsonl]
+                                  [--have owner/contacts_read.jsonl] [--have <another.jsonl>]...
                                   [--out owner/companies_house_pass2.jsonl]
 """
 import json, base64, urllib.request, urllib.error, urllib.parse, time, re, csv, os, sys
@@ -42,8 +61,15 @@ def arg(n, d):
     return sys.argv[sys.argv.index('--' + n) + 1] if ('--' + n) in sys.argv else d
 
 
+def args(n, d):
+    """Every occurrence of a repeatable flag, in order; [d] when it is absent."""
+    o = [sys.argv[i + 1] for i, a in enumerate(sys.argv)
+         if a == '--' + n and i + 1 < len(sys.argv)]
+    return o or [d]
+
+
 LEADS = os.path.join(HERE, arg('leads', 'leads_qualified.csv'))
-HAVE = os.path.join(HERE, arg('have', os.path.join('owner', 'contacts_read.jsonl')))
+HAVE = [os.path.join(HERE, h) for h in args('have', os.path.join('owner', 'contacts_read.jsonl'))]
 OUT = os.path.join(HERE, arg('out', os.path.join('owner', 'companies_house_pass2.jsonl')))
 
 KEY = [l.split('=', 1)[1].strip() for l in open(ENV) if l.startswith('COMPANIES_HOUSE_KEY')][0]
@@ -77,12 +103,21 @@ def outward(a):
 csv.field_size_limit(10 ** 7)
 q = list(csv.DictReader(open(LEADS, encoding='utf-8')))
 named = set()
-if os.path.exists(HAVE):
-    for l in open(HAVE, encoding='utf-8'):
-        if l.strip():
-            d = json.loads(l)
-            if d.get('contacts'):
-                named.add(d['place_id'])
+junk = 0
+for hv in HAVE:
+    if not os.path.exists(hv):
+        print('NOTE: --have %s does not exist; its leads are all treated as unnamed' % hv)
+        continue
+    for l in open(hv, encoding='utf-8'):
+        if not l.strip():
+            continue
+        d = json.loads(l)
+        if d.get('contacts') and d.get('primary_name'):
+            named.add(d['place_id'])
+        elif d.get('contacts'):
+            junk += 1          # contacts, but merge-owner-reads.js promoted none of them
+print('have files: %d | leads named: %d | records with contacts but no primary_name (retried): %d'
+      % (len(HAVE), len(named), junk))
 todo = [r for r in q if r['place_id'] not in named]
 
 out = open(OUT, 'w', encoding='utf-8')
@@ -104,16 +139,22 @@ for r in todo:
         addr = it.get('address') or {}
         ow = outward(addr.get('postal_code') or '')
         town = (addr.get('locality') or '').lower()
-        geo = (lead_ow and ow == lead_ow) or (lead_town and town == lead_town)
+        pc_match = bool(lead_ow and ow == lead_ow)
+        town_match = bool(lead_town and town == lead_town)
         toks = set(core(name)); ttoks = set(core(t))
         contains = bool(toks) and toks <= ttoks
         if exact:
-            best = (it, 'exact_title'); break
-        if contains and geo and not best:
-            best = (it, 'title_contains+geo')
+            best = (it, 'exact_title', pc_match, town_match); break
+        if contains and (pc_match or town_match) and not best:
+            best = (it, 'title_contains+postcode' if pc_match else 'title_contains+city',
+                    pc_match, town_match)
     if not best:
         continue
-    it, conf = best
+    it, basis, pc_match, town_match = best
+    # The same demotion demote_city_only_ch.py applies to the engine's output: accepted on the town
+    # name alone => a CANDIDATE the reader must judge under CH rule 3, never authoritative.
+    city_only = (basis == 'title_contains+city')
+    conf = 'low_confidence' if city_only else 'matched'
     o = api('/company/' + it['company_number'] + '/officers?items_per_page=50')
     time.sleep(0.25)
     offs = [{'name': x.get('name'), 'role': x.get('officer_role'), 'appointed_on': x.get('appointed_on')}
@@ -123,13 +164,21 @@ for r in todo:
             and not re.search(r'corporate|secretary|nominee', x.get('officer_role', ''))]
     if not offs:
         continue
-    out.write(json.dumps({'place_id': r['place_id'], 'business_name': r['name'], 'ch_company': it['title'],
-                          'ch_number': it['company_number'], 'ch_address': it.get('address_snippet', ''),
-                          'confidence': conf, 'officers': offs}, ensure_ascii=False) + '\n')
+    rec = {'place_id': r['place_id'], 'business_name': r['name'], 'ch_company': it['title'],
+           'ch_number': it['company_number'], 'ch_address': it.get('address_snippet', ''),
+           'confidence': conf, 'basis': basis, 'match_postcode': pc_match,
+           'match_city': town_match, 'officers': offs}
+    if city_only:
+        rec['demoted_reason'] = 'city_only'
+    out.write(json.dumps(rec, ensure_ascii=False) + '\n')
     hit += 1
-    by_conf[conf] = by_conf.get(conf, 0) + 1
+    by_conf[basis] = by_conf.get(basis, 0) + 1
 out.close()
 print('leads: %d | already named by the read: %d | unnamed tried: %d | pass2 matched with directors: %d %s'
       % (len(q), len(named), len(todo), hit, by_conf))
+print('  authoritative (exact_title / title_contains+postcode): %d'
+      % (by_conf.get('exact_title', 0) + by_conf.get('title_contains+postcode', 0)))
+print('  DEMOTED city_only (title_contains+city, town name the ONLY geo signal): %d'
+      % by_conf.get('title_contains+city', 0))
 print('NOTE: these are LOOSER matches than the engine\'s. owner-prompt.md CH rule 3 still applies —')
 print('      reject any match whose registered title shares no distinctive token with the business name.')

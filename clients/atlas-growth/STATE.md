@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-16_uk-foundation-repair-maps` — scrape COMPLETE (22,193 universe, 4,620 calls). Adjudication DONE: **686 ICP** + **174 damp-only**. Emails (on-site, deep harvest): 314/686 ICP (46%), 145/174 damp (83%), 434 unique — NOT verified (no MV/BB keys yet). GATE 6 approved 2026-09-17 (`owner-prompts/uk-foundation-repair.md`). Companies House: 431 authoritative + 189 candidates; 83 city-only matches demoted. **Owner reads: site-text pass DONE — 380/598 named (568 owner-level)**; CH-only pass (192 no-text leads) in progress; LinkedIn sweep for the residue next |
+| Current run | `2026-09-16_uk-foundation-repair-maps` — scrape COMPLETE (22,193 universe, 4,620 calls). Adjudication DONE: **686 ICP** + **174 damp-only**. Emails (on-site, deep harvest): 314/686 ICP (46%), 145/174 damp (83%), 434 unique — NOT verified (no MV/BB keys yet). GATE 6 approved 2026-09-17 (`owner-prompts/uk-foundation-repair.md`). Companies House: 431 authoritative + 189 candidates; 83 city-only matches demoted. **Owner reads DONE — site-text pass 380/598, CH-only pass 103/192 = 483 of 860 named (56%).** **Companies House pass 2 DONE (2026-09-17)**: 377 unnamed re-searched, 102 matched with active directors, 100 authoritative + 2 demoted city_only; 55 are national-brand branches (Timberwise/Rentokil/Protectahome) whose parent officers are not the branch's owner and are skipped, **47 queued as 2 CH-only read batches** in `owner/read_pass2/`. **LinkedIn sweep prepped: 377 leads, 19 batches of 20** in `owner/sweep/` — dispatch per `SWEEP-PLAN.md`, first tranche 5 batches (100 leads, ≤200 WebSearch) |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
@@ -22,6 +22,22 @@
 3. API keys are in the operator's gitignored env file, never in the repo. Credits are never spent without an explicit go.
 4. Open decisions: the second Plusvibe email needs a `company_short` variable (plan agreed, not built); paid email finders
    as 50-contact probes; the ~1,000-lead pull. Standing directives are in "Client directives" below.
+
+## Owner-finding, 2026-09-17 session (Companies House pass 2 + sweep prep)
+
+- **483 of 860 named** after both reads (`primary_name` non-empty). 377 unnamed: qualified 287 /
+  damp_only 82; 210 had site text and 159 did not; 224 have no Companies House record at all.
+- **8 read records hold a "contact" that is not a person** ("West Yorkshire", "Home About Damptec")
+  with `primary_name` blank. `combine-owner-contacts.js` drops them, `prep-sweep-batches.js` would
+  have skipped them — `build_have.py` puts them back in the queue. See the IMPROVEMENTS entry.
+- **Companies House pass 2** (`ch_second_pass.py`, now repeat-`--have` + a city-only demotion of its
+  own): 102 of 377 matched with directors (27%), 96 on exact-title equality. The wins are the leads
+  the engine matched to the WRONG company — `Derbyshire Damp Services` was on DERBYSHIRE COMPUTER
+  SERVICES LTD and is now on DERBYSHIRE DAMP SERVICES LTD; `Southern Damp Proofing` was on
+  ABOVEWATER DAMP PROOFING LTD. 55 of the 102 are brand branches resolving to the national parent
+  and are excluded from the re-read.
+- **Next:** 2 pass-2 read batches (free) → merge → rebuild `--have` → re-run the sweep prep → sweep
+  tranche 1. All of it is written out in `SWEEP-PLAN.md`.
 
 ## Where the 2026-09-16 UK run stands (2026-09-16, end of session)
 
