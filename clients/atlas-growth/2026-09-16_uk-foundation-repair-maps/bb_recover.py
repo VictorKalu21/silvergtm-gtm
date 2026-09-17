@@ -20,7 +20,10 @@ def bb(email):
     d = json.load(urllib.request.urlopen(req, timeout=60))
     for _ in range(12):
         if d.get('status') != 'verifying': return d
-        time.sleep(max(3, int(d.get('try_again_at', 5)) if str(d.get('try_again_at', '')).isdigit() else 5))
+        # try_again_at is an epoch timestamp when present -> sleep until then, bounded 3..15 s (the first version slept for the whole epoch)
+        ta = d.get('try_again_at'); wait = 5
+        if isinstance(ta, (int, float)) or str(ta).isdigit(): wait = float(ta) - time.time() if float(ta) > 1e9 else float(ta)
+        time.sleep(min(15, max(3, wait)))
         req = urllib.request.Request('https://api.bounceban.com/v1/verify/single/status?id=' + d['id'], headers={'Authorization': KEY})
         d = json.load(urllib.request.urlopen(req, timeout=60))
     return d
