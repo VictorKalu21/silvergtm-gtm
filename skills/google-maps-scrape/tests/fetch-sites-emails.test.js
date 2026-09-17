@@ -87,6 +87,48 @@ check('a bare [email protected] with no data-cfemail yields nothing', addrs(PLAC
 check('vendor/placeholder hosts stay rejected',
   addrs(`<a href="mailto:you@yourdomain.com">x</a><a href="mailto:me@example.com">y</a>`).length === 0);
 
+// --- the four junk classes that slipped through on the 2026-09-17 live 141-site Firecrawl pass ---
+// (1) Chromium/MHTML frame ids in a rendered body, and the other reserved names that are not hosts
+const MHTML = `<html><body><p>Content-ID: frame-c71c7e88b8ccd4549bcc7c058bd203bb@mhtml.blink</p>
+  <p>ops@server.local admin@box.internal x@thing.invalid y@foo.test z@bar.localhost</p></body></html>`;
+check('MHTML frame ids and reserved TLDs are rejected', addrs(MHTML).length === 0);
+check('a real host with a short TLD is untouched', addrs(`<p>info@acme.uk and info@acme.co.uk</p>`).length === 2);
+
+// (2) a URL-encoded leading space on the TEXT rung: normalise and dedupe, never ship both
+check('%20info@host normalises to the bare address and dedupes against it',
+  emailsIn('- [info@pilingspecialists.co.uk](mailto:%20info@pilingspecialists.co.uk)').join() === 'info@pilingspecialists.co.uk');
+check('%0a / %0d forms normalise the same way',
+  emailsIn('%0ainfo@acme.co.uk %0dinfo@acme.co.uk info@acme.co.uk').join() === 'info@acme.co.uk');
+check('a trailing %20 (mailto:addr%20) is stripped too',
+  addrs(`<a href="mailto:sdavidson@ataluk.com%20">mail</a>`).join() === 'sdavidson@ataluk.com');
+
+// (3) template addresses left in a theme — the registrable label is the giveaway
+check('placeholder addresses are rejected',
+  addrs(`<p>email@company.co.uk you@email.com joe@email.com name@yourdomain.com hi@yourcompany.co.uk</p>`).length === 0);
+check('a business local part at a free-mail host is NOT a placeholder',
+  emailsIn('forwardscaffolding@email.com').join() === 'forwardscaffolding@email.com');
+check('the local part alone never rejects (joe@realdomain stays)',
+  emailsIn('joe@realdomain.co.uk name@dampproofingltd.co.uk').length === 2);
+check('a real deep subdomain still passes',
+  emailsIn('webmaster@lakedistrictdampproofing.abbeydampproofinginliverpool.co.uk').length === 1);
+
+// (4) a mailbox sitting in a URL PATH is a page address, not a contact (Microsoft Bookings links)
+const BOOKING = `[Book a free design review](https://outlook.office.com/book/MeetwiththeAtalTechnicalManager@ataluk.com/?ismsaljsauthenabled)
+- [dthew@ataluk.com](mailto:dthew@ataluk.com)
+- [enquiries@ataluk.com](mailto:%20enquiries@ataluk.com)
+[Set up a meeting](https://outlook.office.com/book/SetupameetingwiththeAtalManagingDirector@ataluk.com/?ismsaljsauthenabled)`;
+check('a Bookings URL path segment is not an address', !addrs(BOOKING).some(e => /^(meetwith|setupa)/.test(e)));
+check('the real mailboxes on that same page survive',
+  addrs(BOOKING).join() === 'dthew@ataluk.com,enquiries@ataluk.com');
+check('the text rung drops it too', !emailsIn(BOOKING).some(e => /^(meetwith|setupa)/.test(e)));
+check('an address stated in the open AND used in a URL path is kept',
+  emailsIn('mail us at info@acme.co.uk or book https://book.acme.co.uk/b/info@acme.co.uk/?x=1').join() === 'info@acme.co.uk');
+check('a query-string address is not a path segment, so it is kept',
+  emailsIn('https://acme.co.uk/contact?to=info@acme.co.uk').join() === 'info@acme.co.uk');
+check('a tag_split local part longer than 40 chars is dropped',
+  addrs(`<p>${'a'.repeat(41)}<span>@</span>acme.co.uk</p>`).length === 0 &&
+  addrs(`<p>${'a'.repeat(30)}<span>@</span>acme.co.uk</p>`).length === 1);
+
 // --- provenance priority + the cap (mailto > jsonld > cfemail > tag_split > text) ---
 const SAME = `<p>info@acme.co.uk</p><script type="application/ld+json">{"@type":"Org","email":"info@acme.co.uk"}</script>
   <a href="mailto:info@acme.co.uk">mail</a>`;

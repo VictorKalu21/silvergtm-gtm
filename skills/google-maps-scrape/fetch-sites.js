@@ -22,7 +22,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const { isSharedHost } = require('./shared-hosts');
+const { isSharedHost, rootDomain } = require('./shared-hosts');
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36';
 // second-level pages worth following. about/team/meet are owner-finding shaped; the contact keywords
 // are where a trade site actually puts its mailbox (IMPROVEMENTS.md HIGH: fetch-sites email coverage).
@@ -83,6 +83,49 @@ const RE_TAGSPLIT = /([a-z0-9._%+-]{2,64})\s*(?:<[^<>]{1,160}>\s*){0,3}(?:@|&#0*
 // junk: image files (either side of the @, e.g. a CDN "info@2x.png"), vendor/CDN/placeholder hosts,
 // and Cloudflare's own placeholder text when no data-cfemail backs it.
 const JUNK = /\.(png|jpe?g|gif|webp|svg|bmp|ico|tiff?)$|\.(png|jpe?g|gif|webp|svg|bmp|ico|tiff?)@|(example|sentry|wixpress|godaddy|squarespace|schema\.org|w3\.org|jquery|cloudflare|wordpress|gravatar|shopify|placeholder|yourdomain|domain\.com|email\.com|test\.com|company\.com)\.|^email@protected$/i;
+// not a public suffix: a Chromium/MHTML frame id (frame-<32hex>@mhtml.blink, 8 of them on the
+// 2026-09-17 Firecrawl pass) and the RFC 2606 / special-use names. A host here is never a mailbox.
+const BAD_TLD = /\.(blink|local|localhost|localdomain|internal|intranet|invalid|test|example|lan|home|corp|arpa|onion)$/i;
+// template addresses left in a theme: the registrable label is the giveaway (email@company.co.uk,
+// you@email.com, joe@email.com). The weak words only reject when the LOCAL part is a placeholder
+// too, so forwardscaffolding@email.com (a real free-mail mailbox) and joe@realdomain survive.
+const PLACEHOLDER_SLD_ALWAYS = new Set(['yourdomain', 'yourcompany', 'mycompany', 'mydomain', 'yoursite', 'yourwebsite', 'domainname', 'exampledomain', 'yourbusiness']);
+const PLACEHOLDER_SLD_WEAK = new Set(['email', 'company', 'domain', 'test', 'website', 'sitename']);
+const PLACEHOLDER_LOCAL = new Set(['you', 'yourname', 'name', 'firstname', 'lastname', 'email', 'username', 'user', 'someone', 'john', 'jane', 'joe']);
+function isPlaceholderAddress(e) {
+  const at = e.indexOf('@');
+  const local = e.slice(0, at), host = e.slice(at + 1);
+  const sld = ((rootDomain(host) || host).split('.')[0] || '');
+  if (PLACEHOLDER_SLD_ALWAYS.has(sld)) return true;
+  return PLACEHOLDER_LOCAL.has(local) && (PLACEHOLDER_SLD_WEAK.has(sld) || PLACEHOLDER_SLD_ALWAYS.has(sld));
+}
+// A booking / profile URL can carry a mailbox as a PATH SEGMENT — Microsoft Bookings writes
+// https://outlook.office.com/book/MeetwiththeAtalTechnicalManager@ataluk.com/?... — and that is the
+// address of a page, not a contact. Such an address is dropped unless the same page ALSO states it
+// outside a URL. (mailto: is not an http URL, so a real mailto address is never touched.)
+const RE_URL = /\bhttps?:\/\/[^\s"'<>()\[\]\\]+/gi;
+function urlPathOnlyEmails(txt) {
+  const s = String(txt == null ? '' : txt);
+  const inUrl = new Set();
+  for (const m of s.matchAll(RE_URL)) {
+    const path = m[0].split(/[?#]/)[0];                 // a query value is NOT a path segment
+    for (const seg of path.split('/').slice(3)) { const e = segIsAddress(seg); if (e) inUrl.add(e); }
+  }
+  if (!inUrl.size) return inUrl;
+  for (const raw of (s.replace(RE_URL, ' ').match(RE_EMAIL) || [])) inUrl.delete(cleanEmail(raw));  // also stated in the open
+  return inUrl;
+}
+// a path segment counts only when the WHOLE segment is the address (so ?to=info@x, and any segment
+// that merely contains one, are left alone)
+function segIsAddress(seg) {
+  const e = cleanEmail(seg);
+  if (!e) return null;
+  let t = String(seg);
+  try { t = decodeURIComponent(t); } catch (err) { /* stray % */ }
+  t = t.replace(/\s+/g, '').toLowerCase().replace(/[.,;:!?]+$/, '');
+  return t === e ? e : null;
+}
+const MAX_LOCAL_TAGSPLIT = 40;   // an anchor/label swallowed into a local part is never this long
 // provenance priority: the first rung in this order that found an address owns its label
 const SOURCE_RANK = { mailto: 0, jsonld: 1, cfemail: 2, tag_split: 3, text: 4 };
 
@@ -118,9 +161,15 @@ function cleanEmail(raw) {
   e = local + '@' + dom;
   return EMAIL_SHAPE.test(e) ? e : null;
 }
-const keepEmail = e => !!e && EMAIL_SHAPE.test(e) && !JUNK.test(e);
-// the text rung: the plain regex over stripped text, exactly what this script has always done
-const emailsIn = txt => [...new Set((String(txt == null ? '' : txt).match(RE_EMAIL) || []).map(e => e.toLowerCase()))].filter(keepEmail);
+const keepEmail = e => !!e && EMAIL_SHAPE.test(e) && !JUNK.test(e) && !BAD_TLD.test(e) && !isPlaceholderAddress(e);
+// the text rung: the plain regex over stripped text. Every match goes through cleanEmail, so a
+// URL-encoded leading space (%20info@host, what markdown from a rendered fetch carries) normalises
+// to the bare address and dedupes against it instead of shipping twice.
+const emailsIn = txt => {
+  const s = String(txt == null ? '' : txt);
+  const skip = urlPathOnlyEmails(s);
+  return [...new Set((s.match(RE_EMAIL) || []).map(e => cleanEmail(e)))].filter(e => keepEmail(e) && !skip.has(e));
+};
 
 // JSON-LD "email" at ANY depth (contactPoint[], @graph[], nested Organization)
 function walkJsonEmails(node, out) {
@@ -140,14 +189,19 @@ function walkJsonEmails(node, out) {
 // stripping a page twice is the most expensive thing in this file).
 function extractEmails(rawHtml, text) {
   const out = [], best = new Map();
+  let skip = new Set();                       // URL-path-segment addresses (filled in below)
   const add = (cand, src) => {
     const e = cleanEmail(cand);
     if (!keepEmail(e)) return;
+    // a declared mailbox (mailto/jsonld/cfemail) is trusted; a scraped one is not a page address
+    if (skip.has(e) && (src === 'tag_split' || src === 'text')) return;
     const prev = best.get(e);
     if (prev === undefined) { best.set(e, src); out.push({ email: e, source: src }); }
     else if (SOURCE_RANK[src] < SOURCE_RANK[prev]) { best.set(e, src); out.find(x => x.email === e).source = src; }
   };
   const h = String(rawHtml == null ? '' : rawHtml).replace(ZERO_WIDTH, '');
+  skip = urlPathOnlyEmails(h);
+  if (text !== undefined) for (const e of urlPathOnlyEmails(text)) skip.add(e);
   for (const m of h.matchAll(RE_MAILTO)) add(m[1], 'mailto');
   for (const m of h.matchAll(RE_LDJSON)) {
     const blob = m[1].replace(/^\s*<!\[CDATA\[/, '').replace(/\]\]>\s*$/, '').trim();
@@ -158,7 +212,10 @@ function extractEmails(rawHtml, text) {
   }
   for (const m of h.matchAll(RE_CFEMAIL)) { const d = cfDecode(m[1]); if (d) add(d, 'cfemail'); }
   for (const m of h.matchAll(RE_CFLINK)) { const d = cfDecode(m[1]); if (d) add(d, 'cfemail'); }
-  for (const m of h.matchAll(RE_TAGSPLIT)) add(m[1] + '@' + m[2], 'tag_split');
+  // the local part of a tag/entity-split match is the run of address characters immediately before
+  // the separator (the class admits no whitespace, so a label with spaces can never be swallowed);
+  // a run longer than a real local part means the page ran words together — drop it.
+  for (const m of h.matchAll(RE_TAGSPLIT)) { if (m[1].length <= MAX_LOCAL_TAGSPLIT) add(m[1] + '@' + m[2], 'tag_split'); }
   for (const e of emailsIn(text === undefined ? htmlToText(h) : text)) add(e, 'text');
   return out;
 }
