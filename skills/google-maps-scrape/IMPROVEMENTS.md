@@ -822,7 +822,7 @@ below are new; each names how it relates to those where they touch.
 
 ## HIGH (fetch-sites.js, email coverage): the email regex runs on STRIPPED text and the L2 keywords never reach the contact page — four classes of address are invisible and the page they live on is never fetched
 
-**Status:** OPEN (proved job-side by `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/harvest_emails_deep.py`; engine change not made) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 676 root domains), **HIGH impact — it is the difference between a third and a half of the list being contactable.**
+**Status:** DONE 2026-09-17 — engine change made: `fetch-sites.js` now extracts emails from the RAW body (mailto / JSON-LD / data-cfemail / tag-split-entity rungs, unioned with the old text regex, provenance in a new `emails_by_source` field) and the four contact keywords are in the default `L2_DEFAULT`, test: tests/fetch-sites-emails.test.js (ported from `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/harvest_emails_deep.py`) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 676 root domains), **HIGH impact — it is the difference between a third and a half of the list being contactable.**
 
 **Problem.** `fetch-sites.js` extracts emails with a plain regex run over the output of `htmlToText()`. That function deletes `<script>` blocks and every tag, i.e. every attribute, *before* the regex sees the page. Four whole classes of address are therefore unreachable by construction, and a fifth never gets fetched at all:
 

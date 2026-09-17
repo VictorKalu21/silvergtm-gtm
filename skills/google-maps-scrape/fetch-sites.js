@@ -22,44 +22,16 @@
 const fs = require('fs');
 const path = require('path');
 
-function arg(name, def) { const i = process.argv.indexOf('--' + name); return i > -1 ? process.argv[i + 1] : def; }
-const IN = arg('in'), OUT = arg('out', '.');
-const LIMIT = Number(arg('limit', 'Infinity')); // process ALL by default; old default 50 silently truncated runs
-const CONC = parseInt(arg('concurrency', '10'), 10);
-const CFG = arg('config', '');
 const { isSharedHost } = require('./shared-hosts');
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36';
+// second-level pages worth following. about/team/meet are owner-finding shaped; the contact keywords
+// are where a trade site actually puts its mailbox (IMPROVEMENTS.md HIGH: fetch-sites email coverage).
+const L2_DEFAULT = ['about', 'team', 'meet', 'our-story', 'story', 'staff', 'provider', 'providers', 'doctor', 'doctors', 'dentist', 'owner', 'founder', 'leadership', 'who-we-are', 'about-us', 'our-team', 'meet-the', 'contact', 'contact-us', 'get-in-touch', 'enquir'];
+const SKIP_EXT = /\.(pdf|jpe?g|png|gif|svg|webp|mp4|zip|css|js|ico|woff2?)($|\?)/i;
+const SOCIAL = /(facebook|instagram|twitter|x\.com|linkedin|youtube|tiktok|yelp|maps\.google|goo\.gl)\./i;
 const PAGE_TIMEOUT = 8000;     // per-request abort (main pass)
 const MAX_L2 = 6;              // how many second-level pages to follow
 const HOME_CAP = 6000, L2_CAP = 2800, TOTAL_CAP = 18000; // char caps
-// --- escalation rungs (see IMPROVEMENTS.md: rendered/anti-bot fallback) ---
-const RETRY_ON = !process.argv.includes('--no-retry');        // free longer-timeout retry, default ON
-const RETRY_TIMEOUT = parseInt(arg('retry-timeout', '20000'), 10); // slow-but-alive recovery
-const FIRECRAWL = process.argv.includes('--firecrawl');       // opt-in paid rung, default OFF
-const FIRECRAWL_TIMEOUT = 60000;
-const ENVPATH = arg('env', path.join(__dirname, '.env'));
-function loadEnv(f){const o={};if(fs.existsSync(f))for(const l of fs.readFileSync(f,'utf8').split(/\r?\n/)){const m=l.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/i);if(m)o[m[1]]=m[2].replace(/^["']|["']$/g,'');}return o;}
-const FIRECRAWL_KEY = loadEnv(ENVPATH).FIRECRAWL_KEY;
-if (!IN) { console.error('ERROR: --in <csv> required'); process.exit(1); }
-// --- owner-prompt gate (SKILL STEP 6a): owner-finding output is not written until the per-vertical
-// prompt exists in the run folder. Checks OUT, its parent and grandparent (batch sub-dirs allowed).
-if (!process.argv.includes('--no-prompt-ok')) {
-  const cands = [path.resolve(OUT), path.dirname(path.resolve(OUT)), path.dirname(path.dirname(path.resolve(OUT)))].map(d => path.join(d, 'owner-prompt.md'));
-  if (!cands.some(f => fs.existsSync(f))) {
-    console.error('\nERROR: per-vertical owner-prompt.md required before fetching owner text (SKILL STEP 6a).');
-    console.error('  looked for: ' + cands.join(' | '));
-    console.error('  Build it from owner-prompt.template.md (or copy <client>/owner-prompts/<vertical>.md) at STEP 3 time,');
-    console.error('  save it in the run folder, then re-run. (Deliberate prompt-less fetch: pass --no-prompt-ok.)\n');
-    process.exit(1);
-  }
-}
-
-const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36';
-const L2_DEFAULT = ['about', 'team', 'meet', 'our-story', 'story', 'staff', 'provider', 'providers', 'doctor', 'doctors', 'dentist', 'owner', 'founder', 'leadership', 'who-we-are', 'about-us', 'our-team', 'meet-the'];
-let L2_EXTRA = [];
-if (CFG) { try { L2_EXTRA = (JSON.parse(require('fs').readFileSync(CFG, 'utf8')).site_l2_keywords) || []; } catch (e) { console.error('WARN: could not read site_l2_keywords from ' + CFG); } }
-const L2_KEYWORDS = [...new Set([...L2_DEFAULT, ...L2_EXTRA])];
-const SKIP_EXT = /\.(pdf|jpe?g|png|gif|svg|webp|mp4|zip|css|js|ico|woff2?)($|\?)/i;
-const SOCIAL = /(facebook|instagram|twitter|x\.com|linkedin|youtube|tiktok|yelp|maps\.google|goo\.gl)\./i;
 
 function parseCsv(txt) {
   const rows = []; let row = [], cur = '', q = false;
@@ -90,7 +62,153 @@ function links(html, base) {
   }
   return out;
 }
-const emailsIn = txt => [...new Set((txt.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi) || []).map(e => e.toLowerCase()).filter(e => !/\.(png|jpg|gif|webp)$/.test(e) && !/(example|sentry|wixpress|godaddy|squarespace)\./.test(e)))];
+
+// ---- on-site email extraction (IMPROVEMENTS.md HIGH, 2026-09-17) --------------------------------
+// A regex over htmlToText() output is blind by construction: the function deletes <script> blocks and
+// every tag (so every attribute) BEFORE the regex sees the page. Four whole classes of address are
+// therefore invisible — mailto: hrefs, JSON-LD "email", Cloudflare data-cfemail (XOR-encoded hex; the
+// visible text is only the "[email protected]" placeholder), and tag-split / entity-obfuscated forms.
+// Every rung below reads the RAW response body; the old text regex stays as the last rung, so nothing
+// the engine used to find is lost. Ported from the job-side implementation proved on the Atlas Growth
+// 2026-09-16 UK run (+137 addresses over 676 domains, every cfemail one of them new).
+const ZERO_WIDTH = /[\u200b\u200c\u200d\u2060\ufeff\u00ad]/g;
+const RE_EMAIL = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi;
+const EMAIL_SHAPE = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+const RE_MAILTO = /mailto\s*:\s*["']?([^"'<>\s)]+)/gi;
+const RE_LDJSON = /<script[^>]+type\s*=\s*["']?application\/ld\+json["']?[^>]*>([\s\S]*?)<\/script>/gi;
+const RE_CFEMAIL = /data-cfemail\s*=\s*["']([0-9a-fA-F]+)["']/g;
+const RE_CFLINK = /\/cdn-cgi\/l\/email-protection#([0-9a-fA-F]+)/g;
+// info<span>@</span>example.co.uk / info&#64;example.co.uk / info [at] example.co.uk
+const RE_TAGSPLIT = /([a-z0-9._%+-]{2,64})\s*(?:<[^<>]{1,160}>\s*){0,3}(?:@|&#0*64;|&#x0*40;|&commat;|\[\s*at\s*\]|\(\s*at\s*\))\s*(?:<[^<>]{1,160}>\s*){0,3}([a-z0-9-]+(?:\.[a-z0-9-]+)+\.?[a-z]{2,})/gi;
+// junk: image files (either side of the @, e.g. a CDN "info@2x.png"), vendor/CDN/placeholder hosts,
+// and Cloudflare's own placeholder text when no data-cfemail backs it.
+const JUNK = /\.(png|jpe?g|gif|webp|svg|bmp|ico|tiff?)$|\.(png|jpe?g|gif|webp|svg|bmp|ico|tiff?)@|(example|sentry|wixpress|godaddy|squarespace|schema\.org|w3\.org|jquery|cloudflare|wordpress|gravatar|shopify|placeholder|yourdomain|domain\.com|email\.com|test\.com|company\.com)\.|^email@protected$/i;
+// provenance priority: the first rung in this order that found an address owns its label
+const SOURCE_RANK = { mailto: 0, jsonld: 1, cfemail: 2, tag_split: 3, text: 4 };
+
+// Cloudflare email obfuscation: first byte is the XOR key, the rest is the address.
+function cfDecode(hex) {
+  if (typeof hex !== 'string' || !/^[0-9a-f]+$/i.test(hex) || hex.length % 2 || hex.length < 8) return null;
+  const key = parseInt(hex.slice(0, 2), 16);
+  let s = '';
+  for (let i = 2; i < hex.length; i += 2) s += String.fromCharCode(parseInt(hex.slice(i, i + 2), 16) ^ key);
+  return s.includes('@') ? s : null;
+}
+
+// normalise one candidate string -> a bare lowercase address, or null
+function cleanEmail(raw) {
+  if (!raw) return null;
+  let s = String(raw).trim();
+  try { s = decodeURIComponent(s); } catch (e) { /* stray % in the href */ }
+  s = decode(s).replace(ZERO_WIDTH, '');
+  s = s.replace(/^\s*(?:mailto\s*:)+\s*/i, '');
+  s = s.split('?')[0].split(',')[0].split(';')[0];      // mailto query strings / multi-recipient
+  s = s.trim().replace(/^[<>"'()\[\]{}]+/, '').replace(/[<>"'()\[\]{}]+$/, '');
+  s = s.replace(/[.,;:!?|\u2019'")\]}-]+$/, '');        // trailing punctuation
+  s = s.replace(/\s+/g, '').toLowerCase();
+  const m = s.match(RE_EMAIL);
+  if (!m) return null;
+  let e = m[0].replace(/\.+$/, '');
+  const at = e.indexOf('@');
+  // JSON-escape residue: a tag_split match over an inline JS blob can swallow the escape body of
+  // \u003e / \u0026 (the backslash is not in the local-part class) and produce "u003eenquiries@host".
+  // Strip the residue rather than the address.
+  const local = e.slice(0, at).replace(/^(?:u00[0-9a-f]{2})+/, ''), dom = e.slice(at + 1);
+  if (!local) return null;
+  e = local + '@' + dom;
+  return EMAIL_SHAPE.test(e) ? e : null;
+}
+const keepEmail = e => !!e && EMAIL_SHAPE.test(e) && !JUNK.test(e);
+// the text rung: the plain regex over stripped text, exactly what this script has always done
+const emailsIn = txt => [...new Set((String(txt == null ? '' : txt).match(RE_EMAIL) || []).map(e => e.toLowerCase()))].filter(keepEmail);
+
+// JSON-LD "email" at ANY depth (contactPoint[], @graph[], nested Organization)
+function walkJsonEmails(node, out) {
+  if (Array.isArray(node)) { for (const v of node) walkJsonEmails(v, out); return; }
+  if (!node || typeof node !== 'object') return;
+  for (const [k, v] of Object.entries(node)) {
+    if (/^e-?mail(address)?$/i.test(k)) {
+      if (typeof v === 'string') out.push(v);
+      else if (Array.isArray(v)) out.push(...v.filter(x => typeof x === 'string'));
+      else if (v && typeof v === 'object') walkJsonEmails(v, out);
+    } else walkJsonEmails(v, out);
+  }
+}
+
+// every rung, in provenance order, over the RAW body -> [{ email, source }] (first source wins).
+// `text` is the page's htmlToText() output when the caller already has it (the run path does, and
+// stripping a page twice is the most expensive thing in this file).
+function extractEmails(rawHtml, text) {
+  const out = [], best = new Map();
+  const add = (cand, src) => {
+    const e = cleanEmail(cand);
+    if (!keepEmail(e)) return;
+    const prev = best.get(e);
+    if (prev === undefined) { best.set(e, src); out.push({ email: e, source: src }); }
+    else if (SOURCE_RANK[src] < SOURCE_RANK[prev]) { best.set(e, src); out.find(x => x.email === e).source = src; }
+  };
+  const h = String(rawHtml == null ? '' : rawHtml).replace(ZERO_WIDTH, '');
+  for (const m of h.matchAll(RE_MAILTO)) add(m[1], 'mailto');
+  for (const m of h.matchAll(RE_LDJSON)) {
+    const blob = m[1].replace(/^\s*<!\[CDATA\[/, '').replace(/\]\]>\s*$/, '').trim();
+    let vals = [];
+    try { walkJsonEmails(JSON.parse(blob), vals); }
+    catch (e) { vals = [...blob.matchAll(/"e-?mail(?:address)?"\s*:\s*"([^"]{5,120})"/gi)].map(x => x[1]); } // malformed JSON-LD is common
+    for (const v of vals) add(v, 'jsonld');
+  }
+  for (const m of h.matchAll(RE_CFEMAIL)) { const d = cfDecode(m[1]); if (d) add(d, 'cfemail'); }
+  for (const m of h.matchAll(RE_CFLINK)) { const d = cfDecode(m[1]); if (d) add(d, 'cfemail'); }
+  for (const m of h.matchAll(RE_TAGSPLIT)) add(m[1] + '@' + m[2], 'tag_split');
+  for (const e of emailsIn(text === undefined ? htmlToText(h) : text)) add(e, 'text');
+  return out;
+}
+
+// union several rung outputs (one per fetched page, plus the text rung over the combined text):
+// discovery order is kept for the cap, the highest-priority source wins the label.
+function mergeEmailSources(lists, cap = 8) {
+  const order = [], best = new Map();
+  for (const list of lists) for (const { email, source } of (list || [])) {
+    const prev = best.get(email);
+    if (prev === undefined) { best.set(email, source); order.push(email); }
+    else if ((SOURCE_RANK[source] ?? 9) < (SOURCE_RANK[prev] ?? 9)) best.set(email, source);
+  }
+  const emails = order.slice(0, cap);
+  return { emails, by_source: Object.fromEntries(emails.map(e => [e, best.get(e)])) };
+}
+
+module.exports = { L2_DEFAULT, htmlToText, emailsIn, extractEmails, mergeEmailSources, cfDecode, cleanEmail, keepEmail };
+if (require.main !== module) return;   // required by a test: nothing below runs (argv parse + fetches)
+
+// ---- run path ----------------------------------------------------------------------------------
+function arg(name, def) { const i = process.argv.indexOf('--' + name); return i > -1 ? process.argv[i + 1] : def; }
+const IN = arg('in'), OUT = arg('out', '.');
+const LIMIT = Number(arg('limit', 'Infinity')); // process ALL by default; old default 50 silently truncated runs
+const CONC = parseInt(arg('concurrency', '10'), 10);
+const CFG = arg('config', '');
+// --- escalation rungs (see IMPROVEMENTS.md: rendered/anti-bot fallback) ---
+const RETRY_ON = !process.argv.includes('--no-retry');        // free longer-timeout retry, default ON
+const RETRY_TIMEOUT = parseInt(arg('retry-timeout', '20000'), 10); // slow-but-alive recovery
+const FIRECRAWL = process.argv.includes('--firecrawl');       // opt-in paid rung, default OFF
+const FIRECRAWL_TIMEOUT = 60000;
+const ENVPATH = arg('env', path.join(__dirname, '.env'));
+function loadEnv(f){const o={};if(fs.existsSync(f))for(const l of fs.readFileSync(f,'utf8').split(/\r?\n/)){const m=l.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/i);if(m)o[m[1]]=m[2].replace(/^["']|["']$/g,'');}return o;}
+const FIRECRAWL_KEY = loadEnv(ENVPATH).FIRECRAWL_KEY;
+if (!IN) { console.error('ERROR: --in <csv> required'); process.exit(1); }
+// --- owner-prompt gate (SKILL STEP 6a): owner-finding output is not written until the per-vertical
+// prompt exists in the run folder. Checks OUT, its parent and grandparent (batch sub-dirs allowed).
+if (!process.argv.includes('--no-prompt-ok')) {
+  const cands = [path.resolve(OUT), path.dirname(path.resolve(OUT)), path.dirname(path.dirname(path.resolve(OUT)))].map(d => path.join(d, 'owner-prompt.md'));
+  if (!cands.some(f => fs.existsSync(f))) {
+    console.error('\nERROR: per-vertical owner-prompt.md required before fetching owner text (SKILL STEP 6a).');
+    console.error('  looked for: ' + cands.join(' | '));
+    console.error('  Build it from owner-prompt.template.md (or copy <client>/owner-prompts/<vertical>.md) at STEP 3 time,');
+    console.error('  save it in the run folder, then re-run. (Deliberate prompt-less fetch: pass --no-prompt-ok.)\n');
+    process.exit(1);
+  }
+}
+let L2_EXTRA = [];
+if (CFG) { try { L2_EXTRA = (JSON.parse(require('fs').readFileSync(CFG, 'utf8')).site_l2_keywords) || []; } catch (e) { console.error('WARN: could not read site_l2_keywords from ' + CFG); } }
+const L2_KEYWORDS = [...new Set([...L2_DEFAULT, ...L2_EXTRA])];
 
 async function getPage(url, timeout) {
   const ctrl = new AbortController(); const to = setTimeout(() => ctrl.abort(), timeout || PAGE_TIMEOUT);
@@ -130,11 +248,13 @@ async function firecrawlScrape(url) {
 }
 
 async function processLead(lead, timeout) {
-  const rec = { place_id: lead.place_id, name: lead.name, website: lead.website, neighborhood: lead.neighborhood, city: lead.city, phone: lead.phone_number, full_address: lead.full_address, status: 'ok', pages: [], emails: [] };
+  const rec = { place_id: lead.place_id, name: lead.name, website: lead.website, neighborhood: lead.neighborhood, city: lead.city, phone: lead.phone_number, full_address: lead.full_address, status: 'ok', pages: [], emails: [], emails_by_source: {} };
   const home = await getPage(lead.website, timeout);
   if (!home.ok) { rec.status = 'home_failed:' + (home.status || home.err); rec.text = ''; return rec; }
   const base = home.finalUrl || lead.website;
-  const homeText = htmlToText(home.html).slice(0, HOME_CAP);
+  const homeStripped = htmlToText(home.html);
+  const raws = [{ html: home.html, text: homeStripped }];   // RAW bodies: the email rungs read these, not the stripped text
+  const homeText = homeStripped.slice(0, HOME_CAP);
   rec.pages.push({ url: base, label: 'home', text: homeText });
   // pick L2 pages
   const seen = new Set([new URL(base).pathname]);
@@ -147,10 +267,16 @@ async function processLead(lead, timeout) {
   for (const l of scored) { const p = new URL(l.url).pathname; if (seen.has(p)) continue; seen.add(p); picks.push(l); if (picks.length >= MAX_L2) break; }
   for (const l of picks) {
     const pg = await getPage(l.url, timeout);
-    if (pg.ok) rec.pages.push({ url: l.url, label: l.path.replace(/[^a-z]/g, ' ').trim().split(' ')[0] || 'page', text: htmlToText(pg.html).slice(0, L2_CAP) });
+    if (pg.ok) {
+      const stripped = htmlToText(pg.html);
+      raws.push({ html: pg.html, text: stripped });
+      rec.pages.push({ url: l.url, label: l.path.replace(/[^a-z]/g, ' ').trim().split(' ')[0] || 'page', text: stripped.slice(0, L2_CAP) });
+    }
   }
   const combined = rec.pages.map(p => `=== ${p.label} (${p.url}) ===\n${p.text}`).join('\n\n').slice(0, TOTAL_CAP);
-  rec.emails = emailsIn(combined).slice(0, 8);
+  const merged = mergeEmailSources([...raws.map(r => extractEmails(r.html, r.text)), emailsIn(combined).map(e => ({ email: e, source: 'text' }))]);
+  rec.emails = merged.emails;                 // flat array, unchanged shape — downstream scripts read it
+  rec.emails_by_source = merged.by_source;    // { address: mailto|jsonld|cfemail|tag_split|text }
   rec.text = combined;
   rec.pages_fetched = rec.pages.length;
   return rec;
@@ -224,7 +350,9 @@ async function processLead(lead, timeout) {
               const text = md.slice(0, TOTAL_CAP);
               rec.status = 'ok';
               rec.pages = [{ url: rec.website, label: 'home', text: text.slice(0, HOME_CAP) }];
-              rec.emails = emailsIn(text).slice(0, 8);
+              const fm = mergeEmailSources([emailsIn(text).map(e => ({ email: e, source: 'text' }))]); // markdown only: text rung
+              rec.emails = fm.emails;
+              rec.emails_by_source = fm.by_source;
               rec.text = text;
               rec.pages_fetched = rec.pages.length;
               rec.source = 'firecrawl';
