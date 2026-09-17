@@ -824,6 +824,23 @@ below are new; each names how it relates to those where they touch.
 Each item names the measured pain from a real run, what buying it changes in the engine, and the cost tier.
 Ordered by leverage. Nothing here is required to run the process as it stands today.
 
+**Why this list exists (operator, 2026-09-17): the repo is a GTM system, and the aim is that it gets more
+defensible and more antifragile with every run.** Read the items through that lens:
+- *Memory* (item 1) is what makes a run compound instead of repeat — every fetch, verdict, registry match and
+  named contact becomes an asset the next client run inherits at zero cost, and "net-new" becomes a fact the
+  system knows rather than a CSV the operator has to supply.
+- *Feedback* (item 6) is what makes the system learn from being wrong — bounce and reply data flowing back
+  into the verdict and ranking tables turns every send into a calibration of the next one.
+- *Source diversity* (item 8, last bullet, and the source library) is the defensibility — a trade body's member
+  API, a registry snapshot, a manufacturer's dealer feed and Maps are four independent views of one market, and
+  a list built from their intersection is not something a competitor gets from one paid export.
+- *Egress independence* (items 2 and 7) removes the single point of failure this run kept hitting — a blocked
+  challenge host, a session pause, a 10-req/min plan — so the process degrades instead of stopping.
+- *Tests + this file* are the immune system: every fault found on a live run becomes a test and a DONE entry,
+  which is the only reason nine engine changes could ship in one day without breaking the fourteen before them.
+Anything that adds to one of those five properties belongs on this list; anything that only adds volume does
+not.
+
 ### 1. A persistent store — Supabase (Postgres + storage), free tier is enough to start
 **Pain measured.** Every run is a folder of CSV/JSONL that is gitignored, so state lives in tarballs: the UK run's
 data had to be sent to the operator and re-unpacked to resume; cross-run dedupe needed the operator to upload a
