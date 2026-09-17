@@ -9,13 +9,22 @@
  *
  * Usage:
  *   node fetch-sites.js --in <leads_clean.csv> --out <dir> [--limit N] [--concurrency C]
- *                       [--retry-timeout <ms>] [--no-retry] [--firecrawl]
+ *                       [--retry-timeout <ms>] [--no-retry] [--firecrawl] [--firecrawl-rpm 10]
+ *   node fetch-sites.js --firecrawl-residue <site_text.jsonl> [--firecrawl-rpm 10] [--limit N]
+ *                       [--firecrawl-redo-failed]
  *
  * Escalation (see IMPROVEMENTS.md): after the main plain-fetch pass, a FREE longer-timeout
  * retry (default ON) re-fetches only the transient failures (AbortError/timeout/5xx/429/reset)
  * to recover slow-but-alive sites. With --firecrawl, residual failures (403/Cloudflare/thin-JS)
  * are sent to Firecrawl's scrape API (key FIRECRAWL_KEY in .env). No raw headless Chrome rung
  * (tested useless here). 404/connection-reset after retry = accepted as dead.
+ *
+ * The Firecrawl rung is plan-aware (IMPROVEMENTS.md MEDIUM, 2026-09-17): it reads maxConcurrency
+ * from GET /v1/team/queue-status and never runs more workers than that (2 if the call fails),
+ * spaces request starts at 60/--firecrawl-rpm seconds, and on a 429 sleeps for Retry-After
+ * (else 60 s) and re-queues the row. --firecrawl-residue runs that rung ALONE over an existing
+ * site_text.jsonl (status != ok rows only, 404/400/402/307 skipped as dead, 403 class last,
+ * recovered rows written back in place, resumable) — the only way a paid rung is ever used twice.
  *
  * Output: <dir>/site_text.jsonl  (one JSON object per line)
  */
@@ -245,16 +254,28 @@ const CFG = arg('config', '');
 // --- escalation rungs (see IMPROVEMENTS.md: rendered/anti-bot fallback) ---
 const RETRY_ON = !process.argv.includes('--no-retry');        // free longer-timeout retry, default ON
 const RETRY_TIMEOUT = parseInt(arg('retry-timeout', '20000'), 10); // slow-but-alive recovery
-const FIRECRAWL = process.argv.includes('--firecrawl');       // opt-in paid rung, default OFF
-const FIRECRAWL_TIMEOUT = 60000;
+const FIRECRAWL_RESIDUE = arg('firecrawl-residue', '');       // run the paid rung ALONE over an existing site_text.jsonl
+const FIRECRAWL = process.argv.includes('--firecrawl') || !!FIRECRAWL_RESIDUE; // opt-in paid rung, default OFF
+// plan limits (probe 2026-09-17, Hobby key: {"maxConcurrency":2}; body of a 429: 'Consumed (req/min): 11').
+// The request-start spacing is what keeps the queue alive — 4 unspaced workers burned 188 of 197 rows in <2 min.
+const FIRECRAWL_RPM = Math.max(1, Number(arg('firecrawl-rpm', '10')) || 10);
+const FIRECRAWL_DEFAULT_CONC = 2;    // when queue-status cannot be read
+const FIRECRAWL_MAX_TRIES = 3;       // per row, counting 429 re-queues
+const FIRECRAWL_REDO_FAILED = process.argv.includes('--firecrawl-redo-failed'); // residue mode: re-attempt rows already tried
+const FIRECRAWL_TIMEOUT = 120000;    // client abort; the server-side page timeout below is 90 s
+const FIRECRAWL_PAGE_TIMEOUT = 90000;
 const ENVPATH = arg('env', path.join(__dirname, '.env'));
 function loadEnv(f){const o={};if(fs.existsSync(f))for(const l of fs.readFileSync(f,'utf8').split(/\r?\n/)){const m=l.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/i);if(m)o[m[1]]=m[2].replace(/^["']|["']$/g,'');}return o;}
-const FIRECRAWL_KEY = loadEnv(ENVPATH).FIRECRAWL_KEY;
-if (!IN) { console.error('ERROR: --in <csv> required'); process.exit(1); }
+const FIRECRAWL_ENV = loadEnv(ENVPATH);
+const FIRECRAWL_KEY = FIRECRAWL_ENV.FIRECRAWL_KEY;
+// overridable so the test can point the rung at a local fake endpoint (no network in tests)
+const FIRECRAWL_BASE = String(arg('firecrawl-base', '') || FIRECRAWL_ENV.FIRECRAWL_BASE || 'https://api.firecrawl.dev').replace(/\/+$/, '');
+if (!IN && !FIRECRAWL_RESIDUE) { console.error('ERROR: --in <csv> required (or --firecrawl-residue <site_text.jsonl>)'); process.exit(1); }
 // --- owner-prompt gate (SKILL STEP 6a): owner-finding output is not written until the per-vertical
 // prompt exists in the run folder. Checks OUT, its parent and grandparent (batch sub-dirs allowed).
 if (!process.argv.includes('--no-prompt-ok')) {
-  const cands = [path.resolve(OUT), path.dirname(path.resolve(OUT)), path.dirname(path.dirname(path.resolve(OUT)))].map(d => path.join(d, 'owner-prompt.md'));
+  const gateDir = FIRECRAWL_RESIDUE ? path.dirname(path.resolve(FIRECRAWL_RESIDUE)) : path.resolve(OUT);
+  const cands = [gateDir, path.dirname(gateDir), path.dirname(path.dirname(gateDir))].map(d => path.join(d, 'owner-prompt.md'));
   if (!cands.some(f => fs.existsSync(f))) {
     console.error('\nERROR: per-vertical owner-prompt.md required before fetching owner text (SKILL STEP 6a).');
     console.error('  looked for: ' + cands.join(' | '));
@@ -289,19 +310,145 @@ function isTransient(code) {
   return false;
 }
 
-// Firecrawl rendered/anti-bot rung (opt-in). Returns markdown string or null.
+// ---- Firecrawl rendered/anti-bot rung (opt-in, paid) --------------------------------------------
+// Plan-aware after IMPROVEMENTS.md MEDIUM 2026-09-17: worker count comes from the account's own
+// queue-status, request STARTS are spaced, and a 429 backs off and re-queues instead of burning the row.
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+// a recovered page that is a challenge interstitial (or near-empty) is NOT a recovery — the job-side
+// runner had to add this check before the counts meant anything.
+const FIRECRAWL_CHALLENGE = /just a moment|enable javascript and cookies|attention required|checking your browser|verifying you are human/i;
+const FIRECRAWL_MIN_CHARS = 200;
+const firecrawlUsable = md => !!md && md.trim().length > FIRECRAWL_MIN_CHARS && !FIRECRAWL_CHALLENGE.test(md.slice(0, 600));
+// dead by definition — never worth a credit (IMPROVEMENTS.md)
+const FIRECRAWL_SKIP_DEAD = /^home_failed:(404|400|402|307)$/;
+
+// GET /v1/team/queue-status -> the plan's maxConcurrency (probe 2026-09-17: {"success":true,...,
+// "maxConcurrency":2}; free, no credits). Any failure = the conservative default.
+async function firecrawlMaxConcurrency() {
+  const ctrl = new AbortController(); const to = setTimeout(() => ctrl.abort(), 20000);
+  try {
+    const r = await fetch(FIRECRAWL_BASE + '/v1/team/queue-status', { signal: ctrl.signal, headers: { 'Authorization': 'Bearer ' + FIRECRAWL_KEY } });
+    if (!r.ok) return FIRECRAWL_DEFAULT_CONC;
+    const j = await r.json();
+    const n = Number((j && j.maxConcurrency) ?? (j && j.data && j.data.maxConcurrency));
+    return Number.isFinite(n) && n >= 1 ? Math.floor(n) : FIRECRAWL_DEFAULT_CONC;
+  } catch (e) { return FIRECRAWL_DEFAULT_CONC; } finally { clearTimeout(to); }
+}
+
+// one scrape call -> { http, ok, md, html, status, err, retryAfter }
 async function firecrawlScrape(url) {
   const ctrl = new AbortController(); const to = setTimeout(() => ctrl.abort(), FIRECRAWL_TIMEOUT);
   try {
-    const r = await fetch('https://api.firecrawl.dev/v1/scrape', {
+    const r = await fetch(FIRECRAWL_BASE + '/v1/scrape', {
       method: 'POST', signal: ctrl.signal,
       headers: { 'Authorization': 'Bearer ' + FIRECRAWL_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url, formats: ['markdown'], onlyMainContent: true }),
+      // html as well as markdown: the raw-HTML email rungs (mailto/JSON-LD/cfemail/tag-split) only see
+      // a body. onlyMainContent is deliberately NOT set — the mailbox lives in the header/footer.
+      body: JSON.stringify({ url, formats: ['markdown', 'html'], timeout: FIRECRAWL_PAGE_TIMEOUT, waitFor: 2000 }),
     });
-    if (!r.ok) return null;
-    const j = await r.json();
-    return (j && j.data && j.data.markdown) || null;
-  } catch (e) { return null; } finally { clearTimeout(to); }
+    const ra = Number(r.headers.get('retry-after'));
+    let j = {}; try { j = await r.json(); } catch (e) { j = {}; }
+    return {
+      http: r.status, ok: r.status === 200 && !!(j && j.success !== false && j.data),
+      md: (j && j.data && j.data.markdown) || '', html: (j && j.data && j.data.html) || '',
+      status: (j && j.data && j.data.metadata && j.data.metadata.statusCode) || 0,
+      err: String((j && j.error) || '').slice(0, 160),
+      retryAfter: Number.isFinite(ra) && ra > 0 ? ra : 0,
+    };
+  } catch (e) { return { http: 0, ok: false, md: '', html: '', status: 0, err: String(e.message || e).slice(0, 160), retryAfter: 0 }; } finally { clearTimeout(to); }
+}
+
+// turn one scrape result into a site_text record, in place. Returns true when it is a real recovery.
+function applyFirecrawl(rec, r) {
+  rec.firecrawl = { http: r.http, status: r.status || 0, err: r.err || '', at: new Date().toISOString() };
+  if (!(r.ok && firecrawlUsable(r.md))) return false;
+  const text = r.md.slice(0, TOTAL_CAP);
+  // (d) the RAW html gets every email rung, not just the markdown text regex
+  const merged = mergeEmailSources([
+    extractEmails(r.html || '', htmlToText(r.html || '')),
+    emailsIn(text).map(e => ({ email: e, source: 'text' })),
+  ]);
+  rec.status = 'ok';
+  rec.pages = [{ url: rec.website, label: 'home', text: text.slice(0, HOME_CAP) }];
+  rec.emails = merged.emails;
+  rec.emails_by_source = merged.by_source;
+  rec.text = text;
+  rec.pages_fetched = 1;
+  rec.source = 'firecrawl';
+  return true;
+}
+
+// the pass itself: <= plan maxConcurrency workers, starts spaced 60/RPM seconds apart, 429 -> sleep
+// Retry-After (else 60 s) and re-queue the row (counted separately from a failure).
+async function firecrawlPass(recs, label, onUpdate) {
+  const stats = { rows: recs.length, calls: 0, recovered: 0, failed: 0, rate_limited: 0, workers: 0, max_concurrency: 0 };
+  if (!recs.length) return stats;
+  const maxConc = await firecrawlMaxConcurrency();
+  const gap = Math.round(60000 / FIRECRAWL_RPM);
+  const workers = Math.max(1, Math.min(maxConc, recs.length));
+  stats.workers = workers; stats.max_concurrency = maxConc;
+  process.stderr.write(`\nFIRECRAWL${label}: ${recs.length} row(s), ${workers} worker(s) (plan maxConcurrency ${maxConc}), ${FIRECRAWL_RPM} req/min = ${gap}ms between starts\n`);
+  const q = recs.map(rec => ({ rec, tries: 0 }));
+  let nextStart = 0, n = 0; const t0 = Date.now();
+  async function fworker() {
+    while (q.length) {
+      const job = q.shift();
+      const wait = Math.max(0, nextStart - Date.now());
+      nextStart = Math.max(Date.now(), nextStart) + gap;
+      if (wait) await sleep(wait);
+      job.tries++; stats.calls++;
+      const r = await firecrawlScrape(job.rec.website);
+      if (r.http === 429) {
+        stats.rate_limited++;
+        const back = (r.retryAfter || 60) * 1000;
+        if (job.tries < FIRECRAWL_MAX_TRIES) {
+          process.stderr.write(`  429 ${job.rec.website} — sleeping ${Math.round(back / 1000)}s, row re-queued (try ${job.tries})\n`);
+          nextStart = Math.max(nextStart, Date.now() + back);   // hold every worker, not just this one
+          q.push(job);
+          await sleep(back);
+          continue;
+        }
+      }
+      const ok = applyFirecrawl(job.rec, r);
+      if (ok) stats.recovered++; else stats.failed++;
+      n++;
+      if (onUpdate) onUpdate(job.rec, ok);
+      process.stderr.write(`  ${n}/${recs.length} ${ok ? 'ok emails=' + job.rec.emails.length : 'fail:' + (job.rec.firecrawl.status || job.rec.firecrawl.http || 'err')} ${job.rec.website} ${((Date.now() - t0) / 1000 / n).toFixed(1)}s/site\n`);
+    }
+  }
+  await Promise.all(Array.from({ length: workers }, fworker));
+  return stats;
+}
+
+// ---- --firecrawl-residue: the paid rung ALONE over an existing site_text.jsonl ------------------
+// Selection: status != ok, minus the dead codes, minus rows already attempted (resumable, no double
+// spend — --firecrawl-redo-failed re-attempts those). 403 class last: it is the least alive class.
+async function residueMode() {
+  const file = path.resolve(FIRECRAWL_RESIDUE);
+  if (!fs.existsSync(file)) { console.error('ERROR: --firecrawl-residue file not found: ' + file); process.exit(1); }
+  if (!FIRECRAWL_KEY) { console.error(`ERROR: --firecrawl-residue needs FIRECRAWL_KEY in ${ENVPATH}`); process.exit(1); }
+  const entries = fs.readFileSync(file, 'utf8').split('\n').filter(l => l.trim())
+    .map(raw => { try { return { raw, rec: JSON.parse(raw) }; } catch (e) { return { raw, rec: null }; } });
+  const attemptable = entries.map(e => e.rec).filter(r => r && r.website && r.status !== 'ok'
+    && !FIRECRAWL_SKIP_DEAD.test(String(r.status)) && (FIRECRAWL_REDO_FAILED || !r.firecrawl));
+  const todo = attemptable
+    .slice()
+    .sort((a, b) => (/403/.test(String(a.status)) ? 1 : 0) - (/403/.test(String(b.status)) ? 1 : 0))  // 403 class last
+    .slice(0, LIMIT);
+  const skippedDead = entries.filter(e => e.rec && e.rec.status !== 'ok' && FIRECRAWL_SKIP_DEAD.test(String(e.rec.status))).length;
+  const alreadyTried = entries.filter(e => e.rec && e.rec.status !== 'ok' && e.rec.firecrawl).length;
+  process.stderr.write(`RESIDUE ${file}\n  ${entries.length} row(s); ok ${entries.filter(e => e.rec && e.rec.status === 'ok').length}; dead-code skipped ${skippedDead}; already attempted ${alreadyTried}; attempting ${todo.length}\n`);
+  const flush = () => {
+    const tmp = file + '.tmp';
+    fs.writeFileSync(tmp, entries.map(e => (e.rec ? JSON.stringify(e.rec) : e.raw)).join('\n') + (entries.length ? '\n' : ''));
+    fs.renameSync(tmp, file);            // written back IN PLACE, atomically, after every row
+  };
+  const t0 = Date.now();
+  const stats = await firecrawlPass(todo, '-RESIDUE', () => flush());
+  if (todo.length) flush();
+  const withEmail = todo.filter(r => r.status === 'ok' && r.emails && r.emails.length).length;
+  const rep = { residue_file: file, rows: entries.length, attempted: stats.recovered + stats.failed, recovered: stats.recovered, failed: stats.failed, rate_limited_429: stats.rate_limited, calls: stats.calls, with_email: withEmail, workers: stats.workers, plan_max_concurrency: stats.max_concurrency, rpm: FIRECRAWL_RPM, seconds: Math.round((Date.now() - t0) / 1000) };
+  console.log(JSON.stringify(rep));
 }
 
 async function processLead(lead, timeout) {
@@ -340,6 +487,7 @@ async function processLead(lead, timeout) {
 }
 
 (async () => {
+  if (FIRECRAWL_RESIDUE) { await residueMode(); return; }   // paid rung alone over an existing site_text.jsonl
   const rows = parseCsv(fs.readFileSync(IN, 'utf8')).filter(r => r.length > 1);
   const H = rows.shift(); const ix = n => H.indexOf(n);
   const all = rows.map(r => Object.fromEntries(H.map((h, i) => [h, r[i]]))).filter(l => l.website && /^https?:\/\//i.test(l.website));
@@ -388,52 +536,31 @@ async function processLead(lead, timeout) {
   }
 
   // ---- PASS 3: Firecrawl rendered/anti-bot rung (opt-in) — residual failures only ----
-  let firecrawlTried = 0, firecrawlRecovered = 0;
+  let firecrawlTried = 0, firecrawlRecovered = 0, firecrawl429 = 0;
   if (FIRECRAWL) {
     if (!FIRECRAWL_KEY) {
       process.stderr.write(`WARN: --firecrawl passed but FIRECRAWL_KEY not in ${ENVPATH} — skipping Firecrawl rung\n`);
     } else {
-      const residIdx = records.map((r, i) => ({ r, i })).filter(({ r }) => r.status.startsWith('home_failed:')).map(({ i }) => i);
-      if (residIdx.length) {
-        process.stderr.write(`\nFIRECRAWL: attempting ${residIdx.length} residual failures\n`);
-        const fq = residIdx.slice();
-        async function fworker() {
-          while (fq.length) {
-            const i = fq.shift();
-            firecrawlTried++;
-            const rec = records[i];
-            const md = await firecrawlScrape(rec.website);
-            if (md && md.trim()) {
-              const text = md.slice(0, TOTAL_CAP);
-              rec.status = 'ok';
-              rec.pages = [{ url: rec.website, label: 'home', text: text.slice(0, HOME_CAP) }];
-              const fm = mergeEmailSources([emailsIn(text).map(e => ({ email: e, source: 'text' }))]); // markdown only: text rung
-              rec.emails = fm.emails;
-              rec.emails_by_source = fm.by_source;
-              rec.text = text;
-              rec.pages_fetched = rec.pages.length;
-              rec.source = 'firecrawl';
-              firecrawlRecovered++;
-            }
-          }
-        }
-        await Promise.all(Array.from({ length: Math.min(4, residIdx.length) }, fworker)); // gentler concurrency on paid API
-      }
+      // the dead codes are skipped here too: a 404/400/402/307 homepage costs a credit and returns nothing
+      const resid = records.filter(r => r.status.startsWith('home_failed:') && !FIRECRAWL_SKIP_DEAD.test(r.status));
+      const st = await firecrawlPass(resid, '');
+      firecrawlTried = st.recovered + st.failed; firecrawlRecovered = st.recovered; firecrawl429 = st.rate_limited;
     }
   }
 
-  // rewrite the file so recovered rows are merged (same one-JSON-per-line format)
-  if (retryRecovered || firecrawlRecovered) {
+  // rewrite the file so recovered rows (and the firecrawl stamps a later --firecrawl-residue reads
+  // for resumability) are merged (same one-JSON-per-line format)
+  if (retryRecovered || firecrawlRecovered || firecrawlTried) {
     fs.writeFileSync(outFile, records.map(r => JSON.stringify(r)).join('\n') + (records.length ? '\n' : ''));
   }
 
   const homeFail = records.filter(r => r.status !== 'ok').length;
   const ownersHintEmails = records.filter(r => r.emails.length).length;
   process.stderr.write(`\nRECOVERY: retry recovered ${retryRecovered}${RETRY_ON ? '' : ' (retry disabled)'}` +
-    (FIRECRAWL ? `; firecrawl recovered ${firecrawlRecovered}/${firecrawlTried}` : '') + `\n`);
+    (FIRECRAWL ? `; firecrawl recovered ${firecrawlRecovered}/${firecrawlTried} (429s ${firecrawl429})` : '') + `\n`);
   console.log(`\nDONE: ${records.length} leads → ${outFile}`);
   console.log(`  home fetch failed: ${homeFail}`);
   console.log(`  leads with at least one email on-site: ${ownersHintEmails}`);
   console.log(`  retry recovered: ${retryRecovered}${RETRY_ON ? '' : ' (disabled)'}`);
-  if (FIRECRAWL) console.log(`  firecrawl recovered: ${firecrawlRecovered}/${firecrawlTried}`);
+  if (FIRECRAWL) console.log(`  firecrawl recovered: ${firecrawlRecovered}/${firecrawlTried} (rate-limited 429s: ${firecrawl429})`);
 })();

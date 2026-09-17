@@ -757,7 +757,7 @@ and `owner-prompts.md` stay as legacy, labelled so. The word now appears only in
 
 ## MEDIUM (companies-house.js): exact-title matches with punctuation/"&" differences fall to low_confidence
 
-**Status:** OPEN (job-side workaround in `clients/atlas-growth/2026-09-16_uk-foundation-repair/ch_second_pass.py`) ·
+**Status:** DONE 2026-09-17 — normalised-title equality (`&`→`and`, punctuation/suffix/case stripped) accepts BEFORE the overlap score, the same normalisation runs inside the overlap tokeniser, and a `--town` fallback confirms a lead whose `full_address` has no postcode · test: tests/companies-house.test.js ·
 found 2026-09-16 (Atlas Growth UK foundation repair, 180 leads), MEDIUM impact — costs ~10% of the registry's names.
 
 Problem: `nameOverlap` tokenises on words, so "Welba Construction Ltd." vs "WELBA CONSTRUCTION LTD" scores below the
@@ -798,8 +798,7 @@ businesses own those; only the platform's registrable domain goes in the list.
 
 ## LOW-MEDIUM (coverage blind spot): `run-scrape.js` heals only `status != ok`, so an `ok` result with 0 rows is invisible
 
-**Status:** OPEN (not implemented) · found 2026-09-16 (Atlas Growth UK foundation repair), LOW-MEDIUM impact —
-unmeasured under-collection, cheap to close.
+**Status:** DONE 2026-09-17 — `run-scrape.js` now flags `ok`+0 tiles at centres whose other queries returned > `--zero-heal-min` (default 50) rows, re-buys them ONCE through the existing heal machinery into `heal-zero/`, and reports the count in the coverage summary and `coverage_report.json` whether or not the re-buy runs (`--no-heal-zero` declines it) · test: tests/run-scrape-zero-heal.test.js
 
 **Problem.** The heal loop re-buys a `(tile, query)` event only when its `status != ok`. A tile-query that returns
 `status: ok` with **count 0** while the same tile's other queries return hundreds of rows is not a real zero — it is
@@ -861,7 +860,7 @@ Test fixture: one page per rung plus a negative (an `info@` inside a CDN URL, an
 
 ## MEDIUM-HIGH (companies-house.js): the **city-only** acceptance path is ~21% wrong, and it is asserted as `matched`, so the reader never judges it
 
-**Status:** OPEN — **job-side in `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/demote_city_only_ch.py`; the engine change needs operator approval + a test** (not made) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 860 leads), MEDIUM-HIGH impact — **it ships WRONG OWNER NAMES and marks them authoritative.**
+**Status:** DONE 2026-09-17 — a cityMatch-only acceptance is now labelled `confidence: low_confidence` + `demoted_reason: city_only` (postcode, normalised-title equality and overlap ≥ 0.9 — including overlap-plus-city — stay `matched`), a labelling change only: company, number and officers still ship · test: tests/companies-house.test.js · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 860 leads), MEDIUM-HIGH impact — **it ships WRONG OWNER NAMES and marks them authoritative.**
 
 **Problem.** `companies-house.js` accepts a candidate on any of three bases and records all three identically as `matched`. Measured against a hand audit of every accepted row (`CH-REPORT.md` §4, 432 accepted):
 
@@ -881,7 +880,7 @@ The damage is not the match, it is the label: `owner-prompt.md` Companies House 
 
 ## MEDIUM (stageC / own-domain ranking): the own-domain test is exact-or-subdomain, so an obvious SIBLING domain reads as third-party and the lead ends with no email at all
 
-**Status:** OPEN in the engine — **job-side fix in `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/rerank_emails.py` (FIX (b), `ownness()` returning `'' | exact | subdomain | sibling`); engine port pending** — that is the implementation to port, not a substitute for it · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — small count, but it is a *total* loss on the affected lead.
+**Status:** DONE 2026-09-17 — ported into a new engine module `email-rank.js`: `ownness(email, rootDomain)` returns `'' | exact | subdomain | sibling`, the sibling test comparing the whole second-level label (hyphens stripped, public suffix off via `rootDomain()` in shared-hosts.js, label >= 4 chars, both suffixes in `SAME_COMPANY_TLD`) and NEVER a substring; module in place; call sites: build-plusvibe.js, prep-owner-batches.js pending (build-clay-csv.js and combine-owner-contacts.js pick no best email today, so they were left alone) · test: tests/email-rank.test.js · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — small count, but it is a *total* loss on the affected lead.
 
 **Problem.** The own-domain test compares the address's domain to the lead's `root_domain` by exact match or subdomain. A hyphen variant or a `.com`/`.co.uk` twin — both routine on UK trade sites, where the Maps website and the mailbox domain are registered separately — is classified `other_domain` and dropped, and on a lead whose *only* address is that sibling the row ends with nothing:
 
@@ -897,7 +896,7 @@ The damage is not the match, it is the label: `owner-prompt.md` Companies House 
 
 ## MEDIUM (stageC / person-shape scoring): "any separated local part is `first.last`" is too loose in one direction and too tight in the other — a free-mail trade name outranks the company's own inbox, and `jim@owndomain` loses to `info@`
 
-**Status:** OPEN in the engine — **job-side fix in `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/rerank_emails.py` (FIX (a)); engine port pending** · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — it picks the wrong single best address on leads that HAVE the right one.
+**Status:** DONE 2026-09-17 — ported into `email-rank.js` as `personShape(local)` / `nameFromLocal(local)`: a separated local is `first.last` only when neither token is a trade/company or generic word, and a single-token local that is a common first name is person-shaped, feeding the same `rankEmails()` score `kind*10 + ownness`; module in place; call sites: build-plusvibe.js, prep-owner-batches.js pending (build-clay-csv.js and combine-owner-contacts.js pick no best email today, so they were left alone) · test: tests/email-rank.test.js · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — it picks the wrong single best address on leads that HAVE the right one.
 
 **Problem.** The ranking is `score = kind*10 + ownness` with `person > generic > other`, and `name_from_local` calls a local part person-shaped whenever it is dotted/separated. Two failure modes, both live on this run:
 - **Too loose.** A company's own trade name in a free mailbox scores `person` and beats an own-domain inbox: *BullNose Brickwork* `albion.groundworkers@gmail.com` beat `bullnosebrickwork@gmail.com`; *Russell Preservation* `russell.pres@btconnect.com` beat `info@russellpreservation.co.uk` (`HARVEST-REPORT.md` §"6 rows whose EXISTING email was replaced").
@@ -907,7 +906,7 @@ The damage is not the match, it is the label: `owner-prompt.md` Companies House 
 
 ## MEDIUM (prep-owner-batches.js ordering): a lead with no page text is dropped **before** Companies House directors are injected, so a registry-only lead is never read
 
-**Status:** OPEN (worked around job-side with `prep_chonly_batches.py` / `prep_pass2_batches.py` in this run folder) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — **silent lead loss on exactly the leads the registry could answer.**
+**Status:** DONE 2026-09-17 — `prep-owner-batches.js --ch <companies_house.jsonl>[,…]` renders `ch_directors` (injector wording unchanged) BEFORE the skip decision, so the skip test is "no evidence of ANY kind" and `skipped_none.json` records a reason per lead (`no_text` vs `nothing`) · test: tests/prep-owner-batches.test.js · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — **silent lead loss on exactly the leads the registry could answer.**
 
 **Problem.** `prep-owner-batches.js` skips a lead with no evidence text at all (`owner/read/skipped_none.json`) and the registry block is injected into the batches *afterwards*, by a separate step. The two orderings disagree about what counts as evidence: for a UK run, Companies House **is** the evidence, and it is the only evidence the address-less service-area listings will ever have. On this run **262 of 860 leads were skipped for having no text — and 192 of them carried active CH officers** (86 authoritative, 78 `low_confidence` candidates, 28 demoted `city_only`). Those 192 were not judged by anything: not by a reader, and not by the prompt's rule 3. They needed a second, hand-built pass (`prep_chonly_batches.py`, 5 batches) plus a third after the registry's second pass (`prep_pass2_batches.py`, 2 batches of 47) to reach a reader at all — and the pass-2 batches alone named 46 leads that would otherwise have gone to a paid-ish web sweep or nowhere.
 
@@ -934,7 +933,7 @@ Branching per `web-scrape-triage`:
 
 ## MEDIUM (build-plusvibe.js `fill`): the `OUTCOME` consistency table hardcodes ONE VERTICAL'S business types, so `flag_outcome_off_trade` is silently inert on every other vertical
 
-**Status:** OPEN (found while writing `clients/atlas-growth/personalize-config-uk.json`; no engine change made) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, STEP 7b), MEDIUM impact — **a silently disabled guardrail, which is worse than an absent one.**
+**Status:** DONE 2026-09-17 — `fill` reads the outcome table from the config (`outcome_by_type`, the US table as the default) and WARNs with the count of rows whose `business_type` the table cannot check · test: tests/build-plusvibe.test.js
 
 **Problem.** `fill` computes four flags. Three are config-independent (`flag_visit_repeats_trade`, `flag_word_used_3x`, `flag_free_in_visit`). The fourth reads a table baked into the script:
 
@@ -952,7 +951,7 @@ It bites now: the UK config's seven trades (`damp proofing`, `structural waterpr
 
 ## LOW (build-plusvibe.js `fill`): `clean()` passes an embedded newline through into a placeholder value
 
-**Status:** OPEN (job-side patch in the batch output; no engine change) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, STEP 7b), LOW impact — one row in 391, but it ships a broken subject-line-style value into a sent email.
+**Status:** DONE 2026-09-17 — `clean()` collapses `[\r\n\t]+` to one space before the length check and `check --csv` fails on a line break in any placeholder column · test: tests/build-plusvibe.test.js
 
 **Problem.** A Haiku batch returned `city: "Hastings \nProud To Be A Respected"` (the Maps `city` field for that lead carried a tagline after a newline, and the reader copied it as the "known city"). `clean()` trims ends and quote marks and rejects `cannot|unknown|n/a`, but not an interior newline or carriage return, so `fill` wrote it into the upload and `check --csv` (name rule + unfilled placeholders) has no rule for it. Observed after the fill, by a `\n`-in-value scan.
 
@@ -962,7 +961,7 @@ It bites now: the UK config's seven trades (`damp proofing`, `structural waterpr
 
 ## MEDIUM (build-plusvibe.js `fill` / personalise reader): a blank `city` is a broken email, and the reader returns blank even where the site names its base — a job-side overrides file is the only fix today
 
-**Status:** OPEN (job-side `owner/city_overrides.json` on both the US and the UK run) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, STEP 7b), MEDIUM impact — **41 of 391 rows (10.5%)** rendered `Noticed you do damp proofing around .` before the fix.
+**Status:** DONE 2026-09-17 — `base --city-overrides <json>` plus a `city-fallback` sub-command (site re-read → keyless Nominatim zoom 14 with a district reject-list → county / name area) that writes it · test: tests/build-plusvibe.test.js
 
 **Problem.** Service-area Maps listings carry no address, so `base` writes an empty `city`. The personalisation prompt then asks the reader for the town from the site "ONLY if the known city is blank" — but the reader returned `""` for all 31 such leads that had site text, including ones whose text says `From our Beckenham base` or carries a footer postcode. Ten more had no site text at all. `fill` counts `blank_city` and the SKILL says to clear it job-side; nothing in the engine does it.
 
@@ -972,7 +971,7 @@ It bites now: the UK config's seven trades (`damp proofing`, `structural waterpr
 
 ## MEDIUM (fetch-sites.js `--firecrawl` PASS 3): hardcoded 4 workers, no 429 back-off, and no residue-only mode — the rung cannot be used as shipped on a Firecrawl Hobby plan
 
-**Status:** OPEN (job-side runner `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/firecrawl_residue.js`; no engine change) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 204-site residue), MEDIUM impact — the paid rung exists in the engine but a real run of it fails three ways.
+**Status:** DONE 2026-09-17 — PASS 3 now caps workers at the plan's `queue-status` `maxConcurrency` (2 on failure), spaces starts at `60/--firecrawl-rpm` (default 10), sleeps `Retry-After` and re-queues on a 429 (counted separately), skips the dead codes, rejects challenge/<200-char pages, runs the raw-HTML email rungs on the recovery, and `--firecrawl-residue <site_text.jsonl>` runs the rung alone over an existing file (403 class last, written back in place, resumable) · test: tests/fetch-sites-firecrawl.test.js · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 204-site residue), MEDIUM impact — the paid rung exists in the engine but a real run of it fails three ways.
 
 **Problem.** Measured on the first Firecrawl key this repo has had:
 1. **Concurrency.** PASS 3 runs `Math.min(4, residIdx.length)` workers. `GET /v1/team/queue-status` on this plan returns `maxConcurrency: 2`; the third and fourth requests wait and then die with `408 … timed out while waiting for a concurrency slot` (2 of the first 4 probes).

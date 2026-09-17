@@ -29,7 +29,9 @@ Rules:
 - Do not include the company name, quotation marks, or trailing punctuation.
 - If you truly cannot tell, use the config's fallback for that placeholder.
 - For `city`: if the known city is non-empty, repeat it exactly WITHOUT any trailing state code; only read it
-  from the website when it is blank, and then give the city the company is based in.
+  from the website when it is blank, and then give the town the company is BASED in. A base reads as the town on
+  the footer postcode / registered-office line, a "based in X" or "from our X base" phrase, or the town in the
+  page headline — never one of the towns in a service-area or "areas we cover" list, and never a county or region.
 
 Write ONE JSON object to `<out>`, keyed by place_id, each value `{"business_type": "...",
 "inspection_type": "...", "inspection_singular": "...", "project_type": "...", "city": "...", "evidence":
