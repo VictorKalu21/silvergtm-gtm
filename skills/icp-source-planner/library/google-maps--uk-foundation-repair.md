@@ -172,3 +172,5 @@ geocode at town level (~1 call/s, district answers rejected), then county / the 
   2); **468 with an email (54.4%)**, 444 unique best addresses, 367 named+email; verified **370
   sendable** of 444; Plusvibe upload **391 rows** (364 personalised, 27 named, 0 blank cities after
   42 job-side overrides).
+
+**Pair with:** `trade-bodies-and-installer-networks--foundation-repair.md` — the PCA member API hands back a filed email for 397 UK contractors; joined by website host it supplied an address for 89 of this run's email-less leads and 42 companies Maps did not have. Run it FIRST on the next UK build.
