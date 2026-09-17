@@ -15,7 +15,12 @@ Before uploading any contact list to a cold-email campaign. Non-negotiable gate.
 | **DeBounce** | `verify-debounce-bounceban.js` | Better catch-all detection on enterprise domains |
 | **MillionVerifier** | `verify-millionverifier-bounceban.js` | Cheaper per credit, faster, good default for most lists |
 
-Stage 2 is always **BounceBan** — it SMTP-probes the catch-alls and recovers ~60–70% as sendable.
+Stage 2 is always **BounceBan** — it SMTP-probes what Stage 1 could not settle and recovers it as sendable.
+**Operator directive 2026-09-17: BounceBan gets MV `invalid` and `error` too, not just catch-all/unknown.**
+Measured on the Atlas Growth UK run: 3 of the first 4 MV-`invalid` addresses sent to BounceBan came back
+`deliverable`. A BounceBan `deliverable` on an MV `invalid` overrides the drop (detail
+`bb:recovered_from_invalid`); anything else keeps the MV reason and stays dropped, so the override can only
+ever add sendable addresses. `disposable` is never sent — it is not recoverable. `ok` needs nothing.
 
 ## The runner lives in this skill folder
 
@@ -25,7 +30,11 @@ checkpoints without spending; test in `tests/verify-dry-run.test.js`). The older
 
 ```
 IN=<list.csv> OUT_DIR=<dir> node skills/email-verify-debounce-bounceban/scripts/verify-millionverifier-bounceban.js [--concurrency 4]
+                                                                                    [--bb-on catch_all,unknown,error,invalid] [--dry-run]
 ```
+
+`--bb-on` lists the MillionVerifier results that are routed to BounceBan; the default is the set above.
+**`--bb-on catch_all,unknown,error` is the old behaviour, one flag away** (every `invalid` dropped outright).
 
 **API facts (verified 2026-09-12, one probe each):** MillionVerifier `GET https://api.millionverifier.com/api/v3/?api=KEY&email=&timeout=20`
 → `result` ∈ `ok | catch_all | unknown | disposable | invalid | error`, plus `role`, `free`, `subresult`; credits at
@@ -71,13 +80,21 @@ The CSV must have an `Email` column (exact, case-sensitive). All other columns a
 
 ## Classification logic
 
-```
-Stage 1 → "safe/ok"                → sendable
-Stage 1 → "invalid/disposable/spam" → dropped
-Stage 1 → "catch-all/unknown"       → BounceBan
-  BounceBan → "deliverable"         → sendable (recovered)
-  BounceBan → anything else         → risky
-```
+| Stage 1 (MillionVerifier) | Stage 2 | Verdict |
+|---|---|---|
+| `ok` | — | **sendable** (`mv:ok`) |
+| `disposable` | never sent | **dropped** (`mv:disposable`) |
+| `catch_all` / `unknown` | BounceBan | `deliverable` → **sendable** (`bb:deliverable(recovered)`) · anything else → **risky** · no answer yet → `unverified` |
+| `error`, or an empty/missing result | BounceBan | same as above — an MV error is a question, not a verdict |
+| `invalid` | BounceBan (since 2026-09-17) | `deliverable` → **sendable** (`mv:invalid bb:recovered_from_invalid`) · **anything else, including no answer → dropped** with the MV reason |
+
+Stage 2 runs over every address whose Stage-1 result is in `--bb-on` **plus every address Stage 1 failed to
+answer at all** — a MillionVerifier call that throws is now checkpointed as `result: "error"` instead of
+writing nothing, which is what used to strand such rows as `unverified`, outside BounceBan's reach, on every
+retry (20 rows on the Atlas Growth UK run; see `IMPROVEMENTS.md`).
+
+`report.json` also carries `bb_on` (the routing set actually used), `mv_call_failures` and
+`recovered_from_invalid` so a run can be read back without re-deriving it.
 
 ## Resumability
 Both checkpoints are append-only JSONL files. If interrupted (laptop sleep, crash), re-run the same command — already-verified emails are skipped automatically.
