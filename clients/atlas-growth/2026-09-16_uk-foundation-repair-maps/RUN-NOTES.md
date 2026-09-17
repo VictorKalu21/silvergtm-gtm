@@ -41,11 +41,28 @@ emailed**. Deliverables sent 2026-09-17: `atlas_uk_foundation_repair_maps_qualif
 `contacts_all.csv` (852 contacts), `verify_input.csv` (444), `excluded_adjudication.csv`, and
 `atlas-growth_uk-maps_rundata_essentials.tar.gz` (raw `shard-*` dirs excluded — recreatable at API cost).
 
+**Verification (2026-09-17, operator go + keys).** MillionVerifier → BounceBan over the 444 unique
+addresses: **370 sendable**, 39 risky (catch-all, kept out of the send), 35 dropped (15 invalid + 20
+addresses MillionVerifier returned a persistent `error` for across three attempts — unverified, not
+invalid). `deliverable/emails_final.csv` = 468 rows (392 sendable once shared brand mailboxes are
+counted per lead).
+
+**Plusvibe (STEP 7b, 2026-09-17).** 3-lead test → wording change ('structural waterproofing →
+basement surveys', operator) → 7-lead test → full fill, 10 Haiku batches over `plusvibe_base.csv`
+(391 sendable leads, 27 named under the name rule). Fill: **364 personalised, 27 fallback-only**
+(no site text), 0 of 4 flags, `redo` 0, **41 blank cities**. Blank cities cleared job-side into
+`owner/city_overrides.json` (42 rows incl. one newline-polluted value): a focused Haiku re-read of the
+site text found the base town for 20 of 31 (the first reader had returned blank even for 'From our
+Beckenham base'); keyless Nominatim reverse geocode at zoom 14 for the rest (3-call probe: Stockport /
+Fylde / Rotherham, <1 s each — district-level answers rejected), then the county or the area in the
+business name for franchise listings ('Damp Detectives South West' → 'the South West'). Final
+`check --csv`: 391 rows, 27 named, 0 name-rule violations, 0 unfilled placeholders. Sent as
+`deliverable/atlas_uk_plusvibe_upload.csv`.
+
 **Open items.**
-1. **Email verification NOT run** — no MillionVerifier / BounceBan keys, and credits need an explicit
-   operator go. `deliverable/verify_input.csv` (444 addresses) is staged for it.
-2. **Plusvibe (STEP 7b) not built** — it runs after verification; `personalize-config-uk.json` is
-   drafted and still needs the 3-lead then 7-lead operator test.
+1. **20 addresses unverified** (persistent MillionVerifier API error) — classed dropped; re-run once
+   if MV recovers, they cost 20 credits.
+2. **Second Plusvibe email** still needs the `company_short` variable (STATE.md open decision).
 3. **Three engine fixes pending operator approval + a test**, all filed OPEN in
    `skills/google-maps-scrape/IMPROVEMENTS.md`: the city-only Companies House demotion (job-side in
    `demote_city_only_ch.py`), the sibling-domain + person-shape email ranking (job-side in

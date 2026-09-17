@@ -134,9 +134,14 @@ rows = **2.61 calls/row ≈ 208 calls per 1,000 universe rows ≈ 5.4 calls per 
 20 heal passes, 0 unhealed tiles. Everything after the scrape was **$0**: site text (free fetch +
 in-container Scrapling), Companies House (free key), every owner read and the sweep (in-session
 Haiku / WebSearch — **~470 WebSearch calls for 70 names, ~6.7 searches per name**, against a
-~200-call-per-session ceiling, so the sweep is 3+ sessions of budget). **Email verification has NOT
-run** — no MillionVerifier / BounceBan keys, and credits need an explicit operator go; the 444-address
-`verify_input.csv` is staged for it. The Plusvibe (STEP 7b) build waits on that verification.
+~200-call-per-session ceiling, so the sweep is 3+ sessions of budget). **Email verification:** 444
+unique addresses → **370 sendable (83%)**, 39 risky (catch-all), 35 dropped (20 of them persistent
+MillionVerifier API errors) — 444 MV + 118 BB credits. **Plusvibe (STEP 7b):** 391 rows (one per
+sendable lead), 364 personalised from site text, 27 fallbacks, **27 named** — this vertical is
+`info@` / `enquiries@` country, so the send is mostly nameless company mailboxes. **41 of 391 rows
+(10.5%) had no city after the fill** (service-area listings with no Maps address): budget a job-side
+`city_overrides.json` pass — focused Haiku site re-read (20/31), then a keyless Nominatim reverse
+geocode at town level (~1 call/s, district answers rejected), then county / the area in the name.
 
 **Gotchas:**
 - **Site text is ~85% fetchable and the last 15% is not buyable from a datacentre egress.** 403s
@@ -164,5 +169,6 @@ run** — no MillionVerifier / BounceBan keys, and credits need an explicit oper
   validated qualify + owner-finding; scrape not ours.
 - 2026-09-17 — Atlas Growth — our own scrape, 22,193 universe → 1,770 net-new → **686 ICP + 174
   damp-only**; **586 of 860 named (68.1%)** (CH 504 · web search/SERP 68 · site 12 · email local part
-  2); **468 with an email (54.4%)**, 444 unique best addresses, 367 named+email; verification NOT run
-  (no keys); Plusvibe not built.
+  2); **468 with an email (54.4%)**, 444 unique best addresses, 367 named+email; verified **370
+  sendable** of 444; Plusvibe upload **391 rows** (364 personalised, 27 named, 0 blank cities after
+  42 job-side overrides).
