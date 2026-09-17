@@ -21,11 +21,14 @@ never as the only source (a Maps universe is 20-50× larger).
 | **PCA — Property Care Association (UK)** `property-care.org` | **YES**, hidden API, keyless | memberName, tradingName, memberCategory, skills[], **email**, phone1, website, fullAddress, cityTown, postalcode, county, linkedIn, googleBusiness, profile url | **457 members; 397 contractors; 290 with a Damp Control / Structural Waterproofing / Structural Repair skill** | **397/397 contractors (100%)**, 155 person-shaped |
 | **Supportworks dealer network (US/CA)** `foundationsupportworks.com` | **YES**, hidden API on `hub.supportworks.com`, keyless | name, address, lat/lon, phone, url, hours, associations[] | **99 unique dealers** (164 state rows US, 18 CA, 1 ZA — multi-state dealers repeat) | no (site url → fetch-sites) |
 | **NFRA — National Foundation Repair Association (US)** `foundationrepair.org` | **YES**, public Google-Sheet CSV behind the map | Business Name, Phone, Website, Street, City, State, Zip, Lat, Long, Renewal Date, status | **159 rows, 154 with website, 34 states** (mix of contractors + inspectors + suppliers; a `SUSPENDED` flag column) | no |
+| **Basement Systems dealer network (US/CA/UK)** `basementsystems.com` | **YES**, server-rendered state pages, plain fetch | dealer name, service-area text, profile url (`data-company` id); the profile shows the NETWORK's 1-800 number and **no dealer website or email** → `name-to-domain` | **105 unique dealers** over 66 state/province pages (48 serve several states) | no |
+| BHA — Basement Health Association (US) `basementhealth.org` | page 200, but the locator is a Bullseye Locations ASP.NET web-forms embed (postback, no client key in the page) | — | not enumerated | — |
 | TBIC — The Basement Information Centre (UK) `basements.org.uk` | YES, server HTML | member list → profile page with website, phone, **one contact email** (e.g. `richard@…`) | small (tens; mostly suppliers/consultants + a few waterproofing contractors) | yes, per profile |
 | ASUC — underpinning contractors (UK) `asuc.org.uk/search-members/` | page 200, list **not** in the HTML (WP member-directory plugin, `adn_md_action=filter_members` returns the empty shell) | — | ~100 members claimed | untested |
 | Newton NSBC / Delta installers / Helifix installers (UK) | pages 200, but the installer list is a JS/map widget; no member links in the HTML | — | tens each | — |
 | Triton (UK), Groundworks (US), Yell, Checkatrade | **403 / Cloudflare** from this egress | — | — | — |
-| Facebook business pages | **400** on 3/3 from this egress | — | — | — |
+| Facebook business pages | **400** on 3/3 from this egress; **through Firecrawl the page renders only the logged-out "This content isn't available right now" wall** — dead as a rung | — | — | — |
+| Yell (UK) | Cloudflare 403 direct; **renders through Firecrawl (37 KB) with 0 emails** — Yell lists no addresses by design; Checkatrade likewise | — | — | no |
 
 **Method (PCA):**
 ```
@@ -46,6 +49,10 @@ GET https://hub.supportworks.com/ws/fetchData.php?data=dealerlist&state=VA  → 
 GET https://hub.supportworks.com/ws/fetchData.php?data=dealer&dealerid=<id>
 ```
 Found in the page's own `data.js`. 3-call probe: statelist 12.5 KB / VA 5 dealers / TX 2 dealers, <1 s each.
+
+**Method (Basement Systems):** `GET https://www.basementsystems.com/basement-waterproofing/contractors.html` lists the state pages
+(`/basement-waterproofing/<state>-<xx>.html`, 66); each carries `<div class="directory-dealers--company" data-company="<id>">`
+blocks with the dealer name, a service-area paragraph and a profile link. Dedupe on `data-company`. 66 plain calls, ~1.5 s each.
 
 **Method (NFRA):** the find-a-pro page fetches
 `https://docs.google.com/spreadsheets/d/e/2PACX-1vRzHpuX4D5WiyB7Cpb0UGxBewE6PQeUA_xXPon2TdUIFJ2hmr6Cxvvx29EZ_EbHVPbpih6XVo8yXi5u/pub?gid=0&single=true&output=csv`
