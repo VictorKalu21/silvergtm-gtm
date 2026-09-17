@@ -98,3 +98,25 @@ wall; Yell/Checkatrade publish none). **Open:** operator go on 25 MillionVerifie
 `verify/verify_input_residue.csv`; then rebuild the Plusvibe upload for the new sendable rows.
 The new extractor's junk (MHTML frame ids, `%20` residue, placeholder addresses, Bookings URL
 mailboxes) was found on this replay and fixed in the engine with tests the same day.
+
+## Close-out after verification and the BounceBan recovery (2026-09-17)
+
+The 25 new addresses: 23 sendable / 2 risky / 0 dropped (25 MV + 4 BB credits). Operator directive:
+BounceBan also recovers what MillionVerifier calls `invalid` or returned `error` on — `bb_recover.py`
+sent the earlier batch's 15 invalid + 20 error rows (35 BB credits): **invalid → 5 deliverable /
+9 undeliverable / 1 no answer; error → 13 deliverable / 7 risky.** Reclassified from the checkpoints
+with the runner's new default routing (`--bb-on catch_all,unknown,error,invalid`):
+
+| | before | after |
+|---|---|---|
+| unique addresses | 444 | 469 |
+| sendable | 370 | **411 (87.6%)** |
+| risky | 39 | 48 |
+| dropped | 35 | 10 |
+| `emails_final.csv` sendable rows | 392 | **435** |
+
+Plusvibe rebuilt with the engine's new `base --city-overrides` (46 overrides; the 5 stragglers after
+`city-fallback` were village/pin answers replaced by the town the lead itself names) and with
+`outcome_by_type` added to the UK config, so `flag_outcome_off_trade` is live for the first time
+(0 hits on 435 rows). **435 rows, 409 personalised, 26 fallback-only, 29 named, 0 flags, check
+passed.** Sent as `deliverable/atlas_uk_plusvibe_upload.csv`.

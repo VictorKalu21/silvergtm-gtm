@@ -169,9 +169,9 @@ geocode at town level (~1 call/s, district answers rejected), then county / the 
   validated qualify + owner-finding; scrape not ours.
 - 2026-09-17 — Atlas Growth — our own scrape, 22,193 universe → 1,770 net-new → **686 ICP + 174
   damp-only**; **586 of 860 named (68.1%)** (CH 504 · web search/SERP 68 · site 12 · email local part
-  2); **468 with an email (54.4%)**, 444 unique best addresses, 367 named+email; verified **370
-  sendable** of 444; Plusvibe upload **391 rows** (364 personalised, 27 named, 0 blank cities after
-  42 job-side overrides).
+  2); **468 with an email (54.4%)**, 444 unique best addresses, 367 named+email; verified **411
+  sendable** of 469 (after BounceBan recovery of MV invalid/error rows: +18); Plusvibe upload **435 rows** (409 personalised, 29 named, 0 blank cities after
+  46 overrides).
 
 **Firecrawl on the residue (2026-09-17):** 204 blocked sites → **141 recovered (69%)** for 146 credits at 10 req/min; that text re-tiered 55 leads, adjudication added **+38 worked leads (898)**, +24 named, **+27 emails (495, 55.1%)**. Worth it at ~1 credit per recovered site; run it before the owner reads next time, not after.
 
