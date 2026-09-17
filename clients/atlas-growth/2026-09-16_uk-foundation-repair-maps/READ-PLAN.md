@@ -134,6 +134,70 @@ Two additions to hold the readers to, both already in `owner-prompt.md`:
 2. Companies House prints `SURNAME, Forename`. It is converted (`BIRD, Martin Paul` → `Martin Bird`,
    first forename only) and never emitted raw.
 
+## STEP A2 — the 5 Companies-House-ONLY reads (the 262 skipped leads)
+
+Closes open item 1. `prep_chonly_batches.py` (this folder) rebuilds the leads
+`prep-owner-batches.js` dropped for having no evidence text, in the identical lead-object shape,
+with `site_text` / `owner_page_text` / `serp_text` / `web_search_evidence` all empty and
+`ch_directors` rendered by a byte-for-byte copy of `inject_ch_directors.py`'s renderer (the script
+asserts the `[matched match]` / `[low_confidence match]` / `DEMOTED` literals still match that
+file's source before it writes anything). It is **not** imported — `inject_ch_directors.py` works at
+module level and an import would rewrite `owner/read/batches/` underneath the live readers.
+
+```bash
+python3 $RUN/prep_chonly_batches.py          # --batch 40, --out owner/read_chonly
+```
+
+```
+skipped leads total:            262
+  with >=1 active CH officer:   192     (the engine stores active officers only — `!x.resigned_on`)
+  no Companies House officers:  70      (STEP C sweeps these for a name)
+batches written:                5       (4 x 40 + 1 x 32) -> owner/read_chonly/batches
+  authoritative [matched match]:        86
+  candidates    [low_confidence match]: 78
+  DEMOTED city_only:                    28   <- the exposure open item 1 named
+```
+
+Dispatch **one subagent per batch, `model: haiku`, all 5 in a single message** — the STEP A prompt
+template verbatim, with `owner/read/batches/batch-<N>-in.json` swapped for
+`owner/read_chonly/batches/batch-<N>-in.json` (and the same swap in the `-out.json` write path), for
+`N` in `0 … 4`. Three things to add to it, because these readers see a different world:
+
+1. **The Companies House block is the ONLY evidence.** `site_text`, `owner_page_text`, `serp_text`
+   and `web_search_evidence` are empty by construction, not by accident — do not report them as
+   missing data and do not go looking for more (no web search; that is STEP C's job).
+2. **For a `[low_confidence match]` — 106 of the 192 — rule 3 is the ENTIRE judgement.** With no
+   page text there is no second signal to corroborate with, so the distinctive-token overlap between
+   the registered company title and the business name decides it alone. No overlap ⇒ output `[]`.
+   `BNS Groundwork London → GROUNDWORK EAST LONDON` shares only the generic `groundwork` and dies;
+   `TARN Basement Excavation London → TARN DEVELOPMENT LONDON LLP` shares `tarn` and survives.
+3. **A sole-trader-style business name is not evidence of a director.** "J Smith Damp Proofing"
+   matching a `SMITH` officer at some company is a name coincidence, not a match — the surname in a
+   trading name does not satisfy rule 3 on its own, and the ENTITY-MATCH rule still applies (a
+   same-name firm in another UK town is a different company).
+
+`evidence` is still a verbatim quote containing the person's name — here that quote comes from the
+`ch_directors` block itself. `SURNAME, Forename` is converted (`BARLOW, Reginald William` →
+`Reginald Barlow`, first forename only) and never emitted raw. `source` is `companies_house`.
+
+### Merge (confirmed: `merge-owner-reads.js --dir` points anywhere)
+
+`--dir` is used only as `path.join(DIR, 'batches')` for the `batch-<N>-in.json` / `-out.json` pairs
+and as the write path for `read_report.json`; `--out` defaults to `<dir>/../contacts_read.jsonl` and
+is passed explicitly here so it cannot collide with STEP B's file. Nothing in it is hardcoded to
+`owner/read`, so this directory works unchanged:
+
+```bash
+node $ENG/merge-owner-reads.js --dir $RUN/owner/read_chonly --out $RUN/owner/contacts_read_chonly.jsonl \
+  --exclude-titles "surveyor,damp surveyor,building surveyor,remedial surveyor,quantity surveyor,estimator,inspector,site manager,site foreman,foreman,contracts manager,contracts supervisor,project manager,production manager,technician,damp technician,damp proofer,installer,operative,labourer,laborer,apprentice,scheduler,dispatcher,receptionist,bookkeeper,accounts,health and safety,company secretary,former,retired"
+```
+→ `owner/contacts_read_chonly.jsonl` + `.csv` + `owner/read_chonly/read_report.json`
+
+Same UK `--exclude-titles` list as STEP B, verbatim — `company secretary` earns its place here more
+than anywhere else, since a registry block is exactly where one shows up. Feed
+`contacts_read_chonly.jsonl` to `combine-owner-contacts.js` (step 9) alongside
+`contacts_read.jsonl` and `contacts_sweep.jsonl`.
+
 ## STEP B — merge the reads (UK exclude list is not optional)
 
 ```bash
@@ -184,15 +248,14 @@ whatever it names, and `combine-owner-contacts.js` (step 9).
 
 ## Open items for the operator
 
-1. **262 leads never reach a reader.** `prep-owner-batches.js` drops a lead with no evidence text at
-   all, and `ch_directors` is injected *after* that drop — so a lead whose only evidence is the
-   registry is not judged. **192 of the 262 carry Companies House officers: 86 authoritative, 78
-   low_confidence candidates, 28 demoted `city_only`.** The 28 are the exposure: an unjudged
-   town-name-only match. Two ways to close it, operator's call — queue a CH-only read pass over
-   `owner/read/skipped_none.json`, or leave them to `assemble_deliverable.py`'s own `same_company()`
-   QA (it already drops a `companies_house`-sourced contact whose CH title shares no core token with
-   the business name), which catches the same defect one stage later. STEP C sweeps all 262 for a
-   name regardless.
+1. ~~**262 leads never reach a reader.**~~ **CLOSED by STEP A2.** `prep-owner-batches.js` drops a
+   lead with no evidence text at all, and `ch_directors` is injected *after* that drop — so a lead
+   whose only evidence is the registry was not judged. **192 of the 262 carry Companies House
+   officers: 86 authoritative, 78 low_confidence candidates, 28 demoted `city_only`** — the 28 being
+   the exposure, an unjudged town-name-only match. `prep_chonly_batches.py` now queues all 192 as 5
+   CH-only read batches in `owner/read_chonly/` (STEP A2); `assemble_deliverable.py`'s
+   `same_company()` QA stays as the second net one stage later. The remaining 70 have no registry
+   record either; STEP C sweeps all 262 for a name regardless.
 2. **The engine still accepts on `cityMatch` alone.** The demotion here is job-side and applies to
    this run's output only. The permanent fix belongs in `skills/google-maps-scrape/companies-house.js`
    behind a test and an operator go — a new `IMPROVEMENTS.md` entry, distinct from the OPEN
@@ -233,6 +296,7 @@ python3 $RUN/demote_city_only_ch.py          # 349 kept authoritative / 83 demot
 node $ENG/prep-owner-batches.js --leads $RUN/owner_read_input.csv --dir $RUN/owner \
      --out $RUN/owner/read --batch 40        # 598 items, 15 batches, 262 skipped_none
 python3 $RUN/inject_ch_directors.py          # 428 of 598 leads given ch_directors
+python3 $RUN/prep_chonly_batches.py          # 192 of the 262 skipped, 5 batches -> owner/read_chonly
 ```
 
 `demote_city_only_ch.py` and `inject_ch_directors.py` are both idempotent; re-running
