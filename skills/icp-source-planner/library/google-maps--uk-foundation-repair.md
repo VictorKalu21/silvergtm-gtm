@@ -173,4 +173,6 @@ geocode at town level (~1 call/s, district answers rejected), then county / the 
   sendable** of 444; Plusvibe upload **391 rows** (364 personalised, 27 named, 0 blank cities after
   42 job-side overrides).
 
+**Firecrawl on the residue (2026-09-17):** 204 blocked sites → **141 recovered (69%)** for 146 credits at 10 req/min; that text re-tiered 55 leads, adjudication added **+38 worked leads (898)**, +24 named, **+27 emails (495, 55.1%)**. Worth it at ~1 credit per recovered site; run it before the owner reads next time, not after.
+
 **Pair with:** `trade-bodies-and-installer-networks--foundation-repair.md` — the PCA member API hands back a filed email for 397 UK contractors; joined by website host it supplied an address for 89 of this run's email-less leads and 42 companies Maps did not have. Run it FIRST on the next UK build.

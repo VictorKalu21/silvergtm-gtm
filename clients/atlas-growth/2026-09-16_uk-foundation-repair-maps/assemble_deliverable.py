@@ -55,7 +55,8 @@ SEGMENTS = [('qualified', 'leads_qualified_contacts.csv'),
 SOURCES = [('read',        'owner/contacts_read.jsonl',        ['owner/companies_house.jsonl', 'owner/companies_house_lowconf.jsonl']),
            ('read_chonly', 'owner/contacts_read_chonly.jsonl', ['owner/companies_house.jsonl', 'owner/companies_house_lowconf.jsonl']),
            ('read_pass2',  'owner/contacts_read_pass2.jsonl',  ['owner/companies_house_pass2.jsonl']),
-           ('sweep',       'owner/contacts_sweep.jsonl',       [])]
+           ('sweep',       'owner/contacts_sweep.jsonl',       []),
+           ('read_residue','owner/residue/contacts_read.jsonl', ['owner/residue/companies_house.jsonl', 'owner/residue/companies_house_lowconf.jsonl'])]
 
 # ---------------------------------------------------------------------------
 # the export run's QA helpers, verbatim

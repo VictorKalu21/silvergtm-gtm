@@ -71,3 +71,30 @@ business name for franchise listings ('Damp Detectives South West' → 'the Sout
 4. **8 junk-contact records** — read records holding a "contact" that is not a person
    (`"West Yorkshire"`, `"Home About Damptec"`) with a blank `primary_name`; they were re-queued by
    `build_have.py` this run, but the three-way "named" disagreement in the engine is still OPEN.
+
+## Firecrawl residue pass (2026-09-17, operator key)
+
+The 224-site residue (status != ok in `owner/site_text.jsonl`, minus 404/400/402/307 = **204**) went
+through `firecrawl_residue.js`: 2 workers, one request every 6.5 s (the Hobby plan is
+`maxConcurrency 2`, 10 req/min — the engine's own `--firecrawl` pass at 4 workers produced 408s and
+then 429s on every row; filed in IMPROVEMENTS). **141 recovered (69%)**, 63 failed (41 thin/parked
+pages returning 200 with <200 chars, 15 engine-500, 3 timeouts, rest 4xx). 146 credits.
+Merged by `merge_firecrawl.py` (backup `site_text.jsonl.pre-firecrawl.bak`), then the run's own
+chain re-ran on the recovered text only:
+
+| step | result |
+|---|---|
+| `stageB_classify.py` | 76 rows changed tier, all recovered; **55 unworked leads now A/B/C** |
+| adjudication batches 45–47 (Opus, same PROMPT.md) | 27 yes · 26 no · 2 unclear |
+| `merge_adjudication.py` | **+29 ICP, +9 damp-only → 715 + 183 = 898 worked leads**; 0 removed, kept rows changed only in classification fields |
+| `companies-house.js` on the 38 (`owner/residue/`) + low-conf officers | 24 matched with directors; 6 low-confidence candidates |
+| `prep-owner-batches.js` → `inject_ch_residue.py` → 2 Haiku reads → `merge-owner-reads.js` | 35 read (3 no evidence), **24 named**, 39 contacts (CH 38, site 1) |
+| `combine-owner-contacts.js` (+ `owner/residue/contacts_read.jsonl`) | **623 of 898 named (69.4%)** at contact level; **610** in the deliverable after the CH name-mismatch QA |
+| recovered emails → `owner/emails_deep.jsonl` → `rerank_emails.py` | **+13 worked leads gained a first email**, +14 on the new leads → **495 of 898 (55.1%)**, 469 unique |
+| `assemble_deliverable.py` (+ `read_residue` source) → `apply_verify.py` | 392 sendable · 40 risky · 36 dropped · **27 unverified** (25 unique new addresses, 6 person-shaped) |
+
+Facebook and the UK directories were probed through Firecrawl and are dead as email rungs (login
+wall; Yell/Checkatrade publish none). **Open:** operator go on 25 MillionVerifier credits for
+`verify/verify_input_residue.csv`; then rebuild the Plusvibe upload for the new sendable rows.
+The new extractor's junk (MHTML frame ids, `%20` residue, placeholder addresses, Bookings URL
+mailboxes) was found on this replay and fixed in the engine with tests the same day.
