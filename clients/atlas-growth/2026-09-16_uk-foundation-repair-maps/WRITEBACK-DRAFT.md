@@ -91,7 +91,7 @@ The damage is not the match, it is the label: `owner-prompt.md` Companies House 
 
 ## A3 — MEDIUM (stageC / own-domain ranking): the own-domain test is exact-or-subdomain, so an obvious SIBLING domain reads as third-party and the lead ends with no email at all
 
-**Status:** OPEN (not fixed anywhere; 10 leads on this run end empty) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — small count, but it is a *total* loss on the affected lead.
+**Status:** OPEN in the engine (a job-side fix now exists — `rerank_emails.py` FIX (b) in this run folder, `ownness()` returning `'' | exact | subdomain | sibling`; that is the implementation to port, not a substitute for it) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — small count, but it is a *total* loss on the affected lead.
 
 **Problem.** The own-domain test compares the address's domain to the lead's `root_domain` by exact match or subdomain. A hyphen variant or a `.com`/`.co.uk` twin — both routine on UK trade sites, where the Maps website and the mailbox domain are registered separately — is classified `other_domain` and dropped, and on a lead whose *only* address is that sibling the row ends with nothing:
 
