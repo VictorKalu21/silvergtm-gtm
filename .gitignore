@@ -10,3 +10,6 @@
 /data/
 /out/
 *.xlsx
+
+# Skill config templates are process, not data
+!**/config.example.json

@@ -1,0 +1,26 @@
+{
+  "_comment": "Copy to config.json inside your RUN folder (gitignored). Regexes are JS, case-insensitive. Locked 2026-09-17 with the user: size 51-500, Lead/Senior are IC, explicit Terraform/CloudFormation/Bicep only.",
+  "hits_file": "discovery/hits.txt",
+  "slugs_file": "discovery/slugs.json",
+  "ats": { "greenhouse": true, "lever": true, "ashby": true, "workable": false },
+  "fetch": { "concurrency": 6, "timeout_ms": 20000, "delay_ms": 300 },
+
+  "title_allow": "\\b(dev ?ops|platform|infrastructure|infra|cloud|sre|site reliability|reliability|systems? engineer)\\b",
+  "title_role_word": "\\b(engineer|engineering|developer|sre|specialist)\\b",
+  "title_deny": "\\b(head|director|vp|vice president|principal|staff|chief|cto|manager|architect|intern|internship|consultant|contractor|freelance|freelancer|founding|apprentice|graduate|junior)\\b",
+
+  "tech": {
+    "terraform": "\\bterraform\\b|\\bterragrunt\\b|\\bopentofu\\b",
+    "cloudformation": "\\bcloud ?formation\\b",
+    "bicep": "\\bbicep\\b"
+  },
+  "posting_max_age_days": 90,
+
+  "company_deny_name": "\\b(jobgether|staffing|recruit(ing|ment)?|talent|consult(ing|ancy)?|federal|freelanc|outsourc|nearshore|offshore)\\b",
+  "size_band": [51, 500],
+  "company_deny_verticals": ["consultancy", "agency", "MSP", "IT services", "staffing", "banking", "finance", "fintech-regulated", "insurance", "defense", "government contractor", "healthcare provider/payer", "crypto exchange"],
+
+  "people_csv": "people.csv",
+  "people_cols": { "first": "First Name", "last": "Last Name", "title": "Title", "linkedin": "Person Linkedin Url", "website": "Website", "company": "Company", "email": "Email" },
+  "dedupe_files": []
+}
