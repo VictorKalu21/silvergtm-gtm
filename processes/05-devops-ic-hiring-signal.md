@@ -75,17 +75,22 @@ Apollo people search by domain, IC titles per config, exclude the JD's named hir
 - **Greenhouse embed hits carry no slug**; **8 MB body cap** drops giant boards (Anduril) as `badjson`.
 - Never fetch LinkedIn profiles for the tech mention — auth-walled (web-scrape-triage STOP line). JD, ATS JSON, and HeyReach headline are the allowed evidence sources.
 
-## Worked example — test batch (2026-09-17, Gate 2)
+## Worked example — test run (2026-09-17)
 
 | Stage | Count |
 |---|---|
-| WebSearch queries | 18 |
-| Hit URLs | 121 (Greenhouse 49 · Ashby 31 · Lever 21 · Workable 19) |
-| Boards fetched | 100 enabled → 92 ok (8 failed: 404 / oversize) |
-| Postings enumerated | 4,069 |
-| IC-title postings | 180 |
-| IC-title + explicit tech | 109 (Terraform 108 · CloudFormation 18 · Bicep 4); 73 fresh ≤90 d |
-| Companies with ≥1 passing posting | 48 (47 pass · 1 held on name-deny) |
-| Domains from source | 38 high + 2 medium; 6 → WebSearch; 1 unresolvable (staffing) |
+| WebSearch queries (two batches) | 38 |
+| Hit URLs | 219 → 218 unique boards (Greenhouse 94 · Ashby 70 · Lever 35 · Workable 19 off) |
+| Boards fetched | 198 enabled → 189 ok (9 failed: 404 / oversize) |
+| Postings enumerated from ATS JSON | 8,755 |
+| IC-title postings | 463 |
+| IC-title + explicit tech in the JD | 242 (Terraform 241 · CloudFormation 45 · Bicep 8); 174 fresh ≤90 d |
+| Companies with ≥1 passing posting (G2) | 109 |
+| Domains from the source | 88 board/JD links + 12 WebSearch + 6 medium; 3 unresolved |
+| Company screen (Haiku on homepage text + 12 manual overrides) | 66 kept · 43 dropped (27 services · 14 regulated · 2 other) |
+| Size confirmed 51–500 (LinkedIn snippet / PitchBook via WebSearch) | **31 companies** (34 out of band, 1 unknown) |
 
-Gate 2 stopped here for eyeball; company screen + people pull follow at G3.
+Screen cost: four Haiku batches, ~250k tokens total. Size confirmation: 67 WebSearch calls, $0.
+Gotchas that surfaced: Sierra's LinkedIn snippet carries no count (940 via TrueUp); SmarterDx's LinkedIn now
+shows its acquirer's 10,001+; an Ashby board with hundreds of postings across brands (Clera) is a recruiter.
+The 31 qualified companies carry 55 passing postings between them → `apollo_domains.csv` is the people-step input.
