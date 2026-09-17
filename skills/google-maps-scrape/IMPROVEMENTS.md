@@ -811,3 +811,141 @@ tiles.
 **Candidate fix.** After pass 0, flag `ok`+0 events at centres whose other queries returned > N rows, and re-buy
 them once (same runsheet, same heal machinery). Surface the count in the coverage summary either way so the hole is
 visible even when the re-buy is declined. Cost is ~36–90 calls on a run of this size.
+
+## NOTE 2026-09-17 (write-back index, Atlas Growth 2026-09-16 UK foundation-repair MAPS run)
+
+Entries for this run that are **already logged above and are not repeated below** — cross-reference them, do not re-file:
+the `MEDIUM (owner-finding, three scripts disagree on what "named" means)` entry (top of file); `DONE 2026-09-16 (engine bug):
+shared-hosts.js didn't know site-builder platforms`; `LOW-MEDIUM (coverage blind spot): run-scrape.js heals only status != ok`;
+and `MEDIUM (companies-house.js): exact-title matches with punctuation/"&" differences fall to low_confidence`. The six entries
+below are new; each names how it relates to those where they touch.
+
+## HIGH (fetch-sites.js, email coverage): the email regex runs on STRIPPED text and the L2 keywords never reach the contact page — four classes of address are invisible and the page they live on is never fetched
+
+**Status:** OPEN (proved job-side by `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/harvest_emails_deep.py`; engine change not made) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 676 root domains), **HIGH impact — it is the difference between a third and a half of the list being contactable.**
+
+**Problem.** `fetch-sites.js` extracts emails with a plain regex run over the output of `htmlToText()`. That function deletes `<script>` blocks and every tag, i.e. every attribute, *before* the regex sees the page. Four whole classes of address are therefore unreachable by construction, and a fifth never gets fetched at all:
+
+| miss | why |
+|---|---|
+| `mailto:` href | an attribute; the `<a>` is gone before the regex runs |
+| JSON-LD `"email"` | lives in `<script type="application/ld+json">`, which `htmlToText` strips |
+| Cloudflare `data-cfemail` | XOR-encoded hex attribute; the visible text is only `[email protected]` |
+| `<span>@</span>` splits, `&#64;`, `[at]`, zero-width chars | broken before the regex ever sees an `@` |
+| the contact page | the default `site_l2_keywords` list is owner-finding shaped (about / team / meet / …). `contact`, `contact-us`, `get-in-touch`, `enquir` are **not** in it — and a UK trade site puts its mailbox on the contact page, not the about page |
+
+Probed on three live list sites before anything was built (`HARVEST-REPORT.md`, 3-call rule): `khbpiling.co.uk` (mailto), `piledsolutions.co.uk` (cfemail), `southwestunderpinning.co.uk` (JSON-LD). Three sites, three different rungs, and **the engine's rung returned nothing on all three.**
+
+**Measured gain, one list.** 784 leads with a non-shared-host website → 676 unique root domains fetched (one fetch per root domain; branches read their representative), 1,523 page requests, 2.45 pages per reachable domain.
+
+| | |
+|---|---|
+| addresses kept | 494 over 422 domains |
+| **new to the run** (the engine's output did not contain them) | **137** — mailto 49 · tag_split 19 · cfemail **48 (100% of that rung)** · jsonld 19 · raw_html 2 |
+| domains that gained an address the engine never had | 119 |
+| leads that gained a sendable address | **+103** (+74 ICP, +29 damp-only) |
+| ICP segment coverage | 240/686 (**35.0%**) → 314/686 (**45.8%**) |
+| damp-only segment coverage | 116/174 (66.7%) → 145/174 (**83.3%**) |
+| both segments | 356/860 (41.4%) → 459/860 (**53.4%**) at harvest time (**468/860, 54.4%** in the final deliverable after the re-rank below) |
+| person-shaped addresses | 8 → 14 at harvest time · own-domain 257 → 330 |
+
+Every single Cloudflare-obfuscated address was new — that rung is pure gain by construction, because the engine can only ever see the placeholder.
+
+**Fix (engine, with a test and an operator go).** Two data/shape changes, no new dependency and no new fetch budget:
+1. An `emailsIn(rawHtml)` that runs **before** `htmlToText`, over the raw response body: `mailto:` hrefs, JSON-LD `"email"`, `data-cfemail` (XOR decode), and a tag-split/entity normaliser (`&#64;`, `[at]`, `<span>@</span>`, zero-width) — then union with today's text regex and keep the existing junk / other-domain / third-party rejects. Provenance per address (`mailto | jsonld | cfemail | tag_split | raw_html | text`) so a bad rung can be switched off by evidence.
+2. Add `contact`, `contact-us`, `get-in-touch`, `enquir` to the **default** `site_l2_keywords`. The UK config already carries them job-side (ICP-uk.md), which is why the L2 half of the gain was available at all; the defaults should not need a per-client override to find a contact page.
+
+Test fixture: one page per rung plus a negative (an `info@` inside a CDN URL, and a `[email protected]` with no `data-cfemail`, neither of which may be kept). One extraction defect already found and fixed in the job-side version, worth carrying into the test: a `tag_split` match over an inline JS blob swallowed a `>` escape body and produced `u003eenquiries@…`.
+
+**Cost note:** no extra fetch — the rungs read the body already downloaded; only the contact-page L2 adds requests (~1.5 pages per domain here, free).
+
+## MEDIUM-HIGH (companies-house.js): the **city-only** acceptance path is ~21% wrong, and it is asserted as `matched`, so the reader never judges it
+
+**Status:** OPEN — **job-side in `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/demote_city_only_ch.py`; the engine change needs operator approval + a test** (not made) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 860 leads), MEDIUM-HIGH impact — **it ships WRONG OWNER NAMES and marks them authoritative.**
+
+**Problem.** `companies-house.js` accepts a candidate on any of three bases and records all three identically as `matched`. Measured against a hand audit of every accepted row (`CH-REPORT.md` §4, 432 accepted):
+
+| acceptance basis | matched | flagged wrong | error rate |
+|---|---:|---:|---:|
+| postcode in the registered-office snippet | 154 | 4 (3 of them false alarms) | **~0.6%** |
+| name overlap ≥ 0.9 | 159 | 0 | **0%** |
+| **city / town name only** | **119** | **25** | **~21%** |
+
+A UK town is not a disambiguator in a vertical where every second firm is called `<word> Damp Proofing`: *Rentokil Property Care – Belfast* → BELFAST PROPERTY DEVELOPMENTS LTD, *Phillips Building & Property Maintenance* → ALM BUILDING SERVICES & PROPERTY MAINTENANCE LTD, *PERLINI Damp Proofing* → ABOVEWATER DAMP PROOFING LTD (the same failure the export run already caught), *Bolton Piling* → APPLETON PILING LIMITED, *BNS Groundwork London* → GROUNDWORK EAST LONDON. A 25-row random QA put the fleet-wide wrong rate at 2/25 (8%); the fleet scan put it at ~26 of 432 (~6.0%), **25 of them on this one path**. The scan under-counts — an all-generic pair it cannot see (*P&E Basement Excavation Builders* → HG P&E AGGREGATOR NOMINEES LIMITED, a nominee holding company) was caught by eye.
+
+The damage is not the match, it is the label: `owner-prompt.md` Companies House rule 3 (reject a match whose registered title shares no distinctive token with the business name) is applied by the reader **only to `low_confidence` candidates**. A `matched` record is handed to the reader as authoritative, so the one path that needs judgement is the one path that never gets it.
+
+**Fix (engine, needs operator approval + a test — not applied).** Demote a `cityMatch`-only acceptance to `confidence: low_confidence` with a `demoted_reason: city_only`, unless the name overlap also clears the high bar. It is a labelling change, not a drop: the candidate still reaches the reader, who applies rule 3 to it. Test: three fixtures — postcode-confirmed (stays `matched`), overlap ≥ 0.9 with a city hit (stays `matched` — that combined path measured 0% wrong on 36 rows and must not be demoted with the rest), town-name-only (demotes). Job-side precedent to port: `demote_city_only_ch.py` demoted 83 of 432 on exactly that two-part test, and `inject_ch_directors.py` renders the demoted block with the literal the prompt keys on.
+
+**Related but distinct:** the OPEN 2026-09-16 entry *"exact-title matches with punctuation/'&' differences fall to low_confidence"* is the opposite error — real matches wrongly demoted. Fixing that one (normalised-title equality as an accept) also shrinks this one, because a lead that can be accepted on a normalised title never reaches the city-only path. Downstream of both, the same-company QA on this run's combined names moved the headline from 599 to **586 of 860** — the 13 removed were branch-to-national-parent and wrong-company CH matches.
+
+## MEDIUM (stageC / own-domain ranking): the own-domain test is exact-or-subdomain, so an obvious SIBLING domain reads as third-party and the lead ends with no email at all
+
+**Status:** OPEN in the engine — **job-side fix in `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/rerank_emails.py` (FIX (b), `ownness()` returning `'' | exact | subdomain | sibling`); engine port pending** — that is the implementation to port, not a substitute for it · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — small count, but it is a *total* loss on the affected lead.
+
+**Problem.** The own-domain test compares the address's domain to the lead's `root_domain` by exact match or subdomain. A hyphen variant or a `.com`/`.co.uk` twin — both routine on UK trade sites, where the Maps website and the mailbox domain are registered separately — is classified `other_domain` and dropped, and on a lead whose *only* address is that sibling the row ends with nothing:
+
+    khbpiling.co.uk        -> info@khb-piling.co.uk
+    dc-edney.co.uk         -> enquiries@dcedney.co.uk
+    telforddampproofing.com-> info@telforddampproofing.co.uk
+    tflower.uk             -> info@tflower.co.uk
+    renlon.co.uk           -> survey@renlon.com
+
+**10 leads** on this run, all of them otherwise contactable.
+
+**Fix (engine, with a test).** Normalise before comparing: lowercase, strip hyphens, and treat the same second-level label as own-domain across `.co.uk` / `.com` / `.uk` (the public-suffix-aware `rootDomain` in `shared-hosts.js` already knows how to take a `co.uk`-style suffix off). Keep it to a sibling test — it must not become a substring test, or `damp.co.uk` starts owning `dampex.com`. Test fixture: the five pairs above as accepts, plus `dampproofing.co.uk` vs `dampproofingltd.co.uk` as a reject.
+
+## MEDIUM (stageC / person-shape scoring): "any separated local part is `first.last`" is too loose in one direction and too tight in the other — a free-mail trade name outranks the company's own inbox, and `jim@owndomain` loses to `info@`
+
+**Status:** OPEN in the engine — **job-side fix in `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/rerank_emails.py` (FIX (a)); engine port pending** · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — it picks the wrong single best address on leads that HAVE the right one.
+
+**Problem.** The ranking is `score = kind*10 + ownness` with `person > generic > other`, and `name_from_local` calls a local part person-shaped whenever it is dotted/separated. Two failure modes, both live on this run:
+- **Too loose.** A company's own trade name in a free mailbox scores `person` and beats an own-domain inbox: *BullNose Brickwork* `albion.groundworkers@gmail.com` beat `bullnosebrickwork@gmail.com`; *Russell Preservation* `russell.pres@btconnect.com` beat `info@russellpreservation.co.uk` (`HARVEST-REPORT.md` §"6 rows whose EXISTING email was replaced").
+- **Too tight.** A separator is required, so a first-name-only mailbox on the company's own domain scores `other` and loses to `info@`: `jim@falconstructural.co.uk`, `garry@atkinswallcare.co.uk`, `jean@maljon.co.uk`, `paul@…`. Those are the best owner-outreach addresses on the list, and the deep harvest surfaced them only for them to be ranked away.
+
+**Fix (engine, with a test).** Two narrow rules, no new scoring dimension: (a) a separated local is person-shaped only when the SECOND token is not a trade/company word and neither token is a generic mailbox word; (b) a single-token local that is a common first name is person-shaped. Test fixture: the four accepts (`jim@`, `garry@`, `jean@`, `paul@`) and the two rejects (`albion.groundworkers@`, `russell.pres@` against an own-domain generic), plus one unchanged `first.last@owndomain` so the normal case is pinned. Final person-shaped count on this run after the job-side re-rank: **39 of 860**.
+
+## MEDIUM (prep-owner-batches.js ordering): a lead with no page text is dropped **before** Companies House directors are injected, so a registry-only lead is never read
+
+**Status:** OPEN (worked around job-side with `prep_chonly_batches.py` / `prep_pass2_batches.py` in this run folder) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact — **silent lead loss on exactly the leads the registry could answer.**
+
+**Problem.** `prep-owner-batches.js` skips a lead with no evidence text at all (`owner/read/skipped_none.json`) and the registry block is injected into the batches *afterwards*, by a separate step. The two orderings disagree about what counts as evidence: for a UK run, Companies House **is** the evidence, and it is the only evidence the address-less service-area listings will ever have. On this run **262 of 860 leads were skipped for having no text — and 192 of them carried active CH officers** (86 authoritative, 78 `low_confidence` candidates, 28 demoted `city_only`). Those 192 were not judged by anything: not by a reader, and not by the prompt's rule 3. They needed a second, hand-built pass (`prep_chonly_batches.py`, 5 batches) plus a third after the registry's second pass (`prep_pass2_batches.py`, 2 batches of 47) to reach a reader at all — and the pass-2 batches alone named 46 leads that would otherwise have gone to a paid-ish web sweep or nowhere.
+
+The 28 demoted `city_only` records inside that set are the sharp edge: an unjudged town-name-only match (see the city-only entry above) on a lead nothing else can check.
+
+**Fix (engine, with a test and an operator go).** Make the skip test "no evidence of ANY kind" rather than "no page text": either inject `ch_directors` before the skip decision, or give `prep-owner-batches.js` a `--ch <companies_house.jsonl>` input it counts as evidence. Either way `skipped_none.json` should record *why* a lead was skipped, so "no text" and "nothing at all" stop being the same number. Test: a fixture lead with empty `site_text` and one active officer must land in a batch, not in `skipped_none`.
+
+**Related:** distinct from the top-of-file `MEDIUM (owner-finding, three scripts disagree on what "named" means)` entry — that one loses leads the reader half-answered; this one loses leads the reader never saw.
+
+## FACT / ENVIRONMENT (site-text recovery ceiling): Cloudflare's **Turnstile widget host is not allowed out of this egress**, so a challenge that needs it can never be solved from here — however long it is given
+
+**Status:** RECORDED 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run). Not a bug; a boundary to design against, and the reason not to buy more time on the Tier-3 rung. This is the **environment half** of the OPEN `fetch-sites.js: add a rendered/anti-bot fallback rung (triage-ladder escalation)` entry above — it does not replace it.
+
+**Measured.** `fetch-sites.js` over 1,469 spend rows: **1,206 ok / 263 home-fetch failures**, free retry recovered 22. Failure classes: 403 ×163 · TypeError (DNS/TLS) ×41 · 503 ×22 · 404 ×16 · 500 ×7 · AbortError ×6 · the rest single figures. 153 further leads returned `ok` under 300 characters.
+
+Branching per `web-scrape-triage`:
+- **Thin shells got no rung, correctly.** Probed with a full Scrapling render and `network_idle=True`: obsbasements.co.uk / geobond.co.uk / shieldpreservation.co.uk came back at **205 / 63 / 211 characters**. They are near-empty pages, not JS shells a renderer can fill.
+- **403 / challenge subset → one Scrapling `StealthyFetcher` attempt each** (0.4.15, `solve_cloudflare=True`, one `StealthySession` per worker so the clearance cookie is reused across that lead's pages): 196 candidates by review count, **126 attempted inside the ~90 min cap, 40 recovered.** `site_text.jsonl` 1,206 → **1,245 ok**; on-site emails 773 → 781; and in the downstream classifier the 40 recovered sites moved **51 rows into tier A**. The rung paid for itself.
+- **The ceiling is the egress policy, not the sites.** 39 of the 86 failed attempts returned `502 upstream request failed`, and the proxy's own status endpoint names the cause: `connect_rejected … "gateway answered 502 to CONNECT", host brunhild.challenges.cloudflare.com:443`. The Turnstile widget host is not reachable, so the challenge cannot complete no matter the timeout. Reported, not routed around.
+- **TLS/JA3 impersonation clears none of it** (3-call probe, `HARVEST-REPORT.md`): groundworksconstructionlondon.co.uk 403 → 403, groundworkcompanies.co.uk 403 → 403, minipilingsystems.co.uk 202/169 B → 202/169 B. Same result `RUN-NOTES.md` got on petercox / timberwise.
+- **Wayback has no mirror rung right now** — re-probed 2026-09-16: `cdx/search/cdx` returns the "Internet Archive: Temporarily Offline" page and `archive.org/wayback/available` returns 429.
+
+**Consequence for planning.** **Residue with no site text: 224 of 1,469 spend rows (15.2%)** — 70 challenge-class leads the deadline cut, 87 attempted and still blocked, 128 thin shells, 67 dead. Site text is **~85% fetchable** for this vertical from a datacentre egress and that number will not move without a residential IP or a hosted unlocker (Firecrawl: no key this run). Budget the residue into the plan instead of paying for a fourth attempt: these leads are not dropped, they go to adjudication on name + Google types with an empty `text`, which the prompt already maps to `unclear`.
+
+## MEDIUM (build-plusvibe.js `fill`): the `OUTCOME` consistency table hardcodes ONE VERTICAL'S business types, so `flag_outcome_off_trade` is silently inert on every other vertical
+
+**Status:** OPEN (found while writing `clients/atlas-growth/personalize-config-uk.json`; no engine change made) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, STEP 7b), MEDIUM impact — **a silently disabled guardrail, which is worse than an absent one.**
+
+**Problem.** `fill` computes four flags. Three are config-independent (`flag_visit_repeats_trade`, `flag_word_used_3x`, `flag_free_in_visit`). The fourth reads a table baked into the script:
+
+    const OUTCOME = { 'foundation repair': ['repair'], 'basement waterproofing': ['waterproofing'],
+      'crawl space repair': [...], 'concrete leveling': [...], 'house leveling': [...], 'slab repair': [...] };
+    if (OUTCOME[filled.business_type] && !OUTCOME[filled.business_type].includes(filled.project_type)) …
+
+Those are the US foundation-repair run's `business_type` values. Any other vertical — or the same vertical in another country — produces a `business_type` the table does not hold, the `&&` short-circuits, and the flag **can never fire**. It does not warn, and `fill_report.json` prints `flag_outcome_off_trade: []`, which reads as "checked, clean" rather than "not checked". This is the same client-neutrality defect as the DONE 2026-09-11 `apply-classify.js` fallback: one client's vertical hardcoded into a shared engine script.
+
+It bites now: the UK config's seven trades (`damp proofing`, `structural waterproofing`, `basement waterproofing`, `underpinning`, `structural repairs`, `mini piling`, `subsidence repair`) share exactly one key with the table (`basement waterproofing`), so the flag covers a fraction of one trade and nothing else. The bug it exists to catch is a real one on the US run — batch 4 gave 26 foundation-repair shops "waterproofing".
+
+**Fix (engine, with a test and an operator go).** Read the table from the config instead of the script: an optional `outcome_by_type` block (`business_type -> [allowed project_type, …]`) with the existing US table as the default when the key is absent, **and a loud WARN naming the count of rows whose `business_type` is not in the table** so an unchecked run can never look like a clean one. Config-shaped, not logic-shaped — the same "grow data, not logic" move as `brand_families`. Test: a UK-shaped config where `mini piling -> tanking` must flag, and a config with no block at all where today's US behaviour is unchanged.
+
+**Until then:** the UK config carries the gap in its own `_r.engine_note_outcome_flag` note, and the 7-lead operator test (`_test_plan`) reads `project_type` against `business_type` by eye on every trade in the sample. Not exercised on this run — the Plusvibe build waits on email verification.

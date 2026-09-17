@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-16_uk-foundation-repair-maps` — **owner-finding DONE 2026-09-17**: 860 leads (686 ICP + 174 damp-only), **586 named (68%)** — CH 504, web search/SERP 68, site 12; 367 named+email; 444 unique best emails in `deliverable/verify_input.csv` — **verification NOT run (no MillionVerifier/BounceBan keys yet)**; Plusvibe build waits on verification. Deliverables sent 2026-09-17 (qualified list, contacts_all, verify_input, excluded_adjudication, rundata tarball). Write-back in progress |
+| Current run | `2026-09-16_uk-foundation-repair-maps` — **owner-finding DONE 2026-09-17**: 860 leads (686 ICP + 174 damp-only), **586 named (68%)** — CH 504, web search/SERP 68, site 12; 367 named+email; 444 unique best emails in `deliverable/verify_input.csv` — **verification NOT run (no MillionVerifier/BounceBan keys yet)**; Plusvibe build waits on verification. Deliverables sent 2026-09-17 (qualified list, contacts_all, verify_input, excluded_adjudication, rundata tarball). Write-back applied 2026-09-17 (IMPROVEMENTS, source profile, SKILL facts). Details below |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
@@ -19,6 +19,9 @@
    sent to the operator as `atlas-growth_rundata_essentials.tar.gz` (19 MB) on 2026-09-16: everything except the raw
    scrape shards (`shard-*`, `recover/`, ~370 MB, recreatable by re-running the scrape at API cost). Unpack it into
    `clients/atlas-growth/` before touching the run; without it, owner-finding and the waterfall start from zero.
+   The MAPS run has its own tarball, sent 2026-09-17: **`atlas-growth_uk-maps_rundata_essentials.tar.gz`** — same rule,
+   the raw scrape dirs (`shard-*`, plus `recover/` / `rebuy/`) were **excluded** as recreatable at API cost. Unpack it into
+   `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/` before resuming that run.
 3. API keys are in the operator's gitignored env file, never in the repo. Credits are never spent without an explicit go.
 4. Open decisions: the second Plusvibe email needs a `company_short` variable (plan agreed, not built); paid email finders
    as 50-contact probes; the ~1,000-lead pull. Standing directives are in "Client directives" below.
@@ -38,6 +41,35 @@
   and are excluded from the re-read.
 - **Next:** 2 pass-2 read batches (free) → merge → rebuild `--have` → re-run the sweep prep → sweep
   tranche 1. All of it is written out in `SWEEP-PLAN.md`.
+
+## Where the 2026-09-16 UK MAPS run stands (2026-09-17, end of session)
+
+Our own UK scrape. Scripts + the reports in the run folder are tracked; all data (`leads_*.csv`,
+`owner/`, `deliverable/`) is gitignored.
+
+| Stage | State | Numbers |
+|---|---|---|
+| Scrape (177 tiles × 10 queries, 8 shards, pagination on) | done | 22,193 unique · 4,620 calls · 2.61 calls/row · 20 heal passes, 0 unhealed · 87 `ok`+0 events, 36 re-bought (+295) |
+| Qualify + recoveries (GATE 3 P1–P8 applied) | done | main 2,057 + generic recovery 441 + unrated recovery 344 = **2,842** |
+| Footprint gate + cross-run dedupe + collapse | done | 2,842 → 1,969 → **1,770 net-new** (199 dropped: 109 id + 89 host + 1 phone) → 1,469 spend rows + 146 no-website |
+| Site text (+ Scrapling rung on the 403s) | done | 1,245 of 1,469 ok (**~85%**); 224 residue (15.2%): 157 challenge-class, 128 thin shells, 67 dead. Ceiling is this egress: the Turnstile host is blocked |
+| Keyword tiers + model adjudication | done | A 246 · B 632 · C 117 · D 775; tier-D 100-row seeded sample **0 ICP of 100** → **686 ICP + 174 damp-only** |
+| Emails (on-site only — this scrape has no Maps email column) | done, **unverified** | engine harvest 35% ICP → deep harvest **314/686 (46%)** ICP and **145/174 (83%)** damp-only; final **468/860 (54.4%)**, **444 unique best addresses**, 39 person-shaped |
+| Companies House (engine pass + demotion) | done | **431/860 authoritative** (50.1%) + 189 candidates = 620 with a name on the table (72%); 83 city-only matches demoted job-side (~21% wrong path) |
+| Owner reads (free, in-session Haiku) | done | site-text **380/598** · CH-only **103/192** · CH pass-2 **46/47** → **529 of 860 named (61.5%)** |
+| Companies House pass 2 | done | 377 re-searched → 102 with active directors (96 exact-title); 55 brand branches skipped; 47 read |
+| LinkedIn sweep (`--registry linkedin.com`) | **done** | 17 batches over 331 leads, ~470 WebSearch calls → **70 named (21%)**; tranche yields 23/100 · 22/100 · 24/100 · 5/31 (flat) |
+| **Combined named** | **done** | **586 of 860 (68.1%)** after the same-company QA (599 before it, 13 branch/wrong-company matches removed). Sources: **CH 504 · web search + SERP 68 · website 12 · email local part 2**. **Named + email: 367 (42.7%)** |
+| Plusvibe upload (STEP 7b) | config drafted, **not built** | `clients/atlas-growth/personalize-config-uk.json` — UK trade table, pre-test. 3-lead then 7-lead operator test before any full fill; waits on verification |
+| Verification (MillionVerifier → BounceBan) | **NOT RUN** — pending keys + an explicit go | `deliverable/verify_input.csv`: **444 unique addresses** |
+
+Deliverables sent 2026-09-17 (see the ledger). Open: email verification once keys are supplied, then
+the Plusvibe build; three engine fixes from this run are filed OPEN in
+`skills/google-maps-scrape/IMPROVEMENTS.md` and need operator approval + a test (city-only CH
+demotion, sibling-domain + person-shape email ranking, the `prep-owner-batches.js` skip order); 8
+read records hold a junk "contact" with a blank `primary_name` (see the same file). The engine
+write-back for this run was applied on 2026-09-17 from
+`clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/WRITEBACK-DRAFT.md`.
 
 ## Where the 2026-09-16 UK run stands (2026-09-16, end of session)
 
@@ -140,3 +172,4 @@ redo prompts needed, so the next run's first pass should flag stragglers, not ba
 | 2026-09-12 | 2026-09-11_foundation-repair | `contacts_final.csv` (845 named leads, 1,034 contacts), `leads_unnamed.csv` (259) | sent in session |
 | 2026-09-13 | 2026-09-11_foundation-repair | `emails_final.csv` (275 verified sendable addresses on 236 leads; 172 personal) | sent in session |
 | 2026-09-13 | 2026-09-11_foundation-repair | `plusvibe_upload.csv` (236 rows, one per lead; 142 with first/last; personalized_email on every row, 200 from site text, 36 fallbacks) | sent in session |
+| 2026-09-17 | 2026-09-16_uk-foundation-repair-maps | `deliverable/atlas_uk_foundation_repair_maps_qualified.csv` (**860 rows**, 686 ICP + 174 damp-only, 586 named / 68.1%, 468 with an unverified email), `deliverable/contacts_all.csv` (852 contacts), `deliverable/verify_input.csv` (444 unique addresses), `excluded_adjudication.csv`, `atlas-growth_uk-maps_rundata_essentials.tar.gz` | sent in session — verification and the Plusvibe build still pending |
