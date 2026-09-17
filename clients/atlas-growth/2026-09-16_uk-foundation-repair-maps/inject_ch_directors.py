@@ -38,7 +38,16 @@ for fn, conf in ((os.path.join('owner', 'companies_house.jsonl'), 'matched'),
         o = json.loads(l)
         # an engine match wins over a low-confidence candidate for the same lead
         if o.get('officers') and (o['place_id'] not in ch or conf == 'matched'):
-            ch[o['place_id']] = {'confidence': o.get('confidence') if conf == 'pass2' else conf,
+            # The file supplies the tag, EXCEPT: pass-2 records carry their own, and an engine match
+            # that demote_city_only_ch.py demoted (accepted on the town name alone, ~21% wrong on
+            # this run — CH-REPORT.md) carries `low_confidence` + `demoted_reason` so the reader
+            # sees `[low_confidence match]` and applies owner-prompt.md Companies House rule 3.
+            c_conf = conf
+            if conf == 'pass2':
+                c_conf = o.get('confidence')
+            elif conf == 'matched' and o.get('demoted_reason'):
+                c_conf = o.get('confidence') or 'low_confidence'
+            ch[o['place_id']] = {'confidence': c_conf, 'demoted': o.get('demoted_reason', ''),
                                  'company': o.get('ch_company'), 'number': o.get('ch_number'),
                                  'officers': o['officers']}
 
@@ -47,7 +56,7 @@ if not files:
     print('ERROR: no batch-*-in.json in %s — run prep-owner-batches.js first' % BATCHES)
     raise SystemExit(1)
 
-n = total = 0
+n = total = auth_n = demoted_n = 0
 for f in files:
     b = json.load(open(f, encoding='utf-8-sig'))
     for lead in b:
@@ -56,13 +65,22 @@ for f in files:
         if c:
             lines = ['%s — %s (appointed %s)' % (x['name'], x['role'], x.get('appointed_on', ''))
                      for x in c['officers'][:8]]
-            lead['ch_directors'] = ('Companies House [%s match]: %s (%s)\n' % (c['confidence'], c['company'], c['number'])) \
+            demo = ('  (DEMOTED: %s — the ONLY basis for this match was the town name, so it is a '
+                    'CANDIDATE, not authoritative: apply Companies House rule 3 before you output '
+                    'anybody from it)' % c['demoted']) if c.get('demoted') else ''
+            lead['ch_directors'] = ('Companies House [%s match]%s: %s (%s)\n' % (c['confidence'], demo, c['company'], c['number'])) \
                                    + '\n'.join(lines)
             n += 1
+            if c.get('demoted'):
+                demoted_n += 1
+            elif c['confidence'] == 'matched':
+                auth_n += 1
         else:
             lead['ch_directors'] = ''
     json.dump(b, open(f, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
 
 print('batches: %d | leads: %d | leads given ch_directors: %d (%.0f%%)'
       % (len(files), total, n, 100.0 * n / total if total else 0))
+print('  of those: authoritative %d | DEMOTED city_only %d | low_confidence/pass2 candidates %d'
+      % (auth_n, demoted_n, n - auth_n - demoted_n))
 print('CH records loaded: %d' % len(ch))
