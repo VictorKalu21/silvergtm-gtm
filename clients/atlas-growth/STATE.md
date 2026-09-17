@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-16_uk-foundation-repair-maps` — scrape COMPLETE (22,193 universe, 4,620 calls). GATE 3 rules applied; funnel v2 1,770 net-new. Adjudication DONE (45 Opus batches): **686 ICP** (421 yes + 265 unclear) + **174 damp-only segment** + 910 excluded (tier D 0/100 yes → dropped). On-site emails: 240 of 686 (no Maps email field on a live pull). UK owner prompt built (`owner-prompts/uk-foundation-repair.md`) — **at GATE 6**; Companies House pass + contact-page email harvest running; Haiku reads await prompt approval |
+| Current run | `2026-09-16_uk-foundation-repair-maps` — scrape COMPLETE (22,193 universe, 4,620 calls). Adjudication DONE: **686 ICP** + **174 damp-only**. Emails (on-site, deep harvest): 314/686 ICP (46%), 145/174 damp (83%), 434 unique — NOT verified (no MV/BB keys yet). GATE 6 approved 2026-09-17 (`owner-prompts/uk-foundation-repair.md`). Companies House: 431 authoritative + 189 candidates; 83 city-only matches demoted. **Owner reads: site-text pass DONE — 380/598 named (568 owner-level)**; CH-only pass (192 no-text leads) in progress; LinkedIn sweep for the residue next |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
