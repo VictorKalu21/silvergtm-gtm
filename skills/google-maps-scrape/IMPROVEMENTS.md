@@ -819,6 +819,101 @@ shared-hosts.js didn't know site-builder platforms`; `LOW-MEDIUM (coverage blind
 and `MEDIUM (companies-house.js): exact-title matches with punctuation/"&" differences fall to low_confidence`. The six entries
 below are new; each names how it relates to those where they touch.
 
+## WHAT TO GET — operator shopping list (written 2026-09-17 after the Atlas Growth UK run; keep this section current)
+
+Each item names the measured pain from a real run, what buying it changes in the engine, and the cost tier.
+Ordered by leverage. Nothing here is required to run the process as it stands today.
+
+### 1. A persistent store — Supabase (Postgres + storage), free tier is enough to start
+**Pain measured.** Every run is a folder of CSV/JSONL that is gitignored, so state lives in tarballs: the UK run's
+data had to be sent to the operator and re-unpacked to resume; cross-run dedupe needed the operator to upload a
+175-row CSV; the 1,469 site fetches, 141 Firecrawl recoveries (146 credits), 469 email verdicts (469 MV + 157 BB
+credits) and 898 Companies House lookups are all locked inside one run folder and would be **paid again** on the
+next UK build, because nothing outside the folder remembers them. `name-to-domain` already has a persistent cache
+for exactly this reason; the rest of the engine does not.
+**What it changes.** Five tables and the engine reads/writes them by key: `places` (place_id, universe row,
+first_seen/last_seen per run), `site_text` (root_domain, fetched_at, text, emails, rung), `email_verdicts` (email,
+mv_result, bb_result, verified_at — a verdict under ~90 days is reused, never re-bought), `ch_matches` (place_id →
+company number, basis, confidence), `contacts` (place_id → named person, source, evidence). `leads_netnew`
+becomes a query instead of a CSV diff; the run folder keeps only the config, the run log and the deliverable.
+Supabase Storage (or any S3) holds the raw shard dirs so a run can be resumed from any session.
+**Cost.** Free tier (500 MB Postgres, 1 GB storage) covers a 22k-row universe many times over; the paid tier is
+$25/mo. **Needs:** a project URL + service-role key in a gitignored env file; the engine change is a `store.js`
+module with `--store` on the scripts that fetch, verify or match, defaulting to today's file behaviour when absent.
+
+### 2. Firecrawl: move off the Hobby plan, or add a residential proxy — the egress is the ceiling
+**Pain measured.** Site text is ~85% fetchable from this datacentre egress; the last 15% (224 of 1,469 sites) is
+Cloudflare-class. The free Scrapling rung recovered 40 and then hit a hard wall: **the Turnstile widget host is
+blocked from this egress**, so no in-container solver can finish a challenge. Firecrawl recovered **141 of 204
+(69%)**, but the Hobby plan is `maxConcurrency 2` and **10 requests/min**, so the pass took 22 minutes and the
+engine's own rung had to be rewritten around the limit. Facebook, Yell, Checkatrade and Groundworks all 403/400
+from here as well (they publish no emails, so that loss is small).
+**What it changes.** Either (a) Firecrawl Standard ($83/mo at the time of writing: 100k credits, 50 req/min,
+higher concurrency) so the residue pass is a 3-minute step, or (b) a residential/ISP proxy (Bright Data, Oxylabs,
+IPRoyal — ~$5-15/GB; a 200-site pass is well under 1 GB) that Scrapling and plain fetch use for the residue, which
+also unblocks the Turnstile host and every 403 directory. (b) is cheaper per recovered site and keeps the rung
+free after the proxy; (a) is zero-maintenance. **Needs:** the key/proxy URL in `.env`; `fetch-sites.js` already
+takes `--firecrawl-rpm` and reads `maxConcurrency` from the account, and Scrapling takes a proxy argument.
+
+### 3. Companies House bulk snapshot instead of the live API for the match step
+**Pain measured.** The live API is 600 requests / 5 minutes and every script spends 2 per lead, so a 898-lead run
+is ~5N ≈ 4,500 requests ≈ 40 minutes at the cap, one process at a time, and the exact-title / town matching had
+to be tuned around one search call per lead.
+**What it changes.** Companies House publishes the **free "Basic Company Data" snapshot** (one CSV, ~2.5 GB
+unzipped, every live company with name, number, registered office, postcode, SIC, status, monthly). Loaded once
+into the store from item 1 (or SQLite), the match becomes a local query over the whole register — no rate limit,
+matching on postcode/town/normalised title against every company at once, and the officers call is the only
+live request left (1 per matched company, ~40% of today's calls). **Cost:** free; ~3 GB disk. **Needs:** nothing
+but the download; `companies-house.js` gains a `--snapshot <db>` path.
+
+### 4. Email-finder credits for the named-but-mailbox-only leads (QuickEnrich, TryKitt, AI Ark)
+**Pain measured.** UK trade sites publish role mailboxes: the final Plusvibe upload is **29 named rows of 435**;
+367 of 898 leads have a NAME and an email but the email is `info@`. The finder waterfall
+(`skills/email-waterfall`) is the only way to turn a Companies House director into a person address, and the
+US test measured QuickEnrich at 21 real addresses per 100 named leads, 12 sendable after verification; TryKitt's
+free tier returned 0 of 58 because it needs funding; AI Ark's trial quota died after ~40 requests.
+**What it changes.** A funded QuickEnrich + TryKitt pair lets the waterfall run on the ~590 named leads at
+roughly 15-20% yield → ~100 owner addresses on this list, each verified before use. **Cost:** QuickEnrich credits
+are ~$0.02-0.05 each; TryKitt is a small monthly plan. **Needs:** keys in the verification env file; the skill
+already exists and is gated on an explicit go per run.
+
+### 5. A scriptable SERP key for the LinkedIn sweep — Brave Search API (free tier) or serper
+**Pain measured.** The sweep names ~21% of the leads it touches, at ~6.7 searches per name, and the in-session
+`WebSearch` tool is capped around 200 calls per session, so a 331-lead sweep spanned four sessions and four
+tranches (23/22/24/5). It is the slowest step in the pipeline by wall-clock.
+**What it changes.** `prep-sweep-batches.js` + a Brave Search API key (free 2,000 queries/month; $5/1k after)
+lets the sweep run as one scripted pass with the same LinkedIn-restricted queries, and the results are cached in
+the store. **Cost:** free to start. **Needs:** a key in `.env`; a small `sweep-search.js` that takes the batch
+files the engine already writes.
+
+### 6. Plusvibe API access — close the loop on what actually bounced
+**Pain measured.** Verification quality is asserted from MillionVerifier/BounceBan verdicts, never measured
+against the send: the run has no bounce or reply data per address, per rung (mailto vs cfemail vs Firecrawl
+recovery) or per verdict class (BounceBan-recovered invalids especially — 18 addresses this run).
+**What it changes.** `build-plusvibe.js push` uploads the CSV directly, and a nightly pull of bounces/replies
+writes back to `email_verdicts` and `contacts`, so the next run's ranking and the BounceBan routing decision are
+tuned on real bounce rates. **Cost:** included in the Plusvibe plan. **Needs:** the workspace API key.
+
+### 7. A runner that outlives a chat session — a small VPS or a scheduled GitHub Action
+**Pain measured.** Three jobs this run ran 20-60 minutes (Firecrawl residue 22 min, BounceBan recovery ~60 min,
+Companies House ~40 min at the cap) and every one depended on the session staying alive; two were killed by a
+session pause and relaunched. Scrapling's solver was only usable because the container happened to have Chromium.
+**What it changes.** The same scripts run from a $5 VPS (or a GitHub Actions cron with the env as secrets) with
+the store from item 1 as the hand-off, and a residential egress from item 2 attached to it. The session then
+orchestrates and reads results instead of hosting the work. **Cost:** ~$5/mo. **Needs:** the repo checked out
+there with Node 22 + Python 3, the gitignored env files, Chromium for Scrapling.
+
+### 8. Small things that are free and worth doing now
+- **Geocoding:** Nominatim keyless at 1 req/s was enough for 59 rows; for thousands use Geoapify (3k/day free)
+  and the same `city-fallback --geocode-fixture` seam. No purchase.
+- **Verification runner copy:** the copy under `gtm-processes/scripts/` carries the two routing defects fixed in
+  this repo (invalid never sent to BounceBan; a thrown stage-1 call stranded the address). Retire it.
+- **BounceBan bulk endpoint:** single verifies on MV-invalid addresses took ~2 minutes each (deep probe); the
+  bulk/async endpoint with a webhook would make the recovery a fire-and-forget step. Free, API change only.
+- **Manufacturer / trade-body sources first:** the PCA member API gave a filed email for 397 UK contractors in 11
+  calls; run those sources before Maps on the next UK build (`skills/icp-source-planner/library/
+  trade-bodies-and-installer-networks--foundation-repair.md`). No purchase.
+
 ## HIGH (fetch-sites.js, email coverage): the email regex runs on STRIPPED text and the L2 keywords never reach the contact page — four classes of address are invisible and the page they live on is never fetched
 
 **Status:** DONE 2026-09-17 — engine change made: `fetch-sites.js` now extracts emails from the RAW body (mailto / JSON-LD / data-cfemail / tag-split-entity rungs, unioned with the old text regex, provenance in a new `emails_by_source` field) and the four contact keywords are in the default `L2_DEFAULT`, plus the junk rejects the first live 141-site Firecrawl pass exposed (MHTML frame ids / reserved TLDs, `%20`-prefixed text matches normalised and deduped, theme placeholder addresses by registrable label, and a mailbox used as a URL PATH segment — a Microsoft Bookings link — dropped unless the page also states it in the open), test: tests/fetch-sites-emails.test.js (ported from `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/harvest_emails_deep.py`) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 676 root domains), **HIGH impact — it is the difference between a third and a half of the list being contactable.**
