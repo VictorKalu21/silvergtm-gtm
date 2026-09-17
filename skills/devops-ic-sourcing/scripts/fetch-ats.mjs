@@ -20,12 +20,14 @@ const boardLinks = html => { const c = {}; for (const h of extractHrefs(html)) {
 const titleOf = html => decodeEntities(((html || "").match(/<title[^>]*>([^<]{0,200})<\/title>/i) || [])[1] || "").trim();
 
 async function greenhouse(slug) {
-  const r = await fetchText(`https://boards-api.greenhouse.io/v1/boards/${slug}/jobs?content=true`, { timeout: T });
+  let api = "boards-api.greenhouse.io", host = "job-boards.greenhouse.io";
+  let r = await fetchText(`https://${api}/v1/boards/${slug}/jobs?content=true`, { timeout: T });
+  if (r.status === 404) { api = "boards-api.eu.greenhouse.io"; host = "job-boards.eu.greenhouse.io"; r = await fetchText(`https://${api}/v1/boards/${slug}/jobs?content=true`, { timeout: T }); }  // EU-hosted boards live on the .eu API
   if (r.err || r.status !== 200) return { err: r.err || `http${r.status}` };
   let j; try { j = JSON.parse(r.body); } catch { return { err: "badjson" }; }
-  const meta = await fetchText(`https://boards-api.greenhouse.io/v1/boards/${slug}`, { timeout: T });
+  const meta = await fetchText(`https://${api}/v1/boards/${slug}`, { timeout: T });
   let name = ""; let intro = ""; try { const m = JSON.parse(meta.body || "{}"); name = m.name || ""; intro = m.content || ""; } catch {}
-  const page = await fetchText(`https://job-boards.greenhouse.io/${slug}`, { timeout: T });
+  const page = await fetchText(`https://${host}/${slug}`, { timeout: T });
   const links = boardLinks((page.body || "") + " " + decodeEntities(intro));
   const postings = (j.jobs || []).map(x => {
     const html = decodeEntities(x.content || "");
