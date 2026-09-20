@@ -6,26 +6,35 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-20_au-foundation-repair-maps` — **ADJUDICATED, STOPPED AT GATE 6** (2026-09-20). Site text 335/364 ok (287 with email, 376 unique addresses); 21 Opus adjudication batches → **329 worked leads** (242 yes + 87 unclear incl. 77 tier-A no-text keeps), 148 out, 2 house-raising-only. NSW registry 18 matched + 29 low-confidence (29 Directors), WA 2 + 3. Owner-read batches built: 218 items / 6 batches, 27 with a registry block, 111 to the sweep. Store LIVE: 5,118 places, 364 site texts, 52 registry matches, ledger. 8 shards COMPLETE, **3,861 Maps calls** (2.12/row, under the 4,750 estimate). Universe **5,118 unique = 3,010 Australian + 2,107 US pins** (Google pads AU viewports with US results; the footprint gate removed all of them). Qualify (5 approved passes + GATE 3 proposals P1/P2 applied provisionally) → footprint gate **479 in footprint** (VIC 185 · QLD 101 · NSW 96 · WA 22 · SA 19 · TAS 7 · ACT 2 · unknown 13) → collapse **364 owner-finding domains + 67 no-website**. The Australian trade is ~3,000 businesses on Maps, not the 10-15k estimated; expect ~350-400 worked leads. `REPORT-GATE3.md` has the audit: P1 (no-website ICP-named restumpers, +24 AU) and P2 (empty-type ICP-named, +10 AU) recommended in; P3-P5 ten named losses accepted. Registries ready: `registry_nsw.py` (keyless API, Director + Nominated supervisor) and `registry_wa.py` (register PDF); VIC/QLD walled from this network → 60% of the list leans on site text + LinkedIn sweep. **Waiting on the operator:** GATE 6 (owner prompt) → 6 Haiku reads → LinkedIn sweep on the 111 → emails/rank → MV/BB go; Firecrawl residue go (14 sites) |
+| Current run | `2026-09-20_au-foundation-repair-maps` — **OWNER-FINDING + EMAILS DONE, DELIVERABLE ASSEMBLED, STOPPED BEFORE VERIFICATION** (2026-09-20). 329 worked leads (261 yes · 68 unclear) · **93 named (28.3%)** (registry 20 · site 17 · sweep 29 · business name 7 · email local part 20) · **217 with an email (66.0%), 180 unique, unverified** · named+email 79. Sweep tranche 1 only (120 of 284 unnamed; session WebSearch budget spent). Deliverable in `<run>/deliverable/` (gitignored). Store: places 5,118 · site_text 364 · registry 52 · contacts 89 · ledger 4. |
 | Previous run (UK Maps) | `2026-09-16_uk-foundation-repair-maps` — owner-finding DONE (586/860 named). **Verification DONE 2026-09-17** (MillionVerifier → BounceBan, keys supplied by operator): 444 unique addresses → **370 sendable**, 39 risky, 35 dropped (20 of the drops are persistent MillionVerifier API errors, unverified not invalid). `deliverable/emails_final.csv` 468 rows (392 sendable incl. shared brand mailboxes). **Plusvibe upload BUILT and sent 2026-09-17**: `deliverable/atlas_uk_plusvibe_upload.csv`, **391 rows** (one per lead, sendable addresses only), 364 personalised from site text + 27 config fallbacks, **27 named** under the name rule (357 company mailboxes stay nameless), 0 flags, 0 blank cities after a job-side `owner/city_overrides.json` (42 rows), `check` passed. **Firecrawl residue pass 2026-09-17 (operator key):** 204 blocked sites → **141 recovered (69%)**, 146 credits; 55 unworked leads re-tiered A–C → Opus adjudication → **+29 ICP +9 damp-only = 898 worked leads**; CH + Haiku read on the 38 → **610 named (67.9%)**; emails **495 (55.1%)**, 469 unique, 25 new addresses verified (23 sendable / 2 risky) and **BounceBan recovery over the earlier MV invalid/error rows (operator directive): 18 recovered sendable** (5 of 15 invalid, 13 of 20 error), 7 risky, 10 dropped → **411 unique sendable of 469 (87.6%)**, `emails_final.csv` 435 sendable / 49 risky / 11 dropped. **Plusvibe upload REBUILT and sent: 435 rows** (44 new), 409 personalised, 29 named, 0 blank cities (46 overrides: 41 job-side + 5 after the new `city-fallback`), outcome flag now LIVE via `outcome_by_type` in the UK config, `check` passed. Facebook and UK-directory rungs are dead ends (probes in the source library). **Run closed out** — nine engine changes from it shipped 2026-09-17 with tests |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
 | Live campaigns | none |
 
-## How to resume the AU run (written 2026-09-20)
+## How to resume the AU run (written 2026-09-20, after owner-finding)
 
-1. Read root `CLAUDE.md`, `skills/google-maps-scrape/README.md`, `skills/icp-source-planner/SKILL.md`, then this file, then
-   `clients/atlas-growth/2026-09-20_au-foundation-repair-maps/GATE1.md` and `RUN-NOTES.md`.
-2. Ask the operator for the keys (never printed, never in a prompt): `SCRAPER_TECH_KEY`, `FIRECRAWL_KEY`, `SUPABASE_URL`,
-   `SUPABASE_SERVICE_KEY` → `skills/google-maps-scrape/.env`; `MILLIONVERIFIER_KEY`, `BOUNCEBAN_KEY` →
-   `$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env`.
-3. Run the 3-call Maps probe (GATE1.md §0), paste the numbers into GATE1 §0/§2/§3/§4/§6 and RUN-NOTES, then put GATE 1 to
-   the operator. Nothing else spends before that approval.
-4. If the operator confirms Supabase-first: build `store.js` per the IMPROVEMENTS entry (test + DONE flip), apply
-   `store/schema.sql`, then scrape with `--store`.
-5. Commands are in `PIPELINE.md`. Shards regenerate with `node clients/atlas-growth/gen-runsheet-au.js`.
-
+1. Read root `CLAUDE.md`, `skills/google-maps-scrape/README.md`, then this file, then the run's `RUN-NOTES.md` (last
+   section) and `PIPELINE.md`. Data files are gitignored; without the run folder's CSV/JSONL on disk, the scrape,
+   site text and adjudication are in the Supabase store (`store-sync.js pull-places / pull-site-text`) — 3,861 Maps
+   calls are NOT re-bought.
+2. Keys (never printed, never in a prompt): `SCRAPER_TECH_KEY`, `FIRECRAWL_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`
+   in `skills/google-maps-scrape/.env`; `MILLIONVERIFIER_KEY`, `BOUNCEBAN_KEY` still to be supplied.
+3. **Finish the sweep (free, needs a fresh WebSearch budget):** batches 6–14 under `<run>/owner/sweep2/batches/` have no
+   `-out.json`. Six batches per session at most: dispatch per `skills/google-maps-scrape/owner-sweep-subagent.md`
+   (or `owner-sweep` workflow, `args {run, batchIds:[6,7,8,9,10,11]}`), then
+   `node skills/google-maps-scrape/merge-owner-reads.js --dir <run>/owner/sweep2 --out <run>/owner/contacts_sweep.jsonl --exclude-titles "<list in RUN-NOTES>"`,
+   `node skills/google-maps-scrape/combine-owner-contacts.js --leads <run>/leads_qualified.csv --out <run>/owner/contacts_final.jsonl <read> <read_residue> <eponym> <sweep>`,
+   `python3 <run>/assemble_deliverable_au.py`. Delete any `-out.json` a budget-starved agent wrote with 0 searches.
+4. **Verification (credits, explicit go + count):** input is `<run>/deliverable/verify_input.csv` (180 unique `Email`).
+   MillionVerifier → BounceBan per `skills/email-verify-debounce-bounceban`, then port the UK run's `apply_verify.py`
+   to write `emails_final.csv` (verdict column) and `store-sync.js verdicts`.
+5. **Plusvibe:** `build-plusvibe.js base --city-overrides` (service-area listings have no city; the coordinate-box
+   state is in the deliverable), 3-lead then 7-lead wording tests against `clients/atlas-growth/personalize-au-config.json`,
+   then `fill` / `check`.
+6. Engine gaps found this run are in `skills/google-maps-scrape/IMPROVEMENTS.md` (2026-09-20 index) — fix with a test and
+   an operator go, not in the run folder.
 ## How to resume in a new session (written 2026-09-16)
 
 1. Read root `CLAUDE.md`, then `skills/google-maps-scrape/README.md`, then this file.

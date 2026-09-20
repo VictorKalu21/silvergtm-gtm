@@ -63,4 +63,4 @@ the location requirement exist because of that. Supervisor-only names are `gm` u
 them the owner (owner-prompt rule 2); a `Director` role is the owner outright.
 
 **Runs:** 2026-09-20 — Atlas Growth AU Maps run — scripts `registry_nsw.py` / `registry_wa.py` in the run folder,
-functional probes passed (3 names each); bulk join pending the scrape. Named-rate contribution to be appended.
+functional probes passed (3 names each). Bulk join on the 479 in-footprint leads: **NSW 18 matched + 29 low-confidence (29 Directors), WA 2 + 3** → 52 registry records injected into the owner read → **20 of the run's 93 names came from the registers** (NSW leads 63% named vs VIC 22% with no register). One low-confidence match dropped at assembly as a name mismatch (Foundation Property Solutions ↔ 3G Property Group). VIC/QLD remain the gap.

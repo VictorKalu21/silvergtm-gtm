@@ -1124,3 +1124,53 @@ It bites now: the UK config's seven trades (`damp proofing`, `structural waterpr
 **Fix (engine, with a test and an operator go).** (a) Read `maxConcurrency` from `queue-status` at start and cap the workers at it (default 2 when the call fails). (b) Space request starts at `60/limit` seconds and on a 429 sleep for the `Retry-After` header (else 60 s) and re-queue the row; count 429s separately from failures. (c) Add `--firecrawl-residue <site_text.jsonl>`: read the file, attempt only `status != ok` rows (skipping `404/400/402/307`, which are dead by definition), write recovered rows back in place with `source: 'firecrawl'`, resumable. (d) A recovered page whose markdown is a challenge page (`Just a moment`, `Enable JavaScript and cookies`) or under ~200 chars is NOT `ok` — the job-side runner had to add that check. Test: a fake Firecrawl endpoint that returns 429 once then 200, asserting the row is retried and the worker count honours the cap.
 
 **Yield, measured (correcting the first impression from a 6-site smoke test):** with the rate limit respected, **141 of 204 residue sites recovered (69%)** — the 403 class included — for 146 credits, 6.6 s per site. The first 6-site probe looked like 'mostly dead' only because 4 of the 6 hit the concurrency/408 wall. Downstream that text moved 55 leads into tiers A–C, added 38 worked leads and 27 emails to an 860-lead run. Order DNS/TLS/5xx/timeout first anyway (cheaper failures), but do not skip the 403s.
+
+## NOTE 2026-09-20 (write-back index, Atlas Growth 2026-09-20 AU foundation-repair MAPS run)
+
+First Australian run. Engine gaps found, all worked around job-side in the run folder (`rank_emails_au.js`, `filter_contacts_au.py`, `fix_directory_hosts.py`) and listed below; none fixed in the engine without an operator go. Store (`store.js` / `store-sync.js`) shipped on this run — see the DONE entry above. Australian facts that decide designs are in `skills/icp-source-planner/library/google-maps--au-foundation-repair.md` and `au-state-licence-boards--foundation-repair-owners.md`.
+
+## MEDIUM (shared-hosts.js): Australian directory hosts are not shared hosts, so `collapse-domains.js` fans one listing's text, verdict and emails to unrelated firms
+
+**Status:** OPEN — job-side repair `fix_directory_hosts.py` in the AU run folder · found 2026-09-20 (Atlas Growth AU MAPS run), caught by the residue adjudicator, not by the engine.
+
+**Problem.** `SHARED_HOSTS` lists the UK/US directories but not `localsearch.com.au`, `yellowpages.com.au`, `truelocal.com.au`, `hipages.com.au`, `oneflare.com.au`, `serviceseeking.com.au`, `hotfrog.com.au`, `startlocal.com.au`, `dlook.com.au`, `aussieweb.com.au`, `cylex.com.au`, `wordofmouth.com.au`, `productreview.com.au`, `houzz.com.au`, `airtasker.com`. A Maps listing whose "website" is its localsearch page is classified `site`, its `root_domain` becomes `localsearch.com.au`, and `collapse-domains.js` groups every such lead under ONE representative. On this run Scott Myers Construction and LJ Constructions inherited NQ Restumping Solutions' localsearch page: same site text, same "yes" verdict (from the neighbour's page), same harvested emails; Wide Bay Stumping inherited Elite Reblocking's yellowpages page and its `elitereblocking@gmail.com`. That is a wrong email on a wrong lead in the upload.
+
+**Fix (engine, with a test and an operator go).** Add the AU directory list to `SHARED_HOSTS` (the file already has a "directories / lead marketplaces" section) and add a `tests/shared-hosts.test.js` case per host. `classifyWebsite()` then returns `shared_host`, the lead goes to the no-website track, and nothing is fanned.
+
+**Until then:** `fix_directory_hosts.py` after `merge_adjudication.py` (ICP-named rows → `unclear` + `directory_host:<host>`; others removed) and the `DIRECTORY_HOSTS` guard in `rank_emails_au.js` (no rep fan-out over a directory root).
+
+## MEDIUM (email-rank.js): the ranking's country tables are UK/US — `.com.au` siblings, AU ISP free-mail and site-builder placeholder addresses are all judged wrong
+
+**Status:** OPEN — job-side `rank_emails_au.js` extends the exported `SAME_COMPANY_TLD` Set in place and pre-filters candidates · found 2026-09-20 (Atlas Growth AU MAPS run).
+
+**Problem.** Three tables inside `email-rank.js` are the UK run's:
+1. `SAME_COMPANY_TLD` has no `com.au` / `net.au` / `org.au` / `au`, so `buildfix.com.au` does not own `info@buildfix.com` and `reblocking.melbourne`-style twins fail the sibling test (fails closed: a missed sibling, never a false one — but the lead ends with `info@` or nothing).
+2. `FREE` knows the UK ISPs (btinternet, sky, talktalk) and not the Australian ones — `bigpond`, `optusnet`, `iinet`, `tpg`, `westnet`, `internode`, `dodo`, `adam`, `ozemail`, `y7mail`, `live.com.au` — so a one-man restumper's `stumpy.88@bigpond.com` is dropped as "a third-party domain scraped off the site" (5 leads on this run would have lost their only address).
+3. `BAD` catches `wixpress`/`godaddy`/`squarespace` but not the placeholder addresses the raw-HTML harvest now picks off site-builder boilerplate and CSS font licences: `example@mysite.com`, `your@email.com`, `mymail@mailservice.com`, `micah@micahrich.com`, `info@indiantypefoundry.com`, `eben@eyebytes.com`, `impallari@gmail.com`, `team@latofonts.com`, `test@test.com`, `support@yourmail.tld` — **38 of 408 harvested addresses on this run (9%)** were placeholders, and `impallari@gmail.com` (a font designer) was a lead's BEST email until the filter.
+Also `TRADE` / `TRADE_SUBSTR` do not know the Australian trade nouns, so `goldenstar.reblocking@gmail.com`, `melbourne.bestreblocking@`, `nextlevel_restumping@` and `mge.au@mainmark.com` score as `first.last` persons (11 demoted job-side).
+
+**Fix (engine, with a test and an operator go).** (a) Add `com.au net.au org.au au` to `SAME_COMPANY_TLD`. (b) Split `FREE` into a base list plus a per-country list keyed by the job's `geo.country` (`au`: the ISPs above; keep the UK list under `gb`). (c) Extend `BAD` with the placeholder set above and a rule: local part in {`email`, `name`, `your`, `test`, `mymail`, `example`, `user`, `username`} or domain in {`mysite.com`, `email.com`, `mailservice.com`, `example.com`, `domain.com`, `yourdomain.*`, `*.tld`}. (d) Let `TRADE` take extra tokens from the config (`site_l2_keywords` already lists the vertical's trade words). Tests: one case per rule in `tests/email-rank.test.js`.
+
+**Until then:** a job script imports `email-rank.js`, adds the TLDs to the exported Set, pre-filters placeholders / directory domains / third-party non-free domains with its own country tables, calls `rankEmails(cands, root, {keepThirdParty:true})` and re-scores. `rank_emails_au.js` is the reference.
+
+## MEDIUM (merge-owner-reads.js): the business-name guard is one vertical's word list, so a reader that outputs the business as a person passes it
+
+**Status:** OPEN — job-side `filter_contacts_au.py` pass 1 · found 2026-09-20 (Atlas Growth AU MAPS run).
+
+**Problem.** `TRADEWORD` (`foundation|waterproofing|basement|crawl|concrete|repair|systems|services|solutions|company|inc|llc|leveling|mudjacking|...`) is the US foundation-repair list. One of six Haiku readers on this run applied owner-prompt rule 1 ("the business name IS the person, for sole traders") to EVERY lead in its batch and returned 17 business names as owners — "Perth House", "BDG Raising", "Explosive Restumping", "Gold Coast", "Melbourne's Best", "Calcon Building", "TOP Reblocking", "Truss Reblocking" — with `evidence` = the business name. All 17 passed the guard (no US trade word in them) and would have been the deliverable's `first_name` ("Perth", "Explosive", "Gold").
+
+**Fix (engine, with a test and an operator go).** (a) `--trade-words "a,b,c"` on `merge-owner-reads.js`, merged into `TRADEWORD` the way `--exclude-titles` works, and the SKILL step passes the config's `site_l2_keywords` + `geo` place names. (b) A second deterministic check independent of the word list: drop a contact whose normalised name is a leading substring of the normalised business name UNLESS the contact's first token is in `email-rank.js`'s `FIRST_NAMES` (that keeps "Matt Hooper" from "Matt Hooper House Restumping" and drops "Perth House"). (c) Owner-prompt rule 1 should say explicitly that it applies only when the leading tokens are a personal first name + surname — the AU prompt gets that line at write-back.
+
+**Until then:** `filter_contacts_au.py` (pass 1 = the drop rule above; pass 2 = rule 1 applied deterministically over every lead with the engine's `FIRST_NAMES`, which found 7 more owners the readers missed — Dennis Heale, Glenn Palframan, Scott Myers, Ian Herbeners, Ted Rattee, John Cash, Wayne Marshall).
+
+## FACT / ENVIRONMENT (owner sweep budget): `WebSearch` is capped at 200 calls per SESSION for `Agent`-tool subagents — six 20-lead batches spend it, and the rest of the sweep returns empty
+
+**Status:** noted 2026-09-20 (Atlas Growth AU MAPS run). Six Haiku sweep agents dispatched with the `Agent` tool used **190 searches for 120 leads (33 named, 27.5%)**; the next six agents reported `200/200 used` and wrote empty or partial `-out.json` files (deleted so they re-run). `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` is not something the run can raise for itself. Whether a saved-workflow run (`owner-sweep`, `args.batchIds`) carries its own budget was probed on this run — result in the RUN-NOTES. The SKILL's "one run of at most 6 batches at a time" holds for either path; plan a 280-lead sweep as ≥3 sessions or workflow runs, and keep the partial `-out.json` check (a batch with 0 searches is not swept).
+
+## LOW (store.js `upsertContacts`): expects one row per CONTACT, but `contacts_final.jsonl` is one row per LEAD with `contacts[]` — `store-sync.js contacts` pushes 0 rows
+
+**Status:** OPEN — job-side flatten (`owner/contacts_flat.jsonl`, one line per contact with `place_id, name, first_name, title, role_bucket, source, evidence, confidence`) pushed instead · found 2026-09-20 (Atlas Growth AU MAPS run), the first live `contacts` push.
+
+**Problem.** `upsertContacts()` filters `rows.filter(r => r.place_id && r.name)`; a `combine-owner-contacts.js` row has `place_id` and `contacts: [{name,...}]`, never a top-level `name`, so every row is filtered out and the CLI prints `contacts: 0` without an error. `tests/store.test.js` fed the flat shape, so it passed.
+
+**Fix (engine, with a test and an operator go).** In `upsertContacts()`, when a row carries `contacts[]`, emit one record per contact (inheriting `place_id`, `confidence`); keep the flat shape working. Test: a two-contact lead row → two upserted records.

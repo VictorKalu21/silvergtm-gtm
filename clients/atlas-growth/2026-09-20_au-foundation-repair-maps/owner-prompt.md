@@ -156,7 +156,11 @@ engine's enum name for a registry source; the record's own `registry` field says
    Nolan, `Hartley & Sons House Raising` → the surname is Hartley. Output that person with
    `evidence` = the business name itself and `role_bucket:"owner_or_partner"`. Where the name gives
    only initials and a surname and no forename is found anywhere in the sources, do **not** invent
-   a forename — output nothing.
+   a forename — output nothing. **This rule fires ONLY when the leading words are a personal first
+   name followed by a surname.** `Perth House Restumping`, `Gold Coast Underpinning`, `Explosive
+   Restumping`, `Melbourne's Best Reblocking`, `BDG Raising` name a place, a trade or a brand, not a
+   person — output `[]` for them (trap 3). A reader that returned those as owners on 2026-09-20 is
+   why this sentence exists.
 2. **"Family owned and operated since 1985" names nobody.** Nor do "a family business", "father
    and son", "over 30 years' experience", "our team of qualified assessors", "locally owned". It is
    marketing copy. Do not infer a person, a surname or a founder from it.

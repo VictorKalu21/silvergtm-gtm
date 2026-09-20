@@ -188,3 +188,31 @@ node skills/google-maps-scrape/build-plusvibe.js check --csv <run>/owner/plusvib
 `clients/atlas-growth/STATE.md`, `skills/icp-source-planner/library/google-maps--au-foundation-repair.md`
 plus a registry profile `au-state-licence-boards--foundation-repair-owners.md`, both indexed in
 `library/_index.md`.
+
+## After GATE 6 (2026-09-20) — owner-finding, emails, deliverable
+
+```
+# Firecrawl residue (approved 2026-09-20; 25 credits)
+node skills/google-maps-scrape/fetch-sites.js --firecrawl-residue <run>/owner/site_text.jsonl --firecrawl-rpm 10
+node skills/google-maps-scrape/store-sync.js site-text --in <run>/owner/site_text.residue.jsonl --source firecrawl
+node skills/google-maps-scrape/store-sync.js ledger --run-id atlas-growth/2026-09-20_au-foundation-repair-maps --service firecrawl --credits 25
+python3 <run>/stageB_classify.py                      # re-classify with the recovered text
+#   adjudicate/in/batch-021.jsonl (12 residue rows, built inline) -> Opus -> adjudicate/out/batch-021.json
+python3 <run>/merge_adjudication.py && python3 <run>/fix_directory_hosts.py
+
+# owner read (6 Haiku batches per owner-read-subagent.md) -> merge -> AU filter + eponym pass
+node skills/google-maps-scrape/merge-owner-reads.js --dir <run>/owner/read --exclude-titles "estimator,...,supervisor,...,former,retired"
+python3 <run>/filter_contacts_au.py                  # contacts_read.jsonl in place (+ .pre-filter), contacts_eponym.jsonl
+node skills/google-maps-scrape/prep-owner-batches.js --leads <run>/owner/leads_residue.csv --dir <run>/owner --out <run>/owner/read_residue --batch 40 --ch <run>/registry_matched.jsonl,<run>/registry_lowconf.jsonl
+node skills/google-maps-scrape/merge-owner-reads.js --dir <run>/owner/read_residue --out <run>/owner/contacts_read_residue.jsonl --exclude-titles "..."
+
+# sweep (LinkedIn-restricted), 6 batches per session
+node skills/google-maps-scrape/prep-sweep-batches.js --leads <run>/leads_qualified.csv --out <run>/owner/sweep2 --have <run>/owner/contacts_read.jsonl --have <run>/owner/contacts_eponym.jsonl --registry linkedin.com --batch 20
+node skills/google-maps-scrape/merge-owner-reads.js --dir <run>/owner/sweep2 --out <run>/owner/contacts_sweep.jsonl --exclude-titles "..."
+node skills/google-maps-scrape/combine-owner-contacts.js --leads <run>/leads_qualified.csv --out <run>/owner/contacts_final.jsonl <run>/owner/contacts_read.jsonl <run>/owner/contacts_read_residue.jsonl <run>/owner/contacts_eponym.jsonl <run>/owner/contacts_sweep.jsonl
+
+# emails + deliverable
+node <run>/rank_emails_au.js                          # leads_qualified_contacts.csv
+python3 <run>/assemble_deliverable_au.py             # deliverable/*.csv (verify_input.csv = the MV->BB input, NOT run)
+#   store: contacts flattened one-per-contact (owner/contacts_flat.jsonl) -> store-sync.js contacts --run-id ...
+```
