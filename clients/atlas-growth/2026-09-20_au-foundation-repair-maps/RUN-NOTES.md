@@ -146,6 +146,20 @@ proxy. Format: `status size effective-url | title`.
   + suburb, officers = Director + Nominated supervisor with role and suburb). Rate: unmetered as far as
   observed; be polite (concurrency 2, ~1 req/s). Budget ≈ 1 call per NSW lead + 1 per match.
 
+- **`registry_nsw.py` written and functionally probed 2026-09-20 (3 leads, ~10 calls).** Two more API facts
+  the probe surfaced: **`pageNumber` is ZERO-BASED** ("underpinning": page 0 = 10 rows, page 1 = the
+  remaining 4, page 2 = `[]` — the earlier "14 records, 4 returned" reading was page 1 of 2), and **the
+  search term is matched as ONE token** ("Underpinning Solutions" → `[]`, "underpinning" → 14 incl.
+  UNDERPINNING SOLUTIONS PTY LTD; "solutions" → 200; a space anywhere in the term returns nothing; the
+  licence number as a search term also returns nothing). The script therefore searches the name's 1–2
+  most distinctive tokens (longest non-stopword), unions the hits, then matches on token overlap plus
+  suburb/postcode. Probe output: `Underpinning Solutions Pty Ltd` → matched exact_title, 170381C,
+  officers Director + Nominated supervisor Markos Abelas · `Buildfix` → matched name_overlap (suburb
+  Seven Hills), Buildfix Group Pty Ltd 294990C, Director Dale Allan Stewart, nominated supervisors Paul
+  Ralph Martin + Dale Allan Stewart · `Sydney House Levelling` → no_match (the first version matched an
+  individual surnamed House at low confidence; `house`/`home`/`level`/direction words joined the stop
+  list and a one-token overlap without a suburb match is no longer a candidate).
+
 **Victoria — VBA.**
 - `GET https://www.vba.vic.gov.au/tools/find-practitioner` → `403 5627B | Just a moment...` (Cloudflare).
 - `GET https://bams.vba.vic.gov.au/bams/s/practitioner-search` → **`200 223988B | Building Activity
