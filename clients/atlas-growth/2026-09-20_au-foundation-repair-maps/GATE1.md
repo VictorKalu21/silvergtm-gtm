@@ -4,7 +4,7 @@ Spent so far: **3 Maps calls** (the probe below). Nothing else. `SKILL` STEP 3 r
 because a wrong coordinate or a wrong category is cheap to fix now and expensive after the scrape.
 **Approve before the first shard runs.**
 
-**STATUS: READY FOR THE OPERATOR (2026-09-20).** The 3-call probe ran, the 305 probe rows went through
+**STATUS: APPROVED BY THE OPERATOR 2026-09-20 — "yes to all, your recs": whole of Australia · restumping/reblocking ICP · floor 5 + low-rated recovery · keep `foundation repair` · ~4,750 Maps calls · bare "Hi," · Supabase store first.** The 3-call probe ran, the 305 probe rows went through
 the actual engine (`qualify-leads.js` × 4 configs, `footprint-gate.js`), and three rule changes came
 out of it (§4). Every number below is measured on those rows; nothing is estimated except §2's spend.
 

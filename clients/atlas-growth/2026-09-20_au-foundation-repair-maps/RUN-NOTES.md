@@ -234,18 +234,20 @@ contacts, ledger; Storage bucket `run-shards`). Not built: engine additions need
 and the entry flipped to DONE. Keys (`SUPABASE_URL`, `SUPABASE_SERVICE_KEY`) go in
 `skills/google-maps-scrape/.env` only.
 
-## Supabase MCP (added 2026-09-20 on the operator's instruction)
+## Supabase access (decided 2026-09-20)
 
-`claude mcp add --scope project --transport http supabase "https://mcp.supabase.com/mcp?project_ref=xuxyaniyaeinqfjaqbzh&features=docs,account,database,debugging,development,functions,branching"`
-→ `.mcp.json` at the repo root (tracked; `.gitignore` gained `!.mcp.json` because `*.json` would have
-hidden it). **Authentication is pending**: the OAuth flow runs from the operator's own terminal
-(`claude /mcp` → select `supabase` → Authenticate) and cannot be completed from this session. Until
-then the MCP tools are not usable here. `SUPABASE_URL=https://xuxyaniyaeinqfjaqbzh.supabase.co` is
-derivable from the project ref and was written to `skills/google-maps-scrape/.env` (gitignored);
-`SUPABASE_SERVICE_KEY` is still needed for `store.js` — the MCP server is for applying
-`store/schema.sql` and inspecting tables, the engine talks to PostgREST with the service key.
-The optional `npx skills add supabase/agent-skills` step was NOT run: it installs third-party skills
-into a repo whose skills are curated and registered by hand under `.claude/skills/`; operator's call.
+The Supabase MCP server was added and then REMOVED the same day on the operator's word ("no need to add
+mcp if it adds bloat, keep it simple"): `.mcp.json` deleted, the `.gitignore` exception reverted. The
+engine talks to Supabase through PostgREST with the service-role key in `skills/google-maps-scrape/.env`,
+nothing else. PostgREST cannot run DDL, so `store/schema.sql` is applied ONCE by the operator in the
+Supabase SQL editor (one paste). Until it is applied, every store write degrades to a WARN and the run
+continues on files; the shard CSVs are backfilled into `places` afterwards, so nothing is lost.
+
+## GATE 1 — APPROVED 2026-09-20 ("yes to all, your recs")
+
+Whole of Australia (182 tiles) · restumping and reblocking are ICP · review floor 5 + the low-rated
+recovery (option a) · `foundation repair` kept despite the US bleed · ~4,750 Maps calls · bare "Hi," for
+nameless rows · Supabase store built first (approved as an engine change), schema by SQL-editor paste.
 
 ## Open, for the operator (first message of the next session)
 
