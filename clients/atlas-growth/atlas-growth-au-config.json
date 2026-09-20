@@ -1,0 +1,119 @@
+{
+  "_comment": "Atlas Growth :: AUSTRALIA foundation repair / underpinning / restumping. Engine config for google-maps-scrape. Mirrors clients/atlas-growth/atlas-growth-uk-config.json (the UK run) with Australian geo, Australian vocabulary and the same VOLUME-SAFE rule posture: the real ICP gate is the downstream site-text adjudication (adjudicate/PROMPT.md), so nothing here may drop a plausible trade firm. Job-specific values live ONLY here — never edit an engine script to tune this run. DRAFT until GATE 1: the type allow list (rule 4) and the query order are set by the 3-call Maps probe, not by this file.",
+
+  "geo": {
+    "_r": "areas mode: the runsheet tiles ARE the footprint (whole of Australia, metro-anchored — 138 anchors + 44 densify = 182 tiles, gen-runsheet-au.js). UNLIKE THE UK, Australia HAS a state token in its addresses (NSW VIC QLD SA WA TAS ACT NT), so region_from_city is a regex and footprint-gate.js runs its region check as well as the hub-distance and foreign-country checks — pass `--regions NSW,VIC,QLD,SA,WA,TAS,ACT,NT` or the region check is skipped (footprint-gate.js:140 only fires when both the regex and --regions are present). The regex has no comma requirement because the probe has not yet shown whether scraper.tech renders `city` as 'Parramatta NSW' or 'Parramatta, NSW' — verify on the probe rows before the gate runs. region_default 'Australia' is load-bearing: footprint-gate.js deletes it from its foreign-country blocklist so an address ending '...NSW, Australia' is never dropped as wrong_country; 'new zealand' stays in the set, which is correct (NZ pins must drop), and so do 'united states'/'usa' (the UK run measured US service-area pins arriving in a gb pull with UK region tags — expect the same here). hub radius: the UK ran 0.75 deg; Australian tiles are sparser, so the pipeline uses 1.0 deg (~111 km) and sparse_geo stays false — a lead 150 km from every tile in this anchor set is in the outback or in the sea.",
+    "country": "au",
+    "footprint": { "mode": "areas" },
+    "region_from_city": "\\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\\b",
+    "region_default": "Australia"
+  },
+
+  "categories": {
+    "_r": "The 10 runsheet queries, grouped by icp_type, in DRAFT order (gen-runsheet-au.js QUERIES is the source of truth; the Maps probe reorders). 'foundation' = the job itself under every Australian name for it. Restumping and reblocking are the VICTORIAN words for replacing timber stumps with concrete or steel — the same job on a different house type — and are recommended ICP, not adjacent (operator decision at GATE 1). 'house raising' is tagged adjacent: the same firms often do it, but raising is a lift-and-build job rather than a repair, so it is judged by the site-text adjudication the way the UK's damp-only segment was.",
+    "foundation": ["underpinning", "restumping", "reblocking", "foundation repair", "house levelling",
+                   "house relevelling", "slab lifting", "resin injection underpinning", "subsidence repair"],
+    "adjacent": ["house raising"]
+  },
+
+  "scrape_tuning": {
+    "_r": "Identical to the UK run, which measured 2.61 Maps calls per runsheet row at these settings over 1,770 rows. paginate:true pages each viewport via `offset` to exhaustion; max_pages 6 x limit 150 = up to 900 records per tile, far above anything an Australian suburb will hold; 6 caps the worst-case Sydney/Melbourne spend. saturation 90 is inert under paginate and left at the default. max_depth 1 = at most one quadrant split. quad_offset 0.02 (~2.2 km) is suburb scale. Sydney (13 tiles) and Melbourne (11) are densified with EXPLICIT suburb tiles rather than splits, because a split lands wherever the maths puts it and the suburbs are where the reactive-clay market is.",
+    "paginate": true,
+    "max_pages": 6,
+    "limit": 150,
+    "saturation": 90,
+    "max_depth": 1,
+    "quad_offset": 0.02
+  },
+
+  "qualify_rules": [
+    {"_r": "1. HARD entity deny, scope:'any' — the ONLY rule allowed to match a secondary google_type, reserved for entity kinds that can NEVER appear on a real underpinning/restumping contractor (sharp-shannon 2026-09-13 lesson: a bare 'atm' under scope:any deleted 71 real bank branches). These are what our own queries drag in: 'foundation repair' surfaces charitable Foundations and hospital foundations; 'house levelling'/'house raising' surface removalists and real-estate agents; 'subsidence repair' surfaces smash repairers ('repair'). Terms are multi-word wherever a bare stem would collide (no bare 'school', 'care', 'club', 'park'). Deliberately ABSENT: 'pest control service' — in Australia termite firms are a different trade and a pure pest firm dies at the rule-4 allow, but a restumper who also repairs termite-damaged bearers may carry the tag as a SECONDARY type and must survive. Also absent: 'property management company' (moved to the primary-only deny on the UK run for exactly the secondary-tag reason; kept there here).",
+     "field": "google_types", "op": "deny", "scope": "any", "label": "hard_off_icp_type", "value": [
+       "auto body shop", "car repair and maintenance", "car repair", "truck repair", "motorcycle repair",
+       "car dealer", "used car dealer", "tire shop", "tyre shop", "car wash", "auto glass shop",
+       "non-profit organization", "charity", "charitable organization", "social services organization",
+       "college", "university", "primary school", "secondary school", "high school", "tafe",
+       "hospital", "medical clinic", "hospice", "nursing home", "aged care", "dental clinic", "veterinary",
+       "church", "mosque", "synagogue", "hindu temple", "place of worship", "monastery", "cathedral",
+       "funeral home", "cemetery", "crematorium",
+       "real estate agency", "estate agent", "property developer",
+       "insurance agency", "law firm", "solicitor", "conveyancer", "recruiter", "travel agency"]},
+
+    {"_r": "2. PRIMARY-type deny (the engine default: matches google_types[0] only). These entity kinds DO legitimately appear as a secondary tag on a real target, so they may only be judged on their primary identity. Engineers, building inspectors and building surveyors (in Australia the surveyor is the CERTIFIER, not a trade) are referral sources, not buyers of a Facebook lead-gen retainer; they are denied on primary, but a real underpinning firm carrying 'Structural engineer' as a SECOND tag survives. GATE 3 CHECK REQUIRED: on the probe rows and again at qualify, count rows whose PRIMARY type is 'Structural engineer' and whose NAME carries an ICP token (underpin, restump, foundation) — Google is known to mis-primary small remediation firms this way and a recovery pass CANNOT resurrect a deny drop, so if the count is material the term moves to a name-gated recovery instead. Merchants / suppliers / hire are the 'supplier not contractor' bucket. Plumbers and drainage are denied on primary because 'stormwater' and 'drainage' tags would otherwise ride in on every drainage-repair pin. DELIBERATE OMISSIONS, each a volume-safety call: (a) NO 'concrete contractor' — in Australia slab-lifting and house-levelling firms are routinely primaried Concrete contractor; the bucket is huge (driveways, slabs) so it is NOT allowed at rule 4 either — it is a name-gated RECOVERY type in recover-generic-au-config.json. (b) NO 'roofing contractor' / 'insulation contractor' / 'waterproofing service' — plausible trade firms, left for the adjudication. (c) NO 'pest control service' — see rule 1. (d) NO 'excavating contractor' / 'earthworks' — house-raising and underpinning firms carry them as secondary tags and sometimes as primary; recovery type, name-gated.",
+     "field": "google_types", "op": "deny", "label": "off_icp_primary", "value": [
+       "structural engineer", "civil engineer", "geotechnical engineer", "engineering consultant", "consulting engineer",
+       "building surveyor", "quantity surveyor", "land surveyor", "building inspector", "building inspection service",
+       "home inspector", "property inspector", "pest inspection",
+       "building materials supplier", "building materials store", "home improvement store",
+       "hardware store", "concrete product supplier", "ready mix concrete supplier",
+       "lumber store", "timber supplier", "landscaping supply store", "paint store", "tile store",
+       "tool rental service", "equipment rental agency", "plant hire", "crane service",
+       "manufacturer", "wholesaler", "distribution service",
+       "plumber", "drainage service", "septic system service",
+       "fire damage restoration service",
+       "mover", "moving company", "moving and storage service", "removalist",
+       "architect", "interior designer", "kitchen remodeler", "bathroom remodeler",
+       "waste management service", "skip bin service", "skip rental service",
+       "property management company"]},
+
+    {"_r": "3. NAME deny (exact substring, always fires regardless of primary/secondary — the fallback for everything the type denies cannot see). Every term is multi-word or unambiguous, per the sharp-shannon substring lesson ('spa' ate 'Coworking space'). Explicit traps this vertical has in Australia: charities and hospital foundations answering 'foundation'; the national hardware chains and concrete suppliers answering every query; smash repairers answering 'repair'; pre-purchase building inspectors answering 'foundation'/'subsidence'; termite firms answering 'restumping' (they inspect the subfloor). DELIBERATE OMISSIONS: (a) no bare 'engineering' or 'engineers' — 'ABC Underpinning & Engineering' is a plausible real name; only the practice compounds are denied and a pure practice dies at the allow gate. (b) no bare 'concrete' or 'concreting' — slab-lifting firms carry it; only the SUPPLIER compounds are denied. (c) no bare 'pest' or 'termite' — some restumpers advertise termite-damage repair; only the inspection/treatment compounds are denied. (d) no chain/franchise names at all: the operator's standing directive is keep the roll-up, flag the brand (brand_families), never a chain drop.",
+     "field": "name", "op": "not_contains_any", "label": "name_deny", "value": [
+       "community foundation", "hospital foundation", "health foundation", "research foundation", "cancer foundation",
+       "charitable trust", "charitable foundation", "foundation trust", "foundation ltd", "op shop", "vinnies",
+       "salvation army", "rotary club", "lions club", "rsl club", "rsl sub", "surf club", "surf life saving",
+       "anglican church", "catholic church", "uniting church", "baptist church", "parish", "islamic centre",
+       "shire council", "city council", "regional council", "district council", "town council",
+       "smash repair", "smash repairs", "panel beater", "panel beating", "panel beaters", "crash repair",
+       "collision", "auto body", "autobody", "windscreen", "windscreens", "car detailing", "mechanical repairs",
+       "bunnings", "mitre 10", "home timber", "home hardware", "bowens", "dahlsens", "reece", "tradelink",
+       "boral", "hanson", "holcim", "readymix", "ready mix", "ready-mix", "concrete supplies", "concrete supply",
+       "landscape supplies", "landscaping supplies", "garden supplies", "sand & soil", "sand and soil", "sand & gravel",
+       "quarry", "quarries",
+       "kennards hire", "coates hire", "kennards", "coates",
+       "consulting engineers", "engineering consultants", "geotechnical", "geotech", "structural engineers pty",
+       "building inspections", "building inspection", "pre purchase", "pre-purchase", "prepurchase",
+       "building certif", "private certif", "pest inspection", "pest inspections", "termite inspection",
+       "termite treatment", "termite management", "pest control", "pest management",
+       "drain jetting", "blocked drains", "blocked drain", "drain cleaning", "cctv drain", "drain camera",
+       "plumbing & gas", "plumbing and gas", "plumbing & gasfitting", "hot water", "roof plumbing",
+       "real estate", "realty", "property management", "strata", "mortgage", "conveyancing",
+       "removals", "removalist", "removalists", "furniture removal"]},
+
+    {"_r": "4. Positive allow on google_types-ANY (never primary_type — Google mis-primaries real firms constantly). PROVISIONAL: these are the type stems the US and UK exports surfaced for this trade plus the Australian trade nouns; the 3-call Maps probe's type distribution REPLACES this list at GATE 1. 'foundation' is a real Google category ('Foundation') and is where the franchise licensees sit. 'restump', 'reblock', 'house raising', 'levelling'/'leveling', 'slab', 'pier', 'helical', 'shoring', 'soil' cost nothing even if thin. DELIBERATE ABSENCES: (a) 'waterproofing' — in Australia this is the bathroom/balcony membrane trade, not basement waterproofing, and allowing it would flood the list with wet-area waterproofers; a basement specialist is recovered by NAME ('basement'). (b) the generic buckets ('construction company', 'contractor', 'general contractor', 'builder', 'home builder', 'concrete contractor', 'excavating contractor'): recovered instead by recover-generic-au-config.json, which pairs the generic type WITH an ICP token in the NAME — the pairing qualify-leads.js cannot express as one rule. (c) 'drainage' — removed on the UK run (GATE 3 / P4) because it only ever admitted handyman generalists; same call here. (d) 'pest control' — see rule 1.",
+     "field": "google_types", "op": "allow", "label": "not_in_icp", "value": [
+       "foundation", "underpin", "restump", "reblock", "house raising", "house leveling", "house levelling",
+       "concrete leveling", "concrete levelling", "slab", "structural", "piling", "pile driving", "pier",
+       "helical", "shoring", "soil stabili", "masonry", "stonemason", "building restoration", "remedial"]},
+
+    {"_r": "5. Review floor 5, label too_small. A GHOST-LISTING FILTER, not a size gate — the US run's floor of 30 was wrong for the UK (3-to-10-person owner-operated firms with single-digit review counts) and will be wrong here for the same reason. The real ICP gate is the downstream site-text adjudication, so the Maps stage is deliberately volume-safe. 5 removes unclaimed, zero-activity duplicate pins and nothing else. REVISIT after the probe: the median review count of the three probe tiles is the number that confirms or moves this. A blank review_count fails this floor exactly as a 0 does (qualify-leads.js:92) — those rows come back through recover-unrated-au-config.json when they carry a website. Re-checkable at $0 by re-running qualify at 0 over excluded_officp.csv.",
+     "field": "review_count", "op": ">=", "value": 5, "label": "too_small"}
+  ],
+
+  "_no_website_rule": "Deliberately NO {website, exists} rule, as in the US and UK configs. collapse-domains.js (STEP 5c-dom) classifies website as site/shared_host/none AFTER the geo gate and dedupe, so every row — including no-website and Facebook-only firms — passes the category and name denies first. Australian owner-operated trades are heavy Facebook-page-only users; they are the recovery track (STEP 5d), not junk.",
+
+  "_no_gov_deny": "Deliberately NO standing government deny. None of these 10 queries carries distress/institutional intent. The institutional risk that does exist — a hospital or research Foundation answering 'foundation repair', a council depot answering 'house raising' — is covered by the rule-1 scope:any type deny (non-profit / charity / hospital) plus the council and foundation terms in the rule-3 name deny. Stated so it is a visible decision at GATE 1, not an omission.",
+
+  "_no_chain_drop": "Deliberately NO chain/franchise name deny anywhere in qualify_rules. Operator directive, carried from the US and UK runs: keep roll-ups and franchises, FLAG the brand. The flag is brand_families below (applied by collapse-domains.js as brand_family) plus the free location_count signal. A Mainmark or Buildfix licensee is a real target row — and under the licence-registry owner rung the licensee is usually a named individual.",
+
+  "brand_families": {
+    "_r": "Australian brand / franchise / licensee families. Matching is a lowercase SUBSTRING test against '<name> <root_domain>' (collapse-domains.js:56), so every term must be distinctive enough that it cannot false-match an independent. Two operator-listed families are DELIBERATELY OMITTED for that reason: 'Foundation Solutions' (a generic phrase — 'Melbourne Foundation Solutions' is a plausible independent) and 'Jim's' (the Jim's Group has 50+ franchise divisions and a bare \"jim's\" would relabel every sole trader called Jim; add 'jim's <division>' only if the probe shows such a division actually exists in this trade). 'uretek' is kept separate from Mainmark here: in the UK they were paired as Geobear/Uretek, but in Australia Uretek trades under its own name through licensees. Buildfix is a national resin-injection franchise (Sydney, Melbourne, Brisbane, Canberra per its locations page, probed 2026-09-20) — flag, never drop.",
+    "Mainmark": ["mainmark"],
+    "Uretek": ["uretek"],
+    "Buildfix": ["buildfix"],
+    "Teretek": ["teretek"],
+    "Restumping Australia": ["restumping australia", "restumpingaustralia"]
+  },
+  "_brand_terms_dropped_deliberately": "foundation solutions, jim's (bare), and any bare trade noun. Kept OUT of brand_families on purpose: collapse-domains.js would stamp the label on independents. Listed here as prose, never as an array inside brand_families — an array there becomes a brand label of its own. The scrape's own location_count column is the discovery tool for multi-location names this list does not know yet; add them at GATE 3, not before.",
+
+  "_r_site_l2_keywords": "NOTE: fetch-sites.js reads site_l2_keywords as a flat ARRAY (fetch-sites.js:59) — the rationale lives here, in this sibling key. Engine default L2 paths are about/team/meet/our-story/staff/owner/founder/leadership/who-we-are/about-us/our-team. The operator wants on-site EMAILS harvested as well as owner names, and on an Australian trade site the mailbox lives on the contact page. Australian sites say 'get a quote' and 'book an inspection' where UK ones say 'request a survey' — the paths below carry the Australian spellings. This scrape has no Maps email column, so on-site harvest is the ONLY free email rung; the fetch-sites.js extraction rungs (mailto, JSON-LD, Cloudflare cfemail, obfuscated forms) shipped 2026-09-17 with tests.",
+  "site_l2_keywords": ["contact", "contact-us", "contactus", "get-in-touch", "enquiries", "enquiry", "enquire",
+                       "get-a-quote", "free-quote", "request-a-quote", "book-an-inspection", "free-inspection",
+                       "inspection", "about", "about-us", "our-team", "meet-the-team", "our-story"],
+
+  "owner_query": {
+    "_r": "Australian bias terms: the budget holder at an owner-operated underpinning/restumping firm is the DIRECTOR (ASIC title), the OWNER, or the licensee/nominee named on the state licence — and 'managing director' where the firm is big enough to have one. 'president' and 'GM' are American. country 'AU' so any SERP backend is localised. use_linkedin TRUE, same finding as the US and UK runs: on a title-only SERP endpoint LinkedIn titles are the richest Name-Title source. CAVEAT: there is NO Companies House here. The registry rung is the STATE LICENCE BOARD (NSW verify.licence.nsw.gov.au hidden API first — probed 2026-09-20; QBCC / VBA / SA / WA behind Cloudflare, a captcha or an unreachable proxy path), fed to prep-owner-batches.js through --ch. Treat owner_query as the residue pass, not the primary rung.",
+    "bias_terms": ["owner", "director", "managing director", "founder", "licensee"],
+    "use_linkedin": true,
+    "country": "AU"
+  }
+}

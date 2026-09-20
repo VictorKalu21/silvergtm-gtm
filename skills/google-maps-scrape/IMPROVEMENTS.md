@@ -811,6 +811,22 @@ tiles.
 them once (same runsheet, same heal machinery). Surface the count in the coverage summary either way so the hole is
 visible even when the re-buy is declined. Cost is ~36–90 calls on a run of this size.
 
+## OPEN 2026-09-20 (engine, cross-run memory): `store.js` — a Supabase store behind `--store` so fetches, verdicts and registry matches are a QUERY on the next run, not a re-buy
+
+**Status:** OPEN — PROPOSED 2026-09-20 at the start of the Atlas Growth Australia run (the first run with a Supabase project available). **Needs operator approval, a test in `tests/store.test.js`, and this entry flipped to DONE before any script calls it.** Schema drafted in `store/schema.sql`. This is the build-out of shopping-list item 1 below; that item stays as the operator-facing rationale, this entry is the engineering spec.
+**Problem.** Every run's state is a gitignored folder: the UK run's 1,469 site fetches, 141 Firecrawl recoveries (146 credits), 469 email verdicts (469 MV + 157 BB credits) and 898 Companies House lookups are locked in one folder and would be paid again on the next UK build. Cross-run dedupe (`build-netnew.js`) needs the operator to re-upload a CSV; resuming a run needs a tarball hand-off; credit spend is reconstructed from logs after the fact.
+**Fix (spec).** One module, `store.js`, exporting `open(env)` → `{ places, siteText, verdicts, registry, contacts, runs, ledger, storage }` over the Supabase REST API (service-role key; `@supabase/supabase-js` or plain `fetch` against PostgREST — plain fetch preferred: zero dependencies, same as the rest of the engine). Every call is a no-op returning `null` when `SUPABASE_URL` / `SUPABASE_SERVICE_KEY` are absent or `--store` is not passed, so today's file behaviour is the default and every existing test passes unchanged. Consumers, each behind `--store` and each still writing its file output:
+- `run-scrape.js` / `scrape.js`: upsert every bought row into `places` (`first_seen_run` kept, `last_seen_run` set); write the `runs` row at start and `finished_at` at end; `ledger` row per Maps call batch.
+- `build-netnew.js`: `--ref-store` = query `places` for the client's earlier runs instead of `--ref-*` CSVs (the durable ledger STATE.md has wanted since run 1).
+- `fetch-sites.js`: before fetching a root domain, read `site_text`; reuse when `status = ok` and younger than `--store-max-age` (default 180 days); write every fetch result, including failures, with its rung as `source`; `ledger` row per Firecrawl call.
+- `verify-millionverifier-bounceban.js` (sibling skill): read `email_verdicts`, skip any address with a verdict younger than 90 days, write every new verdict; `ledger` rows per MV and BB credit.
+- `companies-house.js` and the job-side registry scripts: write `registry_matches` (registry = companies_house | nsw_fair_trading | qbcc | vba | wa_building_energy | sa_cbs | abn).
+- `combine-owner-contacts.js`: write `contacts`.
+- Storage: `store.storage.putShard(runId, shardDir)` tars a `shard-N/` directory into the private bucket `run-shards`; `getShard` restores it, so `--resume` works from a fresh container.
+**Schema.** `store/schema.sql` (seven tables: `runs`, `places`, `site_text`, `email_verdicts`, `registry_matches`, `contacts`, `ledger`; RLS on, no anon policies). Keys chosen so a second run of the same country is a query: `place_id`, `root_domain`, `email`, `(place_id, registry, match_key)`.
+**Test.** `tests/store.test.js` runs against a fake PostgREST server (the `tests/fake-searchmaps.js` pattern): asserts (a) absent keys → every method returns `null` and no network call is made; (b) `siteText.get` returns a row only when younger than the max age; (c) `verdicts.get` never returns a verdict older than 90 days; (d) `places.upsert` preserves `first_seen_run`; (e) a 5xx from the store degrades to file behaviour with one WARN, never a crash mid-run.
+**Rules kept.** The store is the gitignored data's new home and nothing more: no PII enters the repo; keys live only in `skills/google-maps-scrape/.env`; the module is added, no existing script's file output changes.
+
 ## NOTE 2026-09-17 (write-back index, Atlas Growth 2026-09-16 UK foundation-repair MAPS run)
 
 Entries for this run that are **already logged above and are not repeated below** — cross-reference them, do not re-file:

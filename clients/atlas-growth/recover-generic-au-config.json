@@ -1,0 +1,29 @@
+{
+  "_comment": "Atlas Growth AU :: RECOVERY pass over excluded_officp.csv, mirroring clients/atlas-growth/recover-generic-uk-config.json. The main config deliberately refuses the generic construction buckets — and, Australia-specifically, 'concrete contractor' and 'excavating contractor' — because they are mostly driveways, slabs and earthworks and would flood the list. This pass takes them back ONLY when the business NAME says underpinning / restumping / foundation / levelling work — the pairing qualify-leads.js cannot express as a single rule. Deterministic, $0, no re-scrape. Run: qualify-leads.js --in <run>/excluded_officp.csv --config recover-generic-au-config.json --out <run>/recover, then append recover/leads_clean_qualified.csv to the main qualified list (dedupe on place_id).",
+
+  "geo": { "country": "au", "footprint": { "mode": "areas" }, "region_from_city": "\\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\\b", "region_default": "Australia" },
+
+  "qualify_rules": [
+    {"_r": "0. RECOVERY SCOPE GATE — recover ONLY rows the main pass dropped at its positive allow (drop_reason 'not_in_icp'). Without it the generic type net below readmits entities the main config removed ON PURPOSE (a drain firm named 'Structural Drainage Solutions' typed 'Drainage service | Contractor' would come straight back). Works because excluded_officp.csv carries the drop_reason column qualify-leads.js appends. CAVEAT: pointed at a file WITHOUT a drop_reason column, qualify-leads.js skips the rule with a WARN on stderr and the pass silently degrades to type+name only — read the WARN line.",
+     "field": "drop_reason", "op": "in", "label": "not_a_recovery_candidate", "value": ["not_in_icp"]},
+
+    {"_r": "1. The generic type net. These are the buckets the main config's allow deliberately omits. In Australia the ones that matter most are 'concrete contractor' (slab lifting and house levelling firms are routinely primaried this way) and 'excavating contractor' / 'earthworks' (house raising and underpinning). 'building restoration service' is in the MAIN allow, not here. 'waterproofing service' is here, not in the main allow: a basement-waterproofing firm comes back only when its NAME says basement/underpinning, so the wet-area membrane trade stays out. 'pest control service' is here for the same reason: a restumper primaried pest control (termite-damage repair) comes back on an ICP name token; a pure termite firm does not. PROVISIONAL — the probe's type distribution may add terms (e.g. an Australian-English category string the US/UK exports never showed).",
+     "field": "google_types", "op": "allow", "label": "not_generic_contractor", "value": [
+       "construction company", "contractor", "general contractor", "building firm",
+       "builder", "home builder", "building company", "concrete contractor", "concreter",
+       "excavating contractor", "earthworks", "civil engineering contractor", "groundworks",
+       "repair service", "building consultant", "property maintenance", "handyman",
+       "waterproofing service", "pest control service", "carpenter", "structural engineer"]},
+
+    {"_r": "2. The NAME must actually claim the work. This is the precision half of the pair — keep it strict. Australian vocabulary: 'restump', 'reblock', 'relevel', 'house raising', 'slab lift', 'resin inject' are the trade's own words; 'underpin', 'subsidence', 'foundation', 'levelling' are shared with the UK/US. 'structural' is in because 'XYZ Structural Repairs' is how a general builder advertises this line — but 'structural engineer' rows have a different drop_reason (off_icp_primary) and rule 0 refuses them, so the token cannot readmit a practice. Deliberately NOT included: 'concrete' or 'concreting' (every driveway firm), 'building' (matches everything), 'excavation' / 'earthmoving' (lays NEW foundations — adjudicate/PROMPT.md classes that 'no'), 'waterproofing' (bathroom trade). THE BRAND_FAMILIES TERMS ARE INCLUDED — all term strings from atlas-growth-au-config.json's brand_families, copied verbatim and lowercase so the two lists cannot drift (UK GATE 3 / P8 lesson: brand-named rows died on the name gate because a brand name carries no trade vocabulary, contradicting the keep-and-flag directive). Rule 0 still means only a main-pass 'not_in_icp' row can get this far, so a brand term can never rescue something a DENY removed.",
+     "field": "name", "op": "contains_any", "label": "name_not_icp", "value": [
+       "underpin", "restump", "re-stump", "reblock", "re-block", "relevel", "re-level", "levelling", "leveling",
+       "house raising", "house raiser", "house lifting", "slab lift", "slab jack", "resin inject", "subsidence",
+       "foundation", "footing", "piling", "pile ", "pier", "stabilis", "stabiliz", "structural", "remedial",
+       "basement", "helical", "screw pile", "stump",
+       "mainmark", "uretek", "buildfix", "teretek", "restumping australia", "restumpingaustralia"]},
+
+    {"_r": "3. Same ghost-listing floor as the main pass so the recovery cannot sneak sub-floor rows in by the back door. (Rule 0 already blocks too_small rows; this is belt and braces for the degraded-run case described there.)",
+     "field": "review_count", "op": ">=", "value": 5, "label": "too_small"}
+  ]
+}
