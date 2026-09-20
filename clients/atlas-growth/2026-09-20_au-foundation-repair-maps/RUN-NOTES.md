@@ -164,6 +164,19 @@ contacts, ledger; Storage bucket `run-shards`). Not built: engine additions need
 and the entry flipped to DONE. Keys (`SUPABASE_URL`, `SUPABASE_SERVICE_KEY`) go in
 `skills/google-maps-scrape/.env` only.
 
+## Supabase MCP (added 2026-09-20 on the operator's instruction)
+
+`claude mcp add --scope project --transport http supabase "https://mcp.supabase.com/mcp?project_ref=xuxyaniyaeinqfjaqbzh&features=docs,account,database,debugging,development,functions,branching"`
+→ `.mcp.json` at the repo root (tracked; `.gitignore` gained `!.mcp.json` because `*.json` would have
+hidden it). **Authentication is pending**: the OAuth flow runs from the operator's own terminal
+(`claude /mcp` → select `supabase` → Authenticate) and cannot be completed from this session. Until
+then the MCP tools are not usable here. `SUPABASE_URL=https://xuxyaniyaeinqfjaqbzh.supabase.co` is
+derivable from the project ref and was written to `skills/google-maps-scrape/.env` (gitignored);
+`SUPABASE_SERVICE_KEY` is still needed for `store.js` — the MCP server is for applying
+`store/schema.sql` and inspecting tables, the engine talks to PostgREST with the service key.
+The optional `npx skills add supabase/agent-skills` step was NOT run: it installs third-party skills
+into a repo whose skills are curated and registered by hand under `.claude/skills/`; operator's call.
+
 ## Open, for the operator (first message of the next session)
 
 Confirm the client (Atlas Growth assumed); whole of Australia vs east coast + Perth + Adelaide;

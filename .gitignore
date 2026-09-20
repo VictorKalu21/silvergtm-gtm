@@ -11,6 +11,8 @@
 *.jsonl
 *.json
 !scripts/**/*.json   # allow config/fixtures if ever needed
+# Project-scope MCP server config (server URLs + project refs only, no secrets; auth tokens live in the user keychain).
+!.mcp.json
 /data/
 /out/
 *.xlsx
