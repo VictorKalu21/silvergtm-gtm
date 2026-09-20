@@ -1,0 +1,78 @@
+{
+  "_comment": "Atlas Growth AU :: FIFTH RECOVERY pass over excluded_officp.csv — the NO-TYPE track (GATE 3 proposal P2, 2026-09-20). Google returned an EMPTY google_types on a small set of listings ('Reblocking Kings' Hadfield, 'Always Level Reblocking' Meadow Heights, 'Foundation Solutions' Birkdale, 'Advanced Reblocking Specialists' Footscray, 'Quicklift Reblocking' Warragul): 9 Australian rows with an ICP name and no category at all. The main pass drops them as not_in_icp (no type can match the allow) and the generic recovery cannot see them either (no type can match its net). qualify-leads.js has a `not_exists` op that works on any column, so the pass is: dropped at the allow AND google_types empty AND an ICP token in the name. Nothing else can arrive here.",
+  "geo": {
+    "country": "au",
+    "footprint": {
+      "mode": "areas"
+    },
+    "region_from_city": "\\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\\b",
+    "region_default": "Australia"
+  },
+  "qualify_rules": [
+    {
+      "_r": "0. Scope gate: not_in_icp only.",
+      "field": "drop_reason",
+      "op": "in",
+      "label": "not_a_notype_candidate",
+      "value": [
+        "not_in_icp"
+      ]
+    },
+    {
+      "_r": "1. EMPTY google_types only — a typed row belongs to the main allow or the generic recovery, never here.",
+      "field": "google_types",
+      "op": "not_exists",
+      "label": "has_type"
+    },
+    {
+      "_r": "2. The NAME must claim the work — same token list as recover-generic-au-config.json rule 2.",
+      "field": "name",
+      "op": "contains_any",
+      "label": "name_not_icp",
+      "value": [
+        "underpin",
+        "restump",
+        "re-stump",
+        "reblock",
+        "re-block",
+        "relevel",
+        "re-level",
+        "levelling",
+        "leveling",
+        "house raising",
+        "house raiser",
+        "house lifting",
+        "slab lift",
+        "slab jack",
+        "resin inject",
+        "subsidence",
+        "foundation",
+        "footing",
+        "piling",
+        "pile ",
+        "pier",
+        "stabilis",
+        "stabiliz",
+        "structural",
+        "remedial",
+        "basement",
+        "helical",
+        "screw pile",
+        "stump",
+        "concrete lift",
+        "jacking",
+        "substructure",
+        "piering",
+        "raise and relevel",
+        "ground fix",
+        "groundfix",
+        "mainmark",
+        "uretek",
+        "buildfix",
+        "teretek",
+        "restumping australia",
+        "restumpingaustralia"
+      ]
+    }
+  ]
+}

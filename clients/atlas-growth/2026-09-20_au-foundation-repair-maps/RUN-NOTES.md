@@ -274,6 +274,20 @@ per shard, no WARN/ERR/429 lines in any log. Store: `store.js` + `store-sync.js`
 applied) as designed — the operator pastes `skills/google-maps-scrape/store/schema.sql` into the SQL
 editor once, then the `places` push and the two ledger rows are re-run.
 
+## Scrape done + GATE 3 written (2026-09-20)
+
+All 8 shards exit 0, COMPLETE, 0 heal passes, 0 unhealed. **3,861 Maps calls, 2.12 calls/row** (page
+depth 1/2/3 = 31/1,537/252). 11,002 shard rows → **5,118 unique businesses: 3,010 Australian, 2,107 United
+States pins** (Google pads the AU viewport with US results for "foundation repair" / "levelling"). Qualify
+×5 approved passes → 1,339 → GATE 3 proposals P1 (no-website ICP-named, +49/24 AU) and P2 (empty-type
+ICP-named, +11/10 AU) applied provisionally → 1,399 → centroid blanking 15 → footprint gate **479 kept**
+(920 dropped: 914 US + 6 AU service-area pins far from any tile) → `build-netnew` 479 (`ref files used: 0`,
+first AU run) → `collapse-domains` **364 owner-finding domains + 67 no-website** (62 none, 5 shared host),
+brand rows Mainmark 6 / Buildfix 4. State split (token, else lat/lng box): VIC 185 · QLD 101 · NSW 96 ·
+WA 22 · SA 19 · TAS 7 · ACT 2 · unknown 13. Full audit: `REPORT-GATE3.md`. Store push of `places` (5,118)
+and the Maps ledger attempted → PGRST205 (schema not applied) → re-run when it is.
+**STOPPED at GATE 3 for the operator** (P1/P2 in or out; P3–P5 accepted losses; go for site text).
+
 ## GATE 1 — APPROVED 2026-09-20 ("yes to all, your recs")
 
 Whole of Australia (182 tiles) · restumping and reblocking are ICP · review floor 5 + the low-rated
