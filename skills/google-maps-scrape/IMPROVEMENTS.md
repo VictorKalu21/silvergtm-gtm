@@ -811,6 +811,20 @@ tiles.
 them once (same runsheet, same heal machinery). Surface the count in the coverage summary either way so the hole is
 visible even when the re-buy is declined. Cost is ~36–90 calls on a run of this size.
 
+## OPEN 2026-09-20 (footprint-gate.js, LOW): a service-area listing with no address carries the COUNTRY CENTROID as its coordinates, and the hub-distance gate drops it as `far_from_hubs`
+
+**Status:** OPEN (job-side workaround: blank lat/lng on centroid rows before the gate) · found 2026-09-20 (Atlas Growth AU Maps probe), LOW-MEDIUM impact: 4 of 225 Australian probe rows, all real Victorian reblockers ("Vic Homes Reblocking", "Divine Reblocking and Underpinning", "Able Reblocking Specialists", "Elite Reblocking Services").
+**Problem.** Google places an address-less service-area listing at the geographic centre of its country (`-32.2054, 136.1074` for Australia; expect the equivalent for gb/us). `footprint-gate.js` keeps rows with MISSING coordinates but has no notion of a placeholder coordinate, so these rows fail the hub-distance check (~700 km from every tile) and are dropped with the US pins.
+**Fix (later, engine, with a test).** A per-country centroid table (or: detect the single most repeated exact coordinate pair among address-less rows) and treat a match as missing coordinates, falling through to the region check. Report the count as `centroid_placeholder` in `footprint_gate_report.json`.
+**Until then:** before the gate, blank `latitude`/`longitude` on rows whose coordinates equal the country centroid to 4 dp and whose `full_address` is empty.
+
+## OPEN 2026-09-20 (qualify-leads.js recovery chaining, MEDIUM): a recovery pass can only see the MAIN pass's drop reason, so a row that fails two rules is reachable by neither recovery
+
+**Status:** OPEN (worked around in the AU configs by removing the review floor from the generic recovery) · found 2026-09-20 (Atlas Growth AU Maps probe), MEDIUM impact: 49 of 225 Australian probe rows, all ICP-named.
+**Problem.** `qualify-leads.js` records only the FIRST failing rule as `drop_reason`. The recovery pattern (UK GATE 3) scopes each recovery on that one reason. A row typed `Construction company` with 3 reviews fails `not_in_icp` first; the generic recovery admits its type and name, then fails its own repeated review floor; the low-rated/unrated recoveries refuse it because its `drop_reason` is `not_in_icp`, not `too_small`. The row is lost although each recovery individually would have taken it.
+**Fix (later, engine, with a test).** Either (a) `qualify-leads.js` writes ALL failing rule labels (`drop_reasons`, `|`-joined) alongside the first, so a recovery scope gate can use `contains_any`; or (b) a `--chain` mode where a recovery's own excluded file carries a fresh `drop_reason` and can feed the next recovery. (a) is smaller and keeps the first-failure `drop_reason` column intact.
+**Until then:** do not repeat the main floor inside a name-gated recovery; the name gate is the precision, and the floor there only strands rows.
+
 ## OPEN 2026-09-20 (engine, cross-run memory): `store.js` — a Supabase store behind `--store` so fetches, verdicts and registry matches are a QUERY on the next run, not a re-buy
 
 **Status:** OPEN — PROPOSED 2026-09-20 at the start of the Atlas Growth Australia run (the first run with a Supabase project available). **Needs operator approval, a test in `tests/store.test.js`, and this entry flipped to DONE before any script calls it.** Schema drafted in `store/schema.sql`. This is the build-out of shopping-list item 1 below; that item stays as the operator-facing rationale, this entry is the engineering spec.

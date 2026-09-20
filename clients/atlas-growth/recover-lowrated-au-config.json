@@ -1,0 +1,85 @@
+{
+  "_comment": "Atlas Growth AU :: THIRD RECOVERY pass over excluded_officp.csv — the LOW-RATED track (PROPOSED at the 2026-09-20 Maps probe, operator decision at GATE 1). Measured on the 305 probe rows: the review floor of 5 dropped 28 Australian rows as too_small and 21 of them are plainly real trade firms with 1-4 reviews — Eastern Restumping and Underpinning (2), MR Reblocking, Restumping and House Underpinning (2, typed 'Foundation'), C S Volk Reblocking (2), Expert Reblocking & Underpinning (3), SIMON REBLOCKING AND UNDERPINNING (4), Shepparton Restumping (1), State Wide Reblocking & Underpinning (3), Precise Restumping & Underpinning (4), Getting Dirty Restumping and Underpinning (2). In Victoria the 1-4 band is NOT the ghost band it was in the UK: restumping is a low-review trade. This pass keeps the floor of 5 as the ghost filter for nameless generic pins and takes back exactly the rows that carry all three of: 1-4 reviews (not blank — the unrated pass owns blanks), a live website, and an ICP token in the NAME. Deterministic, $0. Run AFTER the other two: qualify-leads.js --in <run>/excluded_officp.csv --config recover-lowrated-au-config.json --out <run>/recover-lowrated, then append (dedupe on place_id; assert zero overlap with the main pass and the other two recoveries). ALTERNATIVE the operator may prefer: lower the main floor to 1 and delete this file — same effect for ICP-named rows, but it also admits 1-4-review rows with generic names, which this pass refuses.",
+  "geo": {
+    "country": "au",
+    "footprint": {
+      "mode": "areas"
+    },
+    "region_from_city": "\\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\\b",
+    "region_default": "Australia"
+  },
+  "qualify_rules": [
+    {
+      "_r": "0. RECOVERY SCOPE GATE — one drop reason only, 'too_small'. A row removed by a deny or by the positive allow is refused before any other rule is read. Read the WARN line if pointed at a file without drop_reason.",
+      "field": "drop_reason",
+      "op": "in",
+      "label": "not_a_lowrated_candidate",
+      "value": [
+        "too_small"
+      ]
+    },
+    {
+      "_r": "1. RATED, not blank: the unrated pass owns blank review_count. qualify-leads.js treats a blank as failing any numeric comparison, so `>= 1` keeps exactly the 1-4 band here (5+ never reached this file).",
+      "field": "review_count",
+      "op": ">=",
+      "value": 1,
+      "label": "unrated_not_lowrated"
+    },
+    {
+      "_r": "2. A LIVE WEBSITE — the same substitute signal the unrated pass demands. Facebook-only rows are admitted here and routed to the no-website track by collapse-domains.js downstream.",
+      "field": "website",
+      "op": "exists",
+      "label": "no_website"
+    },
+    {
+      "_r": "3. The NAME must claim the work — the precision half. Same token list as recover-generic-au-config.json rule 2 (kept in step by hand; brand terms included so a low-review licensee is not stranded).",
+      "field": "name",
+      "op": "contains_any",
+      "label": "name_not_icp",
+      "value": [
+        "underpin",
+        "restump",
+        "re-stump",
+        "reblock",
+        "re-block",
+        "relevel",
+        "re-level",
+        "levelling",
+        "leveling",
+        "house raising",
+        "house raiser",
+        "house lifting",
+        "slab lift",
+        "slab jack",
+        "resin inject",
+        "subsidence",
+        "foundation",
+        "footing",
+        "piling",
+        "pile ",
+        "pier",
+        "stabilis",
+        "stabiliz",
+        "structural",
+        "remedial",
+        "basement",
+        "helical",
+        "screw pile",
+        "stump",
+        "concrete lift",
+        "jacking",
+        "substructure",
+        "piering",
+        "raise and relevel",
+        "ground fix",
+        "groundfix",
+        "mainmark",
+        "uretek",
+        "buildfix",
+        "teretek",
+        "restumping australia",
+        "restumpingaustralia"
+      ]
+    }
+  ]
+}

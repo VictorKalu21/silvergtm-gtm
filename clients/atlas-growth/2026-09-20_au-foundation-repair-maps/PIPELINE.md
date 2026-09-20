@@ -13,6 +13,7 @@ Shorthand used in the prose only — the commands are written out in full:
 | config | `clients/atlas-growth/atlas-growth-au-config.json` |
 | recovery config | `clients/atlas-growth/recover-generic-au-config.json` |
 | unrated config | `clients/atlas-growth/recover-unrated-au-config.json` |
+| low-rated config | `clients/atlas-growth/recover-lowrated-au-config.json` (PROPOSED at GATE 1 §6; run only if approved) |
 | runsheet | `clients/atlas-growth/atlas-growth-au-runsheet.csv` (1,820 rows = 182 tiles × 10 queries) |
 | shards | `clients/atlas-growth/shards-au/shard-0..7.csv` (gitignored; regenerate with `node clients/atlas-growth/gen-runsheet-au.js`) |
 | memory | none — first Australian run for this client. `build-netnew.js` will report `ref files used: 0`, which is valid for THIS run only |
@@ -25,8 +26,8 @@ that has not finished.
 
 ## Step 0 — Gates that must be true before the first Maps call
 
-1. `SCRAPER_TECH_KEY` in `skills/google-maps-scrape/.env` (ask the operator; never printed).
-2. The 3-call probe run and pasted into `GATE1.md` §0 and `RUN-NOTES.md`.
+1. `SCRAPER_TECH_KEY` in `skills/google-maps-scrape/.env` — DONE 2026-09-20 (also Firecrawl, Supabase URL + service key).
+2. The 3-call probe run and pasted into `GATE1.md` §0 and `RUN-NOTES.md` — DONE 2026-09-20.
 3. GATE1 approved: footprint, queries, review floor, brand families, Maps spend.
 4. If the operator confirms Supabase first: `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` in the same
    `.env`, `store.js` shipped with its test and IMPROVEMENTS entry, `runs` row written for this run.
@@ -65,9 +66,10 @@ Port `merge-shards.js` from `clients/atlas-growth/2026-09-16_uk-foundation-repai
 node skills/google-maps-scrape/qualify-leads.js --in <run>/leads_clean.csv --config clients/atlas-growth/atlas-growth-au-config.json --out <run>
 node skills/google-maps-scrape/qualify-leads.js --in <run>/excluded_officp.csv --config clients/atlas-growth/recover-generic-au-config.json --out <run>/recover
 node skills/google-maps-scrape/qualify-leads.js --in <run>/excluded_officp.csv --config clients/atlas-growth/recover-unrated-au-config.json --out <run>/recover-unrated
+node skills/google-maps-scrape/qualify-leads.js --in <run>/excluded_officp.csv --config clients/atlas-growth/recover-lowrated-au-config.json --out <run>/recover-lowrated   # if GATE 1 approves option (a)
 ```
 
-Append both recovery outputs to `leads_clean_qualified.csv` through the MAIN file's header, dedupe on
+Append the recovery outputs to `leads_clean_qualified.csv` through the MAIN file's header, dedupe on
 `place_id`, assert zero overlap between the three. Then **GATE 3**: the drop-reason audit
 (`gate3-stats.js` ported from the UK run), with proposals; applied on approval, before site text. The
 audit MUST include the `Structural engineer`-primaried rows whose name carries an ICP token (config
@@ -76,6 +78,11 @@ rule 2 note) and the `Concrete contractor` rows the generic recovery took back a
 **STOP:** a `WARN` on stderr about a missing `drop_reason` column (the recovery pass has degraded).
 
 ## Step 4 — Footprint gate (mandatory in areas mode)
+
+First the centroid blanking (GATE1 §7.7, IMPROVEMENTS 2026-09-20): rows with an empty `full_address` whose
+lat/lng equal `-32.2054, 136.1074` (Australia's geographic centre, Google's no-location placeholder) get
+blank coordinates so the gate keeps them instead of dropping them as `far_from_hubs`. A 10-line job-side
+step in the run folder (allowed: `.skill-check` exists). Then:
 
 ```bash
 node skills/google-maps-scrape/footprint-gate.js --in <run>/leads_clean_qualified.csv \

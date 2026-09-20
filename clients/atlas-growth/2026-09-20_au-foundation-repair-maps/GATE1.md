@@ -1,27 +1,55 @@
-# GATE 1 — Atlas Growth **Australia** foundation repair: read-back before any API call
+# GATE 1 — Atlas Growth **Australia** foundation repair: read-back before the scrape
 
-Nothing here has spent anything. `SKILL` STEP 3 requires this read-back because a wrong coordinate or
-a wrong category is cheap to fix now and expensive to fix after the scrape. **Approve before the
-first call.**
+Spent so far: **3 Maps calls** (the probe below). Nothing else. `SKILL` STEP 3 requires this read-back
+because a wrong coordinate or a wrong category is cheap to fix now and expensive after the scrape.
+**Approve before the first shard runs.**
 
-**STATUS: DRAFT — the 3-call Maps probe has not run** (no `SCRAPER_TECH_KEY` in this container).
-Every cell marked *(probe)* is filled from the probe before this gate is put to the operator:
-row counts per probe tile, the google_types distribution, the website fill, the median review count,
-and the `city` field's format (which decides whether `region_from_city` needs a comma).
+**STATUS: READY FOR THE OPERATOR (2026-09-20).** The 3-call probe ran, the 305 probe rows went through
+the actual engine (`qualify-leads.js` × 4 configs, `footprint-gate.js`), and three rule changes came
+out of it (§4). Every number below is measured on those rows; nothing is estimated except §2's spend.
 
 ---
 
-## 0. The three probe calls (run first; 3 Maps calls)
+## 0. The three probe calls (run 2026-09-20, `limit 150`, `zoom 13`, `country au`, first page only)
 
-| # | query | tile | zoom | country | what it answers |
-|---|---|---|---|---|---|
-| 1 | `underpinning` | Sydney CBD (-33.8688, 151.2093) | 13 | au | rows per dense tile; the type distribution for the national word |
-| 2 | `restumping` | Melbourne CBD (-37.8136, 144.9631) | 13 | au | whether the Victorian word returns a distinct population (ICP vs adjacent decision) |
-| 3 | `foundation repair` | Brisbane CBD (-27.4698, 153.0251) | 13 | au | whether the American label has volume here or returns only franchises |
+| # | query | tile | rows | website | review median (q1 / q3) | state token in `city` | pins outside Australia |
+|---|---|---|---:|---:|---|---|---:|
+| 1 | `underpinning` | Sydney CBD | **48** | 98% | 15 (3 / 70) | 34 of 40 with a city | 1 |
+| 2 | `restumping` | Melbourne CBD | **119** | 87% | 12 (4 / 40) | 72 of 73 | 0 |
+| 3 | `foundation repair` | Brisbane CBD | **149** (at the page cap) | 94% | 19 (4 / 70) | 32 of 102 | **79** |
 
-Paste per call: rows returned, top-8 `google_types` primaries, website fill %, median and quartile
-`review_count`, three sample `city` strings, count of non-AU pins. Those numbers set §3 (query
-order), §4 rule 4 (the type allow), §6 (the review floor) and the calls-per-row estimate in §2.
+Across the three: **305 unique businesses, 225 inside Australia by lat/lng, 80 outside** (all in the
+United States: Wisconsin "Basement Foundation Repair", "The Mudjackers LLC", "MUDTeCH"…). No `email`
+field on any row (as in the UK). `state` field is always null; the state token rides in `city` as
+`"Millers Point NSW"` (no comma), so the config's `region_from_city` regex is right as written.
+**82 of 225 Australian rows have a blank `city` and `full_address`** (service-area listings) — the
+region check cannot fire on them; the hub-distance check does (see §7.7 for the one trap).
+
+Top primary types, Australian rows: `Building restoration service` (the Victorian restumping label,
+53 of 119 Melbourne primaries), `Construction company`, `Concrete contractor` (37 of 149 Brisbane —
+slab and driveway firms), `Waterproofing service` (31 in Brisbane — the bathroom trade, confirming
+the decision to keep it out of the allow), `Foundation`, `Structural engineer`, `Tradesmen`,
+`Home builder`, `Civil engineering company`.
+
+### Dry run — the 305 probe rows through the engine, after the §4 changes
+
+| stage | rows |
+|---|---:|
+| probe universe (deduped on place_id; 11 rows appeared in two probes) | 305 |
+| main pass `atlas-growth-au-config.json` | 69 kept (drops: not_in_icp 189 · too_small 37 · off_icp_primary 9 · name_deny 1) |
+| + generic recovery (type net × ICP name token) | +111 |
+| + unrated recovery (blank reviews × website) | +12 |
+| + **low-rated recovery (1–4 reviews × website × ICP name) — PROPOSED** | +17 |
+| merged (zero overlap asserted) | 209 |
+| footprint gate, hub radius 1.0°, `--regions` all eight states | **147 kept** · 62 dropped `far_from_hubs` (58 US pins, 4 Australian — §7.7) |
+
+**147 of the 225 Australian rows (65%) reach the site-text stage.** Of the 78 not kept: 58 are the US
+pins, 12 are ICP-named rows (2 suppliers, correctly out; 6 with no website and under 5 reviews, the
+accepted ghost-filter cost; **4 with an EMPTY `google_types`** — "Reblocking Kings", "Always Level
+Reblocking", "Foundation Solutions", "Advanced Reblocking Specialists" — which no type rule can see;
+a GATE 3 item), and the rest carry no ICP token in their name (retaining walls, concreters, shotcrete,
+a marketplace, inspectors). Of the 147 kept, **17 carry no ICP token in the name** (Buildfix, Mainmark,
+Urathane Solutions, Techniblock, Booth Engineers…) — that is the adjudication's load, and it is small.
 
 ## 1. Footprint — anchors by state
 
@@ -77,17 +105,14 @@ Mount Gambier · Kadina · Port Pirie · Port Augusta · Whyalla · Port Lincoln
 | Perth | +6 | Wanneroo · Morley · Midland · Cannington · Armadale · Cockburn |
 | Adelaide | +5 | Elizabeth · Modbury · Glenelg–West Beach · Marion · Noarlunga |
 
-Explicit suburb tiles rather than engine quadrant splits, because a split lands wherever the maths
-puts it and the suburbs are where the reactive-clay market is.
-
 Known accepted gaps: the Pilbara and Kimberley interior, Cape York, the Nullarbor, western NSW beyond
 Broken Hill, the Barkly.
 
 **Decision for the operator:** whole of Australia (as generated) **or** east coast plus Perth and
-Adelaide. The narrower footprint removes TAS (6), NT (3), and the WA/SA/QLD regionals beyond the
+Adelaide. The narrower footprint removes TAS (6), NT (3) and the WA/SA/QLD regionals beyond the
 capitals — roughly **45 tiles, ~450 rows, ~1,170 Maps calls** at the UK rate. Recommendation: whole
-of Australia. Tasmania and the regionals are where restumping is densest per capita, and a regional
-tile is cheap (1.3 calls/row on sparse tiles).
+of Australia. The Melbourne probe alone returned a Shepparton and a Gippsland restumper; the regionals
+are where restumping is densest per capita, and a regional tile is cheap (1.3 calls/row on sparse tiles).
 
 ---
 
@@ -97,8 +122,9 @@ tile is cheap (1.3 calls/row on sparse tiles).
 - Shards: **8**, round-robin by row, **~228 rows each** (`shards-au/shard-0.csv … shard-7.csv`).
 
 **Projected API calls.** Same tuning as the UK run (`paginate: true`, `max_pages 6`, `limit 150`),
-which **measured 2.61 calls/row over 1,770 rows** — the only published figure for this engine at
-these settings on a comparable metro-anchored footprint.
+which **measured 2.61 calls/row over 1,770 rows**. The probe says the capitals will page: Brisbane
+`foundation repair` returned 149 rows on page one (the cap), Melbourne `restumping` 119, Sydney
+`underpinning` 48 — so a capital-city tile costs 2–4 calls and a regional tile 1.
 
 | scenario | assumption | calls |
 |---|---|---:|
@@ -107,124 +133,130 @@ these settings on a comparable metro-anchored footprint.
 | high | every row behaves like a dense tile (2.9 calls/row) | **~5,300** |
 | absolute ceiling | every row hits `max_pages` and never splits | 10,920 |
 
-*(probe)* — the three probe tiles give the first Australian calls-per-row reading; a Sydney CBD
-`underpinning` tile that pages to 3+ pages puts the run at the central figure or above. **Do not
-extrapolate from the first minutes of the run** — take the real number from `run_log.json` at ≥25%
-of the sheet. Maps spend is confirmed by the operator once the probe gives the figure.
+**Do not extrapolate from the first minutes of the run** — take the real number from `run_log.json`
+at ≥25% of the sheet. **Decision for the operator: approve ~4,750 Maps calls (central).**
 
 ---
 
-## 3. The 10 queries (draft order)
+## 3. The 10 queries — what the probe says
 
-| # | query | icp_type | priority | *(probe)* rows / note |
+| # | query | icp_type | priority | probe reading |
 |---|---|---|---|---|
-| 1 | `underpinning` | foundation | P1 | |
-| 2 | `restumping` | foundation | P1 | |
-| 3 | `reblocking` | foundation | P1 | |
-| 4 | `foundation repair` | foundation | P1 | |
-| 5 | `house levelling` | foundation | P1 | |
-| 6 | `house relevelling` | foundation | P1 | swap candidate (near-duplicate of 5) |
-| 7 | `slab lifting` | foundation | P1 | |
-| 8 | `resin injection underpinning` | foundation | P1 | swap candidate (may return only franchises) |
-| 9 | `subsidence repair` | foundation | P1 | |
-| 10 | `house raising` | adjacent | P2 | |
+| 1 | `underpinning` | foundation | P1 | 48 rows in Sydney CBD, 47 Australian; the national word; the franchise rows sit here |
+| 2 | `restumping` | foundation | P1 | **119 rows in Melbourne CBD, all Australian, ~90% ICP-named** — the densest query of the three |
+| 3 | `reblocking` | foundation | P1 | not probed; the Melbourne `restumping` set already carries 30+ "Reblocking" names, so this will overlap heavily (cheap: one page) |
+| 4 | `foundation repair` | foundation | P1 | 149 rows in Brisbane at the cap, **79 of them United States pins (53%)** — Google text-matches the American phrase globally. It still found Foundation Solutions Underpinning (111 reviews), GROUNDFIX, Brisbane Underpinning and Structural Repairs. Keep, but every page of it will be half junk |
+| 5 | `house levelling` | foundation | P1 | not probed |
+| 6 | `house relevelling` | foundation | P1 | not probed — **swap candidate** (near-duplicate of 5) |
+| 7 | `slab lifting` | foundation | P1 | not probed |
+| 8 | `resin injection underpinning` | foundation | P1 | not probed — **swap candidate** (the franchises already surface under `underpinning`) |
+| 9 | `subsidence repair` | foundation | P1 | not probed |
+| 10 | `house raising` | adjacent | P2 | not probed |
 
-Candidate replacements if 6 or 8 are swapped: `foundation underpinning`, `retaining wall repair`,
-`structural repair` (carries the UK's bodyshop trap; the rule-3 name deny already covers it).
+Candidate replacements if 6 or 8 are swapped: `foundation underpinning`, `retaining wall repair`
+(the Sydney probe surfaced several retaining-wall firms that also underpin), `structural repair`.
 
 **Decision for the operator:** restumping and reblocking as **ICP** (as tagged) or adjacent.
-Recommendation: ICP — they are the Victorian word for the same job on a stumped house, and the
-homeowner books the same inspection.
+Recommendation: ICP — the Melbourne probe shows they are the same firms ("Eastern Restumping and
+Underpinning", "Perfectly Restumping & Underpinning | Floor Leveling and Reblocking").
 
 ---
 
-## 4. Qualify rules — one line each (order matters; first failure is the drop_reason)
+## 4. Qualify rules — one line each, with the three probe-driven changes
 
 | # | rule | one line |
 |---|---|---|
-| 1 | `hard_off_icp_type` (deny, **any tag**) | Charities and hospital foundations, colleges/schools/TAFEs, hospitals and aged care, places of worship, funeral homes, real-estate agencies and developers, law/insurance/conveyancing, smash repairers and car dealers — what our own queries drag in, and the only rule allowed to look at a secondary tag. |
-| 2 | `off_icp_primary` (deny, **primary tag only**) | Structural/civil/geotechnical engineers, building surveyors (certifiers) and inspectors, hardware and concrete suppliers, plant hire, plumbers and drainage, removalists, architects, kitchen/bathroom fitters, skip bins, property managers — dropped only when that is their *primary* identity. **`Concrete contractor` and `Excavating contractor` are NOT here** — Australian slab-lifting and house-raising firms are routinely primaried that way; they are name-gated recovery types instead. |
-| 3 | `name_deny` (name, exact substring) | Hospital/research/community foundations, councils, churches, RSL and surf clubs, smash repair and panel beating, Bunnings/Mitre 10/Bowens/Reece, Boral/Hanson/Holcim/readymix, Kennards/Coates, consulting-engineer and geotechnical practices, pre-purchase building and pest inspectors, termite treatment, drain-only jargon, plumbing-and-gas, real estate, strata, removalists. No chain or franchise names. |
-| 4 | `not_in_icp` (allow, **any tag**) — **PROVISIONAL** | Must carry one of: foundation · underpin · restump · reblock · house raising · house levelling/leveling · concrete levelling/leveling · slab · structural · piling · pile driving · pier · helical · shoring · soil stabilisation · masonry · stonemason · building restoration · remedial. **`waterproofing` deliberately absent** (bathroom trade in Australia). *(probe)* replaces this list. |
-| 5 | `too_small` (review_count ≥ 5) | Ghost-listing filter only. *(probe)* median confirms or moves it. |
-| — | `recover-generic-au-config.json` | Second $0 pass over `excluded_officp.csv`: takes back rows dropped as `not_in_icp` whose type is generic construction / concrete / excavating / waterproofing / pest control **and** whose NAME carries an Australian ICP token or a brand term. Cannot resurrect anything a deny removed. |
-| — | `recover-unrated-au-config.json` | Third $0 pass: takes back rows dropped as `too_small` with a blank `review_count` and a website. |
+| 1 | `hard_off_icp_type` (deny, **any tag**) | Charities and hospital foundations, colleges/schools/TAFEs, hospitals and aged care, places of worship, funeral homes, real-estate agencies and developers, law/insurance/conveyancing, smash repairers and car dealers. Fired on 0 Australian probe rows. |
+| 2 | `off_icp_primary` (deny, **primary tag only**) | Building inspectors and surveyors (certifiers), hardware and concrete suppliers, plant hire, plumbers and drainage, removalists, architects, kitchen/bathroom fitters, skip bins, property managers, geotechnical/consulting engineers. **CHANGE 1: `structural engineer` and `civil engineer` REMOVED.** Google types every Mainmark branch (Sydney 214 reviews, Melbourne 142, QLD 75) as only `Civil engineering company` and every Buildfix branch (223, 207) as `Structural engineer`; with the deny in, both operator-named brand families died, plus "My Underpinning Structural Engineers" and "Sydney Foundation Repairs". A pure practice (Booth Engineers) still falls out at the allow and is refused by the recovery's name gate. Fires on 9 rows now, all suppliers and inspectors. |
+| 3 | `name_deny` (name, exact substring) | Foundations (hospital/research/community), councils, churches, RSL/surf clubs, smash repair, Bunnings/Mitre 10/Bowens/Reece, Boral/Hanson/Holcim/readymix, Kennards/Coates, consulting-engineer and geotechnical practices, pre-purchase inspectors, termite treatment, drain-only jargon, plumbing-and-gas, real estate, strata, removalists. **CHANGE 2: bare `geotech` REMOVED** — it deleted "Geotech Built Restumping, Underpinning & Foundations" (43 reviews). |
+| 4 | `not_in_icp` (allow, **any tag**) | Must carry one of: foundation · underpin · restump · reblock · house raising · house levelling/leveling · concrete levelling/leveling · slab · structural · piling · pile driving · pier · helical · shoring · soil stabilisation · masonry · stonemason · building restoration · remedial. `waterproofing` deliberately absent (31 Brisbane primaries, all bathroom membrane firms). Confirmed by the probe: `building restoration` alone carries most of Victoria. |
+| 5 | `too_small` (review_count ≥ 5) | Ghost-listing filter. See §6. |
+| — | `recover-generic-au-config.json` | Rows dropped as `not_in_icp` whose type is generic construction / concrete / excavating / **engineer / drilling / tradesmen** and whose NAME carries an ICP or brand token. **CHANGE 3: its own review floor REMOVED.** The UK version repeated the floor; here it stranded 49 ICP-named rows (Restumping Melbourne, OzRestumping, Sunbury Restumping, Underpin Solutions, Brisbane Underpinning and Structural Repairs…) that the other recoveries could not reach because they never carried `too_small`. The name gate is the precision; 10 of the 111 it now admits have no website and under 5 reviews, and those go to the no-website track. |
+| — | `recover-unrated-au-config.json` | Rows dropped as `too_small` with a **blank** `review_count` and a website. +12 on the probe. |
+| — | **`recover-lowrated-au-config.json` — PROPOSED** | Rows dropped as `too_small` with **1–4 reviews**, a website, and an ICP name token. +17 on the probe. See §6. |
 
-**Dry-run status:** not yet run. Before this gate is put to the operator, a ~30-row fixture CSV in
-the UK run's `dryrun-results.md` style goes through all three configs, with the segment-killer probes
-for this market: a Mainmark licensee primaried `Concrete contractor` (must die at the allow and come
-back through the generic recovery); a hospital foundation carrying `Foundation` (must drop at rule 1);
-a smash repairer answering `subsidence repair` (rule 3); a restumper primaried `Pest control service`
-(must survive rule 1 and come back through recovery on its name); a `Structural engineer`-primaried
-firm named "XYZ Underpinning" (drops at rule 2 — this is the GATE 3 count).
+**Dry run:** the 305 probe rows through all four configs and the gate — the table in §0. No fixture
+file was hand-built; the probe rows are the fixture.
 
 ---
 
 ## 5. Brand families (flag, never drop)
 
-Mainmark · Uretek · Buildfix · Teretek · Restumping Australia.
+Mainmark · Uretek · Buildfix · Teretek · Restumping Australia. **All six Mainmark/Buildfix probe rows
+are kept** after Change 1. Two operator-listed terms stay out: `Foundation Solutions` (the probe has
+both "Foundation Solutions Underpinning", a 111-review Brisbane independent, and a 4-review "Foundation
+Solutions" — a generic phrase, not a family) and `Jim's` (no Jim's division appeared in 305 rows).
+Candidates the probe surfaced for GATE 3: **Urathane Solutions** and **Techniblock** (Melbourne
+resin-injection brands, multiple listings), **Raise and Relevel**, **Surefoot**.
 
-Two operator-listed terms **left out**: `Foundation Solutions` (generic phrase, would label
-independents) and `Jim's` (50+ franchise divisions; a bare "jim's" relabels every sole trader called
-Jim). Buildfix probed 2026-09-20: a national resin-injection franchise with Sydney, Melbourne,
-Brisbane and Canberra locations. `location_count` in the scrape output is the discovery tool for
-families this list does not know; additions at GATE 3.
+## 6. Review floor — the number that moved
 
-## 6. Review floor
+Australian rows by review count: **blank 40 · 1–4 59 · 5–9 26 · 10+ 100** (of 225). The 1–4 band is
+**26% of the universe**, and it is not the ghost band it was in the UK: Eastern Restumping and
+Underpinning (2), MR Reblocking, Restumping and House Underpinning (2, typed `Foundation`), C S Volk
+Reblocking (2), Expert Reblocking & Underpinning (3), State Wide Reblocking & Underpinning (3), Precise
+Restumping & Underpinning (4), Shepparton Restumping (1). Restumping is a low-review trade.
 
-**5**, label `too_small`, as in the UK. Not 30 (the US number). A ghost-listing filter, not a size
-gate: this trade in Australia is owner-operated firms with single-digit review counts. *(probe)* —
-the median review count across the three probe tiles is the number that confirms or moves this.
-Re-checkable at $0 by re-running qualify at 0 over the excluded file.
+Two ways to take them, operator's choice:
+
+- **(a) Recommended: keep the floor at 5 and add the low-rated recovery** (`recover-lowrated-au-config.json`,
+  already written and dry-run: 1–4 reviews AND a website AND an ICP name token). Keeps the ghost
+  filter for nameless generic pins; +17 on the probe.
+- **(b) Lower the main floor to 1** and drop the extra file. Same effect for ICP-named rows, but also
+  admits 1–4-review rows with generic names, which (a) refuses.
+
+Either way the 1–4-review rows with **no website** stay out (6 on the probe) — they are the accepted cost.
 
 ---
 
 ## 7. The deliberate calls, stated so they are visible
 
-1. **No chain drop.** Roll-ups, franchises and licensees are kept and flagged (`brand_family` +
-   `location_count`). Under the licence-registry owner rung a licensee is usually a named individual.
-2. **No government deny.** None of these 10 queries carries distress/institutional intent; the
-   institutional risk (hospital foundations, council depots) is covered by rules 1 and 3.
-3. **Generic construction, concrete and excavating types refused at the allow, recovered by NAME.**
-   Admitting `Concrete contractor` outright would flood the list with driveways and slabs.
-4. **Waterproofing is not this trade here.** In Australia "waterproofing" is the bathroom/balcony
-   membrane trade. It is out of the type allow; a basement specialist comes back by name.
-5. **Pest control is not denied by type.** A restumper repairing termite-damaged bearers may carry it
-   as a secondary tag. Pure termite firms die at the allow and the compounds are name-denied.
-6. **The state token is used.** `region_from_city` parses NSW/VIC/QLD/SA/WA/TAS/ACT/NT and the
-   footprint gate runs `--regions` with all eight, at hub radius 1.0° — never ship without it.
+1. **No chain drop.** Franchise licensees kept and flagged; under the NSW licence registry a licensee
+   is a named Director.
+2. **No government deny.** Rules 1 and 3 cover the institutional risk; 0 probe rows needed it.
+3. **Generic construction, concrete, excavating and engineering types refused at the allow, recovered
+   by NAME.** `Construction company` is 52 of the 147 kept rows — via the name gate, not the allow.
+4. **Waterproofing is not this trade here.** 31 of 149 Brisbane primaries, all bathroom membrane firms.
+5. **Pest control is not denied by type.** 0 probe rows affected either way.
+6. **`foundation repair` is kept despite the 53% US bleed.** The footprint gate removed all 58 US
+   pins that reached it (`far_from_hubs`), at $0. The cost is Maps calls on half-junk pages, ~10% of
+   the run's spend. Say the word and the query goes.
+7. **The country-centroid trap (new, from the probe).** Four real Victorian reblockers with no address
+   ("Vic Homes Reblocking", "Divine Reblocking and Underpinning", "Able Reblocking Specialists",
+   "Elite Reblocking Services") carry lat/lng **-32.2054, 136.1074 — the geographic centre of
+   Australia**, Google's placeholder for a service-area listing with no location. The hub gate drops
+   them as `far_from_hubs`. Job-side fix at STEP 4: blank the coordinates on rows sitting exactly on
+   that centroid before the gate runs (the gate keeps rows with missing coordinates), and let the
+   region regex on the name/city decide. Logged in IMPROVEMENTS for the engine.
 
 ---
 
 ## 8. Sharding and the merge rule
 
-- **8 shards**, round-robin by row, ~228 rows each, so every worker spans all eight states and both
-  priorities. Run each through `run-scrape.js` (never `scrape.js`), gate on exit 0 /
-  `coverage_report.json` = COMPLETE. `run-scrape.js` re-buys `ok`-with-zero-rows tiles at dense
-  centres automatically since 2026-09-17.
-- **Merge:** concatenate the 8 `leads_clean.csv`, **dedupe on `place_id`**, and on a duplicate
-  **union the `google_types` and `icp_type` tags, rejoined with `|`** (`qualify-leads.js` hardcodes
-  `|`; any other separator turns the primary-only deny into an any-match deny). Port
-  `merge-shards.js` from the UK run folder unchanged.
-- Then, in order: `qualify-leads.js` (main) → generic recovery → unrated recovery →
-  `footprint-gate.js --hub-radius-deg 1.0 --regions NSW,VIC,QLD,SA,WA,TAS,ACT,NT` → `build-netnew.js`
-  (**expect `ref files used: 0` — this is the client's first Australian run and no prior AU list
-  exists**; the US and UK runs cannot overlap by place_id) → `collapse-domains.js`.
+- **8 shards**, round-robin by row, ~228 rows each. Run each through `run-scrape.js` (never
+  `scrape.js`), gate on `coverage_report.json` = COMPLETE.
+- **Merge:** concatenate the 8 `leads_clean.csv`, **dedupe on `place_id`**, union `google_types` and
+  `icp_type` with `|`. Port `merge-shards.js` from the UK run folder unchanged.
+- Then, in order: `qualify-leads.js` (main) → generic recovery → unrated recovery → low-rated recovery
+  (if approved) → centroid blanking → `footprint-gate.js --hub-radius-deg 1.0 --regions
+  NSW,VIC,QLD,SA,WA,TAS,ACT,NT` → `build-netnew.js` (**`ref files used: 0` is expected**: first
+  Australian run) → `collapse-domains.js`.
 
 ---
 
 ## 9. Owner-finding expectation, stated now
 
-No Companies House. The named rate depends on how many state licence registries yield. Probed
-2026-09-20 from this egress (`RUN-NOTES.md`): **NSW has a live keyless JSON API, confirmed from plain curl — 122 current "Underpinning and Piering" contractor licences, individuals named directly, a full universe in 13 calls**;
-**VIC** has a reachable Salesforce back door (needs a capture) behind a Cloudflare front; **QLD** is
-refused at the proxy (Firecrawl or another egress); **SA** sits behind a reCAPTCHA; **WA** publishes
-its registers as **PDFs** plus a search app. If fewer than three yield, expect the named rate to fall
-from the UK's 68% toward the site-plus-sweep ceiling of ~45%.
+No Companies House. **NSW is a working keyless owner registry** (probed and replayed from curl:
+122 current "Underpinning and Piering" contractor licences in 13 calls; each detail record names the
+Director and Nominated supervisor). WA publishes its register as a daily PDF. VIC's BAMS app does not
+boot from this egress and its front is Cloudflare (Firecrawl, 143 credits on the account). QLD is
+refused at the proxy. SA sits behind a reCAPTCHA. Expect the named rate to sit between the UK's 68%
+and the ~45% site-plus-sweep ceiling, weighted by how much of the list is NSW.
 
 ---
 
-**Approve?** The questions worth an explicit yes/no: **whole of Australia vs east coast + Perth +
-Adelaide**; **restumping/reblocking as ICP**; the **review floor of 5**; the **Maps spend** once the
-probe gives the calls-per-row figure; and the **salutation fallback** for nameless rows (default a
-bare "Hi,").
+**Approve?** The decisions: **whole of Australia vs east coast + Perth + Adelaide** · **restumping and
+reblocking as ICP** · **review floor: (a) 5 + low-rated recovery, or (b) 1** · **keep `foundation
+repair` despite the US bleed** · **~4,750 Maps calls** · **salutation fallback for nameless rows**
+(default a bare "Hi,") · **build the Supabase store first** (keys present and probed; needs your
+approval as an engine change, plus the schema applied through the MCP once you have authenticated).

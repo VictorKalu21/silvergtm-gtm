@@ -1,7 +1,8 @@
 # 2026-09-20_au-foundation-repair-maps — run notes
 
-Our own Australian Google Maps scrape. **Scoped 2026-09-20, not started**: no `SCRAPER_TECH_KEY` in
-this container, so the 3-call Maps probe (`GATE1.md` §0) has not run and GATE 1 is a draft. Post-scrape
+Our own Australian Google Maps scrape. **Scoped 2026-09-20; GATE 1 ready for the operator, scrape not
+started.** Keys arrived 2026-09-20 (scraper.tech, Firecrawl, Supabase URL + service role) and live only in
+`skills/google-maps-scrape/.env` (gitignored, mode 600). Spend so far: **3 Maps calls** (the probe). Post-scrape
 commands: `PIPELINE.md`. Dedupe memory: none (first Australian run for this client).
 
 Session facts: branch `claude/busy-hypatia-n8vbvy` reset onto `claude/friendly-tesla-u4apeq` (the UK
@@ -10,6 +11,75 @@ this container 2026-09-20: `skills/google-maps-scrape/tests/*.test.js` 19 files 
 `skills/email-verify-debounce-bounceban/tests/verify-dry-run.test.js` ok. No `.claude/settings.json`
 exists here (gitignored by `*.json`); the hooks in `.claude/hooks/` are present but unwired in this
 container, so the `.skill-check` and `owner-prompt.md` gates are being observed by hand.
+
+## Maps probe (3 calls, 2026-09-20) — `searchmaps.php`, `limit 150`, `zoom 13`, `country au`, `offset 0`
+
+| call | tile | http | bytes | time | rows | website | review median (q1/q3) | outside AU by lat/lng |
+|---|---|---|---:|---:|---:|---:|---|---:|
+| `underpinning` | Sydney CBD -33.8688,151.2093 | 200 | 142,646 | 4.6 s | 48 | 47 (98%) | 15 (3/70) | 1 |
+| `restumping` | Melbourne CBD -37.8136,144.9631 | 200 | 315,558 | 8.5 s | 119 | 103 (87%) | 12 (4/40) | 0 |
+| `foundation repair` | Brisbane CBD -27.4698,153.0251 | 200 | 416,950 | 6.1 s | 149 (cap) | 140 (94%) | 19 (4/70) | 79 |
+
+Row keys: `business_id city description full_address full_address_array is_claimed is_permanently_closed
+is_temporarily_closed latitude longitude name phone_number photos place_id place_link price_level rating
+review_count state timezone types verified website working_hours`. `state` is null on every row; `description`
+empty on every row; **no `email` field**. `city` renders as `"Millers Point NSW"` (no comma) — the config regex
+holds. Blank `city` + `full_address` on 82 of the 225 Australian rows. Closed flags: 0.
+
+Top primaries — Sydney: Construction company 21 · Building restoration service 7 · Civil engineering company 3
+(all three Mainmark branches) · Home builder 3 · Concrete contractor 2 · Structural engineer 1 (Buildfix).
+Melbourne: **Building restoration service 53** · Construction company 39 · Home builder 6 · Building firm 4 ·
+Tradesmen 3 · Foundation 3. Brisbane: **Concrete contractor 37** · **Waterproofing service 31** · Construction
+company 21 · Building restoration service 9 · Tradesmen 7 · Foundation 7 · Structural engineer 6.
+The 79 non-AU Brisbane rows are all United States (Wisconsin: "Basement Foundation Repair", "The Mudjackers
+LLC", "MUDTeCH", "ABT Foundation Solutions, Inc." Neenah WI) — `country=au` is a hint, not a filter.
+
+Brand rows and their types: Mainmark Sydney / Melbourne / QLD = `['Civil engineering company']` only;
+Buildfix Sydney / Brisbane = `['Structural engineer','Building restoration service']`; Surefoot Underpinning
+Specialist = `['Drilling contractor']`; Geotech Built Restumping = Construction company + Building restoration +
+Retaining wall supplier + Soil testing service.
+
+### Dry run — 305 probe rows through the engine (scratchpad only; no client data in the repo)
+
+Rows converted to the `leads_clean.csv` column layout (`scrape.js` `cleanCols`), deduped on `place_id` (11 rows
+appeared in two probes). First pass with the configs as written that morning: **Mainmark ×3 and Buildfix ×2
+died as `off_icp_primary`**, "Geotech Built Restumping" died on the bare `geotech` name token, and 49
+ICP-named rows died between the recovery passes (generic type + blank/1-4 reviews → generic recovery's own
+review floor → not reachable by the unrated/low-rated passes, whose scope gate wants `too_small`).
+Three config changes (GATE1 §4) and a new `recover-lowrated-au-config.json` later:
+
+| pass | kept | drop reasons |
+|---|---:|---|
+| main `atlas-growth-au-config.json` | 69 | not_in_icp 189 · too_small 37 · off_icp_primary 9 · name_deny 1 |
+| `recover-generic-au-config.json` | +111 | name_not_icp 71 · not_a_recovery_candidate 47 · not_generic_contractor 7 |
+| `recover-unrated-au-config.json` | +12 | has_review_count 23 · no_website 2 |
+| `recover-lowrated-au-config.json` (proposed) | +17 | unrated_not_lowrated 14 · name_not_icp 3 · no_website 3 |
+| merged (zero overlap asserted) | 209 | |
+| `footprint-gate.js --hub-radius-deg 1.0 --regions NSW,…,NT` | **147** | far_from_hubs 62 (58 US pins + 4 AU centroid pins) |
+
+**147 of 225 Australian rows kept (65%).** Still lost and ICP-named: ADS Piering and S & M Concrete Stumps
+(suppliers, correct), 6 no-website rows with <5 reviews (accepted), and **4 rows with an EMPTY `google_types`**
+(Reblocking Kings, Always Level Reblocking, Foundation Solutions, Advanced Reblocking Specialists) that no
+type rule can see — GATE 3 item (a name-only pass over empty-type rows). Kept rows: 136 of 147 have a
+website; 17 carry no ICP name token (the adjudication load). Review split of the kept: blank 25 · 1-4 32 · 5+ 90.
+
+**Country-centroid trap (new):** the 4 Australian rows the gate dropped ("Vic Homes Reblocking", "Divine
+Reblocking and Underpinning", "Able Reblocking Specialists", "Elite Reblocking Services") all carry lat/lng
+`-32.2054, 136.1074` — the geographic centre of Australia, Google's placeholder for a service-area listing
+with no location. Job-side fix before the gate: blank the coordinates on rows at exactly that point (the
+gate keeps rows with missing coords). Filed in IMPROVEMENTS as an engine observation.
+
+## Key probes (2026-09-20, after the operator supplied the keys)
+
+- **Supabase, service role, 3 calls:** `GET /rest/v1/` → `200` (PostgREST swagger, "standard public
+  schema", host `xuxyaniyaeinqfjaqbzh.supabase.co`); `GET /rest/v1/places?select=place_id&limit=1` →
+  `404 PGRST205 "Could not find the table 'public.places'"` (no tables yet — schema not applied);
+  `GET /storage/v1/bucket` → `200 []`. **The key works; the schema is not applied.** PostgREST cannot run
+  DDL, so `store/schema.sql` goes in through the Supabase MCP (after the operator authenticates) or the SQL
+  editor — not from this session with the service key alone.
+- **Firecrawl, 1 call:** `GET /v1/team/credit-usage` → `200 {"remaining_credits":143,"plan_credits":1000,
+  "billing_period_end":"2026-10-01"}`. Hobby plan, 143 credits until 1 October.
+- **scraper.tech:** the 3 Maps calls above (`scraper-key` header, as `scrape.js` sends it).
 
 ## Probes (3-call rule) — Australian registries and directories from this container, 2026-09-20
 

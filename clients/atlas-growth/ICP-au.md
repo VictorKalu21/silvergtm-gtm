@@ -26,7 +26,11 @@ Waterproofing and damp are **not** the adjacent trade the way they were in the U
 adjacent trades here are house raising, restumping (if the operator rules it adjacent rather than
 ICP), retaining walls and structural engineering; the engineers are a deny, as in the UK.
 
-Share of the universe by self-label: *(probe)*.
+Share of the universe by self-label, from the 3-call probe (GATE1 §0): `restumping` is the densest query
+(119 rows in Melbourne CBD, ~90% ICP-named, primaried `Building restoration service`); `underpinning`
+returns 48 in Sydney CBD with the franchises typed as engineers; `foundation repair` returns 149 in
+Brisbane of which **53% are United States pins** and the Australian half is mostly concreters and
+bathroom waterproofers with a handful of real underpinners.
 
 ## Footprint
 
@@ -102,9 +106,11 @@ post-GATE-3 rule set; the Australian changes are marked.
    Australia the surveyor is the *certifier*), building and pest inspectors, hardware and concrete
    suppliers, plant hire, plumbers and drainage, removalists, architects, kitchen/bathroom fitters,
    skip bins, property managers — dropped **only when that is their primary Google category**.
-   **GATE 3 check:** count rows primaried `Structural engineer` whose *name* carries an ICP token;
-   Google is known to mis-primary small remediation firms this way and a recovery pass cannot
-   resurrect a deny drop. **Not denied:** `concrete contractor` and `excavating contractor` — they
+   **Changed at the probe (2026-09-20): `structural engineer` and `civil engineer` are NOT denied.**
+   Google types every Mainmark branch as `Civil engineering company` and every Buildfix branch as
+   `Structural engineer`; the deny deleted both brand families. A pure practice still falls out at the
+   allow and is refused by the recovery's name gate. Bare `geotech` also left the name deny (it
+   deleted "Geotech Built Restumping"). **Not denied:** `concrete contractor` and `excavating contractor` — they
    are name-gated recovery types instead, because Australian slab-lifting and house-raising firms
    are routinely primaried that way.
 3. **Name deny.** The exact-match fallback: hospital/research/community foundations, councils,
@@ -135,6 +141,12 @@ post-GATE-3 rule set; the Australian changes are marked.
   term. It can never resurrect a deny.
 - **Unrated listings are a track, not junk.** `recover-unrated-au-config.json` (clone of the UK
   P7 pass) takes back rows with a blank `review_count` and a website.
+- **The generic recovery carries no review floor of its own (probe, 2026-09-20).** Repeating the
+  floor there stranded 49 ICP-named rows that no other pass could reach; the name gate is the
+  precision.
+- **Low-rated restumpers are real (probe, 2026-09-20).** 26% of Australian probe rows have 1–4
+  reviews and the Victorian ones are plainly real firms. `recover-lowrated-au-config.json` (proposed,
+  GATE 1 §6) takes back 1–4-review rows with a website and an ICP name token.
 - **No chain drop, ever.** Franchise licensees are kept and flagged (`brand_family` +
   `location_count`). Under the licence-registry owner rung a licensee is usually a named individual,
   which makes these rows *better* targets than in the UK.
