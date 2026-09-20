@@ -61,6 +61,30 @@ Companies tab → **Show Filters** → the **Job Postings** filter group.
 
 Sizing reference from the Blitz probe (2026-09-19): ~33k Tier-1 US postings in 90 days after agency exclusion ≈ 8–12k companies. Expect Apollo to land in the same order of magnitude; the 51–1000 band will be a fraction of that.
 
+### Step 1b — AI-product TAM (AI is the product, or a meaningful part of it)
+Companies tab. Two saved searches; **read counts before exporting anything.**
+
+| Filter | `AI-product STRICT` | `AI-product BROAD` |
+|---|---|---|
+| Keywords → include tags | artificial intelligence, machine learning, generative ai, large language models, llm, natural language processing, conversational ai, ai agents, agentic ai, computer vision, deep learning, ai assistant, ai copilot, ai automation, speech recognition | same |
+| Keywords → company description contains | AI-powered, AI platform, AI agent, LLM, generative AI, copilot, machine learning | (empty) |
+| Keywords → exclude | staffing, recruiting, consulting, consultancy, agency, outsourcing, training, bootcamp, university, research institute | same |
+| Industry → include | Software Development; Technology, Information and Internet; Computer Software; Internet; Information Technology and Services | same |
+| Industry → exclude | Staffing and Recruiting; IT Services and IT Consulting; Business Consulting and Services; Marketing Services; Advertising Services; Higher Education | same |
+| # Employees | 11–1,000 (shard by band at export) | same |
+| HQ location | United States | same |
+| Technologies (optional narrowing) | OpenAI, Hugging Face, PyTorch, TensorFlow, LangChain, Pinecone — only if the count is still too big | skip |
+
+STRICT = tags AND description text: separates "built an AI product" from "mentions AI on the about page". Tag matching is keyword-loose; the description condition does the precision work.
+
+**Export order (credits are the constraint):**
+1. STRICT count only — no export.
+2. STRICT + the Step-1 Job Postings filter stacked on top → AI-product companies also hiring AI roles = **Tier A**. Export this intersection first, sharded by band.
+3. STRICT minus the job filter → export the remainder only up to this month's export budget.
+4. BROAD → count only (the ceiling). Export only if STRICT is too thin.
+
+UI notes: the Keywords filter has a where-to-match sub-option (tags / name / description) whose label varies by Apollo version — if description matching isn't offered, use tags alone and lean on the industry excludes. Industry names differ slightly from the list above; pick the closest.
+
 ### Step 2 — People in AI titles (the team-on-payroll signal)
 People tab → filters.
 
