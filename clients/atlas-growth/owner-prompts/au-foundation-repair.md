@@ -113,6 +113,11 @@ block is labelled "Companies House" by the injector, and **for this job that lab
 licence board record for this lead"**. Tag anyone you take from it `source:"companies_house"` (the
 engine's enum name for a registry source; the record's own `registry` field says which board).
 
+0. **NSW records carry roles.** `verify.licence.nsw.gov.au` detail records list `associatedRoles` —
+   `Licensee`, `Director`, `Nominated supervisor` — each with a named party and suburb (probed
+   2026-09-20: UNDERPINNING SOLUTIONS PTY LTD → Director and Nominated supervisor Markos Abelas). A
+   party in the **`Director`** role is `owner_or_partner`, `is_likely_owner:true`, no second signal
+   needed. A party only in `Nominated supervisor` follows rule 2.
 1. **A current licence held by an individual is `owner_or_partner`** with
    `source:"companies_house"` and `is_likely_owner:true` — when the licence is in the person's
    own name (a sole trader or partnership licence), or the person's surname appears in the business

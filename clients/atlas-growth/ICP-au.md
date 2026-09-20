@@ -206,7 +206,7 @@ egress (outputs in the run's `RUN-NOTES.md`):
 
 | registry | state | status | rung |
 |---|---|---|---|
-| Fair Trading `verify.licence.nsw.gov.au` | NSW | **live keyless JSON API** behind the shell (`/publicregisterapi/api/v1/licence/search/query`, POST) | Tier 0 |
+| Fair Trading `verify.licence.nsw.gov.au` | NSW | **live keyless JSON API, CONFIRMED from plain curl** (`POST /publicregisterapi/api/v1/licence/search/advQuery`, `pageSize` must be ≤ 10 — larger silently returns `[]`; filter by licence class `HBS_CON_Underpinning and Piering` → **122 current contractor licences**, individuals named directly; `GET .../details/{licenceType}/{licenceId}` for the record) | Tier 0 |
 | VBA `bams.vba.vic.gov.au` | VIC | `find-practitioner` is Cloudflare 403; the BAMS Salesforce community answers 200 (Aura POST, needs a capture) | Tier 0 / Tier 3 |
 | QBCC online licence search | QLD | proxy refuses the CONNECT (502); the QBCC root answers | Firecrawl or another egress |
 | CBS `OccLicPubReg` | SA | 200, but a **reCAPTCHA** sits before the form — not the plain form the handoff hoped | session cookie from an operator solve, or skip |

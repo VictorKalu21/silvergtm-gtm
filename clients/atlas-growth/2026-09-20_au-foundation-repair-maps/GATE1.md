@@ -216,7 +216,7 @@ Re-checkable at $0 by re-running qualify at 0 over the excluded file.
 ## 9. Owner-finding expectation, stated now
 
 No Companies House. The named rate depends on how many state licence registries yield. Probed
-2026-09-20 from this egress (`RUN-NOTES.md`): **NSW has a live keyless JSON API** behind its shell;
+2026-09-20 from this egress (`RUN-NOTES.md`): **NSW has a live keyless JSON API, confirmed from plain curl — 122 current "Underpinning and Piering" contractor licences, individuals named directly, a full universe in 13 calls**;
 **VIC** has a reachable Salesforce back door (needs a capture) behind a Cloudflare front; **QLD** is
 refused at the proxy (Firecrawl or another egress); **SA** sits behind a reCAPTCHA; **WA** publishes
 its registers as **PDFs** plus a search app. If fewer than three yield, expect the named rate to fall

@@ -38,11 +38,43 @@ proxy. Format: `status size effective-url | title`.
   with `licenceGroup:"Trades"` + `suburb:"Parramatta"` → `200 {"results":[]}`.
 - `POST /publicregisterapi/api/v1/Trades/search/query` (group as path, per the `${a}/search/query`
   template) → `404` twice.
-- **Verdict:** Tier 0 hidden API confirmed live and keyless; the exact body/path that returns rows is
-  not yet captured (five body shapes tried, all `200 []` or `404`). **Next step, before any
-  `registry_nsw.py`:** one Playwright capture of a real search from the UI (Chromium is pre-installed:
-  render `/home`, choose the contractors register, search "underpinning", read the XHR) — the
-  `web-scrape-triage` Tier 0 netlog rung. Budget: one render.
+- **CAPTURED 2026-09-20 with the pre-installed Chromium** (Playwright 1.56 global install, full
+  `chrome` binary; the proxy CA had to be added to `~/.pki/nssdb` with `certutil` first — `apt-get
+  install libnss3-tools` after an `apt-get update`; never `ignoreHTTPSErrors`). Rendering
+  `/home/Trades/results?licenceGroupCode=Trades&searchTerm=underpinning&status=all&page=1` fired:
+  `GET /licence/search/advLayout?licenceGroup=Trades` (field list: search, abnacn, licenceClasses,
+  locationID, status), `POST /licence/search/licenceClass` `{"licenceGroup":"Trades","keywordSearchText":"","pageSize":200}`
+  (121 classes) and **`POST /licence/search/advQuery`**
+  `{"licenceGroup":"Trades","search":"underpinning","autoComplete":false,"pageNumber":1,"pageSize":10,"licenceTypes":[]}`
+  → 14 records. The browser XHR carried only `x-correlation-id` + New Relic tracing headers — neither
+  matters (tested: a fetch from inside the page with an identical body but `pageSize:50` also returned
+  `[]`). **The gate was `pageSize`: anything above 10 returns `{"results":[]}` with no paging block and
+  no error.**
+- **Replayed from plain curl, keyless, 3 calls (the rule):**
+  1. `POST .../licence/search/advQuery` `{"licenceGroup":"Trades","search":"underpinning","autoComplete":false,"pageNumber":1,"pageSize":10,"licenceTypes":[]}`
+     → `200 5349B`, `pagingInfo {currentPage 1, totalPages 2, pageSize 10, totalRecords 14}`; rows carry
+     `licenceNumber, licenceType, status, granted, expires, licensee, licenseeType (Individual|Organisation),
+     suburb, state, postcode, ABN, ACN, licenceId`. Sample: `170381C Contractor Current Organisation
+     UNDERPINNING SOLUTIONS PTY LTD SANS SOUCI NSW 2219`.
+  2. Same endpoint filtered by **licence class** — the filter takes the class OBJECT as `licenceClass`
+     returns it (a bare code string is a `400 "$.licenceClassSearch[0]": "The input was not valid."`):
+     `{"licenceGroup":"Trades","search":"","autoComplete":false,"pageNumber":1,"pageSize":10,"licenceTypes":[],"status":["Current"],"licenceClassSearch":[{"classCodes":["HBS_CON_Underpinning and Piering","AMR-TRADES-036"],"displayName":"Contractor Licence - Underpinning and Piering","licenceTypes":["Contractor Licence"]}]}`
+     → `200`, **`totalRecords 122`, 13 pages** — the whole current NSW-licensed underpinning universe,
+     including individuals (`476584C Current Individual Andy Wensing TAMBAN NSW`) and interstate firms
+     holding NSW licences (Ausipile QLD, B Marshall & S A Marshall VIC, Blade Pile Qld). The matching
+     Qualified Supervisor class is `HBS_QSC_Underpinning and Piering` / `AMR-TRADES-073`.
+  3. `GET .../licence/search/details/{licenceType URL-encoded}/{licenceId}` (e.g.
+     `details/Contractor%20Licence/1-3RH70OX`) → `200 5919B`; `componentData.associatedRoles` names the
+     people: for UNDERPINNING SOLUTIONS PTY LTD → `Director: Markos Abelas (Individual, SANS SOUCI)` and
+     `Nominated supervisor: Markos Abelas`. Also `classes[] (code, isActive)`, `complianceSummary`,
+     `ABN/ACN`. (The group name in the path is the licenceType, not `Trades` — `details/Trades/...` is a 404.)
+- **Verdict: NSW is a working, keyless owner registry.** `registry_nsw.py` plan: (a) pull the 122-row
+  class universe (13 calls) plus name searches for every NSW lead (`search` = the business name, page
+  size 10, paginate on `totalPages`); (b) one `details` GET per matched licence for the Director /
+  Nominated supervisor parties; (c) emit `registry_nsw.jsonl` in the `companies_house.jsonl` record shape
+  (`registry:"nsw_fair_trading"`, `match_key` = licenceNumber, `basis` = exact_title | abn | name_overlap
+  + suburb, officers = Director + Nominated supervisor with role and suburb). Rate: unmetered as far as
+  observed; be polite (concurrency 2, ~1 req/s). Budget ≈ 1 call per NSW lead + 1 per match.
 
 **Victoria — VBA.**
 - `GET https://www.vba.vic.gov.au/tools/find-practitioner` → `403 5627B | Just a moment...` (Cloudflare).
