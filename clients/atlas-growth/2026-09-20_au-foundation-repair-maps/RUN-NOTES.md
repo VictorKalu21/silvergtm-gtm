@@ -199,6 +199,14 @@ proxy. Format: `status size effective-url | title`.
     `content-length: 5381787`, `last-modified: Sat, 19 Sep 2026` — **the whole builder register as a
     PDF, refreshed daily**. Also `BuildingEngineerRegister.pdf`, `BuildingSurveyorRegister.pdf`,
     `PainterRegister.pdf`. Tier 0.5 bulk file: `pdftotext -layout` then parse.
+  - **Register PDF parsed 2026-09-20** (`registry_wa.py --parse`, poppler `pdftotext -layout`): **6,456 current
+    building contractors, 6,382 with at least one NOMINATED SUPERVISOR** ("BP103981 - Woodruffe, Bryn John", one
+    per line, 143 entities with two, 8 with three), business address with suburb + WA postcode on all but a few
+    dozen rows. WA has no underpinning class, so this is a NAME-JOIN source for WA leads, not a class pull.
+    Offline probe of the join: `Future Foundations Group` (Midland) → matched name_overlap, BC107098, supervisor
+    Vasile Onicas · `101 Residential` (Osborne Park) → matched, BC13521, supervisor Michael Mandaglio ·
+    `Perth Underpinning Specialists` → no_match (no such entity; correct). Supervisor → `owner_or_partner` only
+    with a second signal (owner-prompt.md registry rule 2), else `gm`.
   - `https://ols.demirs.wa.gov.au/search` → `200 3792B | WA Online Licence Search`, an Angular SPA
     (`main.d2c6bb639d390fb4.js` 1.7 MB); its API host was not found by grep (calls are relative). The
     PDF is the cheaper rung anyway.
