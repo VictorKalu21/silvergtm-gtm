@@ -293,6 +293,44 @@ and the Maps ledger attempted → PGRST205 (schema not applied) → re-run when 
 PostgREST reads (`places` count 5,118; `pull-places` returned 5,118 rows). From here every AU place_id is a
 query, not a re-buy.
 
+## Site text, adjudication, owner prep (2026-09-20)
+
+**Site text:** `fetch-sites.js` on 364 domains, concurrency 8, plain → 20 s retry: **335 ok (92%)**, 29 residue
+(403 ×8, TypeError ×10 = dead/parked, 404 ×5, 5xx ×6). **287 leads with an on-site email, 376 unique addresses**
+(mailto 268 · tag_split 90 · JSON-LD 28 · cfemail 19). Pushed to the store (`site-text: 364`). Firecrawl
+candidates in the residue: **14** (the 403/5xx set; 404/TypeError are dead) — needs the operator's go (~14–28 credits of 143).
+
+**Classify + adjudicate:** `stageB_classify.py` → tiers A 351 · B 22 · C 25 · D 81 (site status ok 379 · no_website 62 ·
+home_failed 33 · shared_host 5). `prep_adjudicate.py` → 21 batches (A 15, B 1, C 1, D 4 = the full 81-row D set,
+sampled at 100). 21 Opus adjudicators, one per batch, all returned valid arrays. **Every adjudicator flagged the same
+gap: leads with EMPTY text (no website / shared host / failed fetch) score "no" under PROMPT.md's empty-text rule
+although their names are the trade** ("Vicwide restumping and underpinning", "Joe's Reblocking and Underpinning",
+"Where's Ray House Re stumping"). `merge_adjudication.py` was patched before the merge: a tier-A row with no site
+text is kept as `unclear` + `no_site_text:<status>` instead of dropped; tier B/C/D keep the adjudicator's "no". Also
+added: a guard for coordinate-less US rows (0 fired). Other adjudicator notes for the write-back: `localsearch.com.au`
+(a directory) was treated as an own domain and grouped three listings, fanning one listing's text onto "Wide Bay
+Stumping" (shared-host list gap → IMPROVEMENTS); two domains are hijacked spam (prorestumpingmelbourne.com,
+hondaforeignautoparts.com); a few same-business duplicate pins survive collapse when they carry no domain.
+
+**Merge funnel:** 479 → **329 qualified** (242 yes + 87 unclear, of which 77 are the no-text tier-A keeps) ·
+2 house-raising-only (adjacent segment) · 148 dropped `adjudicated_no` (engineers/inspectors, new-build pilers,
+concreters, suppliers, general builders, waterproofers; tier-D sample yes-rate 1.2% → D is noise). Service buckets
+among the 329: underpinning_restumping 256 · structural_repair_specialist 18 · house_raising 15 (offer restumping
+too) · slab_lifting_levelling 14 · general_builder 11 · groundworks_new_foundations 9 · other 4 · waterproofing 2.
+Brand-flagged 10. Review tracks: unrated 82, low-rated 80. Website: 275 site · 52 none · 2 shared host; 231 with
+an on-site email.
+
+**Registries:** NSW (96 leads, ~2 searches + 1 details each): **18 matched · 29 low_confidence · 49 no_match**;
+29 records carry a `Director` role. WA (22 leads, offline join): 2 matched · 3 low_confidence · 17 no_match. Shaped
+into `registry_matched.jsonl` (20) + `registry_lowconf.jsonl` (32) in the Companies House record shape (`ch_number`
+carries the board and licence, roles normalised Director / Nominated supervisor / Partner / Licensee) and pushed to
+the store (`registry: 52`).
+
+**Owner prep:** `prep-owner-batches.js --ch <both registry files>` → **218 items in 6 batches**, 27 with a registry
+block, **111 skipped** (92 `nothing`: no site text and no registry hit — the no-website and failed-fetch rows;
+19 `no_text`). The 111 are the LinkedIn-restricted sweep's queue after the reads. **STOPPED for GATE 6** (owner
+prompt read-back) before any Haiku read.
+
 ## GATE 1 — APPROVED 2026-09-20 ("yes to all, your recs")
 
 Whole of Australia (182 tiles) · restumping and reblocking are ICP · review floor 5 + the low-rated
