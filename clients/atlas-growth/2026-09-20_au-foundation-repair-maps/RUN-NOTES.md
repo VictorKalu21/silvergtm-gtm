@@ -80,8 +80,17 @@ proxy. Format: `status size effective-url | title`.
 - `GET https://www.vba.vic.gov.au/tools/find-practitioner` → `403 5627B | Just a moment...` (Cloudflare).
 - `GET https://bams.vba.vic.gov.au/bams/s/practitioner-search` → **`200 223988B | Building Activity
   Management System`** — a Salesforce Experience Cloud (Aura) community, reachable from here. Data
-  loads through `/bams/s/sfsites/aura` POSTs with component descriptors; needs the same one-render
-  capture as NSW. Firecrawl is the fallback for the `find-practitioner` front.
+  loads through `/bams/s/sfsites/aura` POSTs with component descriptors.
+- **One headless-Chromium render attempted 2026-09-20** (same setup that worked for NSW): the shell
+  loads (`title: Building Activity Management System`) but the Lightning app never boots — page text
+  `"Sorry to interrupt — We can't load the page. Please click Refresh."`, 0 visible inputs, **0 Aura
+  POSTs** on load or after a search attempt. Most likely the Salesforce static hosts
+  (`*.a.forceusercontent.com`, `cdn.content.aws-prod1-useast1.aws.sfdc.cl`) are outside this egress's
+  policy, so the community cannot fetch its own framework. Not retried.
+- **Verdict:** VIC needs Firecrawl (`FIRECRAWL_KEY`, count stated first) on the `find-practitioner`
+  front, or a capture from a browser on another network to learn the Aura request; then the same
+  `registry_vic.py` shape as NSW. VBA's practitioner classes to look for: Domestic Builder (Limited)
+  restumping/reblocking and underpinning — confirm the class names on the first captured response.
 
 **Queensland — QBCC.**
 - `GET https://www.onlineservices.qbcc.qld.gov.au/OnlineLicenceSearch/VisualElements/SearchBSALicenseeContent.aspx`
