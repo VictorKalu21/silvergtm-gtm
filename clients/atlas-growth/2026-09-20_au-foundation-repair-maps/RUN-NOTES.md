@@ -286,7 +286,12 @@ first AU run) → `collapse-domains` **364 owner-finding domains + 67 no-website
 brand rows Mainmark 6 / Buildfix 4. State split (token, else lat/lng box): VIC 185 · QLD 101 · NSW 96 ·
 WA 22 · SA 19 · TAS 7 · ACT 2 · unknown 13. Full audit: `REPORT-GATE3.md`. Store push of `places` (5,118)
 and the Maps ledger attempted → PGRST205 (schema not applied) → re-run when it is.
-**STOPPED at GATE 3 for the operator** (P1/P2 in or out; P3–P5 accepted losses; go for site text).
+**GATE 3 APPROVED 2026-09-20** ("do p1 and p2 i guess"): P1 + P2 stay in, P3–P5 losses accepted, site text goes.
+
+**Store live 2026-09-20.** Operator pasted `store/schema.sql` into the SQL editor; `store-sync.js run` → 1,
+`places` → `{"inserted":5118,"updated":0}`, two ledger rows (3 probe calls + 3,861 scrape calls), verified by
+PostgREST reads (`places` count 5,118; `pull-places` returned 5,118 rows). From here every AU place_id is a
+query, not a re-buy.
 
 ## GATE 1 — APPROVED 2026-09-20 ("yes to all, your recs")
 
