@@ -17,7 +17,7 @@ Shorthand used in the prose only — the commands are written out in full:
 | runsheet | `clients/atlas-growth/atlas-growth-au-runsheet.csv` (1,820 rows = 182 tiles × 10 queries) |
 | shards | `clients/atlas-growth/shards-au/shard-0..7.csv` (gitignored; regenerate with `node clients/atlas-growth/gen-runsheet-au.js`) |
 | memory | none — first Australian run for this client. `build-netnew.js` will report `ref files used: 0`, which is valid for THIS run only |
-| store | `--store` on fetch/verify/match once `store.js` ships (IMPROVEMENTS entry 2026-09-20); file behaviour otherwise |
+| store | `node skills/google-maps-scrape/store-sync.js <cmd>` between steps (shipped 2026-09-20; exits 0 and skips without keys, exits 2 until the schema is applied). Run id for this run: `atlas-growth/2026-09-20_au-foundation-repair-maps` |
 
 Each step lists its **STOP condition**. A stop is not an obstacle to route around — it is the step
 that has not finished.
@@ -29,8 +29,13 @@ that has not finished.
 1. `SCRAPER_TECH_KEY` in `skills/google-maps-scrape/.env` — DONE 2026-09-20 (also Firecrawl, Supabase URL + service key).
 2. The 3-call probe run and pasted into `GATE1.md` §0 and `RUN-NOTES.md` — DONE 2026-09-20.
 3. GATE1 approved: footprint, queries, review floor, brand families, Maps spend.
-4. If the operator confirms Supabase first: `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` in the same
-   `.env`, `store.js` shipped with its test and IMPROVEMENTS entry, `runs` row written for this run.
+4. Supabase store: keys in the same `.env` (DONE), `store.js` + `store-sync.js` shipped with tests (DONE 2026-09-20),
+   `store/schema.sql` applied by the operator in the SQL editor (PENDING — until then every `store-sync.js`
+   call below exits 2 and is simply re-run once the schema exists; nothing else waits on it).
+   ```bash
+   node skills/google-maps-scrape/store-sync.js run --run-id atlas-growth/2026-09-20_au-foundation-repair-maps --client atlas-growth --country au --config clients/atlas-growth/atlas-growth-au-config.json
+   node skills/google-maps-scrape/store-sync.js ledger --run-id atlas-growth/2026-09-20_au-foundation-repair-maps --service scraper_tech_maps --credits 3 --note "GATE1 probe"
+   ```
 
 ## Step 1 — Scrape **[credits: Maps, ~4,750 central]**
 
@@ -59,6 +64,12 @@ Port `merge-shards.js` from `clients/atlas-growth/2026-09-16_uk-foundation-repai
 
 **STOP:** the merged row count is not ≥ the largest single shard, or a `google_types` value contains
 `,` instead of `|`.
+
+Then push the universe and the spend into the store (re-run later if the schema was not yet applied):
+```bash
+node skills/google-maps-scrape/store-sync.js places --in <run>/leads_clean.csv --run-id atlas-growth/2026-09-20_au-foundation-repair-maps --country au
+node skills/google-maps-scrape/store-sync.js ledger --run-id atlas-growth/2026-09-20_au-foundation-repair-maps --service scraper_tech_maps --credits <calls_summary.total_calls> --note "8 shards"
+```
 
 ## Step 3 — Qualify (main + two recoveries)
 
@@ -114,7 +125,12 @@ node skills/google-maps-scrape/fetch-sites.js --firecrawl-residue <run>/owner/si
 ```
 
 Plain → longer-timeout retry → Firecrawl residue (Hobby plan: concurrency 2, 10 req/min — the flag
-respects it). Turnstile-walled hosts are a known ceiling from this egress.
+respects it). Turnstile-walled hosts are a known ceiling from this egress. Afterwards:
+```bash
+node skills/google-maps-scrape/store-sync.js site-text --in <run>/owner/site_text.jsonl --source plain
+node skills/google-maps-scrape/store-sync.js ledger --run-id atlas-growth/2026-09-20_au-foundation-repair-maps --service firecrawl --credits <n> --note "residue pass"
+```
+(On the NEXT Australian run: `store-sync.js pull-site-text --domains leads_domains.csv --out cached.jsonl` first, and fetch only the domains not in it.)
 
 ## Step 7 — Classify and adjudicate
 
@@ -150,6 +166,9 @@ python3 <run>/apply_verify.py
 ```
 
 The runner routes MillionVerifier invalid/error to BounceBan by default (recovered 18 of 35 on the UK run).
+Before the send: `store-sync.js pull-verdicts --emails <run>/deliverable/verify_input.csv --out <run>/verify/cached.csv`
+and remove any address with a cached verdict younger than 90 days from the input (never re-bought). After:
+`store-sync.js verdicts --in <run>/verify/<stem>_all.csv` and a `ledger` row each for millionverifier and bounceban.
 
 ## Step 10 — Plusvibe (STEP 7b)
 

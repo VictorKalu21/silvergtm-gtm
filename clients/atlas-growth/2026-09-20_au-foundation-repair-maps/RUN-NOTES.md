@@ -243,6 +243,15 @@ nothing else. PostgREST cannot run DDL, so `store/schema.sql` is applied ONCE by
 Supabase SQL editor (one paste). Until it is applied, every store write degrades to a WARN and the run
 continues on files; the shard CSVs are backfilled into `places` afterwards, so nothing is lost.
 
+## Scrape launched 2026-09-20 (after GATE 1 approval)
+
+8 shards, one `run-scrape.js --resume` process each, launched through the harness background runner; the
+node processes survived the launcher's exit (checked with pgrep). Progress at +25 min: 62–72 of 227 tiles
+per shard, no WARN/ERR/429 lines in any log. Store: `store.js` + `store-sync.js` shipped and tested
+(18/18) while the shards ran; live `store-sync.js run` against the project → exit 2 (PGRST205, schema not
+applied) as designed — the operator pastes `skills/google-maps-scrape/store/schema.sql` into the SQL
+editor once, then the `places` push and the two ledger rows are re-run.
+
 ## GATE 1 — APPROVED 2026-09-20 ("yes to all, your recs")
 
 Whole of Australia (182 tiles) · restumping and reblocking are ICP · review floor 5 + the low-rated
