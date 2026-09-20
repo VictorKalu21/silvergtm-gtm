@@ -24,7 +24,7 @@ Verdict rules (applied to the EFFECTIVE verdict, i.e. post-reconciliation)
 
 Usage:  python3 merge_adjudication.py [--dir <run folder>]
 """
-import csv, json, glob, os, sys, collections
+import csv, json, glob, os, sys, collections, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = HERE
@@ -149,11 +149,25 @@ for r in rows:
     if r2['review_floor_flag']:
         flags.append(r2['review_floor_flag'])
 
+    # AU-SPECIFIC (2026-09-20, from the adjudicators' own notes): a lead with NO site text (no website, shared host,
+    # or a failed fetch) is scored "no" by PROMPT.md's empty-text rule. That is a statement about the evidence, not
+    # about the firm — 'Vicwide restumping and underpinning' is not a "no". A tier-A row (STRONG keyword hit on
+    # name + types) with no text is kept as `unclear` + no_site_text, so it rides into owner-finding and the
+    # residue / no-website recovery can still fill it; a tier B/C/D row with no text keeps the adjudicator's "no".
+    no_text = (r.get('site_status') or '') != 'ok'
+    if verdict == 'no' and no_text and tier == 'A' and (bucket in ('other', '') or 'empty' in reason_txt.lower() or 'no text' in reason_txt.lower()):
+        verdict = 'unclear'; bucket = bucket if bucket not in ('other', '') else 'underpinning_restumping'
+        r2['adjudication'] = verdict; r2['service_bucket'] = bucket
+        flags.append('no_site_text:' + (r.get('site_status') or 'none'))
+    # US pins that reached this stage without coordinates (the gate keeps coordinate-less rows): city like 'St. Clair, MI, United States'
+    us_row = bool(re.search(r',\s*[A-Z]{2},\s*United States|\bUnited States\b|\bUSA\b', (r.get('city') or '') + ' ' + (r.get('full_address') or '')))
     carve_row = (verdict == 'no' and bucket == CARVE_BUCKET)
     brand_unclear = (verdict == 'unclear' and bool(r.get('brand_family')))
 
     reason = ''
-    if tier in ('A', 'B', 'C'):
+    if us_row:
+        reason = 'wrong_country:united_states'
+    elif tier in ('A', 'B', 'C'):
         if not verdict:
             flags.append('missing_verdict'); counts['KEPT_missing_verdict'] += 1
         elif verdict == 'yes':
@@ -235,6 +249,7 @@ elif not D_WORTH_IT:
 print('-' * 78)
 print('service buckets (qualified)     : %s' % collections.Counter(r['service_bucket'] for r in qualified).most_common())
 print('brand-flagged (qualified)       : %d' % sum(1 for r in qualified if r.get('brand_family')))
+print('no_site_text kept as unclear    : %d' % sum(1 for r in qualified if 'no_site_text' in r['qa_flags']))
 print('unrated track (qualified)       : %d | lowrated track: %d' % (sum(1 for r in qualified if r['review_floor_flag'] == 'unrated_track'), sum(1 for r in qualified if r['review_floor_flag'] == 'lowrated_track')))
 print('icp_unclear (qualified)         : %d' % sum(1 for r in qualified if 'icp_unclear' in r['qa_flags']))
 print('missing_verdict (qualified)     : %d' % sum(1 for r in qualified if 'missing_verdict' in r['qa_flags']))
