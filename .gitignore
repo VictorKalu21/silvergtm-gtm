@@ -28,3 +28,7 @@ clients/**/owner_new/
 # matched run-folder artifacts (heal-N-runsheet.csv, border-runsheet.csv), which are regenerable.
 !clients/*/*-config.json
 !clients/*/*-runsheet.csv
+
+# Python bytecode caches from run-folder scripts.
+__pycache__/
+*.pyc
