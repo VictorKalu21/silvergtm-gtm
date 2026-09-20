@@ -71,6 +71,8 @@ def parse(txt_path):
             if sup: cur['supervisors'].append(sup)
     if cur: recs.append(cur)
     for r in recs:
+        # a registration's conditions text ("Restricted to: ...") can bleed into the NAME column on wrapped rows — cut it
+        r['name'] = re.split(r'\s+Restricted to:?', r['name'], 1)[0].strip()
         # single-line rows overflow the FIRST REGISTERED date into the address column ("BICTON WA 6157 10/11/2020"): strip it
         r['address'] = re.sub(r'\s*\b\d\d/\d\d/\d{4}\b', '', ' '.join(r['address'].split())).strip()
         m = re.search(r'([A-Z][A-Z \'-]+?)\s+WA\s+(\d{4})\b', r['address']); r['suburb'] = (m.group(1).strip() if m else ''); r['postcode'] = (m.group(2) if m else '')
