@@ -32,3 +32,5 @@ clients/**/owner_new/
 # Python bytecode caches from run-folder scripts.
 __pycache__/
 *.pyc
+# Run-state markers written by shard launchers (exit lines), regenerable.
+*.done
