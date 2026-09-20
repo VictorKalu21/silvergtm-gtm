@@ -81,7 +81,9 @@ Why broad: tag matching is loose in both directions — a real AI-product compan
 2. Broad + the Step-1 Job Postings filter stacked on top → AI-product companies also hiring AI roles. Export first (Tier A candidates).
 3. Broad minus the job filter → export sharded by band, up to this month's export budget; the remaining bands wait for next month.
 
-Export columns: Company, Website/Domain, # Employees, Industry, HQ, Keywords/Tags, Short description (if offered), LinkedIn URL. The tags and description columns feed scoring — include them.
+Export columns (the ai-reserve scorer auto-detects these Apollo headers — keep them): Company Name, Website, # Employees, Industry, Founded Year, **Total Funding, Last Raised At** (Gate 2 of the rubric reads these), City/State/Country, Company Linkedin Url, Keywords, Short Description. Tags + description feed the `--precut` and the classifier — include them.
+
+**Downstream (client = AI Reserve):** the export does NOT get scored by the table in Step 5 — it goes through `ai-reserve/scoring/engine/` against `scoring/RUBRIC.md` (four gates: AI-is-the-product · raised recently · external LLM-provider spend · ≥$25k/mo). Run `node scoring/engine/1-build-input.js <export.csv> --precut` first: the precut drops zero-AI-signal rows for free, which is why the Apollo net can stay wide. Dedupe universe before scoring: `tracks/universe/final_all_domains.csv`, `tracks/universe/apollo_pull_domains.csv`, `tracks/universe/contacted_exclude.txt`. The prior universe pull deliberately used 101–5,000 employees, US/UK/IL/AU/PL, no keyword gate — this TAM (11–1,000, US, AI tags) is the complementary slice, not a re-pull.
 
 UI notes: the Keywords filter has a where-to-match sub-option (tags / name / description) whose label varies by Apollo version. Industry names differ slightly from the list above; pick the closest.
 
