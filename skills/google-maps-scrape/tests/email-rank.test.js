@@ -164,4 +164,45 @@ t('cands accept strings, pairs and objects alike', () => {
   assert.deepStrictEqual(rankEmails(null, dom), []);
 });
 
-console.log(`\n${pass}/14 checks passed`);
+console.log('\nemail-rank :: country tables (IMPROVEMENTS 2026-09-20, Atlas Growth AU run)');
+const { isFree, PLACEHOLDER, nameFromLocal } = require('../email-rank.js');
+
+t('.com.au twins are siblings: buildfix.com.au owns info@buildfix.com, and reblocking.com.au owns hello@reblocking.net.au', () => {
+  assert.strictEqual(ownness('info@buildfix.com', 'buildfix.com.au'), 'sibling');
+  assert.strictEqual(ownness('hello@reblocking.net.au', 'reblocking.com.au'), 'sibling');
+  assert.strictEqual(ownness('info@damp.com.au', 'dampex.com.au'), '', 'still a sibling test, never a substring test');
+});
+
+t('AU ISP webmail is free ONLY with country au; the UK list is unchanged', () => {
+  assert.strictEqual(isFree('stumpy.88@bigpond.com', 'au'), true);
+  assert.strictEqual(isFree('assurancerestumping@iinet.net.au', 'au'), true);
+  assert.strictEqual(isFree('gplw@westnet.com.au', 'au'), true);
+  assert.strictEqual(isFree('stumpy.88@bigpond.com', 'gb'), false);
+  assert.strictEqual(isFree('x@btinternet.com', 'au'), true, 'the base FREE list still applies everywhere');
+  const r = rankEmails([['stumpy.88@bigpond.com', 'site']], 'centrestaterestumping.com.au', { country: 'au' });
+  assert.strictEqual(r.length, 1, 'a one-man restumper keeps his bigpond address');
+  assert.strictEqual(rankEmails([['stumpy.88@bigpond.com', 'site']], 'centrestaterestumping.com.au').length, 0, 'without the country it is still third-party');
+});
+
+t('site-builder and font-licence placeholders are never a mailbox', () => {
+  for (const e of ['example@mysite.com', 'your@email.com', 'mymail@mailservice.com', 'micah@micahrich.com', 'info@indiantypefoundry.com', 'eben@eyebytes.com', 'impallari@gmail.com', 'team@latofonts.com', 'test@test.com', 'support@yourmail.tld', 'name@domain.com']) {
+    assert.ok(PLACEHOLDER.test(e), e + ' should be a placeholder');
+    assert.deepStrictEqual(rankEmails([[e, 'site']], 'anything.com.au', { keepThirdParty: true }), [], e + ' should be dropped');
+  }
+  assert.ok(!PLACEHOLDER.test('info@buildfix.com.au') && !PLACEHOLDER.test('dennis@dennisheale.com.au'), 'real addresses pass');
+  assert.strictEqual(rankEmails([['jane.doe@acme.co.uk', 'site']], 'acme.co.uk').length, 1, 'a placeholder-shaped local on the lead\'s OWN domain is a real mailbox');
+  assert.strictEqual(rankEmails([['jane.doe@gmail.com', 'site']], 'acme.co.uk').length, 0, 'the same local on free-mail is a placeholder');
+});
+
+t('the job\'s trade words make first.last a trading name, not a person', () => {
+  const tw = ['restumping', 'reblocking', 'underpinning', 'restump', 'reblock'];
+  assert.strictEqual(nameFromLocal('goldenstar.reblocking', tw), null);
+  assert.strictEqual(nameFromLocal('nextlevel_restumping', tw), null);
+  assert.strictEqual(nameFromLocal('oc.restumping', tw), null);
+  assert.ok(nameFromLocal('goldenstar.reblocking') !== null, 'without the words the UK list does not know the trade');
+  assert.deepStrictEqual(nameFromLocal('jamie.key', tw), { first: 'Jamie', last: 'Key', pattern: 'first.last' });
+  const r = rankEmails([['goldenstar.reblocking@gmail.com', 'site'], ['info@goldenstarreblocking.com.au', 'site']], 'goldenstarreblocking.com.au', { country: 'au', tradeWords: tw });
+  assert.strictEqual(r[0].email, 'info@goldenstarreblocking.com.au', 'the own-domain inbox beats the free-mail trading name');
+});
+
+console.log(`\n${pass}/18 checks passed`);

@@ -43,6 +43,12 @@ const SHARED_HOSTS = [
   'mapquest.com', 'tripadvisor.com', 'birdeye.com', 'chamberofcommerce.com', 'expertise.com',
   'wheree.com', 'buildzoom.com', 'networx.com', 'checkatrade.com', 'trustatrader.com',
   'mybuilder.com', 'rated-people.com', 'yell.com', 'hotfrog.com', 'cylex.com', 'brownbook.net',
+  // Australian directories / marketplaces (2026-09-20 AU run: three unrelated restumpers shared one
+  // localsearch.com.au root_domain and inherited a neighbour's page text, verdict and email)
+  'localsearch.com.au', 'yellowpages.com.au', 'truelocal.com.au', 'hipages.com.au', 'oneflare.com.au',
+  'serviceseeking.com.au', 'hotfrog.com.au', 'startlocal.com.au', 'dlook.com.au', 'aussieweb.com.au',
+  'cylex.com.au', 'wordofmouth.com.au', 'productreview.com.au', 'houzz.com.au', 'airtasker.com',
+  'whereis.com', 'pinkpages.com.au',
 ];
 
 // lenient host extraction: accepts a full URL, a bare host, or host+path; strips www.

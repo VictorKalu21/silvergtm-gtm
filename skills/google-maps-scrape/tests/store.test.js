@@ -91,6 +91,18 @@ const server = http.createServer((req, res) => {
   await store.upsertVerdicts([{ Email: 'A@b.com', verify_verdict: 'sendable', verify_detail: 'mv:ok' }, { Email: 'c@d.com', verify_verdict: 'unverified' }]);
   check('(g) unverified rows are not written; email lowercased', reqs[0].body.length === 1 && reqs[0].body[0].email === 'a@b.com' && reqs[0].body[0].verdict === 'sendable');
 
+  // (g2) contacts: the per-lead shape (contacts[]) is flattened to one row per contact; the flat shape still works
+  reqs.length = 0;
+  await store.upsertContacts([
+    { place_id: 'L1', primary_name: 'Ann Lee', confidence: 'high', contacts: [{ name: 'Ann Lee', role_bucket: 'owner_or_partner', source: 'registry', evidence: 'Ann Lee — Director' }, { name: 'Bob Roy', role_bucket: 'gm', source: 'website', evidence: 'Bob Roy, manager' }] },
+    { place_id: 'L2', name: 'Cy Day', role_bucket: 'owner_or_partner', source: 'web_search', evidence: 'Cy Day owner' },
+    { place_id: 'L3', contacts: [] },
+    { place_id: 'L1', contacts: [{ name: 'ann lee', role_bucket: 'owner_or_partner' }] },
+  ], 'run-A');
+  const cb = reqs[0] && reqs[0].body;
+  check('(g2) per-lead contacts[] rows flatten to one row per contact (2 + 1), empty and duplicate-name rows skipped', !!cb && cb.length === 3 && cb.filter(r => r.place_id === 'L1').length === 2 && cb.some(r => r.place_id === 'L2' && r.name === 'Cy Day'));
+  check('(g2) flattened rows inherit the lead confidence and carry run_id', cb.find(r => r.name === 'Ann Lee').confidence === 'high' && cb.every(r => r.run_id === 'run-A') && /on_conflict=place_id%2Cname%2Crun_id|on_conflict=place_id,name,run_id/.test(reqs[0].url));
+
   // (h) CLI end to end
   reqs.length = 0;
   const csv = path.join(tmp, 'leads.csv');

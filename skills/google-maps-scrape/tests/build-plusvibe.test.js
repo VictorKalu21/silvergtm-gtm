@@ -154,6 +154,12 @@ check('base --city-overrides applies the file before the fill, counts itself, le
   const { report } = await cityFallback({ base: P('cf.csv'), leads: P('cf_leads.csv'), siteRead: P('sr'), areaWords: [{ match: 'south west', out: 'the South West' }], districts: DISTRICTS_DEFAULT,
     geocode: async (pid, lat, lon) => { if (pid === 'L3' || pid === 'C1') throw new Error('rung 1 must short-circuit before any geocode'); seen.push(`${pid}@${lat},${lon}`); return FX[pid] ?? null; } });
   check('city-fallback: an injected geocode is called once per unresolved lead, never for a rung-1 hit', report.resolved === 7 && seen.join(' ') === 'C2@53.41,-2.16 C3@53.79,-2.96 C4@53.43,-1.35 C5@50.7,-3.9');
+  // (D) per-country locality order (IMPROVEMENTS 2026-09-21): au reads suburb first, strips " City", rejects an LGA
+  check('city-fallback au: suburb beats the metro/LGA in `city`', pickGeocodeCity({ suburb: 'Woodridge', city: 'Logan City' }, DISTRICTS_DEFAULT, 'au').city === 'Woodridge' && pickGeocodeCity({ suburb: 'Endeavour Hills', city: 'Melbourne' }, DISTRICTS_DEFAULT, 'au').rung === 'geocode_suburb');
+  check('city-fallback au: a bare `city` loses its " City" suffix, an LGA is rejected, a village still counts', pickGeocodeCity({ city: 'Logan City' }, DISTRICTS_DEFAULT, 'au').city === 'Logan' && pickGeocodeCity({ city: 'City of Casey' }, DISTRICTS_DEFAULT, 'au').city === '' && pickGeocodeCity({ city: 'Yarra Ranges Council' }, DISTRICTS_DEFAULT, 'au').city === '' && pickGeocodeCity({ village: 'Inverleigh', city: 'Shire of Golden Plains' }, DISTRICTS_DEFAULT, 'au').city === 'Inverleigh');
+  check('city-fallback default (UK) order is unchanged: town > city > village, suburb ignored', pickGeocodeCity({ suburb: 'Heaton', city: 'Rotherham' }, DISTRICTS_DEFAULT).city === 'Rotherham' && pickGeocodeCity({ suburb: 'Heaton', town: 'Stockport', city: 'Fylde' }, DISTRICTS_DEFAULT, 'gb').city === 'Stockport');
+  const au = await cityFallback({ base: P('cf.csv'), leads: P('cf_leads.csv'), country: 'au', districts: DISTRICTS_DEFAULT, geocode: async (pid) => (pid === 'C2' ? { address: { suburb: 'Glendale', city: 'Newcastle' } } : pid === 'C3' ? { address: { city: 'Logan City' } } : null) });
+  check('city-fallback --country au: report counts geocode_suburb and carries the country', au.report.country === 'au' && au.report.geocode_suburb === 1 && au.overrides.C2 === 'Glendale' && au.overrides.C3 === 'Logan');
   fs.rmSync(tmp, { recursive: true, force: true });
   process.exit(fails ? 1 : 0);
 })();

@@ -211,7 +211,17 @@ class Store {
     return this.upsert('registry_matches', clean, 'place_id,registry,match_key');
   }
   async upsertContacts(rows, runId) {
-    const clean = rows.filter(r => r && r.place_id && r.name).map(r => ({ place_id: r.place_id, name: r.name, first_name: r.first_name || null, title: r.title || null, role_bucket: r.role_bucket || 'other', source: r.source || 'model_read', evidence: r.evidence || null, confidence: r.confidence || null, run_id: runId }));
+    // accepts the flat shape (one row per contact) AND the combine-owner-contacts.js / merge-owner-reads.js shape
+    // (one row per lead with contacts[]) — the latter pushed 0 rows until 2026-09-20 (IMPROVEMENTS LOW)
+    const flat = [];
+    for (const r of (rows || [])) {
+      if (!r || !r.place_id) continue;
+      if (Array.isArray(r.contacts)) for (const c of r.contacts) { if (c && c.name) flat.push({ ...c, place_id: r.place_id, confidence: c.confidence || r.confidence || null }); }
+      else if (r.name) flat.push(r);
+    }
+    const seen = new Set();
+    const clean = flat.filter(r => { const k = r.place_id + '|' + String(r.name).toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; })
+      .map(r => ({ place_id: r.place_id, name: r.name, first_name: r.first_name || null, title: r.title || null, role_bucket: r.role_bucket || 'other', source: r.source || 'model_read', evidence: r.evidence || null, confidence: r.confidence || null, run_id: runId }));
     return this.upsert('contacts', clean, 'place_id,name,run_id');
   }
 }

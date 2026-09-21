@@ -62,6 +62,24 @@ const GENERIC_GOOD = ['info', 'enquiries', 'enquiry', 'hello', 'sales', 'office'
 const BAD = /noreply|no-reply|donotreply|privacy|webmaster|postmaster|abuse|jobs|careers|recruit|hr@|accounts|invoice|payroll|unsubscribe|example|sentry|wixpress|godaddy|squarespace|@.*\.(png|jpg|gif|webp|svg)$|dpo@|gdpr|complaints|press@|marketing@|newsletter/i;
 const THIRD = /checkatrade|trustatrader|ratedpeople|mybuilder|yell\.com|facebook|google|nhs\.uk|gov\.uk|\.ac\.uk|fmb\.org|which\.co|trustpilot|houzz|bark\.com|linkedin|fensa|gassafe|nicieic|trustmark/i;
 const FREE = /@(gmail|googlemail|hotmail|outlook|yahoo|live|aol|icloud|me|btinternet|btconnect|sky|talktalk|virginmedia|ntlworld|blueyonder|hotmail\.co|yahoo\.co|mail|protonmail|msn)\./i;
+// Per-country ISP webmail on top of FREE (2026-09-20 AU run: a one-man restumper's stumpy.88@bigpond.com was
+// dropped as "a third-party domain scraped off the site"). Keyed by the job's geo.country; `gb` is FREE alone.
+const FREE_BY_COUNTRY = {
+  au: /@(bigpond|optusnet|iinet|tpg|westnet|internode|dodo|adam|ozemail|y7mail|exemail|aapt|iprimus|primus|netspace|optushome|people|live|yahoo|hotmail|outlook)\.(com\.au|net\.au|com|net)$/i,
+};
+function isFree(email, country) {
+  const e = String(email || '').toLowerCase();
+  if (FREE.test('@' + e.slice(e.lastIndexOf('@') + 1) + '.')) return true;
+  const r = FREE_BY_COUNTRY[String(country || '').toLowerCase()];
+  return !!(r && r.test(e));
+}
+// Site-builder and CSS-font-licence placeholders the raw-HTML harvest picks up (9% of the 2026-09-20 AU
+// harvest): never a mailbox, whatever domain they sit on.
+const PLACEHOLDER_DOMAIN = /@(mysite|email|mailservice|example|domain|yourdomain|yourmail|company|website|test|micahrich|indiantypefoundry|eyebytes|fontspring|myfonts|fonts|typekit|latofonts|impallari|fontsquirrel|pixelspread|dafont|fontshare)\.(com|net|org|io|tld)$|\.tld$/i;
+// a placeholder LOCAL part (name@, your@, john.doe@ ...) only counts on a domain that is not the lead's own —
+// jane.doe@acme.co.uk on acme.co.uk is a real mailbox
+const PLACEHOLDER_LOCAL = /^(email|name|yourname|your|user|username|firstname|lastname|johndoe|john\.doe|jane\.doe|test|mymail|example|someone|impallari)@/i;
+const PLACEHOLDER = new RegExp(PLACEHOLDER_DOMAIN.source + '|' + PLACEHOLDER_LOCAL.source, 'i');
 const SHAPE = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
 const GENERIC_ALL = new Set([...GENERIC_GOOD,
   'accounts', 'support', 'service', 'services', 'help', 'bookings', 'booking', 'orders', 'office',
@@ -134,14 +152,18 @@ troy tyler val valerie vanessa vaughan vera vicki vicky victor victoria vincent 
 warren wayne wendy wes wesley will william willie yvonne zac zach zachary zoe
 `.trim().split(/\s+/));
 
-function isTradeToken(t) {
+function isTradeToken(t, extra) {
   if (TRADE.has(t)) return true;
   if (t.length > 4 && TRADE_SUFFIX.some(s => t.endsWith(s))) return true;
-  return TRADE_SUBSTR.some(w => t.includes(w));
+  if (TRADE_SUBSTR.some(w => t.includes(w))) return true;
+  // the job's own trade vocabulary (config site_l2_keywords: restumping, reblocking, underpinning ...) —
+  // exact token, or inside the token when the word is >= 6 chars ('goldenstar.reblocking', 'nextlevel_restumping')
+  for (const w of (extra || [])) { const x = String(w).toLowerCase(); if (t === x || (x.length >= 6 && t.includes(x))) return true; }
+  return false;
 }
 
 /** stageC's name_from_local WITH FIX (a). -> {first, last, pattern} | null */
-function nameFromLocal(local) {
+function nameFromLocal(local, extra) {
   const l = String(local || '').toLowerCase();
   if (!l || GENERIC_ALL.has(l) || /\d{3,}/.test(l)) return null;
   const title = s => s.charAt(0).toUpperCase() + s.slice(1);
@@ -151,11 +173,11 @@ function nameFromLocal(local) {
     const [, a, b] = m;
     if (GENERIC_ALL.has(a) || GENERIC_ALL.has(b)) return null;
     // FIX (a): 'albion.groundworkers', 'russell.pres', 'lisa.jpdltd' are TRADING names
-    if (isTradeToken(b) || isTradeToken(a)) return null;
+    if (isTradeToken(b, extra) || isTradeToken(a, extra)) return null;
     return { first: title(a), last: title(b), pattern: 'first.last' };
   }
   m = l.match(/^([a-z])[._-]([a-z]{3,})$/);                  // f.last (separator REQUIRED)
-  if (m && !GENERIC_ALL.has(m[2]) && !isTradeToken(m[2])) {
+  if (m && !GENERIC_ALL.has(m[2]) && !isTradeToken(m[2], extra)) {
     return { first: m[1].toUpperCase() + '.', last: title(m[2]), pattern: 'f.last' };
   }
   // FIX (a), the other direction: a first-name-only mailbox is the best outreach address there is
@@ -173,7 +195,8 @@ function personShape(local) { return nameFromLocal(local) !== null; }
 // two-level suffix (me.uk) falls back to a 2-label root, which yields a <4-char label and is
 // rejected by the length rule — it fails CLOSED (a missed sibling, never a false one).
 const SAME_COMPANY_TLD = new Set(['co.uk', 'com', 'uk', 'net', 'org', 'org.uk', 'me.uk', 'ltd.uk',
-  'plc.uk', 'net.uk', 'biz', 'eu', 'london', 'co', 'info', 'company', 'services']);
+  'plc.uk', 'net.uk', 'biz', 'eu', 'london', 'co', 'info', 'company', 'services',
+  'com.au', 'net.au', 'org.au', 'au', 'id.au']);   // AU twins (2026-09-20 AU run): buildfix.com.au owns info@buildfix.com
 
 /** 'www.khb-piling.co.uk' -> {label:'khb-piling', suffix:'co.uk'} — public suffix via shared-hosts. */
 function splitDomain(d) {
@@ -216,23 +239,27 @@ function normCand(c) {
  * Rank every candidate address for one lead, best first.
  * @param {Array} cands  'a@b.com' | ['a@b.com','maps'] | {email,source}
  * @param {string} rootDom  the lead's root domain ('' when it has no site of its own)
- * @param {object} [opts]  {keepThirdParty:true} disables the third-party-off-the-site gate
+ * @param {object} [opts]  {keepThirdParty:true} disables the third-party-off-the-site gate;
+ *                         {country:'au'} adds that country's ISP webmail to the free-mail set;
+ *                         {tradeWords:[...]} the job's trade vocabulary, so 'goldenstar.reblocking' is not a person
  */
 function rankEmails(cands, rootDom, opts = {}) {
   const seen = new Set(), ranked = [];
+  const extra = (opts.tradeWords || []).map(w => String(w).toLowerCase());
   for (const c of (cands || [])) {
     const { email: e0, source } = normCand(c);
     const e = String(e0 || '').trim().toLowerCase();
-    if (!e || seen.has(e) || BAD.test(e) || THIRD.test(e) || !SHAPE.test(e)) continue;
+    if (!e || seen.has(e) || BAD.test(e) || PLACEHOLDER_DOMAIN.test(e) || THIRD.test(e) || !SHAPE.test(e)) continue;
     seen.add(e);
     const at = e.lastIndexOf('@');
     const local = e.slice(0, at), edom = e.slice(at + 1);
     const basis = ownness(e, rootDom);
+    if (!basis && PLACEHOLDER_LOCAL.test(e)) continue;   // name@ / your@ / john.doe@ off the lead's own domain
     const own = !!basis;
-    const free = FREE.test('@' + edom + '.');
+    const free = isFree(e, opts.country);
     // a 3rd-party, non-free domain scraped off the site is not this business's mailbox
     if (!own && !free && source === 'site' && !opts.keepThirdParty) continue;
-    const person = nameFromLocal(local);
+    const person = nameFromLocal(local, extra);
     const kind = person ? 'person' : (GENERIC_ALL.has(local) ? 'generic' : 'other');
     const score = (person ? 3 : kind === 'generic' ? 2 : 1) * 10 + (own ? 3 : source === 'maps' ? 2 : 1);
     ranked.push({ email: e, local, domain: edom, kind, own, basis, source, person, score });
@@ -243,7 +270,7 @@ function rankEmails(cands, rootDom, opts = {}) {
 }
 
 module.exports = {
-  ownness, personShape, nameFromLocal, rankEmails,
+  ownness, personShape, nameFromLocal, rankEmails, isFree, FREE_BY_COUNTRY, PLACEHOLDER, PLACEHOLDER_DOMAIN, PLACEHOLDER_LOCAL,
   splitDomain, sldKey, isTradeToken,
   GENERIC_GOOD, GENERIC_ALL, TRADE, FIRST_NAMES, SAME_COMPANY_TLD, BAD, THIRD, FREE, SHAPE,
 };

@@ -7,7 +7,7 @@
  *   node build-plusvibe.js redo  --dir <owner/personalize>              (next batch-N-in.json from the last fill's flags; exits 2 when nothing to redo)
  *   node build-plusvibe.js check --csv <any plusvibe csv>          (exit 1 if any name rides an address it does not own, or a placeholder value holds a line break)
  *   node build-plusvibe.js city-fallback --base <plusvibe_base.csv> --out <owner/city_overrides.json> [--leads <leads_icp.csv>] [--site-read <dir>]
- *                                        [--area-words <json>] [--districts <json>] [--user-agent <ua>] [--geocode-fixture <json>]
+ *                                        [--area-words <json>] [--districts <json>] [--user-agent <ua>] [--geocode-fixture <json>] [--country au]
  *                                                                 (three rungs for a blank city; writes the place_id -> city file `base --city-overrides` reads)
  *
  * THE NAME RULE (the bug this file exists to prevent): a first/last name is attached to an address
@@ -70,12 +70,24 @@ const norm = v => flat(v).toLowerCase();
 // Nominatim at zoom 14: `town` is a town; `city` is often a DISTRICT (Fylde, Mole Valley, Kirklees)
 // and must be rejected; `village` is right but reads oddly in "around X", so it only wins when
 // neither a town nor an acceptable city is there.
-function pickGeocodeCity(address, districts) {
+// Per-country locality order (IMPROVEMENTS 2026-09-21, Atlas Growth AU run). Probed on three AU coordinates:
+// Nominatim puts the locality a tradie would say in `suburb` (Endeavour Hills, Woodridge, Glendale) and the metro
+// or local-government area in `city` (Melbourne, "Logan City"); `town`/`village` are null. So `au` reads
+// suburb > town > village > city, strips a trailing " City" / " Shire" / " Regional" and rejects an LGA
+// ("City of Casey", "Shire of Yarra Ranges", "... Council"). Any other country keeps the UK order.
+const LGA_RE = /^(city|shire|council|municipality|region|rural city|borough|town) of\b|\bcouncil$/i;
+const LOCALITY_ORDER = { default: ['town', 'city', 'village'], au: ['suburb', 'town', 'village', 'city'] };
+function pickGeocodeCity(address, districts, country) {
   const d = new Set((districts || DISTRICTS_DEFAULT).map(norm));
-  const a = address || {}, town = flat(a.town), city = flat(a.city), village = flat(a.village);
-  if (town) return { city: town, rung: 'geocode_town' };
-  if (city && !d.has(norm(city))) return { city, rung: 'geocode_city' };
-  if (village) return { city: village, rung: 'geocode_village' };
+  const a = address || {}, cc = String(country || '').toLowerCase();
+  for (const k of (LOCALITY_ORDER[cc] || LOCALITY_ORDER.default)) {
+    let v = flat(a[k]); if (!v) continue;
+    if (k === 'city') {
+      if (d.has(norm(v))) continue;
+      if (cc === 'au') { if (LGA_RE.test(v)) continue; v = v.replace(/\s+(City|Shire|Regional)$/i, ''); }
+    }
+    return { city: v, rung: 'geocode_' + k };
+  }
   return { city: '', rung: '' };
 }
 function loadDistricts(file) {
@@ -126,7 +138,7 @@ async function cityFallback(o) {
   const site = siteReadCities(o.siteRead), districts = o.districts || DISTRICTS_DEFAULT, areas = o.areaWords || [];
   const need = base.filter(r => !flat(r.city));
   const out = {}, rep = { rows: base.length, blank_city: need.length, rung1_site_read: 0, rung2_geocode: 0, rung3_county_or_name: 0,
-    site_read: 0, geocoded: 0, geocode_failed: 0, geocode_town: 0, geocode_city: 0, geocode_village: 0, district_rejected: 0, county: 0, name_area: 0, unresolved: 0, resolved: 0 };
+    site_read: 0, geocoded: 0, geocode_failed: 0, geocode_suburb: 0, geocode_town: 0, geocode_city: 0, geocode_village: 0, district_rejected: 0, county: 0, name_area: 0, unresolved: 0, resolved: 0, country: String(o.country || '').toLowerCase() || 'default' };
   for (const r of need) {
     const take = (city, rung, group) => { out[r.place_id] = city; rep[rung]++; rep[group]++; rep.resolved++; };
     const hit = site.get(r.place_id);
@@ -138,7 +150,7 @@ async function cityFallback(o) {
       if (j) {
         rep.geocoded++; const a = j.address || {}; county = flat(a.county);
         const cityRaw = flat(a.city); if (cityRaw && !flat(a.town) && new Set(districts.map(norm)).has(norm(cityRaw))) rep.district_rejected++;
-        const p = pickGeocodeCity(a, districts);
+        const p = pickGeocodeCity(a, districts, o.country);
         if (p.city) { take(p.city, p.rung, 'rung2_geocode'); continue; }
       } else rep.geocode_failed++;
     }
@@ -256,7 +268,7 @@ if (cmd === 'base') {
   const fixture = arg('geocode-fixture');
   const fx = fixture ? JSON.parse(strip(fs.readFileSync(fixture, 'utf8'))) : null;
   const geocode = fx ? async (pid, lat, lon) => fx[pid] ?? fx[`${lat},${lon}`] ?? null : nominatim(arg('user-agent', UA_DEFAULT));
-  cityFallback({ base: arg('base'), leads: arg('leads'), siteRead: arg('site-read'), out: arg('out'),
+  cityFallback({ base: arg('base'), leads: arg('leads'), siteRead: arg('site-read'), out: arg('out'), country: arg('country', ''),
     districts: loadDistricts(arg('districts')), areaWords: loadAreaWords(arg('area-words')), geocode })
     .then(({ report }) => console.log(JSON.stringify(report)))
     .catch(e => { console.error(String(e && e.stack || e)); process.exit(1); });

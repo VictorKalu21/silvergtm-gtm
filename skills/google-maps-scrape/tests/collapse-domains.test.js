@@ -23,6 +23,11 @@ check('isSharedHost m.facebook subdomain', SH.isSharedHost('https://m.facebook.c
 check('isSharedHost wixsite subdomain', SH.isSharedHost('https://acme.wixsite.com/site') === true);
 check('isSharedHost bare host accepted', SH.isSharedHost('sites.google.com') === true);
 check('isSharedHost real site false', SH.isSharedHost('https://www.acmefoundationrepair.com') === false);
+// AU directories (IMPROVEMENTS 2026-09-20): a localsearch / yellowpages listing is not the business's site
+check('isSharedHost localsearch.com.au listing', SH.isSharedHost('https://www.localsearch.com.au/profile/nq-restumping/1234') === true);
+check('isSharedHost yellowpages.com.au listing', SH.isSharedHost('https://www.yellowpages.com.au/vic/elite-reblocking-123') === true);
+check('isSharedHost hipages / truelocal / oneflare', ['https://hipages.com.au/connect/x', 'truelocal.com.au/business/y', 'https://www.oneflare.com.au/b/z'].every(SH.isSharedHost));
+check('classifyWebsite AU directory -> shared_host, a .com.au trade site -> site', SH.classifyWebsite('https://www.localsearch.com.au/profile/x') === 'shared_host' && SH.classifyWebsite('https://www.geotechbuilt.com.au/') === 'site');
 // site-builder platforms: matched by SUFFIX, so any business subdomain on them counts
 check('isSharedHost sitelift subdomain', SH.isSharedHost('https://sundridge.sitelift.site/') === true);
 check('isSharedHost sitelift bare host', SH.isSharedHost('sitelift.site') === true);

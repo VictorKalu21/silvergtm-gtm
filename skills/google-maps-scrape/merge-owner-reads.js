@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* merge-owner-reads.js — join the model's batch-N-out.json files back to the leads.
- *   node merge-owner-reads.js --dir <out>/owner/read [--out <out>/owner/contacts_read.jsonl]
+ *   node merge-owner-reads.js --dir <out>/owner/read [--out <out>/owner/contacts_read.jsonl] [--exclude-titles "a,b"] [--trade-words "restumping,reblocking,perth"]
  * Enforces the template's fixed guardrails DETERMINISTICALLY (these are checks, not extraction):
  *   evidence must contain the person's first or last name; role_bucket must be in the enum;
  *   name must not contain a role word; dedupe by full name. Everything dropped is counted.
@@ -12,7 +12,20 @@ const OUT = arg('out', path.join(DIR, '..', 'contacts_read.jsonl'));
 const ENUM = new Set(['owner_or_partner', 'gm', 'marketing', 'sales_manager', 'office_manager', 'other']);
 const ROLEWORD = /\b(owner|president|manager|director|founder|ceo|vp|estimator|technician|foreman|inspector|sales|marketing|office|team|staff)\b/i;
 // A business is not a person (owner-prompt trap 2). Trade words in a NAME mean a company slipped through.
-const TRADEWORD = /\b(foundation|waterproofing|basement|crawl|crawlspace|concrete|repair|systems|services|solutions|company|inc|llc|leveling|mudjacking|resources|construction|contractors?)\b/i;
+const TRADEWORD_DEFAULT = 'foundation,waterproofing,basement,crawl,crawlspace,concrete,repair,systems,services,solutions,company,inc,llc,leveling,mudjacking,resources,construction,contractors?';
+// --trade-words "restumping,reblocking,underpinning,perth,gold coast" adds the vertical's trade nouns and place names
+// (IMPROVEMENTS 2026-09-20: the default list is US foundation repair, so "Explosive Restumping" and "Gold Coast" passed it).
+const TRADEWORD = new RegExp('\\b(' + TRADEWORD_DEFAULT.split(',').concat(arg('trade-words', '').split(',').map(t => t.trim()).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))).join('|') + ')\\b', 'i');
+// A reader that applies "the business name IS the person" to every lead outputs the business as a contact ("Perth
+// House" for Perth House Restumping). Independent of any word list: a name that is the LEADING part of the business
+// name is a business name unless its first token is a personal first name (Matt Hooper House Restumping -> Matt Hooper).
+const { FIRST_NAMES } = require('./email-rank.js');
+const normName = s => String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+function isBusinessNameAsPerson(name, businessName) {
+  const n = normName(name), b = normName(businessName);
+  if (!n || !b || !(b === n || b.startsWith(n + ' '))) return false;
+  return !FIRST_NAMES.has(n.split(' ')[0]);
+}
 // Titles the job's owner-prompt EXCLUDES. Pass the vertical's list with --exclude-titles "a,b,c"; this default is the
 // foundation-repair block. A contact whose TITLE matches is counted as excluded_by_title and never output.
 const EXCL_DEFAULT = 'estimator,technician,installer,crew lead,foreman,laborer,apprentice,field inspector,inspector,production manager,project manager,dispatcher,scheduler,csr,customer care,customer relations,customer service,design specialist,home performance,controller,accountant,bookkeeper,recruiter,purchasing,vp of sales,vice president of sales,sales representative,sales rep,account executive,former,retired';
@@ -21,7 +34,7 @@ const strip = s => s.replace(/^﻿/, '');
 const bdir = path.join(DIR, 'batches');
 const ins = fs.readdirSync(bdir).filter(f => /^batch-\d+-in\.json$/.test(f)).sort((a, b) => parseInt(a.match(/\d+/)[0]) - parseInt(b.match(/\d+/)[0]));
 const rep = { batches: ins.length, batches_missing_out: [], leads: 0, leads_with_contacts: 0, contacts: 0, owner_level: 0,
-  dropped_no_evidence_name: 0, dropped_bad_bucket: 0, dropped_roleword_name: 0, dropped_tradeword_name: 0, dropped_single_token_name: 0,
+  dropped_no_evidence_name: 0, dropped_bad_bucket: 0, dropped_roleword_name: 0, dropped_tradeword_name: 0, dropped_business_name: 0, dropped_single_token_name: 0,
   excluded_by_title: 0, dropped_unknown_place_id: 0, by_source: {} };
 const lines = [];
 for (const f of ins) {
@@ -42,6 +55,7 @@ for (const f of ins) {
       if (!ENUM.has(c.role_bucket)) { rep.dropped_bad_bucket++; continue; }
       if (ROLEWORD.test(name)) { rep.dropped_roleword_name++; continue; }
       if (TRADEWORD.test(name)) { rep.dropped_tradeword_name++; continue; }
+      if (isBusinessNameAsPerson(name, lead.business_name)) { rep.dropped_business_name++; continue; }
       if (toks.length < 2) { rep.dropped_single_token_name++; continue; }
       if (EXCL.test(String(c.title || ''))) { rep.excluded_by_title++; continue; }
       const k = name.toLowerCase(); if (seen.has(k)) continue; seen.add(k);

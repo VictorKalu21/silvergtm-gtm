@@ -1127,11 +1127,11 @@ It bites now: the UK config's seven trades (`damp proofing`, `structural waterpr
 
 ## NOTE 2026-09-20 (write-back index, Atlas Growth 2026-09-20 AU foundation-repair MAPS run)
 
-First Australian run. Engine gaps found, all worked around job-side in the run folder (`rank_emails_au.js`, `filter_contacts_au.py`, `fix_directory_hosts.py`) and listed below; none fixed in the engine without an operator go. Store (`store.js` / `store-sync.js`) shipped on this run — see the DONE entry above. Australian facts that decide designs are in `skills/icp-source-planner/library/google-maps--au-foundation-repair.md` and `au-state-licence-boards--foundation-repair-owners.md`.
+First Australian run. Engine gaps found, worked around job-side in the run folder (`rank_emails_au.js`, `filter_contacts_au.py`, `fix_directory_hosts.py`, `city_overrides_au.py`) and listed below; **all five engine fixes approved by the operator and merged 2026-09-21** (each with a test; the sweep-budget entry is a FACT, no engine change). Store (`store.js` / `store-sync.js`) shipped on this run — see the DONE entry above. Australian facts that decide designs are in `skills/icp-source-planner/library/google-maps--au-foundation-repair.md` and `au-state-licence-boards--foundation-repair-owners.md`.
 
 ## MEDIUM (shared-hosts.js): Australian directory hosts are not shared hosts, so `collapse-domains.js` fans one listing's text, verdict and emails to unrelated firms
 
-**Status:** OPEN — job-side repair `fix_directory_hosts.py` in the AU run folder · found 2026-09-20 (Atlas Growth AU MAPS run), caught by the residue adjudicator, not by the engine.
+**Status:** DONE 2026-09-21 (operator approval 2026-09-21) — 17 AU directory hosts added to `SHARED_HOSTS` (localsearch, yellowpages, truelocal, hipages, oneflare, serviceseeking, hotfrog.com.au, startlocal, dlook, aussieweb, cylex.com.au, wordofmouth, productreview, houzz.com.au, airtasker, whereis, pinkpages) · test: tests/collapse-domains.test.js (4 new checks) · found 2026-09-20 (Atlas Growth AU MAPS run), caught by the residue adjudicator, not by the engine; that run was repaired job-side with `fix_directory_hosts.py`.
 
 **Problem.** `SHARED_HOSTS` lists the UK/US directories but not `localsearch.com.au`, `yellowpages.com.au`, `truelocal.com.au`, `hipages.com.au`, `oneflare.com.au`, `serviceseeking.com.au`, `hotfrog.com.au`, `startlocal.com.au`, `dlook.com.au`, `aussieweb.com.au`, `cylex.com.au`, `wordofmouth.com.au`, `productreview.com.au`, `houzz.com.au`, `airtasker.com`. A Maps listing whose "website" is its localsearch page is classified `site`, its `root_domain` becomes `localsearch.com.au`, and `collapse-domains.js` groups every such lead under ONE representative. On this run Scott Myers Construction and LJ Constructions inherited NQ Restumping Solutions' localsearch page: same site text, same "yes" verdict (from the neighbour's page), same harvested emails; Wide Bay Stumping inherited Elite Reblocking's yellowpages page and its `elitereblocking@gmail.com`. That is a wrong email on a wrong lead in the upload.
 
@@ -1141,7 +1141,7 @@ First Australian run. Engine gaps found, all worked around job-side in the run f
 
 ## MEDIUM (email-rank.js): the ranking's country tables are UK/US — `.com.au` siblings, AU ISP free-mail and site-builder placeholder addresses are all judged wrong
 
-**Status:** OPEN — job-side `rank_emails_au.js` extends the exported `SAME_COMPANY_TLD` Set in place and pre-filters candidates · found 2026-09-20 (Atlas Growth AU MAPS run).
+**Status:** DONE 2026-09-21 (operator approval 2026-09-21) — (a) `com.au net.au org.au au id.au` in `SAME_COMPANY_TLD`; (b) `FREE_BY_COUNTRY.au` + `isFree(email, country)`, `rankEmails(..., {country})`; (c) `PLACEHOLDER` regex (site-builder + font-licence addresses, `name@`/`test@`/`.tld` shapes) dropped before ranking; (d) `rankEmails(..., {tradeWords})` → `nameFromLocal(local, extra)` / `isTradeToken(t, extra)` · test: tests/email-rank.test.js (4 new cases, 18/18) · found 2026-09-20 (Atlas Growth AU MAPS run), where `rank_emails_au.js` carried the same rules job-side.
 
 **Problem.** Three tables inside `email-rank.js` are the UK run's:
 1. `SAME_COMPANY_TLD` has no `com.au` / `net.au` / `org.au` / `au`, so `buildfix.com.au` does not own `info@buildfix.com` and `reblocking.melbourne`-style twins fail the sibling test (fails closed: a missed sibling, never a false one — but the lead ends with `info@` or nothing).
@@ -1155,7 +1155,7 @@ Also `TRADE` / `TRADE_SUBSTR` do not know the Australian trade nouns, so `golden
 
 ## MEDIUM (merge-owner-reads.js): the business-name guard is one vertical's word list, so a reader that outputs the business as a person passes it
 
-**Status:** OPEN — job-side `filter_contacts_au.py` pass 1 · found 2026-09-20 (Atlas Growth AU MAPS run).
+**Status:** DONE 2026-09-21 (operator approval 2026-09-21) — (a) `--trade-words "a,b"` merged into `TRADEWORD`; (b) `isBusinessNameAsPerson()`: a name that is the leading part of the business name is dropped unless its first token is in `email-rank.js` `FIRST_NAMES` (new counter `dropped_business_name`); (c) the AU owner prompt's rule 1 now says it fires only on first name + surname · test: tests/merge-owner-reads.test.js (new, 4 checks) · found 2026-09-20 (Atlas Growth AU MAPS run), repaired job-side there with `filter_contacts_au.py`.
 
 **Problem.** `TRADEWORD` (`foundation|waterproofing|basement|crawl|concrete|repair|systems|services|solutions|company|inc|llc|leveling|mudjacking|...`) is the US foundation-repair list. One of six Haiku readers on this run applied owner-prompt rule 1 ("the business name IS the person, for sole traders") to EVERY lead in its batch and returned 17 business names as owners — "Perth House", "BDG Raising", "Explosive Restumping", "Gold Coast", "Melbourne's Best", "Calcon Building", "TOP Reblocking", "Truss Reblocking" — with `evidence` = the business name. All 17 passed the guard (no US trade word in them) and would have been the deliverable's `first_name` ("Perth", "Explosive", "Gold").
 
@@ -1169,7 +1169,7 @@ Also `TRADE` / `TRADE_SUBSTR` do not know the Australian trade nouns, so `golden
 
 ## LOW (store.js `upsertContacts`): expects one row per CONTACT, but `contacts_final.jsonl` is one row per LEAD with `contacts[]` — `store-sync.js contacts` pushes 0 rows
 
-**Status:** OPEN — job-side flatten (`owner/contacts_flat.jsonl`, one line per contact with `place_id, name, first_name, title, role_bucket, source, evidence, confidence`) pushed instead · found 2026-09-20 (Atlas Growth AU MAPS run), the first live `contacts` push.
+**Status:** DONE 2026-09-21 (operator approval 2026-09-21) — `upsertContacts()` flattens `contacts[]` rows (inheriting `place_id` and the lead `confidence`), keeps the flat shape, dedupes on place_id + lowercased name · test: tests/store.test.js (g2, 2 checks) · found 2026-09-20 (Atlas Growth AU MAPS run), the first live `contacts` push, pushed job-side as `owner/contacts_flat.jsonl`.
 
 **Problem.** `upsertContacts()` filters `rows.filter(r => r.place_id && r.name)`; a `combine-owner-contacts.js` row has `place_id` and `contacts: [{name,...}]`, never a top-level `name`, so every row is filtered out and the CLI prints `contacts: 0` without an error. `tests/store.test.js` fed the flat shape, so it passed.
 
@@ -1177,7 +1177,7 @@ Also `TRADE` / `TRADE_SUBSTR` do not know the Australian trade nouns, so `golden
 
 ## LOW (build-plusvibe.js `city-fallback`): the Nominatim rung prefers town > city > village, which in Australia yields the metro or the local-government area, never the suburb a tradie would say
 
-**Status:** OPEN — job-side `city_overrides_au.py` in the AU run folder · found 2026-09-21 (Atlas Growth AU MAPS run), 75 of 172 base rows had a blank city.
+**Status:** DONE 2026-09-21 (operator approval 2026-09-21) — `LOCALITY_ORDER` per country (`au`: suburb > town > village > city, trailing " City/Shire/Regional" stripped, `LGA_RE` rejects "City of X" / "... Council"), `pickGeocodeCity(address, districts, country)`, `cityFallback({country})`, CLI `--country au`; the default (UK) order is unchanged · test: tests/build-plusvibe.test.js (D, 4 checks) · found 2026-09-21 (Atlas Growth AU MAPS run), 75 of 172 base rows had a blank city, filled job-side by `city_overrides_au.py`.
 
 **Problem.** Probed 2026-09-21 (three AU coordinates, zoom 14): Nominatim puts the locality in `suburb` ("Endeavour Hills", "Woodridge", "Glendale") and the metro or LGA in `city` ("Melbourne", "Logan City", "Newcastle"); `town` and `village` are null. `pickGeocodeCity()` never reads `suburb`, so an Australian row gets "Logan City" or a district-style LGA ("City of Casey", "Shire of Yarra Ranges") that the UK-seeded reject list does not know — "Noticed you do restumping around Logan City" is not how anyone talks.
 
