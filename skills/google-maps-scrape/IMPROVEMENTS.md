@@ -1174,3 +1174,13 @@ Also `TRADE` / `TRADE_SUBSTR` do not know the Australian trade nouns, so `golden
 **Problem.** `upsertContacts()` filters `rows.filter(r => r.place_id && r.name)`; a `combine-owner-contacts.js` row has `place_id` and `contacts: [{name,...}]`, never a top-level `name`, so every row is filtered out and the CLI prints `contacts: 0` without an error. `tests/store.test.js` fed the flat shape, so it passed.
 
 **Fix (engine, with a test and an operator go).** In `upsertContacts()`, when a row carries `contacts[]`, emit one record per contact (inheriting `place_id`, `confidence`); keep the flat shape working. Test: a two-contact lead row → two upserted records.
+
+## LOW (build-plusvibe.js `city-fallback`): the Nominatim rung prefers town > city > village, which in Australia yields the metro or the local-government area, never the suburb a tradie would say
+
+**Status:** OPEN — job-side `city_overrides_au.py` in the AU run folder · found 2026-09-21 (Atlas Growth AU MAPS run), 75 of 172 base rows had a blank city.
+
+**Problem.** Probed 2026-09-21 (three AU coordinates, zoom 14): Nominatim puts the locality in `suburb` ("Endeavour Hills", "Woodridge", "Glendale") and the metro or LGA in `city` ("Melbourne", "Logan City", "Newcastle"); `town` and `village` are null. `pickGeocodeCity()` never reads `suburb`, so an Australian row gets "Logan City" or a district-style LGA ("City of Casey", "Shire of Yarra Ranges") that the UK-seeded reject list does not know — "Noticed you do restumping around Logan City" is not how anyone talks.
+
+**Fix (engine, with a test and an operator go).** A per-country locality order in `city-fallback`: `au` = suburb > town > village > city (strip a trailing " City"/" Shire"/" Regional", reject `^(City|Shire|Council|Region) of`); keep the UK order as the default. One fixture case per country in `tests/build-plusvibe.test.js`.
+
+**Until then:** `city_overrides_au.py` writes the `--city-overrides` file with that order (plus the state-less area token from the business name as the last rung).
