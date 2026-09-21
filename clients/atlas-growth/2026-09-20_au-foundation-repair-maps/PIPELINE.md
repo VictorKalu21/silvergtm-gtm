@@ -216,3 +216,15 @@ node <run>/rank_emails_au.js                          # leads_qualified_contacts
 python3 <run>/assemble_deliverable_au.py             # deliverable/*.csv (verify_input.csv = the MV->BB input, NOT run)
 #   store: contacts flattened one-per-contact (owner/contacts_flat.jsonl) -> store-sync.js contacts --run-id ...
 ```
+
+## Verification + Plusvibe (keys supplied 2026-09-21; the credit-spending run is blocked for the agent by the permission layer — operator runs it or allows it)
+
+```
+IN=<run>/deliverable/verify_input.csv OUT_DIR=<run>/verify node skills/email-verify-debounce-bounceban/scripts/verify-millionverifier-bounceban.js --concurrency 4
+#   180 unique addresses -> 180 MillionVerifier credits + BounceBan on catch_all/unknown/error/invalid (balances 2026-09-21: MV 14,505 · BB 5,809)
+python3 <run>/apply_verify.py <run>/verify/verify_input_full.csv          # -> deliverable/emails_final.csv (verdict filled)
+node skills/google-maps-scrape/store-sync.js verdicts --in <run>/verify/verify_input_full.csv
+node skills/google-maps-scrape/build-plusvibe.js base --leads <run>/deliverable/atlas_au_foundation_repair_maps_qualified.csv --emails <run>/deliverable/emails_final.csv --contacts <run>/owner/contacts_final.jsonl --out <run>/owner/plusvibe_base.csv [--city-overrides <run>/owner/city_overrides.json]
+node skills/google-maps-scrape/build-plusvibe.js prep --base <run>/owner/plusvibe_base.csv --site <run>/owner/site_text.jsonl --dir <run>/owner/personalize --batch 40
+#   3-lead then 7-lead wording test against clients/atlas-growth/personalize-au-config.json, then fill / redo / check
+```

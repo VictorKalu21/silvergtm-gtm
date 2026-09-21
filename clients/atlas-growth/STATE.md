@@ -27,9 +27,13 @@
    `node skills/google-maps-scrape/merge-owner-reads.js --dir <run>/owner/sweep2 --out <run>/owner/contacts_sweep.jsonl --exclude-titles "<list in RUN-NOTES>"`,
    `node skills/google-maps-scrape/combine-owner-contacts.js --leads <run>/leads_qualified.csv --out <run>/owner/contacts_final.jsonl <read> <read_residue> <eponym> <sweep>`,
    `python3 <run>/assemble_deliverable_au.py`. Delete any `-out.json` a budget-starved agent wrote with 0 searches.
-4. **Verification (credits, explicit go + count):** input is `<run>/deliverable/verify_input.csv` (180 unique `Email`).
-   MillionVerifier → BounceBan per `skills/email-verify-debounce-bounceban`, then port the UK run's `apply_verify.py`
-   to write `emails_final.csv` (verdict column) and `store-sync.js verdicts`.
+4. **Verification — keys supplied 2026-09-21, run NOT yet made.** `MILLIONVERIFIER_KEY` / `BOUNCEBAN_KEY` are in
+   `$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env` (mode 600; balances checked free: MV 14,505 · BB 5,809).
+   The agent's attempt to run the verifier was **denied by the permission layer as a real-world transaction**, so the
+   operator either runs the first command in `<run>/PIPELINE.md` ("Verification + Plusvibe") themselves or allows it
+   for the agent. Input `<run>/deliverable/verify_input.csv` (180 unique `Email`); then
+   `python3 <run>/apply_verify.py <run>/verify/verify_input_full.csv` → `deliverable/emails_final.csv`, and
+   `store-sync.js verdicts`.
 5. **Plusvibe:** `build-plusvibe.js base --city-overrides` (service-area listings have no city; the coordinate-box
    state is in the deliverable), 3-lead then 7-lead wording tests against `clients/atlas-growth/personalize-au-config.json`,
    then `fill` / `check`.
