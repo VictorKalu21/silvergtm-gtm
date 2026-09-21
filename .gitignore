@@ -34,3 +34,6 @@ __pycache__/
 *.pyc
 # Run-state markers written by shard launchers (exit lines), regenerable.
 *.done
+
+# personal Claude Code overrides (permission allow rules), never committed
+.claude/settings.local.json
