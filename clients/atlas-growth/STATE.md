@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| Current run | `2026-09-20_au-foundation-repair-maps` — **VERIFIED, PLUSVIBE BASE BUILT, STOPPED AT THE 3-LEAD WORDING SIGN-OFF** (2026-09-21). 329 worked leads · 93 named (28.3%) · 217 with an email → **verified 2026-09-21: 172 sendable rows (140 unique addresses) · 32 risky · 13 dropped** · Plusvibe base 172 rows (12 named by the name rule, 10 blank city, 32 without site text). Sweep tranche 1 only (120 of 284 unnamed). Deliverable + `verify/` + `owner/plusvibe_base.csv` in the run folder (gitignored). Store: places 5,118 · site_text 364 · registry 52 · contacts 89 · verdicts 180 · ledger 6. |
+| Current run | `2026-09-20_au-foundation-repair-maps` — **PLUSVIBE UPLOAD BUILT, NOT UPLOADED** (2026-09-21). 329 worked leads · 93 named · 217 with an email · verified 140/180 sendable · **`owner/plusvibe_upload.csv` 168 rows** (140 personalised from site text, 28 on fallbacks; 4 blank-city rows held in `plusvibe_upload_blankcity.csv`; 12 rows carry a first name under the name rule). Wording signed off 2026-09-21 (rectification for foundation repair). Sweep tranche 1 only (120 of 284 unnamed). All run data gitignored in the run folder. Store: places 5,118 · site_text 364 · registry 52 · contacts 89 · verdicts 180 · ledger 6. |
 | Previous run (UK Maps) | `2026-09-16_uk-foundation-repair-maps` — owner-finding DONE (586/860 named). **Verification DONE 2026-09-17** (MillionVerifier → BounceBan, keys supplied by operator): 444 unique addresses → **370 sendable**, 39 risky, 35 dropped (20 of the drops are persistent MillionVerifier API errors, unverified not invalid). `deliverable/emails_final.csv` 468 rows (392 sendable incl. shared brand mailboxes). **Plusvibe upload BUILT and sent 2026-09-17**: `deliverable/atlas_uk_plusvibe_upload.csv`, **391 rows** (one per lead, sendable addresses only), 364 personalised from site text + 27 config fallbacks, **27 named** under the name rule (357 company mailboxes stay nameless), 0 flags, 0 blank cities after a job-side `owner/city_overrides.json` (42 rows), `check` passed. **Firecrawl residue pass 2026-09-17 (operator key):** 204 blocked sites → **141 recovered (69%)**, 146 credits; 55 unworked leads re-tiered A–C → Opus adjudication → **+29 ICP +9 damp-only = 898 worked leads**; CH + Haiku read on the 38 → **610 named (67.9%)**; emails **495 (55.1%)**, 469 unique, 25 new addresses verified (23 sendable / 2 risky) and **BounceBan recovery over the earlier MV invalid/error rows (operator directive): 18 recovered sendable** (5 of 15 invalid, 13 of 20 error), 7 risky, 10 dropped → **411 unique sendable of 469 (87.6%)**, `emails_final.csv` 435 sendable / 49 risky / 11 dropped. **Plusvibe upload REBUILT and sent: 435 rows** (44 new), 409 personalised, 29 named, 0 blank cities (46 overrides: 41 job-side + 5 after the new `city-fallback`), outcome flag now LIVE via `outcome_by_type` in the UK config, `check` passed. Facebook and UK-directory rungs are dead ends (probes in the source library). **Run closed out** — nine engine changes from it shipped 2026-09-17 with tests |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
@@ -31,12 +31,10 @@
    `deliverable/emails_final.csv` carries the verdicts; store `verdicts` + ledger written). Keys are in
    `$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env`. If a re-run is ever needed, the agent must call it
    through `<run>/run_verify.sh` (the permission classifier refuses the bare command as a paid transaction).
-5. **Plusvibe — at the 3-lead wording sign-off.** Base built (`owner/plusvibe_base.csv`, 172 rows, `owner/city_overrides.json`
-   applied), `prep` done (4 batches under `owner/personalize/`), 3-lead test filled under `owner/personalize-test3/`
-   (report 0 flags). Next: operator signs off the three emails (open point: "paid repair jobs" for foundation repair) →
-   7-lead test per `personalize-au-config.json` `_test_plan` (house raising, a Mainmark/Buildfix licensee, a blank city,
-   a regional lead, a no-site-text fallback row) → full fill / redo / check → report `fallback_only` (32) and
-   `blank_city` (10) before upload.
+5. **Plusvibe upload ready:** `<run>/owner/plusvibe_upload.csv` (168 rows; `check --csv` clean). Upload is the operator's step
+   (no Plusvibe API on this run). Optional follow-ups: the 4 blank-city rows in `plusvibe_upload_blankcity.csv` (give them a
+   town by hand or drop them); the 32 fallback rows read "underpinning / site inspections" — fine for the trade, listed in
+   `fill_report.json`; the 164 unswept leads (step 3) would add names, not emails.
 6. Engine gaps found this run are in `skills/google-maps-scrape/IMPROVEMENTS.md` (2026-09-20 index) — fix with a test and
    an operator go, not in the run folder.
 ## How to resume in a new session (written 2026-09-16)
