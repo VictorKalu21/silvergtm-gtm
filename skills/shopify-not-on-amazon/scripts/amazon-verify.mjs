@@ -8,7 +8,7 @@
 // Low-and-slow by design (1 tab, 3-7s between pages, ~8-12s per brand incl. one product page). Resume-safe.
 //
 //   RUN=<run> DIR=<dir> node amazon-verify.mjs      # reads {RUN}_keeps.json (or signal survivors) -> {RUN}_amazon_verify.json
-//   env: LIMIT (n brands) DEEP (1 = open the first brand-matching product page to read seller; default 1) HEADLESS (1) RETRY (1)
+//   env: IGNORE_CERT=1 (behind a TLS-intercepting proxy only) LIMIT (n brands) DEEP (1 = open the first brand-matching product page to read seller; default 1) HEADLESS (1) RETRY (1)
 //   setup once: npm i playwright && npx playwright install chromium
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { chromium } from 'playwright';
@@ -29,37 +29,51 @@ if (process.env.LIMIT) todo = todo.slice(0, Number(process.env.LIMIT));
 console.error(`${RUN}: ${src.length} brands, ${Object.keys(done).length} done, ${todo.length} to verify`);
 
 const browser = await chromium.launch({ headless: process.env.HEADLESS !== '0', args: ['--disable-blink-features=AutomationControlled'] });
-const ctx = await browser.newContext({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', viewport: { width: 1366, height: 860 }, locale: 'en-US', timezoneId: 'America/New_York' });
+const ctx = await browser.newContext({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', viewport: { width: 1366, height: 860 }, locale: 'en-US', timezoneId: 'America/New_York', ignoreHTTPSErrors: process.env.IGNORE_CERT === '1' });
 await ctx.addInitScript(() => { Object.defineProperty(navigator, 'webdriver', { get: () => undefined }); });
 const page = await ctx.newPage();
 await page.route(/\.(png|jpe?g|gif|webp|svg|woff2?|mp4)(\?|$)/, (r) => r.abort());
 const CAPTCHA = /Enter the characters you see below|api-services-support@amazon\.com|Type the characters/i;
+const SOFT_BLOCK = /Sorry! Something went wrong|<title>\s*Sorry\s*<\/title>|Robot Check/i;   // Amazon's throttle page (HTTP 503) -> back off, retry
+async function go(url) {   // navigate with one retry on transient proxy/network errors; returns 'blocked' on Amazon's throttle
+  for (let a = 0; a < 2; a++) {
+    try {
+      const res = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      const html = await page.content();
+      if ((res && res.status() === 503) || SOFT_BLOCK.test(html.slice(0, 3000)) || CAPTCHA.test(html)) return 'blocked';
+      return 'ok';
+    } catch (e) { if (a) throw e; await sleep(jitter(4000, 8000)); }
+  }
+}
 
 async function verify(r) {
   const brand = brandOf(r); const q = ac[r.domain]?.query || brandVariants(brand)[0]; const t = tok(q);
   const v = { domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10) };
-  await page.goto(`https://www.amazon.com/s?k=${encodeURIComponent(q)}`, { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.waitForSelector('[data-component-type="s-search-result"], #brandsRefinements, form[action*="validateCaptcha"], .s-no-outline', { timeout: 15000 }).catch(() => {});
-  const html = await page.content();
-  if (CAPTCHA.test(html)) return { ...v, amazon_status: 'blocked' };
+  if (await go(`https://www.amazon.com/s?k=${encodeURIComponent(q)}`) === 'blocked') return { ...v, amazon_status: 'blocked' };
+  await page.waitForSelector('[data-component-type="s-search-result"], #brandsRefinements, .s-no-outline', { timeout: 15000 }).catch(() => {});
+  await sleep(1500);
   const d = await page.evaluate(() => {
     const items = [...document.querySelectorAll('[data-component-type="s-search-result"]')].map((el) => ({
       asin: el.dataset.asin, title: el.querySelector('h2')?.innerText?.trim() || '', sponsored: /Sponsored/.test(el.innerText),
       href: el.querySelector('h2 a, a.a-link-normal.s-no-outline')?.getAttribute('href') || '' }));
     const brands = [...document.querySelectorAll('#brandsRefinements li span.a-size-base, #brandsRefinements li span.a-list-item, [id^="p_123"] span.a-size-base')].map((e) => e.innerText.trim()).filter(Boolean);
-    const store = document.querySelector('a[href*="/stores/"]');
-    return { items, brands, storeHref: store?.getAttribute('href') || null, storeText: store?.innerText?.trim() || null, noResults: /No results for/i.test(document.body.innerText) };
+    // sponsored-brand store links are wrapped in an ad redirect and can belong to a COMPETITOR bidding on this brand's name,
+    // so a store link only counts when its visible text / alt text carries the brand; the product-page byline is the real verdict.
+    const stores = [...document.querySelectorAll('a[href*="/stores/"]')].map((a) => ({ href: a.getAttribute('href'), text: (a.innerText + ' ' + [...a.querySelectorAll('img')].map((i) => i.alt || '').join(' ')).trim() }));
+    return { items, brands, stores: stores.slice(0, 5), noResults: /No results for/i.test(document.body.innerText) };
   });
   const brandRefined = d.brands.some((b) => tok(b) === t);
   const match = d.items.filter((it) => !it.sponsored && tok(it.title).includes(t));
-  const storeIsBrand = d.storeHref && (tok(d.storeText).includes(t) || tok(decodeURIComponent(d.storeHref)).includes(t));
-  Object.assign(v, { resultCount: d.items.length, brandMatches: match.length, brandRefinement: brandRefined, storeHref: storeIsBrand ? 'https://www.amazon.com' + d.storeHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : null, evidence: match.slice(0, 3).map((m) => ({ asin: m.asin, title: m.title.slice(0, 90) })) });
-  if (storeIsBrand) return { ...v, amazon_status: 'brand_store' };
+  const store = d.stores.find((s) => tok(s.text).includes(t));
+  const storeHref = store ? (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?]+/) || [store.href.replace(/\?.*$/, '')])[0] : null;
+  Object.assign(v, { resultCount: d.items.length, brandMatches: match.length, brandRefinement: brandRefined, storeHref, evidence: match.slice(0, 3).map((m) => ({ asin: m.asin, title: m.title.slice(0, 90) })) });
+  if (storeHref) return { ...v, amazon_status: 'brand_store' };
+  if (!d.items.length && !d.noResults) return { ...v, amazon_status: 'blocked' };   // no results rendered and no "No results" text = throttled/empty shell
   if (!brandRefined && !match.length) return { ...v, amazon_status: 'none' };
   if (!DEEP || !match.length) return { ...v, amazon_status: 'listings_unverified' };
   await sleep(jitter(2500, 5000));
-  await page.goto(`https://www.amazon.com/dp/${match[0].asin}`, { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.waitForSelector('#bylineInfo, #productTitle, form[action*="validateCaptcha"]', { timeout: 15000 }).catch(() => {});
+  if (await go(`https://www.amazon.com/dp/${match[0].asin}`) === 'blocked') return { ...v, amazon_status: 'blocked' };
+  await page.waitForSelector('#bylineInfo, #productTitle', { timeout: 15000 }).catch(() => {});
   const p = await page.evaluate(() => ({
     byline: document.querySelector('#bylineInfo')?.innerText?.trim() || '', bylineHref: document.querySelector('#bylineInfo')?.getAttribute('href') || '',
     seller: document.querySelector('#sellerProfileTriggerId, #merchantInfo, [offer-display-feature-name="desktop-merchant-info"]')?.innerText?.trim() || '',
@@ -74,11 +88,16 @@ async function verify(r) {
 }
 let n = 0;
 for (const r of todo) {
-  let v; try { v = await verify(r); } catch (e) { v = { domain: r.domain, brand: brandOf(r), amazon_status: 'blocked', error: e.message.slice(0, 80) }; }
+  let v;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try { v = await verify(r); } catch (e) { v = { domain: r.domain, brand: brandOf(r), amazon_status: 'blocked', error: e.message.slice(0, 80) }; }
+    if (v.amazon_status !== 'blocked') break;
+    console.error(`    throttled (attempt ${attempt}) - backing off`); await sleep(jitter(25000, 50000) * attempt);
+  }
   done[r.domain] = v; n++;
   console.error(`  ${n}/${todo.length} ${r.domain} -> ${v.amazon_status}${v.storeHref ? ' ' + v.storeHref : ''}${v.seller ? ' | ' + v.seller.replace(/\s+/g, ' ').slice(0, 40) : ''}`);
   if (n % 10 === 0) writeFileSync(OUT, JSON.stringify(done, null, 2));
-  if (v.amazon_status === 'blocked') await sleep(jitter(30000, 60000)); else await sleep(jitter(3000, 7000));
+  await sleep(jitter(4000, 9000));
 }
 writeFileSync(OUT, JSON.stringify(done, null, 2)); await browser.close();
 const by = {}; for (const v of Object.values(done)) by[v.amazon_status] = (by[v.amazon_status] || 0) + 1;
