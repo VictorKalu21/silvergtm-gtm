@@ -3,7 +3,10 @@
 // free HTTP resolver (skills/name-to-domain/scripts/script-resolve.mjs).
 //
 //   node scripts/resolve-domains.mjs --companies run/companies.csv --out run/domains.json \
-//        [--limit 40] [--conc 6] [--timeout 15000] [--work <stagedir>]
+//        [--limit 40] [--conc 6] [--timeout 15000] [--work <stagedir>] [--rescore]
+//
+// --rescore re-applies the ok/verify rules to the cached raw resolutions
+// (<out>.resolved.json) without re-fetching anything.
 //
 // It does NOT reimplement the resolver. It stages the skill's own script in a work
 // dir, feeds it the input shape that script already reads (dbatch-<N>-in.json +
@@ -42,6 +45,17 @@ const SKILL_SCRIPT = path.join(REPO, 'skills/name-to-domain/scripts/script-resol
 
 const MAX_BATCH_FILES = 20;      // the skill script scans dbatch-1..20-in.json
 const SHORT_SLUG = 4;            // slugs below this are collision-prone -> never auto-ok
+
+// TLDs a real company is most likely to sit on. The skill script tries
+// com,io,ai,co,app,so then get<slug>.com / <slug>hq.com / <slug>.tech — so landing
+// on anything outside this set means the obvious homes all failed, which in practice
+// means a same-name unrelated site (angi.tech = an Italian association, not Angi).
+// Those resolve, but they do not get to be `ok`.
+const STRONG_TLD = /\.(com|io|ai|co)$/i;
+
+// Parking / domain-broker templates the skill's body-level PARK regex does not
+// catch because they only show in the <title>.
+const PARKED_TITLE = /(web hosting|domain (name )?for sale|buy this domain|this domain is|parked|godaddy|hugedomains|sedo\b)/i;
 
 function args(argv) {
   const a = {};
@@ -170,17 +184,29 @@ for (const r of todo) {
 console.error(`resolve-domains: ${todo.length} companies need a domain (conc ${CONC}, timeout ${TIMEOUT}ms)`);
 const staged = stageSkillScript(stageDir, CONC, TIMEOUT);
 
+// The raw skill output is cached next to the JSON so --rescore can retune the
+// ok/verify rules without re-fetching every homepage.
+const rawPath = a.out.replace(/\.json$/, '') + '.resolved.json';
+
 const resolved = {};           // _key -> {domain, resolved, confidence}
 const hintUsed = {};           // _key -> hint string
-const maxPasses = Math.max(...todo.map(r => r._hints.length), 0);
 
-for (let p = 0; p < maxPasses; p++) {
-  const entries = todo.filter(r => !resolved[r._key] && r._hints[p])
-    .map(r => ({ key: r._key, name: r._hints[p], location: r._loc }));
-  if (!entries.length) continue;
-  console.error(`\n-- pass ${p + 1}: ${entries.length} entries, hint = ${p === 0 ? 'token/name (slug first)' : p === 1 ? 'alternate name' : 'de-suffixed name'}`);
-  const got = runPass(stageDir, staged, entries, resolved);
-  for (const k in got) { resolved[k] = got[k]; hintUsed[k] = entries.find(e => e.key === k)?.name || ''; }
+if (a.rescore && existsSync(rawPath)) {
+  const cached = JSON.parse(readFileSync(rawPath, 'utf8'));
+  for (const k in cached) { resolved[k] = cached[k].hit; hintUsed[k] = cached[k].hint; }
+  console.error(`rescore: reusing ${Object.keys(resolved).length} cached resolutions from ${rawPath}`);
+} else {
+  const maxPasses = Math.max(...todo.map(r => r._hints.length), 0);
+  for (let p = 0; p < maxPasses; p++) {
+    const entries = todo.filter(r => !resolved[r._key] && r._hints[p])
+      .map(r => ({ key: r._key, name: r._hints[p], location: r._loc }));
+    if (!entries.length) continue;
+    console.error(`\n-- pass ${p + 1}: ${entries.length} entries, hint = ${p === 0 ? 'token/name (slug first)' : p === 1 ? 'alternate name' : 'de-suffixed name'}`);
+    const got = runPass(stageDir, staged, entries, resolved);
+    for (const k in got) { resolved[k] = got[k]; hintUsed[k] = entries.find(e => e.key === k)?.name || ''; }
+  }
+  writeFileSync(rawPath, JSON.stringify(
+    Object.fromEntries(Object.keys(resolved).map(k => [k, { hit: resolved[k], hint: hintUsed[k] || '' }])), null, 2));
 }
 
 // evidence + confidence
@@ -194,13 +220,25 @@ await pool(todo.filter(r => resolved[r._key]), CONC, async r => {
   const locTok = (r._loc.match(/[A-Za-z]{4,}/g) || []).map(s => s.toLowerCase());
   const locHit = page ? locTok.filter(t => page.body.toLowerCase().includes(t)).slice(0, 3) : [];
 
-  const ok = direct && bslug.length >= SHORT_SLUG;
+  // `ok` = the domain is the brand's own apex on a mainstream TLD, the page is not
+  // a parking template, and where we could read a <title> the brand is in it.
+  // Everything else still ships — flagged verify, which is what Tier 1 / a human
+  // picks up. A wrong domain costs more than a held one.
+  const reasons = [];
+  if (!direct) reasons.push('apex label != brand slug');
+  if (bslug.length < SHORT_SLUG) reasons.push(`brand slug too short (${bslug.length})`);
+  if (!STRONG_TLD.test(hit.domain)) reasons.push('fallback TLD — obvious homes all failed');
+  if (PARKED_TITLE.test(title)) reasons.push('parked/broker title');
+  if (title && !slugOf(title).includes(bslug)) reasons.push('brand not in <title>');
+
+  const ok = reasons.length === 0;
   evidence[r._key] = {
     company_name: r.company_name, ats: r.ats, token: r.token,
     hint_used: hintUsed[r._key], brand: hit.resolved, domain: hit.domain,
     apex_matches_brand: direct, brand_slug_len: bslug.length,
     title, location: r._loc, location_terms_on_page: locHit,
     conf: ok ? 'high' : 'medium', flag: ok ? 'ok' : 'verify',
+    why: ok ? ['apex=brand', STRONG_TLD.test(hit.domain) ? 'mainstream TLD' : '', title ? 'brand in <title>' : 'brand in page body (title unreadable)', locHit.length ? `location match: ${locHit.join(',')}` : ''].filter(Boolean) : reasons,
   };
 });
 

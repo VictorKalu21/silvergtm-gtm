@@ -11,8 +11,15 @@
 //
 // Node 22, zero deps. Safe to run against a postings.csv that a pull is still appending to:
 // short / truncated trailing rows are reported, not silently dropped.
+//
+// End to end, two commands (run the first one twice — it is idempotent and tolerates
+// a domains.json that does not exist yet):
+//   node scripts/build-companies.mjs --postings $WORK/run/postings.csv \
+//        --out $WORK/run/companies.csv --domains $WORK/run/domains.json --tier 1
+//   node scripts/resolve-domains.mjs --companies $WORK/run/companies.csv \
+//        --out $WORK/run/domains.json
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
@@ -194,7 +201,12 @@ const companies = [...groups.values()].map(acc => {
 // 2. Domains — split-noise.js shape: { "<company name or token>": [domain, conf, flag] }
 // ---------------------------------------------------------------------------
 
-if (a.domains) {
+// Tolerate a --domains file that does not exist yet: that is the first half of the
+// two-command loop (build -> resolve -> build), so the same command line works
+// before and after the resolver has run.
+if (a.domains && !existsSync(a.domains)) {
+  console.log(`domains: ${a.domains} not present yet — leaving domain blank (run scripts/resolve-domains.mjs, then re-run this)`);
+} else if (a.domains) {
   const D = JSON.parse(readFileSync(a.domains, 'utf8'));
   const dmap = {};
   for (const k in D) dmap[norm(k)] = D[k];
