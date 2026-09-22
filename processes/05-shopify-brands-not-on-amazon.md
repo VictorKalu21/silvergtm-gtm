@@ -67,6 +67,11 @@ node merge.mjs final                 # {RUN}_LEADS.csv + _full + _excluded_amazo
 
 ## Gotchas
 
+- **Amazon's bot wall keys on the exact header set, not the IP.** A desktop UA gets HTTP 503 from the first request; a mobile Safari/Chrome UA gets full search + product pages from a plain fetch — until that exact (UA, Accept, Accept-Language) triple has done a few hundred requests, then it's throttled while a different triple still passes. `amazon-verify.mjs` rotates 7 mobile UAs × 4 Accept × 4 Accept-Language per attempt and never hit the wall over ~600 requests. A headless-browser render from a datacenter IP got throttled after 2 brands; keep `amazon-verify-render.mjs` only as a residential-IP fallback.
+- **Shopify's own bot challenge (429 "Verifying your connection")** kicked in on 83% of stores at CONC=25 from a datacenter IP and stayed sticky. Residential IP + CONC ≤ 8, or a render pass, for the gates.
+- **Public DNS resolvers cap a single IP at ~60 UDP answers/s** regardless of concurrency; the seed mixes 5 UDP resolvers with Google + Cloudflare DNS-over-HTTPS and retries on a different transport (~110/s, <8% loss).
+- **Brand-name matching needs generic-word stripping + word boundaries** (see the worked example) — the naive "full store name in title" check false-negatives household brands and false-positives on substrings.
+- **The Haiku classify is the step that removes retailers**, and Shopify is full of them (furniture-store template networks, multi-brand boutiques, parts resellers). It's cheap; never skip it, whatever the lead count.
 - `Shopify.country` on the homepage is the **visitor's** market, not the store's — use `/meta.json`.
 - Headless storefronts (Gymshark, Bombas) fail `/meta.json`; Cloudflare/Vercel walls block the plain fetch → `blocked`, recover with a render pass or accept the loss (Bombas, Ridge, Caraway on the first run).
 - Never hard-drop on "Printful present": G Fuel's merch line is 5% of its catalog. Score by **catalog share**.
@@ -75,6 +80,19 @@ node merge.mjs final                 # {RUN}_LEADS.csv + _full + _excluded_amazo
 - Sponsored store links ≠ the brand's store. Byline or nothing.
 - No free per-site visit count exists; the deliverable says **rank band** honestly (top-100k ≈ 50k+/mo likely) and carries product count / median price / stack as sales proxies.
 
-## Worked example — first run (2026-09-22, sandbox, Tranco top-120k seed)
+## Worked example — first run (2026-09-22, cloud sandbox, Tranco top-300k × DNS seed, 20-lead test)
 
-_Filled in below from the live run._
+| Stage | Count | Notes |
+|-------|-------|-------|
+| Tranco top-300k after TLD filter | 169,361 | ~110 lookups/s with the mixed UDP/DoH pool, 10 min |
+| Resolve to Shopify (23.227.38/24) | **3,586** (2.1%) | DNS-only; misses Cloudflare/Vercel-fronted stores |
+| Free gates: `pass_free_gates` | **357** | 6 min at CONC=25 |
+| … `blocked` (Shopify 429 "Verifying your connection") | 2,966 | datacenter IP + 25 concurrent = Shopify's bot challenge; sticky for the IP. **Run the gates from a residential IP, CONC ≤ 8** |
+| … `drop_not_us` / dropship-POD / not physical / inactive / other | 236 / 9 / 5 / 2 / 11 | |
+| Haiku classify KEEP (genuine own-brand DTC) | **150** / 357 | the drop pile was ~100 local furniture stores on one Nectar/DreamCloud Shopify template + resellers — **classify is not optional, even for 20 leads** |
+| Amazon autocomplete demand | high 134 · low 13 · none 3 | |
+| Amazon verify (mobile fetch, 2 fetches/brand, ~10 min for 150) | brand_store 60 · listings_official 24 · listings_3p 25 · none 28 · unverified 13 | |
+| **No official presence (none + resellers-only)** | **53** | |
+| Hand-picked, contact-enriched deliverable | **20** | 13 "none", 7 "resellers only"; 19/20 with email, 13/20 phone, 3/20 LinkedIn from the site; Decision Maker left for Apollo |
+
+Spot-checks that changed the verdict during hand review (all now encoded in the scripts): Wyze/Stanley/MAC/Allbirds came back `none` on the first pass because the query carried the full store name ("Wyze Labs", "Stanley 1913", "MAC Cosmetics") and titles don't — fixed by dropping generic words before matching. Lectric eBikes came back `brand_store` because "electric" contains "lectric" — fixed with word-boundary matching. Casper and Pura Vida were `unverified`/`none` on a movie-title collision and a throttled page; a product-line grep ("Casper Sleep", "Pura Vida Bracelets") showed both are on Amazon → excluded. Gymshark, White Fox, Alpinestars, Crafter's Companion passed the `meta.json` US gate on a US entity but are UK/AU/IT-parented → excluded by hand; add a "parent company country" check if the client cares.

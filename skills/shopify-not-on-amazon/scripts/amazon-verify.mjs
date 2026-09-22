@@ -1,104 +1,123 @@
-// STEP 7b · Amazon presence VERIFY by rendering Amazon search in headless Chromium (Playwright).
-// Amazon serves a 503 bot wall to plain fetches, so this is the free way to read the real answer:
-//   brand_store        = "Visit the <Brand> Store" / a /stores/ link -> Brand-Registered, official presence
-//   listings_official  = brand-matching product sold by the brand itself or "Ships from and sold by Amazon.com" (1P)
+// STEP 7b · Amazon presence VERIFY with plain fetches. Amazon serves a 503 bot wall to a desktop UA but
+// returns full search + product pages to a MOBILE Safari UA (found on the first run), so no browser is
+// needed. Two fetches per brand: mobile search -> first brand-matching ASIN -> mobile product page.
+//   brand_store        = product byline "Visit the <Brand> Store" / a /stores/ link with the brand's name -> Brand-Registered, official
+//   listings_official  = brand-matching product sold by the brand itself or by Amazon (1P)
 //   listings_3p        = brand-matching products exist but sold by third parties only -> UNAUTHORIZED RESELLERS, no official presence (the pitch)
-//   none               = no brand refinement, no brand-matching result titles -> not on Amazon
-//   blocked            = captcha; retried on the next run (RETRY=1)
-// Low-and-slow by design (1 tab, 3-7s between pages, ~8-12s per brand incl. one product page). Resume-safe.
+//   none               = no brand-matching result on the first page -> not on Amazon
+//   blocked            = throttle/captcha page after retries; RETRY=1 next run
+// Resume-safe; low concurrency + jitter by design.
 //
 //   RUN=<run> DIR=<dir> node amazon-verify.mjs      # reads {RUN}_keeps.json (or signal survivors) -> {RUN}_amazon_verify.json
-//   env: IGNORE_CERT=1 (behind a TLS-intercepting proxy only) LIMIT (n brands) DEEP (1 = open the first brand-matching product page to read seller; default 1) HEADLESS (1) RETRY (1)
-//   setup once: npm i playwright && npx playwright install chromium
+//   env: LIMIT  CONC (2)  RETRY (1)  DEEP (1 = open the product page; 0 = search only)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { chromium } from 'playwright';
 import { brandOf, brandVariants, tok } from './amazon-autocomplete.mjs';
-const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', DEEP = process.env.DEEP !== '0';
+const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', CONC = Number(process.env.CONC || 2), DEEP = process.env.DEEP !== '0';
 const OUT = `${DIR}/${RUN}_amazon_verify.json`;
 const rd = (f) => JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8').replace(/^﻿/, ''));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const jitter = (a, b) => a + Math.random() * (b - a);
+// Amazon throttles an exact (UA, Accept, Accept-Language) combination after a few hundred requests, not the IP:
+// rotate realistic MOBILE header sets per attempt and the throttle never engages.
+const UAS = ['Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/126.0.6478.108 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36',
+  'Mozilla/5.0 (Linux; Android 13; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
+  'Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1'];
+const ACCEPTS = ['text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', '*/*', 'text/html,application/xhtml+xml,*/*;q=0.8', 'text/html'];
+const LANGS = ['en-US,en;q=0.9', 'en-US', 'en-US,en;q=0.8', 'en'];
+const pick = (a) => a[Math.floor(Math.random() * a.length)];
+const BLOCK = /Sorry! Something went wrong|Enter the characters you see below|Type the characters|api-services-support@amazon\.com|Robot Check/i;
+const strip = (s) => s.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
+
+async function get(url) {
+  for (let a = 0; a < 5; a++) {
+    try {
+      const r = await fetch(url, { headers: { 'User-Agent': pick(UAS), 'Accept-Language': pick(LANGS), 'Accept': pick(ACCEPTS) }, signal: AbortSignal.timeout(25000), redirect: 'follow' });
+      const html = await r.text();
+      if (r.status === 503 || r.status === 429 || BLOCK.test(html.slice(0, 5000)) || html.length < 5000) { await sleep(jitter(2000, 6000) * (a + 1)); continue; }   // short page = JS shell, rotate too
+      return { status: r.status, html };
+    } catch (e) { await sleep(jitter(3000, 6000)); }
+  }
+  return { status: 0, html: '', blocked: true };
+}
 
 let src = existsSync(`${DIR}/${RUN}_keeps.json`) ? rd(`${RUN}_keeps.json`) : rd(`${RUN}_signal.json`).filter((r) => r.status === 'pass_free_gates');
 const ac = existsSync(`${DIR}/${RUN}_amazon_ac.json`) ? rd(`${RUN}_amazon_ac.json`) : {};
-const order = { none: 0, low: 1, high: 2 };   // verify the strongest not-on-Amazon candidates first
+const order = { none: 0, low: 1, high: 2 };
 src.sort((a, b) => (order[ac[a.domain]?.demand] ?? 3) - (order[ac[b.domain]?.demand] ?? 3) || (a.rank || 9e9) - (b.rank || 9e9));
 const done = existsSync(OUT) ? rd(`${RUN}_amazon_verify.json`) : {};
 let todo = src.filter((r) => !done[r.domain] || (process.env.RETRY === '1' && done[r.domain].amazon_status === 'blocked'));
 if (process.env.LIMIT) todo = todo.slice(0, Number(process.env.LIMIT));
-console.error(`${RUN}: ${src.length} brands, ${Object.keys(done).length} done, ${todo.length} to verify`);
+console.error(`${RUN}: ${src.length} brands, ${Object.keys(done).length} done, ${todo.length} to verify (mobile fetch, CONC=${CONC})`);
 
-const browser = await chromium.launch({ headless: process.env.HEADLESS !== '0', args: ['--disable-blink-features=AutomationControlled'] });
-const ctx = await browser.newContext({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', viewport: { width: 1366, height: 860 }, locale: 'en-US', timezoneId: 'America/New_York', ignoreHTTPSErrors: process.env.IGNORE_CERT === '1' });
-await ctx.addInitScript(() => { Object.defineProperty(navigator, 'webdriver', { get: () => undefined }); });
-const page = await ctx.newPage();
-await page.route(/\.(png|jpe?g|gif|webp|svg|woff2?|mp4)(\?|$)/, (r) => r.abort());
-const CAPTCHA = /Enter the characters you see below|api-services-support@amazon\.com|Type the characters/i;
-const SOFT_BLOCK = /Sorry! Something went wrong|<title>\s*Sorry\s*<\/title>|Robot Check/i;   // Amazon's throttle page (HTTP 503) -> back off, retry
-async function go(url) {   // navigate with one retry on transient proxy/network errors; returns 'blocked' on Amazon's throttle
-  for (let a = 0; a < 2; a++) {
-    try {
-      const res = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
-      const html = await page.content();
-      if ((res && res.status() === 503) || SOFT_BLOCK.test(html.slice(0, 3000)) || CAPTCHA.test(html)) return 'blocked';
-      return 'ok';
-    } catch (e) { if (a) throw e; await sleep(jitter(4000, 8000)); }
-  }
+// Brand matching. "Wyze Labs" must match "WYZE Cam v4", "Stanley 1913" must match "STANLEY Quencher", but "American Autowire"
+// must not match every "American ..." title: drop generic words, then require every distinctive word (or the whole token).
+const GENERIC = new Set(['inc','llc','co','company','corp','ltd','labs','lab','brand','brands','collective','cosmetics','beauty','apparel','clothing','shop','store','official','usa','us','home','products','product','technology','technologies','tech','electronics','equipment','supply','supplies','goods','group','international','global','online','the','and','of','by','for','american','america','natural','pure','black','white','smart','pro','best','premium','classic','modern','little','big','great','simple','urban','fresh','green','blue','red','gold','silver','north','south','east','west','new','old','happy','daily','real','true','one','my','house','life','love','world','designs','design','studio','outlet','boutique','jewelry','skincare','wear','workwear','nutrition','health','organic','coffee','foods','food','kitchen','garden','outdoor','outdoors','gear','sports','sport','fitness','yoga','baby','kids','pet','pets','1913']);
+const matcher = (q) => {
+  const t = tok(q); const words = q.toLowerCase().split(/[\s&'’.-]+/).map(tok).filter(Boolean);
+  const key = words.filter((w) => !GENERIC.has(w) && w.length >= 3); const need = key.length ? key : words;
+  const lc = (text) => ' ' + (text || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ') + ' ';   // word-boundary aware: "electric" must NOT match "lectric"
+  const has = (x, w) => x.includes(' ' + w + ' ') || x.includes(' ' + w);                        // whole word, or word-prefix ("lectric" in "lectricxp")
+  return (text) => { const x = lc(text); return tok(text).includes(t) && has(lc(text), need[0]) || need.every((w) => has(x, w)); };
+};
+const sellerIsBrand = (seller, q) => { const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first)); };
+const bylineIsBrand = (byline, q) => { const b = tok(byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, '')); const t = tok(q); return b.length >= 3 && (t.includes(b) || b.includes(t) || matcher(q)(b)); };
+function parseSearch(html, t) {
+  // mobile results: several data-asin divs per product; group the text by ASIN in page order
+  const byAsin = new Map(); const parts = html.split(/(?=<div[^>]*data-asin="B0[A-Z0-9]{8}")/);
+  for (const p of parts) { const m = p.match(/^<div[^>]*data-asin="(B0[A-Z0-9]{8})"/); if (!m) continue; byAsin.set(m[1], (byAsin.get(m[1]) || '') + ' ' + strip(p.slice(0, 20000))); }
+  const items = [...byAsin].map(([asin, text]) => ({ asin, text: text.slice(0, 300), sponsored: /\bSponsored\b/.test(text), match: t(text) }));
+  const stores = [...html.matchAll(/<a[^>]+href="([^"]*\/stores\/[^"]*)"[^>]*>([\s\S]{0,600}?)<\/a>/g)].map((m) => ({ href: m[1], text: strip(m[2] + ' ' + ((m[2].match(/alt="([^"]*)"/) || [])[1] || '')) }));
+  return { items, stores, noResults: /No results for|did not match any products/i.test(html) };
 }
-
+function parseProduct(html) {
+  const bylineDiv = (html.match(/bylineInfo_feature_div[\s\S]{0,6000}/) || [''])[0];
+  const byline = strip((bylineDiv.match(/(Visit the [^<"]{1,80}Store)/) || html.match(/(Visit the [^<"]{1,80}Store)/) || [])[1] || (bylineDiv.match(/Brand:\s*([^<]{1,60})/) || [])[1] && ('Brand: ' + (bylineDiv.match(/Brand:\s*([^<]{1,60})/) || [])[1]) || (html.match(/po-brand[\s\S]{0,600}?<span class="a-size-base po-break-word">([^<]{1,60})/) || [])[1] && ('Brand: ' + (html.match(/po-brand[\s\S]{0,600}?<span class="a-size-base po-break-word">([^<]{1,60})/) || [])[1]) || '');
+  const bylineHref = (html.match(/id="(?:visitStoreMobileUrl|bylineInfo)"[^>]*href="([^"]*\/stores\/[^"]*)"/) || html.match(/href="([^"]*\/stores\/[^"]*)"[^>]*>\s*(?:<[^>]*>\s*)*Visit the /) || [])[1] || null;
+  const seller = strip((html.match(/odf-mobile-merchant-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || [])[1] || (html.match(/id="sellerProfileTriggerId"[^>]*>([^<]{1,80})/) || [])[1] || '');
+  const shipsFrom = strip((html.match(/odf-mobile-fulfiller-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || [])[1] || '');
+  const title = strip((html.match(/id="(?:productTitle|title)"[^>]*>([^<]{1,300})/) || [])[1] || (html.match(/<title>\s*Amazon\.com\s*:\s*([^<]{1,200})/) || [])[1] || '');
+  return { byline, bylineHref, seller, shipsFrom, title };
+}
 async function verify(r) {
-  const brand = brandOf(r); const q = ac[r.domain]?.query || brandVariants(brand)[0]; const t = tok(q);
+  const brand = brandOf(r); const q = ac[r.domain]?.query || brandVariants(brand)[0]; const t = matcher(q);
   const v = { domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10) };
-  if (await go(`https://www.amazon.com/s?k=${encodeURIComponent(q)}`) === 'blocked') return { ...v, amazon_status: 'blocked' };
-  await page.waitForSelector('[data-component-type="s-search-result"], #brandsRefinements, .s-no-outline', { timeout: 15000 }).catch(() => {});
-  await sleep(1500);
-  const d = await page.evaluate(() => {
-    const items = [...document.querySelectorAll('[data-component-type="s-search-result"]')].map((el) => ({
-      asin: el.dataset.asin, title: el.querySelector('h2')?.innerText?.trim() || '', sponsored: /Sponsored/.test(el.innerText),
-      href: el.querySelector('h2 a, a.a-link-normal.s-no-outline')?.getAttribute('href') || '' }));
-    const brands = [...document.querySelectorAll('#brandsRefinements li span.a-size-base, #brandsRefinements li span.a-list-item, [id^="p_123"] span.a-size-base')].map((e) => e.innerText.trim()).filter(Boolean);
-    // sponsored-brand store links are wrapped in an ad redirect and can belong to a COMPETITOR bidding on this brand's name,
-    // so a store link only counts when its visible text / alt text carries the brand; the product-page byline is the real verdict.
-    const stores = [...document.querySelectorAll('a[href*="/stores/"]')].map((a) => ({ href: a.getAttribute('href'), text: (a.innerText + ' ' + [...a.querySelectorAll('img')].map((i) => i.alt || '').join(' ')).trim() }));
-    return { items, brands, stores: stores.slice(0, 5), noResults: /No results for/i.test(document.body.innerText) };
-  });
-  const brandRefined = d.brands.some((b) => tok(b) === t);
-  const match = d.items.filter((it) => !it.sponsored && tok(it.title).includes(t));
-  const store = d.stores.find((s) => tok(s.text).includes(t));
-  const storeHref = store ? (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?]+/) || [store.href.replace(/\?.*$/, '')])[0] : null;
-  Object.assign(v, { resultCount: d.items.length, brandMatches: match.length, brandRefinement: brandRefined, storeHref, evidence: match.slice(0, 3).map((m) => ({ asin: m.asin, title: m.title.slice(0, 90) })) });
-  if (storeHref) return { ...v, amazon_status: 'brand_store' };
-  if (!d.items.length && !d.noResults) return { ...v, amazon_status: 'blocked' };   // no results rendered and no "No results" text = throttled/empty shell
-  if (!brandRefined && !match.length) return { ...v, amazon_status: 'none' };
-  if (!DEEP || !match.length) return { ...v, amazon_status: 'listings_unverified' };
-  await sleep(jitter(2500, 5000));
-  if (await go(`https://www.amazon.com/dp/${match[0].asin}`) === 'blocked') return { ...v, amazon_status: 'blocked' };
-  await page.waitForSelector('#bylineInfo, #productTitle', { timeout: 15000 }).catch(() => {});
-  const p = await page.evaluate(() => ({
-    byline: document.querySelector('#bylineInfo')?.innerText?.trim() || '', bylineHref: document.querySelector('#bylineInfo')?.getAttribute('href') || '',
-    seller: document.querySelector('#sellerProfileTriggerId, #merchantInfo, [offer-display-feature-name="desktop-merchant-info"]')?.innerText?.trim() || '',
-    shipsFrom: document.querySelector('[offer-display-feature-name="desktop-fulfiller-info"]')?.innerText?.trim() || '',
-    captcha: /Enter the characters you see below/i.test(document.body.innerText) }));
-  if (p.captcha) return { ...v, amazon_status: 'blocked' };
-  Object.assign(v, { byline: p.byline, seller: p.seller, shipsFrom: p.shipsFrom, sampleAsin: match[0].asin });
-  if (/^Visit the .* Store/i.test(p.byline) && tok(p.byline).includes(t)) return { ...v, amazon_status: 'brand_store', storeHref: p.bylineHref ? 'https://www.amazon.com' + p.bylineHref.replace(/\?.*$/, '') : null };
-  const s = p.seller + ' ' + p.shipsFrom;
-  if (tok(s).includes(t) || /sold by amazon\.com|amazon\.com\s*$/i.test(p.seller) || /Amazon\.com/i.test(p.seller)) return { ...v, amazon_status: 'listings_official' };
-  return { ...v, amazon_status: 'listings_3p' };
+  const s = await get(`https://www.amazon.com/s?k=${encodeURIComponent(q)}`);
+  if (s.blocked || !s.html) return { ...v, amazon_status: 'blocked' };
+  const d = parseSearch(s.html, t);
+  const match = d.items.filter((it) => it.match && !it.sponsored); const anyMatch = d.items.filter((it) => it.match);
+  const store = d.stores.find((x) => t(x.text));
+  Object.assign(v, { resultCount: d.items.length, brandMatches: match.length, sponsoredMatches: anyMatch.length - match.length, storeHref: store ? (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?"]+/) || [store.href.replace(/\?.*$/, '')])[0] : null, evidence: anyMatch.slice(0, 3).map((m) => ({ asin: m.asin, text: m.text.slice(0, 90) })) });
+  if (store) return { ...v, amazon_status: 'brand_store' };
+  if (!d.items.length && !d.noResults) return { ...v, amazon_status: 'blocked' };
+  if (!anyMatch.length) return { ...v, amazon_status: 'none' };
+  const first = (match[0] || anyMatch[0]);
+  if (!DEEP) return { ...v, amazon_status: 'listings_unverified' };
+  await sleep(jitter(1000, 2500));
+  const p = await get(`https://www.amazon.com/dp/${first.asin}`);
+  if (p.blocked || !p.html) return { ...v, amazon_status: 'listings_unverified' };
+  const pp = parseProduct(p.html); Object.assign(v, { sampleAsin: first.asin, byline: pp.byline, seller: pp.seller, shipsFrom: pp.shipsFrom, productTitle: pp.title.slice(0, 100) });
+  const titleHasBrand = t(pp.title) || (pp.byline && bylineIsBrand(pp.byline, q)) || sellerIsBrand(pp.seller, q);
+  if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q)) return { ...v, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : v.storeHref };
+  if (!titleHasBrand) return { ...v, amazon_status: 'none', note: 'search hit did not carry the brand on the product page' };
+  if (sellerIsBrand(pp.seller, q) || /^amazon(\.com)?$/i.test(pp.seller.trim())) return { ...v, amazon_status: 'listings_official' };
+  return { ...v, amazon_status: pp.seller ? 'listings_3p' : 'listings_unverified' };
 }
-let n = 0;
-for (const r of todo) {
-  let v;
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    try { v = await verify(r); } catch (e) { v = { domain: r.domain, brand: brandOf(r), amazon_status: 'blocked', error: e.message.slice(0, 80) }; }
-    if (v.amazon_status !== 'blocked') break;
-    console.error(`    throttled (attempt ${attempt}) - backing off`); await sleep(jitter(25000, 50000) * attempt);
+let i = 0, n = 0;
+async function worker() {
+  while (i < todo.length) {
+    const r = todo[i++]; let v;
+    try { v = await verify(r); } catch (e) { v = { domain: r.domain, brand: brandOf(r), amazon_status: 'blocked', error: String(e.message).slice(0, 80) }; }
+    done[r.domain] = v; n++;
+    console.error(`  ${n}/${todo.length} ${r.domain} -> ${v.amazon_status}${v.storeHref ? ' ' + v.storeHref : ''}${v.seller ? ' | sold by ' + v.seller.slice(0, 40) : ''}`);
+    if (n % 10 === 0) writeFileSync(OUT, JSON.stringify(done, null, 1));
+    await sleep(jitter(1500, 3500));
   }
-  done[r.domain] = v; n++;
-  console.error(`  ${n}/${todo.length} ${r.domain} -> ${v.amazon_status}${v.storeHref ? ' ' + v.storeHref : ''}${v.seller ? ' | ' + v.seller.replace(/\s+/g, ' ').slice(0, 40) : ''}`);
-  if (n % 10 === 0) writeFileSync(OUT, JSON.stringify(done, null, 2));
-  await sleep(jitter(4000, 9000));
 }
-writeFileSync(OUT, JSON.stringify(done, null, 2)); await browser.close();
+await Promise.all(Array.from({ length: CONC }, worker));
+writeFileSync(OUT, JSON.stringify(done, null, 1));
 const by = {}; for (const v of Object.values(done)) by[v.amazon_status] = (by[v.amazon_status] || 0) + 1;
 console.error(`===== ${RUN}: AMAZON VERIFY DONE =====`, JSON.stringify(by));
