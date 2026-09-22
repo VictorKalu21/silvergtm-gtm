@@ -54,8 +54,13 @@ const SHORT_SLUG = 4;            // slugs below this are collision-prone -> neve
 const STRONG_TLD = /\.(com|io|ai|co)$/i;
 
 // Parking / domain-broker templates the skill's body-level PARK regex does not
-// catch because they only show in the <title>.
-const PARKED_TITLE = /(web hosting|domain (name )?for sale|buy this domain|this domain is|parked|godaddy|hugedomains|sedo\b)/i;
+// catch because they only show in the <title>. Deliberately NOT a bare "web hosting"
+// match — that would libel real hosting companies (DreamHost). The broker template
+// is "<the domain itself> - <generic category list>".
+const PARKED_TITLE = /(domain (name )?for sale|buy this domain|this domain is|parked domain|hugedomains|sedoparking|\bdan\.com\b)/i;
+const BROKER_TITLE = /^[a-z0-9-]+\.(com|net|org|io|co)\s*[-–—|]\s*(software|investment|web hosting|insurance|travel|finance|loans|casino)/i;
+
+const PROBE_V = 2;  // bump when the probe gains a field, so cached probes re-run
 
 function args(argv) {
   const a = {};
@@ -184,17 +189,20 @@ for (const r of todo) {
 console.error(`resolve-domains: ${todo.length} companies need a domain (conc ${CONC}, timeout ${TIMEOUT}ms)`);
 const staged = stageSkillScript(stageDir, CONC, TIMEOUT);
 
-// The raw skill output is cached next to the JSON so --rescore can retune the
-// ok/verify rules without re-fetching every homepage.
-const rawPath = a.out.replace(/\.json$/, '') + '.resolved.json';
+// The cache holds everything the scoring rules read — the raw skill resolution,
+// the hint that produced it, the company identity and the homepage probe — so
+// --rescore can retune ok/verify without a single network call. It is rewritten
+// on every full run and merged (never truncated) so re-running with a different
+// --limit grows it instead of losing rows.
+const cachePath = a.out.replace(/\.json$/, '') + '.resolved.json';
+const cache = existsSync(cachePath) ? JSON.parse(readFileSync(cachePath, 'utf8')) : {};
 
 const resolved = {};           // _key -> {domain, resolved, confidence}
 const hintUsed = {};           // _key -> hint string
 
-if (a.rescore && existsSync(rawPath)) {
-  const cached = JSON.parse(readFileSync(rawPath, 'utf8'));
-  for (const k in cached) { resolved[k] = cached[k].hit; hintUsed[k] = cached[k].hint; }
-  console.error(`rescore: reusing ${Object.keys(resolved).length} cached resolutions from ${rawPath}`);
+if (a.rescore) {
+  for (const k in cache) { resolved[k] = cache[k].hit; hintUsed[k] = cache[k].hint || ''; }
+  console.error(`rescore: reusing ${Object.keys(resolved).length} cached resolutions from ${cachePath} — re-probing any whose homepage evidence predates the current probe version`);
 } else {
   const maxPasses = Math.max(...todo.map(r => r._hints.length), 0);
   for (let p = 0; p < maxPasses; p++) {
@@ -205,58 +213,110 @@ if (a.rescore && existsSync(rawPath)) {
     const got = runPass(stageDir, staged, entries, resolved);
     for (const k in got) { resolved[k] = got[k]; hintUsed[k] = entries.find(e => e.key === k)?.name || ''; }
   }
-  writeFileSync(rawPath, JSON.stringify(
-    Object.fromEntries(Object.keys(resolved).map(k => [k, { hit: resolved[k], hint: hintUsed[k] || '' }])), null, 2));
 }
 
-// evidence + confidence
-const evidence = {};
-await pool(todo.filter(r => resolved[r._key]), CONC, async r => {
-  const hit = resolved[r._key];
+// Identity for every key we will score: this run's rows first, the cache for keys
+// a narrower --limit left out (so a rescore never loses rows it cannot see).
+const ident = {};
+for (const k in cache) if (cache[k].ident) ident[k] = cache[k].ident;
+for (const r of todo) ident[r._key] = { company_name: r.company_name, ats: r.ats, token: r.token, location: r._loc };
+
+// Homepage probe: one GET per resolved domain for the <title> and location
+// corroboration. Reused from cache on --rescore; that is the whole point of it.
+const titleOf = page => page
+  ? ((page.body.match(/<title[^>]*>([^<]{0,160})<\/title>/i) || [])[1] || '').replace(/\s+/g, ' ').trim()
+  : '';
+
+const probe = {};
+for (const k of Object.keys(resolved)) {
+  if (a.rescore && cache[k]?.probe?.v === PROBE_V) probe[k] = cache[k].probe;
+}
+const needProbe = Object.keys(resolved).filter(k => !probe[k]);
+
+await pool(needProbe, CONC, async k => {
+  const hit = resolved[k];
+  const loc = ident[k]?.location || '';
   const page = await getPage(hit.domain, TIMEOUT).catch(() => null);
-  const title = page ? ((page.body.match(/<title[^>]*>([^<]{0,160})<\/title>/i) || [])[1] || '').replace(/\s+/g, ' ').trim() : '';
+  const title = titleOf(page);
+  const locTok = (loc.match(/[A-Za-z]{4,}/g) || []).map(s => s.toLowerCase());
+
+  // If the resolver landed anywhere other than <brand>.com, check whether
+  // <brand>.com is alive AND talking about the same brand. If it is, the .com is
+  // almost certainly the real company and we took a same-name sibling
+  // (trustpilot.ai vs the live trustpilot.com) — ambiguous, so: verify.
+  let comRival = '';
+  const bslug = slugOf(hit.resolved);
+  if (bslug.length >= 3 && !/\.com$/i.test(hit.domain)) {
+    const rival = await getPage(`${bslug}.com`, TIMEOUT).catch(() => null);
+    const rt = titleOf(rival);
+    if (rival && slugOf(rt).includes(bslug)) comRival = `${bslug}.com — ${rt}`.slice(0, 120);
+  }
+
+  probe[k] = {
+    v: PROBE_V, title, reachable: !!page, comRival,
+    locHit: page ? locTok.filter(t => page.body.toLowerCase().includes(t)).slice(0, 3) : [],
+  };
+});
+
+// ---------------------------------------------------------------------------
+// Scoring. `ok` = the domain is the brand's own apex on a mainstream TLD, the page
+// is not a parking template, and where we could read a <title> the brand is in it.
+// Everything else still ships — flagged verify, which is what the skill's Tier 1
+// Haiku pass or a human picks up. A wrong domain costs more than a held one.
+// ---------------------------------------------------------------------------
+const evidence = {};
+for (const k of Object.keys(resolved)) {
+  const hit = resolved[k], pr = probe[k] || { title: '', locHit: [] }, id = ident[k] || {};
   const bslug = slugOf(hit.resolved);
   const direct = apexLabel(hit.domain) === bslug;
-  const locTok = (r._loc.match(/[A-Za-z]{4,}/g) || []).map(s => s.toLowerCase());
-  const locHit = page ? locTok.filter(t => page.body.toLowerCase().includes(t)).slice(0, 3) : [];
+  const title = pr.title || '';
 
-  // `ok` = the domain is the brand's own apex on a mainstream TLD, the page is not
-  // a parking template, and where we could read a <title> the brand is in it.
-  // Everything else still ships — flagged verify, which is what Tier 1 / a human
-  // picks up. A wrong domain costs more than a held one.
   const reasons = [];
   if (!direct) reasons.push('apex label != brand slug');
   if (bslug.length < SHORT_SLUG) reasons.push(`brand slug too short (${bslug.length})`);
   if (!STRONG_TLD.test(hit.domain)) reasons.push('fallback TLD — obvious homes all failed');
-  if (PARKED_TITLE.test(title)) reasons.push('parked/broker title');
+  if (PARKED_TITLE.test(title) || BROKER_TITLE.test(title)) reasons.push('parked/broker title');
   if (title && !slugOf(title).includes(bslug)) reasons.push('brand not in <title>');
+  if (pr.comRival) reasons.push(`live same-brand .com exists: ${pr.comRival}`);
 
   const ok = reasons.length === 0;
-  evidence[r._key] = {
-    company_name: r.company_name, ats: r.ats, token: r.token,
-    hint_used: hintUsed[r._key], brand: hit.resolved, domain: hit.domain,
+  evidence[k] = {
+    company_name: id.company_name || hit.resolved, ats: id.ats || '', token: id.token || '',
+    hint_used: hintUsed[k] || '', brand: hit.resolved, domain: hit.domain,
     apex_matches_brand: direct, brand_slug_len: bslug.length,
-    title, location: r._loc, location_terms_on_page: locHit,
+    title, location: id.location || '', location_terms_on_page: pr.locHit || [],
     conf: ok ? 'high' : 'medium', flag: ok ? 'ok' : 'verify',
-    why: ok ? ['apex=brand', STRONG_TLD.test(hit.domain) ? 'mainstream TLD' : '', title ? 'brand in <title>' : 'brand in page body (title unreadable)', locHit.length ? `location match: ${locHit.join(',')}` : ''].filter(Boolean) : reasons,
+    why: ok
+      ? ['apex=brand', 'mainstream TLD', title ? 'brand in <title>' : 'brand in page body (title unreadable)',
+         (pr.locHit || []).length ? `location match: ${pr.locHit.join(',')}` : ''].filter(Boolean)
+      : reasons,
   };
-});
+}
+
+writeFileSync(cachePath, JSON.stringify(Object.fromEntries(
+  Object.keys(resolved).map(k => [k, { hit: resolved[k], hint: hintUsed[k] || '', ident: ident[k] || {}, probe: probe[k] || null }])
+), null, 2));
 
 // split-noise shape, keyed by company_name AND token so build-companies finds it either way
 const out = {};
+for (const k of Object.keys(evidence)) {
+  const ev = evidence[k];
+  const val = [ev.domain, ev.conf, ev.flag];
+  if (ev.company_name) out[ev.company_name] = val;
+  if (ev.token && ev.token !== ev.company_name) out[ev.token] = val;
+}
+// Companies we tried and could not verify: record the miss so a later build can see
+// the difference between "never looked" (blank) and "looked, no confident answer".
 for (const r of todo) {
-  const hit = resolved[r._key];
-  if (!hit) { out[r.company_name] = ['', 'low', 'verify']; continue; }
-  const ev = evidence[r._key] || { conf: 'medium', flag: 'verify' };
-  const val = [hit.domain, ev.conf, ev.flag];
-  out[r.company_name] = val;
-  if (r.token && r.token !== r.company_name) out[r.token] = val;
+  if (resolved[r._key]) continue;
+  if (!out[r.company_name]) out[r.company_name] = ['', 'low', 'verify'];
 }
 writeFileSync(a.out, JSON.stringify(out, null, 2));
 writeFileSync(a.out.replace(/\.json$/, '') + '.evidence.json', JSON.stringify(evidence, null, 2));
 
+const attempted = a.rescore ? Object.keys(resolved).length : todo.length;
 const nHit = Object.keys(resolved).length;
 const nOk = Object.values(evidence).filter(e => e.flag === 'ok').length;
-console.error(`\nDONE: ${nHit}/${todo.length} resolved (${(100 * nHit / (todo.length || 1)).toFixed(0)}% hit rate) — ok=${nOk} verify=${nHit - nOk}`);
+console.error(`\nDONE: ${nHit}/${attempted} resolved (${(100 * nHit / (attempted || 1)).toFixed(0)}% hit rate) — ok=${nOk} verify=${nHit - nOk}`);
 console.error(`  -> ${a.out}`);
 console.error(`  -> ${a.out.replace(/\.json$/, '')}.evidence.json`);
