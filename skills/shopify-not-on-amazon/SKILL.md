@@ -18,8 +18,11 @@ Build a verified list of **US-based, established, physical-product Shopify brand
 | 1-6 | Free gates | live Shopify (not password/offline/`.myshopify.com`) · **US** (`/meta.json` country) · **physical** (`requires_shipping` share) · not stale (catalog `updated_at`) · **not dropship/POD** (app fingerprints + catalog shares) · not already linking to Amazon on its own site · contact footprint (mailto/tel/LinkedIn/IG + `/pages/contact*` fallback) | free, 3-5 fetches/domain, ~10/s | `pipeline.mjs` |
 | 7a | Amazon demand | Amazon autocomplete: 0 brand suggestions = nobody buys this brand on Amazon (strong prior); rich = demand exists (official OR resellers) | free, no bot wall, minutes | `amazon-autocomplete.mjs` |
 | 8 | Brand + category | Haiku reads homepage text + product types: genuine consumer brand vs reseller/marketplace/agency/B2B; assigns category | cheap | `prep-classify.mjs` -> subagents -> `merge.mjs classify` |
-| 7b | Amazon VERIFY | rendered Amazon search (+1 product page): `brand_store` / `listings_official` / `listings_3p` (resellers only) / `none` | free, slow (~10s/brand, 1 tab) | `amazon-verify.mjs` |
-| 9 | Deliverable | keeps x Amazon x optional Apollo people export -> LEADS / excluded / needs-check | free | `merge.mjs final` |
+| 7b | Amazon VERIFY | plain **mobile-UA fetches**: 2 searches + Amazon's brand filter -> up to 5 product pages (tablet UA) -> `brand_store` / `listings_official` / `listings_3p` (resellers only) / `listings_dormant` / `none`. Accumulates across passes, never downgrades. | free, ~20-40s/brand | `amazon-verify.mjs` (`amazon-verify-render.mjs` = browser fallback) |
+| 8b | Lead review | second Haiku pass on the lead candidates only: final keep/drop + fixed category list + a one-line sales note | cheap | `merge.mjs final` picks up `{RUN}_lead_review_N_out.json` |
+| 9a | Contacts | contact / policy / about / wholesale pages -> emails (own-domain, non-generic first), phones, LinkedIn, named people | free | `enrich-contacts.mjs` |
+| 9b | Paid enrichment (optional) | DataForSEO: traffic estimate (run on the RAW list before the gates), Amazon branded search volume, Google store-page check | ~$0.01/call + $0.0001/item; SERP $0.002 | `dataforseo.mjs` |
+| 9 | Deliverable | keeps x Amazon x review x contacts x DataForSEO x optional Apollo people export -> LEADS (25% cap on fashion/jewelry/alcohol/medical, sorted by Amazon demand) / excluded / needs-check | free | `merge.mjs final` |
 
 ```bash
 export DIR=/path/to/workdir RUN=shopify_us
@@ -29,24 +32,36 @@ FROM=1 TO=200000 CONC=800 node seed-tranco-dns.mjs top-1m.csv        # -> {RUN}_
 node prep-input.mjs {RUN}_seed.csv                                     # -> {RUN}_input.json
 node pipeline.mjs                                                      # -> {RUN}_signal.json + _ALL.csv   (RETRY=1 re-fetches unreachable/blocked)
 node amazon-autocomplete.mjs                                           # -> {RUN}_amazon_ac.json
+#   optional, before the gates: DATAFORSEO_LOGIN=.. DATAFORSEO_PASSWORD=.. SOURCE=input node dataforseo.mjs traffic && MIN_TRAFFIC=20000 node prep-input.mjs --filter
 node prep-classify.mjs                                                 # -> {RUN}_review_batch_N.json ; dispatch Haiku (below)
 node merge.mjs classify                                                # -> {RUN}_keeps.json
-LIMIT=300 node amazon-verify.mjs                                       # -> {RUN}_amazon_verify.json (needs: npm i playwright && npx playwright install chromium)
-node merge.mjs final                                                   # -> {RUN}_LEADS.csv (+ _full, _excluded_amazon, _needs_check)
+node amazon-verify.mjs                                                 # -> {RUN}_amazon_verify.json  (CONC=2; when throttled: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2)
+#   optional: node dataforseo.mjs amazon-volume                        # branded searches/mo on Amazon -> {RUN}_dfs_amazon.json
+#   lead review: batch the none/3p/dormant keeps -> Haiku -> {RUN}_lead_review_N_out.json (prompt below)
+node enrich-contacts.mjs                                               # -> {RUN}_contacts.json
+CAP_SHARE=0.25 node merge.mjs final                                    # -> {RUN}_LEADS.csv (+ _full, _excluded_amazon, _needs_check, _over_category_cap)
 ```
 
 ## How the Amazon check actually works (the part clients ask about)
 
 1. **Own site (free, in the gates).** Any `amazon.com/stores/...` or product link, or a "Shop on Amazon" CTA on the homepage = they're on Amazon -> `drop_amazon_on_site`. Catches few, costs nothing.
 2. **Autocomplete (free, bulk).** `completion.amazon.com/api/2017/suggestions?prefix=<brand>` has no bot wall. Suggestions containing the brand = Amazon shoppers search for it. `none` is the strongest cheap not-on-Amazon prior and orders the verify queue; it is never the verdict (resellers create demand too).
-3. **Rendered search (the verdict).** Plain fetches get a 503 wall, so Playwright drives one Chromium tab to `amazon.com/s?k=<brand>`:
-   - store link whose **visible/alt text** carries the brand -> `brand_store` (Brand Registry = official). Sponsored-brand store links can belong to a competitor bidding on the brand name, so the link's query string is never trusted.
-   - else open the first brand-matching ASIN and read the byline + "Sold by": `Visit the <Brand> Store` -> `brand_store`; seller = brand or Amazon.com -> `listings_official`; anyone else -> **`listings_3p` = unauthorized resellers only = no official presence and the best pitch angle**.
-   - no brand refinement and no brand-matching titles -> `none`.
-   - Amazon's throttle page ("Sorry! Something went wrong", HTTP 503) -> `blocked`, exponential back-off, 3 attempts, `RETRY=1` next run.
-4. **Manual pass on the finalists** (the deliverable promises "verified"): open the store/ASIN evidence in `{RUN}_LEADS_full.csv`; names flagged `Ambiguous name` (<=4 chars / dictionary words) get a human look.
+3. **Fetched search + product pages (the verdict).** A desktop UA gets a 503 wall; a **phone UA gets full search results** from a plain fetch; a **tablet UA gets the product page with the byline inline** (phone product pages load the byline lazily - 5 fetches, 0 bylines on BRUNT). Per brand: 2 searches (result sets differ per request; union them), Amazon's own brand filter `rh=p_89:<Brand>` with the name variants, then up to 5 product pages:
+   - a listing is **attributed** to the brand only if its **byline** ("Visit the X Store" / "Brand: X") or **seller** carries the brand's distinctive words. A title-only match never counts ("Universal Standard Staples" sold by Amazon.com; "Fast Growing hybrid poplar cuttings").
+   - `Visit the <Brand> Store` -> `brand_store`; seller = brand or Amazon.com -> `listings_official`; attributed but every seller is a third party -> **`listings_3p` (unauthorized resellers = no official presence, the best pitch)**; attributed but every listing "Currently unavailable" -> `listings_dormant`; nothing attributed -> `none`.
+   - ANY official listing = official. A re-run (`REPASS=1`) never downgrades and keeps every listing ever found; two clean passes agreed on 19/20 of a recheck set.
+   - throttle (HTTP 503 / "Sorry" / a <5 KB shell page) -> rotate header set, back off; Amazon throttles an exact (UA, Accept, Accept-Language) triple after a few hundred requests and the whole IP after a few thousand -> lighter mode `SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2`.
+4. **Manual pass on the finalists** (the deliverable promises "verified"): every row carries the ASIN evidence and an Amazon search URL. Names flagged `Ambiguous name` get a human look.
 
 Paid shortcut when volume matters: a Google SERP API query `site:amazon.com "Visit the <Brand> Store"` per brand (~$0.002 each) replaces step 3 for the bulk screen; keep the render for the finalists.
+
+## Step 8b: lead review prompt (second Haiku pass, lead candidates only)
+
+Rows `{domain, brand, rank, state, productCount, medianPrice, types, vendors, classifyCategory, amazon, amazonDemand, contacts, text}`:
+
+> Final quality review for a client who wants real U.S. DTC brands (no dropshippers, retailers, marketplaces), physical products, established, mainly supplements/skincare/beauty/pets/home/garden/office/household/food. `isKeep` false ONLY for: reseller/multi-brand retailer, marketplace, dropship/POD, digital/services, alcohol/tobacco/vape/CBD, adult, weapons, clearly non-US, band/celebrity merch, not a real brand. **The `amazon` field is never a drop reason** (resellers-only and dormant are wanted). `category` from the fixed list; `note` = one sales line. JSON only.
+
+Haiku still drops on "already has Amazon presence" and invents catalog-size rules; `merge.mjs final` therefore honors a review drop only when its reason matches the allowed list (see the run notes) - keep that guard.
 
 ## Step 8: the Haiku prompt (the only per-run config)
 
@@ -64,7 +79,11 @@ No free per-site visit count exists. Use the rank the source already gave you: *
 
 `merge.mjs final` joins `{RUN}_people.csv` (an Apollo people export filtered to the lead domains; titles Founder/CEO/Owner > Ecommerce/Marketplace/Digital > Marketing/Growth) by domain. Without it, Email/Phone/LinkedIn come from the site footprint and Decision Maker stays blank for a manual LinkedIn pass.
 
-## Gotchas (learned on the first run)
+## Gotchas (learned on the first two runs)
+
+- **Shopify's own bot challenge** ("Verifying your connection", HTTP 429) locked a datacenter IP out of 83% of stores at CONC=25 and stayed sticky for the day; the next day at `CONC=4 DELAY=1000` ~half passed. Residential IP + CONC<=8 for the gates; `RETRY=1` re-fetches blocked rows.
+- **Verify by accumulation, never by one sample.** Amazon's result set varies per request; a single search + single product page produced a 25% false-"not on Amazon" rate on the first 20 (BRUNT, Vincero, Matador, Alo, American Autowire were all official).
+- **Run DataForSEO traffic BEFORE the gates** (`SOURCE=input`, ~$0.11 per 1,000 domains): cutting to 20k+/50k+ visits first saves most of the gate fetches.
 
 - **`/meta.json` is the US gate**, not `Shopify.country` on the homepage (that's the visitor's localized market). Headless stores (Gymshark-style, Astro/Next front-ends) return HTML for `/meta.json` -> `headless` flag, country falls back to Shopify globals.
 - **Bot walls on the plain fetch** (Vercel checkpoint, Cloudflare "Attention Required", 429) -> `blocked`, not `not_shopify`. Recover with a render pass or skip; Bombas/Ridge/Caraway all did this.
