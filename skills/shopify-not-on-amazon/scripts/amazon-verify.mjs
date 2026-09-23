@@ -142,7 +142,8 @@ function parseProduct(html) {
   let seller = strip(m1(/odf-mobile-merchant-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || m1(/id=['"]sellerProfileTriggerId['"][^>]*>([^<]{1,80})/) || m1(/desktop-merchant-info[\s\S]{0,1500}?offer-display-feature-text-message[^>]*>([^<]{1,80})/) || m1(/Ships from and sold by ([^<.]{1,80})\./) || m1(/Sold by ([^<.]{1,80}) and ships from/) || '');
   if (/learn more about the seller/i.test(seller)) seller = '';
   const shipsFrom = strip(m1(/odf-mobile-fulfiller-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || m1(/desktop-fulfiller-info[\s\S]{0,1500}?offer-display-feature-text-message[^>]*>([^<]{1,80})/) || '');
-  const title = strip((html.match(/id=['"](?:productTitle|title)['"][^>]*>([^<]{1,300})/) || [])[1] || (html.match(/<title>\s*Amazon\.com\s*:\s*([^<]{1,200})/) || [])[1] || '');
+  // id="title" is a wrapper div with only whitespace inside: use productTitle, then the <title> tag minus Amazon's suffix
+  const title = strip((html.match(/id=['"]productTitle['"][^>]*>([^<]{1,300})/) || [])[1] || ((html.match(/<title>([^<]{1,200})/) || [])[1] || '').replace(/^\s*Amazon\.com\s*:\s*/i, '').replace(/\s+(at Amazon|- Amazon\.com|: Amazon\.com|\| Amazon).*$/i, ''));
   const unavailable = !seller && /Currently unavailable\.?(?:\s|<[^>]+>|&[a-z]+;)*We don(?:'|&#39;|&#x27;|’)t know when or if/i.test(html);   // brand listing exists but nobody sells it right now
   return { byline: bylineClean, bylineHref, seller, shipsFrom, title, unavailable };
 }

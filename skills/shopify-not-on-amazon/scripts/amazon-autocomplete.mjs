@@ -23,6 +23,9 @@ export const tok = (s) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g,
 export const GENERIC_WORDS = new Set('inc llc co corp ltd labs lab brand brands collective cosmetics beauty apparel clothing shop store official usa us home products product technology technologies tech electronics equipment supply supplies goods group international global online the and of by for american america natural pure black white smart pro best premium classic modern little big great simple urban fresh green blue red gold silver north south east west new old happy daily real true one my house life love world designs design studio outlet boutique jewelry skincare wear workwear nutrition health organic coffee foods food kitchen garden outdoor outdoors gear sports sport fitness yoga baby kids pet pets 1913 fishing bikes bike ebikes golf tea jerky candles candle soap bedding furniture lighting lights mattress dog cat watches watch eyewear sunglasses records books music cases case denim shirts boots scrubs supplements vitamins wellness skin hair haircare makeup rings guitars drums audio speakers tools hardware parts exhausts power cargo control rockets toys games plants seeds bulbs nursery gardens living sleep mens womens men women shoes footwear bags travel luggage pouches paper stationery decor textiles fabrics fabric candy chocolate cheese butter spice spices sauce sauces snacks protein bars drinks beverages water wine beer spirits com net org'.split(' '));
 export const isGenericName = (name) => { const w = (name || '').toLowerCase().split(/[\s&'’.,/-]+/).map(tok).filter(Boolean); return !w.length || w.every((x) => GENERIC_WORDS.has(x) || x.length < 3); };
 
+// Only run the crawl when executed directly; the other scripts import the helpers above (and this file must not read run files then).
+import { pathToFileURL } from 'node:url';
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await (async () => {
 const src = process.env.SOURCE === 'keeps' || (!process.env.SOURCE && existsSync(`${DIR}/${RUN}_keeps.json`)) ? rd(`${RUN}_keeps.json`) : rd(`${RUN}_signal.json`).filter((r) => r.status === 'pass_free_gates');
 const done = existsSync(OUT) ? rd(`${RUN}_amazon_ac.json`) : {};
 let todo = src.filter((r) => !done[r.domain]); if (process.env.LIMIT) todo = todo.slice(0, Number(process.env.LIMIT));
@@ -57,3 +60,4 @@ writeFileSync(OUT, JSON.stringify(done, null, 2));
 const by = {}; for (const v of Object.values(done)) by[v.demand || 'error'] = (by[v.demand || 'error'] || 0) + 1;
 console.error(`===== ${RUN}: AMAZON AUTOCOMPLETE DONE ===== demand:`, JSON.stringify(by));
 console.error(`-> 'none' = strongest free not-on-Amazon prior; verify with amazon-verify.mjs before it goes in a deliverable`);
+})();
