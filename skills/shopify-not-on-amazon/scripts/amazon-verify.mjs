@@ -114,16 +114,21 @@ const wordsAll = (x) => (x || '').toLowerCase().split(/[\s&'’.,\/-]+/).map(tok
 // true when NAME carries no distinctive word that the brand name Q lacks ("Force Factor" vs "force usa": 'factor' -> false; "Vincero Collective" vs "vincero": ok)
 const stem = (w) => w.replace(/(ies|es|s|y)$/, '');   // nurseries == nursery
 const noExtraWords = (name, q) => { const qw = new Set(wordsAll(q)); return wordsAll(name).every((w) => qw.has(w) || SUFFIX.has(w) || GENERIC.has(w) || CATEGORY.has(w) || [...qw].some((x) => stem(x) === stem(w) || (x.length >= 5 && (w.startsWith(x) || x.startsWith(w))))); };
-const sellerIsBrand = (seller, q) => { if (!seller) return false; const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return noExtraWords(seller, q) && (m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first))); };
+const sellerIsBrand = (seller, q) => { if (!seller) return false; const m = matcher(q); const first = tok(q.split(/\s+/)[0]);
+  const key0 = wordsAll(q).filter((w) => w.length >= 3 && !GENERIC.has(w))[0] || '';
+  const sw = wordsAll(seller).filter((w) => !SUFFIX.has(w) && !GENERIC.has(w) && !CATEGORY.has(w));   // "CEP Sportswear" -> ["cep"], "RBX" -> ["rbx"]
+  return noExtraWords(seller, q) && (m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first)) || (key0.length >= 3 && sw.length === 1 && sw[0] === key0)); };
 // category nouns a site name carries but an Amazon store name drops ("Vornado Air" -> "Visit the Vornado Store"); local to the byline rule so
 // search matching still needs both words ("Hudson Baby" listings never become "Hudson Jeans" candidates)
-const CATEGORY = new Set('jeans air optics mounts industries gaming chair chairs archery uniforms performance running cycles cycling elite originals company companies direct factory living outdoor outdoors vacuum vacuums dress dresses steak steaks bags collection'.split(' '));
+const CATEGORY = new Set('jeans air optics mounts industries gaming chair chairs archery uniforms performance running cycles cycling elite originals company companies direct factory living outdoor outdoors vacuum vacuums dress dresses steak steaks bags collection sportswear activewear swimwear outerwear apparel footwear shoes therapeutics probiotics'.split(' '));
 // byline brand must carry the brand's distinctive words ("Brand: Alo" ok for "alo yoga"; "Visit the Universal Store" NOT ok for "universal standard")
 // domain root without the storefront noise: shopmoment.com -> moment, thepauselife.com -> pauselife, randolphusa.com -> randolph
 const domainRoot = (domain) => { let r = (domain || '').toLowerCase().replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');
   for (const re of [/^(shop|the|get|my|go|buy|try|hello|drink|eat|wear)(?=.{4})/, /(shop|store|usa|us|official|inc|co|online|direct|brand|brands|company|home|hq)$/]) { const r2 = r.replace(re, ''); if (r2.length >= 4) r = r2; }
   return r; };
-const bylineIsBrand = (byline, q, title = '', domain = '') => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q);
+const bylineIsBrand = (byline, q, title = '', domain = '') => { let raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, '');
+  const byPart = raw.match(/^(.{4,}?)\s+by\s+.+$/i); if (byPart) raw = byPart[1];   // "Alegria by PG Lite" -> "Alegria" (licensor/parent suffix)
+  const b = tok(raw); const t = tok(q);
   const words = (x) => x.toLowerCase().split(/[\s&'’.,-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w));
   const key = words(q).slice(0, 2);
   // exact forms: whole byline == whole brand name, or == the brand's distinctive words joined ("Harney & Sons" for "Harney & Sons Fine Teas", "Alo" for "Alo Yoga")

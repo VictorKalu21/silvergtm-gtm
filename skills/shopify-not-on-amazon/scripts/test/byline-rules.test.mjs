@@ -87,3 +87,12 @@ const m5 = [
 ];
 let bad5=0; for (const [b,q,t,d,exp] of m5) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad5++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
 console.log(bad5 ? bad5+' failures (m5)' : 'all '+m5.length+' m5 cases pass');
+const { sellerIsBrand: sib } = fn(tok, GENERIC_WORDS);
+const m6 = [
+ ['Visit the Alegria by PG Lite Store','alegria shoes','','alegriashoes.com',true],
+ ['Visit the Force Factor Store','force','','forceusa.com',false],
+];
+let bad6=0; for (const [b,q,t,d,exp] of m6) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad6++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
+const s6 = [['RBX','rbx active',true],['CEP Sportswear','cep compression',true],['OutdoorEquipped','alegria shoes',false],['Force Factor','force usa',false],['DripDrop Hydration','dripdrop',false],['Amazon.com','rbx active',false]];
+for (const [sel,q,exp] of s6) { const got = sib(sel,q); if (got!==exp) { bad6++; console.log('FAIL seller', sel,'|',q,'->',got,'expected',exp); } }
+console.log(bad6 ? bad6+' failures (m6)' : 'all '+(m6.length+s6.length)+' m6 cases pass');
