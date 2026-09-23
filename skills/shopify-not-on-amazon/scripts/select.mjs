@@ -5,6 +5,7 @@
 //
 //   RUN=<run> DIR=<dir> N=100 CAP_SHARE=0.25 node select.mjs             # -> {RUN}_SELECT.csv
 //   env: MIN_SEARCHES (0) MIN_VISITS (0) REQUIRE_CONTACT (1) DELIVERED (comma list of csvs whose Website column is excluded)
+//        INPUTS (comma list of *_LEADS_full.csv from several runs -> one pool; default {RUN}_LEADS_full.csv)  OUT (output path)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', N = Number(process.env.N ?? 100), CAP = Number(process.env.CAP_SHARE ?? 0.25);
 const MIN_S = Number(process.env.MIN_SEARCHES || 0), MIN_V = Number(process.env.MIN_VISITS || 0), REQ = process.env.REQUIRE_CONTACT !== '0';
@@ -13,8 +14,11 @@ const esc = (v) => '"' + String(v ?? '').replace(/"/g, '""') + '"';
 const dom = (w) => (w || '').replace(/^https?:\/\//, '').replace(/\/.*$/, '').toLowerCase();
 const deny = existsSync(`${DIR}/denylist.json`) ? JSON.parse(readFileSync(`${DIR}/denylist.json`, 'utf8')) : {};
 const delivered = new Set((process.env.DELIVERED || '').split(',').filter(Boolean).flatMap((f) => { const r = parse(readFileSync(f, 'utf8')); const h = r.shift(); const i = h.indexOf('Website'); return i < 0 ? [] : r.map((x) => dom(x[i])); }));
-const rows = parse(readFileSync(`${DIR}/${RUN}_LEADS_full.csv`, 'utf8')); const head = rows.shift();
-const R = rows.map((r) => Object.fromEntries(head.map((h, i) => [h, r[i]])));
+// INPUTS=a.csv,b.csv pools several runs' {RUN}_LEADS_full.csv into one selection (same columns; first file's header wins; later duplicates dropped)
+const inputs = (process.env.INPUTS || `${DIR}/${RUN}_LEADS_full.csv`).split(',').filter(Boolean);
+let head = null; const R = []; const seenDom = new Set();
+for (const f of inputs) { const rows = parse(readFileSync(f, 'utf8')); const h = rows.shift(); head = head || h;
+  for (const r of rows) { const o = Object.fromEntries(h.map((x, i) => [x, r[i]])); const d = dom(o.Website); if (!d || seenDom.has(d)) continue; seenDom.add(d); R.push(Object.fromEntries(head.map((x) => [x, o[x] ?? '']))); } }
 const PREF = /supplement|skincare|beauty|cosmetic|\bpet|home|kitchen|garden|outdoor|office|stationery|household|food|beverage|baby|kids|health|wellness/i;
 const CAPC = /apparel|fashion|clothing|footwear|shoes|jewel|watch|alcohol|wine|beer|spirits|brewery|medical|pharma|dental/i;
 const GENERIC_MAIL = /^(info|support|hello|contact|help|customerservice|customer-service|service|sales|orders|shop|team|care|hi|wholesale|press|privacy|legal|returns|billing|marketing|media|admin|customercare|clientservice|customersupport|cs|ask|success)@/i;
@@ -29,7 +33,7 @@ const unc = pool.filter((r) => !CAPC.test(r.Category)), cap = pool.filter((r) =>
 let pick; if (N > 0) { const maxCap = Math.floor(N * CAP); pick = [...unc.slice(0, N - Math.min(maxCap, cap.length)), ...cap.slice(0, maxCap)].slice(0, N); } else { const maxCap = Math.floor((unc.length / (1 - CAP)) * CAP); pick = [...unc, ...cap.slice(0, maxCap)]; }
 pick.sort((a, b) => score(b) - score(a));
 const out = [head.map(esc).join(',')].concat(pick.map((r) => head.map((h) => esc(r[h])).join(',')));
-writeFileSync(`${DIR}/${RUN}_SELECT.csv`, out.join('\n'));
+writeFileSync(process.env.OUT || `${DIR}/${RUN}_SELECT.csv`, out.join('\n'));
 const cat = {}; for (const r of pick) cat[r.Category] = (cat[r.Category] || 0) + 1;
 console.error(`${RUN}: pool ${pool.length} (denied ${R.length - pool.length}) -> selected ${pick.length}; capped-category share ${(100 * pick.filter((r) => CAPC.test(r.Category)).length / (pick.length || 1)).toFixed(0)}%`);
 console.error(`  email ${pick.filter((r) => r.Email).length} | non-generic email ${pick.filter((r) => r.Email && !GENERIC_MAIL.test(r.Email)).length} | phone ${pick.filter((r) => r.Phone).length} | linkedin ${pick.filter((r) => r.LinkedIn).length}`);

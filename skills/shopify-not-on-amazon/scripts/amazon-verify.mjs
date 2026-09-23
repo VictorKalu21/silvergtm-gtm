@@ -94,7 +94,7 @@ const sellerIsBrand = (seller, q) => { const m = matcher(q); const first = tok(q
 // byline brand must carry the brand's distinctive words ("Brand: Alo" ok for "alo yoga"; "Visit the Universal Store" NOT ok for "universal standard")
 // category nouns a site name carries but an Amazon store name drops ("Vornado Air" -> "Visit the Vornado Store"); local to the byline rule so
 // search matching still needs both words ("Hudson Baby" listings never become "Hudson Jeans" candidates)
-const CATEGORY = new Set('jeans air optics mounts industries gaming chair chairs archery uniforms performance running cycles cycling elite originals company companies direct factory living outdoor outdoors'.split(' '));
+const CATEGORY = new Set('jeans air optics mounts industries gaming chair chairs archery uniforms performance running cycles cycling elite originals company companies direct factory living outdoor outdoors vacuum vacuums dress dresses steak steaks bags collection'.split(' '));
 const bylineIsBrand = (byline, q, title = '', domain = '') => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q);
   const words = (x) => x.toLowerCase().split(/[\s&'’.,-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w));
   const key = words(q).slice(0, 2);
