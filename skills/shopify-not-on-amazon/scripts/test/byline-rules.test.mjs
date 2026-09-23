@@ -79,3 +79,11 @@ const m4 = [
 ];
 let bad4=0; for (const [b,q,t,d,exp] of m4) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad4++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
 console.log(bad4 ? bad4+' failures (m4)' : 'all '+m4.length+' m4 cases pass');
+const m5 = [
+ ['Visit the V-Force® Store','force usa fitness','','forceusa.com',false],
+ ["Brand: L'AGENCE",'l agence','','lagence.com',true],
+ ["Visit the Dr. Bailey's Miracle Cream Store",'dr. bailey skin care','','drbaileyskincare.com',false],
+ ['Visit the Toad&Co Store','toad&co','','toadandco.com',true],
+];
+let bad5=0; for (const [b,q,t,d,exp] of m5) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad5++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
+console.log(bad5 ? bad5+' failures (m5)' : 'all '+m5.length+' m5 cases pass');

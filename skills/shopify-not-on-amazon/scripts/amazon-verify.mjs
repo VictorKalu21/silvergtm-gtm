@@ -51,23 +51,28 @@ const ENT = { amp: '&', quot: '"', apos: "'", nbsp: ' ', reg: '®', trade: '™'
 const decode = (s) => s.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d)).replace(/&([a-zA-Z]+);/g, (m, n) => ENT[n] ?? m);
 const strip = (s) => decode(s.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
 
-// Optional transport: SPIDER_API_KEY=... routes every fetch through Spider Cloud's proxy pool (plain HTTP request, no browser,
-// return_format raw). Amazon throttles per IP after a few thousand requests a day; a rotating proxy pool removes that ceiling.
-// ~$0.001-0.003 per page with proxies on. Same UA rotation and block detection apply to what comes back.
-const SPIDER = process.env.SPIDER_API_KEY || '';
-async function spiderFetch(url, headers) {
-  const r = await fetch('https://api.spider.cloud/scrape', { method: 'POST', headers: { Authorization: `Bearer ${SPIDER}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url, request: 'http', return_format: 'raw', proxy_enabled: true, headers, limit: 1 }), signal: AbortSignal.timeout(60000) });
+// Optional transport: SPIDER_API_KEY=... routes every fetch through Spider Cloud's residential proxy pool (measured 2026-09-23):
+//   search pages: request "smart" with no UA override -> full mobile results (59 ASINs), ~$0.003/page; "http" + phone UA -> a 2 KB shell
+//   product pages: request "http" + iPad user_agent + residential -> full page with byline, ~$0.005/page
+//   the `headers` field is NOT honoured for the UA (Amazon answered its desktop 503 wall); use `user_agent`.
+// ~10 pages per brand -> ~$0.04/brand. Same block detection applies to what comes back.
+const SPIDER = process.env.SPIDER_API_KEY || '', SPIDER_PROXY = process.env.SPIDER_PROXY || 'residential';
+async function spiderFetch(url, ua, tablet) {
+  const body = tablet ? { url, request: 'http', return_format: 'raw', proxy_enabled: true, proxy: SPIDER_PROXY, limit: 1, user_agent: ua }
+                      : { url, request: 'smart', return_format: 'raw', proxy_enabled: true, proxy: SPIDER_PROXY, limit: 1 };
+  const r = await fetch('https://api.spider.cloud/scrape', { method: 'POST', headers: { Authorization: `Bearer ${SPIDER}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(90000) });
   const j = await r.json().catch(() => null);
   const page = Array.isArray(j) ? j[0] : (j?.data?.[0] || j);
+  SPIDER_COST += Number(page?.costs?.total_cost || 0);
   return { status: page?.status || r.status, text: async () => (typeof page?.content === 'string' ? page.content : '') };
 }
+let SPIDER_COST = 0;
 async function get(url, tablet = false) {
   for (let a = 0; a < 6; a++) {
     const ua = pickUA(tablet ? TABLET_UAS : UAS);
     try {
       const headers = { 'User-Agent': ua, 'Accept-Language': pick(LANGS), 'Accept': pick(ACCEPTS) };
-      const r = SPIDER ? await spiderFetch(url, headers) : await fetch(url, { headers, signal: AbortSignal.timeout(25000), redirect: 'follow' });
+      const r = SPIDER ? await spiderFetch(url, ua, tablet) : await fetch(url, { headers, signal: AbortSignal.timeout(25000), redirect: 'follow' });
       const html = await r.text();
       if (r.status === 503 || r.status === 429 || BLOCK.test(html.slice(0, 5000)) || html.length < 5000) { COOL.set(ua, Date.now() + COOLDOWN_MS); await sleep(jitter(1000, 3000)); continue; }   // burnt header set -> cooldown, try another
       return { status: r.status, html };
@@ -105,10 +110,10 @@ const matcher = (q) => {
 };
 // words that never make a store/seller name a different entity: corporate suffixes, the shared generic list, category nouns
 const SUFFIX = new Set('inc llc co corp ltd llp company store brand brands official usa us the and of by com net org labs group international shop direct retail online sales'.split(' '));
-const wordsAll = (x) => (x || '').toLowerCase().split(/[\s&'’.,\/-]+/).map(tok).filter((w) => w.length >= 2);
+const wordsAll = (x) => (x || '').toLowerCase().split(/[\s&'’.,\/-]+/).map(tok).filter(Boolean);   // keep 1-letter tokens: "V-Force" is not "Force"
 // true when NAME carries no distinctive word that the brand name Q lacks ("Force Factor" vs "force usa": 'factor' -> false; "Vincero Collective" vs "vincero": ok)
 const stem = (w) => w.replace(/(ies|es|s|y)$/, '');   // nurseries == nursery
-const noExtraWords = (name, q) => { const qw = new Set(wordsAll(q)); return wordsAll(name).every((w) => qw.has(w) || SUFFIX.has(w) || GENERIC.has(w) || CATEGORY.has(w) || w.length < 3 || [...qw].some((x) => stem(x) === stem(w) || (x.length >= 5 && (w.startsWith(x) || x.startsWith(w))))); };
+const noExtraWords = (name, q) => { const qw = new Set(wordsAll(q)); return wordsAll(name).every((w) => qw.has(w) || SUFFIX.has(w) || GENERIC.has(w) || CATEGORY.has(w) || [...qw].some((x) => stem(x) === stem(w) || (x.length >= 5 && (w.startsWith(x) || x.startsWith(w))))); };
 const sellerIsBrand = (seller, q) => { if (!seller) return false; const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return noExtraWords(seller, q) && (m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first))); };
 // category nouns a site name carries but an Amazon store name drops ("Vornado Air" -> "Visit the Vornado Store"); local to the byline rule so
 // search matching still needs both words ("Hudson Baby" listings never become "Hudson Jeans" candidates)
@@ -279,4 +284,4 @@ async function worker() {
 await Promise.all(Array.from({ length: CONC }, worker));
 writeFileSync(OUT, JSON.stringify(done, null, 1));
 const by = {}; for (const v of Object.values(done)) by[v.amazon_status] = (by[v.amazon_status] || 0) + 1;
-console.error(`===== ${RUN}: AMAZON VERIFY DONE =====`, JSON.stringify(by));
+console.error(`===== ${RUN}: AMAZON VERIFY DONE =====`, JSON.stringify(by), SPIDER ? `spider cost $${SPIDER_COST.toFixed(2)}` : '');
