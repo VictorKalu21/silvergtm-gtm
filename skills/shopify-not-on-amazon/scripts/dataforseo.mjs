@@ -23,7 +23,8 @@ const src = process.env.SOURCE === 'input' ? rd(`${RUN}_input.json`)
   : rd(`${RUN}_keeps.json`);
 const rows = process.env.LIMIT ? src.slice(0, Number(process.env.LIMIT)) : src;
 const ac = existsSync(`${DIR}/${RUN}_amazon_ac.json`) ? rd(`${RUN}_amazon_ac.json`) : {};
-const queryOf = (r) => ac[r.domain]?.query || brandVariants(brandOf(r))[0];
+const QOVR = existsSync(`${DIR}/${RUN}_query_overrides.json`) ? rd(`${RUN}_query_overrides.json`) : {};   // same hand overrides the verifier uses
+const queryOf = (r) => QOVR[r.domain] || ac[r.domain]?.query || brandVariants(brandOf(r))[0];
 
 async function post(path, body) {
   const res = await fetch(`https://api.dataforseo.com/v3/${path}`, { method: 'POST', headers: { Authorization: AUTH, 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(120000) });
