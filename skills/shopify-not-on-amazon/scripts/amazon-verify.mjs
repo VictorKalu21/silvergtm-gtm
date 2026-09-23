@@ -12,6 +12,7 @@
 //
 //   RUN=<run> DIR=<dir> node amazon-verify.mjs      # reads {RUN}_keeps.json (or signal survivors) -> {RUN}_amazon_verify.json
 //   env: LIMIT  CONC (2)  RETRY (1 = redo blocked)  REPASS (1 = redo all, never downgrades)  MAX_DP (5 product pages)  DEEP (0 = search only)
+//        ONLY=a.com,b.com (re-check just those)  RESCORE=1 (no fetch: re-derive statuses from already-read product pages with current rules)
 //        SEARCH_PASSES (2)  BF_VARIANTS (3)  -> lighter mode when Amazon is throttling: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2 CONC=2
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { brandOf, brandVariants, tok, GENERIC_WORDS } from './amazon-autocomplete.mjs';
@@ -70,7 +71,11 @@ const done = existsSync(OUT) ? rd(`${RUN}_amazon_verify.json`) : {};
 // Optional pre-filter from `dataforseo.mjs serp-store` (Google: site:amazon.com "Visit the <Brand> Store", ~$0.002/brand): a hit whose
 // store URL or title carries the brand's distinctive word is a Brand Registry store -> brand_store, no Amazon fetch needed (~1/3 fewer).
 const serp = existsSync(`${DIR}/${RUN}_dfs_serp.json`) ? rd(`${RUN}_dfs_serp.json`) : {};
+// Hand query overrides {domain: "search term"} for sites whose <title> gave a bad name ("top" for kirby.com, "new car" for vinylfrog.com):
+// {RUN}_query_overrides.json; re-run those with ONLY=<domains> REPASS=1
+const QOVR = existsSync(`${DIR}/${RUN}_query_overrides.json`) ? rd(`${RUN}_query_overrides.json`) : {};
 let todo = src.filter((r) => !done[r.domain] || (process.env.RETRY === '1' && done[r.domain].amazon_status === 'blocked') || process.env.REPASS === '1');   // REPASS=1 re-checks everything, accumulating evidence
+if (process.env.ONLY) { const only = new Set(process.env.ONLY.split(',').map((x) => x.trim()).filter(Boolean)); todo = src.filter((r) => only.has(r.domain)); }   // ONLY=a.com,b.com re-checks just those (accumulates like REPASS)
 if (process.env.LIMIT) todo = todo.slice(0, Number(process.env.LIMIT));
 console.error(`${RUN}: ${src.length} brands, ${Object.keys(done).length} done, ${todo.length} to verify (mobile fetch, CONC=${CONC})`);
 
@@ -87,11 +92,22 @@ const matcher = (q) => {
 };
 const sellerIsBrand = (seller, q) => { const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first)); };
 // byline brand must carry the brand's distinctive words ("Brand: Alo" ok for "alo yoga"; "Visit the Universal Store" NOT ok for "universal standard")
-const bylineIsBrand = (byline, q, title = '') => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q);
-  const key = q.toLowerCase().split(/[\s&'’.-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w)).slice(0, 2);
+// category nouns a site name carries but an Amazon store name drops ("Vornado Air" -> "Visit the Vornado Store"); local to the byline rule so
+// search matching still needs both words ("Hudson Baby" listings never become "Hudson Jeans" candidates)
+const CATEGORY = new Set('jeans air optics mounts industries gaming chair chairs archery uniforms performance running cycles cycling elite originals company companies direct factory living outdoor outdoors'.split(' '));
+const bylineIsBrand = (byline, q, title = '', domain = '') => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q);
+  const words = (x) => x.toLowerCase().split(/[\s&'’.,-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w));
+  const key = words(q).slice(0, 2);
   // byline == the brand's first distinctive word, and the product title carries the second ("Visit the WARN Store" + "WARN ... winch")
   const firstPlusTitle = key.length === 2 && b === key[0] && key[0].length >= 4 && tok(title).includes(key[1]);
-  return b.length >= 3 && (b.includes(t) || matcher(q)(raw) || (key.length === 1 && b === key[0]) || (key.length > 1 && b === key.join('')) || firstPlusTitle); };   // "Visit the Berkley Store" == the one distinctive word of "berkley fishing"; matcher gets RAW text (word boundaries need spaces)
+  // a STORE byline is a single brand name: every distinctive byline word is in the brand name and the first distinctive brand word is among them
+  // ("Visit the Vornado Store" for "Vornado Air", "HUDSON" for "Hudson Jeans", "Tifosi" for "Tifosi Optics"); "Square" for "Market Square" is NOT
+  //  - every distinctive brand word beyond the first must appear in the product title ("Universal Standard" never matches a "Universal" store on its own)
+  const storeSubset = /^Visit the /i.test(byline) && key.length > 0 && key[0].length >= 4 && b === key[0] && key.slice(1).every((w) => CATEGORY.has(w) || tok(title).includes(w));   // whole store name == the word ("Hudson Baby" must not pass as "Hudson")
+  // domain root == the store name plus generic words only ("CHITA" for chitaliving.com, "Vornado" for vornado.com; NOT "Universal" for universalstandard.com)
+  const root = domain.toLowerCase().replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');
+  const domainPrefix = /^Visit the /i.test(byline) && b.length >= 5 && !GENERIC.has(b) && root.startsWith(b) && (root.length === b.length || GENERIC.has(root.slice(b.length)) || CATEGORY.has(root.slice(b.length)));
+  return b.length >= 3 && (b.includes(t) || matcher(q)(raw) || (key.length === 1 && b === key[0]) || (key.length > 1 && b === key.join('')) || firstPlusTitle || storeSubset || domainPrefix); };   // "Visit the Berkley Store" == the one distinctive word of "berkley fishing"; matcher gets RAW text (word boundaries need spaces)
 function parseSearch(html, t) {
   // mobile results: several data-asin divs per product; group the text by ASIN in page order
   const byAsin = new Map(); const parts = html.split(/(?=<div[^>]*data-asin="B0[A-Z0-9]{8}")/);
@@ -109,13 +125,13 @@ function parseProduct(html) {
   let seller = strip(m1(/odf-mobile-merchant-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || m1(/id=['"]sellerProfileTriggerId['"][^>]*>([^<]{1,80})/) || m1(/desktop-merchant-info[\s\S]{0,1500}?offer-display-feature-text-message[^>]*>([^<]{1,80})/) || m1(/Ships from and sold by ([^<.]{1,80})\./) || m1(/Sold by ([^<.]{1,80}) and ships from/) || '');
   if (/learn more about the seller/i.test(seller)) seller = '';
   const shipsFrom = strip(m1(/odf-mobile-fulfiller-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || m1(/desktop-fulfiller-info[\s\S]{0,1500}?offer-display-feature-text-message[^>]*>([^<]{1,80})/) || '');
-  const title = strip((html.match(/id="(?:productTitle|title)"[^>]*>([^<]{1,300})/) || [])[1] || (html.match(/<title>\s*Amazon\.com\s*:\s*([^<]{1,200})/) || [])[1] || '');
+  const title = strip((html.match(/id=['"](?:productTitle|title)['"][^>]*>([^<]{1,300})/) || [])[1] || (html.match(/<title>\s*Amazon\.com\s*:\s*([^<]{1,200})/) || [])[1] || '');
   const unavailable = !seller && /Currently unavailable\.?(?:\s|<[^>]+>|&[a-z]+;)*We don(?:'|&#39;|&#x27;|’)t know when or if/i.test(html);   // brand listing exists but nobody sells it right now
   return { byline, bylineHref, seller, shipsFrom, title, unavailable };
 }
 const SEV = { brand_store: 5, listings_official: 4, listings_3p: 3, listings_dormant: 2, listings_unverified: 1, none: 0, blocked: -1 };
 async function verify(r, prior) {
-  const brand = brandOf(r); let q = ac[r.domain]?.query || brandVariants(brand)[0] || brand.toLowerCase();
+  const brand = brandOf(r); let q = QOVR[r.domain] || ac[r.domain]?.query || brandVariants(brand)[0] || brand.toLowerCase();
   const generic = (x) => (x || '').split(/\s+/).map(tok).filter(Boolean).every((w) => GENERIC.has(w) || w.length < 3);
   if (generic(q)) q = r.domain.replace(/\.[a-z.]+$/, '').replace(/[-_]/g, ' ');   // "kids" -> "striderite"
   const t = matcher(q);
@@ -162,10 +178,10 @@ async function verify(r, prior) {
     let p = await get(`https://www.amazon.com/dp/${c.asin}`, true); if (p.blocked || !p.html) continue;
     let pp = parseProduct(p.html);
     if (!pp.byline && !pp.unavailable) { await sleep(jitter(800, 1500)); const p2 = await get(`https://www.amazon.com/dp/${c.asin}`, true); if (p2.html) { const pp2 = parseProduct(p2.html); if (pp2.byline || pp2.seller) pp = pp2; } }   // byline missing = lazy variant, one retry
-    const isBrandListing = (pp.byline && bylineIsBrand(pp.byline, q, pp.title)) || sellerIsBrand(pp.seller, q);
+    const isBrandListing = (pp.byline && bylineIsBrand(pp.byline, q, pp.title, r.domain)) || sellerIsBrand(pp.seller, q);
     const rec = { asin: c.asin, title: pp.title.slice(0, 80), byline: pp.byline.slice(0, 60), seller: pp.seller.slice(0, 40), shipsFrom: pp.shipsFrom.slice(0, 30), unavailable: pp.unavailable, attributed: isBrandListing }; checked.push(rec);
     if (!isBrandListing) continue; sawBrandListing = true;
-    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q, pp.title)) return finish({ ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : null, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
+    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q, pp.title, r.domain)) return finish({ ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : null, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
     if (sellerIsBrand(pp.seller, q) || /^amazon(\.com)?$/i.test(pp.seller.trim())) return finish({ ...v, asinsChecked: checked, amazon_status: 'listings_official', sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
   }
   const last = checked.find((x) => x.attributed && x.seller) || checked.find((x) => x.attributed) || checked[0] || {};
@@ -185,6 +201,25 @@ function finish(v, prior) {
   v.asinsChecked = [...merged.values()];
   if ((SEV[prior.amazon_status] ?? 0) > (SEV[v.amazon_status] ?? 0)) { v.demoted = v.amazon_status; v.amazon_status = prior.amazon_status; v.storeHref = v.storeHref || prior.storeHref; v.sampleAsin = prior.sampleAsin || v.sampleAsin; v.byline = prior.byline || v.byline; v.seller = prior.seller || v.seller; }
   return v;
+}
+// RESCORE=1: no Amazon fetch. Re-derive every status from the product pages already read (asinsChecked) with the CURRENT matching rules,
+// so a matcher fix ("Visit the Vornado Store" for "Vornado Air") upgrades old verdicts without another crawl. Never downgrades.
+if (process.env.RESCORE === '1') {
+  let changed = 0;
+  for (const r of src) {
+    const v = done[r.domain]; if (!v || !v.asinsChecked?.length) continue;
+    const q = v.query || tok(brandOf(r)); let st = v.amazon_status, sample = null;
+    for (const a of v.asinsChecked) {
+      const attributed = (a.byline && bylineIsBrand(a.byline, q, a.title || '', r.domain)) || sellerIsBrand(a.seller || '', q);
+      if (attributed === a.attributed) continue; a.attributed = attributed; if (!attributed) continue;
+      const s2 = /^Visit the /i.test(a.byline) && bylineIsBrand(a.byline, q, a.title || '', r.domain) ? 'brand_store' : (sellerIsBrand(a.seller || '', q) || /^amazon(\.com)?$/i.test((a.seller || '').trim())) ? 'listings_official' : a.seller ? 'listings_3p' : a.unavailable ? 'listings_dormant' : 'listings_unverified';
+      if ((SEV[s2] ?? 0) > (SEV[st] ?? 0)) { st = s2; sample = a; }
+    }
+    if (st !== v.amazon_status) { changed++; console.error(`  rescore ${r.domain}: ${v.amazon_status} -> ${st} (${sample.byline || ''} | ${sample.seller || ''})`); Object.assign(v, { rescoredFrom: v.amazon_status, amazon_status: st, sampleAsin: sample.asin, byline: sample.byline, seller: sample.seller, rescoredAt: new Date().toISOString().slice(0, 10) }); delete v.note; }
+  }
+  writeFileSync(OUT, JSON.stringify(done, null, 1));
+  const by = {}; for (const v of Object.values(done)) by[v.amazon_status] = (by[v.amazon_status] || 0) + 1;
+  console.error(`===== ${RUN}: RESCORE DONE ===== ${changed} changed`, JSON.stringify(by)); process.exit(0);
 }
 let i = 0, n = 0;
 async function worker() {

@@ -36,11 +36,18 @@ node amazon-autocomplete.mjs                                           # -> {RUN
 node prep-classify.mjs                                                 # -> {RUN}_review_batch_N.json ; dispatch Haiku (below)
 node merge.mjs classify                                                # -> {RUN}_keeps.json
 node amazon-verify.mjs                                                 # -> {RUN}_amazon_verify.json  (CONC=2; when throttled: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2)
+#   RETRY=1 (redo blocked)  ONLY=a.com,b.com (redo those; put hand search terms in {RUN}_query_overrides.json first)
+#   RESCORE=1 (no fetch: re-derive verdicts from the product pages already read, after any matcher change; never downgrades)
 #   optional: node dataforseo.mjs amazon-volume                        # branded searches/mo on Amazon -> {RUN}_dfs_amazon.json
 #   lead review: batch the none/3p/dormant keeps -> Haiku -> {RUN}_lead_review_N_out.json (prompt below)
 node enrich-contacts.mjs                                               # -> {RUN}_contacts.json
 CAP_SHARE=0.25 node merge.mjs final                                    # -> {RUN}_LEADS.csv (+ _full, _excluded_amazon, _needs_check, _over_category_cap)
+N=100 DELIVERED=prior_batch.csv node select.mjs                        # -> {RUN}_SELECT.csv : denylist.json + already-delivered exclusion + ranking + 25% cap (N=0 = whole pool)
+# or all of the above in one go (resume-safe; exits 3 while a Haiku batch is waiting for its _out.json):
+DIR=~/clients/x RUN=us DATAFORSEO_LOGIN=.. DATAFORSEO_PASSWORD=.. ./run-all.sh top-1m.csv
 ```
+
+Per-workdir hand files (never in the repo): `denylist.json` `{domain: reason}` grows with every run (retailers, foreign parents, licensed merch, verifier misses); `{RUN}_query_overrides.json` `{domain: "amazon search term"}` for sites whose title gave a bad name.
 
 ## How the Amazon check actually works (the part clients ask about)
 
@@ -48,6 +55,7 @@ CAP_SHARE=0.25 node merge.mjs final                                    # -> {RUN
 2. **Autocomplete (free, bulk).** `completion.amazon.com/api/2017/suggestions?prefix=<brand>` has no bot wall. Suggestions containing the brand = Amazon shoppers search for it. `none` is the strongest cheap not-on-Amazon prior and orders the verify queue; it is never the verdict (resellers create demand too).
 3. **Fetched search + product pages (the verdict).** A desktop UA gets a 503 wall; a **phone UA gets full search results** from a plain fetch; a **tablet UA gets the product page with the byline inline** (phone product pages load the byline lazily - 5 fetches, 0 bylines on BRUNT). Per brand: 2 searches (result sets differ per request; union them), Amazon's own brand filter `rh=p_89:<Brand>` with the name variants, then up to 5 product pages:
    - a listing is **attributed** to the brand only if its **byline** ("Visit the X Store" / "Brand: X") or **seller** carries the brand's distinctive words. A title-only match never counts ("Universal Standard Staples" sold by Amazon.com; "Fast Growing hybrid poplar cuttings").
+   - a store byline is usually **one word shorter than the site name**: "Visit the Vornado Store" for Vornado Air, "HUDSON" for Hudson Jeans, "Tifosi" for Tifosi Optics, "CHITA" for chitaliving.com. The rule: the whole store name equals the brand's first distinctive word and the leftover word is a category noun (`CATEGORY` list in the verifier) or appears in the product title; or the domain root is the store name plus generic words. "Visit the Universal Store" still does NOT match Universal Standard, and "Hudson Baby" does not pass as Hudson. This one rule flipped 18 "none" verdicts to `brand_store` across two runs (Burton, Estes, Mrs. Meyer's, Vornado, Hudson, Arkon, Condor, Milton...).
    - `Visit the <Brand> Store` -> `brand_store`; seller = brand or Amazon.com -> `listings_official`; attributed but every seller is a third party -> **`listings_3p` (unauthorized resellers = no official presence, the best pitch)**; attributed but every listing "Currently unavailable" -> `listings_dormant`; nothing attributed -> `none`.
    - ANY official listing = official. A re-run (`REPASS=1`) never downgrades and keeps every listing ever found; two clean passes agreed on 19/20 of a recheck set.
    - throttle (HTTP 503 / "Sorry" / a <5 KB shell page) -> rotate header set, back off; Amazon throttles an exact (UA, Accept, Accept-Language) triple after a few hundred requests and the whole IP after a few thousand -> lighter mode `SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2`.
@@ -92,5 +100,8 @@ No free per-site visit count exists. Use the rank the source already gave you: *
 - **Brand name for Amazon = `meta.json name`, cleaned**: strip trailing US/USA/Inc, then try full name -> minus last word ("HexClad Cookware" -> "hexclad", "Gymshark US" -> "gymshark").
 - **Amazon throttles per IP** after a handful of renders; low-and-slow + back-off is not optional. From a datacenter IP expect 503s early; residential is fine.
 - **Sponsored store links lie**; only the product-page byline proves a brand store.
+- **Bad search term = bad verdict.** The term comes from `meta.json name` / the `<title>`; "top" (kirby.com), "new car" (vinylfrog.com), "urinary tract health supplements" (uqora.com) all searched the wrong thing. Every row that reaches the deliverable gets its search term eyeballed (`Amazon search term used` column); fix the bad ones in `{RUN}_query_overrides.json` and re-run `ONLY=` on them.
+- **Tablet product pages use single-quoted attributes** (`id='productTitle'`, `id='sellerProfileTriggerId'`); a double-quote-only regex silently returns an empty title/seller.
+- **After any matcher change run `RESCORE=1`** on every run directory: it re-judges the stored product pages in seconds and costs no Amazon requests.
 - **`.myshopify.com` domains and password/offline stores** are not established brands - drop before spending anything.
 - Data outputs (`*_LEADS*.csv`, `*_signal.json`) are PII/deliverables -> gitignored; keep them in the client workdir.
