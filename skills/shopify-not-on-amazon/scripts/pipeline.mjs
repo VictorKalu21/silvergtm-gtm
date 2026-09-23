@@ -80,7 +80,12 @@ function catalogSignals(products) {
   const vendors = uniq(P.map((p) => (p.vendor || '').trim()));
   const types = uniq(P.map((p) => (p.product_type || '').trim()));
   const tagCount = P.reduce((n, p) => n + ((p.tags && p.tags.length) ? 1 : 0), 0);
+  // retailer tells: a brand's catalog has one dominant vendor (itself); a retailer's has many. Computed on the 250-product sample.
+  const vc = new Map(); for (const p of P) { const v = (p.vendor || '').trim().toLowerCase(); if (v) vc.set(v, (vc.get(v) || 0) + 1); }
+  const top = [...vc.values()].sort((a, b) => b - a)[0] || 0;
+  const retail = { vendorDistinctShare: +(vc.size / P.length).toFixed(2), topVendorShare: +(top / P.length).toFixed(2) };
   return {
+    ...retail,
     productsSeen: P.length,
     physicalShare: +(P.filter(isPhysical).length / P.length).toFixed(2),
     medianPrice: median(prices),
@@ -151,6 +156,17 @@ async function analyse(row) {
   if (rec.facebook && /^(tr|sharer|dialog|plugins|pages|profile\.php|share|login)$/i.test(rec.facebook)) rec.facebook = null;
   rec.title = (html.match(/<title[^>]*>([^<]*)<\/title>/i) || [])[1]?.replace(/\s+/g, ' ').trim().slice(0, 120) || null;
   rec.text = pruneText(html);
+  // retailer score: many vendors + no dominant vendor. >= 2 = almost always a multi-brand retailer; the classify prompt gets the flag.
+  const nameTok = (rec.shopName || d.replace(/\.[a-z.]+$/, '')).toLowerCase().replace(/[^a-z0-9]/g, '');
+  const topVendorIsSelf = (rec.vendors || []).length && (rec.vendors[0] || '').toLowerCase().replace(/[^a-z0-9]/g, '').includes(nameTok.slice(0, 6));
+  rec.retailerScore = rec.catalogOk ? (rec.vendorDistinctShare >= 0.15 ? 1 : 0) + (rec.topVendorShare != null && rec.topVendorShare < 0.5 ? 1 : 0) + ((rec.vendorCount || 0) >= 8 && !topVendorIsSelf ? 1 : 0) : null;
+  // parent-company hints: a US storefront can belong to a foreign parent. Currency, ship-to order, and foreign phone/entity forms on the page.
+  const foreign = [];
+  if (rec.currency && rec.currency !== 'USD') foreign.push('currency:' + rec.currency);
+  if (Array.isArray(rec.shipsTo) && rec.shipsTo.length && rec.shipsTo[0] !== '*' && !rec.shipsTo.includes('US')) foreign.push('ships_to:' + rec.shipsTo[0]);
+  const FOREIGN = { uk_phone: /\+44[\s\d]{8,}/, au_phone: /\+61[\s\d]{8,}/, de_phone: /\+49[\s\d]{8,}/, it_phone: /\+39[\s\d]{8,}/, fr_phone: /\+33[\s\d]{8,}/, entity: /\b(?:Pty\.? Ltd|GmbH|S\.?r\.?l\.?|B\.V\.)\b/, cc_tld_mail: /@[a-z0-9.-]+\.(?:co\.uk|com\.au|de|it|fr|nl|se|dk|co\.nz)\b/i };
+  for (const [k, re] of Object.entries(FOREIGN)) if (re.test(html)) foreign.push(k);
+  rec.foreignParentHints = foreign;
   return rec;
 }
 
@@ -188,7 +204,9 @@ function gate(r) {
   return 'pass_free_gates';
 }
 
-const todo = input.filter((r) => { const p = done.get(r.domain); return !p || (process.env.RETRY === '1' && ['unreachable', 'blocked'].includes(p.status)); });
+// RETRY=1 also re-fetches survivors whose /products.json was blocked (catalogOk=false): without the catalog there is no
+// physical/dropship/retailer signal, and that is exactly where retailers slipped through on the second run.
+const todo = input.filter((r) => { const p = done.get(r.domain); return !p || (process.env.RETRY === '1' && (['unreachable', 'blocked'].includes(p.status) || (p.status === 'pass_free_gates' && !p.catalogOk))); });
 console.error(`${RUN}: ${input.length} input, ${done.size} done, ${todo.length} to fetch (CONC=${CONC})`);
 let i = 0, n = 0; const t0 = Date.now();
 const flush = () => { const all = input.map((r) => done.get(r.domain)).filter(Boolean); writeFileSync(OUT, JSON.stringify(all, null, 2)); };
@@ -207,7 +225,7 @@ flush();
 
 const results = input.map((r) => done.get(r.domain)).filter(Boolean);
 const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
-const cols = ['domain', 'rank', 'status', 'shopName', 'podMerchLine', 'contactPage', 'country', 'province', 'city', 'countrySource', 'currency', 'productCount', 'physicalShare', 'medianPrice', 'lastUpdatedDays', 'dropshipScore', 'dropshipWhy', 'amazonOnSite', 'amazonStoreLink', 'amazonLinks', 'emails', 'phones', 'linkedin', 'instagram', 'facebook', 'tiktok', 'types', 'vendors', 'stack', 'title'];
+const cols = ['domain', 'rank', 'status', 'shopName', 'retailerScore', 'vendorDistinctShare', 'topVendorShare', 'foreignParentHints', 'podMerchLine', 'contactPage', 'country', 'province', 'city', 'countrySource', 'currency', 'productCount', 'physicalShare', 'medianPrice', 'lastUpdatedDays', 'dropshipScore', 'dropshipWhy', 'amazonOnSite', 'amazonStoreLink', 'amazonLinks', 'emails', 'phones', 'linkedin', 'instagram', 'facebook', 'tiktok', 'types', 'vendors', 'stack', 'title'];
 writeFileSync(`${DIR}/${RUN}_ALL.csv`, [cols.join(',')].concat(results.map((r) => cols.map((c) => esc(Array.isArray(r[c]) ? r[c].join('|') : r[c])).join(','))).join('\n'));
 const by = {}; for (const r of results) by[r.status] = (by[r.status] || 0) + 1;
 console.error(`\n===== ${RUN}: FREE GATES DONE (${((Date.now() - t0) / 1000).toFixed(0)}s) =====`);

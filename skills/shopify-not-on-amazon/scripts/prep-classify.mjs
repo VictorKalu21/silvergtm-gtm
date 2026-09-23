@@ -9,7 +9,7 @@ const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', BATCH = Numb
 const rows = JSON.parse(readFileSync(`${DIR}/${RUN}_signal.json`, 'utf8').replace(/^﻿/, ''));
 const survivors = rows.filter((r) => r.status === 'pass_free_gates').sort((a, b) => (a.rank || 9e9) - (b.rank || 9e9))
   .map((r) => ({ domain: r.domain, brand: r.shopName || r.title || r.domain, rank: r.rank, state: r.province, productCount: r.productCount, medianPrice: r.medianPrice,
-    types: (r.types || []).slice(0, 6), vendors: (r.vendors || []).slice(0, 4), flags: [...(r.dropshipWhy || []), r.podMerchLine ? 'pod_merch_line' : '', r.headless ? 'headless' : ''].filter(Boolean),
+    types: (r.types || []).slice(0, 6), vendors: (r.vendors || []).slice(0, 4), flags: [...(r.dropshipWhy || []), r.podMerchLine ? 'pod_merch_line' : '', r.headless ? 'headless' : '', r.retailerScore >= 2 ? `likely_retailer(vendor_diversity=${r.vendorDistinctShare},top_vendor=${r.topVendorShare})` : '', ...(r.foreignParentHints || []).map((h) => 'foreign_hint:' + h)].filter(Boolean),
     text: (r.text || '').slice(0, 1500) }));
 let b = 0;
 for (let i = 0; i < survivors.length; i += BATCH, b++) writeFileSync(`${DIR}/${RUN}_review_batch_${b}.json`, JSON.stringify(survivors.slice(i, i + BATCH), null, 1));
