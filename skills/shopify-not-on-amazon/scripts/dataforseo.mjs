@@ -5,7 +5,10 @@
 //                                       #   (Labs: dataforseo_labs/google/bulk_traffic_estimation/live, <=1000 targets/call)
 //   node dataforseo.mjs serp-store      # Google: site:amazon.com "Visit the <Brand> Store" -> third Amazon-presence signal
 //                                       #   -> {RUN}_dfs_serp.json  (serp/google/organic/live/regular, 1 query per brand, ~$0.002 each)
-// env: DATAFORSEO_LOGIN, DATAFORSEO_PASSWORD (required), RUN, DIR, SOURCE (keeps|signal), LIMIT
+// env: DATAFORSEO_LOGIN, DATAFORSEO_PASSWORD (required), RUN, DIR, LIMIT,
+//      SOURCE = input  -> every seeded domain ({RUN}_input.json) - use this for `traffic` BEFORE the gates: at ~$0.0001/domain it is far
+//                         cheaper to cut the population to 20k+/50k+ visits first than to fetch 3 pages from every store
+//             = signal -> gate survivors      = keeps -> classified brands (default when {RUN}_keeps.json exists)
 // NOTE: endpoint paths and response shapes follow the DataForSEO v3 docs as of 2026-09; written without a live account,
 //       so run `LIMIT=5` first and eyeball {RUN}_dfs_*.json before a full batch. merge.mjs final picks these files up if present.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -14,7 +17,9 @@ const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', MODE = proce
 const AUTH = 'Basic ' + Buffer.from(`${process.env.DATAFORSEO_LOGIN}:${process.env.DATAFORSEO_PASSWORD}`).toString('base64');
 if (!MODE || !process.env.DATAFORSEO_LOGIN) { console.error('usage: DATAFORSEO_LOGIN=.. DATAFORSEO_PASSWORD=.. node dataforseo.mjs [amazon-volume|traffic|serp-store]'); process.exit(1); }
 const rd = (f) => JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8').replace(/^﻿/, ''));
-const src = process.env.SOURCE === 'signal' || !existsSync(`${DIR}/${RUN}_keeps.json`) ? rd(`${RUN}_signal.json`).filter((r) => r.status === 'pass_free_gates') : rd(`${RUN}_keeps.json`);
+const src = process.env.SOURCE === 'input' ? rd(`${RUN}_input.json`)
+  : process.env.SOURCE === 'signal' || !existsSync(`${DIR}/${RUN}_keeps.json`) ? rd(`${RUN}_signal.json`).filter((r) => r.status === 'pass_free_gates')
+  : rd(`${RUN}_keeps.json`);
 const rows = process.env.LIMIT ? src.slice(0, Number(process.env.LIMIT)) : src;
 const ac = existsSync(`${DIR}/${RUN}_amazon_ac.json`) ? rd(`${RUN}_amazon_ac.json`) : {};
 const queryOf = (r) => ac[r.domain]?.query || brandVariants(brandOf(r))[0];

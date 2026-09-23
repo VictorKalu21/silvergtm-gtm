@@ -3,10 +3,20 @@
 // (Store Leads export, Apollo accounts, a hand list) so the same pipeline runs on any source.
 //
 //   RUN=<run> DIR=<dir> node prep-input.mjs httparchive_export.csv [more.csv ...]
+//   MIN_TRAFFIC=20000 node prep-input.mjs --filter        # second pass: keep only domains whose {RUN}_dfs_traffic.json organic+paid ETV
+//                                                          # meets the bar (run `dataforseo.mjs traffic` with SOURCE=input first); writes {RUN}_input.json
 import { readFileSync, writeFileSync } from 'node:fs';
 const DIR = process.env.DIR || '.';
 const RUN = process.env.RUN || 'run';
 const files = process.argv.slice(2);
+if (files[0] === '--filter') {
+  const MIN = Number(process.env.MIN_TRAFFIC || 20000);
+  const input = JSON.parse(readFileSync(`${DIR}/${RUN}_input.json`, 'utf8')); const tr = JSON.parse(readFileSync(`${DIR}/${RUN}_dfs_traffic.json`, 'utf8'));
+  const kept = input.map((r) => { const t = tr[r.domain] || {}; const etv = (t.organic_etv || 0) + (t.paid_etv || 0); return { ...r, etv, traffic_band: etv >= 50000 ? '50k+' : etv >= 20000 ? '20k+' : etv >= 10000 ? '10k+' : '<10k' }; }).filter((r) => r.etv >= MIN);
+  writeFileSync(`${DIR}/${RUN}_input_all.json`, JSON.stringify(input, null, 2)); writeFileSync(`${DIR}/${RUN}_input.json`, JSON.stringify(kept, null, 2));
+  console.error(`${RUN}: ${kept.length}/${input.length} domains with DataForSEO ETV >= ${MIN} (50k+: ${kept.filter((r) => r.traffic_band === '50k+').length}); original saved as ${RUN}_input_all.json`);
+  process.exit(0);
+}
 if (!files.length) { console.error('usage: RUN=x DIR=y node prep-input.mjs <export.csv> [...]'); process.exit(1); }
 
 function parse(text) { // RFC-4180
