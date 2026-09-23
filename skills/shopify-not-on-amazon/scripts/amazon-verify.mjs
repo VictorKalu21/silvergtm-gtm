@@ -14,7 +14,7 @@
 //   env: LIMIT  CONC (2)  RETRY (1 = redo blocked)  REPASS (1 = redo all, never downgrades)  MAX_DP (5 product pages)  DEEP (0 = search only)
 //        SEARCH_PASSES (2)  BF_VARIANTS (3)  -> lighter mode when Amazon is throttling: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2 CONC=2
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { brandOf, brandVariants, tok } from './amazon-autocomplete.mjs';
+import { brandOf, brandVariants, tok, GENERIC_WORDS } from './amazon-autocomplete.mjs';
 const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', CONC = Number(process.env.CONC || 2), DEEP = process.env.DEEP !== '0';
 const OUT = `${DIR}/${RUN}_amazon_verify.json`;
 const rd = (f) => JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8').replace(/^﻿/, ''));
@@ -44,7 +44,10 @@ const ACCEPTS = ['text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.
 const LANGS = ['en-US,en;q=0.9', 'en-US', 'en-US,en;q=0.8', 'en'];
 const pick = (a) => a[Math.floor(Math.random() * a.length)];
 const BLOCK = /Sorry! Something went wrong|Enter the characters you see below|Type the characters|api-services-support@amazon\.com|Robot Check/i;
-const strip = (s) => s.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
+// HTML entity decoding matters for brand names: Amazon renders BrüMate as "Br&uuml;Mate", and a byline that fails to decode never matches
+const ENT = { amp: '&', quot: '"', apos: "'", nbsp: ' ', reg: '®', trade: '™', copy: '©', hellip: '…', ndash: '-', mdash: '-', lsquo: "'", rsquo: "'", ldquo: '"', rdquo: '"', uuml: 'ü', ouml: 'ö', auml: 'ä', Uuml: 'Ü', Ouml: 'Ö', Auml: 'Ä', eacute: 'é', egrave: 'è', ecirc: 'ê', euml: 'ë', aacute: 'á', agrave: 'à', acirc: 'â', atilde: 'ã', aring: 'å', iacute: 'í', igrave: 'ì', icirc: 'î', iuml: 'ï', oacute: 'ó', ograve: 'ò', ocirc: 'ô', otilde: 'õ', oslash: 'ø', uacute: 'ú', ugrave: 'ù', ucirc: 'û', ntilde: 'ñ', ccedil: 'ç', szlig: 'ß', Eacute: 'É', Ntilde: 'Ñ', Ccedil: 'Ç' };
+const decode = (s) => s.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d)).replace(/&([a-zA-Z]+);/g, (m, n) => ENT[n] ?? m);
+const strip = (s) => decode(s.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
 
 async function get(url, tablet = false) {
   for (let a = 0; a < 6; a++) {
@@ -70,7 +73,7 @@ console.error(`${RUN}: ${src.length} brands, ${Object.keys(done).length} done, $
 
 // Brand matching. "Wyze Labs" must match "WYZE Cam v4", "Stanley 1913" must match "STANLEY Quencher", but "American Autowire"
 // must not match every "American ..." title: drop generic words, then require every distinctive word (or the whole token).
-const GENERIC = new Set(['inc','llc','co','company','corp','ltd','labs','lab','brand','brands','collective','cosmetics','beauty','apparel','clothing','shop','store','official','usa','us','home','products','product','technology','technologies','tech','electronics','equipment','supply','supplies','goods','group','international','global','online','the','and','of','by','for','american','america','natural','pure','black','white','smart','pro','best','premium','classic','modern','little','big','great','simple','urban','fresh','green','blue','red','gold','silver','north','south','east','west','new','old','happy','daily','real','true','one','my','house','life','love','world','designs','design','studio','outlet','boutique','jewelry','skincare','wear','workwear','nutrition','health','organic','coffee','foods','food','kitchen','garden','outdoor','outdoors','gear','sports','sport','fitness','yoga','baby','kids','pet','pets','1913']);
+const GENERIC = GENERIC_WORDS;
 const matcher = (q) => {
   const t = tok(q); const words = q.toLowerCase().split(/[\s&'’.-]+/).map(tok).filter(Boolean);
   const key = words.filter((w) => !GENERIC.has(w) && w.length >= 3); const need = key.length ? key : words;
@@ -80,7 +83,9 @@ const matcher = (q) => {
 };
 const sellerIsBrand = (seller, q) => { const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first)); };
 // byline brand must carry the brand's distinctive words ("Brand: Alo" ok for "alo yoga"; "Visit the Universal Store" NOT ok for "universal standard")
-const bylineIsBrand = (byline, q) => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q); return b.length >= 3 && (b.includes(t) || matcher(q)(raw)); };   // matcher gets the RAW text: word boundaries need the spaces
+const bylineIsBrand = (byline, q) => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q);
+  const key = q.toLowerCase().split(/[\s&'’.-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w));
+  return b.length >= 3 && (b.includes(t) || matcher(q)(raw) || (key.length === 1 && b === key[0]) || (key.length > 1 && b === key.join(''))); };   // "Visit the Berkley Store" == the one distinctive word of "berkley fishing"; matcher gets RAW text (word boundaries need spaces)
 function parseSearch(html, t) {
   // mobile results: several data-asin divs per product; group the text by ASIN in page order
   const byAsin = new Map(); const parts = html.split(/(?=<div[^>]*data-asin="B0[A-Z0-9]{8}")/);
@@ -104,7 +109,10 @@ function parseProduct(html) {
 }
 const SEV = { brand_store: 5, listings_official: 4, listings_3p: 3, listings_dormant: 2, listings_unverified: 1, none: 0, blocked: -1 };
 async function verify(r, prior) {
-  const brand = brandOf(r); const q = ac[r.domain]?.query || brandVariants(brand)[0]; const t = matcher(q);
+  const brand = brandOf(r); let q = ac[r.domain]?.query || brandVariants(brand)[0] || brand.toLowerCase();
+  const generic = (x) => (x || '').split(/\s+/).map(tok).filter(Boolean).every((w) => GENERIC.has(w) || w.length < 3);
+  if (generic(q)) q = r.domain.replace(/\.[a-z.]+$/, '').replace(/[-_]/g, ' ');   // "kids" -> "striderite"
+  const t = matcher(q);
   const v = { domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10), amazonSearchUrl: `https://www.amazon.com/s?k=${encodeURIComponent(q)}`, passes: (prior?.passes || 0) + 1 };
   // A. plain search, TWICE (Amazon varies the result set per request/header set; the union is far more stable than one sample)
   const cands = []; const seen = new Set(); let blocked = 0, storeHref = null, total = 0, noResults = false;

@@ -13,12 +13,15 @@ const rd = (f) => JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8').replace(/^﻿/,
 export const brandOf = (r) => {
   let b = (r.shopName || '').trim();
   if (!b && r.title) b = r.title.split(/\s[|–—-]\s|\s[|–—]|:\s/)[0].trim();
-  if (!b || b.length > 40 || /^(home|welcome|shop|official)/i.test(b)) b = r.domain.replace(/\.[a-z.]+$/, '').replace(/[-_]/g, ' ');
+  if (!b || b.length > 40 || /^(home|welcome|shop|official)/i.test(b) || isGenericName(b)) b = r.domain.replace(/\.[a-z.]+$/, '').replace(/[-_]/g, ' ');   // "Kids Shoes | Stride Rite" -> striderite
   return b.replace(/\s*(official (store|site|website)|online store|store|shop|®|™)\s*$/i, '').replace(/[,\s]+(us|usa|u\.s\.a?\.?|united states|america|north america|uk|canada|ca|eu|inc\.?|llc|co\.?|ltd\.?)\s*$/i, '').trim();
 };
 // name variants to try, longest first: "HexClad Cookware" -> "hexclad"; "Dr. Squatch" -> "dr squatch"
-export const brandVariants = (b) => { const w = b.split(/\s+/); const out = [b]; if (w.length > 1) out.push(w.slice(0, -1).join(' ')); if (w.length > 2) out.push(w[0]); return [...new Set(out.map((x) => x.toLowerCase()))]; };
-export const tok = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+export const brandVariants = (b) => { const w = b.split(/\s+/); const out = [b]; if (w.length > 1) out.push(w.slice(0, -1).join(' ')); if (w.length > 2) out.push(w[0]); return [...new Set(out.map((x) => x.toLowerCase()))].filter((x) => !isGenericName(x)); };   // never a bare category word
+export const tok = (s) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');   // BrüMate -> brumate
+// words that never identify a brand on their own (categories, corporate suffixes, marketing filler)
+export const GENERIC_WORDS = new Set('inc llc co corp ltd labs lab brand brands collective cosmetics beauty apparel clothing shop store official usa us home products product technology technologies tech electronics equipment supply supplies goods group international global online the and of by for american america natural pure black white smart pro best premium classic modern little big great simple urban fresh green blue red gold silver north south east west new old happy daily real true one my house life love world designs design studio outlet boutique jewelry skincare wear workwear nutrition health organic coffee foods food kitchen garden outdoor outdoors gear sports sport fitness yoga baby kids pet pets 1913 fishing bikes bike ebikes golf tea jerky candles candle soap bedding furniture lighting lights mattress dog cat watches watch eyewear sunglasses records books music cases case denim shirts boots scrubs supplements vitamins wellness skin hair haircare makeup rings guitars drums audio speakers tools hardware parts exhausts power cargo control rockets toys games plants seeds bulbs nursery gardens living sleep mens womens men women shoes footwear bags travel luggage pouches paper stationery decor textiles fabrics fabric candy chocolate cheese butter spice spices sauce sauces snacks protein bars drinks beverages water wine beer spirits com net org'.split(' '));
+export const isGenericName = (name) => { const w = (name || '').toLowerCase().split(/[\s&'’.,/-]+/).map(tok).filter(Boolean); return !w.length || w.every((x) => GENERIC_WORDS.has(x) || x.length < 3); };
 
 const src = process.env.SOURCE === 'keeps' || (!process.env.SOURCE && existsSync(`${DIR}/${RUN}_keeps.json`)) ? rd(`${RUN}_keeps.json`) : rd(`${RUN}_signal.json`).filter((r) => r.status === 'pass_free_gates');
 const done = existsSync(OUT) ? rd(`${RUN}_amazon_ac.json`) : {};
@@ -36,7 +39,8 @@ async function suggest(prefix) {
 }
 async function check(r) {
   const brand = brandOf(r); let best = null;
-  for (const q of brandVariants(brand)) {           // try the full name, then drop the trailing word ("Gymshark US" -> "gymshark")
+  const variants = brandVariants(brand); if (!variants.length) variants.push(brand.toLowerCase());
+  for (const q of variants) {           // try the full name, then drop the trailing word ("Gymshark US" -> "gymshark")
     const s = await suggest(q); if (s.error) return { domain: r.domain, brand, error: s.error, retryable: true };
     const t = tok(q); const hits = s.sugg.filter((x) => tok(x).includes(t));
     const cur = { domain: r.domain, brand, query: q, suggestions: s.sugg, brandHits: hits.length, ambiguous: t.length <= 4 };
