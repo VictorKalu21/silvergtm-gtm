@@ -95,4 +95,16 @@ node merge.mjs final                 # {RUN}_LEADS.csv + _full + _excluded_amazo
 | **No official presence (none + resellers-only)** | **53** | |
 | Hand-picked, contact-enriched deliverable | **20** | 13 "none", 7 "resellers only"; 19/20 with email, 13/20 phone, 3/20 LinkedIn from the site; Decision Maker left for Apollo |
 
+### Second run (2026-09-23, same seed, gates retried from the same IP; 100-lead order)
+
+| Stage | Count |
+|-------|-------|
+| Gate survivors after two retries of Shopify-blocked rows (417 still blocked) | **1,801** |
+| Haiku classify KEEP | **811** |
+| Amazon verify (fetch-based, accumulated over passes): brand_store 426 · listings_official 46 · listings_3p 39 · dormant 48 · none 250 | |
+| Lead candidates (none + 3p + dormant) | 337 |
+| After second Haiku lead review + guard, contact enrichment, hand exclusions (retailers, non-US parents, licensed merch, verifier misses) | **~150 deliverable rows**, ~45% apparel/footwear/jewelry before the 25% cap |
+
+What the hand review still had to catch after all the automation (feed these back into prompts/rules): multi-brand retailers the classifier let through (furniture/outdoor/pen/yarn/bridal/candy/costume retailers), publishers and record labels, licensed and celebrity merch, non-US parents on a US storefront (UK/AU/IT/CA/DE), and ~10 famous brands the verifier had cleared on a single lighter pass (BulkSupplements, BrüMate, Berkley, Stride Rite, Taos, Yellow Box, First Alert, Koss, Kids2, Mrs. Meyer's). The full-strength accumulated pass caught most of those on its own once the entity-decoding, diacritic and category-word bugs were fixed; the rest are in the gotchas.
+
 Spot-checks that changed the verdict during hand review (all now encoded in the scripts): Wyze/Stanley/MAC/Allbirds came back `none` on the first pass because the query carried the full store name ("Wyze Labs", "Stanley 1913", "MAC Cosmetics") and titles don't — fixed by dropping generic words before matching. Lectric eBikes came back `brand_store` because "electric" contains "lectric" — fixed with word-boundary matching. Casper and Pura Vida were `unverified`/`none` on a movie-title collision and a throttled page; a product-line grep ("Casper Sleep", "Pura Vida Bracelets") showed both are on Amazon → excluded. Gymshark, White Fox, Alpinestars, Crafter's Companion passed the `meta.json` US gate on a US entity but are UK/AU/IT-parented → excluded by hand; add a "parent company country" check if the client cares.
