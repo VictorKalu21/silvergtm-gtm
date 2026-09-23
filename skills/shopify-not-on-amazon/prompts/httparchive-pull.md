@@ -2,8 +2,10 @@
 
 Paste the block below into Claude Code on the machine that has BigQuery access. Fill in the project id.
 Output: one CSV, `httparchive_shopify_<crawl-month>.csv`, columns `domain,page,rank,stack`, which `prep-input.mjs`
-(or `run-all.sh` with `SOURCE_CSV=`) consumes directly. Expect roughly 1-2 million rows at rank <= 50M; ~30-60 GB
-scanned, inside BigQuery's 1 TB/month free tier.
+(or `run-all.sh` with `SOURCE_CSV=`) consumes directly. Rank cap 1,000,000 (~60-100k origins): measured on run two, the
+share of stores with 50k+ visits/mo is 40% at Tranco 300k and 26% at 500k, so the 500k-1M CrUX bucket is the last one
+worth a traffic gate for a 50k bar. Widen to 5,000,000 only for a 20k-visit run; 10M and 50M are dead weight.
+~30-60 GB scanned, inside BigQuery's 1 TB/month free tier.
 
 ---
 
@@ -29,16 +31,17 @@ FROM `httparchive.crawl.pages`
 WHERE date = DATE 'CRAWL'
   AND client = 'mobile'
   AND is_root_page
+  AND rank <= 1000000            -- widen to 5000000 only for a 20k-visit run
   AND EXISTS (SELECT 1 FROM UNNEST(technologies) t WHERE t.technology = 'Shopify')
 ORDER BY rank, domain
 ```
 
-   No rank cap: I want every Shopify origin, including rank 50,000,000. `rank` is the CrUX bucket
-   (1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000).
+   `rank` is the CrUX popularity bucket (1000, 5000, 10000, 50000, 100000, 500000, 1000000, ...). Keep the cap at
+   1,000,000: past it almost nothing clears 50k visits a month.
 3. Export the table to CSV. Preferred: `bq extract --destination_format CSV` to a GCS bucket in the project, then
    `gsutil cp` it down and concatenate the shards with a single header. Fallback if there is no bucket:
    `bq query --format=csv --max_rows=5000000` on `SELECT * FROM shopify_census.<table>` and redirect to the file.
 4. Sanity-check before you hand it back: row count per rank bucket (`GROUP BY rank`), no duplicate `page`, the header
    is exactly `domain,page,rank,stack`, and spot-check five rows resolve to live Shopify stores. Tell me the total row
-   count, the count at rank <= 1,000,000, and the bytes billed.
+   count, the count per rank bucket, and the bytes billed.
 5. Name it `httparchive_shopify_<CRAWL>.csv`, zip it, and tell me the path. Do not commit it anywhere.
