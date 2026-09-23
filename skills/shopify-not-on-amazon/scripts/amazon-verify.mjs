@@ -13,7 +13,8 @@
 //   RUN=<run> DIR=<dir> node amazon-verify.mjs      # reads {RUN}_keeps.json (or signal survivors) -> {RUN}_amazon_verify.json
 //   env: LIMIT  CONC (2)  RETRY (1 = redo blocked)  REPASS (1 = redo all, never downgrades)  MAX_DP (5 product pages)  DEEP (0 = search only)
 //        ONLY=a.com,b.com (re-check just those)  RESCORE=1 (no fetch: upgrade-only re-derive from already-read product pages)  RESCORE=2 (full recompute, may downgrade)
-//        SPIDER_API_KEY=.. (route fetches through Spider Cloud's proxy pool when this IP is throttled; CONC=4 is fine then)
+//        AW=0 (use the regular /s and /dp pages instead of the legacy mobile /gp/aw/ ones, which are not IP-throttled)
+//        SPIDER_API_KEY=.. (route fetches through Spider Cloud's proxy pool; only needed if the aw endpoints get walled too)
 //        SEARCH_PASSES (2)  BF_VARIANTS (3)  -> lighter mode when Amazon is throttling: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2 CONC=2
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { brandOf, brandVariants, tok, GENERIC_WORDS } from './amazon-autocomplete.mjs';
@@ -57,6 +58,12 @@ const strip = (s) => decode(s.replace(/<script[\s\S]*?<\/script>/gi, ' ').replac
 //   the `headers` field is NOT honoured for the UA (Amazon answered its desktop 503 wall); use `user_agent`.
 // ~10 pages per brand -> ~$0.04/brand. Same block detection applies to what comes back.
 const SPIDER = process.env.SPIDER_API_KEY || '', SPIDER_PROXY = process.env.SPIDER_PROXY || 'residential';
+// Amazon's LEGACY MOBILE endpoints (/gp/aw/s search, /gp/aw/d/ASIN product) return the same listings, byline (tablet UA) and seller,
+// gzip ~200-300 KB, and were NOT throttled from an IP on which /s and /dp were already serving the 503 wall (measured 2026-09-23).
+// Default on; AW=0 falls back to the regular pages. The deliverable's search URL stays the regular /s?k= link.
+const AW = process.env.AW !== '0';
+const searchUrl = (params) => `https://www.amazon.com/${AW ? 'gp/aw/s' : 's'}?${params}`;
+const productUrl = (asin) => `https://www.amazon.com/${AW ? 'gp/aw/d/' : 'dp/'}${asin}`;
 async function spiderFetch(url, ua, tablet) {
   const body = tablet ? { url, request: 'http', return_format: 'raw', proxy_enabled: true, proxy: SPIDER_PROXY, limit: 1, user_agent: ua }
                       : { url, request: 'smart', return_format: 'raw', proxy_enabled: true, proxy: SPIDER_PROXY, limit: 1 };
@@ -190,7 +197,7 @@ async function verify(r, prior) {
   const cands = []; const seen = new Set(); let blocked = 0, storeHref = null, total = 0, noResults = false;
   const addItems = (items) => { for (const it of items) if (it.match && !seen.has(it.asin)) { seen.add(it.asin); cands.push(it); } };
   for (let pass = 0; pass < Number(process.env.SEARCH_PASSES || 2); pass++) {
-    const s = await get(v.amazonSearchUrl); if (s.blocked || !s.html) { blocked++; continue; }
+    const s = await get(searchUrl(`k=${encodeURIComponent(q)}`)); if (s.blocked || !s.html) { blocked++; continue; }
     const d = parseSearch(s.html, t); total += d.items.length; noResults = noResults || d.noResults;
     const slug = (h) => decodeURIComponent((h.match(/\/stores\/([^\/?"]+)/) || [])[1] || '').replace(/[-_+]/g, ' ');
     const store = d.stores.find((x) => t(x.text) && (bylineIsBrand(`Visit the ${slug(x.href)} Store`, q, '', r.domain) || bylineIsBrand(`Visit the ${x.text.slice(0, 80)} Store`, q, '', r.domain)));   // "CLEAN SKIN CLUB" tile on a Farmacy search must not count
@@ -206,7 +213,7 @@ async function verify(r, prior) {
   const usable = (name) => { const w = name.toLowerCase().split(/\s+/).map(tok).filter(Boolean); return w.length > 1 || (w[0] && w[0].length >= 5 && !GENERIC.has(w[0])); };
   for (const name of [...new Set([q, brand, ...brandVariants(brand)])].filter(usable).slice(0, Number(process.env.BF_VARIANTS || 3))) {
     await sleep(jitter(800, 1800));
-    const bf = await get(`https://www.amazon.com/s?k=${encodeURIComponent(name)}&rh=p_89%3A${encodeURIComponent(name)}`);
+    const bf = await get(searchUrl(`k=${encodeURIComponent(name)}&rh=p_89%3A${encodeURIComponent(name)}`));
     if (bf.blocked || !bf.html) continue;
     const bd = parseSearch(bf.html, t); if (bd.noResults) continue;
     v.catalogBrand = v.catalogBrand || name; addItems(bd.items);
@@ -221,9 +228,9 @@ async function verify(r, prior) {
   const MAX_DP = Number(process.env.MAX_DP || 5); const checked = []; let sawBrandListing = false;
   for (const c of queue.slice(0, MAX_DP)) {
     await sleep(jitter(1000, 2500));
-    let p = await get(`https://www.amazon.com/dp/${c.asin}`, true); if (p.blocked || !p.html) continue;
+    let p = await get(productUrl(c.asin), true); if (p.blocked || !p.html) continue;
     let pp = parseProduct(p.html);
-    if (!pp.byline && !pp.unavailable) { await sleep(jitter(800, 1500)); const p2 = await get(`https://www.amazon.com/dp/${c.asin}`, true); if (p2.html) { const pp2 = parseProduct(p2.html); if (pp2.byline || pp2.seller) pp = pp2; } }   // byline missing = lazy variant, one retry
+    if (!pp.byline && !pp.unavailable) { await sleep(jitter(800, 1500)); const p2 = await get(productUrl(c.asin), true); if (p2.html) { const pp2 = parseProduct(p2.html); if (pp2.byline || pp2.seller) pp = pp2; } }   // byline missing = lazy variant, one retry
     const isBrandListing = (pp.byline && bylineIsBrand(pp.byline, q, pp.title, r.domain)) || sellerIsBrand(pp.seller, q);
     const rec = { asin: c.asin, title: pp.title.slice(0, 80), byline: pp.byline.slice(0, 60), seller: pp.seller.slice(0, 40), shipsFrom: pp.shipsFrom.slice(0, 30), unavailable: pp.unavailable, attributed: isBrandListing }; checked.push(rec);
     if (!isBrandListing) continue; sawBrandListing = true;
