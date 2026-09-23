@@ -12,7 +12,7 @@
 //
 //   RUN=<run> DIR=<dir> node amazon-verify.mjs      # reads {RUN}_keeps.json (or signal survivors) -> {RUN}_amazon_verify.json
 //   env: LIMIT  CONC (2)  RETRY (1 = redo blocked)  REPASS (1 = redo all, never downgrades)  MAX_DP (5 product pages)  DEEP (0 = search only)
-//        ONLY=a.com,b.com (re-check just those)  RESCORE=1 (no fetch: re-derive statuses from already-read product pages with current rules)
+//        ONLY=a.com,b.com (re-check just those)  RESCORE=1 (no fetch: upgrade-only re-derive from already-read product pages)  RESCORE=2 (full recompute, may downgrade)
 //        SEARCH_PASSES (2)  BF_VARIANTS (3)  -> lighter mode when Amazon is throttling: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2 CONC=2
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { brandOf, brandVariants, tok, GENERIC_WORDS } from './amazon-autocomplete.mjs';
@@ -90,24 +90,38 @@ const matcher = (q) => {
   const has = (x, w) => x.includes(' ' + w + ' ') || x.includes(' ' + w);                        // whole word, or word-prefix ("lectric" in "lectricxp")
   return (text) => { const x = lc(text); return tok(text).includes(t) && has(lc(text), need[0]) || need.every((w) => has(x, w)); };
 };
-const sellerIsBrand = (seller, q) => { const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first)); };
-// byline brand must carry the brand's distinctive words ("Brand: Alo" ok for "alo yoga"; "Visit the Universal Store" NOT ok for "universal standard")
+// words that never make a store/seller name a different entity: corporate suffixes, the shared generic list, category nouns
+const SUFFIX = new Set('inc llc co corp ltd llp company store brand brands official usa us the and of by com net org labs group international shop direct retail online sales'.split(' '));
+const wordsAll = (x) => (x || '').toLowerCase().split(/[\s&'’.,\/-]+/).map(tok).filter((w) => w.length >= 2);
+// true when NAME carries no distinctive word that the brand name Q lacks ("Force Factor" vs "force usa": 'factor' -> false; "Vincero Collective" vs "vincero": ok)
+const noExtraWords = (name, q) => { const qw = new Set(wordsAll(q)); return wordsAll(name).every((w) => qw.has(w) || SUFFIX.has(w) || GENERIC.has(w) || CATEGORY.has(w) || w.length < 3 || [...qw].some((x) => x.length >= 5 && (w.startsWith(x) || x.startsWith(w)))); };
+const sellerIsBrand = (seller, q) => { if (!seller) return false; const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return noExtraWords(seller, q) && (m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first))); };
 // category nouns a site name carries but an Amazon store name drops ("Vornado Air" -> "Visit the Vornado Store"); local to the byline rule so
 // search matching still needs both words ("Hudson Baby" listings never become "Hudson Jeans" candidates)
 const CATEGORY = new Set('jeans air optics mounts industries gaming chair chairs archery uniforms performance running cycles cycling elite originals company companies direct factory living outdoor outdoors vacuum vacuums dress dresses steak steaks bags collection'.split(' '));
+// byline brand must carry the brand's distinctive words ("Brand: Alo" ok for "alo yoga"; "Visit the Universal Store" NOT ok for "universal standard")
+// domain root without the storefront noise: shopmoment.com -> moment, thepauselife.com -> pauselife, randolphusa.com -> randolph
+const domainRoot = (domain) => { let r = (domain || '').toLowerCase().replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');
+  for (const re of [/^(shop|the|get|my|go|buy|try|hello|drink|eat|wear)(?=.{4})/, /(shop|store|usa|us|official|inc|co|online|direct|brand|brands|company|home|hq)$/]) { const r2 = r.replace(re, ''); if (r2.length >= 4) r = r2; }
+  return r; };
 const bylineIsBrand = (byline, q, title = '', domain = '') => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q);
   const words = (x) => x.toLowerCase().split(/[\s&'’.,-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w));
   const key = words(q).slice(0, 2);
+  // exact forms: whole byline == whole brand name, or == the brand's distinctive words joined ("Harney & Sons" for "Harney & Sons Fine Teas", "Alo" for "Alo Yoga")
+  const exact = b === t || (key.length > 1 && b === key.join('')) || (key.length === 1 && b === key[0]);
   // byline == the brand's first distinctive word, and the product title carries the second ("Visit the WARN Store" + "WARN ... winch")
   const firstPlusTitle = key.length === 2 && b === key[0] && key[0].length >= 4 && tok(title).includes(key[1]);
-  // a STORE byline is a single brand name: every distinctive byline word is in the brand name and the first distinctive brand word is among them
-  // ("Visit the Vornado Store" for "Vornado Air", "HUDSON" for "Hudson Jeans", "Tifosi" for "Tifosi Optics"); "Square" for "Market Square" is NOT
-  //  - every distinctive brand word beyond the first must appear in the product title ("Universal Standard" never matches a "Universal" store on its own)
+  // a store byline is usually one word shorter than the site name: whole store name == first distinctive brand word, leftover word is a category noun or in the title
   const storeSubset = /^Visit the /i.test(byline) && key.length > 0 && key[0].length >= 4 && b === key[0] && key.slice(1).every((w) => CATEGORY.has(w) || tok(title).includes(w));   // whole store name == the word ("Hudson Baby" must not pass as "Hudson")
   // domain root == the store name plus generic words only ("CHITA" for chitaliving.com, "Vornado" for vornado.com; NOT "Universal" for universalstandard.com)
-  const root = domain.toLowerCase().replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');
+  const root = domainRoot(domain);
   const domainPrefix = /^Visit the /i.test(byline) && b.length >= 5 && !GENERIC.has(b) && root.startsWith(b) && (root.length === b.length || GENERIC.has(root.slice(b.length)) || CATEGORY.has(root.slice(b.length)));
-  return b.length >= 3 && (b.includes(t) || matcher(q)(raw) || (key.length === 1 && b === key[0]) || (key.length > 1 && b === key.join('')) || firstPlusTitle || storeSubset || domainPrefix); };   // "Visit the Berkley Store" == the one distinctive word of "berkley fishing"; matcher gets RAW text (word boundaries need spaces)
+  // store name starts with the whole domain root ("Darn Tough Vermont" for darntough.com, "Thinx for All" for thinx.com; NOT "Pura Vida Moringa" for puravidabracelets.com, NOT "Force Factor" for forceusa.com)
+  const rawRoot = (domain || '').toLowerCase().replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');   // RAW root here: forceusa.com must not become "force"
+  const storePrefix = /^Visit the /i.test(byline) && rawRoot.length >= 5 && !GENERIC.has(rawRoot) && b.startsWith(rawRoot);
+  // loose forms only when the byline carries NO distinctive word the brand lacks ("Force Factor" is not "Force", "Berkley Jensen" is not "Berkley")
+  const loose = (noExtraWords(raw, q) && (b.includes(t) || matcher(q)(raw) || firstPlusTitle || storeSubset)) || domainPrefix || storePrefix;   // the domain rules survive a bad search term ("top" for kirby.com)
+  return b.length >= 3 && (exact || loose); };
 function parseSearch(html, t) {
   // mobile results: several data-asin divs per product; group the text by ASIN in page order
   const byAsin = new Map(); const parts = html.split(/(?=<div[^>]*data-asin="B0[A-Z0-9]{8}")/);
@@ -119,6 +133,7 @@ function parseSearch(html, t) {
 function parseProduct(html) {
   const bylineDiv = (html.match(/bylineInfo_feature_div[\s\S]{0,6000}/) || [''])[0];
   const byline = strip((bylineDiv.match(/(Visit the [^<"]{1,80}Store)/) || html.match(/(Visit the [^<"]{1,80}Store)/) || [])[1] || (bylineDiv.match(/Brand:\s*([^<]{1,60})/) || [])[1] && ('Brand: ' + (bylineDiv.match(/Brand:\s*([^<]{1,60})/) || [])[1]) || (html.match(/po-brand[\s\S]{0,600}?<span class="a-size-base po-break-word">([^<]{1,60})/) || [])[1] && ('Brand: ' + (html.match(/po-brand[\s\S]{0,600}?<span class="a-size-base po-break-word">([^<]{1,60})/) || [])[1]) || '');
+  const bylineClean = byline.replace(/["']\s*\/?>.*$/, '').trim();
   const bylineHref = (html.match(/id="(?:visitStoreMobileUrl|bylineInfo)"[^>]*href="([^"]*\/stores\/[^"]*)"/) || html.match(/href="([^"]*\/stores\/[^"]*)"[^>]*>\s*(?:<[^>]*>\s*)*Visit the /) || [])[1] || null;
   // seller: phone variant (odf-mobile-merchant-info) | tablet/desktop variant (sellerProfileTriggerId link text, single-quoted attrs) | prose
   const m1 = (re) => (html.match(re) || [])[1] || '';
@@ -127,13 +142,16 @@ function parseProduct(html) {
   const shipsFrom = strip(m1(/odf-mobile-fulfiller-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || m1(/desktop-fulfiller-info[\s\S]{0,1500}?offer-display-feature-text-message[^>]*>([^<]{1,80})/) || '');
   const title = strip((html.match(/id=['"](?:productTitle|title)['"][^>]*>([^<]{1,300})/) || [])[1] || (html.match(/<title>\s*Amazon\.com\s*:\s*([^<]{1,200})/) || [])[1] || '');
   const unavailable = !seller && /Currently unavailable\.?(?:\s|<[^>]+>|&[a-z]+;)*We don(?:'|&#39;|&#x27;|’)t know when or if/i.test(html);   // brand listing exists but nobody sells it right now
-  return { byline, bylineHref, seller, shipsFrom, title, unavailable };
+  return { byline: bylineClean, bylineHref, seller, shipsFrom, title, unavailable };
 }
+const AMAZON_1P = /^amazon(\.com)?$|^zappos|^shopbop|an amazon company|^woot\b/i;   // Amazon and its owned retailers = first-party
 const SEV = { brand_store: 5, listings_official: 4, listings_3p: 3, listings_dormant: 2, listings_unverified: 1, none: 0, blocked: -1 };
 async function verify(r, prior) {
   const brand = brandOf(r); let q = QOVR[r.domain] || ac[r.domain]?.query || brandVariants(brand)[0] || brand.toLowerCase();
   const generic = (x) => (x || '').split(/\s+/).map(tok).filter(Boolean).every((w) => GENERIC.has(w) || w.length < 3);
-  if (generic(q)) q = r.domain.replace(/\.[a-z.]+$/, '').replace(/[-_]/g, ' ');   // "kids" -> "striderite"
+  const root = r.domain.replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/gi, '').toLowerCase(), joined = tok(q);
+  const tagline = !QOVR[r.domain] && q.split(/\s+/).length >= 3 && !joined.includes(root) && !root.includes(joined);   // "natural, clean skincare" (farmacybeauty.com), "100% grass-fed beef jerky" (chomps.com)
+  if (generic(q) || tagline) q = r.domain.replace(/\.[a-z.]+$/, '').replace(/[-_]/g, ' ');   // "kids" -> "striderite"
   const t = matcher(q);
   const g = serp[r.domain];
   if (g && g.google_store_found && (g.store_url || g.store_title)) {
@@ -148,7 +166,9 @@ async function verify(r, prior) {
   for (let pass = 0; pass < Number(process.env.SEARCH_PASSES || 2); pass++) {
     const s = await get(v.amazonSearchUrl); if (s.blocked || !s.html) { blocked++; continue; }
     const d = parseSearch(s.html, t); total += d.items.length; noResults = noResults || d.noResults;
-    const store = d.stores.find((x) => t(x.text)); if (store && !storeHref) storeHref = (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?"]+/) || [store.href.replace(/\?.*$/, '')])[0];
+    const slug = (h) => decodeURIComponent((h.match(/\/stores\/([^\/?"]+)/) || [])[1] || '').replace(/[-_+]/g, ' ');
+    const store = d.stores.find((x) => t(x.text) && (bylineIsBrand(`Visit the ${slug(x.href)} Store`, q, '', r.domain) || bylineIsBrand(`Visit the ${x.text.slice(0, 80)} Store`, q, '', r.domain)));   // "CLEAN SKIN CLUB" tile on a Farmacy search must not count
+    if (store && !storeHref) storeHref = (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?"]+/) || [store.href.replace(/\?.*$/, '')])[0];
     addItems(d.items.filter((x) => !x.sponsored)); addItems(d.items);
     if (pass === 0) await sleep(jitter(1500, 3000));
   }
@@ -182,7 +202,7 @@ async function verify(r, prior) {
     const rec = { asin: c.asin, title: pp.title.slice(0, 80), byline: pp.byline.slice(0, 60), seller: pp.seller.slice(0, 40), shipsFrom: pp.shipsFrom.slice(0, 30), unavailable: pp.unavailable, attributed: isBrandListing }; checked.push(rec);
     if (!isBrandListing) continue; sawBrandListing = true;
     if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q, pp.title, r.domain)) return finish({ ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : null, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
-    if (sellerIsBrand(pp.seller, q) || /^amazon(\.com)?$/i.test(pp.seller.trim())) return finish({ ...v, asinsChecked: checked, amazon_status: 'listings_official', sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
+    if (sellerIsBrand(pp.seller, q) || AMAZON_1P.test(pp.seller.trim())) return finish({ ...v, asinsChecked: checked, amazon_status: 'listings_official', sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
   }
   const last = checked.find((x) => x.attributed && x.seller) || checked.find((x) => x.attributed) || checked[0] || {};
   Object.assign(v, { asinsChecked: checked, sampleAsin: last.asin, byline: last.byline, seller: last.seller, productTitle: last.title });
@@ -204,18 +224,26 @@ function finish(v, prior) {
 }
 // RESCORE=1: no Amazon fetch. Re-derive every status from the product pages already read (asinsChecked) with the CURRENT matching rules,
 // so a matcher fix ("Visit the Vornado Store" for "Vornado Air") upgrades old verdicts without another crawl. Never downgrades.
-if (process.env.RESCORE === '1') {
+if (process.env.RESCORE === '1' || process.env.RESCORE === '2') {
   let changed = 0;
+  const FULL = process.env.RESCORE === '2';   // 2 = recompute from scratch (a stricter rule may DOWNGRADE); 1 = upgrade only
   for (const r of src) {
-    const v = done[r.domain]; if (!v || !v.asinsChecked?.length) continue;
-    const q = v.query || tok(brandOf(r)); let st = v.amazon_status, sample = null;
+    const v = done[r.domain]; if (!v) continue;
+    const q = v.query || tok(brandOf(r));
+    if (!v.asinsChecked?.length) {   // verdict came from a search-page store tile: re-test the tile's slug, flag for ONLY= re-check when it fails
+      if (FULL && v.amazon_status === 'brand_store' && v.storeHref && !v.via) { const slug = decodeURIComponent((v.storeHref.match(/\/stores\/([^\/?"]+)/) || [])[1] || '').replace(/[-_+]/g, ' '); if (slug && !/^page$/i.test(slug) && !bylineIsBrand(`Visit the ${slug} Store`, q, '', r.domain)) console.error(`  RECHECK ${r.domain}: store tile "${slug}" does not carry the brand (q="${q}") -> add to ONLY=`); }
+      continue; }
+    let st = FULL ? null : v.amazon_status, sample = null, any = false;
+    if (FULL && v.storeHref && (v.via || bylineIsBrand(`Visit the ${decodeURIComponent((v.storeHref.match(/\/stores\/([^\/?"]+)/) || [])[1] || '').replace(/[-_+]/g, ' ')} Store`, q, '', r.domain))) st = 'brand_store';   // search-page tile whose slug carries the brand
     for (const a of v.asinsChecked) {
-      const attributed = (a.byline && bylineIsBrand(a.byline, q, a.title || '', r.domain)) || sellerIsBrand(a.seller || '', q);
-      if (attributed === a.attributed) continue; a.attributed = attributed; if (!attributed) continue;
-      const s2 = /^Visit the /i.test(a.byline) && bylineIsBrand(a.byline, q, a.title || '', r.domain) ? 'brand_store' : (sellerIsBrand(a.seller || '', q) || /^amazon(\.com)?$/i.test((a.seller || '').trim())) ? 'listings_official' : a.seller ? 'listings_3p' : a.unavailable ? 'listings_dormant' : 'listings_unverified';
-      if ((SEV[s2] ?? 0) > (SEV[st] ?? 0)) { st = s2; sample = a; }
+      a.byline = decode(a.byline || '').replace(/["']\s*\/?>.*$/, '').trim(); a.seller = decode(a.seller || '');
+      const attributed = !!((a.byline && bylineIsBrand(a.byline, q, a.title || '', r.domain)) || sellerIsBrand(a.seller || '', q));
+      if (!FULL && attributed === !!a.attributed) continue; a.attributed = attributed; if (!attributed) continue; any = true;
+      const s2 = /^Visit the /i.test(a.byline) && bylineIsBrand(a.byline, q, a.title || '', r.domain) ? 'brand_store' : (sellerIsBrand(a.seller || '', q) || AMAZON_1P.test((a.seller || '').trim())) ? 'listings_official' : a.seller ? 'listings_3p' : a.unavailable ? 'listings_dormant' : 'listings_unverified';
+      if ((SEV[s2] ?? 0) > (SEV[st] ?? -9)) { st = s2; sample = a; }
     }
-    if (st !== v.amazon_status) { changed++; console.error(`  rescore ${r.domain}: ${v.amazon_status} -> ${st} (${sample.byline || ''} | ${sample.seller || ''})`); Object.assign(v, { rescoredFrom: v.amazon_status, amazon_status: st, sampleAsin: sample.asin, byline: sample.byline, seller: sample.seller, rescoredAt: new Date().toISOString().slice(0, 10) }); delete v.note; }
+    if (FULL && !any) { st = v.amazon_status === 'blocked' ? 'blocked' : 'none'; sample = v.asinsChecked[0]; }
+    if (st && st !== v.amazon_status) { changed++; console.error(`  rescore ${r.domain}: ${v.amazon_status} -> ${st} (q="${q}" | ${sample?.byline || ''} | ${sample?.seller || ''})`); Object.assign(v, { rescoredFrom: v.amazon_status, amazon_status: st, sampleAsin: sample?.asin, byline: sample?.byline || '', seller: sample?.seller || '', rescoredAt: new Date().toISOString().slice(0, 10) }); if (st === 'brand_store') delete v.note; else v.note = 'search hits did not carry the brand in byline or seller'; if (st !== 'brand_store' && !v.via) v.storeHref = null; }
   }
   writeFileSync(OUT, JSON.stringify(done, null, 1));
   const by = {}; for (const v of Object.values(done)) by[v.amazon_status] = (by[v.amazon_status] || 0) + 1;
