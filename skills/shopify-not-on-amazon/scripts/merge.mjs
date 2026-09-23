@@ -46,7 +46,7 @@ if (MODE === 'classify') {
       const prev = people.get(d); if (!prev || score(p.title) < score(prev.title)) people.set(d, p); }
   }
   const trafficText = (r) => { const k = r.rank; if (!k) return 'rank n/a'; const src = r.rankSource || 'Tranco'; const band = k <= 50000 ? 'very high (100k+/mo likely)' : k <= 100000 ? 'high (50k+/mo likely)' : k <= 250000 ? 'medium (20-50k/mo est.)' : 'low'; return `${src} #${k.toLocaleString('en-US')} - ${band}`; };
-  const STATUS = { none: 'No Amazon presence found (rendered search, verified {d})', listings_3p: 'Unauthorized resellers only - no brand store, not sold by brand (verified {d})', listings_unverified: 'Listings exist - seller not verified', brand_store: 'Brand store on Amazon (official)', listings_official: 'Sold by brand / Amazon.com (official)', blocked: 'Not checked (Amazon throttled)' };
+  const STATUS = { none: 'No Amazon presence found (rendered search, verified {d})', listings_3p: 'Unauthorized resellers only - no brand store, not sold by brand (verified {d})', listings_unverified: 'Listings exist - seller not verified', listings_dormant: 'Dormant listings only - brand-attributed ASINs exist but are Currently unavailable, no seller (verified {d})', brand_store: 'Brand store on Amazon (official)', listings_official: 'Sold by brand / Amazon.com (official)', blocked: 'Not checked (Amazon throttled)' };
   const CAP_SHARE = Number(process.env.CAP_SHARE || 0.25);
   const CAP_CATS = /apparel|fashion|clothing|activewear|workwear|footwear|shoes|jewel|watch|alcohol|wine|beer|spirits|brewery|medical|pharma|dental/i;
   const MIN_DEMAND = process.env.MIN_DEMAND || '';
@@ -64,7 +64,7 @@ if (MODE === 'classify') {
       'State': k.province || '', 'City': k.city || '', 'Products': k.productCount, 'Median price': k.medianPrice, 'Instagram': k.instagram ? `https://instagram.com/${k.instagram}` : '', 'All emails': k.emails || [],
       'Amazon demand (autocomplete)': a ? `${a.demand} (${a.brandHits}/10 brand suggestions)` : '', _demand: a?.demand || 'none', _rank: k.rank || 9e9, _capped: CAP_CATS.test(k.category || ''), 'Amazon evidence': v?.storeHref || (v?.evidence || []).map((e) => e.asin).join(' | ') || '', 'Amazon seller seen': v?.seller || '', 'Rank': k.rank, 'Stack': k.stack || '', 'Classify note': k.classifyReason || '', 'Ambiguous name': a?.ambiguous ? 'yes' : '',
     };
-    if (st === 'none' || st === 'listings_3p') leads.push(row); else if (st === 'brand_store' || st === 'listings_official') excluded.push(row); else needs.push(row);
+    if (st === 'none' || st === 'listings_3p' || st === 'listings_dormant') leads.push(row); else if (st === 'brand_store' || st === 'listings_official') excluded.push(row); else needs.push(row);
   }
   if (MIN_DEMAND) leads = leads.filter((r) => (DEMAND_ORDER[r._demand] ?? 2) <= DEMAND_ORDER[MIN_DEMAND]);
   leads.sort((a, b) => (DEMAND_ORDER[a._demand] ?? 2) - (DEMAND_ORDER[b._demand] ?? 2) || a._rank - b._rank);

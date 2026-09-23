@@ -5,12 +5,13 @@
 //   brand_store        = product byline "Visit the <Brand> Store" / a /stores/ link with the brand's name -> Brand-Registered, official
 //   listings_official  = brand-matching product sold by the brand itself or by Amazon (1P)
 //   listings_3p        = brand-matching products exist but sold by third parties only -> UNAUTHORIZED RESELLERS, no official presence (the pitch)
+//   listings_dormant   = brand-attributed listings exist but every one is 'Currently unavailable' (no seller at all) -> no active presence
 //   none               = no brand-matching result on the first page -> not on Amazon
 //   blocked            = throttle/captcha page after retries; RETRY=1 next run
 // Resume-safe; low concurrency + jitter by design.
 //
 //   RUN=<run> DIR=<dir> node amazon-verify.mjs      # reads {RUN}_keeps.json (or signal survivors) -> {RUN}_amazon_verify.json
-//   env: LIMIT  CONC (2)  RETRY (1)  DEEP (1 = open the product page; 0 = search only)
+//   env: LIMIT  CONC (2)  RETRY (1 = redo blocked)  REPASS (1 = redo all, never downgrades)  MAX_DP (5 product pages)  DEEP (0 = search only)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { brandOf, brandVariants, tok } from './amazon-autocomplete.mjs';
 const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', CONC = Number(process.env.CONC || 2), DEEP = process.env.DEEP !== '0';
@@ -27,16 +28,22 @@ const UAS = ['Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit
   'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36',
   'Mozilla/5.0 (Linux; Android 13; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
   'Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1'];
+// PRODUCT pages: phone UAs get a variant whose byline ("Visit the X Store" / "Brand: X") loads lazily and is NOT in the HTML;
+// tablet UAs get the full page. Search pages are fine on phone UAs. (Found on BRUNT: 5 phone fetches, 0 bylines; iPad: byline present.)
+const TABLET_UAS = ['Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (iPad; CPU OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (iPad; CPU OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (Linux; Android 13; SM-X710) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'];
 const ACCEPTS = ['text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', '*/*', 'text/html,application/xhtml+xml,*/*;q=0.8', 'text/html'];
 const LANGS = ['en-US,en;q=0.9', 'en-US', 'en-US,en;q=0.8', 'en'];
 const pick = (a) => a[Math.floor(Math.random() * a.length)];
 const BLOCK = /Sorry! Something went wrong|Enter the characters you see below|Type the characters|api-services-support@amazon\.com|Robot Check/i;
 const strip = (s) => s.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
 
-async function get(url) {
+async function get(url, tablet = false) {
   for (let a = 0; a < 5; a++) {
     try {
-      const r = await fetch(url, { headers: { 'User-Agent': pick(UAS), 'Accept-Language': pick(LANGS), 'Accept': pick(ACCEPTS) }, signal: AbortSignal.timeout(25000), redirect: 'follow' });
+      const r = await fetch(url, { headers: { 'User-Agent': pick(tablet ? TABLET_UAS : UAS), 'Accept-Language': pick(LANGS), 'Accept': pick(ACCEPTS) }, signal: AbortSignal.timeout(25000), redirect: 'follow' });
       const html = await r.text();
       if (r.status === 503 || r.status === 429 || BLOCK.test(html.slice(0, 5000)) || html.length < 5000) { await sleep(jitter(2000, 6000) * (a + 1)); continue; }   // short page = JS shell, rotate too
       return { status: r.status, html };
@@ -50,7 +57,7 @@ const ac = existsSync(`${DIR}/${RUN}_amazon_ac.json`) ? rd(`${RUN}_amazon_ac.jso
 const order = { high: 0, low: 1, none: 2 };   // brands shoppers already search for on Amazon first (that's the buyer's real filter)
 src.sort((a, b) => (order[ac[a.domain]?.demand] ?? 3) - (order[ac[b.domain]?.demand] ?? 3) || (a.rank || 9e9) - (b.rank || 9e9));
 const done = existsSync(OUT) ? rd(`${RUN}_amazon_verify.json`) : {};
-let todo = src.filter((r) => !done[r.domain] || (process.env.RETRY === '1' && done[r.domain].amazon_status === 'blocked'));
+let todo = src.filter((r) => !done[r.domain] || (process.env.RETRY === '1' && done[r.domain].amazon_status === 'blocked') || process.env.REPASS === '1');   // REPASS=1 re-checks everything, accumulating evidence
 if (process.env.LIMIT) todo = todo.slice(0, Number(process.env.LIMIT));
 console.error(`${RUN}: ${src.length} brands, ${Object.keys(done).length} done, ${todo.length} to verify (mobile fetch, CONC=${CONC})`);
 
@@ -65,7 +72,8 @@ const matcher = (q) => {
   return (text) => { const x = lc(text); return tok(text).includes(t) && has(lc(text), need[0]) || need.every((w) => has(x, w)); };
 };
 const sellerIsBrand = (seller, q) => { const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first)); };
-const bylineIsBrand = (byline, q) => { const b = tok(byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, '')); const t = tok(q); return b.length >= 3 && (t.includes(b) || b.includes(t) || matcher(q)(b)); };
+// byline brand must carry the brand's distinctive words ("Brand: Alo" ok for "alo yoga"; "Visit the Universal Store" NOT ok for "universal standard")
+const bylineIsBrand = (byline, q) => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q); return b.length >= 3 && (b.includes(t) || matcher(q)(raw)); };   // matcher gets the RAW text: word boundaries need the spaces
 function parseSearch(html, t) {
   // mobile results: several data-asin divs per product; group the text by ASIN in page order
   const byAsin = new Map(); const parts = html.split(/(?=<div[^>]*data-asin="B0[A-Z0-9]{8}")/);
@@ -78,59 +86,84 @@ function parseProduct(html) {
   const bylineDiv = (html.match(/bylineInfo_feature_div[\s\S]{0,6000}/) || [''])[0];
   const byline = strip((bylineDiv.match(/(Visit the [^<"]{1,80}Store)/) || html.match(/(Visit the [^<"]{1,80}Store)/) || [])[1] || (bylineDiv.match(/Brand:\s*([^<]{1,60})/) || [])[1] && ('Brand: ' + (bylineDiv.match(/Brand:\s*([^<]{1,60})/) || [])[1]) || (html.match(/po-brand[\s\S]{0,600}?<span class="a-size-base po-break-word">([^<]{1,60})/) || [])[1] && ('Brand: ' + (html.match(/po-brand[\s\S]{0,600}?<span class="a-size-base po-break-word">([^<]{1,60})/) || [])[1]) || '');
   const bylineHref = (html.match(/id="(?:visitStoreMobileUrl|bylineInfo)"[^>]*href="([^"]*\/stores\/[^"]*)"/) || html.match(/href="([^"]*\/stores\/[^"]*)"[^>]*>\s*(?:<[^>]*>\s*)*Visit the /) || [])[1] || null;
-  const seller = strip((html.match(/odf-mobile-merchant-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || [])[1] || (html.match(/id="sellerProfileTriggerId"[^>]*>([^<]{1,80})/) || [])[1] || '');
-  const shipsFrom = strip((html.match(/odf-mobile-fulfiller-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || [])[1] || '');
+  // seller: phone variant (odf-mobile-merchant-info) | tablet/desktop variant (sellerProfileTriggerId link text, single-quoted attrs) | prose
+  const m1 = (re) => (html.match(re) || [])[1] || '';
+  let seller = strip(m1(/odf-mobile-merchant-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || m1(/id=['"]sellerProfileTriggerId['"][^>]*>([^<]{1,80})/) || m1(/desktop-merchant-info[\s\S]{0,1500}?offer-display-feature-text-message[^>]*>([^<]{1,80})/) || m1(/Ships from and sold by ([^<.]{1,80})\./) || m1(/Sold by ([^<.]{1,80}) and ships from/) || '');
+  if (/learn more about the seller/i.test(seller)) seller = '';
+  const shipsFrom = strip(m1(/odf-mobile-fulfiller-info-anchor-text"[^>]*>([\s\S]{0,200}?)<div/) || m1(/desktop-fulfiller-info[\s\S]{0,1500}?offer-display-feature-text-message[^>]*>([^<]{1,80})/) || '');
   const title = strip((html.match(/id="(?:productTitle|title)"[^>]*>([^<]{1,300})/) || [])[1] || (html.match(/<title>\s*Amazon\.com\s*:\s*([^<]{1,200})/) || [])[1] || '');
-  return { byline, bylineHref, seller, shipsFrom, title };
+  const unavailable = !seller && /Currently unavailable\.?(?:\s|<[^>]+>|&[a-z]+;)*We don(?:'|&#39;|&#x27;|’)t know when or if/i.test(html);   // brand listing exists but nobody sells it right now
+  return { byline, bylineHref, seller, shipsFrom, title, unavailable };
 }
-async function verify(r) {
+const SEV = { brand_store: 5, listings_official: 4, listings_3p: 3, listings_dormant: 2, listings_unverified: 1, none: 0, blocked: -1 };
+async function verify(r, prior) {
   const brand = brandOf(r); const q = ac[r.domain]?.query || brandVariants(brand)[0]; const t = matcher(q);
-  const v = { domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10), amazonSearchUrl: `https://www.amazon.com/s?k=${encodeURIComponent(q)}` };
-  // A. plain search
-  const s = await get(v.amazonSearchUrl);
-  if (s.blocked || !s.html) return { ...v, amazon_status: 'blocked' };
-  const d = parseSearch(s.html, t);
-  const anyMatch = d.items.filter((it) => it.match); const organic = anyMatch.filter((it) => !it.sponsored);
-  const store = d.stores.find((x) => t(x.text));
-  Object.assign(v, { resultCount: d.items.length, brandMatches: organic.length, sponsoredMatches: anyMatch.length - organic.length, storeHref: store ? (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?"]+/) || [store.href.replace(/\?.*$/, '')])[0] : null, evidence: anyMatch.slice(0, 3).map((m) => ({ asin: m.asin, text: m.text.slice(0, 90) })) });
-  if (store) return { ...v, amazon_status: 'brand_store' };
-  if (!d.items.length && !d.noResults) return { ...v, amazon_status: 'blocked' };
-  // B. Amazon's own brand filter (rh=p_89:<Brand>) as a second candidate source; exact-string, so try the name variants
-  const cands = [...organic, ...anyMatch.filter((x) => !organic.includes(x))];
-  for (const name of [...new Set([q, brand, ...brandVariants(brand)])].slice(0, 3)) {
+  const v = { domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10), amazonSearchUrl: `https://www.amazon.com/s?k=${encodeURIComponent(q)}`, passes: (prior?.passes || 0) + 1 };
+  // A. plain search, TWICE (Amazon varies the result set per request/header set; the union is far more stable than one sample)
+  const cands = []; const seen = new Set(); let blocked = 0, storeHref = null, total = 0, noResults = false;
+  const addItems = (items) => { for (const it of items) if (it.match && !seen.has(it.asin)) { seen.add(it.asin); cands.push(it); } };
+  for (let pass = 0; pass < 2; pass++) {
+    const s = await get(v.amazonSearchUrl); if (s.blocked || !s.html) { blocked++; continue; }
+    const d = parseSearch(s.html, t); total += d.items.length; noResults = noResults || d.noResults;
+    const store = d.stores.find((x) => t(x.text)); if (store && !storeHref) storeHref = (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?"]+/) || [store.href.replace(/\?.*$/, '')])[0];
+    addItems(d.items.filter((x) => !x.sponsored)); addItems(d.items);
+    if (pass === 0) await sleep(jitter(1500, 3000));
+  }
+  if (blocked === 2) return { ...v, amazon_status: 'blocked' };
+  Object.assign(v, { resultCount: total, brandMatches: cands.length, storeHref, evidence: cands.slice(0, 5).map((m) => ({ asin: m.asin, text: m.text.slice(0, 90) })) });
+  if (storeHref) return finish({ ...v, amazon_status: 'brand_store' }, prior);
+  if (!total && !noResults) return { ...v, amazon_status: 'blocked' };
+  // B. Amazon's own brand filter (rh=p_89:<Brand>) with EVERY usable name variant as a second candidate source
+  const usable = (name) => { const w = name.toLowerCase().split(/\s+/).map(tok).filter(Boolean); return w.length > 1 || (w[0] && w[0].length >= 5 && !GENERIC.has(w[0])); };
+  for (const name of [...new Set([q, brand, ...brandVariants(brand)])].filter(usable).slice(0, 3)) {
     await sleep(jitter(800, 1800));
     const bf = await get(`https://www.amazon.com/s?k=${encodeURIComponent(name)}&rh=p_89%3A${encodeURIComponent(name)}`);
     if (bf.blocked || !bf.html) continue;
-    const bd = parseSearch(bf.html, t);
-    if (bd.noResults) continue;
-    v.catalogBrand = name;
-    for (const it of bd.items.filter((x) => x.match)) if (!cands.some((c) => c.asin === it.asin)) cands.push(it);
-    break;
+    const bd = parseSearch(bf.html, t); if (bd.noResults) continue;
+    v.catalogBrand = v.catalogBrand || name; addItems(bd.items);
   }
-  if (!cands.length) return { ...v, amazon_status: 'none' };
-  if (!DEEP) return { ...v, amazon_status: 'listings_unverified' };
-  // C. deep-check up to 3 brand-matching listings; ANY official one = official
-  const checked = []; let sawBrandListing = false;
-  for (const c of cands.slice(0, 3)) {
+  // prior runs' listings come first so a re-run re-reads what it already found
+  const priorAsins = (prior?.asinsChecked || []).filter((x) => x.attributed).map((x) => ({ asin: x.asin, text: x.title || '', match: true }));
+  const queue = [...priorAsins, ...cands.filter((c) => !priorAsins.some((p) => p.asin === c.asin))];
+  if (!queue.length) return finish({ ...v, amazon_status: 'none' }, prior);
+  if (!DEEP) return finish({ ...v, amazon_status: 'listings_unverified' }, prior);
+  // C. deep-check up to MAX_DP listings; a listing counts as the brand's only when the BYLINE or SELLER carries the brand
+  //    (title-only matches: "Universal Standard Staples" sold by Amazon.com, "Fast Growing hybrid poplar cuttings"). ANY official = official.
+  const MAX_DP = Number(process.env.MAX_DP || 5); const checked = []; let sawBrandListing = false;
+  for (const c of queue.slice(0, MAX_DP)) {
     await sleep(jitter(1000, 2500));
-    const p = await get(`https://www.amazon.com/dp/${c.asin}`); if (p.blocked || !p.html) continue;
-    const pp = parseProduct(p.html); const rec = { asin: c.asin, title: pp.title.slice(0, 80), byline: pp.byline.slice(0, 60), seller: pp.seller.slice(0, 40), shipsFrom: pp.shipsFrom.slice(0, 30) }; checked.push(rec);
-    const isBrandListing = t(pp.title) || (pp.byline && bylineIsBrand(pp.byline, q)) || sellerIsBrand(pp.seller, q);
+    let p = await get(`https://www.amazon.com/dp/${c.asin}`, true); if (p.blocked || !p.html) continue;
+    let pp = parseProduct(p.html);
+    if (!pp.byline && !pp.unavailable) { await sleep(jitter(800, 1500)); const p2 = await get(`https://www.amazon.com/dp/${c.asin}`, true); if (p2.html) { const pp2 = parseProduct(p2.html); if (pp2.byline || pp2.seller) pp = pp2; } }   // byline missing = lazy variant, one retry
+    const isBrandListing = (pp.byline && bylineIsBrand(pp.byline, q)) || sellerIsBrand(pp.seller, q);
+    const rec = { asin: c.asin, title: pp.title.slice(0, 80), byline: pp.byline.slice(0, 60), seller: pp.seller.slice(0, 40), shipsFrom: pp.shipsFrom.slice(0, 30), unavailable: pp.unavailable, attributed: isBrandListing }; checked.push(rec);
     if (!isBrandListing) continue; sawBrandListing = true;
-    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q)) return { ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : v.storeHref, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller };
-    if (sellerIsBrand(pp.seller, q) || /^amazon(\.com)?$/i.test(pp.seller.trim())) return { ...v, asinsChecked: checked, amazon_status: 'listings_official', sampleAsin: c.asin, byline: pp.byline, seller: pp.seller };
+    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q)) return finish({ ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : null, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
+    if (sellerIsBrand(pp.seller, q) || /^amazon(\.com)?$/i.test(pp.seller.trim())) return finish({ ...v, asinsChecked: checked, amazon_status: 'listings_official', sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
   }
-  const last = checked.find((x) => x.seller) || checked[0] || {};
+  const last = checked.find((x) => x.attributed && x.seller) || checked.find((x) => x.attributed) || checked[0] || {};
   Object.assign(v, { asinsChecked: checked, sampleAsin: last.asin, byline: last.byline, seller: last.seller, productTitle: last.title });
-  if (!checked.length) return { ...v, amazon_status: 'listings_unverified' };
-  if (!sawBrandListing) return { ...v, amazon_status: 'none', note: 'search hits did not carry the brand on their product pages' };
-  return { ...v, amazon_status: last.seller ? 'listings_3p' : 'listings_unverified' };
+  let st;
+  if (!checked.length) st = 'listings_unverified';
+  else if (!sawBrandListing) { st = 'none'; v.note = 'search hits did not carry the brand in byline or seller'; }
+  else if (last.seller) st = 'listings_3p';
+  else if (checked.filter((x) => x.attributed).every((x) => x.unavailable)) st = 'listings_dormant';   // brand-attributed listings exist but every one is "Currently unavailable"
+  else st = 'listings_unverified';
+  return finish({ ...v, amazon_status: st }, prior);
+}
+// a re-run NEVER downgrades: keep the most severe verdict seen across passes, and keep every attributed listing ever found
+function finish(v, prior) {
+  if (!prior || prior.amazon_status === 'blocked') return v;
+  const merged = new Map([...(prior.asinsChecked || []), ...(v.asinsChecked || [])].map((x) => [x.asin, x]));
+  v.asinsChecked = [...merged.values()];
+  if ((SEV[prior.amazon_status] ?? 0) > (SEV[v.amazon_status] ?? 0)) { v.demoted = v.amazon_status; v.amazon_status = prior.amazon_status; v.storeHref = v.storeHref || prior.storeHref; v.sampleAsin = prior.sampleAsin || v.sampleAsin; v.byline = prior.byline || v.byline; v.seller = prior.seller || v.seller; }
+  return v;
 }
 let i = 0, n = 0;
 async function worker() {
   while (i < todo.length) {
     const r = todo[i++]; let v;
-    try { v = await verify(r); } catch (e) { v = { domain: r.domain, brand: brandOf(r), amazon_status: 'blocked', error: String(e.message).slice(0, 80) }; }
+    try { v = await verify(r, done[r.domain]); } catch (e) { v = { domain: r.domain, brand: brandOf(r), amazon_status: 'blocked', error: String(e.message).slice(0, 80) }; }
     done[r.domain] = v; n++;
     console.error(`  ${n}/${todo.length} ${r.domain} -> ${v.amazon_status}${v.storeHref ? ' ' + v.storeHref : ''}${v.seller ? ' | sold by ' + v.seller.slice(0, 40) : ''}`);
     if (n % 10 === 0) writeFileSync(OUT, JSON.stringify(done, null, 1));
