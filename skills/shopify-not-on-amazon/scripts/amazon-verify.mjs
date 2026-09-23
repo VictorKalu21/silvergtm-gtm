@@ -13,6 +13,7 @@
 //   RUN=<run> DIR=<dir> node amazon-verify.mjs      # reads {RUN}_keeps.json (or signal survivors) -> {RUN}_amazon_verify.json
 //   env: LIMIT  CONC (2)  RETRY (1 = redo blocked)  REPASS (1 = redo all, never downgrades)  MAX_DP (5 product pages)  DEEP (0 = search only)
 //        ONLY=a.com,b.com (re-check just those)  RESCORE=1 (no fetch: upgrade-only re-derive from already-read product pages)  RESCORE=2 (full recompute, may downgrade)
+//        SPIDER_API_KEY=.. (route fetches through Spider Cloud's proxy pool when this IP is throttled; CONC=4 is fine then)
 //        SEARCH_PASSES (2)  BF_VARIANTS (3)  -> lighter mode when Amazon is throttling: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2 CONC=2
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { brandOf, brandVariants, tok, GENERIC_WORDS } from './amazon-autocomplete.mjs';
@@ -50,11 +51,23 @@ const ENT = { amp: '&', quot: '"', apos: "'", nbsp: ' ', reg: '®', trade: '™'
 const decode = (s) => s.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d)).replace(/&([a-zA-Z]+);/g, (m, n) => ENT[n] ?? m);
 const strip = (s) => decode(s.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
 
+// Optional transport: SPIDER_API_KEY=... routes every fetch through Spider Cloud's proxy pool (plain HTTP request, no browser,
+// return_format raw). Amazon throttles per IP after a few thousand requests a day; a rotating proxy pool removes that ceiling.
+// ~$0.001-0.003 per page with proxies on. Same UA rotation and block detection apply to what comes back.
+const SPIDER = process.env.SPIDER_API_KEY || '';
+async function spiderFetch(url, headers) {
+  const r = await fetch('https://api.spider.cloud/scrape', { method: 'POST', headers: { Authorization: `Bearer ${SPIDER}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url, request: 'http', return_format: 'raw', proxy_enabled: true, headers, limit: 1 }), signal: AbortSignal.timeout(60000) });
+  const j = await r.json().catch(() => null);
+  const page = Array.isArray(j) ? j[0] : (j?.data?.[0] || j);
+  return { status: page?.status || r.status, text: async () => (typeof page?.content === 'string' ? page.content : '') };
+}
 async function get(url, tablet = false) {
   for (let a = 0; a < 6; a++) {
     const ua = pickUA(tablet ? TABLET_UAS : UAS);
     try {
-      const r = await fetch(url, { headers: { 'User-Agent': ua, 'Accept-Language': pick(LANGS), 'Accept': pick(ACCEPTS) }, signal: AbortSignal.timeout(25000), redirect: 'follow' });
+      const headers = { 'User-Agent': ua, 'Accept-Language': pick(LANGS), 'Accept': pick(ACCEPTS) };
+      const r = SPIDER ? await spiderFetch(url, headers) : await fetch(url, { headers, signal: AbortSignal.timeout(25000), redirect: 'follow' });
       const html = await r.text();
       if (r.status === 503 || r.status === 429 || BLOCK.test(html.slice(0, 5000)) || html.length < 5000) { COOL.set(ua, Date.now() + COOLDOWN_MS); await sleep(jitter(1000, 3000)); continue; }   // burnt header set -> cooldown, try another
       return { status: r.status, html };
