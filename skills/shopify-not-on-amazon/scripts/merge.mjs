@@ -33,6 +33,10 @@ if (MODE === 'classify') {
   const keeps = rd(`${RUN}_keeps.json`);
   const ac = existsSync(`${DIR}/${RUN}_amazon_ac.json`) ? rd(`${RUN}_amazon_ac.json`) : {};
   const vf = existsSync(`${DIR}/${RUN}_amazon_verify.json`) ? rd(`${RUN}_amazon_verify.json`) : {};
+  const ct = existsSync(`${DIR}/${RUN}_contacts.json`) ? rd(`${RUN}_contacts.json`) : {};          // enrich-contacts.mjs
+  const dfsA = existsSync(`${DIR}/${RUN}_dfs_amazon.json`) ? rd(`${RUN}_dfs_amazon.json`) : {};      // dataforseo.mjs amazon-volume
+  const dfsT = existsSync(`${DIR}/${RUN}_dfs_traffic.json`) ? rd(`${RUN}_dfs_traffic.json`) : {};    // dataforseo.mjs traffic
+  const lr = {}; for (let b = 0; existsSync(`${DIR}/${RUN}_lead_review_${b}_out.json`); b++) for (const v of rd(`${RUN}_lead_review_${b}_out.json`)) if (v && v.domain) lr[v.domain.toLowerCase()] = v;   // optional second Haiku pass
   // optional Apollo people export, matched by domain; best title wins
   const people = new Map();
   if (existsSync(`${DIR}/${RUN}_people.csv`)) {
@@ -54,12 +58,17 @@ if (MODE === 'classify') {
   let leads = [], excluded = [], needs = [], capped = [];
   for (const k of keeps) {
     const a = ac[k.domain], v = vf[k.domain]; const st = v?.amazon_status || (a ? (a.demand === 'none' ? 'listings_unverified' : 'listings_unverified') : 'blocked');
-    const p = people.get(k.domain) || {};
+    const p = people.get(k.domain) || {}; const c = ct[k.domain] || {}; const r2 = lr[k.domain.toLowerCase()] || {};
+    if (r2.isKeep === false) { excluded.push({ 'Brand': k.shopName || k.domain, 'Website': `https://${k.domain}`, 'Amazon Presence Status': 'dropped on lead review: ' + (r2.reason || ''), 'Category': r2.category || k.category }); continue; }
+    const dA = dfsA[k.domain], dT = dfsT[k.domain];
     const row = {
-      'Brand': k.shopName || k.brand || k.domain, 'Website': `https://${k.domain}`, 'Category': k.category || '', 'Estimated Traffic/Sales': trafficText(k),
+      'Brand': k.shopName || k.brand || k.domain, 'Website': `https://${k.domain}`, 'Category': r2.category || k.category || '',
+      'Estimated Traffic/Sales': (dT && dT.organic_etv != null ? `~${Math.round((dT.organic_etv || 0) + (dT.paid_etv || 0)).toLocaleString('en-US')} visits/mo (DataForSEO est.); ` : '') + trafficText(k),
       'Amazon Presence Status': (STATUS[st] || st).replace('{d}', v?.checkedAt || ''),
-      'Email': p.email || (k.emails || [])[0] || '', 'Phone': p.phone || (k.phones || [])[0] || '', 'LinkedIn': p.linkedin || (k.linkedin ? `https://www.linkedin.com/company/${k.linkedin}` : ''),
-      'Decision Maker': p.name ? `${p.name} - ${p.title}` : '',
+      'Email': p.email || c.personalEmail || (c.emails || [])[0] || (k.emails || [])[0] || '', 'Phone': p.phone || (c.phones || [])[0] || (k.phones || [])[0] || '',
+      'LinkedIn': p.linkedin || ((c.linkedin || k.linkedin) ? `https://www.linkedin.com/company/${c.linkedin || k.linkedin}` : ''),
+      'Decision Maker': p.name ? `${p.name} - ${p.title}` : ((c.people || [])[0] ? `${c.people[0]} (named on site, title unverified)` : ''),
+      'Amazon branded searches/mo': dA && dA.amazon_search_volume != null ? dA.amazon_search_volume : '', 'Lead note': r2.note || '',
       // extras
       'State': k.province || '', 'City': k.city || '', 'Products': k.productCount, 'Median price': k.medianPrice, 'Instagram': k.instagram ? `https://instagram.com/${k.instagram}` : '', 'All emails': k.emails || [],
       'Amazon demand (autocomplete)': a ? `${a.demand} (${a.brandHits}/10 brand suggestions)` : '', _demand: a?.demand || 'none', _rank: k.rank || 9e9, _capped: CAP_CATS.test(k.category || ''), 'Amazon evidence': v?.storeHref || (v?.evidence || []).map((e) => e.asin).join(' | ') || '', 'Amazon seller seen': v?.seller || '', 'Rank': k.rank, 'Stack': k.stack || '', 'Classify note': k.classifyReason || '', 'Ambiguous name': a?.ambiguous ? 'yes' : '',
@@ -73,7 +82,7 @@ if (MODE === 'classify') {
   const allow = Math.floor((uncapped.length / (1 - CAP_SHARE)) * CAP_SHARE);
   capped = cappedAll.slice(allow); leads = [...uncapped, ...cappedAll.slice(0, allow)].sort((a, b) => (DEMAND_ORDER[a._demand] ?? 2) - (DEMAND_ORDER[b._demand] ?? 2) || a._rank - b._rank);
   const DELIV = ['Brand', 'Website', 'Category', 'Estimated Traffic/Sales', 'Amazon Presence Status', 'Email', 'Phone', 'LinkedIn', 'Decision Maker'];
-  const FULL = [...DELIV, 'State', 'City', 'Products', 'Median price', 'Instagram', 'All emails', 'Amazon demand (autocomplete)', 'Amazon evidence', 'Amazon seller seen', 'Rank', 'Stack', 'Classify note', 'Ambiguous name'];
+  const FULL = [...DELIV, 'Amazon branded searches/mo', 'Lead note', 'State', 'City', 'Products', 'Median price', 'Instagram', 'All emails', 'Amazon demand (autocomplete)', 'Amazon evidence', 'Amazon seller seen', 'Rank', 'Stack', 'Classify note', 'Ambiguous name'];
   writeFileSync(`${DIR}/${RUN}_LEADS.csv`, csv(DELIV, leads)); writeFileSync(`${DIR}/${RUN}_LEADS_full.csv`, csv(FULL, leads));
   writeFileSync(`${DIR}/${RUN}_excluded_amazon.csv`, csv(FULL, excluded)); writeFileSync(`${DIR}/${RUN}_needs_check.csv`, csv(FULL, needs));
   if (capped.length) writeFileSync(`${DIR}/${RUN}_over_category_cap.csv`, csv(FULL, capped));
