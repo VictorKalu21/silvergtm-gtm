@@ -79,16 +79,19 @@ console.error(`${RUN}: ${src.length} brands, ${Object.keys(done).length} done, $
 const GENERIC = GENERIC_WORDS;
 const matcher = (q) => {
   const t = tok(q); const words = q.toLowerCase().split(/[\s&'’.-]+/).map(tok).filter(Boolean);
-  const key = words.filter((w) => !GENERIC.has(w) && w.length >= 3); const need = key.length ? key : words;
+  // only the first TWO distinctive words are required: "Harney & Sons Fine Teas" must match the byline "Harney & Sons"
+  const key = words.filter((w) => !GENERIC.has(w) && w.length >= 3).slice(0, 2); const need = key.length ? key : words.slice(0, 2);
   const lc = (text) => ' ' + (text || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ') + ' ';   // word-boundary aware: "electric" must NOT match "lectric"
   const has = (x, w) => x.includes(' ' + w + ' ') || x.includes(' ' + w);                        // whole word, or word-prefix ("lectric" in "lectricxp")
   return (text) => { const x = lc(text); return tok(text).includes(t) && has(lc(text), need[0]) || need.every((w) => has(x, w)); };
 };
 const sellerIsBrand = (seller, q) => { const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first)); };
 // byline brand must carry the brand's distinctive words ("Brand: Alo" ok for "alo yoga"; "Visit the Universal Store" NOT ok for "universal standard")
-const bylineIsBrand = (byline, q) => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q);
-  const key = q.toLowerCase().split(/[\s&'’.-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w));
-  return b.length >= 3 && (b.includes(t) || matcher(q)(raw) || (key.length === 1 && b === key[0]) || (key.length > 1 && b === key.join(''))); };   // "Visit the Berkley Store" == the one distinctive word of "berkley fishing"; matcher gets RAW text (word boundaries need spaces)
+const bylineIsBrand = (byline, q, title = '') => { const raw = byline.replace(/^Visit the /i, '').replace(/ Store$/i, '').replace(/^Brand:\s*/i, ''); const b = tok(raw); const t = tok(q);
+  const key = q.toLowerCase().split(/[\s&'’.-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w)).slice(0, 2);
+  // byline == the brand's first distinctive word, and the product title carries the second ("Visit the WARN Store" + "WARN ... winch")
+  const firstPlusTitle = key.length === 2 && b === key[0] && key[0].length >= 4 && tok(title).includes(key[1]);
+  return b.length >= 3 && (b.includes(t) || matcher(q)(raw) || (key.length === 1 && b === key[0]) || (key.length > 1 && b === key.join('')) || firstPlusTitle); };   // "Visit the Berkley Store" == the one distinctive word of "berkley fishing"; matcher gets RAW text (word boundaries need spaces)
 function parseSearch(html, t) {
   // mobile results: several data-asin divs per product; group the text by ASIN in page order
   const byAsin = new Map(); const parts = html.split(/(?=<div[^>]*data-asin="B0[A-Z0-9]{8}")/);
@@ -159,10 +162,10 @@ async function verify(r, prior) {
     let p = await get(`https://www.amazon.com/dp/${c.asin}`, true); if (p.blocked || !p.html) continue;
     let pp = parseProduct(p.html);
     if (!pp.byline && !pp.unavailable) { await sleep(jitter(800, 1500)); const p2 = await get(`https://www.amazon.com/dp/${c.asin}`, true); if (p2.html) { const pp2 = parseProduct(p2.html); if (pp2.byline || pp2.seller) pp = pp2; } }   // byline missing = lazy variant, one retry
-    const isBrandListing = (pp.byline && bylineIsBrand(pp.byline, q)) || sellerIsBrand(pp.seller, q);
+    const isBrandListing = (pp.byline && bylineIsBrand(pp.byline, q, pp.title)) || sellerIsBrand(pp.seller, q);
     const rec = { asin: c.asin, title: pp.title.slice(0, 80), byline: pp.byline.slice(0, 60), seller: pp.seller.slice(0, 40), shipsFrom: pp.shipsFrom.slice(0, 30), unavailable: pp.unavailable, attributed: isBrandListing }; checked.push(rec);
     if (!isBrandListing) continue; sawBrandListing = true;
-    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q)) return finish({ ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : null, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
+    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q, pp.title)) return finish({ ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : null, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
     if (sellerIsBrand(pp.seller, q) || /^amazon(\.com)?$/i.test(pp.seller.trim())) return finish({ ...v, asinsChecked: checked, amazon_status: 'listings_official', sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
   }
   const last = checked.find((x) => x.attributed && x.seller) || checked.find((x) => x.attributed) || checked[0] || {};
