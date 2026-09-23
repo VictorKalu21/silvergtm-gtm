@@ -12,6 +12,7 @@
 //
 //   RUN=<run> DIR=<dir> node amazon-verify.mjs      # reads {RUN}_keeps.json (or signal survivors) -> {RUN}_amazon_verify.json
 //   env: LIMIT  CONC (2)  RETRY (1 = redo blocked)  REPASS (1 = redo all, never downgrades)  MAX_DP (5 product pages)  DEEP (0 = search only)
+//        SEARCH_PASSES (2)  BF_VARIANTS (3)  -> lighter mode when Amazon is throttling: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2 CONC=2
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { brandOf, brandVariants, tok } from './amazon-autocomplete.mjs';
 const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', CONC = Number(process.env.CONC || 2), DEEP = process.env.DEEP !== '0';
@@ -102,7 +103,7 @@ async function verify(r, prior) {
   // A. plain search, TWICE (Amazon varies the result set per request/header set; the union is far more stable than one sample)
   const cands = []; const seen = new Set(); let blocked = 0, storeHref = null, total = 0, noResults = false;
   const addItems = (items) => { for (const it of items) if (it.match && !seen.has(it.asin)) { seen.add(it.asin); cands.push(it); } };
-  for (let pass = 0; pass < 2; pass++) {
+  for (let pass = 0; pass < Number(process.env.SEARCH_PASSES || 2); pass++) {
     const s = await get(v.amazonSearchUrl); if (s.blocked || !s.html) { blocked++; continue; }
     const d = parseSearch(s.html, t); total += d.items.length; noResults = noResults || d.noResults;
     const store = d.stores.find((x) => t(x.text)); if (store && !storeHref) storeHref = (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?"]+/) || [store.href.replace(/\?.*$/, '')])[0];
@@ -115,7 +116,7 @@ async function verify(r, prior) {
   if (!total && !noResults) return { ...v, amazon_status: 'blocked' };
   // B. Amazon's own brand filter (rh=p_89:<Brand>) with EVERY usable name variant as a second candidate source
   const usable = (name) => { const w = name.toLowerCase().split(/\s+/).map(tok).filter(Boolean); return w.length > 1 || (w[0] && w[0].length >= 5 && !GENERIC.has(w[0])); };
-  for (const name of [...new Set([q, brand, ...brandVariants(brand)])].filter(usable).slice(0, 3)) {
+  for (const name of [...new Set([q, brand, ...brandVariants(brand)])].filter(usable).slice(0, Number(process.env.BF_VARIANTS || 3))) {
     await sleep(jitter(800, 1800));
     const bf = await get(`https://www.amazon.com/s?k=${encodeURIComponent(name)}&rh=p_89%3A${encodeURIComponent(name)}`);
     if (bf.blocked || !bf.html) continue;

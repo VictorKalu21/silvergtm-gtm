@@ -71,7 +71,7 @@ if (MODE === 'classify') {
       'Amazon branded searches/mo': dA && dA.amazon_search_volume != null ? dA.amazon_search_volume : '', 'Lead note': r2.note || '',
       // extras
       'State': k.province || '', 'City': k.city || '', 'Products': k.productCount, 'Median price': k.medianPrice, 'Instagram': k.instagram ? `https://instagram.com/${k.instagram}` : '', 'All emails': k.emails || [],
-      'Amazon demand (autocomplete)': a ? `${a.demand} (${a.brandHits}/10 brand suggestions)` : '', _demand: a?.demand || 'none', _rank: k.rank || 9e9, _capped: CAP_CATS.test(k.category || ''), 'Amazon evidence': v?.storeHref || (v?.evidence || []).map((e) => e.asin).join(' | ') || '', 'Amazon seller seen': v?.seller || '', 'Rank': k.rank, 'Stack': k.stack || '', 'Classify note': k.classifyReason || '', 'Ambiguous name': a?.ambiguous ? 'yes' : '',
+      'Amazon demand (autocomplete)': a ? `${a.demand} (${a.brandHits}/10 brand suggestions)` : '', _demand: a?.demand || 'none', _rank: k.rank || 9e9, _capped: CAP_CATS.test(r2.category || k.category || ''), 'Amazon evidence': v?.storeHref || (v?.evidence || []).map((e) => e.asin).join(' | ') || '', 'Amazon seller seen': v?.seller || '', 'Rank': k.rank, 'Stack': k.stack || '', 'Classify note': k.classifyReason || '', 'Ambiguous name': a?.ambiguous ? 'yes' : '',
     };
     if (st === 'none' || st === 'listings_3p' || st === 'listings_dormant') leads.push(row); else if (st === 'brand_store' || st === 'listings_official') excluded.push(row); else needs.push(row);
   }
