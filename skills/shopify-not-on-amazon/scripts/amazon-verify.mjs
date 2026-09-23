@@ -1,6 +1,7 @@
 // STEP 7b · Amazon presence VERIFY with plain fetches. Amazon serves a 503 bot wall to a desktop UA but
 // returns full search + product pages to a MOBILE Safari UA (found on the first run), so no browser is
 // needed. Two fetches per brand: mobile search -> first brand-matching ASIN -> mobile product page.
+//   Three candidate sources (plain search, Amazon's brand filter rh=p_89:<Brand>, up to 3 product pages); ANY official listing = official.
 //   brand_store        = product byline "Visit the <Brand> Store" / a /stores/ link with the brand's name -> Brand-Registered, official
 //   listings_official  = brand-matching product sold by the brand itself or by Amazon (1P)
 //   listings_3p        = brand-matching products exist but sold by third parties only -> UNAUTHORIZED RESELLERS, no official presence (the pitch)
@@ -46,7 +47,7 @@ async function get(url) {
 
 let src = existsSync(`${DIR}/${RUN}_keeps.json`) ? rd(`${RUN}_keeps.json`) : rd(`${RUN}_signal.json`).filter((r) => r.status === 'pass_free_gates');
 const ac = existsSync(`${DIR}/${RUN}_amazon_ac.json`) ? rd(`${RUN}_amazon_ac.json`) : {};
-const order = { none: 0, low: 1, high: 2 };
+const order = { high: 0, low: 1, none: 2 };   // brands shoppers already search for on Amazon first (that's the buyer's real filter)
 src.sort((a, b) => (order[ac[a.domain]?.demand] ?? 3) - (order[ac[b.domain]?.demand] ?? 3) || (a.rank || 9e9) - (b.rank || 9e9));
 const done = existsSync(OUT) ? rd(`${RUN}_amazon_verify.json`) : {};
 let todo = src.filter((r) => !done[r.domain] || (process.env.RETRY === '1' && done[r.domain].amazon_status === 'blocked'));
@@ -84,27 +85,46 @@ function parseProduct(html) {
 }
 async function verify(r) {
   const brand = brandOf(r); const q = ac[r.domain]?.query || brandVariants(brand)[0]; const t = matcher(q);
-  const v = { domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10) };
-  const s = await get(`https://www.amazon.com/s?k=${encodeURIComponent(q)}`);
+  const v = { domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10), amazonSearchUrl: `https://www.amazon.com/s?k=${encodeURIComponent(q)}` };
+  // A. plain search
+  const s = await get(v.amazonSearchUrl);
   if (s.blocked || !s.html) return { ...v, amazon_status: 'blocked' };
   const d = parseSearch(s.html, t);
-  const match = d.items.filter((it) => it.match && !it.sponsored); const anyMatch = d.items.filter((it) => it.match);
+  const anyMatch = d.items.filter((it) => it.match); const organic = anyMatch.filter((it) => !it.sponsored);
   const store = d.stores.find((x) => t(x.text));
-  Object.assign(v, { resultCount: d.items.length, brandMatches: match.length, sponsoredMatches: anyMatch.length - match.length, storeHref: store ? (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?"]+/) || [store.href.replace(/\?.*$/, '')])[0] : null, evidence: anyMatch.slice(0, 3).map((m) => ({ asin: m.asin, text: m.text.slice(0, 90) })) });
+  Object.assign(v, { resultCount: d.items.length, brandMatches: organic.length, sponsoredMatches: anyMatch.length - organic.length, storeHref: store ? (store.href.match(/https:\/\/www\.amazon\.com\/stores\/[^?"]+/) || [store.href.replace(/\?.*$/, '')])[0] : null, evidence: anyMatch.slice(0, 3).map((m) => ({ asin: m.asin, text: m.text.slice(0, 90) })) });
   if (store) return { ...v, amazon_status: 'brand_store' };
   if (!d.items.length && !d.noResults) return { ...v, amazon_status: 'blocked' };
-  if (!anyMatch.length) return { ...v, amazon_status: 'none' };
-  const first = (match[0] || anyMatch[0]);
+  // B. Amazon's own brand filter (rh=p_89:<Brand>) as a second candidate source; exact-string, so try the name variants
+  const cands = [...organic, ...anyMatch.filter((x) => !organic.includes(x))];
+  for (const name of [...new Set([q, brand, ...brandVariants(brand)])].slice(0, 3)) {
+    await sleep(jitter(800, 1800));
+    const bf = await get(`https://www.amazon.com/s?k=${encodeURIComponent(name)}&rh=p_89%3A${encodeURIComponent(name)}`);
+    if (bf.blocked || !bf.html) continue;
+    const bd = parseSearch(bf.html, t);
+    if (bd.noResults) continue;
+    v.catalogBrand = name;
+    for (const it of bd.items.filter((x) => x.match)) if (!cands.some((c) => c.asin === it.asin)) cands.push(it);
+    break;
+  }
+  if (!cands.length) return { ...v, amazon_status: 'none' };
   if (!DEEP) return { ...v, amazon_status: 'listings_unverified' };
-  await sleep(jitter(1000, 2500));
-  const p = await get(`https://www.amazon.com/dp/${first.asin}`);
-  if (p.blocked || !p.html) return { ...v, amazon_status: 'listings_unverified' };
-  const pp = parseProduct(p.html); Object.assign(v, { sampleAsin: first.asin, byline: pp.byline, seller: pp.seller, shipsFrom: pp.shipsFrom, productTitle: pp.title.slice(0, 100) });
-  const titleHasBrand = t(pp.title) || (pp.byline && bylineIsBrand(pp.byline, q)) || sellerIsBrand(pp.seller, q);
-  if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q)) return { ...v, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : v.storeHref };
-  if (!titleHasBrand) return { ...v, amazon_status: 'none', note: 'search hit did not carry the brand on the product page' };
-  if (sellerIsBrand(pp.seller, q) || /^amazon(\.com)?$/i.test(pp.seller.trim())) return { ...v, amazon_status: 'listings_official' };
-  return { ...v, amazon_status: pp.seller ? 'listings_3p' : 'listings_unverified' };
+  // C. deep-check up to 3 brand-matching listings; ANY official one = official
+  const checked = []; let sawBrandListing = false;
+  for (const c of cands.slice(0, 3)) {
+    await sleep(jitter(1000, 2500));
+    const p = await get(`https://www.amazon.com/dp/${c.asin}`); if (p.blocked || !p.html) continue;
+    const pp = parseProduct(p.html); const rec = { asin: c.asin, title: pp.title.slice(0, 80), byline: pp.byline.slice(0, 60), seller: pp.seller.slice(0, 40), shipsFrom: pp.shipsFrom.slice(0, 30) }; checked.push(rec);
+    const isBrandListing = t(pp.title) || (pp.byline && bylineIsBrand(pp.byline, q)) || sellerIsBrand(pp.seller, q);
+    if (!isBrandListing) continue; sawBrandListing = true;
+    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q)) return { ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : v.storeHref, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller };
+    if (sellerIsBrand(pp.seller, q) || /^amazon(\.com)?$/i.test(pp.seller.trim())) return { ...v, asinsChecked: checked, amazon_status: 'listings_official', sampleAsin: c.asin, byline: pp.byline, seller: pp.seller };
+  }
+  const last = checked.find((x) => x.seller) || checked[0] || {};
+  Object.assign(v, { asinsChecked: checked, sampleAsin: last.asin, byline: last.byline, seller: last.seller, productTitle: last.title });
+  if (!checked.length) return { ...v, amazon_status: 'listings_unverified' };
+  if (!sawBrandListing) return { ...v, amazon_status: 'none', note: 'search hits did not carry the brand on their product pages' };
+  return { ...v, amazon_status: last.seller ? 'listings_3p' : 'listings_unverified' };
 }
 let i = 0, n = 0;
 async function worker() {

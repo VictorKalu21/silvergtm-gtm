@@ -7,11 +7,13 @@
 // Resume-safe: re-run any time; done domains are skipped (RETRY=1 re-fetches unreachable rows).
 //
 //   RUN=<run> DIR=<dir> node pipeline.mjs      # {RUN}_input.json -> {RUN}_signal.json + {RUN}_ALL.csv
-//   env: CONC (20) TIMEOUT ms (20000) STALE_DAYS (365) PHYSICAL_MIN (0.5) RETRY (0|1)
+//   env: CONC (20) DELAY ms between domains per worker (0; use CONC=4 DELAY=1000 from a datacenter IP or Shopify's
+//        'Verifying your connection' challenge locks the IP out) TIMEOUT ms (20000) STALE_DAYS (365) PHYSICAL_MIN (0.5) RETRY (0|1)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 const DIR = process.env.DIR || '.';
 const RUN = process.env.RUN || 'run';
 const CONC = Number(process.env.CONC || 20);
+const DELAY = Number(process.env.DELAY || 0);
 const STALE_DAYS = Number(process.env.STALE_DAYS || 365);
 const PHYSICAL_MIN = Number(process.env.PHYSICAL_MIN || 0.5);
 const OUT = `${DIR}/${RUN}_signal.json`;
@@ -196,6 +198,7 @@ async function worker() {
     try { rec = await analyse(row); } catch (e) { rec = { ...row, fetch: 'fail:' + (e.message || 'error') }; }
     rec.status = gate(rec); rec.usSource = rec.country === 'US' ? rec.countrySource : (rec.status !== 'drop_not_us' ? 'usd+address' : null);
     done.set(row.domain, rec); n++;
+    if (DELAY) await new Promise((r) => setTimeout(r, DELAY));
     if (n % 50 === 0) { flush(); const el = (Date.now() - t0) / 1000, rate = n / el, eta = Math.round((todo.length - n) / rate); console.error(`${n}/${todo.length}  ${rate.toFixed(1)}/s  eta ${Math.floor(eta / 60)}m${eta % 60}s`); }
   }
 }
