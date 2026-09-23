@@ -22,19 +22,24 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const jitter = (a, b) => a + Math.random() * (b - a);
 // Amazon throttles an exact (UA, Accept, Accept-Language) combination after a few hundred requests, not the IP:
 // rotate realistic MOBILE header sets per attempt and the throttle never engages.
-const UAS = ['Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1',
-  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Mobile/15E148 Safari/604.1',
-  'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+const IOS = ['15_6', '16_2', '16_6', '17_0', '17_2', '17_4', '17_5', '17_6', '18_0', '18_1', '18_2', '18_3'];
+const UAS = [
+  ...IOS.map((v) => `Mozilla/5.0 (iPhone; CPU iPhone OS ${v} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${v.replace('_', '.')} Mobile/15E148 Safari/604.1`),
   'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/126.0.6478.108 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/131.0.6778.73 Mobile/15E148 Safari/604.1',
   'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36',
   'Mozilla/5.0 (Linux; Android 13; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
-  'Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1'];
+  'Mozilla/5.0 (Linux; Android 14; SM-S928U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36'];
 // PRODUCT pages: phone UAs get a variant whose byline ("Visit the X Store" / "Brand: X") loads lazily and is NOT in the HTML;
 // tablet UAs get the full page. Search pages are fine on phone UAs. (Found on BRUNT: 5 phone fetches, 0 bylines; iPad: byline present.)
-const TABLET_UAS = ['Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1',
-  'Mozilla/5.0 (iPad; CPU OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
-  'Mozilla/5.0 (iPad; CPU OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
-  'Mozilla/5.0 (Linux; Android 13; SM-X710) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'];
+const TABLET_UAS = [
+  ...IOS.map((v) => `Mozilla/5.0 (iPad; CPU OS ${v} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${v.replace('_', '.')} Mobile/15E148 Safari/604.1`),
+  'Mozilla/5.0 (Linux; Android 13; SM-X710) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Linux; Android 14; SM-X910) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'];
+// Amazon throttles a header set (not the IP) after a few hundred requests: a burnt UA answers with a ~1 KB shell page.
+// Adaptive pool: a UA that returns a shell/503 goes on cooldown and is skipped while others still work.
+const COOL = new Map(); const COOLDOWN_MS = Number(process.env.UA_COOLDOWN_MS || 15 * 60 * 1000);
+const pickUA = (pool) => { const ok = pool.filter((u) => !(COOL.get(u) > Date.now())); return (ok.length ? ok : pool)[Math.floor(Math.random() * (ok.length ? ok : pool).length)]; };
 const ACCEPTS = ['text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', '*/*', 'text/html,application/xhtml+xml,*/*;q=0.8', 'text/html'];
 const LANGS = ['en-US,en;q=0.9', 'en-US', 'en-US,en;q=0.8', 'en'];
 const pick = (a) => a[Math.floor(Math.random() * a.length)];
@@ -42,11 +47,12 @@ const BLOCK = /Sorry! Something went wrong|Enter the characters you see below|Ty
 const strip = (s) => s.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
 
 async function get(url, tablet = false) {
-  for (let a = 0; a < 5; a++) {
+  for (let a = 0; a < 6; a++) {
+    const ua = pickUA(tablet ? TABLET_UAS : UAS);
     try {
-      const r = await fetch(url, { headers: { 'User-Agent': pick(tablet ? TABLET_UAS : UAS), 'Accept-Language': pick(LANGS), 'Accept': pick(ACCEPTS) }, signal: AbortSignal.timeout(25000), redirect: 'follow' });
+      const r = await fetch(url, { headers: { 'User-Agent': ua, 'Accept-Language': pick(LANGS), 'Accept': pick(ACCEPTS) }, signal: AbortSignal.timeout(25000), redirect: 'follow' });
       const html = await r.text();
-      if (r.status === 503 || r.status === 429 || BLOCK.test(html.slice(0, 5000)) || html.length < 5000) { await sleep(jitter(2000, 6000) * (a + 1)); continue; }   // short page = JS shell, rotate too
+      if (r.status === 503 || r.status === 429 || BLOCK.test(html.slice(0, 5000)) || html.length < 5000) { COOL.set(ua, Date.now() + COOLDOWN_MS); await sleep(jitter(1000, 3000)); continue; }   // burnt header set -> cooldown, try another
       return { status: r.status, html };
     } catch (e) { await sleep(jitter(3000, 6000)); }
   }
