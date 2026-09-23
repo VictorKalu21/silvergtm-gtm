@@ -67,6 +67,9 @@ const ac = existsSync(`${DIR}/${RUN}_amazon_ac.json`) ? rd(`${RUN}_amazon_ac.jso
 const order = { high: 0, low: 1, none: 2 };   // brands shoppers already search for on Amazon first (that's the buyer's real filter)
 src.sort((a, b) => (order[ac[a.domain]?.demand] ?? 3) - (order[ac[b.domain]?.demand] ?? 3) || (a.rank || 9e9) - (b.rank || 9e9));
 const done = existsSync(OUT) ? rd(`${RUN}_amazon_verify.json`) : {};
+// Optional pre-filter from `dataforseo.mjs serp-store` (Google: site:amazon.com "Visit the <Brand> Store", ~$0.002/brand): a hit whose
+// store URL or title carries the brand's distinctive word is a Brand Registry store -> brand_store, no Amazon fetch needed (~1/3 fewer).
+const serp = existsSync(`${DIR}/${RUN}_dfs_serp.json`) ? rd(`${RUN}_dfs_serp.json`) : {};
 let todo = src.filter((r) => !done[r.domain] || (process.env.RETRY === '1' && done[r.domain].amazon_status === 'blocked') || process.env.REPASS === '1');   // REPASS=1 re-checks everything, accumulating evidence
 if (process.env.LIMIT) todo = todo.slice(0, Number(process.env.LIMIT));
 console.error(`${RUN}: ${src.length} brands, ${Object.keys(done).length} done, ${todo.length} to verify (mobile fetch, CONC=${CONC})`);
@@ -113,6 +116,12 @@ async function verify(r, prior) {
   const generic = (x) => (x || '').split(/\s+/).map(tok).filter(Boolean).every((w) => GENERIC.has(w) || w.length < 3);
   if (generic(q)) q = r.domain.replace(/\.[a-z.]+$/, '').replace(/[-_]/g, ' ');   // "kids" -> "striderite"
   const t = matcher(q);
+  const g = serp[r.domain];
+  if (g && g.google_store_found && (g.store_url || g.store_title)) {
+    const key = q.toLowerCase().split(/[\s&'’.-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w));
+    const hay = tok(decodeURIComponent(g.store_url || '') + ' ' + (g.store_title || ''));
+    if (key.length && key.every((w) => hay.includes(w)) || t(g.store_title || '')) return finish({ domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10), amazonSearchUrl: `https://www.amazon.com/s?k=${encodeURIComponent(q)}`, passes: (prior?.passes || 0) + 1, amazon_status: 'brand_store', storeHref: g.store_url, via: 'google_serp', byline: g.store_title }, prior);
+  }
   const v = { domain: r.domain, brand, query: q, checkedAt: new Date().toISOString().slice(0, 10), amazonSearchUrl: `https://www.amazon.com/s?k=${encodeURIComponent(q)}`, passes: (prior?.passes || 0) + 1 };
   // A. plain search, TWICE (Amazon varies the result set per request/header set; the union is far more stable than one sample)
   const cands = []; const seen = new Set(); let blocked = 0, storeHref = null, total = 0, noResults = false;
