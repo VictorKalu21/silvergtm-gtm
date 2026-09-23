@@ -4,11 +4,11 @@
 // fashion/jewelry/alcohol/medical at CAP_SHARE. N=0 exports the whole ranked pool (let the buyer cut it).
 //
 //   RUN=<run> DIR=<dir> N=100 CAP_SHARE=0.25 node select.mjs             # -> {RUN}_SELECT.csv
-//   env: MIN_SEARCHES (0) MIN_VISITS (0) REQUIRE_CONTACT (1) DELIVERED (comma list of csvs whose Website column is excluded)
+//   env: MIN_SEARCHES (0) MIN_VISITS (0) REQUIRE_CONTACT (0; 1 = drop rows with no email or phone) DELIVERED (comma list of csvs whose Website column is excluded)
 //        INPUTS (comma list of *_LEADS_full.csv from several runs -> one pool; default {RUN}_LEADS_full.csv)  OUT (output path)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', N = Number(process.env.N ?? 100), CAP = Number(process.env.CAP_SHARE ?? 0.25);
-const MIN_S = Number(process.env.MIN_SEARCHES || 0), MIN_V = Number(process.env.MIN_VISITS || 0), REQ = process.env.REQUIRE_CONTACT !== '0';
+const MIN_S = Number(process.env.MIN_SEARCHES || 0), MIN_V = Number(process.env.MIN_VISITS || 0), REQ = process.env.REQUIRE_CONTACT === "1";   // contact is a column, not a filter, unless asked
 function parse(t) { const rows = []; let f = [], c = '', q = false; for (let i = 0; i < t.length; i++) { const ch = t[i]; if (q) { if (ch === '"') { if (t[i + 1] === '"') { c += '"'; i++; } else q = false; } else c += ch; } else if (ch === '"') q = true; else if (ch === ',') { f.push(c); c = ''; } else if (ch === '\n' || ch === '\r') { if (ch === '\r' && t[i + 1] === '\n') i++; if (c !== '' || f.length) { f.push(c); rows.push(f); f = []; c = ''; } } else c += ch; } if (c !== '' || f.length) { f.push(c); rows.push(f); } return rows; }
 const esc = (v) => '"' + String(v ?? '').replace(/"/g, '""') + '"';
 const dom = (w) => (w || '').replace(/^https?:\/\//, '').replace(/\/.*$/, '').toLowerCase();
