@@ -26,7 +26,7 @@ Build a verified list of **US-based, established, physical-product Shopify brand
 
 ```bash
 export DIR=/path/to/workdir RUN=shopify_us
-# 0  source: EITHER BigQuery (httparchive.sql -> export CSV)  OR  free Tranco x DNS:
+# 0  source: EITHER BigQuery (httparchive.sql -> export CSV; prompts/httparchive-pull.md is the paste-in prompt for a machine with bq auth)  OR  free Tranco x DNS:
 curl -L -o top-1m.csv.zip https://tranco-list.eu/top-1m.csv.zip && unzip top-1m.csv.zip
 FROM=1 TO=200000 CONC=800 node seed-tranco-dns.mjs top-1m.csv        # -> {RUN}_seed.csv
 node prep-input.mjs {RUN}_seed.csv                                     # -> {RUN}_input.json
