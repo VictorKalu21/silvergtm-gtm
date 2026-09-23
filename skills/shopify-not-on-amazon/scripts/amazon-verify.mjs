@@ -222,7 +222,7 @@ async function verify(r, prior) {
     const isBrandListing = (pp.byline && bylineIsBrand(pp.byline, q, pp.title, r.domain)) || sellerIsBrand(pp.seller, q);
     const rec = { asin: c.asin, title: pp.title.slice(0, 80), byline: pp.byline.slice(0, 60), seller: pp.seller.slice(0, 40), shipsFrom: pp.shipsFrom.slice(0, 30), unavailable: pp.unavailable, attributed: isBrandListing }; checked.push(rec);
     if (!isBrandListing) continue; sawBrandListing = true;
-    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q, pp.title, r.domain)) return finish({ ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : null, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
+    if (/^Visit the /i.test(pp.byline) && bylineIsBrand(pp.byline, q, pp.title, r.domain)) return finish({ ...v, asinsChecked: checked, amazon_status: 'brand_store', storeHref: pp.bylineHref ? 'https://www.amazon.com' + pp.bylineHref.replace(/^https?:\/\/www\.amazon\.com/, '').replace(/\?.*$/, '') : `https://www.amazon.com/dp/${c.asin}`, sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);   // evidence link = the store page, else the listing that carries the byline (never a stale tile from a prior pass)
     if (sellerIsBrand(pp.seller, q) || AMAZON_1P.test(pp.seller.trim())) return finish({ ...v, asinsChecked: checked, amazon_status: 'listings_official', sampleAsin: c.asin, byline: pp.byline, seller: pp.seller }, prior);
   }
   const last = checked.find((x) => x.attributed && x.seller) || checked.find((x) => x.attributed) || checked[0] || {};
