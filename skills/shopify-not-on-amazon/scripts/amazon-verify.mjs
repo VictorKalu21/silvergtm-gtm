@@ -94,7 +94,8 @@ const matcher = (q) => {
 const SUFFIX = new Set('inc llc co corp ltd llp company store brand brands official usa us the and of by com net org labs group international shop direct retail online sales'.split(' '));
 const wordsAll = (x) => (x || '').toLowerCase().split(/[\s&'’.,\/-]+/).map(tok).filter((w) => w.length >= 2);
 // true when NAME carries no distinctive word that the brand name Q lacks ("Force Factor" vs "force usa": 'factor' -> false; "Vincero Collective" vs "vincero": ok)
-const noExtraWords = (name, q) => { const qw = new Set(wordsAll(q)); return wordsAll(name).every((w) => qw.has(w) || SUFFIX.has(w) || GENERIC.has(w) || CATEGORY.has(w) || w.length < 3 || [...qw].some((x) => x.length >= 5 && (w.startsWith(x) || x.startsWith(w)))); };
+const stem = (w) => w.replace(/(ies|es|s|y)$/, '');   // nurseries == nursery
+const noExtraWords = (name, q) => { const qw = new Set(wordsAll(q)); return wordsAll(name).every((w) => qw.has(w) || SUFFIX.has(w) || GENERIC.has(w) || CATEGORY.has(w) || w.length < 3 || [...qw].some((x) => stem(x) === stem(w) || (x.length >= 5 && (w.startsWith(x) || x.startsWith(w))))); };
 const sellerIsBrand = (seller, q) => { if (!seller) return false; const m = matcher(q); const first = tok(q.split(/\s+/)[0]); return noExtraWords(seller, q) && (m(seller) || (first.length >= 5 && !GENERIC.has(first) && tok(seller).includes(first))); };
 // category nouns a site name carries but an Amazon store name drops ("Vornado Air" -> "Visit the Vornado Store"); local to the byline rule so
 // search matching still needs both words ("Hudson Baby" listings never become "Hudson Jeans" candidates)
@@ -115,10 +116,11 @@ const bylineIsBrand = (byline, q, title = '', domain = '') => { const raw = byli
   const storeSubset = /^Visit the /i.test(byline) && key.length > 0 && key[0].length >= 4 && b === key[0] && key.slice(1).every((w) => CATEGORY.has(w) || tok(title).includes(w));   // whole store name == the word ("Hudson Baby" must not pass as "Hudson")
   // domain root == the store name plus generic words only ("CHITA" for chitaliving.com, "Vornado" for vornado.com; NOT "Universal" for universalstandard.com)
   const root = domainRoot(domain);
-  const domainPrefix = /^Visit the /i.test(byline) && b.length >= 5 && !GENERIC.has(b) && root.startsWith(b) && (root.length === b.length || GENERIC.has(root.slice(b.length)) || CATEGORY.has(root.slice(b.length)));
+  // the domain rules apply to "Visit the X Store" and "Brand: X" alike (both are Amazon's own identity of the listing)
+  const domainPrefix = b.length >= 5 && !GENERIC.has(b) && root.startsWith(b) && (root.length === b.length || GENERIC.has(root.slice(b.length)) || CATEGORY.has(root.slice(b.length)));
   // store name starts with the whole domain root ("Darn Tough Vermont" for darntough.com, "Thinx for All" for thinx.com; NOT "Pura Vida Moringa" for puravidabracelets.com, NOT "Force Factor" for forceusa.com)
   const rawRoot = (domain || '').toLowerCase().replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');   // RAW root here: forceusa.com must not become "force"
-  const storePrefix = /^Visit the /i.test(byline) && rawRoot.length >= 5 && !GENERIC.has(rawRoot) && b.startsWith(rawRoot);
+  const storePrefix = rawRoot.length >= 5 && !GENERIC.has(rawRoot) && (b.startsWith(rawRoot) || (rawRoot.length >= 6 && b.includes(rawRoot)));   // "Jordan's Skinny Mixes" for skinnymixes.com, "Poo-Pourri" for pourri.com
   // loose forms only when the byline carries NO distinctive word the brand lacks ("Force Factor" is not "Force", "Berkley Jensen" is not "Berkley")
   const loose = (noExtraWords(raw, q) && (b.includes(t) || matcher(q)(raw) || firstPlusTitle || storeSubset)) || domainPrefix || storePrefix;   // the domain rules survive a bad search term ("top" for kirby.com)
   return b.length >= 3 && (exact || loose); };
@@ -172,10 +174,10 @@ async function verify(r, prior) {
     addItems(d.items.filter((x) => !x.sponsored)); addItems(d.items);
     if (pass === 0) await sleep(jitter(1500, 3000));
   }
-  if (blocked === 2) return { ...v, amazon_status: 'blocked' };
+  if (blocked === 2) return prior && prior.amazon_status !== 'blocked' ? { ...prior, repassBlockedAt: v.checkedAt } : { ...v, amazon_status: 'blocked' };   // a blocked re-pass keeps the earlier verdict
   Object.assign(v, { resultCount: total, brandMatches: cands.length, storeHref, evidence: cands.slice(0, 5).map((m) => ({ asin: m.asin, text: m.text.slice(0, 90) })) });
   if (storeHref) return finish({ ...v, amazon_status: 'brand_store' }, prior);
-  if (!total && !noResults) return { ...v, amazon_status: 'blocked' };
+  if (!total && !noResults) return prior && prior.amazon_status !== 'blocked' ? { ...prior, repassBlockedAt: v.checkedAt } : { ...v, amazon_status: 'blocked' };
   // B. Amazon's own brand filter (rh=p_89:<Brand>) with EVERY usable name variant as a second candidate source
   const usable = (name) => { const w = name.toLowerCase().split(/\s+/).map(tok).filter(Boolean); return w.length > 1 || (w[0] && w[0].length >= 5 && !GENERIC.has(w[0])); };
   for (const name of [...new Set([q, brand, ...brandVariants(brand)])].filter(usable).slice(0, Number(process.env.BF_VARIANTS || 3))) {

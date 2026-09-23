@@ -66,3 +66,16 @@ const m3 = [
 ];
 let bad3=0; for (const [b,q,t,d,exp] of m3) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad3++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
 console.log(bad3 ? bad3+' failures (m3)' : 'all '+m3.length+' m3 cases pass');
+const m4 = [
+ ["Visit the Jordan's Skinny Mixes Store",'skinny mixes','','skinnymixes.com',true],
+ ['Visit the SPRING HILL NURSERIES Store','spring hill nursery','','springhillnursery.com',true],
+ ['Visit the Poo-Pourri Store','~pourri','','pourri.com',true],
+ ['Brand: Glam-Aholic Lifestyle','glam-aholic','','glamaholiclifestyle.com',true],
+ ['Visit the Christopher Bean Coffee Store',"chris' coffee",'','chriscoffee.com',false],
+ ['Visit the Icy Hot Store','wear icy','','wearicy.com',false],
+ ['Visit the Barsys Store','bar products','','barproducts.com',false],
+ ['Visit the Honest Beauty Store','farmacy beauty','','farmacybeauty.com',false],
+ ['Visit the Evermade Store','proof','','carryproof.com',false],
+];
+let bad4=0; for (const [b,q,t,d,exp] of m4) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad4++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
+console.log(bad4 ? bad4+' failures (m4)' : 'all '+m4.length+' m4 cases pass');
