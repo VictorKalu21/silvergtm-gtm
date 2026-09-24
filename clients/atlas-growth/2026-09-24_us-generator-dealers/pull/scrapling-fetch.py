@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""web-scrape-triage Tier 3 (free rung): Scrapling StealthyFetcher render for sites fetch-sites.js could not read —
+"""web-scrape-triage Tier 3 (free rung): Scrapling StealthyFetcher render (solve_cloudflare OFF: the Turnstile host is blocked from this egress and the solver loops past SIGALRM) for sites fetch-sites.js could not read —
 403/anti-bot blocks and JS-rendered shells that came back 'ok' with empty text. Home page only, rendered.
 Writes records in fetch-sites.js's site_text.jsonl shape to owner-scrapling/site_text.jsonl (resumable).
 Usage: python3 pull/scrapling-fetch.py --shard K --of N [--in leads_scrapling_stealth.csv]"""
@@ -27,7 +27,7 @@ for r in todo:
     rec["phone"] = r.get("phone_number", "")
     try:
         signal.alarm(90)
-        p = StealthyFetcher.fetch(r["website"], headless=True, solve_cloudflare=True, timeout=45000, network_idle=True)
+        p = StealthyFetcher.fetch(r["website"], headless=True, solve_cloudflare=False, timeout=30000, network_idle=True)
         signal.alarm(0)
         body = p.body.decode("utf-8", "ignore") if isinstance(p.body, bytes) else str(p.body)
         text = to_text(body)[:20000]
