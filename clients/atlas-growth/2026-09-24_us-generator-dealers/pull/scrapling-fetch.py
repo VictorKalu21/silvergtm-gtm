@@ -3,7 +3,7 @@
 403/anti-bot blocks and JS-rendered shells that came back 'ok' with empty text. Home page only, rendered.
 Writes records in fetch-sites.js's site_text.jsonl shape to owner-scrapling/site_text.jsonl (resumable).
 Usage: python3 pull/scrapling-fetch.py --shard K --of N [--in leads_scrapling_stealth.csv]"""
-import csv, json, os, re, sys, html, signal
+import csv, json, os, re, sys, html
 from scrapling.fetchers import StealthyFetcher
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 K = int(sys.argv[sys.argv.index("--shard") + 1]); N = int(sys.argv[sys.argv.index("--of") + 1])
@@ -19,29 +19,35 @@ BAD = re.compile(r"\.(png|jpe?g|gif|svg|webp)$|example\.com|sentry|wixpress|doma
 def to_text(h):
     h = re.sub(r"(?is)<(script|style|noscript|svg)[^>]*>.*?</\1>", " ", h)
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?s)<[^>]+>", " ", h))).strip()
-class TO(Exception): pass
-def alarm(*_): raise TO()
-signal.signal(signal.SIGALRM, alarm)
+import multiprocessing as mp
+def fetch_one(url, q):
+    """Runs in a child process so a hung browser can be killed; SIGALRM cannot interrupt Scrapling's event loop."""
+    try:
+        p = StealthyFetcher.fetch(url, headless=True, solve_cloudflare=False, timeout=30000, network_idle=True)
+        body = p.body.decode("utf-8", "ignore") if isinstance(p.body, bytes) else str(p.body)
+        q.put((p.status, body))
+    except Exception as e:
+        q.put(("ERR", type(e).__name__))
 for r in todo:
     rec = {k: r.get(k, "") for k in ("place_id", "name", "website", "neighborhood", "city", "full_address")}
     rec["phone"] = r.get("phone_number", "")
-    try:
-        signal.alarm(90)
-        p = StealthyFetcher.fetch(r["website"], headless=True, solve_cloudflare=False, timeout=30000, network_idle=True)
-        signal.alarm(0)
-        body = p.body.decode("utf-8", "ignore") if isinstance(p.body, bytes) else str(p.body)
-        text = to_text(body)[:20000]
-        blocked = re.search(r"Attention Required|Just a moment|verify you are human|Access denied", text[:400], re.I)
-        ok = p.status == 200 and len(text) >= 200 and not blocked
-        mails = sorted({m.lower() for m in EMAIL.findall(body) if not BAD.search(m)})
-        rec.update(status="ok" if ok else f"home_failed:{p.status}{'_challenge' if blocked else ''}",
-                   pages=[{"url": r["website"], "label": "home", "text": text if ok else ""}],
-                   emails=mails if ok else [], emails_by_source={"scrapling": mails} if ok and mails else {},
-                   text=f"=== home ({r['website']}) ===\n{text}" if ok else "", pages_fetched=1 if ok else 0, source="scrapling")
-    except TO:
+    q = mp.Queue(); proc = mp.Process(target=fetch_one, args=(r["website"], q)); proc.start(); proc.join(75)
+    if proc.is_alive():
+        proc.kill(); proc.join()
         rec.update(status="home_failed:scrapling_timeout", pages=[], emails=[], emails_by_source={}, text="", pages_fetched=0, source="scrapling")
-    except Exception as e:
-        signal.alarm(0)
-        rec.update(status="home_failed:" + type(e).__name__, pages=[], emails=[], emails_by_source={}, text="", pages_fetched=0, source="scrapling")
+    else:
+        try: status, body = q.get(timeout=5)
+        except Exception: status, body = "ERR", "noresult"
+        if status == "ERR":
+            rec.update(status="home_failed:" + body, pages=[], emails=[], emails_by_source={}, text="", pages_fetched=0, source="scrapling")
+        else:
+            text = to_text(body)[:20000]
+            blocked = re.search(r"Attention Required|Just a moment|verify you are human|Access denied", text[:400], re.I)
+            ok = status == 200 and len(text) >= 200 and not blocked
+            mails = sorted({m.lower() for m in EMAIL.findall(body) if not BAD.search(m)})
+            rec.update(status="ok" if ok else f"home_failed:{status}{'_challenge' if blocked else ''}",
+                       pages=[{"url": r["website"], "label": "home", "text": text if ok else ""}],
+                       emails=mails if ok else [], emails_by_source={"scrapling": mails} if ok and mails else {},
+                       text=f"=== home ({r['website']}) ===\n{text}" if ok else "", pages_fetched=1 if ok else 0, source="scrapling")
     with open(OUT, "a") as f: f.write(json.dumps(rec) + "\n")
     print(rec["status"], rec["name"][:40], flush=True)
