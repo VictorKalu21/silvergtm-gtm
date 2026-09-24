@@ -14,6 +14,21 @@
 | Runs shipped | none |
 | Live campaigns | none |
 
+## How to resume the US generator run (written 2026-09-24, paused on the weekly usage limit)
+
+1. **Restore the data first** (gitignored, not in the repo): the operator has `atlas-generators rundata` as 4 parts
+   (`atlas-gen-rundata.part00..03`, sent 2026-09-24). Rejoin with `cat atlas-gen-rundata.part0* > rundata.tar.gz`
+   (sha256 starts `01fad8f868781c46`), then `tar -xzf rundata.tar.gz -C clients/atlas-growth/`. Excluded as rebuildable: Maps
+   shard dirs, `leads_raw.json`, the pre-merge site-text folders (already merged into `owner/site_text.jsonl`), logs.
+2. **Owner-finding, where it stopped:** site read `owner/read` done for batches 0–63 of 138 (resume with the `owner-read`
+   workflow on batches 64–137; its script counts from 0, so pass the ids explicitly or edit the range). BBB web-search sweep
+   `owner/sweep2` done for batches 0–84 of 156; `owner/sweep3` (390 batches, 7,783 leads) not started. Sweep yield ~75%.
+   **≤7 batches per workflow run** (200-search budget per run); re-run any batch that reports 0 searches.
+   After the read finishes, queue its unnamed leads into a further sweep folder with `prep-sweep-batches.js --have`.
+3. Then `merge-owner-reads.js` (pass `--trade-words` from the owner prompt) → `combine-owner-contacts.js` → email waterfall
+   → verification (**paid, explicit go**) → Plusvibe (`build-plusvibe.js`, `personalize-config` for generators still to write).
+4. Raw emails already on disk: 14,554 of 16,515 ICP leads have ≥1 (12,763 from OEM lists, 7,695 on-site) — unverified.
+
 ## How to resume the AU run (written 2026-09-20, after owner-finding)
 
 1. Read root `CLAUDE.md`, `skills/google-maps-scrape/README.md`, then this file, then the run's `RUN-NOTES.md` (last
