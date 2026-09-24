@@ -18,6 +18,7 @@ Build a verified list of **US-based, established, physical-product Shopify brand
 | 1-6 | Free gates | live Shopify (not password/offline/`.myshopify.com`) · **US** (`/meta.json` country) · **physical** (`requires_shipping` share) · not stale (catalog `updated_at`) · **not dropship/POD** (app fingerprints + catalog shares) · not already linking to Amazon on its own site · contact footprint (mailto/tel/LinkedIn/IG + `/pages/contact*` fallback) | free, 3-5 fetches/domain, ~10/s | `pipeline.mjs` |
 | 7a | Amazon demand | Amazon autocomplete: 0 brand suggestions = nobody buys this brand on Amazon (strong prior); rich = demand exists (official OR resellers) | free, no bot wall, minutes | `amazon-autocomplete.mjs` |
 | 8 | Brand + category | Haiku reads homepage text + product types: genuine consumer brand vs reseller/marketplace/agency/B2B; assigns category | cheap | `prep-classify.mjs` -> subagents -> `merge.mjs classify` |
+| 7c | Search-term sanity | Haiku reads {domain, shopName, title, top vendors, term used} for every LEAD row and returns the brand name as Amazon would name the store; changed terms are re-crawled. Catches "curly" (Pattern Beauty), "tropical fish" (Predatory Fins), "gladiator" (Gladiator GarageWorks). | cheap | `prep-query-review.mjs` -> subagents -> `--merge` -> `ONLY=` re-check |
 | 7b | Amazon VERIFY | plain **mobile-UA fetches**: 2 searches + Amazon's brand filter -> up to 5 product pages (tablet UA) -> `brand_store` / `listings_official` / `listings_3p` (resellers only) / `listings_dormant` / `none`. Accumulates across passes, never downgrades. | free, ~20-40s/brand | `amazon-verify.mjs` (`amazon-verify-render.mjs` = browser fallback) |
 | 8b | Lead review | second Haiku pass on the lead candidates only: final keep/drop + fixed category list + a one-line sales note | cheap | `merge.mjs final` picks up `{RUN}_lead_review_N_out.json` |
 | 9a | Contacts | contact / policy / about / wholesale pages -> emails (own-domain, non-generic first), phones, LinkedIn, named people | free | `enrich-contacts.mjs` |
@@ -37,6 +38,8 @@ node prep-classify.mjs                                                 # -> {RUN
 node merge.mjs classify                                                # -> {RUN}_keeps.json
 node amazon-verify.mjs                                                 # -> {RUN}_amazon_verify.json  (CONC=2; when throttled: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2)
 #   RETRY=1 (redo blocked)  ONLY=a.com,b.com (redo those; put hand search terms in {RUN}_query_overrides.json first)
+node prep-query-review.mjs                                             # -> {RUN}_query_review_N.json : Haiku returns the brand name as Amazon names the store
+node prep-query-review.mjs --merge && ONLY=$(cat only_query.txt) REPASS=1 MAX_DP=8 node amazon-verify.mjs   # re-check every changed term (5-8% of lead rows)
 #   RESCORE=1 (no fetch: re-derive verdicts from the product pages already read, after any matcher change; never downgrades)
 #   optional: node dataforseo.mjs amazon-volume                        # branded searches/mo on Amazon -> {RUN}_dfs_amazon.json
 #   lead review: batch the none/3p/dormant keeps -> Haiku -> {RUN}_lead_review_N_out.json (prompt below)
