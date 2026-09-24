@@ -1184,3 +1184,19 @@ Also `TRADE` / `TRADE_SUBSTR` do not know the Australian trade nouns, so `golden
 **Fix (engine, with a test and an operator go).** A per-country locality order in `city-fallback`: `au` = suburb > town > village > city (strip a trailing " City"/" Shire"/" Regional", reject `^(City|Shire|Council|Region) of`); keep the UK order as the default. One fixture case per country in `tests/build-plusvibe.test.js`.
 
 **Until then:** `city_overrides_au.py` writes the `--city-overrides` file with that order (plus the state-less area token from the business name as the last rung).
+
+## MEDIUM (fetch-sites.js): the main pass can hang forever on its last in-flight site, so PASS 2 never runs and the process never exits
+
+**Status:** OPEN · found 2026-09-24 (Atlas Growth, US generator run, 13,639 domains). The main pass wrote 13,637 rows, then sat 13+ minutes at ~32% CPU with 2 leads in flight (`supremephc.com` with a long utm query string, `dscr.com`) and no further writes. Killed; the incremental `site_text.jsonl` survived intact (crash-safe as designed), but the free PASS 2 retry of transient failures was lost.
+
+**Likely cause (unconfirmed):** CPU-bound, not network — a regex or `htmlToText()` pass over a very large page, or a page-size cap that stops reading without resolving (the known `req.destroy()` trap in web-scrape-triage's guardrails). **Fix (engine, with a test and an operator go):** a per-lead wall-clock cap (e.g. 60 s via `Promise.race`) that writes `home_failed:lead_timeout` and moves on, plus a byte cap applied BEFORE any regex. Test: a fixture server that streams a 20 MB page must finish the lead inside the cap.
+
+**Until then:** run with a shell `timeout`, and if it hangs, kill it and re-run `fetch-sites.js` on a CSV of the missing + transient-failure rows into a separate `--out` (that re-run does its own PASS 2). The Atlas generator run did this: `leads_domains_retry.csv` → `owner-retry/`.
+
+## FACT (fetch-sites.js input): `website` must carry a scheme — bare hosts are silently skipped
+
+**Status:** FACT, 2026-09-24 (Atlas Growth US generator run). `fetch-sites.js` keeps only rows where `/^https?:\/\//` matches `website`; OEM dealer lists give bare hosts (`www.acmeelectric.com`), so 7,762 of 13,639 domains were dropped from the run with no warning (the progress line just said `/5877`). Any non-Maps source must be normalised to `https://<host>` before STEP 5c-dom. A one-line warning (`N rows skipped: website has no scheme`) would have made it visible.
+
+## FACT / ENVIRONMENT (WebSearch budget): each Workflow RUN gets its own ~200-search budget; batches past it silently return empty
+
+**Status:** measured 2026-09-24 (Atlas Growth US generator name→domain, Haiku web-verify). One run of 30 batches: batches 1–8 made 15–29 searches each (~200 total), batches 9–30 made 0 and returned all-blank files without any error. A fresh run of 7 batches immediately afterwards made 179 searches (and the next 176, 181) — so the budget resets per run, confirming the question left open in the 2026-09-20 entry above. **Rule:** size a WebSearch workflow run at ≤ ~7 batches × 25 items (≈180 searches), launch runs back-to-back, and treat any batch reporting 0 searches as not done (delete its output and re-queue).
