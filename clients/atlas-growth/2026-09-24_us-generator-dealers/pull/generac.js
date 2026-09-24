@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // Generac HOME STANDBY (category 1) full-US dealer pull.
 // Recipe: icp-source-planner/library/oem-dealer-locators--us-generator-installers.md "## Generac".
+// v2 log (generac.queries.v2.jsonl): v1 used n>=100 as saturation, which was wrong (see SUBCAP below).
 // Probed 2026-09-24: no page/pageSize/limit param, no state or country-wide query (USA w/o postalCode -> 0),
-// centroidLatitude/Longitude ignored (postalCode sets the centre), hard cap 100 sorted tier-then-distance.
+// centroidLatitude/Longitude ignored (postalCode sets the centre), hard cap 100 = 50 tier dealers + 50 aligned contractors, each sorted tier-group then distance.
 // => adaptive ZIP grid: seed greedy cover of ZCTA centroids at r=50 (cover 40 mi), any query returning
 //    100 (saturated) is split into a greedy cover at 25 -> 10 -> 5 mi of the ZCTAs inside its disk.
 // Resume-safe: every finished query appends to raw/generac.queries.jsonl; new dealers append to
@@ -15,10 +16,10 @@ if (process.env.HTTPS_PROXY && !process.env.NODE_USE_ENV_PROXY) {
   process.exit(r.status ?? 1);
 }
 const RAW = path.join(__dirname, '..', 'raw');
-const OUT = path.join(RAW, 'generac.jsonl'), QLOG = path.join(RAW, 'generac.queries.jsonl'), PROG = path.join(RAW, 'generac.progress.json');
+const OUT = path.join(RAW, 'generac.jsonl'), QLOG = path.join(RAW, 'generac.queries.v2.jsonl'), PROG = path.join(RAW, 'generac.progress.json');
 const ZCTA = require(path.join(RAW, 'zcta-2025.json')); // [zip, lat, lng, aland_sqmi] 50 states + DC (Census 2025 gazetteer)
 const LEVELS = [{ r: 50, d: 40 }, { r: 25, d: 20 }, { r: 10, d: 7 }, { r: 5, d: 3.5 }];
-const CAP = 100, MIN_GAP_MS = 550, WORKERS = 2, MAX_TRIES = 7;
+const CAP = 100, SUBCAP = 50, ALIGNED = new Set([20, 21]), MIN_GAP_MS = 550, WORKERS = 2, MAX_TRIES = 7;
 const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36';
 
 const rad = Math.PI / 180;
@@ -37,13 +38,15 @@ function cover(pts, d) {
   }
   return out;
 }
-function children(q) { // q: {zip, r, lvl}
-  const L = LEVELS[q.lvl + 1]; if (!L) return [];
-  const c = ZBY.get(q.zip);
-  // ZCTAs whose centroid lies inside the parent disk (+ margin), nearest-to-centre first
-  const inside = ZCTA.filter(z => Math.abs(z[1] - c[1]) < (q.r + 5) / 60 && hav(c[1], c[2], z[1], z[2]) <= q.r + (q.r - LEVELS[q.lvl].d))
-    .sort((a, b) => hav(c[1], c[2], a[1], a[2]) - hav(c[1], c[2], b[1], b[2]));
-  return cover(inside, L.d).map(z => ({ zip: z[0], r: L.r, lvl: q.lvl + 1, parent: q.zip + '@' + q.r }));
+// Next level = ONE greedy cover over the union of ZCTAs inside any saturated parent disk (+margin); per-parent covers
+// overlapped ~3x (3,728 vs 1,351 queries at r=25). ZIPs already queried at that radius are placed first so a resume reuses them.
+function nextLevel(parents, lvl) {
+  const L = LEVELS[lvl + 1]; if (!L || !parents.length) return [];
+  const P = parents.map(q => { const c = ZBY.get(q.zip); return { lat: c[1], lng: c[2], m: q.r + (q.r - LEVELS[lvl].d) }; });
+  const pts = ZCTA.filter(z => P.some(p => Math.abs(p.lat - z[1]) < p.m / 60 && hav(p.lat, p.lng, z[1], z[2]) <= p.m));
+  const isDone = z => done.has(z[0] + '@' + L.r);
+  pts.sort((a, b) => (isDone(b) - isDone(a)) || a[0].localeCompare(b[0]));
+  return cover(pts, L.d).map(z => ({ zip: z[0], r: L.r, lvl: lvl + 1 }));
 }
 const key = q => q.zip + '@' + q.r;
 
@@ -96,10 +99,10 @@ async function main() {
   console.error(`seeds ${queue.length}; resume: ${done.size} queries done, ${seen.size} dealers`);
   let lvl = 0;
   while (queue.length) {
-    const next = [], pending = [];
+    const satParents = [], pending = [];
     for (const q of queue) {
       const k = key(q), prev = done.get(k);
-      if (prev) { if (prev.saturated) next.push(...children(q)); else { const c = ZBY.get(q.zip); unsatDisks.push({ lat: c[1], lng: c[2], r: q.r }); } }
+      if (prev) { if (prev.saturated) satParents.push(q); else { const c = ZBY.get(q.zip); unsatDisks.push({ lat: c[1], lng: c[2], r: q.r }); } }
       else pending.push(q);
     }
     let i = 0;
@@ -112,16 +115,21 @@ async function main() {
         const ds = j.dealers || []; let fresh = 0; const lines = [];
         for (const x of ds) { if (x.countryCode && x.countryCode !== 'USA') continue; const id = String(x.id); if (!seen.has(id)) { seen.add(id); fresh++; lines.push(JSON.stringify(norm(x, q))); } }
         if (lines.length) fs.appendFileSync(OUT, lines.join('\n') + '\n');
-        const saturated = ds.length >= CAP;
-        const rec = { key: k, zip: q.zip, r: q.r, lvl: q.lvl, n: ds.length, fresh, saturated, parent: q.parent || null, http: j.http || 200, at: new Date().toISOString() };
+        // Cap is TWO sub-caps of 50 (probed 2026-09-24, 11793 r50 = 50 tier dealers + 50 aligned contractors; r25 = 50 + 12
+        // and it silently dropped 11 of 37 dealers within 10 mi). Saturated = either bucket at 50. Class 1 (no badge) is
+        // counted in both buckets (bucket unknown -> conservative).
+        const aligned = ds.filter(x => ALIGNED.has(x.dealerClass) || x.dealerClass === 1).length;
+        const tiered = ds.filter(x => !ALIGNED.has(x.dealerClass)).length;
+        const saturated = ds.length >= CAP || aligned >= SUBCAP || tiered >= SUBCAP;
+        const rec = { key: k, zip: q.zip, r: q.r, lvl: q.lvl, n: ds.length, tiered, aligned, fresh, saturated, http: j.http || 200, at: new Date().toISOString(), ids: ds.map(x => String(x.id)) };
         fs.appendFileSync(QLOG, JSON.stringify(rec) + '\n'); done.set(k, rec);
-        if (saturated) { stats.byLevel[q.r].saturated++; const ch = children(q); if (ch.length) next.push(...ch); else stats.unresolved.push(k); }
+        if (saturated) { stats.byLevel[q.r].saturated++; satParents.push(q); if (!LEVELS[q.lvl + 1]) stats.unresolved.push(k); }
         else { const c = ZBY.get(q.zip); unsatDisks.push({ lat: c[1], lng: c[2], r: q.r }); }
-        if (stats.callsThisRun % 20 === 0) { writeProg(); console.error(`L${q.r} ${i}/${pending.length} calls=${stats.callsThisRun} unique=${seen.size} next=${next.length}`); }
+        if (stats.callsThisRun % 20 === 0) { writeProg(); console.error(`L${q.r} ${i}/${pending.length} calls=${stats.callsThisRun} unique=${seen.size} saturated=${satParents.length}`); }
       }
     };
     await Promise.all(Array.from({ length: WORKERS }, worker));
-    lvl++; const seenKeys = new Set(); queue = next.filter(q => !seenKeys.has(key(q)) && seenKeys.add(key(q)));
+    queue = nextLevel(satParents, lvl); lvl++;
     if (LEVELS[lvl]) stats.byLevel[LEVELS[lvl].r].planned += queue.length;
     writeProg(); console.error(`level done -> ${queue.length} child queries`);
   }

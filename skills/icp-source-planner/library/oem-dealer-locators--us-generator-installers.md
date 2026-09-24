@@ -1,9 +1,9 @@
 ---
 source: OEM generator dealer locators (Briggs & Stratton, Generac, Kohler/Rehlko, Champion, Cummins)
 vertical: US residential home-standby generator installers/dealers
-verdict: partial
+verdict: validated
 last_validated: 2026-09-24
-access: hidden JSON APIs (WA-02); Briggs + Champion whole-network in 1 call; Generac zip grid; Kohler zip grid; Cummins Cloudflare-walled
+access: hidden JSON APIs (WA-02); Briggs + Champion whole-network in 1 call; Generac + Kohler ZIP grid; Cummins via Wayback raw captures (Tier 0.7) — live host Cloudflare-walled
 dispatch: web-scrape-triage (extraction) → google-maps-scrape pipeline from STEP 5b (qualify, owner-finding, Plusvibe)
 cost_tier: free
 ---
@@ -14,13 +14,23 @@ cost_tier: free
 Brands barely overlap (Houston: 14 of 238 unique phones under 2+ brands) — additive, dedupe on domain + phone.
 Rows are NAME/phone/website only — they still go through the `google-maps-scrape` back half for fit, owner and Plusvibe.
 
-| Source | Works | US volume | Domain | Calls |
+**Full pull, 2026-09-24 (Atlas Growth) — measured:**
+
+| Source | US rows (after dropping distributors) | Own domain | Calls | Method |
 |---|---|---|---|---|
-| Briggs & Stratton | yes | 2,466 measured | ~94% (website 79% + email domain) | 1 |
-| Generac (home cat=1) | yes | 6–9k (claimed) | ~83% | ~1.5–2.5k zip grid, 100-cap |
-| Kohler/Rehlko | yes | 1.5–2.5k (guess) | none | ~1.2–1.5k |
-| Champion | yes | ~476 measured | none | 1 |
-| Cummins | NO (Cloudflare) | ? | ? | needs unlocker |
+| Generac (home cat=1) | **13,171** | 70% (website 54%, email 97%) | 4,966 | ZIP grid; split when EITHER bucket hits 50 (see below) |
+| Briggs & Stratton | 2,444 | 84% | 1 | radius 2000 from US centroid |
+| Cummins | 2,415 (2,760 raw − 344 distributor rows − dupes; ~770 are RV service centres) | 0% | ~25 Wayback fetches | Wayback `id_` captures of `locatoradmin.cummins.com/locator-interface/home-generators-rlc-2023?page=0..18`, 200 cards/page, 88% from the 2025-05-24 crawl |
+| Kohler/Rehlko | 1,626 | 0% (microsite only) | 5,573 | ZIP grid at 20 mi + re-query every found dealer's own ZIP |
+| Champion | 476 | 0% | 1 | Locally.com, diag 6000 |
+
+Cross-brand merge (domain+ZIP3 / phone / name+ZIP union): 20,132 rows → **17,795 companies**, 1,374 on ≥2 brands.
+
+**Corrections from the full pull (live beats library):**
+- **Generac's cap is 50 tier-badged dealers + 50 "Aligned Contractors", not 100.** A query returning 62 rows can still be truncated (r25 dropped 11 of 37 dealers within 10 mi). Split a query whenever either bucket reaches 50: the naive "100 = saturated" rule gave 11,870; the corrected rule 13,171; a 6-ZIP spot-check at 10 mi then missed 0 (was 24 of 70). Extra `pageSize/limit/page/skip` params are ignored; state/empty-ZIP/country calls return 0; radius 3000 still caps.
+- **Kohler returns dealers whose SERVICE TERRITORY covers the ZIP, not a radius** (`distMiles` 10 vs 199 → same 31; ZIP 10001 → 0; Montana → dealers 213–299 mi away). Residual after the grid: 6 new dealers in 300 random unqueried ZIPs (~0.35%). The subscription key is read from the page JS at runtime by `pull/kohler.js`, not stored.
+- **Cummins:** every live locator host (`locatoradmin`, `locator`, `cfselocator`, `dealer`, `power`) returns a Cloudflare 403 challenge; Turnstile's host is blocked from the cloud egress, so Scrapling cannot solve it. Wayback holds the full unfiltered paged listing — the Tier-0.7 rung got the whole network at $0. Cards carry no website/email. Page-7 capture is a 403 (≤200 rows possibly missing). Common Crawl index connections reset through the proxy.
+- **Merge trap:** ~100 Generac dealers list `facebook.com` as their website; key merges on the engine's `shared-hosts.js` list + ISP mail domains excluded, or unrelated dealers chain into one group.
 
 Per-source detail follows (from the 2026-09-24 deep-dive).
 
