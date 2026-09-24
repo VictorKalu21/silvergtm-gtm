@@ -83,6 +83,16 @@ Same offer, same buyer as foundation repair: the KEEP / EXCLUDE tables in `ICP.m
 ## Open decisions (answer before the ~50-row test)
 
 1. Plumber rule above — sign off or change.
-2. **Size floor.** Foundation used Maps review floor 30. OEM rows carry no reviews — use OEM tier as
-   the size proxy, join Maps reviews where the place matches, or no floor?
-3. Generac zip-grid pull (~1.5–2.5k free calls, ~1–1.5 h polite) — go?
+2. ~~Size floor~~ — decided 2026-09-24: OEM dealer rows have **no floor**; Maps rows **review_count >= 30**.
+3. ~~Generac pull~~ — go given 2026-09-24.
+
+## Google Maps leg (decided 2026-09-24)
+
+- **Footprint:** nationwide, `areas` mode — 477 Census-derived anchors across all 50 states + DC
+  (`gen-runsheet-generators.js` documents the derivation).
+- **Queries (generator-intent only, no bare "electrician"):** generator installation · generator
+  dealer · standby generator installer (P1) · Generac dealer · generator shop (P2).
+- **Config:** `atlas-growth-generators-config.json` — deny rental/big-box/small-engine/vehicle/marine
+  primaries, allow generator/electric/energy/solar/HVAC/plumbing/contractor types, review floor 30.
+  Allow/deny lists are PROVISIONAL until the calibration tiles are read.
+- **Owner prompt:** `owner-prompts/us-generator-installers.md` (copied into the run folder).

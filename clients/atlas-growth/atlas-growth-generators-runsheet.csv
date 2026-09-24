@@ -1,0 +1,2386 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+ak-anchorage-q0,generator,generator installation,61.1743,-149.2843,13,P1
+ak-anchorage-q1,generator,generator dealer,61.1743,-149.2843,13,P1
+ak-anchorage-q2,generator,standby generator installer,61.1743,-149.2843,13,P1
+ak-anchorage-q3,generator,Generac dealer,61.1743,-149.2843,13,P2
+ak-anchorage-q4,generator,generator shop,61.1743,-149.2843,13,P2
+ak-fairbanks-q0,generator,generator installation,64.8365,-147.6517,13,P1
+ak-fairbanks-q1,generator,generator dealer,64.8365,-147.6517,13,P1
+ak-fairbanks-q2,generator,standby generator installer,64.8365,-147.6517,13,P1
+ak-fairbanks-q3,generator,Generac dealer,64.8365,-147.6517,13,P2
+ak-fairbanks-q4,generator,generator shop,64.8365,-147.6517,13,P2
+ak-juneau-q0,generator,generator installation,58.3729,-134.1784,13,P1
+ak-juneau-q1,generator,generator dealer,58.3729,-134.1784,13,P1
+ak-juneau-q2,generator,standby generator installer,58.3729,-134.1784,13,P1
+ak-juneau-q3,generator,Generac dealer,58.3729,-134.1784,13,P2
+ak-juneau-q4,generator,generator shop,58.3729,-134.1784,13,P2
+ak-sitka-city-and-q0,generator,generator installation,57.1932,-135.3674,13,P1
+ak-sitka-city-and-q1,generator,generator dealer,57.1932,-135.3674,13,P1
+ak-sitka-city-and-q2,generator,standby generator installer,57.1932,-135.3674,13,P1
+ak-sitka-city-and-q3,generator,Generac dealer,57.1932,-135.3674,13,P2
+ak-sitka-city-and-q4,generator,generator shop,57.1932,-135.3674,13,P2
+ak-ketchikan-q0,generator,generator installation,55.3571,-131.6746,13,P1
+ak-ketchikan-q1,generator,generator dealer,55.3571,-131.6746,13,P1
+ak-ketchikan-q2,generator,standby generator installer,55.3571,-131.6746,13,P1
+ak-ketchikan-q3,generator,Generac dealer,55.3571,-131.6746,13,P2
+ak-ketchikan-q4,generator,generator shop,55.3571,-131.6746,13,P2
+ak-kenai-q0,generator,generator installation,60.5622,-151.2081,13,P1
+ak-kenai-q1,generator,generator dealer,60.5622,-151.2081,13,P1
+ak-kenai-q2,generator,standby generator installer,60.5622,-151.2081,13,P1
+ak-kenai-q3,generator,Generac dealer,60.5622,-151.2081,13,P2
+ak-kenai-q4,generator,generator shop,60.5622,-151.2081,13,P2
+ak-bethel-q0,generator,generator installation,60.7939,-161.7959,13,P1
+ak-bethel-q1,generator,generator dealer,60.7939,-161.7959,13,P1
+ak-bethel-q2,generator,standby generator installer,60.7939,-161.7959,13,P1
+ak-bethel-q3,generator,Generac dealer,60.7939,-161.7959,13,P2
+ak-bethel-q4,generator,generator shop,60.7939,-161.7959,13,P2
+ak-kodiak-q0,generator,generator installation,57.7912,-152.4197,13,P1
+ak-kodiak-q1,generator,generator dealer,57.7912,-152.4197,13,P1
+ak-kodiak-q2,generator,standby generator installer,57.7912,-152.4197,13,P1
+ak-kodiak-q3,generator,Generac dealer,57.7912,-152.4197,13,P2
+ak-kodiak-q4,generator,generator shop,57.7912,-152.4197,13,P2
+ak-utqiag-vik-q0,generator,generator installation,71.2644,-156.7537,13,P1
+ak-utqiag-vik-q1,generator,generator dealer,71.2644,-156.7537,13,P1
+ak-utqiag-vik-q2,generator,standby generator installer,71.2644,-156.7537,13,P1
+ak-utqiag-vik-q3,generator,Generac dealer,71.2644,-156.7537,13,P2
+ak-utqiag-vik-q4,generator,generator shop,71.2644,-156.7537,13,P2
+ak-unalaska-q0,generator,generator installation,53.9103,-166.529,13,P1
+ak-unalaska-q1,generator,generator dealer,53.9103,-166.529,13,P1
+ak-unalaska-q2,generator,standby generator installer,53.9103,-166.529,13,P1
+ak-unalaska-q3,generator,Generac dealer,53.9103,-166.529,13,P2
+ak-unalaska-q4,generator,generator shop,53.9103,-166.529,13,P2
+ak-valdez-q0,generator,generator installation,61.0836,-146.3172,13,P1
+ak-valdez-q1,generator,generator dealer,61.0836,-146.3172,13,P1
+ak-valdez-q2,generator,standby generator installer,61.0836,-146.3172,13,P1
+ak-valdez-q3,generator,Generac dealer,61.0836,-146.3172,13,P2
+ak-valdez-q4,generator,generator shop,61.0836,-146.3172,13,P2
+ak-nome-q0,generator,generator installation,64.5057,-165.4153,13,P1
+ak-nome-q1,generator,generator dealer,64.5057,-165.4153,13,P1
+ak-nome-q2,generator,standby generator installer,64.5057,-165.4153,13,P1
+ak-nome-q3,generator,Generac dealer,64.5057,-165.4153,13,P2
+ak-nome-q4,generator,generator shop,64.5057,-165.4153,13,P2
+ak-kotzebue-q0,generator,generator installation,66.8868,-162.4917,13,P1
+ak-kotzebue-q1,generator,generator dealer,66.8868,-162.4917,13,P1
+ak-kotzebue-q2,generator,standby generator installer,66.8868,-162.4917,13,P1
+ak-kotzebue-q3,generator,Generac dealer,66.8868,-162.4917,13,P2
+ak-kotzebue-q4,generator,generator shop,66.8868,-162.4917,13,P2
+ak-seward-q0,generator,generator installation,60.1248,-149.3916,13,P1
+ak-seward-q1,generator,generator dealer,60.1248,-149.3916,13,P1
+ak-seward-q2,generator,standby generator installer,60.1248,-149.3916,13,P1
+ak-seward-q3,generator,Generac dealer,60.1248,-149.3916,13,P2
+ak-seward-q4,generator,generator shop,60.1248,-149.3916,13,P2
+ak-dillingham-q0,generator,generator installation,59.0605,-158.5323,13,P1
+ak-dillingham-q1,generator,generator dealer,59.0605,-158.5323,13,P1
+ak-dillingham-q2,generator,standby generator installer,59.0605,-158.5323,13,P1
+ak-dillingham-q3,generator,Generac dealer,59.0605,-158.5323,13,P2
+ak-dillingham-q4,generator,generator shop,59.0605,-158.5323,13,P2
+al-huntsville-q0,generator,generator installation,34.6977,-86.6767,13,P1
+al-huntsville-q1,generator,generator dealer,34.6977,-86.6767,13,P1
+al-huntsville-q2,generator,standby generator installer,34.6977,-86.6767,13,P1
+al-huntsville-q3,generator,Generac dealer,34.6977,-86.6767,13,P2
+al-huntsville-q4,generator,generator shop,34.6977,-86.6767,13,P2
+al-birmingham-q0,generator,generator installation,33.5272,-86.797,13,P1
+al-birmingham-q1,generator,generator dealer,33.5272,-86.797,13,P1
+al-birmingham-q2,generator,standby generator installer,33.5272,-86.797,13,P1
+al-birmingham-q3,generator,Generac dealer,33.5272,-86.797,13,P2
+al-birmingham-q4,generator,generator shop,33.5272,-86.797,13,P2
+al-montgomery-q0,generator,generator installation,32.3485,-86.2673,13,P1
+al-montgomery-q1,generator,generator dealer,32.3485,-86.2673,13,P1
+al-montgomery-q2,generator,standby generator installer,32.3485,-86.2673,13,P1
+al-montgomery-q3,generator,Generac dealer,32.3485,-86.2673,13,P2
+al-montgomery-q4,generator,generator shop,32.3485,-86.2673,13,P2
+al-mobile-q0,generator,generator installation,30.6682,-88.1079,13,P1
+al-mobile-q1,generator,generator dealer,30.6682,-88.1079,13,P1
+al-mobile-q2,generator,standby generator installer,30.6682,-88.1079,13,P1
+al-mobile-q3,generator,Generac dealer,30.6682,-88.1079,13,P2
+al-mobile-q4,generator,generator shop,30.6682,-88.1079,13,P2
+al-tuscaloosa-q0,generator,generator installation,33.2344,-87.5283,13,P1
+al-tuscaloosa-q1,generator,generator dealer,33.2344,-87.5283,13,P1
+al-tuscaloosa-q2,generator,standby generator installer,33.2344,-87.5283,13,P1
+al-tuscaloosa-q3,generator,Generac dealer,33.2344,-87.5283,13,P2
+al-tuscaloosa-q4,generator,generator shop,33.2344,-87.5283,13,P2
+al-dothan-q0,generator,generator installation,31.2337,-85.4068,13,P1
+al-dothan-q1,generator,generator dealer,31.2337,-85.4068,13,P1
+al-dothan-q2,generator,standby generator installer,31.2337,-85.4068,13,P1
+al-dothan-q3,generator,Generac dealer,31.2337,-85.4068,13,P2
+al-dothan-q4,generator,generator shop,31.2337,-85.4068,13,P2
+al-florence-q0,generator,generator installation,34.8298,-87.6622,13,P1
+al-florence-q1,generator,generator dealer,34.8298,-87.6622,13,P1
+al-florence-q2,generator,standby generator installer,34.8298,-87.6622,13,P1
+al-florence-q3,generator,Generac dealer,34.8298,-87.6622,13,P2
+al-florence-q4,generator,generator shop,34.8298,-87.6622,13,P2
+al-gadsden-q0,generator,generator installation,34.0066,-86.0161,13,P1
+al-gadsden-q1,generator,generator dealer,34.0066,-86.0161,13,P1
+al-gadsden-q2,generator,standby generator installer,34.0066,-86.0161,13,P1
+al-gadsden-q3,generator,Generac dealer,34.0066,-86.0161,13,P2
+al-gadsden-q4,generator,generator shop,34.0066,-86.0161,13,P2
+al-monroeville-q0,generator,generator installation,31.5162,-87.3277,13,P1
+al-monroeville-q1,generator,generator dealer,31.5162,-87.3277,13,P1
+al-monroeville-q2,generator,standby generator installer,31.5162,-87.3277,13,P1
+al-monroeville-q3,generator,Generac dealer,31.5162,-87.3277,13,P2
+al-monroeville-q4,generator,generator shop,31.5162,-87.3277,13,P2
+ar-little-rock-q0,generator,generator installation,34.7254,-92.3586,13,P1
+ar-little-rock-q1,generator,generator dealer,34.7254,-92.3586,13,P1
+ar-little-rock-q2,generator,standby generator installer,34.7254,-92.3586,13,P1
+ar-little-rock-q3,generator,Generac dealer,34.7254,-92.3586,13,P2
+ar-little-rock-q4,generator,generator shop,34.7254,-92.3586,13,P2
+ar-fayetteville-q0,generator,generator installation,36.0715,-94.1666,13,P1
+ar-fayetteville-q1,generator,generator dealer,36.0715,-94.1666,13,P1
+ar-fayetteville-q2,generator,standby generator installer,36.0715,-94.1666,13,P1
+ar-fayetteville-q3,generator,Generac dealer,36.0715,-94.1666,13,P2
+ar-fayetteville-q4,generator,generator shop,36.0715,-94.1666,13,P2
+ar-fort-smith-q0,generator,generator installation,35.3493,-94.3709,13,P1
+ar-fort-smith-q1,generator,generator dealer,35.3493,-94.3709,13,P1
+ar-fort-smith-q2,generator,standby generator installer,35.3493,-94.3709,13,P1
+ar-fort-smith-q3,generator,Generac dealer,35.3493,-94.3709,13,P2
+ar-fort-smith-q4,generator,generator shop,35.3493,-94.3709,13,P2
+ar-jonesboro-q0,generator,generator installation,35.8198,-90.679,13,P1
+ar-jonesboro-q1,generator,generator dealer,35.8198,-90.679,13,P1
+ar-jonesboro-q2,generator,standby generator installer,35.8198,-90.679,13,P1
+ar-jonesboro-q3,generator,Generac dealer,35.8198,-90.679,13,P2
+ar-jonesboro-q4,generator,generator shop,35.8198,-90.679,13,P2
+ar-russellville-q0,generator,generator installation,35.2763,-93.1387,13,P1
+ar-russellville-q1,generator,generator dealer,35.2763,-93.1387,13,P1
+ar-russellville-q2,generator,standby generator installer,35.2763,-93.1387,13,P1
+ar-russellville-q3,generator,Generac dealer,35.2763,-93.1387,13,P2
+ar-russellville-q4,generator,generator shop,35.2763,-93.1387,13,P2
+ar-searcy-q0,generator,generator installation,35.2411,-91.7352,13,P1
+ar-searcy-q1,generator,generator dealer,35.2411,-91.7352,13,P1
+ar-searcy-q2,generator,standby generator installer,35.2411,-91.7352,13,P1
+ar-searcy-q3,generator,Generac dealer,35.2411,-91.7352,13,P2
+ar-searcy-q4,generator,generator shop,35.2411,-91.7352,13,P2
+ar-el-dorado-q0,generator,generator installation,33.219,-92.6641,13,P1
+ar-el-dorado-q1,generator,generator dealer,33.219,-92.6641,13,P1
+ar-el-dorado-q2,generator,standby generator installer,33.219,-92.6641,13,P1
+ar-el-dorado-q3,generator,Generac dealer,33.219,-92.6641,13,P2
+ar-el-dorado-q4,generator,generator shop,33.219,-92.6641,13,P2
+ar-mountain-home-q0,generator,generator installation,36.3351,-92.3841,13,P1
+ar-mountain-home-q1,generator,generator dealer,36.3351,-92.3841,13,P1
+ar-mountain-home-q2,generator,standby generator installer,36.3351,-92.3841,13,P1
+ar-mountain-home-q3,generator,Generac dealer,36.3351,-92.3841,13,P2
+ar-mountain-home-q4,generator,generator shop,36.3351,-92.3841,13,P2
+az-phoenix-q0,generator,generator installation,33.5722,-112.0901,13,P1
+az-phoenix-q1,generator,generator dealer,33.5722,-112.0901,13,P1
+az-phoenix-q2,generator,standby generator installer,33.5722,-112.0901,13,P1
+az-phoenix-q3,generator,Generac dealer,33.5722,-112.0901,13,P2
+az-phoenix-q4,generator,generator shop,33.5722,-112.0901,13,P2
+az-tucson-q0,generator,generator installation,32.153,-110.8708,13,P1
+az-tucson-q1,generator,generator dealer,32.153,-110.8708,13,P1
+az-tucson-q2,generator,standby generator installer,32.153,-110.8708,13,P1
+az-tucson-q3,generator,Generac dealer,32.153,-110.8708,13,P2
+az-tucson-q4,generator,generator shop,32.153,-110.8708,13,P2
+az-mesa-q0,generator,generator installation,33.4006,-111.7165,13,P1
+az-mesa-q1,generator,generator dealer,33.4006,-111.7165,13,P1
+az-mesa-q2,generator,standby generator installer,33.4006,-111.7165,13,P1
+az-mesa-q3,generator,Generac dealer,33.4006,-111.7165,13,P2
+az-mesa-q4,generator,generator shop,33.4006,-111.7165,13,P2
+az-goodyear-q0,generator,generator installation,33.254,-112.3665,13,P1
+az-goodyear-q1,generator,generator dealer,33.254,-112.3665,13,P1
+az-goodyear-q2,generator,standby generator installer,33.254,-112.3665,13,P1
+az-goodyear-q3,generator,Generac dealer,33.254,-112.3665,13,P2
+az-goodyear-q4,generator,generator shop,33.254,-112.3665,13,P2
+az-yuma-q0,generator,generator installation,32.5163,-114.5218,13,P1
+az-yuma-q1,generator,generator dealer,32.5163,-114.5218,13,P1
+az-yuma-q2,generator,standby generator installer,32.5163,-114.5218,13,P1
+az-yuma-q3,generator,Generac dealer,32.5163,-114.5218,13,P2
+az-yuma-q4,generator,generator shop,32.5163,-114.5218,13,P2
+az-flagstaff-q0,generator,generator installation,35.1852,-111.6207,13,P1
+az-flagstaff-q1,generator,generator dealer,35.1852,-111.6207,13,P1
+az-flagstaff-q2,generator,standby generator installer,35.1852,-111.6207,13,P1
+az-flagstaff-q3,generator,Generac dealer,35.1852,-111.6207,13,P2
+az-flagstaff-q4,generator,generator shop,35.1852,-111.6207,13,P2
+az-lake-havasu-city-q0,generator,generator installation,34.4998,-114.3109,13,P1
+az-lake-havasu-city-q1,generator,generator dealer,34.4998,-114.3109,13,P1
+az-lake-havasu-city-q2,generator,standby generator installer,34.4998,-114.3109,13,P1
+az-lake-havasu-city-q3,generator,Generac dealer,34.4998,-114.3109,13,P2
+az-lake-havasu-city-q4,generator,generator shop,34.4998,-114.3109,13,P2
+az-prescott-valley-q0,generator,generator installation,34.5979,-112.3185,13,P1
+az-prescott-valley-q1,generator,generator dealer,34.5979,-112.3185,13,P1
+az-prescott-valley-q2,generator,standby generator installer,34.5979,-112.3185,13,P1
+az-prescott-valley-q3,generator,Generac dealer,34.5979,-112.3185,13,P2
+az-prescott-valley-q4,generator,generator shop,34.5979,-112.3185,13,P2
+az-sierra-vista-q0,generator,generator installation,31.5654,-110.3145,13,P1
+az-sierra-vista-q1,generator,generator dealer,31.5654,-110.3145,13,P1
+az-sierra-vista-q2,generator,standby generator installer,31.5654,-110.3145,13,P1
+az-sierra-vista-q3,generator,Generac dealer,31.5654,-110.3145,13,P2
+az-sierra-vista-q4,generator,generator shop,31.5654,-110.3145,13,P2
+az-kingman-q0,generator,generator installation,35.217,-114.0105,13,P1
+az-kingman-q1,generator,generator dealer,35.217,-114.0105,13,P1
+az-kingman-q2,generator,standby generator installer,35.217,-114.0105,13,P1
+az-kingman-q3,generator,Generac dealer,35.217,-114.0105,13,P2
+az-kingman-q4,generator,generator shop,35.217,-114.0105,13,P2
+az-payson-q0,generator,generator installation,34.2438,-111.319,13,P1
+az-payson-q1,generator,generator dealer,34.2438,-111.319,13,P1
+az-payson-q2,generator,standby generator installer,34.2438,-111.319,13,P1
+az-payson-q3,generator,Generac dealer,34.2438,-111.319,13,P2
+az-payson-q4,generator,generator shop,34.2438,-111.319,13,P2
+az-show-low-q0,generator,generator installation,34.2651,-110.0383,13,P1
+az-show-low-q1,generator,generator dealer,34.2651,-110.0383,13,P1
+az-show-low-q2,generator,standby generator installer,34.2651,-110.0383,13,P1
+az-show-low-q3,generator,Generac dealer,34.2651,-110.0383,13,P2
+az-show-low-q4,generator,generator shop,34.2651,-110.0383,13,P2
+az-safford-q0,generator,generator installation,32.8333,-109.6974,13,P1
+az-safford-q1,generator,generator dealer,32.8333,-109.6974,13,P1
+az-safford-q2,generator,standby generator installer,32.8333,-109.6974,13,P1
+az-safford-q3,generator,Generac dealer,32.8333,-109.6974,13,P2
+az-safford-q4,generator,generator shop,32.8333,-109.6974,13,P2
+az-page-q0,generator,generator installation,36.9418,-111.5133,13,P1
+az-page-q1,generator,generator dealer,36.9418,-111.5133,13,P1
+az-page-q2,generator,standby generator installer,36.9418,-111.5133,13,P1
+az-page-q3,generator,Generac dealer,36.9418,-111.5133,13,P2
+az-page-q4,generator,generator shop,36.9418,-111.5133,13,P2
+ca-los-angeles-q0,generator,generator installation,34.0194,-118.4108,13,P1
+ca-los-angeles-q1,generator,generator dealer,34.0194,-118.4108,13,P1
+ca-los-angeles-q2,generator,standby generator installer,34.0194,-118.4108,13,P1
+ca-los-angeles-q3,generator,Generac dealer,34.0194,-118.4108,13,P2
+ca-los-angeles-q4,generator,generator shop,34.0194,-118.4108,13,P2
+ca-san-diego-q0,generator,generator installation,32.815,-117.1356,13,P1
+ca-san-diego-q1,generator,generator dealer,32.815,-117.1356,13,P1
+ca-san-diego-q2,generator,standby generator installer,32.815,-117.1356,13,P1
+ca-san-diego-q3,generator,Generac dealer,32.815,-117.1356,13,P2
+ca-san-diego-q4,generator,generator shop,32.815,-117.1356,13,P2
+ca-san-jose-q0,generator,generator installation,37.296,-121.8146,13,P1
+ca-san-jose-q1,generator,generator dealer,37.296,-121.8146,13,P1
+ca-san-jose-q2,generator,standby generator installer,37.296,-121.8146,13,P1
+ca-san-jose-q3,generator,Generac dealer,37.296,-121.8146,13,P2
+ca-san-jose-q4,generator,generator shop,37.296,-121.8146,13,P2
+ca-san-francisco-q0,generator,generator installation,37.7272,-123.0322,13,P1
+ca-san-francisco-q1,generator,generator dealer,37.7272,-123.0322,13,P1
+ca-san-francisco-q2,generator,standby generator installer,37.7272,-123.0322,13,P1
+ca-san-francisco-q3,generator,Generac dealer,37.7272,-123.0322,13,P2
+ca-san-francisco-q4,generator,generator shop,37.7272,-123.0322,13,P2
+ca-fresno-q0,generator,generator installation,36.7827,-119.7934,13,P1
+ca-fresno-q1,generator,generator dealer,36.7827,-119.7934,13,P1
+ca-fresno-q2,generator,standby generator installer,36.7827,-119.7934,13,P1
+ca-fresno-q3,generator,Generac dealer,36.7827,-119.7934,13,P2
+ca-fresno-q4,generator,generator shop,36.7827,-119.7934,13,P2
+ca-sacramento-q0,generator,generator installation,38.5677,-121.4682,13,P1
+ca-sacramento-q1,generator,generator dealer,38.5677,-121.4682,13,P1
+ca-sacramento-q2,generator,standby generator installer,38.5677,-121.4682,13,P1
+ca-sacramento-q3,generator,Generac dealer,38.5677,-121.4682,13,P2
+ca-sacramento-q4,generator,generator shop,38.5677,-121.4682,13,P2
+ca-oakland-q0,generator,generator installation,37.7698,-122.2257,13,P1
+ca-oakland-q1,generator,generator dealer,37.7698,-122.2257,13,P1
+ca-oakland-q2,generator,standby generator installer,37.7698,-122.2257,13,P1
+ca-oakland-q3,generator,Generac dealer,37.7698,-122.2257,13,P2
+ca-oakland-q4,generator,generator shop,37.7698,-122.2257,13,P2
+ca-bakersfield-q0,generator,generator installation,35.3532,-119.0379,13,P1
+ca-bakersfield-q1,generator,generator dealer,35.3532,-119.0379,13,P1
+ca-bakersfield-q2,generator,standby generator installer,35.3532,-119.0379,13,P1
+ca-bakersfield-q3,generator,Generac dealer,35.3532,-119.0379,13,P2
+ca-bakersfield-q4,generator,generator shop,35.3532,-119.0379,13,P2
+ca-anaheim-q0,generator,generator installation,33.8555,-117.7587,13,P1
+ca-anaheim-q1,generator,generator dealer,33.8555,-117.7587,13,P1
+ca-anaheim-q2,generator,standby generator installer,33.8555,-117.7587,13,P1
+ca-anaheim-q3,generator,Generac dealer,33.8555,-117.7587,13,P2
+ca-anaheim-q4,generator,generator shop,33.8555,-117.7587,13,P2
+ca-stockton-q0,generator,generator installation,37.9766,-121.3086,13,P1
+ca-stockton-q1,generator,generator dealer,37.9766,-121.3086,13,P1
+ca-stockton-q2,generator,standby generator installer,37.9766,-121.3086,13,P1
+ca-stockton-q3,generator,Generac dealer,37.9766,-121.3086,13,P2
+ca-stockton-q4,generator,generator shop,37.9766,-121.3086,13,P2
+ca-santa-clarita-q0,generator,generator installation,34.4165,-118.5007,13,P1
+ca-santa-clarita-q1,generator,generator dealer,34.4165,-118.5007,13,P1
+ca-santa-clarita-q2,generator,standby generator installer,34.4165,-118.5007,13,P1
+ca-santa-clarita-q3,generator,Generac dealer,34.4165,-118.5007,13,P2
+ca-santa-clarita-q4,generator,generator shop,34.4165,-118.5007,13,P2
+ca-san-bernardino-q0,generator,generator installation,34.1411,-117.2946,13,P1
+ca-san-bernardino-q1,generator,generator dealer,34.1411,-117.2946,13,P1
+ca-san-bernardino-q2,generator,standby generator installer,34.1411,-117.2946,13,P1
+ca-san-bernardino-q3,generator,Generac dealer,34.1411,-117.2946,13,P2
+ca-san-bernardino-q4,generator,generator shop,34.1411,-117.2946,13,P2
+ca-modesto-q0,generator,generator installation,37.6375,-121.003,13,P1
+ca-modesto-q1,generator,generator dealer,37.6375,-121.003,13,P1
+ca-modesto-q2,generator,standby generator installer,37.6375,-121.003,13,P1
+ca-modesto-q3,generator,Generac dealer,37.6375,-121.003,13,P2
+ca-modesto-q4,generator,generator shop,37.6375,-121.003,13,P2
+ca-oxnard-q0,generator,generator installation,34.1994,-119.2075,13,P1
+ca-oxnard-q1,generator,generator dealer,34.1994,-119.2075,13,P1
+ca-oxnard-q2,generator,standby generator installer,34.1994,-119.2075,13,P1
+ca-oxnard-q3,generator,Generac dealer,34.1994,-119.2075,13,P2
+ca-oxnard-q4,generator,generator shop,34.1994,-119.2075,13,P2
+ca-santa-rosa-q0,generator,generator installation,38.4458,-122.7062,13,P1
+ca-santa-rosa-q1,generator,generator dealer,38.4458,-122.7062,13,P1
+ca-santa-rosa-q2,generator,standby generator installer,38.4458,-122.7062,13,P1
+ca-santa-rosa-q3,generator,Generac dealer,38.4458,-122.7062,13,P2
+ca-santa-rosa-q4,generator,generator shop,38.4458,-122.7062,13,P2
+ca-oceanside-q0,generator,generator installation,33.2246,-117.3063,13,P1
+ca-oceanside-q1,generator,generator dealer,33.2246,-117.3063,13,P1
+ca-oceanside-q2,generator,standby generator installer,33.2246,-117.3063,13,P1
+ca-oceanside-q3,generator,Generac dealer,33.2246,-117.3063,13,P2
+ca-oceanside-q4,generator,generator shop,33.2246,-117.3063,13,P2
+ca-lancaster-q0,generator,generator installation,34.6936,-118.1753,13,P1
+ca-lancaster-q1,generator,generator dealer,34.6936,-118.1753,13,P1
+ca-lancaster-q2,generator,standby generator installer,34.6936,-118.1753,13,P1
+ca-lancaster-q3,generator,Generac dealer,34.6936,-118.1753,13,P2
+ca-lancaster-q4,generator,generator shop,34.6936,-118.1753,13,P2
+ca-salinas-q0,generator,generator installation,36.6902,-121.6338,13,P1
+ca-salinas-q1,generator,generator dealer,36.6902,-121.6338,13,P1
+ca-salinas-q2,generator,standby generator installer,36.6902,-121.6338,13,P1
+ca-salinas-q3,generator,Generac dealer,36.6902,-121.6338,13,P2
+ca-salinas-q4,generator,generator shop,36.6902,-121.6338,13,P2
+ca-visalia-q0,generator,generator installation,36.328,-119.3285,13,P1
+ca-visalia-q1,generator,generator dealer,36.328,-119.3285,13,P1
+ca-visalia-q2,generator,standby generator installer,36.328,-119.3285,13,P1
+ca-visalia-q3,generator,Generac dealer,36.328,-119.3285,13,P2
+ca-visalia-q4,generator,generator shop,36.328,-119.3285,13,P2
+ca-victorville-q0,generator,generator installation,34.5277,-117.3536,13,P1
+ca-victorville-q1,generator,generator dealer,34.5277,-117.3536,13,P1
+ca-victorville-q2,generator,standby generator installer,34.5277,-117.3536,13,P1
+ca-victorville-q3,generator,Generac dealer,34.5277,-117.3536,13,P2
+ca-victorville-q4,generator,generator shop,34.5277,-117.3536,13,P2
+ca-fairfield-q0,generator,generator installation,38.2621,-122.0324,13,P1
+ca-fairfield-q1,generator,generator dealer,38.2621,-122.0324,13,P1
+ca-fairfield-q2,generator,standby generator installer,38.2621,-122.0324,13,P1
+ca-fairfield-q3,generator,Generac dealer,38.2621,-122.0324,13,P2
+ca-fairfield-q4,generator,generator shop,38.2621,-122.0324,13,P2
+ca-menifee-q0,generator,generator installation,33.6899,-117.1844,13,P1
+ca-menifee-q1,generator,generator dealer,33.6899,-117.1844,13,P1
+ca-menifee-q2,generator,standby generator installer,33.6899,-117.1844,13,P1
+ca-menifee-q3,generator,Generac dealer,33.6899,-117.1844,13,P2
+ca-menifee-q4,generator,generator shop,33.6899,-117.1844,13,P2
+ca-santa-maria-q0,generator,generator installation,34.9331,-120.4436,13,P1
+ca-santa-maria-q1,generator,generator dealer,34.9331,-120.4436,13,P1
+ca-santa-maria-q2,generator,standby generator installer,34.9331,-120.4436,13,P1
+ca-santa-maria-q3,generator,Generac dealer,34.9331,-120.4436,13,P2
+ca-santa-maria-q4,generator,generator shop,34.9331,-120.4436,13,P2
+ca-chico-q0,generator,generator installation,39.759,-121.8177,13,P1
+ca-chico-q1,generator,generator dealer,39.759,-121.8177,13,P1
+ca-chico-q2,generator,standby generator installer,39.759,-121.8177,13,P1
+ca-chico-q3,generator,Generac dealer,39.759,-121.8177,13,P2
+ca-chico-q4,generator,generator shop,39.759,-121.8177,13,P2
+ca-indio-q0,generator,generator installation,33.7316,-116.236,13,P1
+ca-indio-q1,generator,generator dealer,33.7316,-116.236,13,P1
+ca-indio-q2,generator,standby generator installer,33.7316,-116.236,13,P1
+ca-indio-q3,generator,Generac dealer,33.7316,-116.236,13,P2
+ca-indio-q4,generator,generator shop,33.7316,-116.236,13,P2
+ca-redding-q0,generator,generator installation,40.5703,-122.3668,13,P1
+ca-redding-q1,generator,generator dealer,40.5703,-122.3668,13,P1
+ca-redding-q2,generator,standby generator installer,40.5703,-122.3668,13,P1
+ca-redding-q3,generator,Generac dealer,40.5703,-122.3668,13,P2
+ca-redding-q4,generator,generator shop,40.5703,-122.3668,13,P2
+ca-el-centro-q0,generator,generator installation,32.7864,-115.5602,13,P1
+ca-el-centro-q1,generator,generator dealer,32.7864,-115.5602,13,P1
+ca-el-centro-q2,generator,standby generator installer,32.7864,-115.5602,13,P1
+ca-el-centro-q3,generator,Generac dealer,32.7864,-115.5602,13,P2
+ca-el-centro-q4,generator,generator shop,32.7864,-115.5602,13,P2
+ca-el-paso-de-robles-paso-robles-q0,generator,generator installation,35.6285,-120.6504,13,P1
+ca-el-paso-de-robles-paso-robles-q1,generator,generator dealer,35.6285,-120.6504,13,P1
+ca-el-paso-de-robles-paso-robles-q2,generator,standby generator installer,35.6285,-120.6504,13,P1
+ca-el-paso-de-robles-paso-robles-q3,generator,Generac dealer,35.6285,-120.6504,13,P2
+ca-el-paso-de-robles-paso-robles-q4,generator,generator shop,35.6285,-120.6504,13,P2
+ca-ridgecrest-q0,generator,generator installation,35.6285,-117.664,13,P1
+ca-ridgecrest-q1,generator,generator dealer,35.6285,-117.664,13,P1
+ca-ridgecrest-q2,generator,standby generator installer,35.6285,-117.664,13,P1
+ca-ridgecrest-q3,generator,Generac dealer,35.6285,-117.664,13,P2
+ca-ridgecrest-q4,generator,generator shop,35.6285,-117.664,13,P2
+ca-eureka-q0,generator,generator installation,40.7976,-124.1542,13,P1
+ca-eureka-q1,generator,generator dealer,40.7976,-124.1542,13,P1
+ca-eureka-q2,generator,standby generator installer,40.7976,-124.1542,13,P1
+ca-eureka-q3,generator,Generac dealer,40.7976,-124.1542,13,P2
+ca-eureka-q4,generator,generator shop,40.7976,-124.1542,13,P2
+ca-blythe-q0,generator,generator installation,33.6535,-114.6218,13,P1
+ca-blythe-q1,generator,generator dealer,33.6535,-114.6218,13,P1
+ca-blythe-q2,generator,standby generator installer,33.6535,-114.6218,13,P1
+ca-blythe-q3,generator,Generac dealer,33.6535,-114.6218,13,P2
+ca-blythe-q4,generator,generator shop,33.6535,-114.6218,13,P2
+ca-ukiah-q0,generator,generator installation,39.1475,-123.2049,13,P1
+ca-ukiah-q1,generator,generator dealer,39.1475,-123.2049,13,P1
+ca-ukiah-q2,generator,standby generator installer,39.1475,-123.2049,13,P1
+ca-ukiah-q3,generator,Generac dealer,39.1475,-123.2049,13,P2
+ca-ukiah-q4,generator,generator shop,39.1475,-123.2049,13,P2
+ca-susanville-q0,generator,generator installation,40.4337,-120.6283,13,P1
+ca-susanville-q1,generator,generator dealer,40.4337,-120.6283,13,P1
+ca-susanville-q2,generator,standby generator installer,40.4337,-120.6283,13,P1
+ca-susanville-q3,generator,Generac dealer,40.4337,-120.6283,13,P2
+ca-susanville-q4,generator,generator shop,40.4337,-120.6283,13,P2
+ca-mammoth-lakes-q0,generator,generator installation,37.6244,-118.9884,13,P1
+ca-mammoth-lakes-q1,generator,generator dealer,37.6244,-118.9884,13,P1
+ca-mammoth-lakes-q2,generator,standby generator installer,37.6244,-118.9884,13,P1
+ca-mammoth-lakes-q3,generator,Generac dealer,37.6244,-118.9884,13,P2
+ca-mammoth-lakes-q4,generator,generator shop,37.6244,-118.9884,13,P2
+ca-alturas-q0,generator,generator installation,41.4891,-120.5513,13,P1
+ca-alturas-q1,generator,generator dealer,41.4891,-120.5513,13,P1
+ca-alturas-q2,generator,standby generator installer,41.4891,-120.5513,13,P1
+ca-alturas-q3,generator,Generac dealer,41.4891,-120.5513,13,P2
+ca-alturas-q4,generator,generator shop,41.4891,-120.5513,13,P2
+co-denver-q0,generator,generator installation,39.7619,-104.8811,13,P1
+co-denver-q1,generator,generator dealer,39.7619,-104.8811,13,P1
+co-denver-q2,generator,standby generator installer,39.7619,-104.8811,13,P1
+co-denver-q3,generator,Generac dealer,39.7619,-104.8811,13,P2
+co-denver-q4,generator,generator shop,39.7619,-104.8811,13,P2
+co-colorado-springs-q0,generator,generator installation,38.8673,-104.7607,13,P1
+co-colorado-springs-q1,generator,generator dealer,38.8673,-104.7607,13,P1
+co-colorado-springs-q2,generator,standby generator installer,38.8673,-104.7607,13,P1
+co-colorado-springs-q3,generator,Generac dealer,38.8673,-104.7607,13,P2
+co-colorado-springs-q4,generator,generator shop,38.8673,-104.7607,13,P2
+co-fort-collins-q0,generator,generator installation,40.5482,-105.0648,13,P1
+co-fort-collins-q1,generator,generator dealer,40.5482,-105.0648,13,P1
+co-fort-collins-q2,generator,standby generator installer,40.5482,-105.0648,13,P1
+co-fort-collins-q3,generator,Generac dealer,40.5482,-105.0648,13,P2
+co-fort-collins-q4,generator,generator shop,40.5482,-105.0648,13,P2
+co-pueblo-q0,generator,generator installation,38.2692,-104.6108,13,P1
+co-pueblo-q1,generator,generator dealer,38.2692,-104.6108,13,P1
+co-pueblo-q2,generator,standby generator installer,38.2692,-104.6108,13,P1
+co-pueblo-q3,generator,Generac dealer,38.2692,-104.6108,13,P2
+co-pueblo-q4,generator,generator shop,38.2692,-104.6108,13,P2
+co-boulder-q0,generator,generator installation,40.0244,-105.2513,13,P1
+co-boulder-q1,generator,generator dealer,40.0244,-105.2513,13,P1
+co-boulder-q2,generator,standby generator installer,40.0244,-105.2513,13,P1
+co-boulder-q3,generator,Generac dealer,40.0244,-105.2513,13,P2
+co-boulder-q4,generator,generator shop,40.0244,-105.2513,13,P2
+co-grand-junction-q0,generator,generator installation,39.0891,-108.5675,13,P1
+co-grand-junction-q1,generator,generator dealer,39.0891,-108.5675,13,P1
+co-grand-junction-q2,generator,standby generator installer,39.0891,-108.5675,13,P1
+co-grand-junction-q3,generator,Generac dealer,39.0891,-108.5675,13,P2
+co-grand-junction-q4,generator,generator shop,39.0891,-108.5675,13,P2
+co-montrose-q0,generator,generator installation,38.4689,-107.859,13,P1
+co-montrose-q1,generator,generator dealer,38.4689,-107.859,13,P1
+co-montrose-q2,generator,standby generator installer,38.4689,-107.859,13,P1
+co-montrose-q3,generator,Generac dealer,38.4689,-107.859,13,P2
+co-montrose-q4,generator,generator shop,38.4689,-107.859,13,P2
+co-steamboat-springs-q0,generator,generator installation,40.4756,-106.8229,13,P1
+co-steamboat-springs-q1,generator,generator dealer,40.4756,-106.8229,13,P1
+co-steamboat-springs-q2,generator,standby generator installer,40.4756,-106.8229,13,P1
+co-steamboat-springs-q3,generator,Generac dealer,40.4756,-106.8229,13,P2
+co-steamboat-springs-q4,generator,generator shop,40.4756,-106.8229,13,P2
+co-sterling-q0,generator,generator installation,40.6205,-103.1926,13,P1
+co-sterling-q1,generator,generator dealer,40.6205,-103.1926,13,P1
+co-sterling-q2,generator,standby generator installer,40.6205,-103.1926,13,P1
+co-sterling-q3,generator,Generac dealer,40.6205,-103.1926,13,P2
+co-sterling-q4,generator,generator shop,40.6205,-103.1926,13,P2
+co-glenwood-springs-q0,generator,generator installation,39.5471,-107.3426,13,P1
+co-glenwood-springs-q1,generator,generator dealer,39.5471,-107.3426,13,P1
+co-glenwood-springs-q2,generator,standby generator installer,39.5471,-107.3426,13,P1
+co-glenwood-springs-q3,generator,Generac dealer,39.5471,-107.3426,13,P2
+co-glenwood-springs-q4,generator,generator shop,39.5471,-107.3426,13,P2
+co-alamosa-q0,generator,generator installation,37.4745,-105.877,13,P1
+co-alamosa-q1,generator,generator dealer,37.4745,-105.877,13,P1
+co-alamosa-q2,generator,standby generator installer,37.4745,-105.877,13,P1
+co-alamosa-q3,generator,Generac dealer,37.4745,-105.877,13,P2
+co-alamosa-q4,generator,generator shop,37.4745,-105.877,13,P2
+co-trinidad-q0,generator,generator installation,37.1732,-104.4903,13,P1
+co-trinidad-q1,generator,generator dealer,37.1732,-104.4903,13,P1
+co-trinidad-q2,generator,standby generator installer,37.1732,-104.4903,13,P1
+co-trinidad-q3,generator,Generac dealer,37.1732,-104.4903,13,P2
+co-trinidad-q4,generator,generator shop,37.1732,-104.4903,13,P2
+co-lamar-q0,generator,generator installation,38.076,-102.6147,13,P1
+co-lamar-q1,generator,generator dealer,38.076,-102.6147,13,P1
+co-lamar-q2,generator,standby generator installer,38.076,-102.6147,13,P1
+co-lamar-q3,generator,Generac dealer,38.076,-102.6147,13,P2
+co-lamar-q4,generator,generator shop,38.076,-102.6147,13,P2
+co-salida-q0,generator,generator installation,38.5299,-105.998,13,P1
+co-salida-q1,generator,generator dealer,38.5299,-105.998,13,P1
+co-salida-q2,generator,standby generator installer,38.5299,-105.998,13,P1
+co-salida-q3,generator,Generac dealer,38.5299,-105.998,13,P2
+co-salida-q4,generator,generator shop,38.5299,-105.998,13,P2
+ct-bridgeport-q0,generator,generator installation,41.1874,-73.1958,13,P1
+ct-bridgeport-q1,generator,generator dealer,41.1874,-73.1958,13,P1
+ct-bridgeport-q2,generator,standby generator installer,41.1874,-73.1958,13,P1
+ct-bridgeport-q3,generator,Generac dealer,41.1874,-73.1958,13,P2
+ct-bridgeport-q4,generator,generator shop,41.1874,-73.1958,13,P2
+ct-hartford-q0,generator,generator installation,41.7659,-72.6816,13,P1
+ct-hartford-q1,generator,generator dealer,41.7659,-72.6816,13,P1
+ct-hartford-q2,generator,standby generator installer,41.7659,-72.6816,13,P1
+ct-hartford-q3,generator,Generac dealer,41.7659,-72.6816,13,P2
+ct-hartford-q4,generator,generator shop,41.7659,-72.6816,13,P2
+dc-washington-q0,generator,generator installation,38.9042,-77.0165,13,P1
+dc-washington-q1,generator,generator dealer,38.9042,-77.0165,13,P1
+dc-washington-q2,generator,standby generator installer,38.9042,-77.0165,13,P1
+dc-washington-q3,generator,Generac dealer,38.9042,-77.0165,13,P2
+dc-washington-q4,generator,generator shop,38.9042,-77.0165,13,P2
+de-dover-q0,generator,generator installation,39.1606,-75.5217,13,P1
+de-dover-q1,generator,generator dealer,39.1606,-75.5217,13,P1
+de-dover-q2,generator,standby generator installer,39.1606,-75.5217,13,P1
+de-dover-q3,generator,Generac dealer,39.1606,-75.5217,13,P2
+de-dover-q4,generator,generator shop,39.1606,-75.5217,13,P2
+fl-jacksonville-q0,generator,generator installation,30.3369,-81.6616,13,P1
+fl-jacksonville-q1,generator,generator dealer,30.3369,-81.6616,13,P1
+fl-jacksonville-q2,generator,standby generator installer,30.3369,-81.6616,13,P1
+fl-jacksonville-q3,generator,Generac dealer,30.3369,-81.6616,13,P2
+fl-jacksonville-q4,generator,generator shop,30.3369,-81.6616,13,P2
+fl-miami-q0,generator,generator installation,25.7752,-80.2086,13,P1
+fl-miami-q1,generator,generator dealer,25.7752,-80.2086,13,P1
+fl-miami-q2,generator,standby generator installer,25.7752,-80.2086,13,P1
+fl-miami-q3,generator,Generac dealer,25.7752,-80.2086,13,P2
+fl-miami-q4,generator,generator shop,25.7752,-80.2086,13,P2
+fl-tampa-q0,generator,generator installation,27.9701,-82.4797,13,P1
+fl-tampa-q1,generator,generator dealer,27.9701,-82.4797,13,P1
+fl-tampa-q2,generator,standby generator installer,27.9701,-82.4797,13,P1
+fl-tampa-q3,generator,Generac dealer,27.9701,-82.4797,13,P2
+fl-tampa-q4,generator,generator shop,27.9701,-82.4797,13,P2
+fl-orlando-q0,generator,generator installation,28.4087,-81.2548,13,P1
+fl-orlando-q1,generator,generator dealer,28.4087,-81.2548,13,P1
+fl-orlando-q2,generator,standby generator installer,28.4087,-81.2548,13,P1
+fl-orlando-q3,generator,Generac dealer,28.4087,-81.2548,13,P2
+fl-orlando-q4,generator,generator shop,28.4087,-81.2548,13,P2
+fl-port-st-lucie-q0,generator,generator installation,27.2806,-80.3883,13,P1
+fl-port-st-lucie-q1,generator,generator dealer,27.2806,-80.3883,13,P1
+fl-port-st-lucie-q2,generator,standby generator installer,27.2806,-80.3883,13,P1
+fl-port-st-lucie-q3,generator,Generac dealer,27.2806,-80.3883,13,P2
+fl-port-st-lucie-q4,generator,generator shop,27.2806,-80.3883,13,P2
+fl-cape-coral-q0,generator,generator installation,26.6432,-81.9974,13,P1
+fl-cape-coral-q1,generator,generator dealer,26.6432,-81.9974,13,P1
+fl-cape-coral-q2,generator,standby generator installer,26.6432,-81.9974,13,P1
+fl-cape-coral-q3,generator,Generac dealer,26.6432,-81.9974,13,P2
+fl-cape-coral-q4,generator,generator shop,26.6432,-81.9974,13,P2
+fl-tallahassee-q0,generator,generator installation,30.4535,-84.2523,13,P1
+fl-tallahassee-q1,generator,generator dealer,30.4535,-84.2523,13,P1
+fl-tallahassee-q2,generator,standby generator installer,30.4535,-84.2523,13,P1
+fl-tallahassee-q3,generator,Generac dealer,30.4535,-84.2523,13,P2
+fl-tallahassee-q4,generator,generator shop,30.4535,-84.2523,13,P2
+fl-fort-lauderdale-q0,generator,generator installation,26.1412,-80.1467,13,P1
+fl-fort-lauderdale-q1,generator,generator dealer,26.1412,-80.1467,13,P1
+fl-fort-lauderdale-q2,generator,standby generator installer,26.1412,-80.1467,13,P1
+fl-fort-lauderdale-q3,generator,Generac dealer,26.1412,-80.1467,13,P2
+fl-fort-lauderdale-q4,generator,generator shop,26.1412,-80.1467,13,P2
+fl-gainesville-q0,generator,generator installation,29.6795,-82.3468,13,P1
+fl-gainesville-q1,generator,generator dealer,29.6795,-82.3468,13,P1
+fl-gainesville-q2,generator,standby generator installer,29.6795,-82.3468,13,P1
+fl-gainesville-q3,generator,Generac dealer,29.6795,-82.3468,13,P2
+fl-gainesville-q4,generator,generator shop,29.6795,-82.3468,13,P2
+fl-palm-bay-q0,generator,generator installation,27.9548,-80.665,13,P1
+fl-palm-bay-q1,generator,generator dealer,27.9548,-80.665,13,P1
+fl-palm-bay-q2,generator,standby generator installer,27.9548,-80.665,13,P1
+fl-palm-bay-q3,generator,Generac dealer,27.9548,-80.665,13,P2
+fl-palm-bay-q4,generator,generator shop,27.9548,-80.665,13,P2
+fl-west-palm-beach-q0,generator,generator installation,26.7451,-80.127,13,P1
+fl-west-palm-beach-q1,generator,generator dealer,26.7451,-80.127,13,P1
+fl-west-palm-beach-q2,generator,standby generator installer,26.7451,-80.127,13,P1
+fl-west-palm-beach-q3,generator,Generac dealer,26.7451,-80.127,13,P2
+fl-west-palm-beach-q4,generator,generator shop,26.7451,-80.127,13,P2
+fl-lakeland-q0,generator,generator installation,28.0555,-81.9548,13,P1
+fl-lakeland-q1,generator,generator dealer,28.0555,-81.9548,13,P1
+fl-lakeland-q2,generator,standby generator installer,28.0555,-81.9548,13,P1
+fl-lakeland-q3,generator,Generac dealer,28.0555,-81.9548,13,P2
+fl-lakeland-q4,generator,generator shop,28.0555,-81.9548,13,P2
+fl-palm-coast-q0,generator,generator installation,29.5368,-81.2426,13,P1
+fl-palm-coast-q1,generator,generator dealer,29.5368,-81.2426,13,P1
+fl-palm-coast-q2,generator,standby generator installer,29.5368,-81.2426,13,P1
+fl-palm-coast-q3,generator,Generac dealer,29.5368,-81.2426,13,P2
+fl-palm-coast-q4,generator,generator shop,29.5368,-81.2426,13,P2
+fl-pensacola-q0,generator,generator installation,30.441,-87.1912,13,P1
+fl-pensacola-q1,generator,generator dealer,30.441,-87.1912,13,P1
+fl-pensacola-q2,generator,standby generator installer,30.441,-87.1912,13,P1
+fl-pensacola-q3,generator,Generac dealer,30.441,-87.1912,13,P2
+fl-pensacola-q4,generator,generator shop,30.441,-87.1912,13,P2
+fl-panama-city-q0,generator,generator installation,30.1663,-85.6702,13,P1
+fl-panama-city-q1,generator,generator dealer,30.1663,-85.6702,13,P1
+fl-panama-city-q2,generator,standby generator installer,30.1663,-85.6702,13,P1
+fl-panama-city-q3,generator,Generac dealer,30.1663,-85.6702,13,P2
+fl-panama-city-q4,generator,generator shop,30.1663,-85.6702,13,P2
+fl-key-west-q0,generator,generator installation,24.5651,-81.7755,13,P1
+fl-key-west-q1,generator,generator dealer,24.5651,-81.7755,13,P1
+fl-key-west-q2,generator,standby generator installer,24.5651,-81.7755,13,P1
+fl-key-west-q3,generator,Generac dealer,24.5651,-81.7755,13,P2
+fl-key-west-q4,generator,generator shop,24.5651,-81.7755,13,P2
+fl-wildwood-q0,generator,generator installation,28.8058,-82.0073,13,P1
+fl-wildwood-q1,generator,generator dealer,28.8058,-82.0073,13,P1
+fl-wildwood-q2,generator,standby generator installer,28.8058,-82.0073,13,P1
+fl-wildwood-q3,generator,Generac dealer,28.8058,-82.0073,13,P2
+fl-wildwood-q4,generator,generator shop,28.8058,-82.0073,13,P2
+fl-marco-island-q0,generator,generator installation,25.932,-81.7048,13,P1
+fl-marco-island-q1,generator,generator dealer,25.932,-81.7048,13,P1
+fl-marco-island-q2,generator,standby generator installer,25.932,-81.7048,13,P1
+fl-marco-island-q3,generator,Generac dealer,25.932,-81.7048,13,P2
+fl-marco-island-q4,generator,generator shop,25.932,-81.7048,13,P2
+ga-atlanta-q0,generator,generator installation,33.7629,-84.4227,13,P1
+ga-atlanta-q1,generator,generator dealer,33.7629,-84.4227,13,P1
+ga-atlanta-q2,generator,standby generator installer,33.7629,-84.4227,13,P1
+ga-atlanta-q3,generator,Generac dealer,33.7629,-84.4227,13,P2
+ga-atlanta-q4,generator,generator shop,33.7629,-84.4227,13,P2
+ga-columbus-q0,generator,generator installation,32.5102,-84.8749,13,P1
+ga-columbus-q1,generator,generator dealer,32.5102,-84.8749,13,P1
+ga-columbus-q2,generator,standby generator installer,32.5102,-84.8749,13,P1
+ga-columbus-q3,generator,Generac dealer,32.5102,-84.8749,13,P2
+ga-columbus-q4,generator,generator shop,32.5102,-84.8749,13,P2
+ga-augusta-richmond-county-q0,generator,generator installation,33.3655,-82.0734,13,P1
+ga-augusta-richmond-county-q1,generator,generator dealer,33.3655,-82.0734,13,P1
+ga-augusta-richmond-county-q2,generator,standby generator installer,33.3655,-82.0734,13,P1
+ga-augusta-richmond-county-q3,generator,Generac dealer,33.3655,-82.0734,13,P2
+ga-augusta-richmond-county-q4,generator,generator shop,33.3655,-82.0734,13,P2
+ga-macon-bibb-county-q0,generator,generator installation,32.809,-83.6941,13,P1
+ga-macon-bibb-county-q1,generator,generator dealer,32.809,-83.6941,13,P1
+ga-macon-bibb-county-q2,generator,standby generator installer,32.809,-83.6941,13,P1
+ga-macon-bibb-county-q3,generator,Generac dealer,32.809,-83.6941,13,P2
+ga-macon-bibb-county-q4,generator,generator shop,32.809,-83.6941,13,P2
+ga-savannah-q0,generator,generator installation,32.018,-81.1965,13,P1
+ga-savannah-q1,generator,generator dealer,32.018,-81.1965,13,P1
+ga-savannah-q2,generator,standby generator installer,32.018,-81.1965,13,P1
+ga-savannah-q3,generator,Generac dealer,32.018,-81.1965,13,P2
+ga-savannah-q4,generator,generator shop,32.018,-81.1965,13,P2
+ga-athens-clarke-county-q0,generator,generator installation,33.9496,-83.3701,13,P1
+ga-athens-clarke-county-q1,generator,generator dealer,33.9496,-83.3701,13,P1
+ga-athens-clarke-county-q2,generator,standby generator installer,33.9496,-83.3701,13,P1
+ga-athens-clarke-county-q3,generator,Generac dealer,33.9496,-83.3701,13,P2
+ga-athens-clarke-county-q4,generator,generator shop,33.9496,-83.3701,13,P2
+ga-albany-q0,generator,generator installation,31.5781,-84.1762,13,P1
+ga-albany-q1,generator,generator dealer,31.5781,-84.1762,13,P1
+ga-albany-q2,generator,standby generator installer,31.5781,-84.1762,13,P1
+ga-albany-q3,generator,Generac dealer,31.5781,-84.1762,13,P2
+ga-albany-q4,generator,generator shop,31.5781,-84.1762,13,P2
+ga-valdosta-q0,generator,generator installation,30.8501,-83.2788,13,P1
+ga-valdosta-q1,generator,generator dealer,30.8501,-83.2788,13,P1
+ga-valdosta-q2,generator,standby generator installer,30.8501,-83.2788,13,P1
+ga-valdosta-q3,generator,Generac dealer,30.8501,-83.2788,13,P2
+ga-valdosta-q4,generator,generator shop,30.8501,-83.2788,13,P2
+ga-rome-q0,generator,generator installation,34.2661,-85.1861,13,P1
+ga-rome-q1,generator,generator dealer,34.2661,-85.1861,13,P1
+ga-rome-q2,generator,standby generator installer,34.2661,-85.1861,13,P1
+ga-rome-q3,generator,Generac dealer,34.2661,-85.1861,13,P2
+ga-rome-q4,generator,generator shop,34.2661,-85.1861,13,P2
+ga-dublin-q0,generator,generator installation,32.5355,-82.9288,13,P1
+ga-dublin-q1,generator,generator dealer,32.5355,-82.9288,13,P1
+ga-dublin-q2,generator,standby generator installer,32.5355,-82.9288,13,P1
+ga-dublin-q3,generator,Generac dealer,32.5355,-82.9288,13,P2
+ga-dublin-q4,generator,generator shop,32.5355,-82.9288,13,P2
+ga-brunswick-q0,generator,generator installation,31.1361,-81.4669,13,P1
+ga-brunswick-q1,generator,generator dealer,31.1361,-81.4669,13,P1
+ga-brunswick-q2,generator,standby generator installer,31.1361,-81.4669,13,P1
+ga-brunswick-q3,generator,Generac dealer,31.1361,-81.4669,13,P2
+ga-brunswick-q4,generator,generator shop,31.1361,-81.4669,13,P2
+hi-urban-honolulu-q0,generator,generator installation,21.3243,-157.8476,13,P1
+hi-urban-honolulu-q1,generator,generator dealer,21.3243,-157.8476,13,P1
+hi-urban-honolulu-q2,generator,standby generator installer,21.3243,-157.8476,13,P1
+hi-urban-honolulu-q3,generator,Generac dealer,21.3243,-157.8476,13,P2
+hi-urban-honolulu-q4,generator,generator shop,21.3243,-157.8476,13,P2
+ia-des-moines-q0,generator,generator installation,41.5726,-93.6102,13,P1
+ia-des-moines-q1,generator,generator dealer,41.5726,-93.6102,13,P1
+ia-des-moines-q2,generator,standby generator installer,41.5726,-93.6102,13,P1
+ia-des-moines-q3,generator,Generac dealer,41.5726,-93.6102,13,P2
+ia-des-moines-q4,generator,generator shop,41.5726,-93.6102,13,P2
+ia-cedar-rapids-q0,generator,generator installation,41.9642,-91.6792,13,P1
+ia-cedar-rapids-q1,generator,generator dealer,41.9642,-91.6792,13,P1
+ia-cedar-rapids-q2,generator,standby generator installer,41.9642,-91.6792,13,P1
+ia-cedar-rapids-q3,generator,Generac dealer,41.9642,-91.6792,13,P2
+ia-cedar-rapids-q4,generator,generator shop,41.9642,-91.6792,13,P2
+ia-davenport-q0,generator,generator installation,41.5568,-90.6039,13,P1
+ia-davenport-q1,generator,generator dealer,41.5568,-90.6039,13,P1
+ia-davenport-q2,generator,standby generator installer,41.5568,-90.6039,13,P1
+ia-davenport-q3,generator,Generac dealer,41.5568,-90.6039,13,P2
+ia-davenport-q4,generator,generator shop,41.5568,-90.6039,13,P2
+ia-sioux-city-q0,generator,generator installation,42.4954,-96.3895,13,P1
+ia-sioux-city-q1,generator,generator dealer,42.4954,-96.3895,13,P1
+ia-sioux-city-q2,generator,standby generator installer,42.4954,-96.3895,13,P1
+ia-sioux-city-q3,generator,Generac dealer,42.4954,-96.3895,13,P2
+ia-sioux-city-q4,generator,generator shop,42.4954,-96.3895,13,P2
+ia-waterloo-q0,generator,generator installation,42.4923,-92.3519,13,P1
+ia-waterloo-q1,generator,generator dealer,42.4923,-92.3519,13,P1
+ia-waterloo-q2,generator,standby generator installer,42.4923,-92.3519,13,P1
+ia-waterloo-q3,generator,Generac dealer,42.4923,-92.3519,13,P2
+ia-waterloo-q4,generator,generator shop,42.4923,-92.3519,13,P2
+ia-dubuque-q0,generator,generator installation,42.4989,-90.7073,13,P1
+ia-dubuque-q1,generator,generator dealer,42.4989,-90.7073,13,P1
+ia-dubuque-q2,generator,standby generator installer,42.4989,-90.7073,13,P1
+ia-dubuque-q3,generator,Generac dealer,42.4989,-90.7073,13,P2
+ia-dubuque-q4,generator,generator shop,42.4989,-90.7073,13,P2
+ia-mason-city-q0,generator,generator installation,43.1478,-93.2004,13,P1
+ia-mason-city-q1,generator,generator dealer,43.1478,-93.2004,13,P1
+ia-mason-city-q2,generator,standby generator installer,43.1478,-93.2004,13,P1
+ia-mason-city-q3,generator,Generac dealer,43.1478,-93.2004,13,P2
+ia-mason-city-q4,generator,generator shop,43.1478,-93.2004,13,P2
+ia-ottumwa-q0,generator,generator installation,41.0223,-92.4233,13,P1
+ia-ottumwa-q1,generator,generator dealer,41.0223,-92.4233,13,P1
+ia-ottumwa-q2,generator,standby generator installer,41.0223,-92.4233,13,P1
+ia-ottumwa-q3,generator,Generac dealer,41.0223,-92.4233,13,P2
+ia-ottumwa-q4,generator,generator shop,41.0223,-92.4233,13,P2
+ia-fort-dodge-q0,generator,generator installation,42.5099,-94.1757,13,P1
+ia-fort-dodge-q1,generator,generator dealer,42.5099,-94.1757,13,P1
+ia-fort-dodge-q2,generator,standby generator installer,42.5099,-94.1757,13,P1
+ia-fort-dodge-q3,generator,Generac dealer,42.5099,-94.1757,13,P2
+ia-fort-dodge-q4,generator,generator shop,42.5099,-94.1757,13,P2
+ia-burlington-q0,generator,generator installation,40.8071,-91.1237,13,P1
+ia-burlington-q1,generator,generator dealer,40.8071,-91.1237,13,P1
+ia-burlington-q2,generator,standby generator installer,40.8071,-91.1237,13,P1
+ia-burlington-q3,generator,Generac dealer,40.8071,-91.1237,13,P2
+ia-burlington-q4,generator,generator shop,40.8071,-91.1237,13,P2
+ia-spirit-lake-q0,generator,generator installation,43.4167,-95.1131,13,P1
+ia-spirit-lake-q1,generator,generator dealer,43.4167,-95.1131,13,P1
+ia-spirit-lake-q2,generator,standby generator installer,43.4167,-95.1131,13,P1
+ia-spirit-lake-q3,generator,Generac dealer,43.4167,-95.1131,13,P2
+ia-spirit-lake-q4,generator,generator shop,43.4167,-95.1131,13,P2
+id-boise-city-q0,generator,generator installation,43.5993,-116.2298,13,P1
+id-boise-city-q1,generator,generator dealer,43.5993,-116.2298,13,P1
+id-boise-city-q2,generator,standby generator installer,43.5993,-116.2298,13,P1
+id-boise-city-q3,generator,Generac dealer,43.5993,-116.2298,13,P2
+id-boise-city-q4,generator,generator shop,43.5993,-116.2298,13,P2
+id-idaho-falls-q0,generator,generator installation,43.4896,-112.0353,13,P1
+id-idaho-falls-q1,generator,generator dealer,43.4896,-112.0353,13,P1
+id-idaho-falls-q2,generator,standby generator installer,43.4896,-112.0353,13,P1
+id-idaho-falls-q3,generator,Generac dealer,43.4896,-112.0353,13,P2
+id-idaho-falls-q4,generator,generator shop,43.4896,-112.0353,13,P2
+id-twin-falls-q0,generator,generator installation,42.5638,-114.4606,13,P1
+id-twin-falls-q1,generator,generator dealer,42.5638,-114.4606,13,P1
+id-twin-falls-q2,generator,standby generator installer,42.5638,-114.4606,13,P1
+id-twin-falls-q3,generator,Generac dealer,42.5638,-114.4606,13,P2
+id-twin-falls-q4,generator,generator shop,42.5638,-114.4606,13,P2
+id-lewiston-q0,generator,generator installation,46.3931,-116.9935,13,P1
+id-lewiston-q1,generator,generator dealer,46.3931,-116.9935,13,P1
+id-lewiston-q2,generator,standby generator installer,46.3931,-116.9935,13,P1
+id-lewiston-q3,generator,Generac dealer,46.3931,-116.9935,13,P2
+id-lewiston-q4,generator,generator shop,46.3931,-116.9935,13,P2
+id-mccall-q0,generator,generator installation,44.9084,-116.1125,13,P1
+id-mccall-q1,generator,generator dealer,44.9084,-116.1125,13,P1
+id-mccall-q2,generator,standby generator installer,44.9084,-116.1125,13,P1
+id-mccall-q3,generator,Generac dealer,44.9084,-116.1125,13,P2
+id-mccall-q4,generator,generator shop,44.9084,-116.1125,13,P2
+id-ketchum-q0,generator,generator installation,43.6872,-114.3725,13,P1
+id-ketchum-q1,generator,generator dealer,43.6872,-114.3725,13,P1
+id-ketchum-q2,generator,standby generator installer,43.6872,-114.3725,13,P1
+id-ketchum-q3,generator,Generac dealer,43.6872,-114.3725,13,P2
+id-ketchum-q4,generator,generator shop,43.6872,-114.3725,13,P2
+id-salmon-q0,generator,generator installation,45.1744,-113.8948,13,P1
+id-salmon-q1,generator,generator dealer,45.1744,-113.8948,13,P1
+id-salmon-q2,generator,standby generator installer,45.1744,-113.8948,13,P1
+id-salmon-q3,generator,Generac dealer,45.1744,-113.8948,13,P2
+id-salmon-q4,generator,generator shop,45.1744,-113.8948,13,P2
+id-bonners-ferry-q0,generator,generator installation,48.6934,-116.3184,13,P1
+id-bonners-ferry-q1,generator,generator dealer,48.6934,-116.3184,13,P1
+id-bonners-ferry-q2,generator,standby generator installer,48.6934,-116.3184,13,P1
+id-bonners-ferry-q3,generator,Generac dealer,48.6934,-116.3184,13,P2
+id-bonners-ferry-q4,generator,generator shop,48.6934,-116.3184,13,P2
+il-chicago-q0,generator,generator installation,41.837,-87.6849,13,P1
+il-chicago-q1,generator,generator dealer,41.837,-87.6849,13,P1
+il-chicago-q2,generator,standby generator installer,41.837,-87.6849,13,P1
+il-chicago-q3,generator,Generac dealer,41.837,-87.6849,13,P2
+il-chicago-q4,generator,generator shop,41.837,-87.6849,13,P2
+il-aurora-q0,generator,generator installation,41.7635,-88.2901,13,P1
+il-aurora-q1,generator,generator dealer,41.7635,-88.2901,13,P1
+il-aurora-q2,generator,standby generator installer,41.7635,-88.2901,13,P1
+il-aurora-q3,generator,Generac dealer,41.7635,-88.2901,13,P2
+il-aurora-q4,generator,generator shop,41.7635,-88.2901,13,P2
+il-rockford-q0,generator,generator installation,42.2593,-89.0635,13,P1
+il-rockford-q1,generator,generator dealer,42.2593,-89.0635,13,P1
+il-rockford-q2,generator,standby generator installer,42.2593,-89.0635,13,P1
+il-rockford-q3,generator,Generac dealer,42.2593,-89.0635,13,P2
+il-rockford-q4,generator,generator shop,42.2593,-89.0635,13,P2
+il-springfield-q0,generator,generator installation,39.7911,-89.6446,13,P1
+il-springfield-q1,generator,generator dealer,39.7911,-89.6446,13,P1
+il-springfield-q2,generator,standby generator installer,39.7911,-89.6446,13,P1
+il-springfield-q3,generator,Generac dealer,39.7911,-89.6446,13,P2
+il-springfield-q4,generator,generator shop,39.7911,-89.6446,13,P2
+il-peoria-q0,generator,generator installation,40.7516,-89.6172,13,P1
+il-peoria-q1,generator,generator dealer,40.7516,-89.6172,13,P1
+il-peoria-q2,generator,standby generator installer,40.7516,-89.6172,13,P1
+il-peoria-q3,generator,Generac dealer,40.7516,-89.6172,13,P2
+il-peoria-q4,generator,generator shop,40.7516,-89.6172,13,P2
+il-champaign-q0,generator,generator installation,40.1141,-88.2746,13,P1
+il-champaign-q1,generator,generator dealer,40.1141,-88.2746,13,P1
+il-champaign-q2,generator,standby generator installer,40.1141,-88.2746,13,P1
+il-champaign-q3,generator,Generac dealer,40.1141,-88.2746,13,P2
+il-champaign-q4,generator,generator shop,40.1141,-88.2746,13,P2
+il-quincy-q0,generator,generator installation,39.9337,-91.3793,13,P1
+il-quincy-q1,generator,generator dealer,39.9337,-91.3793,13,P1
+il-quincy-q2,generator,standby generator installer,39.9337,-91.3793,13,P1
+il-quincy-q3,generator,Generac dealer,39.9337,-91.3793,13,P2
+il-quincy-q4,generator,generator shop,39.9337,-91.3793,13,P2
+il-kankakee-q0,generator,generator installation,41.1017,-87.8637,13,P1
+il-kankakee-q1,generator,generator dealer,41.1017,-87.8637,13,P1
+il-kankakee-q2,generator,standby generator installer,41.1017,-87.8637,13,P1
+il-kankakee-q3,generator,Generac dealer,41.1017,-87.8637,13,P2
+il-kankakee-q4,generator,generator shop,41.1017,-87.8637,13,P2
+il-mount-vernon-q0,generator,generator installation,38.3142,-88.9175,13,P1
+il-mount-vernon-q1,generator,generator dealer,38.3142,-88.9175,13,P1
+il-mount-vernon-q2,generator,standby generator installer,38.3142,-88.9175,13,P1
+il-mount-vernon-q3,generator,Generac dealer,38.3142,-88.9175,13,P2
+il-mount-vernon-q4,generator,generator shop,38.3142,-88.9175,13,P2
+in-indianapolis-city-balance-q0,generator,generator installation,39.7767,-86.1459,13,P1
+in-indianapolis-city-balance-q1,generator,generator dealer,39.7767,-86.1459,13,P1
+in-indianapolis-city-balance-q2,generator,standby generator installer,39.7767,-86.1459,13,P1
+in-indianapolis-city-balance-q3,generator,Generac dealer,39.7767,-86.1459,13,P2
+in-indianapolis-city-balance-q4,generator,generator shop,39.7767,-86.1459,13,P2
+in-fort-wayne-q0,generator,generator installation,41.0882,-85.1428,13,P1
+in-fort-wayne-q1,generator,generator dealer,41.0882,-85.1428,13,P1
+in-fort-wayne-q2,generator,standby generator installer,41.0882,-85.1428,13,P1
+in-fort-wayne-q3,generator,Generac dealer,41.0882,-85.1428,13,P2
+in-fort-wayne-q4,generator,generator shop,41.0882,-85.1428,13,P2
+in-evansville-q0,generator,generator installation,37.9877,-87.5347,13,P1
+in-evansville-q1,generator,generator dealer,37.9877,-87.5347,13,P1
+in-evansville-q2,generator,standby generator installer,37.9877,-87.5347,13,P1
+in-evansville-q3,generator,Generac dealer,37.9877,-87.5347,13,P2
+in-evansville-q4,generator,generator shop,37.9877,-87.5347,13,P2
+in-south-bend-q0,generator,generator installation,41.6766,-86.2688,13,P1
+in-south-bend-q1,generator,generator dealer,41.6766,-86.2688,13,P1
+in-south-bend-q2,generator,standby generator installer,41.6766,-86.2688,13,P1
+in-south-bend-q3,generator,Generac dealer,41.6766,-86.2688,13,P2
+in-south-bend-q4,generator,generator shop,41.6766,-86.2688,13,P2
+in-lafayette-q0,generator,generator installation,40.3994,-86.8628,13,P1
+in-lafayette-q1,generator,generator dealer,40.3994,-86.8628,13,P1
+in-lafayette-q2,generator,standby generator installer,40.3994,-86.8628,13,P1
+in-lafayette-q3,generator,Generac dealer,40.3994,-86.8628,13,P2
+in-lafayette-q4,generator,generator shop,40.3994,-86.8628,13,P2
+in-muncie-q0,generator,generator installation,40.1988,-85.3951,13,P1
+in-muncie-q1,generator,generator dealer,40.1988,-85.3951,13,P1
+in-muncie-q2,generator,standby generator installer,40.1988,-85.3951,13,P1
+in-muncie-q3,generator,Generac dealer,40.1988,-85.3951,13,P2
+in-muncie-q4,generator,generator shop,40.1988,-85.3951,13,P2
+in-terre-haute-q0,generator,generator installation,39.4642,-87.376,13,P1
+in-terre-haute-q1,generator,generator dealer,39.4642,-87.376,13,P1
+in-terre-haute-q2,generator,standby generator installer,39.4642,-87.376,13,P1
+in-terre-haute-q3,generator,Generac dealer,39.4642,-87.376,13,P2
+in-terre-haute-q4,generator,generator shop,39.4642,-87.376,13,P2
+in-seymour-q0,generator,generator installation,38.9468,-85.8892,13,P1
+in-seymour-q1,generator,generator dealer,38.9468,-85.8892,13,P1
+in-seymour-q2,generator,standby generator installer,38.9468,-85.8892,13,P1
+in-seymour-q3,generator,Generac dealer,38.9468,-85.8892,13,P2
+in-seymour-q4,generator,generator shop,38.9468,-85.8892,13,P2
+ks-wichita-q0,generator,generator installation,37.6906,-97.3458,13,P1
+ks-wichita-q1,generator,generator dealer,37.6906,-97.3458,13,P1
+ks-wichita-q2,generator,standby generator installer,37.6906,-97.3458,13,P1
+ks-wichita-q3,generator,Generac dealer,37.6906,-97.3458,13,P2
+ks-wichita-q4,generator,generator shop,37.6906,-97.3458,13,P2
+ks-topeka-q0,generator,generator installation,39.0347,-95.6962,13,P1
+ks-topeka-q1,generator,generator dealer,39.0347,-95.6962,13,P1
+ks-topeka-q2,generator,standby generator installer,39.0347,-95.6962,13,P1
+ks-topeka-q3,generator,Generac dealer,39.0347,-95.6962,13,P2
+ks-topeka-q4,generator,generator shop,39.0347,-95.6962,13,P2
+ks-manhattan-q0,generator,generator installation,39.1883,-96.6059,13,P1
+ks-manhattan-q1,generator,generator dealer,39.1883,-96.6059,13,P1
+ks-manhattan-q2,generator,standby generator installer,39.1883,-96.6059,13,P1
+ks-manhattan-q3,generator,Generac dealer,39.1883,-96.6059,13,P2
+ks-manhattan-q4,generator,generator shop,39.1883,-96.6059,13,P2
+ks-salina-q0,generator,generator installation,38.8131,-97.6145,13,P1
+ks-salina-q1,generator,generator dealer,38.8131,-97.6145,13,P1
+ks-salina-q2,generator,standby generator installer,38.8131,-97.6145,13,P1
+ks-salina-q3,generator,Generac dealer,38.8131,-97.6145,13,P2
+ks-salina-q4,generator,generator shop,38.8131,-97.6145,13,P2
+ks-dodge-city-q0,generator,generator installation,37.7607,-100.0179,13,P1
+ks-dodge-city-q1,generator,generator dealer,37.7607,-100.0179,13,P1
+ks-dodge-city-q2,generator,standby generator installer,37.7607,-100.0179,13,P1
+ks-dodge-city-q3,generator,Generac dealer,37.7607,-100.0179,13,P2
+ks-dodge-city-q4,generator,generator shop,37.7607,-100.0179,13,P2
+ks-emporia-q0,generator,generator installation,38.4019,-96.1917,13,P1
+ks-emporia-q1,generator,generator dealer,38.4019,-96.1917,13,P1
+ks-emporia-q2,generator,standby generator installer,38.4019,-96.1917,13,P1
+ks-emporia-q3,generator,Generac dealer,38.4019,-96.1917,13,P2
+ks-emporia-q4,generator,generator shop,38.4019,-96.1917,13,P2
+ks-hays-q0,generator,generator installation,38.8822,-99.322,13,P1
+ks-hays-q1,generator,generator dealer,38.8822,-99.322,13,P1
+ks-hays-q2,generator,standby generator installer,38.8822,-99.322,13,P1
+ks-hays-q3,generator,Generac dealer,38.8822,-99.322,13,P2
+ks-hays-q4,generator,generator shop,38.8822,-99.322,13,P2
+ks-liberal-q0,generator,generator installation,37.0461,-100.9277,13,P1
+ks-liberal-q1,generator,generator dealer,37.0461,-100.9277,13,P1
+ks-liberal-q2,generator,standby generator installer,37.0461,-100.9277,13,P1
+ks-liberal-q3,generator,Generac dealer,37.0461,-100.9277,13,P2
+ks-liberal-q4,generator,generator shop,37.0461,-100.9277,13,P2
+ks-colby-q0,generator,generator installation,39.3846,-101.045,13,P1
+ks-colby-q1,generator,generator dealer,39.3846,-101.045,13,P1
+ks-colby-q2,generator,standby generator installer,39.3846,-101.045,13,P1
+ks-colby-q3,generator,Generac dealer,39.3846,-101.045,13,P2
+ks-colby-q4,generator,generator shop,39.3846,-101.045,13,P2
+ks-neodesha-q0,generator,generator installation,37.4242,-95.6846,13,P1
+ks-neodesha-q1,generator,generator dealer,37.4242,-95.6846,13,P1
+ks-neodesha-q2,generator,standby generator installer,37.4242,-95.6846,13,P1
+ks-neodesha-q3,generator,Generac dealer,37.4242,-95.6846,13,P2
+ks-neodesha-q4,generator,generator shop,37.4242,-95.6846,13,P2
+ky-louisville-jefferson-county-q0,generator,generator installation,38.1654,-85.6474,13,P1
+ky-louisville-jefferson-county-q1,generator,generator dealer,38.1654,-85.6474,13,P1
+ky-louisville-jefferson-county-q2,generator,standby generator installer,38.1654,-85.6474,13,P1
+ky-louisville-jefferson-county-q3,generator,Generac dealer,38.1654,-85.6474,13,P2
+ky-louisville-jefferson-county-q4,generator,generator shop,38.1654,-85.6474,13,P2
+ky-lexington-fayette-q0,generator,generator installation,38.0407,-84.4583,13,P1
+ky-lexington-fayette-q1,generator,generator dealer,38.0407,-84.4583,13,P1
+ky-lexington-fayette-q2,generator,standby generator installer,38.0407,-84.4583,13,P1
+ky-lexington-fayette-q3,generator,Generac dealer,38.0407,-84.4583,13,P2
+ky-lexington-fayette-q4,generator,generator shop,38.0407,-84.4583,13,P2
+ky-bowling-green-q0,generator,generator installation,36.9768,-86.4337,13,P1
+ky-bowling-green-q1,generator,generator dealer,36.9768,-86.4337,13,P1
+ky-bowling-green-q2,generator,standby generator installer,36.9768,-86.4337,13,P1
+ky-bowling-green-q3,generator,Generac dealer,36.9768,-86.4337,13,P2
+ky-bowling-green-q4,generator,generator shop,36.9768,-86.4337,13,P2
+ky-paducah-q0,generator,generator installation,37.0709,-88.6445,13,P1
+ky-paducah-q1,generator,generator dealer,37.0709,-88.6445,13,P1
+ky-paducah-q2,generator,standby generator installer,37.0709,-88.6445,13,P1
+ky-paducah-q3,generator,Generac dealer,37.0709,-88.6445,13,P2
+ky-paducah-q4,generator,generator shop,37.0709,-88.6445,13,P2
+ky-ashland-q0,generator,generator installation,38.4595,-82.6451,13,P1
+ky-ashland-q1,generator,generator dealer,38.4595,-82.6451,13,P1
+ky-ashland-q2,generator,standby generator installer,38.4595,-82.6451,13,P1
+ky-ashland-q3,generator,Generac dealer,38.4595,-82.6451,13,P2
+ky-ashland-q4,generator,generator shop,38.4595,-82.6451,13,P2
+ky-hazard-q0,generator,generator installation,37.2605,-83.1982,13,P1
+ky-hazard-q1,generator,generator dealer,37.2605,-83.1982,13,P1
+ky-hazard-q2,generator,standby generator installer,37.2605,-83.1982,13,P1
+ky-hazard-q3,generator,Generac dealer,37.2605,-83.1982,13,P2
+ky-hazard-q4,generator,generator shop,37.2605,-83.1982,13,P2
+la-new-orleans-q0,generator,generator installation,30.0534,-89.9345,13,P1
+la-new-orleans-q1,generator,generator dealer,30.0534,-89.9345,13,P1
+la-new-orleans-q2,generator,standby generator installer,30.0534,-89.9345,13,P1
+la-new-orleans-q3,generator,Generac dealer,30.0534,-89.9345,13,P2
+la-new-orleans-q4,generator,generator shop,30.0534,-89.9345,13,P2
+la-baton-rouge-q0,generator,generator installation,30.4404,-91.1332,13,P1
+la-baton-rouge-q1,generator,generator dealer,30.4404,-91.1332,13,P1
+la-baton-rouge-q2,generator,standby generator installer,30.4404,-91.1332,13,P1
+la-baton-rouge-q3,generator,Generac dealer,30.4404,-91.1332,13,P2
+la-baton-rouge-q4,generator,generator shop,30.4404,-91.1332,13,P2
+la-shreveport-q0,generator,generator installation,32.4669,-93.7922,13,P1
+la-shreveport-q1,generator,generator dealer,32.4669,-93.7922,13,P1
+la-shreveport-q2,generator,standby generator installer,32.4669,-93.7922,13,P1
+la-shreveport-q3,generator,Generac dealer,32.4669,-93.7922,13,P2
+la-shreveport-q4,generator,generator shop,32.4669,-93.7922,13,P2
+la-lafayette-q0,generator,generator installation,30.2056,-92.0281,13,P1
+la-lafayette-q1,generator,generator dealer,30.2056,-92.0281,13,P1
+la-lafayette-q2,generator,standby generator installer,30.2056,-92.0281,13,P1
+la-lafayette-q3,generator,Generac dealer,30.2056,-92.0281,13,P2
+la-lafayette-q4,generator,generator shop,30.2056,-92.0281,13,P2
+la-lake-charles-q0,generator,generator installation,30.199,-93.2108,13,P1
+la-lake-charles-q1,generator,generator dealer,30.199,-93.2108,13,P1
+la-lake-charles-q2,generator,standby generator installer,30.199,-93.2108,13,P1
+la-lake-charles-q3,generator,Generac dealer,30.199,-93.2108,13,P2
+la-lake-charles-q4,generator,generator shop,30.199,-93.2108,13,P2
+la-monroe-q0,generator,generator installation,32.519,-92.0772,13,P1
+la-monroe-q1,generator,generator dealer,32.519,-92.0772,13,P1
+la-monroe-q2,generator,standby generator installer,32.519,-92.0772,13,P1
+la-monroe-q3,generator,Generac dealer,32.519,-92.0772,13,P2
+la-monroe-q4,generator,generator shop,32.519,-92.0772,13,P2
+la-alexandria-q0,generator,generator installation,31.2934,-92.4702,13,P1
+la-alexandria-q1,generator,generator dealer,31.2934,-92.4702,13,P1
+la-alexandria-q2,generator,standby generator installer,31.2934,-92.4702,13,P1
+la-alexandria-q3,generator,Generac dealer,31.2934,-92.4702,13,P2
+la-alexandria-q4,generator,generator shop,31.2934,-92.4702,13,P2
+la-houma-q0,generator,generator installation,29.5787,-90.708,13,P1
+la-houma-q1,generator,generator dealer,29.5787,-90.708,13,P1
+la-houma-q2,generator,standby generator installer,29.5787,-90.708,13,P1
+la-houma-q3,generator,Generac dealer,29.5787,-90.708,13,P2
+la-houma-q4,generator,generator shop,29.5787,-90.708,13,P2
+ma-boston-q0,generator,generator installation,42.3386,-71.0183,13,P1
+ma-boston-q1,generator,generator dealer,42.3386,-71.0183,13,P1
+ma-boston-q2,generator,standby generator installer,42.3386,-71.0183,13,P1
+ma-boston-q3,generator,Generac dealer,42.3386,-71.0183,13,P2
+ma-boston-q4,generator,generator shop,42.3386,-71.0183,13,P2
+ma-worcester-q0,generator,generator installation,42.2695,-71.8078,13,P1
+ma-worcester-q1,generator,generator dealer,42.2695,-71.8078,13,P1
+ma-worcester-q2,generator,standby generator installer,42.2695,-71.8078,13,P1
+ma-worcester-q3,generator,Generac dealer,42.2695,-71.8078,13,P2
+ma-worcester-q4,generator,generator shop,42.2695,-71.8078,13,P2
+ma-springfield-q0,generator,generator installation,42.1155,-72.54,13,P1
+ma-springfield-q1,generator,generator dealer,42.1155,-72.54,13,P1
+ma-springfield-q2,generator,standby generator installer,42.1155,-72.54,13,P1
+ma-springfield-q3,generator,Generac dealer,42.1155,-72.54,13,P2
+ma-springfield-q4,generator,generator shop,42.1155,-72.54,13,P2
+ma-lowell-q0,generator,generator installation,42.639,-71.321,13,P1
+ma-lowell-q1,generator,generator dealer,42.639,-71.321,13,P1
+ma-lowell-q2,generator,standby generator installer,42.639,-71.321,13,P1
+ma-lowell-q3,generator,Generac dealer,42.639,-71.321,13,P2
+ma-lowell-q4,generator,generator shop,42.639,-71.321,13,P2
+ma-new-bedford-q0,generator,generator installation,41.6613,-70.9379,13,P1
+ma-new-bedford-q1,generator,generator dealer,41.6613,-70.9379,13,P1
+ma-new-bedford-q2,generator,standby generator installer,41.6613,-70.9379,13,P1
+ma-new-bedford-q3,generator,Generac dealer,41.6613,-70.9379,13,P2
+ma-new-bedford-q4,generator,generator shop,41.6613,-70.9379,13,P2
+md-baltimore-q0,generator,generator installation,39.3,-76.6105,13,P1
+md-baltimore-q1,generator,generator dealer,39.3,-76.6105,13,P1
+md-baltimore-q2,generator,standby generator installer,39.3,-76.6105,13,P1
+md-baltimore-q3,generator,Generac dealer,39.3,-76.6105,13,P2
+md-baltimore-q4,generator,generator shop,39.3,-76.6105,13,P2
+md-hagerstown-q0,generator,generator installation,39.6402,-77.7227,13,P1
+md-hagerstown-q1,generator,generator dealer,39.6402,-77.7227,13,P1
+md-hagerstown-q2,generator,standby generator installer,39.6402,-77.7227,13,P1
+md-hagerstown-q3,generator,Generac dealer,39.6402,-77.7227,13,P2
+md-hagerstown-q4,generator,generator shop,39.6402,-77.7227,13,P2
+md-salisbury-q0,generator,generator installation,38.3753,-75.5859,13,P1
+md-salisbury-q1,generator,generator dealer,38.3753,-75.5859,13,P1
+md-salisbury-q2,generator,standby generator installer,38.3753,-75.5859,13,P1
+md-salisbury-q3,generator,Generac dealer,38.3753,-75.5859,13,P2
+md-salisbury-q4,generator,generator shop,38.3753,-75.5859,13,P2
+md-cumberland-q0,generator,generator installation,39.6513,-78.758,13,P1
+md-cumberland-q1,generator,generator dealer,39.6513,-78.758,13,P1
+md-cumberland-q2,generator,standby generator installer,39.6513,-78.758,13,P1
+md-cumberland-q3,generator,Generac dealer,39.6513,-78.758,13,P2
+md-cumberland-q4,generator,generator shop,39.6513,-78.758,13,P2
+me-portland-q0,generator,generator installation,43.6332,-70.1853,13,P1
+me-portland-q1,generator,generator dealer,43.6332,-70.1853,13,P1
+me-portland-q2,generator,standby generator installer,43.6332,-70.1853,13,P1
+me-portland-q3,generator,Generac dealer,43.6332,-70.1853,13,P2
+me-portland-q4,generator,generator shop,43.6332,-70.1853,13,P2
+me-bangor-q0,generator,generator installation,44.8296,-68.7888,13,P1
+me-bangor-q1,generator,generator dealer,44.8296,-68.7888,13,P1
+me-bangor-q2,generator,standby generator installer,44.8296,-68.7888,13,P1
+me-bangor-q3,generator,Generac dealer,44.8296,-68.7888,13,P2
+me-bangor-q4,generator,generator shop,44.8296,-68.7888,13,P2
+me-augusta-q0,generator,generator installation,44.3349,-69.7342,13,P1
+me-augusta-q1,generator,generator dealer,44.3349,-69.7342,13,P1
+me-augusta-q2,generator,standby generator installer,44.3349,-69.7342,13,P1
+me-augusta-q3,generator,Generac dealer,44.3349,-69.7342,13,P2
+me-augusta-q4,generator,generator shop,44.3349,-69.7342,13,P2
+me-presque-isle-q0,generator,generator installation,46.6884,-67.9933,13,P1
+me-presque-isle-q1,generator,generator dealer,46.6884,-67.9933,13,P1
+me-presque-isle-q2,generator,standby generator installer,46.6884,-67.9933,13,P1
+me-presque-isle-q3,generator,Generac dealer,46.6884,-67.9933,13,P2
+me-presque-isle-q4,generator,generator shop,46.6884,-67.9933,13,P2
+me-calais-q0,generator,generator installation,45.143,-67.2175,13,P1
+me-calais-q1,generator,generator dealer,45.143,-67.2175,13,P1
+me-calais-q2,generator,standby generator installer,45.143,-67.2175,13,P1
+me-calais-q3,generator,Generac dealer,45.143,-67.2175,13,P2
+me-calais-q4,generator,generator shop,45.143,-67.2175,13,P2
+mi-detroit-q0,generator,generator installation,42.383,-83.1022,13,P1
+mi-detroit-q1,generator,generator dealer,42.383,-83.1022,13,P1
+mi-detroit-q2,generator,standby generator installer,42.383,-83.1022,13,P1
+mi-detroit-q3,generator,Generac dealer,42.383,-83.1022,13,P2
+mi-detroit-q4,generator,generator shop,42.383,-83.1022,13,P2
+mi-grand-rapids-q0,generator,generator installation,42.9612,-85.6556,13,P1
+mi-grand-rapids-q1,generator,generator dealer,42.9612,-85.6556,13,P1
+mi-grand-rapids-q2,generator,standby generator installer,42.9612,-85.6556,13,P1
+mi-grand-rapids-q3,generator,Generac dealer,42.9612,-85.6556,13,P2
+mi-grand-rapids-q4,generator,generator shop,42.9612,-85.6556,13,P2
+mi-ann-arbor-q0,generator,generator installation,42.2761,-83.7309,13,P1
+mi-ann-arbor-q1,generator,generator dealer,42.2761,-83.7309,13,P1
+mi-ann-arbor-q2,generator,standby generator installer,42.2761,-83.7309,13,P1
+mi-ann-arbor-q3,generator,Generac dealer,42.2761,-83.7309,13,P2
+mi-ann-arbor-q4,generator,generator shop,42.2761,-83.7309,13,P2
+mi-lansing-q0,generator,generator installation,42.7143,-84.5609,13,P1
+mi-lansing-q1,generator,generator dealer,42.7143,-84.5609,13,P1
+mi-lansing-q2,generator,standby generator installer,42.7143,-84.5609,13,P1
+mi-lansing-q3,generator,Generac dealer,42.7143,-84.5609,13,P2
+mi-lansing-q4,generator,generator shop,42.7143,-84.5609,13,P2
+mi-flint-q0,generator,generator installation,43.0244,-83.692,13,P1
+mi-flint-q1,generator,generator dealer,43.0244,-83.692,13,P1
+mi-flint-q2,generator,standby generator installer,43.0244,-83.692,13,P1
+mi-flint-q3,generator,Generac dealer,43.0244,-83.692,13,P2
+mi-flint-q4,generator,generator shop,43.0244,-83.692,13,P2
+mi-portage-q0,generator,generator installation,42.197,-85.5914,13,P1
+mi-portage-q1,generator,generator dealer,42.197,-85.5914,13,P1
+mi-portage-q2,generator,standby generator installer,42.197,-85.5914,13,P1
+mi-portage-q3,generator,Generac dealer,42.197,-85.5914,13,P2
+mi-portage-q4,generator,generator shop,42.197,-85.5914,13,P2
+mi-midland-q0,generator,generator installation,43.6248,-84.232,13,P1
+mi-midland-q1,generator,generator dealer,43.6248,-84.232,13,P1
+mi-midland-q2,generator,standby generator installer,43.6248,-84.232,13,P1
+mi-midland-q3,generator,Generac dealer,43.6248,-84.232,13,P2
+mi-midland-q4,generator,generator shop,43.6248,-84.232,13,P2
+mi-port-huron-q0,generator,generator installation,42.9938,-82.4337,13,P1
+mi-port-huron-q1,generator,generator dealer,42.9938,-82.4337,13,P1
+mi-port-huron-q2,generator,standby generator installer,42.9938,-82.4337,13,P1
+mi-port-huron-q3,generator,Generac dealer,42.9938,-82.4337,13,P2
+mi-port-huron-q4,generator,generator shop,42.9938,-82.4337,13,P2
+mi-marquette-q0,generator,generator installation,46.5507,-87.3958,13,P1
+mi-marquette-q1,generator,generator dealer,46.5507,-87.3958,13,P1
+mi-marquette-q2,generator,standby generator installer,46.5507,-87.3958,13,P1
+mi-marquette-q3,generator,Generac dealer,46.5507,-87.3958,13,P2
+mi-marquette-q4,generator,generator shop,46.5507,-87.3958,13,P2
+mi-traverse-city-q0,generator,generator installation,44.7543,-85.603,13,P1
+mi-traverse-city-q1,generator,generator dealer,44.7543,-85.603,13,P1
+mi-traverse-city-q2,generator,standby generator installer,44.7543,-85.603,13,P1
+mi-traverse-city-q3,generator,Generac dealer,44.7543,-85.603,13,P2
+mi-traverse-city-q4,generator,generator shop,44.7543,-85.603,13,P2
+mi-sault-ste-marie-q0,generator,generator installation,46.4762,-84.3705,13,P1
+mi-sault-ste-marie-q1,generator,generator dealer,46.4762,-84.3705,13,P1
+mi-sault-ste-marie-q2,generator,standby generator installer,46.4762,-84.3705,13,P1
+mi-sault-ste-marie-q3,generator,Generac dealer,46.4762,-84.3705,13,P2
+mi-sault-ste-marie-q4,generator,generator shop,46.4762,-84.3705,13,P2
+mi-alpena-q0,generator,generator installation,45.0745,-83.4436,13,P1
+mi-alpena-q1,generator,generator dealer,45.0745,-83.4436,13,P1
+mi-alpena-q2,generator,standby generator installer,45.0745,-83.4436,13,P1
+mi-alpena-q3,generator,Generac dealer,45.0745,-83.4436,13,P2
+mi-alpena-q4,generator,generator shop,45.0745,-83.4436,13,P2
+mi-ludington-q0,generator,generator installation,43.9572,-86.4429,13,P1
+mi-ludington-q1,generator,generator dealer,43.9572,-86.4429,13,P1
+mi-ludington-q2,generator,standby generator installer,43.9572,-86.4429,13,P1
+mi-ludington-q3,generator,Generac dealer,43.9572,-86.4429,13,P2
+mi-ludington-q4,generator,generator shop,43.9572,-86.4429,13,P2
+mi-ironwood-q0,generator,generator installation,46.4522,-90.1504,13,P1
+mi-ironwood-q1,generator,generator dealer,46.4522,-90.1504,13,P1
+mi-ironwood-q2,generator,standby generator installer,46.4522,-90.1504,13,P1
+mi-ironwood-q3,generator,Generac dealer,46.4522,-90.1504,13,P2
+mi-ironwood-q4,generator,generator shop,46.4522,-90.1504,13,P2
+mi-hancock-q0,generator,generator installation,47.1367,-88.5978,13,P1
+mi-hancock-q1,generator,generator dealer,47.1367,-88.5978,13,P1
+mi-hancock-q2,generator,standby generator installer,47.1367,-88.5978,13,P1
+mi-hancock-q3,generator,Generac dealer,47.1367,-88.5978,13,P2
+mi-hancock-q4,generator,generator shop,47.1367,-88.5978,13,P2
+mn-minneapolis-q0,generator,generator installation,44.9633,-93.2683,13,P1
+mn-minneapolis-q1,generator,generator dealer,44.9633,-93.2683,13,P1
+mn-minneapolis-q2,generator,standby generator installer,44.9633,-93.2683,13,P1
+mn-minneapolis-q3,generator,Generac dealer,44.9633,-93.2683,13,P2
+mn-minneapolis-q4,generator,generator shop,44.9633,-93.2683,13,P2
+mn-rochester-q0,generator,generator installation,44.0143,-92.4786,13,P1
+mn-rochester-q1,generator,generator dealer,44.0143,-92.4786,13,P1
+mn-rochester-q2,generator,standby generator installer,44.0143,-92.4786,13,P1
+mn-rochester-q3,generator,Generac dealer,44.0143,-92.4786,13,P2
+mn-rochester-q4,generator,generator shop,44.0143,-92.4786,13,P2
+mn-duluth-q0,generator,generator installation,46.7745,-92.1341,13,P1
+mn-duluth-q1,generator,generator dealer,46.7745,-92.1341,13,P1
+mn-duluth-q2,generator,standby generator installer,46.7745,-92.1341,13,P1
+mn-duluth-q3,generator,Generac dealer,46.7745,-92.1341,13,P2
+mn-duluth-q4,generator,generator shop,46.7745,-92.1341,13,P2
+mn-st-cloud-q0,generator,generator installation,45.5267,-94.171,13,P1
+mn-st-cloud-q1,generator,generator dealer,45.5267,-94.171,13,P1
+mn-st-cloud-q2,generator,standby generator installer,45.5267,-94.171,13,P1
+mn-st-cloud-q3,generator,Generac dealer,45.5267,-94.171,13,P2
+mn-st-cloud-q4,generator,generator shop,45.5267,-94.171,13,P2
+mn-mankato-q0,generator,generator installation,44.1711,-93.9764,13,P1
+mn-mankato-q1,generator,generator dealer,44.1711,-93.9764,13,P1
+mn-mankato-q2,generator,standby generator installer,44.1711,-93.9764,13,P1
+mn-mankato-q3,generator,Generac dealer,44.1711,-93.9764,13,P2
+mn-mankato-q4,generator,generator shop,44.1711,-93.9764,13,P2
+mn-willmar-q0,generator,generator installation,45.121,-95.0587,13,P1
+mn-willmar-q1,generator,generator dealer,45.121,-95.0587,13,P1
+mn-willmar-q2,generator,standby generator installer,45.121,-95.0587,13,P1
+mn-willmar-q3,generator,Generac dealer,45.121,-95.0587,13,P2
+mn-willmar-q4,generator,generator shop,45.121,-95.0587,13,P2
+mn-hibbing-q0,generator,generator installation,47.3959,-92.9465,13,P1
+mn-hibbing-q1,generator,generator dealer,47.3959,-92.9465,13,P1
+mn-hibbing-q2,generator,standby generator installer,47.3959,-92.9465,13,P1
+mn-hibbing-q3,generator,Generac dealer,47.3959,-92.9465,13,P2
+mn-hibbing-q4,generator,generator shop,47.3959,-92.9465,13,P2
+mn-bemidji-q0,generator,generator installation,47.487,-94.8827,13,P1
+mn-bemidji-q1,generator,generator dealer,47.487,-94.8827,13,P1
+mn-bemidji-q2,generator,standby generator installer,47.487,-94.8827,13,P1
+mn-bemidji-q3,generator,Generac dealer,47.487,-94.8827,13,P2
+mn-bemidji-q4,generator,generator shop,47.487,-94.8827,13,P2
+mn-international-falls-q0,generator,generator installation,48.5864,-93.4077,13,P1
+mn-international-falls-q1,generator,generator dealer,48.5864,-93.4077,13,P1
+mn-international-falls-q2,generator,standby generator installer,48.5864,-93.4077,13,P1
+mn-international-falls-q3,generator,Generac dealer,48.5864,-93.4077,13,P2
+mn-international-falls-q4,generator,generator shop,48.5864,-93.4077,13,P2
+mn-wadena-q0,generator,generator installation,46.4472,-95.1267,13,P1
+mn-wadena-q1,generator,generator dealer,46.4472,-95.1267,13,P1
+mn-wadena-q2,generator,standby generator installer,46.4472,-95.1267,13,P1
+mn-wadena-q3,generator,Generac dealer,46.4472,-95.1267,13,P2
+mn-wadena-q4,generator,generator shop,46.4472,-95.1267,13,P2
+mn-roseau-q0,generator,generator installation,48.8445,-95.7624,13,P1
+mn-roseau-q1,generator,generator dealer,48.8445,-95.7624,13,P1
+mn-roseau-q2,generator,standby generator installer,48.8445,-95.7624,13,P1
+mn-roseau-q3,generator,Generac dealer,48.8445,-95.7624,13,P2
+mn-roseau-q4,generator,generator shop,48.8445,-95.7624,13,P2
+mo-kansas-city-q0,generator,generator installation,39.1252,-94.5503,13,P1
+mo-kansas-city-q1,generator,generator dealer,39.1252,-94.5503,13,P1
+mo-kansas-city-q2,generator,standby generator installer,39.1252,-94.5503,13,P1
+mo-kansas-city-q3,generator,Generac dealer,39.1252,-94.5503,13,P2
+mo-kansas-city-q4,generator,generator shop,39.1252,-94.5503,13,P2
+mo-st-louis-q0,generator,generator installation,38.6357,-90.2446,13,P1
+mo-st-louis-q1,generator,generator dealer,38.6357,-90.2446,13,P1
+mo-st-louis-q2,generator,standby generator installer,38.6357,-90.2446,13,P1
+mo-st-louis-q3,generator,Generac dealer,38.6357,-90.2446,13,P2
+mo-st-louis-q4,generator,generator shop,38.6357,-90.2446,13,P2
+mo-springfield-q0,generator,generator installation,37.1942,-93.2926,13,P1
+mo-springfield-q1,generator,generator dealer,37.1942,-93.2926,13,P1
+mo-springfield-q2,generator,standby generator installer,37.1942,-93.2926,13,P1
+mo-springfield-q3,generator,Generac dealer,37.1942,-93.2926,13,P2
+mo-springfield-q4,generator,generator shop,37.1942,-93.2926,13,P2
+mo-columbia-q0,generator,generator installation,38.9473,-92.3264,13,P1
+mo-columbia-q1,generator,generator dealer,38.9473,-92.3264,13,P1
+mo-columbia-q2,generator,standby generator installer,38.9473,-92.3264,13,P1
+mo-columbia-q3,generator,Generac dealer,38.9473,-92.3264,13,P2
+mo-columbia-q4,generator,generator shop,38.9473,-92.3264,13,P2
+mo-joplin-q0,generator,generator installation,37.0752,-94.5013,13,P1
+mo-joplin-q1,generator,generator dealer,37.0752,-94.5013,13,P1
+mo-joplin-q2,generator,standby generator installer,37.0752,-94.5013,13,P1
+mo-joplin-q3,generator,Generac dealer,37.0752,-94.5013,13,P2
+mo-joplin-q4,generator,generator shop,37.0752,-94.5013,13,P2
+mo-cape-girardeau-q0,generator,generator installation,37.3094,-89.5584,13,P1
+mo-cape-girardeau-q1,generator,generator dealer,37.3094,-89.5584,13,P1
+mo-cape-girardeau-q2,generator,standby generator installer,37.3094,-89.5584,13,P1
+mo-cape-girardeau-q3,generator,Generac dealer,37.3094,-89.5584,13,P2
+mo-cape-girardeau-q4,generator,generator shop,37.3094,-89.5584,13,P2
+mo-sedalia-q0,generator,generator installation,38.7052,-93.2358,13,P1
+mo-sedalia-q1,generator,generator dealer,38.7052,-93.2358,13,P1
+mo-sedalia-q2,generator,standby generator installer,38.7052,-93.2358,13,P1
+mo-sedalia-q3,generator,Generac dealer,38.7052,-93.2358,13,P2
+mo-sedalia-q4,generator,generator shop,38.7052,-93.2358,13,P2
+mo-rolla-q0,generator,generator installation,37.9459,-91.7612,13,P1
+mo-rolla-q1,generator,generator dealer,37.9459,-91.7612,13,P1
+mo-rolla-q2,generator,standby generator installer,37.9459,-91.7612,13,P1
+mo-rolla-q3,generator,Generac dealer,37.9459,-91.7612,13,P2
+mo-rolla-q4,generator,generator shop,37.9459,-91.7612,13,P2
+mo-farmington-q0,generator,generator installation,37.7825,-90.4273,13,P1
+mo-farmington-q1,generator,generator dealer,37.7825,-90.4273,13,P1
+mo-farmington-q2,generator,standby generator installer,37.7825,-90.4273,13,P1
+mo-farmington-q3,generator,Generac dealer,37.7825,-90.4273,13,P2
+mo-farmington-q4,generator,generator shop,37.7825,-90.4273,13,P2
+mo-kirksville-q0,generator,generator installation,40.1982,-92.5746,13,P1
+mo-kirksville-q1,generator,generator dealer,40.1982,-92.5746,13,P1
+mo-kirksville-q2,generator,standby generator installer,40.1982,-92.5746,13,P1
+mo-kirksville-q3,generator,Generac dealer,40.1982,-92.5746,13,P2
+mo-kirksville-q4,generator,generator shop,40.1982,-92.5746,13,P2
+mo-poplar-bluff-q0,generator,generator installation,36.7633,-90.414,13,P1
+mo-poplar-bluff-q1,generator,generator dealer,36.7633,-90.414,13,P1
+mo-poplar-bluff-q2,generator,standby generator installer,36.7633,-90.414,13,P1
+mo-poplar-bluff-q3,generator,Generac dealer,36.7633,-90.414,13,P2
+mo-poplar-bluff-q4,generator,generator shop,36.7633,-90.414,13,P2
+mo-maryville-q0,generator,generator installation,40.3425,-94.87,13,P1
+mo-maryville-q1,generator,generator dealer,40.3425,-94.87,13,P1
+mo-maryville-q2,generator,standby generator installer,40.3425,-94.87,13,P1
+mo-maryville-q3,generator,Generac dealer,40.3425,-94.87,13,P2
+mo-maryville-q4,generator,generator shop,40.3425,-94.87,13,P2
+ms-jackson-q0,generator,generator installation,32.3158,-90.2129,13,P1
+ms-jackson-q1,generator,generator dealer,32.3158,-90.2129,13,P1
+ms-jackson-q2,generator,standby generator installer,32.3158,-90.2129,13,P1
+ms-jackson-q3,generator,Generac dealer,32.3158,-90.2129,13,P2
+ms-jackson-q4,generator,generator shop,32.3158,-90.2129,13,P2
+ms-gulfport-q0,generator,generator installation,30.4195,-89.069,13,P1
+ms-gulfport-q1,generator,generator dealer,30.4195,-89.069,13,P1
+ms-gulfport-q2,generator,standby generator installer,30.4195,-89.069,13,P1
+ms-gulfport-q3,generator,Generac dealer,30.4195,-89.069,13,P2
+ms-gulfport-q4,generator,generator shop,30.4195,-89.069,13,P2
+ms-hattiesburg-q0,generator,generator installation,31.3073,-89.3174,13,P1
+ms-hattiesburg-q1,generator,generator dealer,31.3073,-89.3174,13,P1
+ms-hattiesburg-q2,generator,standby generator installer,31.3073,-89.3174,13,P1
+ms-hattiesburg-q3,generator,Generac dealer,31.3073,-89.3174,13,P2
+ms-hattiesburg-q4,generator,generator shop,31.3073,-89.3174,13,P2
+ms-tupelo-q0,generator,generator installation,34.2706,-88.7325,13,P1
+ms-tupelo-q1,generator,generator dealer,34.2706,-88.7325,13,P1
+ms-tupelo-q2,generator,standby generator installer,34.2706,-88.7325,13,P1
+ms-tupelo-q3,generator,Generac dealer,34.2706,-88.7325,13,P2
+ms-tupelo-q4,generator,generator shop,34.2706,-88.7325,13,P2
+ms-meridian-q0,generator,generator installation,32.3842,-88.6894,13,P1
+ms-meridian-q1,generator,generator dealer,32.3842,-88.6894,13,P1
+ms-meridian-q2,generator,standby generator installer,32.3842,-88.6894,13,P1
+ms-meridian-q3,generator,Generac dealer,32.3842,-88.6894,13,P2
+ms-meridian-q4,generator,generator shop,32.3842,-88.6894,13,P2
+ms-greenville-q0,generator,generator installation,33.3835,-91.0523,13,P1
+ms-greenville-q1,generator,generator dealer,33.3835,-91.0523,13,P1
+ms-greenville-q2,generator,standby generator installer,33.3835,-91.0523,13,P1
+ms-greenville-q3,generator,Generac dealer,33.3835,-91.0523,13,P2
+ms-greenville-q4,generator,generator shop,33.3835,-91.0523,13,P2
+ms-starkville-q0,generator,generator installation,33.4633,-88.8278,13,P1
+ms-starkville-q1,generator,generator dealer,33.4633,-88.8278,13,P1
+ms-starkville-q2,generator,standby generator installer,33.4633,-88.8278,13,P1
+ms-starkville-q3,generator,Generac dealer,33.4633,-88.8278,13,P2
+ms-starkville-q4,generator,generator shop,33.4633,-88.8278,13,P2
+mt-billings-q0,generator,generator installation,45.7885,-108.5525,13,P1
+mt-billings-q1,generator,generator dealer,45.7885,-108.5525,13,P1
+mt-billings-q2,generator,standby generator installer,45.7885,-108.5525,13,P1
+mt-billings-q3,generator,Generac dealer,45.7885,-108.5525,13,P2
+mt-billings-q4,generator,generator shop,45.7885,-108.5525,13,P2
+mt-missoula-q0,generator,generator installation,46.8744,-114.0261,13,P1
+mt-missoula-q1,generator,generator dealer,46.8744,-114.0261,13,P1
+mt-missoula-q2,generator,standby generator installer,46.8744,-114.0261,13,P1
+mt-missoula-q3,generator,Generac dealer,46.8744,-114.0261,13,P2
+mt-missoula-q4,generator,generator shop,46.8744,-114.0261,13,P2
+mt-great-falls-q0,generator,generator installation,47.5025,-111.3,13,P1
+mt-great-falls-q1,generator,generator dealer,47.5025,-111.3,13,P1
+mt-great-falls-q2,generator,standby generator installer,47.5025,-111.3,13,P1
+mt-great-falls-q3,generator,Generac dealer,47.5025,-111.3,13,P2
+mt-great-falls-q4,generator,generator shop,47.5025,-111.3,13,P2
+mt-bozeman-q0,generator,generator installation,45.6832,-111.0538,13,P1
+mt-bozeman-q1,generator,generator dealer,45.6832,-111.0538,13,P1
+mt-bozeman-q2,generator,standby generator installer,45.6832,-111.0538,13,P1
+mt-bozeman-q3,generator,Generac dealer,45.6832,-111.0538,13,P2
+mt-bozeman-q4,generator,generator shop,45.6832,-111.0538,13,P2
+mt-butte-silver-bow-balance-q0,generator,generator installation,45.8962,-112.6601,13,P1
+mt-butte-silver-bow-balance-q1,generator,generator dealer,45.8962,-112.6601,13,P1
+mt-butte-silver-bow-balance-q2,generator,standby generator installer,45.8962,-112.6601,13,P1
+mt-butte-silver-bow-balance-q3,generator,Generac dealer,45.8962,-112.6601,13,P2
+mt-butte-silver-bow-balance-q4,generator,generator shop,45.8962,-112.6601,13,P2
+mt-helena-q0,generator,generator installation,46.5966,-112.0218,13,P1
+mt-helena-q1,generator,generator dealer,46.5966,-112.0218,13,P1
+mt-helena-q2,generator,standby generator installer,46.5966,-112.0218,13,P1
+mt-helena-q3,generator,Generac dealer,46.5966,-112.0218,13,P2
+mt-helena-q4,generator,generator shop,46.5966,-112.0218,13,P2
+mt-kalispell-q0,generator,generator installation,48.2162,-114.3276,13,P1
+mt-kalispell-q1,generator,generator dealer,48.2162,-114.3276,13,P1
+mt-kalispell-q2,generator,standby generator installer,48.2162,-114.3276,13,P1
+mt-kalispell-q3,generator,Generac dealer,48.2162,-114.3276,13,P2
+mt-kalispell-q4,generator,generator shop,48.2162,-114.3276,13,P2
+mt-havre-q0,generator,generator installation,48.5419,-109.678,13,P1
+mt-havre-q1,generator,generator dealer,48.5419,-109.678,13,P1
+mt-havre-q2,generator,standby generator installer,48.5419,-109.678,13,P1
+mt-havre-q3,generator,Generac dealer,48.5419,-109.678,13,P2
+mt-havre-q4,generator,generator shop,48.5419,-109.678,13,P2
+mt-miles-city-q0,generator,generator installation,46.4058,-105.8389,13,P1
+mt-miles-city-q1,generator,generator dealer,46.4058,-105.8389,13,P1
+mt-miles-city-q2,generator,standby generator installer,46.4058,-105.8389,13,P1
+mt-miles-city-q3,generator,Generac dealer,46.4058,-105.8389,13,P2
+mt-miles-city-q4,generator,generator shop,46.4058,-105.8389,13,P2
+mt-lewistown-q0,generator,generator installation,47.0514,-109.4524,13,P1
+mt-lewistown-q1,generator,generator dealer,47.0514,-109.4524,13,P1
+mt-lewistown-q2,generator,standby generator installer,47.0514,-109.4524,13,P1
+mt-lewistown-q3,generator,Generac dealer,47.0514,-109.4524,13,P2
+mt-lewistown-q4,generator,generator shop,47.0514,-109.4524,13,P2
+mt-glendive-q0,generator,generator installation,47.1065,-104.7109,13,P1
+mt-glendive-q1,generator,generator dealer,47.1065,-104.7109,13,P1
+mt-glendive-q2,generator,standby generator installer,47.1065,-104.7109,13,P1
+mt-glendive-q3,generator,Generac dealer,47.1065,-104.7109,13,P2
+mt-glendive-q4,generator,generator shop,47.1065,-104.7109,13,P2
+mt-shelby-q0,generator,generator installation,48.5021,-111.862,13,P1
+mt-shelby-q1,generator,generator dealer,48.5021,-111.862,13,P1
+mt-shelby-q2,generator,standby generator installer,48.5021,-111.862,13,P1
+mt-shelby-q3,generator,Generac dealer,48.5021,-111.862,13,P2
+mt-shelby-q4,generator,generator shop,48.5021,-111.862,13,P2
+mt-glasgow-q0,generator,generator installation,48.199,-106.6321,13,P1
+mt-glasgow-q1,generator,generator dealer,48.199,-106.6321,13,P1
+mt-glasgow-q2,generator,standby generator installer,48.199,-106.6321,13,P1
+mt-glasgow-q3,generator,Generac dealer,48.199,-106.6321,13,P2
+mt-glasgow-q4,generator,generator shop,48.199,-106.6321,13,P2
+nc-charlotte-q0,generator,generator installation,35.209,-80.831,13,P1
+nc-charlotte-q1,generator,generator dealer,35.209,-80.831,13,P1
+nc-charlotte-q2,generator,standby generator installer,35.209,-80.831,13,P1
+nc-charlotte-q3,generator,Generac dealer,35.209,-80.831,13,P2
+nc-charlotte-q4,generator,generator shop,35.209,-80.831,13,P2
+nc-raleigh-q0,generator,generator installation,35.8319,-78.641,13,P1
+nc-raleigh-q1,generator,generator dealer,35.8319,-78.641,13,P1
+nc-raleigh-q2,generator,standby generator installer,35.8319,-78.641,13,P1
+nc-raleigh-q3,generator,Generac dealer,35.8319,-78.641,13,P2
+nc-raleigh-q4,generator,generator shop,35.8319,-78.641,13,P2
+nc-greensboro-q0,generator,generator installation,36.0949,-79.8236,13,P1
+nc-greensboro-q1,generator,generator dealer,36.0949,-79.8236,13,P1
+nc-greensboro-q2,generator,standby generator installer,36.0949,-79.8236,13,P1
+nc-greensboro-q3,generator,Generac dealer,36.0949,-79.8236,13,P2
+nc-greensboro-q4,generator,generator shop,36.0949,-79.8236,13,P2
+nc-winston-salem-q0,generator,generator installation,36.1029,-80.2608,13,P1
+nc-winston-salem-q1,generator,generator dealer,36.1029,-80.2608,13,P1
+nc-winston-salem-q2,generator,standby generator installer,36.1029,-80.2608,13,P1
+nc-winston-salem-q3,generator,Generac dealer,36.1029,-80.2608,13,P2
+nc-winston-salem-q4,generator,generator shop,36.1029,-80.2608,13,P2
+nc-fayetteville-q0,generator,generator installation,35.0828,-78.9735,13,P1
+nc-fayetteville-q1,generator,generator dealer,35.0828,-78.9735,13,P1
+nc-fayetteville-q2,generator,standby generator installer,35.0828,-78.9735,13,P1
+nc-fayetteville-q3,generator,Generac dealer,35.0828,-78.9735,13,P2
+nc-fayetteville-q4,generator,generator shop,35.0828,-78.9735,13,P2
+nc-wilmington-q0,generator,generator installation,34.2092,-77.8858,13,P1
+nc-wilmington-q1,generator,generator dealer,34.2092,-77.8858,13,P1
+nc-wilmington-q2,generator,standby generator installer,34.2092,-77.8858,13,P1
+nc-wilmington-q3,generator,Generac dealer,34.2092,-77.8858,13,P2
+nc-wilmington-q4,generator,generator shop,34.2092,-77.8858,13,P2
+nc-asheville-q0,generator,generator installation,35.571,-82.5527,13,P1
+nc-asheville-q1,generator,generator dealer,35.571,-82.5527,13,P1
+nc-asheville-q2,generator,standby generator installer,35.571,-82.5527,13,P1
+nc-asheville-q3,generator,Generac dealer,35.571,-82.5527,13,P2
+nc-asheville-q4,generator,generator shop,35.571,-82.5527,13,P2
+nc-greenville-q0,generator,generator installation,35.5964,-77.3753,13,P1
+nc-greenville-q1,generator,generator dealer,35.5964,-77.3753,13,P1
+nc-greenville-q2,generator,standby generator installer,35.5964,-77.3753,13,P1
+nc-greenville-q3,generator,Generac dealer,35.5964,-77.3753,13,P2
+nc-greenville-q4,generator,generator shop,35.5964,-77.3753,13,P2
+nc-lenoir-q0,generator,generator installation,35.9077,-81.5248,13,P1
+nc-lenoir-q1,generator,generator dealer,35.9077,-81.5248,13,P1
+nc-lenoir-q2,generator,standby generator installer,35.9077,-81.5248,13,P1
+nc-lenoir-q3,generator,Generac dealer,35.9077,-81.5248,13,P2
+nc-lenoir-q4,generator,generator shop,35.9077,-81.5248,13,P2
+nc-havelock-q0,generator,generator installation,34.9089,-76.8995,13,P1
+nc-havelock-q1,generator,generator dealer,34.9089,-76.8995,13,P1
+nc-havelock-q2,generator,standby generator installer,34.9089,-76.8995,13,P1
+nc-havelock-q3,generator,Generac dealer,34.9089,-76.8995,13,P2
+nc-havelock-q4,generator,generator shop,34.9089,-76.8995,13,P2
+nd-fargo-q0,generator,generator installation,46.8647,-96.8291,13,P1
+nd-fargo-q1,generator,generator dealer,46.8647,-96.8291,13,P1
+nd-fargo-q2,generator,standby generator installer,46.8647,-96.8291,13,P1
+nd-fargo-q3,generator,Generac dealer,46.8647,-96.8291,13,P2
+nd-fargo-q4,generator,generator shop,46.8647,-96.8291,13,P2
+nd-bismarck-q0,generator,generator installation,46.8146,-100.7701,13,P1
+nd-bismarck-q1,generator,generator dealer,46.8146,-100.7701,13,P1
+nd-bismarck-q2,generator,standby generator installer,46.8146,-100.7701,13,P1
+nd-bismarck-q3,generator,Generac dealer,46.8146,-100.7701,13,P2
+nd-bismarck-q4,generator,generator shop,46.8146,-100.7701,13,P2
+nd-grand-forks-q0,generator,generator installation,47.9196,-97.0873,13,P1
+nd-grand-forks-q1,generator,generator dealer,47.9196,-97.0873,13,P1
+nd-grand-forks-q2,generator,standby generator installer,47.9196,-97.0873,13,P1
+nd-grand-forks-q3,generator,Generac dealer,47.9196,-97.0873,13,P2
+nd-grand-forks-q4,generator,generator shop,47.9196,-97.0873,13,P2
+nd-minot-q0,generator,generator installation,48.2361,-101.2775,13,P1
+nd-minot-q1,generator,generator dealer,48.2361,-101.2775,13,P1
+nd-minot-q2,generator,standby generator installer,48.2361,-101.2775,13,P1
+nd-minot-q3,generator,Generac dealer,48.2361,-101.2775,13,P2
+nd-minot-q4,generator,generator shop,48.2361,-101.2775,13,P2
+nd-williston-q0,generator,generator installation,48.1895,-103.6491,13,P1
+nd-williston-q1,generator,generator dealer,48.1895,-103.6491,13,P1
+nd-williston-q2,generator,standby generator installer,48.1895,-103.6491,13,P1
+nd-williston-q3,generator,Generac dealer,48.1895,-103.6491,13,P2
+nd-williston-q4,generator,generator shop,48.1895,-103.6491,13,P2
+nd-dickinson-q0,generator,generator installation,46.8928,-102.796,13,P1
+nd-dickinson-q1,generator,generator dealer,46.8928,-102.796,13,P1
+nd-dickinson-q2,generator,standby generator installer,46.8928,-102.796,13,P1
+nd-dickinson-q3,generator,Generac dealer,46.8928,-102.796,13,P2
+nd-dickinson-q4,generator,generator shop,46.8928,-102.796,13,P2
+nd-jamestown-q0,generator,generator installation,46.9059,-98.6936,13,P1
+nd-jamestown-q1,generator,generator dealer,46.9059,-98.6936,13,P1
+nd-jamestown-q2,generator,standby generator installer,46.9059,-98.6936,13,P1
+nd-jamestown-q3,generator,Generac dealer,46.9059,-98.6936,13,P2
+nd-jamestown-q4,generator,generator shop,46.9059,-98.6936,13,P2
+nd-devils-lake-q0,generator,generator installation,48.1126,-98.8748,13,P1
+nd-devils-lake-q1,generator,generator dealer,48.1126,-98.8748,13,P1
+nd-devils-lake-q2,generator,standby generator installer,48.1126,-98.8748,13,P1
+nd-devils-lake-q3,generator,Generac dealer,48.1126,-98.8748,13,P2
+nd-devils-lake-q4,generator,generator shop,48.1126,-98.8748,13,P2
+ne-omaha-q0,generator,generator installation,41.2627,-96.0535,13,P1
+ne-omaha-q1,generator,generator dealer,41.2627,-96.0535,13,P1
+ne-omaha-q2,generator,standby generator installer,41.2627,-96.0535,13,P1
+ne-omaha-q3,generator,Generac dealer,41.2627,-96.0535,13,P2
+ne-omaha-q4,generator,generator shop,41.2627,-96.0535,13,P2
+ne-lincoln-q0,generator,generator installation,40.8103,-96.6749,13,P1
+ne-lincoln-q1,generator,generator dealer,40.8103,-96.6749,13,P1
+ne-lincoln-q2,generator,standby generator installer,40.8103,-96.6749,13,P1
+ne-lincoln-q3,generator,Generac dealer,40.8103,-96.6749,13,P2
+ne-lincoln-q4,generator,generator shop,40.8103,-96.6749,13,P2
+ne-grand-island-q0,generator,generator installation,40.9214,-98.3586,13,P1
+ne-grand-island-q1,generator,generator dealer,40.9214,-98.3586,13,P1
+ne-grand-island-q2,generator,standby generator installer,40.9214,-98.3586,13,P1
+ne-grand-island-q3,generator,Generac dealer,40.9214,-98.3586,13,P2
+ne-grand-island-q4,generator,generator shop,40.9214,-98.3586,13,P2
+ne-norfolk-q0,generator,generator installation,42.0282,-97.4278,13,P1
+ne-norfolk-q1,generator,generator dealer,42.0282,-97.4278,13,P1
+ne-norfolk-q2,generator,standby generator installer,42.0282,-97.4278,13,P1
+ne-norfolk-q3,generator,Generac dealer,42.0282,-97.4278,13,P2
+ne-norfolk-q4,generator,generator shop,42.0282,-97.4278,13,P2
+ne-north-platte-q0,generator,generator installation,41.125,-100.7504,13,P1
+ne-north-platte-q1,generator,generator dealer,41.125,-100.7504,13,P1
+ne-north-platte-q2,generator,standby generator installer,41.125,-100.7504,13,P1
+ne-north-platte-q3,generator,Generac dealer,41.125,-100.7504,13,P2
+ne-north-platte-q4,generator,generator shop,41.125,-100.7504,13,P2
+ne-scottsbluff-q0,generator,generator installation,41.8681,-103.662,13,P1
+ne-scottsbluff-q1,generator,generator dealer,41.8681,-103.662,13,P1
+ne-scottsbluff-q2,generator,standby generator installer,41.8681,-103.662,13,P1
+ne-scottsbluff-q3,generator,Generac dealer,41.8681,-103.662,13,P2
+ne-scottsbluff-q4,generator,generator shop,41.8681,-103.662,13,P2
+ne-chadron-q0,generator,generator installation,42.826,-103.0025,13,P1
+ne-chadron-q1,generator,generator dealer,42.826,-103.0025,13,P1
+ne-chadron-q2,generator,standby generator installer,42.826,-103.0025,13,P1
+ne-chadron-q3,generator,Generac dealer,42.826,-103.0025,13,P2
+ne-chadron-q4,generator,generator shop,42.826,-103.0025,13,P2
+nh-manchester-q0,generator,generator installation,42.9849,-71.4441,13,P1
+nh-manchester-q1,generator,generator dealer,42.9849,-71.4441,13,P1
+nh-manchester-q2,generator,standby generator installer,42.9849,-71.4441,13,P1
+nh-manchester-q3,generator,Generac dealer,42.9849,-71.4441,13,P2
+nh-manchester-q4,generator,generator shop,42.9849,-71.4441,13,P2
+nh-berlin-q0,generator,generator installation,44.4843,-71.2771,13,P1
+nh-berlin-q1,generator,generator dealer,44.4843,-71.2771,13,P1
+nh-berlin-q2,generator,standby generator installer,44.4843,-71.2771,13,P1
+nh-berlin-q3,generator,Generac dealer,44.4843,-71.2771,13,P2
+nh-berlin-q4,generator,generator shop,44.4843,-71.2771,13,P2
+nj-atlantic-city-q0,generator,generator installation,39.3773,-74.4511,13,P1
+nj-atlantic-city-q1,generator,generator dealer,39.3773,-74.4511,13,P1
+nj-atlantic-city-q2,generator,standby generator installer,39.3773,-74.4511,13,P1
+nj-atlantic-city-q3,generator,Generac dealer,39.3773,-74.4511,13,P2
+nj-atlantic-city-q4,generator,generator shop,39.3773,-74.4511,13,P2
+nm-albuquerque-q0,generator,generator installation,35.1048,-106.6468,13,P1
+nm-albuquerque-q1,generator,generator dealer,35.1048,-106.6468,13,P1
+nm-albuquerque-q2,generator,standby generator installer,35.1048,-106.6468,13,P1
+nm-albuquerque-q3,generator,Generac dealer,35.1048,-106.6468,13,P2
+nm-albuquerque-q4,generator,generator shop,35.1048,-106.6468,13,P2
+nm-las-cruces-q0,generator,generator installation,32.3264,-106.7897,13,P1
+nm-las-cruces-q1,generator,generator dealer,32.3264,-106.7897,13,P1
+nm-las-cruces-q2,generator,standby generator installer,32.3264,-106.7897,13,P1
+nm-las-cruces-q3,generator,Generac dealer,32.3264,-106.7897,13,P2
+nm-las-cruces-q4,generator,generator shop,32.3264,-106.7897,13,P2
+nm-santa-fe-q0,generator,generator installation,35.662,-105.9818,13,P1
+nm-santa-fe-q1,generator,generator dealer,35.662,-105.9818,13,P1
+nm-santa-fe-q2,generator,standby generator installer,35.662,-105.9818,13,P1
+nm-santa-fe-q3,generator,Generac dealer,35.662,-105.9818,13,P2
+nm-santa-fe-q4,generator,generator shop,35.662,-105.9818,13,P2
+nm-roswell-q0,generator,generator installation,33.3734,-104.5294,13,P1
+nm-roswell-q1,generator,generator dealer,33.3734,-104.5294,13,P1
+nm-roswell-q2,generator,standby generator installer,33.3734,-104.5294,13,P1
+nm-roswell-q3,generator,Generac dealer,33.3734,-104.5294,13,P2
+nm-roswell-q4,generator,generator shop,33.3734,-104.5294,13,P2
+nm-farmington-q0,generator,generator installation,36.7538,-108.1805,13,P1
+nm-farmington-q1,generator,generator dealer,36.7538,-108.1805,13,P1
+nm-farmington-q2,generator,standby generator installer,36.7538,-108.1805,13,P1
+nm-farmington-q3,generator,Generac dealer,36.7538,-108.1805,13,P2
+nm-farmington-q4,generator,generator shop,36.7538,-108.1805,13,P2
+nm-hobbs-q0,generator,generator installation,32.7291,-103.1606,13,P1
+nm-hobbs-q1,generator,generator dealer,32.7291,-103.1606,13,P1
+nm-hobbs-q2,generator,standby generator installer,32.7291,-103.1606,13,P1
+nm-hobbs-q3,generator,Generac dealer,32.7291,-103.1606,13,P2
+nm-hobbs-q4,generator,generator shop,32.7291,-103.1606,13,P2
+nm-clovis-q0,generator,generator installation,34.4386,-103.1942,13,P1
+nm-clovis-q1,generator,generator dealer,34.4386,-103.1942,13,P1
+nm-clovis-q2,generator,standby generator installer,34.4386,-103.1942,13,P1
+nm-clovis-q3,generator,Generac dealer,34.4386,-103.1942,13,P2
+nm-clovis-q4,generator,generator shop,34.4386,-103.1942,13,P2
+nm-carlsbad-q0,generator,generator installation,32.4008,-104.241,13,P1
+nm-carlsbad-q1,generator,generator dealer,32.4008,-104.241,13,P1
+nm-carlsbad-q2,generator,standby generator installer,32.4008,-104.241,13,P1
+nm-carlsbad-q3,generator,Generac dealer,32.4008,-104.241,13,P2
+nm-carlsbad-q4,generator,generator shop,32.4008,-104.241,13,P2
+nm-alamogordo-q0,generator,generator installation,32.8836,-105.9636,13,P1
+nm-alamogordo-q1,generator,generator dealer,32.8836,-105.9636,13,P1
+nm-alamogordo-q2,generator,standby generator installer,32.8836,-105.9636,13,P1
+nm-alamogordo-q3,generator,Generac dealer,32.8836,-105.9636,13,P2
+nm-alamogordo-q4,generator,generator shop,32.8836,-105.9636,13,P2
+nm-gallup-q0,generator,generator installation,35.5138,-108.7437,13,P1
+nm-gallup-q1,generator,generator dealer,35.5138,-108.7437,13,P1
+nm-gallup-q2,generator,standby generator installer,35.5138,-108.7437,13,P1
+nm-gallup-q3,generator,Generac dealer,35.5138,-108.7437,13,P2
+nm-gallup-q4,generator,generator shop,35.5138,-108.7437,13,P2
+nm-silver-city-q0,generator,generator installation,32.7786,-108.2694,13,P1
+nm-silver-city-q1,generator,generator dealer,32.7786,-108.2694,13,P1
+nm-silver-city-q2,generator,standby generator installer,32.7786,-108.2694,13,P1
+nm-silver-city-q3,generator,Generac dealer,32.7786,-108.2694,13,P2
+nm-silver-city-q4,generator,generator shop,32.7786,-108.2694,13,P2
+nm-socorro-q0,generator,generator installation,34.0545,-106.9062,13,P1
+nm-socorro-q1,generator,generator dealer,34.0545,-106.9062,13,P1
+nm-socorro-q2,generator,standby generator installer,34.0545,-106.9062,13,P1
+nm-socorro-q3,generator,Generac dealer,34.0545,-106.9062,13,P2
+nm-socorro-q4,generator,generator shop,34.0545,-106.9062,13,P2
+nm-santa-rosa-q0,generator,generator installation,34.9361,-104.675,13,P1
+nm-santa-rosa-q1,generator,generator dealer,34.9361,-104.675,13,P1
+nm-santa-rosa-q2,generator,standby generator installer,34.9361,-104.675,13,P1
+nm-santa-rosa-q3,generator,Generac dealer,34.9361,-104.675,13,P2
+nm-santa-rosa-q4,generator,generator shop,34.9361,-104.675,13,P2
+nv-las-vegas-q0,generator,generator installation,36.2335,-115.264,13,P1
+nv-las-vegas-q1,generator,generator dealer,36.2335,-115.264,13,P1
+nv-las-vegas-q2,generator,standby generator installer,36.2335,-115.264,13,P1
+nv-las-vegas-q3,generator,Generac dealer,36.2335,-115.264,13,P2
+nv-las-vegas-q4,generator,generator shop,36.2335,-115.264,13,P2
+nv-reno-q0,generator,generator installation,39.5491,-119.8499,13,P1
+nv-reno-q1,generator,generator dealer,39.5491,-119.8499,13,P1
+nv-reno-q2,generator,standby generator installer,39.5491,-119.8499,13,P1
+nv-reno-q3,generator,Generac dealer,39.5491,-119.8499,13,P2
+nv-reno-q4,generator,generator shop,39.5491,-119.8499,13,P2
+nv-elko-q0,generator,generator installation,40.8381,-115.7678,13,P1
+nv-elko-q1,generator,generator dealer,40.8381,-115.7678,13,P1
+nv-elko-q2,generator,standby generator installer,40.8381,-115.7678,13,P1
+nv-elko-q3,generator,Generac dealer,40.8381,-115.7678,13,P2
+nv-elko-q4,generator,generator shop,40.8381,-115.7678,13,P2
+nv-winnemucca-q0,generator,generator installation,40.9644,-117.7246,13,P1
+nv-winnemucca-q1,generator,generator dealer,40.9644,-117.7246,13,P1
+nv-winnemucca-q2,generator,standby generator installer,40.9644,-117.7246,13,P1
+nv-winnemucca-q3,generator,Generac dealer,40.9644,-117.7246,13,P2
+nv-winnemucca-q4,generator,generator shop,40.9644,-117.7246,13,P2
+nv-west-wendover-q0,generator,generator installation,40.7403,-114.0786,13,P1
+nv-west-wendover-q1,generator,generator dealer,40.7403,-114.0786,13,P1
+nv-west-wendover-q2,generator,standby generator installer,40.7403,-114.0786,13,P1
+nv-west-wendover-q3,generator,Generac dealer,40.7403,-114.0786,13,P2
+nv-west-wendover-q4,generator,generator shop,40.7403,-114.0786,13,P2
+nv-ely-q0,generator,generator installation,39.2649,-114.8709,13,P1
+nv-ely-q1,generator,generator dealer,39.2649,-114.8709,13,P1
+nv-ely-q2,generator,standby generator installer,39.2649,-114.8709,13,P1
+nv-ely-q3,generator,Generac dealer,39.2649,-114.8709,13,P2
+nv-ely-q4,generator,generator shop,39.2649,-114.8709,13,P2
+ny-new-york-q0,generator,generator installation,40.6627,-73.9387,13,P1
+ny-new-york-q1,generator,generator dealer,40.6627,-73.9387,13,P1
+ny-new-york-q2,generator,standby generator installer,40.6627,-73.9387,13,P1
+ny-new-york-q3,generator,Generac dealer,40.6627,-73.9387,13,P2
+ny-new-york-q4,generator,generator shop,40.6627,-73.9387,13,P2
+ny-buffalo-q0,generator,generator installation,42.8925,-78.8597,13,P1
+ny-buffalo-q1,generator,generator dealer,42.8925,-78.8597,13,P1
+ny-buffalo-q2,generator,standby generator installer,42.8925,-78.8597,13,P1
+ny-buffalo-q3,generator,Generac dealer,42.8925,-78.8597,13,P2
+ny-buffalo-q4,generator,generator shop,42.8925,-78.8597,13,P2
+ny-rochester-q0,generator,generator installation,43.1699,-77.6169,13,P1
+ny-rochester-q1,generator,generator dealer,43.1699,-77.6169,13,P1
+ny-rochester-q2,generator,standby generator installer,43.1699,-77.6169,13,P1
+ny-rochester-q3,generator,Generac dealer,43.1699,-77.6169,13,P2
+ny-rochester-q4,generator,generator shop,43.1699,-77.6169,13,P2
+ny-syracuse-q0,generator,generator installation,43.041,-76.1436,13,P1
+ny-syracuse-q1,generator,generator dealer,43.041,-76.1436,13,P1
+ny-syracuse-q2,generator,standby generator installer,43.041,-76.1436,13,P1
+ny-syracuse-q3,generator,Generac dealer,43.041,-76.1436,13,P2
+ny-syracuse-q4,generator,generator shop,43.041,-76.1436,13,P2
+ny-albany-q0,generator,generator installation,42.6657,-73.7984,13,P1
+ny-albany-q1,generator,generator dealer,42.6657,-73.7984,13,P1
+ny-albany-q2,generator,standby generator installer,42.6657,-73.7984,13,P1
+ny-albany-q3,generator,Generac dealer,42.6657,-73.7984,13,P2
+ny-albany-q4,generator,generator shop,42.6657,-73.7984,13,P2
+ny-binghamton-q0,generator,generator installation,42.1013,-75.9094,13,P1
+ny-binghamton-q1,generator,generator dealer,42.1013,-75.9094,13,P1
+ny-binghamton-q2,generator,standby generator installer,42.1013,-75.9094,13,P1
+ny-binghamton-q3,generator,Generac dealer,42.1013,-75.9094,13,P2
+ny-binghamton-q4,generator,generator shop,42.1013,-75.9094,13,P2
+ny-poughkeepsie-q0,generator,generator installation,41.6946,-73.9199,13,P1
+ny-poughkeepsie-q1,generator,generator dealer,41.6946,-73.9199,13,P1
+ny-poughkeepsie-q2,generator,standby generator installer,41.6946,-73.9199,13,P1
+ny-poughkeepsie-q3,generator,Generac dealer,41.6946,-73.9199,13,P2
+ny-poughkeepsie-q4,generator,generator shop,41.6946,-73.9199,13,P2
+ny-watertown-q0,generator,generator installation,43.9733,-75.91,13,P1
+ny-watertown-q1,generator,generator dealer,43.9733,-75.91,13,P1
+ny-watertown-q2,generator,standby generator installer,43.9733,-75.91,13,P1
+ny-watertown-q3,generator,Generac dealer,43.9733,-75.91,13,P2
+ny-watertown-q4,generator,generator shop,43.9733,-75.91,13,P2
+ny-oneonta-q0,generator,generator installation,42.4548,-75.0669,13,P1
+ny-oneonta-q1,generator,generator dealer,42.4548,-75.0669,13,P1
+ny-oneonta-q2,generator,standby generator installer,42.4548,-75.0669,13,P1
+ny-oneonta-q3,generator,Generac dealer,42.4548,-75.0669,13,P2
+ny-oneonta-q4,generator,generator shop,42.4548,-75.0669,13,P2
+ny-massena-q0,generator,generator installation,44.929,-74.893,13,P1
+ny-massena-q1,generator,generator dealer,44.929,-74.893,13,P1
+ny-massena-q2,generator,standby generator installer,44.929,-74.893,13,P1
+ny-massena-q3,generator,Generac dealer,44.929,-74.893,13,P2
+ny-massena-q4,generator,generator shop,44.929,-74.893,13,P2
+ny-wellsville-q0,generator,generator installation,42.1207,-77.9457,13,P1
+ny-wellsville-q1,generator,generator dealer,42.1207,-77.9457,13,P1
+ny-wellsville-q2,generator,standby generator installer,42.1207,-77.9457,13,P1
+ny-wellsville-q3,generator,Generac dealer,42.1207,-77.9457,13,P2
+ny-wellsville-q4,generator,generator shop,42.1207,-77.9457,13,P2
+oh-columbus-q0,generator,generator installation,39.9839,-82.9849,13,P1
+oh-columbus-q1,generator,generator dealer,39.9839,-82.9849,13,P1
+oh-columbus-q2,generator,standby generator installer,39.9839,-82.9849,13,P1
+oh-columbus-q3,generator,Generac dealer,39.9839,-82.9849,13,P2
+oh-columbus-q4,generator,generator shop,39.9839,-82.9849,13,P2
+oh-cleveland-q0,generator,generator installation,41.4785,-81.6794,13,P1
+oh-cleveland-q1,generator,generator dealer,41.4785,-81.6794,13,P1
+oh-cleveland-q2,generator,standby generator installer,41.4785,-81.6794,13,P1
+oh-cleveland-q3,generator,Generac dealer,41.4785,-81.6794,13,P2
+oh-cleveland-q4,generator,generator shop,41.4785,-81.6794,13,P2
+oh-cincinnati-q0,generator,generator installation,39.1402,-84.5058,13,P1
+oh-cincinnati-q1,generator,generator dealer,39.1402,-84.5058,13,P1
+oh-cincinnati-q2,generator,standby generator installer,39.1402,-84.5058,13,P1
+oh-cincinnati-q3,generator,Generac dealer,39.1402,-84.5058,13,P2
+oh-cincinnati-q4,generator,generator shop,39.1402,-84.5058,13,P2
+oh-toledo-q0,generator,generator installation,41.6641,-83.5819,13,P1
+oh-toledo-q1,generator,generator dealer,41.6641,-83.5819,13,P1
+oh-toledo-q2,generator,standby generator installer,41.6641,-83.5819,13,P1
+oh-toledo-q3,generator,Generac dealer,41.6641,-83.5819,13,P2
+oh-toledo-q4,generator,generator shop,41.6641,-83.5819,13,P2
+oh-akron-q0,generator,generator installation,41.0805,-81.5214,13,P1
+oh-akron-q1,generator,generator dealer,41.0805,-81.5214,13,P1
+oh-akron-q2,generator,standby generator installer,41.0805,-81.5214,13,P1
+oh-akron-q3,generator,Generac dealer,41.0805,-81.5214,13,P2
+oh-akron-q4,generator,generator shop,41.0805,-81.5214,13,P2
+oh-dayton-q0,generator,generator installation,39.7847,-84.1996,13,P1
+oh-dayton-q1,generator,generator dealer,39.7847,-84.1996,13,P1
+oh-dayton-q2,generator,standby generator installer,39.7847,-84.1996,13,P1
+oh-dayton-q3,generator,Generac dealer,39.7847,-84.1996,13,P2
+oh-dayton-q4,generator,generator shop,39.7847,-84.1996,13,P2
+oh-mansfield-q0,generator,generator installation,40.7667,-82.5308,13,P1
+oh-mansfield-q1,generator,generator dealer,40.7667,-82.5308,13,P1
+oh-mansfield-q2,generator,standby generator installer,40.7667,-82.5308,13,P1
+oh-mansfield-q3,generator,Generac dealer,40.7667,-82.5308,13,P2
+oh-mansfield-q4,generator,generator shop,40.7667,-82.5308,13,P2
+oh-lima-q0,generator,generator installation,40.7407,-84.1121,13,P1
+oh-lima-q1,generator,generator dealer,40.7407,-84.1121,13,P1
+oh-lima-q2,generator,standby generator installer,40.7407,-84.1121,13,P1
+oh-lima-q3,generator,Generac dealer,40.7407,-84.1121,13,P2
+oh-lima-q4,generator,generator shop,40.7407,-84.1121,13,P2
+oh-zanesville-q0,generator,generator installation,39.956,-82.0135,13,P1
+oh-zanesville-q1,generator,generator dealer,39.956,-82.0135,13,P1
+oh-zanesville-q2,generator,standby generator installer,39.956,-82.0135,13,P1
+oh-zanesville-q3,generator,Generac dealer,39.956,-82.0135,13,P2
+oh-zanesville-q4,generator,generator shop,39.956,-82.0135,13,P2
+ok-oklahoma-city-q0,generator,generator installation,35.4671,-97.5137,13,P1
+ok-oklahoma-city-q1,generator,generator dealer,35.4671,-97.5137,13,P1
+ok-oklahoma-city-q2,generator,standby generator installer,35.4671,-97.5137,13,P1
+ok-oklahoma-city-q3,generator,Generac dealer,35.4671,-97.5137,13,P2
+ok-oklahoma-city-q4,generator,generator shop,35.4671,-97.5137,13,P2
+ok-tulsa-q0,generator,generator installation,36.1279,-95.9023,13,P1
+ok-tulsa-q1,generator,generator dealer,36.1279,-95.9023,13,P1
+ok-tulsa-q2,generator,standby generator installer,36.1279,-95.9023,13,P1
+ok-tulsa-q3,generator,Generac dealer,36.1279,-95.9023,13,P2
+ok-tulsa-q4,generator,generator shop,36.1279,-95.9023,13,P2
+ok-lawton-q0,generator,generator installation,34.6172,-98.4214,13,P1
+ok-lawton-q1,generator,generator dealer,34.6172,-98.4214,13,P1
+ok-lawton-q2,generator,standby generator installer,34.6172,-98.4214,13,P1
+ok-lawton-q3,generator,Generac dealer,34.6172,-98.4214,13,P2
+ok-lawton-q4,generator,generator shop,34.6172,-98.4214,13,P2
+ok-enid-q0,generator,generator installation,36.4067,-97.8699,13,P1
+ok-enid-q1,generator,generator dealer,36.4067,-97.8699,13,P1
+ok-enid-q2,generator,standby generator installer,36.4067,-97.8699,13,P1
+ok-enid-q3,generator,Generac dealer,36.4067,-97.8699,13,P2
+ok-enid-q4,generator,generator shop,36.4067,-97.8699,13,P2
+ok-ardmore-q0,generator,generator installation,34.1965,-97.1318,13,P1
+ok-ardmore-q1,generator,generator dealer,34.1965,-97.1318,13,P1
+ok-ardmore-q2,generator,standby generator installer,34.1965,-97.1318,13,P1
+ok-ardmore-q3,generator,Generac dealer,34.1965,-97.1318,13,P2
+ok-ardmore-q4,generator,generator shop,34.1965,-97.1318,13,P2
+ok-ponca-city-q0,generator,generator installation,36.721,-97.0684,13,P1
+ok-ponca-city-q1,generator,generator dealer,36.721,-97.0684,13,P1
+ok-ponca-city-q2,generator,standby generator installer,36.721,-97.0684,13,P1
+ok-ponca-city-q3,generator,Generac dealer,36.721,-97.0684,13,P2
+ok-ponca-city-q4,generator,generator shop,36.721,-97.0684,13,P2
+ok-altus-q0,generator,generator installation,34.6571,-99.309,13,P1
+ok-altus-q1,generator,generator dealer,34.6571,-99.309,13,P1
+ok-altus-q2,generator,standby generator installer,34.6571,-99.309,13,P1
+ok-altus-q3,generator,Generac dealer,34.6571,-99.309,13,P2
+ok-altus-q4,generator,generator shop,34.6571,-99.309,13,P2
+ok-mcalester-q0,generator,generator installation,34.9261,-95.7736,13,P1
+ok-mcalester-q1,generator,generator dealer,34.9261,-95.7736,13,P1
+ok-mcalester-q2,generator,standby generator installer,34.9261,-95.7736,13,P1
+ok-mcalester-q3,generator,Generac dealer,34.9261,-95.7736,13,P2
+ok-mcalester-q4,generator,generator shop,34.9261,-95.7736,13,P2
+ok-woodward-q0,generator,generator installation,36.4248,-99.4047,13,P1
+ok-woodward-q1,generator,generator dealer,36.4248,-99.4047,13,P1
+ok-woodward-q2,generator,standby generator installer,36.4248,-99.4047,13,P1
+ok-woodward-q3,generator,Generac dealer,36.4248,-99.4047,13,P2
+ok-woodward-q4,generator,generator shop,36.4248,-99.4047,13,P2
+or-portland-q0,generator,generator installation,45.537,-122.65,13,P1
+or-portland-q1,generator,generator dealer,45.537,-122.65,13,P1
+or-portland-q2,generator,standby generator installer,45.537,-122.65,13,P1
+or-portland-q3,generator,Generac dealer,45.537,-122.65,13,P2
+or-portland-q4,generator,generator shop,45.537,-122.65,13,P2
+or-eugene-q0,generator,generator installation,44.0568,-123.119,13,P1
+or-eugene-q1,generator,generator dealer,44.0568,-123.119,13,P1
+or-eugene-q2,generator,standby generator installer,44.0568,-123.119,13,P1
+or-eugene-q3,generator,Generac dealer,44.0568,-123.119,13,P2
+or-eugene-q4,generator,generator shop,44.0568,-123.119,13,P2
+or-salem-q0,generator,generator installation,44.9239,-123.023,13,P1
+or-salem-q1,generator,generator dealer,44.9239,-123.023,13,P1
+or-salem-q2,generator,standby generator installer,44.9239,-123.023,13,P1
+or-salem-q3,generator,Generac dealer,44.9239,-123.023,13,P2
+or-salem-q4,generator,generator shop,44.9239,-123.023,13,P2
+or-bend-q0,generator,generator installation,44.0567,-121.308,13,P1
+or-bend-q1,generator,generator dealer,44.0567,-121.308,13,P1
+or-bend-q2,generator,standby generator installer,44.0567,-121.308,13,P1
+or-bend-q3,generator,Generac dealer,44.0567,-121.308,13,P2
+or-bend-q4,generator,generator shop,44.0567,-121.308,13,P2
+or-medford-q0,generator,generator installation,42.336,-122.8518,13,P1
+or-medford-q1,generator,generator dealer,42.336,-122.8518,13,P1
+or-medford-q2,generator,standby generator installer,42.336,-122.8518,13,P1
+or-medford-q3,generator,Generac dealer,42.336,-122.8518,13,P2
+or-medford-q4,generator,generator shop,42.336,-122.8518,13,P2
+or-roseburg-q0,generator,generator installation,43.2236,-123.352,13,P1
+or-roseburg-q1,generator,generator dealer,43.2236,-123.352,13,P1
+or-roseburg-q2,generator,standby generator installer,43.2236,-123.352,13,P1
+or-roseburg-q3,generator,Generac dealer,43.2236,-123.352,13,P2
+or-roseburg-q4,generator,generator shop,43.2236,-123.352,13,P2
+or-klamath-falls-q0,generator,generator installation,42.2188,-121.7787,13,P1
+or-klamath-falls-q1,generator,generator dealer,42.2188,-121.7787,13,P1
+or-klamath-falls-q2,generator,standby generator installer,42.2188,-121.7787,13,P1
+or-klamath-falls-q3,generator,Generac dealer,42.2188,-121.7787,13,P2
+or-klamath-falls-q4,generator,generator shop,42.2188,-121.7787,13,P2
+or-the-dalles-q0,generator,generator installation,45.5984,-121.1524,13,P1
+or-the-dalles-q1,generator,generator dealer,45.5984,-121.1524,13,P1
+or-the-dalles-q2,generator,standby generator installer,45.5984,-121.1524,13,P1
+or-the-dalles-q3,generator,Generac dealer,45.5984,-121.1524,13,P2
+or-the-dalles-q4,generator,generator shop,45.5984,-121.1524,13,P2
+or-la-grande-q0,generator,generator installation,45.3245,-118.0869,13,P1
+or-la-grande-q1,generator,generator dealer,45.3245,-118.0869,13,P1
+or-la-grande-q2,generator,standby generator installer,45.3245,-118.0869,13,P1
+or-la-grande-q3,generator,Generac dealer,45.3245,-118.0869,13,P2
+or-la-grande-q4,generator,generator shop,45.3245,-118.0869,13,P2
+or-brookings-q0,generator,generator installation,42.0724,-124.3049,13,P1
+or-brookings-q1,generator,generator dealer,42.0724,-124.3049,13,P1
+or-brookings-q2,generator,standby generator installer,42.0724,-124.3049,13,P1
+or-brookings-q3,generator,Generac dealer,42.0724,-124.3049,13,P2
+or-brookings-q4,generator,generator shop,42.0724,-124.3049,13,P2
+or-burns-q0,generator,generator installation,43.5883,-119.0613,13,P1
+or-burns-q1,generator,generator dealer,43.5883,-119.0613,13,P1
+or-burns-q2,generator,standby generator installer,43.5883,-119.0613,13,P1
+or-burns-q3,generator,Generac dealer,43.5883,-119.0613,13,P2
+or-burns-q4,generator,generator shop,43.5883,-119.0613,13,P2
+pa-philadelphia-q0,generator,generator installation,40.0094,-75.1333,13,P1
+pa-philadelphia-q1,generator,generator dealer,40.0094,-75.1333,13,P1
+pa-philadelphia-q2,generator,standby generator installer,40.0094,-75.1333,13,P1
+pa-philadelphia-q3,generator,Generac dealer,40.0094,-75.1333,13,P2
+pa-philadelphia-q4,generator,generator shop,40.0094,-75.1333,13,P2
+pa-pittsburgh-q0,generator,generator installation,40.4399,-79.9757,13,P1
+pa-pittsburgh-q1,generator,generator dealer,40.4399,-79.9757,13,P1
+pa-pittsburgh-q2,generator,standby generator installer,40.4399,-79.9757,13,P1
+pa-pittsburgh-q3,generator,Generac dealer,40.4399,-79.9757,13,P2
+pa-pittsburgh-q4,generator,generator shop,40.4399,-79.9757,13,P2
+pa-allentown-q0,generator,generator installation,40.5936,-75.4784,13,P1
+pa-allentown-q1,generator,generator dealer,40.5936,-75.4784,13,P1
+pa-allentown-q2,generator,standby generator installer,40.5936,-75.4784,13,P1
+pa-allentown-q3,generator,Generac dealer,40.5936,-75.4784,13,P2
+pa-allentown-q4,generator,generator shop,40.5936,-75.4784,13,P2
+pa-erie-q0,generator,generator installation,42.1166,-80.0735,13,P1
+pa-erie-q1,generator,generator dealer,42.1166,-80.0735,13,P1
+pa-erie-q2,generator,standby generator installer,42.1166,-80.0735,13,P1
+pa-erie-q3,generator,Generac dealer,42.1166,-80.0735,13,P2
+pa-erie-q4,generator,generator shop,42.1166,-80.0735,13,P2
+pa-scranton-q0,generator,generator installation,41.4042,-75.6659,13,P1
+pa-scranton-q1,generator,generator dealer,41.4042,-75.6659,13,P1
+pa-scranton-q2,generator,standby generator installer,41.4042,-75.6659,13,P1
+pa-scranton-q3,generator,Generac dealer,41.4042,-75.6659,13,P2
+pa-scranton-q4,generator,generator shop,41.4042,-75.6659,13,P2
+pa-lancaster-q0,generator,generator installation,40.0421,-76.301,13,P1
+pa-lancaster-q1,generator,generator dealer,40.0421,-76.301,13,P1
+pa-lancaster-q2,generator,standby generator installer,40.0421,-76.301,13,P1
+pa-lancaster-q3,generator,Generac dealer,40.0421,-76.301,13,P2
+pa-lancaster-q4,generator,generator shop,40.0421,-76.301,13,P2
+pa-altoona-q0,generator,generator installation,40.5081,-78.4011,13,P1
+pa-altoona-q1,generator,generator dealer,40.5081,-78.4011,13,P1
+pa-altoona-q2,generator,standby generator installer,40.5081,-78.4011,13,P1
+pa-altoona-q3,generator,Generac dealer,40.5081,-78.4011,13,P2
+pa-altoona-q4,generator,generator shop,40.5081,-78.4011,13,P2
+pa-williamsport-q0,generator,generator installation,41.24,-77.0356,13,P1
+pa-williamsport-q1,generator,generator dealer,41.24,-77.0356,13,P1
+pa-williamsport-q2,generator,standby generator installer,41.24,-77.0356,13,P1
+pa-williamsport-q3,generator,Generac dealer,41.24,-77.0356,13,P2
+pa-williamsport-q4,generator,generator shop,41.24,-77.0356,13,P2
+pa-hermitage-q0,generator,generator installation,41.2296,-80.4407,13,P1
+pa-hermitage-q1,generator,generator dealer,41.2296,-80.4407,13,P1
+pa-hermitage-q2,generator,standby generator installer,41.2296,-80.4407,13,P1
+pa-hermitage-q3,generator,Generac dealer,41.2296,-80.4407,13,P2
+pa-hermitage-q4,generator,generator shop,41.2296,-80.4407,13,P2
+ri-providence-q0,generator,generator installation,41.8231,-71.4188,13,P1
+ri-providence-q1,generator,generator dealer,41.8231,-71.4188,13,P1
+ri-providence-q2,generator,standby generator installer,41.8231,-71.4188,13,P1
+ri-providence-q3,generator,Generac dealer,41.8231,-71.4188,13,P2
+ri-providence-q4,generator,generator shop,41.8231,-71.4188,13,P2
+sc-charleston-q0,generator,generator installation,32.828,-79.9729,13,P1
+sc-charleston-q1,generator,generator dealer,32.828,-79.9729,13,P1
+sc-charleston-q2,generator,standby generator installer,32.828,-79.9729,13,P1
+sc-charleston-q3,generator,Generac dealer,32.828,-79.9729,13,P2
+sc-charleston-q4,generator,generator shop,32.828,-79.9729,13,P2
+sc-columbia-q0,generator,generator installation,34.0405,-80.9061,13,P1
+sc-columbia-q1,generator,generator dealer,34.0405,-80.9061,13,P1
+sc-columbia-q2,generator,standby generator installer,34.0405,-80.9061,13,P1
+sc-columbia-q3,generator,Generac dealer,34.0405,-80.9061,13,P2
+sc-columbia-q4,generator,generator shop,34.0405,-80.9061,13,P2
+sc-greenville-q0,generator,generator installation,34.8369,-82.363,13,P1
+sc-greenville-q1,generator,generator dealer,34.8369,-82.363,13,P1
+sc-greenville-q2,generator,standby generator installer,34.8369,-82.363,13,P1
+sc-greenville-q3,generator,Generac dealer,34.8369,-82.363,13,P2
+sc-greenville-q4,generator,generator shop,34.8369,-82.363,13,P2
+sc-florence-q0,generator,generator installation,34.1789,-79.7922,13,P1
+sc-florence-q1,generator,generator dealer,34.1789,-79.7922,13,P1
+sc-florence-q2,generator,standby generator installer,34.1789,-79.7922,13,P1
+sc-florence-q3,generator,Generac dealer,34.1789,-79.7922,13,P2
+sc-florence-q4,generator,generator shop,34.1789,-79.7922,13,P2
+sc-myrtle-beach-q0,generator,generator installation,33.7104,-78.886,13,P1
+sc-myrtle-beach-q1,generator,generator dealer,33.7104,-78.886,13,P1
+sc-myrtle-beach-q2,generator,standby generator installer,33.7104,-78.886,13,P1
+sc-myrtle-beach-q3,generator,Generac dealer,33.7104,-78.886,13,P2
+sc-myrtle-beach-q4,generator,generator shop,33.7104,-78.886,13,P2
+sd-sioux-falls-q0,generator,generator installation,43.5407,-96.732,13,P1
+sd-sioux-falls-q1,generator,generator dealer,43.5407,-96.732,13,P1
+sd-sioux-falls-q2,generator,standby generator installer,43.5407,-96.732,13,P1
+sd-sioux-falls-q3,generator,Generac dealer,43.5407,-96.732,13,P2
+sd-sioux-falls-q4,generator,generator shop,43.5407,-96.732,13,P2
+sd-rapid-city-q0,generator,generator installation,44.0711,-103.2179,13,P1
+sd-rapid-city-q1,generator,generator dealer,44.0711,-103.2179,13,P1
+sd-rapid-city-q2,generator,standby generator installer,44.0711,-103.2179,13,P1
+sd-rapid-city-q3,generator,Generac dealer,44.0711,-103.2179,13,P2
+sd-rapid-city-q4,generator,generator shop,44.0711,-103.2179,13,P2
+sd-aberdeen-q0,generator,generator installation,45.4647,-98.4681,13,P1
+sd-aberdeen-q1,generator,generator dealer,45.4647,-98.4681,13,P1
+sd-aberdeen-q2,generator,standby generator installer,45.4647,-98.4681,13,P1
+sd-aberdeen-q3,generator,Generac dealer,45.4647,-98.4681,13,P2
+sd-aberdeen-q4,generator,generator shop,45.4647,-98.4681,13,P2
+sd-brookings-q0,generator,generator installation,44.3034,-96.7873,13,P1
+sd-brookings-q1,generator,generator dealer,44.3034,-96.7873,13,P1
+sd-brookings-q2,generator,standby generator installer,44.3034,-96.7873,13,P1
+sd-brookings-q3,generator,Generac dealer,44.3034,-96.7873,13,P2
+sd-brookings-q4,generator,generator shop,44.3034,-96.7873,13,P2
+sd-yankton-q0,generator,generator installation,42.8898,-97.3927,13,P1
+sd-yankton-q1,generator,generator dealer,42.8898,-97.3927,13,P1
+sd-yankton-q2,generator,standby generator installer,42.8898,-97.3927,13,P1
+sd-yankton-q3,generator,Generac dealer,42.8898,-97.3927,13,P2
+sd-yankton-q4,generator,generator shop,42.8898,-97.3927,13,P2
+sd-mitchell-q0,generator,generator installation,43.7271,-98.0422,13,P1
+sd-mitchell-q1,generator,generator dealer,43.7271,-98.0422,13,P1
+sd-mitchell-q2,generator,standby generator installer,43.7271,-98.0422,13,P1
+sd-mitchell-q3,generator,Generac dealer,43.7271,-98.0422,13,P2
+sd-mitchell-q4,generator,generator shop,43.7271,-98.0422,13,P2
+sd-pierre-q0,generator,generator installation,44.3752,-100.32,13,P1
+sd-pierre-q1,generator,generator dealer,44.3752,-100.32,13,P1
+sd-pierre-q2,generator,standby generator installer,44.3752,-100.32,13,P1
+sd-pierre-q3,generator,Generac dealer,44.3752,-100.32,13,P2
+sd-pierre-q4,generator,generator shop,44.3752,-100.32,13,P2
+sd-mobridge-q0,generator,generator installation,45.541,-100.4349,13,P1
+sd-mobridge-q1,generator,generator dealer,45.541,-100.4349,13,P1
+sd-mobridge-q2,generator,standby generator installer,45.541,-100.4349,13,P1
+sd-mobridge-q3,generator,Generac dealer,45.541,-100.4349,13,P2
+sd-mobridge-q4,generator,generator shop,45.541,-100.4349,13,P2
+sd-winner-q0,generator,generator installation,43.3776,-99.8551,13,P1
+sd-winner-q1,generator,generator dealer,43.3776,-99.8551,13,P1
+sd-winner-q2,generator,standby generator installer,43.3776,-99.8551,13,P1
+sd-winner-q3,generator,Generac dealer,43.3776,-99.8551,13,P2
+sd-winner-q4,generator,generator shop,43.3776,-99.8551,13,P2
+sd-sisseton-q0,generator,generator installation,45.6625,-97.0453,13,P1
+sd-sisseton-q1,generator,generator dealer,45.6625,-97.0453,13,P1
+sd-sisseton-q2,generator,standby generator installer,45.6625,-97.0453,13,P1
+sd-sisseton-q3,generator,Generac dealer,45.6625,-97.0453,13,P2
+sd-sisseton-q4,generator,generator shop,45.6625,-97.0453,13,P2
+tn-nashville-davidson-q0,generator,generator installation,36.1718,-86.785,13,P1
+tn-nashville-davidson-q1,generator,generator dealer,36.1718,-86.785,13,P1
+tn-nashville-davidson-q2,generator,standby generator installer,36.1718,-86.785,13,P1
+tn-nashville-davidson-q3,generator,Generac dealer,36.1718,-86.785,13,P2
+tn-nashville-davidson-q4,generator,generator shop,36.1718,-86.785,13,P2
+tn-memphis-q0,generator,generator installation,35.1092,-89.9685,13,P1
+tn-memphis-q1,generator,generator dealer,35.1092,-89.9685,13,P1
+tn-memphis-q2,generator,standby generator installer,35.1092,-89.9685,13,P1
+tn-memphis-q3,generator,Generac dealer,35.1092,-89.9685,13,P2
+tn-memphis-q4,generator,generator shop,35.1092,-89.9685,13,P2
+tn-knoxville-q0,generator,generator installation,35.9707,-83.9493,13,P1
+tn-knoxville-q1,generator,generator dealer,35.9707,-83.9493,13,P1
+tn-knoxville-q2,generator,standby generator installer,35.9707,-83.9493,13,P1
+tn-knoxville-q3,generator,Generac dealer,35.9707,-83.9493,13,P2
+tn-knoxville-q4,generator,generator shop,35.9707,-83.9493,13,P2
+tn-chattanooga-q0,generator,generator installation,35.066,-85.2484,13,P1
+tn-chattanooga-q1,generator,generator dealer,35.066,-85.2484,13,P1
+tn-chattanooga-q2,generator,standby generator installer,35.066,-85.2484,13,P1
+tn-chattanooga-q3,generator,Generac dealer,35.066,-85.2484,13,P2
+tn-chattanooga-q4,generator,generator shop,35.066,-85.2484,13,P2
+tn-clarksville-q0,generator,generator installation,36.5664,-87.3452,13,P1
+tn-clarksville-q1,generator,generator dealer,36.5664,-87.3452,13,P1
+tn-clarksville-q2,generator,standby generator installer,36.5664,-87.3452,13,P1
+tn-clarksville-q3,generator,Generac dealer,36.5664,-87.3452,13,P2
+tn-clarksville-q4,generator,generator shop,36.5664,-87.3452,13,P2
+tn-murfreesboro-q0,generator,generator installation,35.8539,-86.4212,13,P1
+tn-murfreesboro-q1,generator,generator dealer,35.8539,-86.4212,13,P1
+tn-murfreesboro-q2,generator,standby generator installer,35.8539,-86.4212,13,P1
+tn-murfreesboro-q3,generator,Generac dealer,35.8539,-86.4212,13,P2
+tn-murfreesboro-q4,generator,generator shop,35.8539,-86.4212,13,P2
+tn-johnson-city-q0,generator,generator installation,36.3423,-82.3809,13,P1
+tn-johnson-city-q1,generator,generator dealer,36.3423,-82.3809,13,P1
+tn-johnson-city-q2,generator,standby generator installer,36.3423,-82.3809,13,P1
+tn-johnson-city-q3,generator,Generac dealer,36.3423,-82.3809,13,P2
+tn-johnson-city-q4,generator,generator shop,36.3423,-82.3809,13,P2
+tn-jackson-q0,generator,generator installation,35.6542,-88.8353,13,P1
+tn-jackson-q1,generator,generator dealer,35.6542,-88.8353,13,P1
+tn-jackson-q2,generator,standby generator installer,35.6542,-88.8353,13,P1
+tn-jackson-q3,generator,Generac dealer,35.6542,-88.8353,13,P2
+tn-jackson-q4,generator,generator shop,35.6542,-88.8353,13,P2
+tn-cookeville-q0,generator,generator installation,36.1469,-85.5127,13,P1
+tn-cookeville-q1,generator,generator dealer,36.1469,-85.5127,13,P1
+tn-cookeville-q2,generator,standby generator installer,36.1469,-85.5127,13,P1
+tn-cookeville-q3,generator,Generac dealer,36.1469,-85.5127,13,P2
+tn-cookeville-q4,generator,generator shop,36.1469,-85.5127,13,P2
+tx-houston-q0,generator,generator installation,29.7857,-95.3888,13,P1
+tx-houston-q1,generator,generator dealer,29.7857,-95.3888,13,P1
+tx-houston-q2,generator,standby generator installer,29.7857,-95.3888,13,P1
+tx-houston-q3,generator,Generac dealer,29.7857,-95.3888,13,P2
+tx-houston-q4,generator,generator shop,29.7857,-95.3888,13,P2
+tx-san-antonio-q0,generator,generator installation,29.4628,-98.5246,13,P1
+tx-san-antonio-q1,generator,generator dealer,29.4628,-98.5246,13,P1
+tx-san-antonio-q2,generator,standby generator installer,29.4628,-98.5246,13,P1
+tx-san-antonio-q3,generator,Generac dealer,29.4628,-98.5246,13,P2
+tx-san-antonio-q4,generator,generator shop,29.4628,-98.5246,13,P2
+tx-dallas-q0,generator,generator installation,32.7933,-96.7665,13,P1
+tx-dallas-q1,generator,generator dealer,32.7933,-96.7665,13,P1
+tx-dallas-q2,generator,standby generator installer,32.7933,-96.7665,13,P1
+tx-dallas-q3,generator,Generac dealer,32.7933,-96.7665,13,P2
+tx-dallas-q4,generator,generator shop,32.7933,-96.7665,13,P2
+tx-austin-q0,generator,generator installation,30.2986,-97.7541,13,P1
+tx-austin-q1,generator,generator dealer,30.2986,-97.7541,13,P1
+tx-austin-q2,generator,standby generator installer,30.2986,-97.7541,13,P1
+tx-austin-q3,generator,Generac dealer,30.2986,-97.7541,13,P2
+tx-austin-q4,generator,generator shop,30.2986,-97.7541,13,P2
+tx-fort-worth-q0,generator,generator installation,32.782,-97.3486,13,P1
+tx-fort-worth-q1,generator,generator dealer,32.782,-97.3486,13,P1
+tx-fort-worth-q2,generator,standby generator installer,32.782,-97.3486,13,P1
+tx-fort-worth-q3,generator,Generac dealer,32.782,-97.3486,13,P2
+tx-fort-worth-q4,generator,generator shop,32.782,-97.3486,13,P2
+tx-el-paso-q0,generator,generator installation,31.8478,-106.4311,13,P1
+tx-el-paso-q1,generator,generator dealer,31.8478,-106.4311,13,P1
+tx-el-paso-q2,generator,standby generator installer,31.8478,-106.4311,13,P1
+tx-el-paso-q3,generator,Generac dealer,31.8478,-106.4311,13,P2
+tx-el-paso-q4,generator,generator shop,31.8478,-106.4311,13,P2
+tx-corpus-christi-q0,generator,generator installation,27.7543,-97.1734,13,P1
+tx-corpus-christi-q1,generator,generator dealer,27.7543,-97.1734,13,P1
+tx-corpus-christi-q2,generator,standby generator installer,27.7543,-97.1734,13,P1
+tx-corpus-christi-q3,generator,Generac dealer,27.7543,-97.1734,13,P2
+tx-corpus-christi-q4,generator,generator shop,27.7543,-97.1734,13,P2
+tx-lubbock-q0,generator,generator installation,33.5619,-101.8889,13,P1
+tx-lubbock-q1,generator,generator dealer,33.5619,-101.8889,13,P1
+tx-lubbock-q2,generator,standby generator installer,33.5619,-101.8889,13,P1
+tx-lubbock-q3,generator,Generac dealer,33.5619,-101.8889,13,P2
+tx-lubbock-q4,generator,generator shop,33.5619,-101.8889,13,P2
+tx-laredo-q0,generator,generator installation,27.5604,-99.4892,13,P1
+tx-laredo-q1,generator,generator dealer,27.5604,-99.4892,13,P1
+tx-laredo-q2,generator,standby generator installer,27.5604,-99.4892,13,P1
+tx-laredo-q3,generator,Generac dealer,27.5604,-99.4892,13,P2
+tx-laredo-q4,generator,generator shop,27.5604,-99.4892,13,P2
+tx-frisco-q0,generator,generator installation,33.1554,-96.8226,13,P1
+tx-frisco-q1,generator,generator dealer,33.1554,-96.8226,13,P1
+tx-frisco-q2,generator,standby generator installer,33.1554,-96.8226,13,P1
+tx-frisco-q3,generator,Generac dealer,33.1554,-96.8226,13,P2
+tx-frisco-q4,generator,generator shop,33.1554,-96.8226,13,P2
+tx-amarillo-q0,generator,generator installation,35.1981,-101.8331,13,P1
+tx-amarillo-q1,generator,generator dealer,35.1981,-101.8331,13,P1
+tx-amarillo-q2,generator,standby generator installer,35.1981,-101.8331,13,P1
+tx-amarillo-q3,generator,Generac dealer,35.1981,-101.8331,13,P2
+tx-amarillo-q4,generator,generator shop,35.1981,-101.8331,13,P2
+tx-brownsville-q0,generator,generator installation,25.9957,-97.4508,13,P1
+tx-brownsville-q1,generator,generator dealer,25.9957,-97.4508,13,P1
+tx-brownsville-q2,generator,standby generator installer,25.9957,-97.4508,13,P1
+tx-brownsville-q3,generator,Generac dealer,25.9957,-97.4508,13,P2
+tx-brownsville-q4,generator,generator shop,25.9957,-97.4508,13,P2
+tx-killeen-q0,generator,generator installation,31.0777,-97.732,13,P1
+tx-killeen-q1,generator,generator dealer,31.0777,-97.732,13,P1
+tx-killeen-q2,generator,standby generator installer,31.0777,-97.732,13,P1
+tx-killeen-q3,generator,Generac dealer,31.0777,-97.732,13,P2
+tx-killeen-q4,generator,generator shop,31.0777,-97.732,13,P2
+tx-mcallen-q0,generator,generator installation,26.225,-98.2461,13,P1
+tx-mcallen-q1,generator,generator dealer,26.225,-98.2461,13,P1
+tx-mcallen-q2,generator,standby generator installer,26.225,-98.2461,13,P1
+tx-mcallen-q3,generator,Generac dealer,26.225,-98.2461,13,P2
+tx-mcallen-q4,generator,generator shop,26.225,-98.2461,13,P2
+tx-waco-q0,generator,generator installation,31.558,-97.1898,13,P1
+tx-waco-q1,generator,generator dealer,31.558,-97.1898,13,P1
+tx-waco-q2,generator,standby generator installer,31.558,-97.1898,13,P1
+tx-waco-q3,generator,Generac dealer,31.558,-97.1898,13,P2
+tx-waco-q4,generator,generator shop,31.558,-97.1898,13,P2
+tx-midland-q0,generator,generator installation,32.0246,-102.1135,13,P1
+tx-midland-q1,generator,generator dealer,32.0246,-102.1135,13,P1
+tx-midland-q2,generator,standby generator installer,32.0246,-102.1135,13,P1
+tx-midland-q3,generator,Generac dealer,32.0246,-102.1135,13,P2
+tx-midland-q4,generator,generator shop,32.0246,-102.1135,13,P2
+tx-abilene-q0,generator,generator installation,32.4545,-99.7381,13,P1
+tx-abilene-q1,generator,generator dealer,32.4545,-99.7381,13,P1
+tx-abilene-q2,generator,standby generator installer,32.4545,-99.7381,13,P1
+tx-abilene-q3,generator,Generac dealer,32.4545,-99.7381,13,P2
+tx-abilene-q4,generator,generator shop,32.4545,-99.7381,13,P2
+tx-college-station-q0,generator,generator installation,30.5852,-96.2964,13,P1
+tx-college-station-q1,generator,generator dealer,30.5852,-96.2964,13,P1
+tx-college-station-q2,generator,standby generator installer,30.5852,-96.2964,13,P1
+tx-college-station-q3,generator,Generac dealer,30.5852,-96.2964,13,P2
+tx-college-station-q4,generator,generator shop,30.5852,-96.2964,13,P2
+tx-league-city-q0,generator,generator installation,29.4901,-95.1091,13,P1
+tx-league-city-q1,generator,generator dealer,29.4901,-95.1091,13,P1
+tx-league-city-q2,generator,standby generator installer,29.4901,-95.1091,13,P1
+tx-league-city-q3,generator,Generac dealer,29.4901,-95.1091,13,P2
+tx-league-city-q4,generator,generator shop,29.4901,-95.1091,13,P2
+tx-beaumont-q0,generator,generator installation,30.0849,-94.1453,13,P1
+tx-beaumont-q1,generator,generator dealer,30.0849,-94.1453,13,P1
+tx-beaumont-q2,generator,standby generator installer,30.0849,-94.1453,13,P1
+tx-beaumont-q3,generator,Generac dealer,30.0849,-94.1453,13,P2
+tx-beaumont-q4,generator,generator shop,30.0849,-94.1453,13,P2
+tx-new-braunfels-q0,generator,generator installation,29.6993,-98.1151,13,P1
+tx-new-braunfels-q1,generator,generator dealer,29.6993,-98.1151,13,P1
+tx-new-braunfels-q2,generator,standby generator installer,29.6993,-98.1151,13,P1
+tx-new-braunfels-q3,generator,Generac dealer,29.6993,-98.1151,13,P2
+tx-new-braunfels-q4,generator,generator shop,29.6993,-98.1151,13,P2
+tx-tyler-q0,generator,generator installation,32.3173,-95.3059,13,P1
+tx-tyler-q1,generator,generator dealer,32.3173,-95.3059,13,P1
+tx-tyler-q2,generator,standby generator installer,32.3173,-95.3059,13,P1
+tx-tyler-q3,generator,Generac dealer,32.3173,-95.3059,13,P2
+tx-tyler-q4,generator,generator shop,32.3173,-95.3059,13,P2
+tx-conroe-q0,generator,generator installation,30.3287,-95.4846,13,P1
+tx-conroe-q1,generator,generator dealer,30.3287,-95.4846,13,P1
+tx-conroe-q2,generator,standby generator installer,30.3287,-95.4846,13,P1
+tx-conroe-q3,generator,Generac dealer,30.3287,-95.4846,13,P2
+tx-conroe-q4,generator,generator shop,30.3287,-95.4846,13,P2
+tx-wichita-falls-q0,generator,generator installation,33.9067,-98.5258,13,P1
+tx-wichita-falls-q1,generator,generator dealer,33.9067,-98.5258,13,P1
+tx-wichita-falls-q2,generator,standby generator installer,33.9067,-98.5258,13,P1
+tx-wichita-falls-q3,generator,Generac dealer,33.9067,-98.5258,13,P2
+tx-wichita-falls-q4,generator,generator shop,33.9067,-98.5258,13,P2
+tx-san-angelo-q0,generator,generator installation,31.4411,-100.4505,13,P1
+tx-san-angelo-q1,generator,generator dealer,31.4411,-100.4505,13,P1
+tx-san-angelo-q2,generator,standby generator installer,31.4411,-100.4505,13,P1
+tx-san-angelo-q3,generator,Generac dealer,31.4411,-100.4505,13,P2
+tx-san-angelo-q4,generator,generator shop,31.4411,-100.4505,13,P2
+tx-victoria-q0,generator,generator installation,28.8285,-96.986,13,P1
+tx-victoria-q1,generator,generator dealer,28.8285,-96.986,13,P1
+tx-victoria-q2,generator,standby generator installer,28.8285,-96.986,13,P1
+tx-victoria-q3,generator,Generac dealer,28.8285,-96.986,13,P2
+tx-victoria-q4,generator,generator shop,28.8285,-96.986,13,P2
+tx-texarkana-q0,generator,generator installation,33.4492,-94.085,13,P1
+tx-texarkana-q1,generator,generator dealer,33.4492,-94.085,13,P1
+tx-texarkana-q2,generator,standby generator installer,33.4492,-94.085,13,P1
+tx-texarkana-q3,generator,Generac dealer,33.4492,-94.085,13,P2
+tx-texarkana-q4,generator,generator shop,33.4492,-94.085,13,P2
+tx-del-rio-q0,generator,generator installation,29.373,-100.8819,13,P1
+tx-del-rio-q1,generator,generator dealer,29.373,-100.8819,13,P1
+tx-del-rio-q2,generator,standby generator installer,29.373,-100.8819,13,P1
+tx-del-rio-q3,generator,Generac dealer,29.373,-100.8819,13,P2
+tx-del-rio-q4,generator,generator shop,29.373,-100.8819,13,P2
+tx-lufkin-q0,generator,generator installation,31.3229,-94.729,13,P1
+tx-lufkin-q1,generator,generator dealer,31.3229,-94.729,13,P1
+tx-lufkin-q2,generator,standby generator installer,31.3229,-94.729,13,P1
+tx-lufkin-q3,generator,Generac dealer,31.3229,-94.729,13,P2
+tx-lufkin-q4,generator,generator shop,31.3229,-94.729,13,P2
+tx-eagle-pass-q0,generator,generator installation,28.7128,-100.4848,13,P1
+tx-eagle-pass-q1,generator,generator dealer,28.7128,-100.4848,13,P1
+tx-eagle-pass-q2,generator,standby generator installer,28.7128,-100.4848,13,P1
+tx-eagle-pass-q3,generator,Generac dealer,28.7128,-100.4848,13,P2
+tx-eagle-pass-q4,generator,generator shop,28.7128,-100.4848,13,P2
+tx-corsicana-q0,generator,generator installation,32.0824,-96.4667,13,P1
+tx-corsicana-q1,generator,generator dealer,32.0824,-96.4667,13,P1
+tx-corsicana-q2,generator,standby generator installer,32.0824,-96.4667,13,P1
+tx-corsicana-q3,generator,Generac dealer,32.0824,-96.4667,13,P2
+tx-corsicana-q4,generator,generator shop,32.0824,-96.4667,13,P2
+tx-paris-q0,generator,generator installation,33.6689,-95.5466,13,P1
+tx-paris-q1,generator,generator dealer,33.6689,-95.5466,13,P1
+tx-paris-q2,generator,standby generator installer,33.6689,-95.5466,13,P1
+tx-paris-q3,generator,Generac dealer,33.6689,-95.5466,13,P2
+tx-paris-q4,generator,generator shop,33.6689,-95.5466,13,P2
+tx-kerrville-q0,generator,generator installation,30.0383,-99.1311,13,P1
+tx-kerrville-q1,generator,generator dealer,30.0383,-99.1311,13,P1
+tx-kerrville-q2,generator,standby generator installer,30.0383,-99.1311,13,P1
+tx-kerrville-q3,generator,Generac dealer,30.0383,-99.1311,13,P2
+tx-kerrville-q4,generator,generator shop,30.0383,-99.1311,13,P2
+tx-stephenville-q0,generator,generator installation,32.2145,-98.2199,13,P1
+tx-stephenville-q1,generator,generator dealer,32.2145,-98.2199,13,P1
+tx-stephenville-q2,generator,standby generator installer,32.2145,-98.2199,13,P1
+tx-stephenville-q3,generator,Generac dealer,32.2145,-98.2199,13,P2
+tx-stephenville-q4,generator,generator shop,32.2145,-98.2199,13,P2
+tx-brownwood-q0,generator,generator installation,31.7129,-98.9771,13,P1
+tx-brownwood-q1,generator,generator dealer,31.7129,-98.9771,13,P1
+tx-brownwood-q2,generator,standby generator installer,31.7129,-98.9771,13,P1
+tx-brownwood-q3,generator,Generac dealer,31.7129,-98.9771,13,P2
+tx-brownwood-q4,generator,generator shop,31.7129,-98.9771,13,P2
+tx-alice-q0,generator,generator installation,27.7556,-98.0658,13,P1
+tx-alice-q1,generator,generator dealer,27.7556,-98.0658,13,P1
+tx-alice-q2,generator,standby generator installer,27.7556,-98.0658,13,P1
+tx-alice-q3,generator,Generac dealer,27.7556,-98.0658,13,P2
+tx-alice-q4,generator,generator shop,27.7556,-98.0658,13,P2
+tx-bay-city-q0,generator,generator installation,28.9835,-95.9599,13,P1
+tx-bay-city-q1,generator,generator dealer,28.9835,-95.9599,13,P1
+tx-bay-city-q2,generator,standby generator installer,28.9835,-95.9599,13,P1
+tx-bay-city-q3,generator,Generac dealer,28.9835,-95.9599,13,P2
+tx-bay-city-q4,generator,generator shop,28.9835,-95.9599,13,P2
+tx-pampa-q0,generator,generator installation,35.5479,-100.965,13,P1
+tx-pampa-q1,generator,generator dealer,35.5479,-100.965,13,P1
+tx-pampa-q2,generator,standby generator installer,35.5479,-100.965,13,P1
+tx-pampa-q3,generator,Generac dealer,35.5479,-100.965,13,P2
+tx-pampa-q4,generator,generator shop,35.5479,-100.965,13,P2
+tx-mount-pleasant-q0,generator,generator installation,33.1582,-94.9745,13,P1
+tx-mount-pleasant-q1,generator,generator dealer,33.1582,-94.9745,13,P1
+tx-mount-pleasant-q2,generator,standby generator installer,33.1582,-94.9745,13,P1
+tx-mount-pleasant-q3,generator,Generac dealer,33.1582,-94.9745,13,P2
+tx-mount-pleasant-q4,generator,generator shop,33.1582,-94.9745,13,P2
+tx-uvalde-q0,generator,generator installation,29.2152,-99.7772,13,P1
+tx-uvalde-q1,generator,generator dealer,29.2152,-99.7772,13,P1
+tx-uvalde-q2,generator,standby generator installer,29.2152,-99.7772,13,P1
+tx-uvalde-q3,generator,Generac dealer,29.2152,-99.7772,13,P2
+tx-uvalde-q4,generator,generator shop,29.2152,-99.7772,13,P2
+tx-snyder-q0,generator,generator installation,32.7136,-100.9119,13,P1
+tx-snyder-q1,generator,generator dealer,32.7136,-100.9119,13,P1
+tx-snyder-q2,generator,standby generator installer,32.7136,-100.9119,13,P1
+tx-snyder-q3,generator,Generac dealer,32.7136,-100.9119,13,P2
+tx-snyder-q4,generator,generator shop,32.7136,-100.9119,13,P2
+tx-town-of-pecos-q0,generator,generator installation,31.3917,-103.5272,13,P1
+tx-town-of-pecos-q1,generator,generator dealer,31.3917,-103.5272,13,P1
+tx-town-of-pecos-q2,generator,standby generator installer,31.3917,-103.5272,13,P1
+tx-town-of-pecos-q3,generator,Generac dealer,31.3917,-103.5272,13,P2
+tx-town-of-pecos-q4,generator,generator shop,31.3917,-103.5272,13,P2
+tx-dalhart-q0,generator,generator installation,36.0574,-102.5122,13,P1
+tx-dalhart-q1,generator,generator dealer,36.0574,-102.5122,13,P1
+tx-dalhart-q2,generator,standby generator installer,36.0574,-102.5122,13,P1
+tx-dalhart-q3,generator,Generac dealer,36.0574,-102.5122,13,P2
+tx-dalhart-q4,generator,generator shop,36.0574,-102.5122,13,P2
+tx-alpine-q0,generator,generator installation,30.3639,-103.6645,13,P1
+tx-alpine-q1,generator,generator dealer,30.3639,-103.6645,13,P1
+tx-alpine-q2,generator,standby generator installer,30.3639,-103.6645,13,P1
+tx-alpine-q3,generator,Generac dealer,30.3639,-103.6645,13,P2
+tx-alpine-q4,generator,generator shop,30.3639,-103.6645,13,P2
+tx-presidio-q0,generator,generator installation,29.5603,-104.3653,13,P1
+tx-presidio-q1,generator,generator dealer,29.5603,-104.3653,13,P1
+tx-presidio-q2,generator,standby generator installer,29.5603,-104.3653,13,P1
+tx-presidio-q3,generator,Generac dealer,29.5603,-104.3653,13,P2
+tx-presidio-q4,generator,generator shop,29.5603,-104.3653,13,P2
+ut-salt-lake-city-q0,generator,generator installation,40.7769,-111.931,13,P1
+ut-salt-lake-city-q1,generator,generator dealer,40.7769,-111.931,13,P1
+ut-salt-lake-city-q2,generator,standby generator installer,40.7769,-111.931,13,P1
+ut-salt-lake-city-q3,generator,Generac dealer,40.7769,-111.931,13,P2
+ut-salt-lake-city-q4,generator,generator shop,40.7769,-111.931,13,P2
+ut-provo-q0,generator,generator installation,40.2453,-111.6451,13,P1
+ut-provo-q1,generator,generator dealer,40.2453,-111.6451,13,P1
+ut-provo-q2,generator,standby generator installer,40.2453,-111.6451,13,P1
+ut-provo-q3,generator,Generac dealer,40.2453,-111.6451,13,P2
+ut-provo-q4,generator,generator shop,40.2453,-111.6451,13,P2
+ut-st-george-q0,generator,generator installation,37.077,-113.5765,13,P1
+ut-st-george-q1,generator,generator dealer,37.077,-113.5765,13,P1
+ut-st-george-q2,generator,standby generator installer,37.077,-113.5765,13,P1
+ut-st-george-q3,generator,Generac dealer,37.077,-113.5765,13,P2
+ut-st-george-q4,generator,generator shop,37.077,-113.5765,13,P2
+ut-logan-q0,generator,generator installation,41.7403,-111.8418,13,P1
+ut-logan-q1,generator,generator dealer,41.7403,-111.8418,13,P1
+ut-logan-q2,generator,standby generator installer,41.7403,-111.8418,13,P1
+ut-logan-q3,generator,Generac dealer,41.7403,-111.8418,13,P2
+ut-logan-q4,generator,generator shop,41.7403,-111.8418,13,P2
+ut-cedar-city-q0,generator,generator installation,37.6838,-113.0955,13,P1
+ut-cedar-city-q1,generator,generator dealer,37.6838,-113.0955,13,P1
+ut-cedar-city-q2,generator,standby generator installer,37.6838,-113.0955,13,P1
+ut-cedar-city-q3,generator,Generac dealer,37.6838,-113.0955,13,P2
+ut-cedar-city-q4,generator,generator shop,37.6838,-113.0955,13,P2
+ut-vernal-q0,generator,generator installation,40.4517,-109.538,13,P1
+ut-vernal-q1,generator,generator dealer,40.4517,-109.538,13,P1
+ut-vernal-q2,generator,standby generator installer,40.4517,-109.538,13,P1
+ut-vernal-q3,generator,Generac dealer,40.4517,-109.538,13,P2
+ut-vernal-q4,generator,generator shop,40.4517,-109.538,13,P2
+ut-richfield-q0,generator,generator installation,38.7613,-112.0929,13,P1
+ut-richfield-q1,generator,generator dealer,38.7613,-112.0929,13,P1
+ut-richfield-q2,generator,standby generator installer,38.7613,-112.0929,13,P1
+ut-richfield-q3,generator,Generac dealer,38.7613,-112.0929,13,P2
+ut-richfield-q4,generator,generator shop,38.7613,-112.0929,13,P2
+ut-blanding-q0,generator,generator installation,37.6231,-109.513,13,P1
+ut-blanding-q1,generator,generator dealer,37.6231,-109.513,13,P1
+ut-blanding-q2,generator,standby generator installer,37.6231,-109.513,13,P1
+ut-blanding-q3,generator,Generac dealer,37.6231,-109.513,13,P2
+ut-blanding-q4,generator,generator shop,37.6231,-109.513,13,P2
+va-virginia-beach-q0,generator,generator installation,36.7795,-76.0291,13,P1
+va-virginia-beach-q1,generator,generator dealer,36.7795,-76.0291,13,P1
+va-virginia-beach-q2,generator,standby generator installer,36.7795,-76.0291,13,P1
+va-virginia-beach-q3,generator,Generac dealer,36.7795,-76.0291,13,P2
+va-virginia-beach-q4,generator,generator shop,36.7795,-76.0291,13,P2
+va-richmond-q0,generator,generator installation,37.5314,-77.476,13,P1
+va-richmond-q1,generator,generator dealer,37.5314,-77.476,13,P1
+va-richmond-q2,generator,standby generator installer,37.5314,-77.476,13,P1
+va-richmond-q3,generator,Generac dealer,37.5314,-77.476,13,P2
+va-richmond-q4,generator,generator shop,37.5314,-77.476,13,P2
+va-newport-news-q0,generator,generator installation,37.0761,-76.522,13,P1
+va-newport-news-q1,generator,generator dealer,37.0761,-76.522,13,P1
+va-newport-news-q2,generator,standby generator installer,37.0761,-76.522,13,P1
+va-newport-news-q3,generator,Generac dealer,37.0761,-76.522,13,P2
+va-newport-news-q4,generator,generator shop,37.0761,-76.522,13,P2
+va-suffolk-q0,generator,generator installation,36.6972,-76.6348,13,P1
+va-suffolk-q1,generator,generator dealer,36.6972,-76.6348,13,P1
+va-suffolk-q2,generator,standby generator installer,36.6972,-76.6348,13,P1
+va-suffolk-q3,generator,Generac dealer,36.6972,-76.6348,13,P2
+va-suffolk-q4,generator,generator shop,36.6972,-76.6348,13,P2
+va-roanoke-q0,generator,generator installation,37.2785,-79.9582,13,P1
+va-roanoke-q1,generator,generator dealer,37.2785,-79.9582,13,P1
+va-roanoke-q2,generator,standby generator installer,37.2785,-79.9582,13,P1
+va-roanoke-q3,generator,Generac dealer,37.2785,-79.9582,13,P2
+va-roanoke-q4,generator,generator shop,37.2785,-79.9582,13,P2
+va-harrisonburg-q0,generator,generator installation,38.4363,-78.8733,13,P1
+va-harrisonburg-q1,generator,generator dealer,38.4363,-78.8733,13,P1
+va-harrisonburg-q2,generator,standby generator installer,38.4363,-78.8733,13,P1
+va-harrisonburg-q3,generator,Generac dealer,38.4363,-78.8733,13,P2
+va-harrisonburg-q4,generator,generator shop,38.4363,-78.8733,13,P2
+va-fredericksburg-q0,generator,generator installation,38.2993,-77.4867,13,P1
+va-fredericksburg-q1,generator,generator dealer,38.2993,-77.4867,13,P1
+va-fredericksburg-q2,generator,standby generator installer,38.2993,-77.4867,13,P1
+va-fredericksburg-q3,generator,Generac dealer,38.2993,-77.4867,13,P2
+va-fredericksburg-q4,generator,generator shop,38.2993,-77.4867,13,P2
+va-front-royal-q0,generator,generator installation,38.925,-78.1834,13,P1
+va-front-royal-q1,generator,generator dealer,38.925,-78.1834,13,P1
+va-front-royal-q2,generator,standby generator installer,38.925,-78.1834,13,P1
+va-front-royal-q3,generator,Generac dealer,38.925,-78.1834,13,P2
+va-front-royal-q4,generator,generator shop,38.925,-78.1834,13,P2
+va-bluefield-q0,generator,generator installation,37.2352,-81.2747,13,P1
+va-bluefield-q1,generator,generator dealer,37.2352,-81.2747,13,P1
+va-bluefield-q2,generator,standby generator installer,37.2352,-81.2747,13,P1
+va-bluefield-q3,generator,Generac dealer,37.2352,-81.2747,13,P2
+va-bluefield-q4,generator,generator shop,37.2352,-81.2747,13,P2
+vt-burlington-q0,generator,generator installation,44.4919,-73.2389,13,P1
+vt-burlington-q1,generator,generator dealer,44.4919,-73.2389,13,P1
+vt-burlington-q2,generator,standby generator installer,44.4919,-73.2389,13,P1
+vt-burlington-q3,generator,Generac dealer,44.4919,-73.2389,13,P2
+vt-burlington-q4,generator,generator shop,44.4919,-73.2389,13,P2
+vt-rutland-q0,generator,generator installation,43.6097,-72.9778,13,P1
+vt-rutland-q1,generator,generator dealer,43.6097,-72.9778,13,P1
+vt-rutland-q2,generator,standby generator installer,43.6097,-72.9778,13,P1
+vt-rutland-q3,generator,Generac dealer,43.6097,-72.9778,13,P2
+vt-rutland-q4,generator,generator shop,43.6097,-72.9778,13,P2
+wa-seattle-q0,generator,generator installation,47.6193,-122.3515,13,P1
+wa-seattle-q1,generator,generator dealer,47.6193,-122.3515,13,P1
+wa-seattle-q2,generator,standby generator installer,47.6193,-122.3515,13,P1
+wa-seattle-q3,generator,Generac dealer,47.6193,-122.3515,13,P2
+wa-seattle-q4,generator,generator shop,47.6193,-122.3515,13,P2
+wa-spokane-q0,generator,generator installation,47.6669,-117.4333,13,P1
+wa-spokane-q1,generator,generator dealer,47.6669,-117.4333,13,P1
+wa-spokane-q2,generator,standby generator installer,47.6669,-117.4333,13,P1
+wa-spokane-q3,generator,Generac dealer,47.6669,-117.4333,13,P2
+wa-spokane-q4,generator,generator shop,47.6669,-117.4333,13,P2
+wa-tacoma-q0,generator,generator installation,47.2522,-122.4598,13,P1
+wa-tacoma-q1,generator,generator dealer,47.2522,-122.4598,13,P1
+wa-tacoma-q2,generator,standby generator installer,47.2522,-122.4598,13,P1
+wa-tacoma-q3,generator,Generac dealer,47.2522,-122.4598,13,P2
+wa-tacoma-q4,generator,generator shop,47.2522,-122.4598,13,P2
+wa-everett-q0,generator,generator installation,47.9654,-122.1899,13,P1
+wa-everett-q1,generator,generator dealer,47.9654,-122.1899,13,P1
+wa-everett-q2,generator,standby generator installer,47.9654,-122.1899,13,P1
+wa-everett-q3,generator,Generac dealer,47.9654,-122.1899,13,P2
+wa-everett-q4,generator,generator shop,47.9654,-122.1899,13,P2
+wa-yakima-q0,generator,generator installation,46.5909,-120.5494,13,P1
+wa-yakima-q1,generator,generator dealer,46.5909,-120.5494,13,P1
+wa-yakima-q2,generator,standby generator installer,46.5909,-120.5494,13,P1
+wa-yakima-q3,generator,Generac dealer,46.5909,-120.5494,13,P2
+wa-yakima-q4,generator,generator shop,46.5909,-120.5494,13,P2
+wa-bellingham-q0,generator,generator installation,48.7534,-122.4702,13,P1
+wa-bellingham-q1,generator,generator dealer,48.7534,-122.4702,13,P1
+wa-bellingham-q2,generator,standby generator installer,48.7534,-122.4702,13,P1
+wa-bellingham-q3,generator,Generac dealer,48.7534,-122.4702,13,P2
+wa-bellingham-q4,generator,generator shop,48.7534,-122.4702,13,P2
+wa-kennewick-q0,generator,generator installation,46.1976,-119.1759,13,P1
+wa-kennewick-q1,generator,generator dealer,46.1976,-119.1759,13,P1
+wa-kennewick-q2,generator,standby generator installer,46.1976,-119.1759,13,P1
+wa-kennewick-q3,generator,Generac dealer,46.1976,-119.1759,13,P2
+wa-kennewick-q4,generator,generator shop,46.1976,-119.1759,13,P2
+wa-wenatchee-q0,generator,generator installation,47.436,-120.3293,13,P1
+wa-wenatchee-q1,generator,generator dealer,47.436,-120.3293,13,P1
+wa-wenatchee-q2,generator,standby generator installer,47.436,-120.3293,13,P1
+wa-wenatchee-q3,generator,Generac dealer,47.436,-120.3293,13,P2
+wa-wenatchee-q4,generator,generator shop,47.436,-120.3293,13,P2
+wa-moses-lake-q0,generator,generator installation,47.1279,-119.2764,13,P1
+wa-moses-lake-q1,generator,generator dealer,47.1279,-119.2764,13,P1
+wa-moses-lake-q2,generator,standby generator installer,47.1279,-119.2764,13,P1
+wa-moses-lake-q3,generator,Generac dealer,47.1279,-119.2764,13,P2
+wa-moses-lake-q4,generator,generator shop,47.1279,-119.2764,13,P2
+wa-port-angeles-q0,generator,generator installation,48.1192,-123.448,13,P1
+wa-port-angeles-q1,generator,generator dealer,48.1192,-123.448,13,P1
+wa-port-angeles-q2,generator,standby generator installer,48.1192,-123.448,13,P1
+wa-port-angeles-q3,generator,Generac dealer,48.1192,-123.448,13,P2
+wa-port-angeles-q4,generator,generator shop,48.1192,-123.448,13,P2
+wa-aberdeen-q0,generator,generator installation,46.9752,-123.8114,13,P1
+wa-aberdeen-q1,generator,generator dealer,46.9752,-123.8114,13,P1
+wa-aberdeen-q2,generator,standby generator installer,46.9752,-123.8114,13,P1
+wa-aberdeen-q3,generator,Generac dealer,46.9752,-123.8114,13,P2
+wa-aberdeen-q4,generator,generator shop,46.9752,-123.8114,13,P2
+wa-omak-q0,generator,generator installation,48.4223,-119.5306,13,P1
+wa-omak-q1,generator,generator dealer,48.4223,-119.5306,13,P1
+wa-omak-q2,generator,standby generator installer,48.4223,-119.5306,13,P1
+wa-omak-q3,generator,Generac dealer,48.4223,-119.5306,13,P2
+wa-omak-q4,generator,generator shop,48.4223,-119.5306,13,P2
+wi-milwaukee-q0,generator,generator installation,43.0633,-87.9667,13,P1
+wi-milwaukee-q1,generator,generator dealer,43.0633,-87.9667,13,P1
+wi-milwaukee-q2,generator,standby generator installer,43.0633,-87.9667,13,P1
+wi-milwaukee-q3,generator,Generac dealer,43.0633,-87.9667,13,P2
+wi-milwaukee-q4,generator,generator shop,43.0633,-87.9667,13,P2
+wi-madison-q0,generator,generator installation,43.0878,-89.4299,13,P1
+wi-madison-q1,generator,generator dealer,43.0878,-89.4299,13,P1
+wi-madison-q2,generator,standby generator installer,43.0878,-89.4299,13,P1
+wi-madison-q3,generator,Generac dealer,43.0878,-89.4299,13,P2
+wi-madison-q4,generator,generator shop,43.0878,-89.4299,13,P2
+wi-green-bay-q0,generator,generator installation,44.5215,-87.9866,13,P1
+wi-green-bay-q1,generator,generator dealer,44.5215,-87.9866,13,P1
+wi-green-bay-q2,generator,standby generator installer,44.5215,-87.9866,13,P1
+wi-green-bay-q3,generator,Generac dealer,44.5215,-87.9866,13,P2
+wi-green-bay-q4,generator,generator shop,44.5215,-87.9866,13,P2
+wi-eau-claire-q0,generator,generator installation,44.8183,-91.4948,13,P1
+wi-eau-claire-q1,generator,generator dealer,44.8183,-91.4948,13,P1
+wi-eau-claire-q2,generator,standby generator installer,44.8183,-91.4948,13,P1
+wi-eau-claire-q3,generator,Generac dealer,44.8183,-91.4948,13,P2
+wi-eau-claire-q4,generator,generator shop,44.8183,-91.4948,13,P2
+wi-la-crosse-q0,generator,generator installation,43.8247,-91.2246,13,P1
+wi-la-crosse-q1,generator,generator dealer,43.8247,-91.2246,13,P1
+wi-la-crosse-q2,generator,standby generator installer,43.8247,-91.2246,13,P1
+wi-la-crosse-q3,generator,Generac dealer,43.8247,-91.2246,13,P2
+wi-la-crosse-q4,generator,generator shop,43.8247,-91.2246,13,P2
+wi-fond-du-lac-q0,generator,generator installation,43.7722,-88.4403,13,P1
+wi-fond-du-lac-q1,generator,generator dealer,43.7722,-88.4403,13,P1
+wi-fond-du-lac-q2,generator,standby generator installer,43.7722,-88.4403,13,P1
+wi-fond-du-lac-q3,generator,Generac dealer,43.7722,-88.4403,13,P2
+wi-fond-du-lac-q4,generator,generator shop,43.7722,-88.4403,13,P2
+wi-wausau-q0,generator,generator installation,44.9618,-89.6465,13,P1
+wi-wausau-q1,generator,generator dealer,44.9618,-89.6465,13,P1
+wi-wausau-q2,generator,standby generator installer,44.9618,-89.6465,13,P1
+wi-wausau-q3,generator,Generac dealer,44.9618,-89.6465,13,P2
+wi-wausau-q4,generator,generator shop,44.9618,-89.6465,13,P2
+wv-charleston-q0,generator,generator installation,38.3487,-81.6323,13,P1
+wv-charleston-q1,generator,generator dealer,38.3487,-81.6323,13,P1
+wv-charleston-q2,generator,standby generator installer,38.3487,-81.6323,13,P1
+wv-charleston-q3,generator,Generac dealer,38.3487,-81.6323,13,P2
+wv-charleston-q4,generator,generator shop,38.3487,-81.6323,13,P2
+wv-morgantown-q0,generator,generator installation,39.6375,-79.9469,13,P1
+wv-morgantown-q1,generator,generator dealer,39.6375,-79.9469,13,P1
+wv-morgantown-q2,generator,standby generator installer,39.6375,-79.9469,13,P1
+wv-morgantown-q3,generator,Generac dealer,39.6375,-79.9469,13,P2
+wv-morgantown-q4,generator,generator shop,39.6375,-79.9469,13,P2
+wv-parkersburg-q0,generator,generator installation,39.2613,-81.5434,13,P1
+wv-parkersburg-q1,generator,generator dealer,39.2613,-81.5434,13,P1
+wv-parkersburg-q2,generator,standby generator installer,39.2613,-81.5434,13,P1
+wv-parkersburg-q3,generator,Generac dealer,39.2613,-81.5434,13,P2
+wv-parkersburg-q4,generator,generator shop,39.2613,-81.5434,13,P2
+wy-casper-q0,generator,generator installation,42.8421,-106.3213,13,P1
+wy-casper-q1,generator,generator dealer,42.8421,-106.3213,13,P1
+wy-casper-q2,generator,standby generator installer,42.8421,-106.3213,13,P1
+wy-casper-q3,generator,Generac dealer,42.8421,-106.3213,13,P2
+wy-casper-q4,generator,generator shop,42.8421,-106.3213,13,P2
+wy-gillette-q0,generator,generator installation,44.2726,-105.4989,13,P1
+wy-gillette-q1,generator,generator dealer,44.2726,-105.4989,13,P1
+wy-gillette-q2,generator,standby generator installer,44.2726,-105.4989,13,P1
+wy-gillette-q3,generator,Generac dealer,44.2726,-105.4989,13,P2
+wy-gillette-q4,generator,generator shop,44.2726,-105.4989,13,P2
+wy-laramie-q0,generator,generator installation,41.306,-105.6086,13,P1
+wy-laramie-q1,generator,generator dealer,41.306,-105.6086,13,P1
+wy-laramie-q2,generator,standby generator installer,41.306,-105.6086,13,P1
+wy-laramie-q3,generator,Generac dealer,41.306,-105.6086,13,P2
+wy-laramie-q4,generator,generator shop,41.306,-105.6086,13,P2
+wy-rock-springs-q0,generator,generator installation,41.5947,-109.2209,13,P1
+wy-rock-springs-q1,generator,generator dealer,41.5947,-109.2209,13,P1
+wy-rock-springs-q2,generator,standby generator installer,41.5947,-109.2209,13,P1
+wy-rock-springs-q3,generator,Generac dealer,41.5947,-109.2209,13,P2
+wy-rock-springs-q4,generator,generator shop,41.5947,-109.2209,13,P2
+wy-sheridan-q0,generator,generator installation,44.7962,-106.9642,13,P1
+wy-sheridan-q1,generator,generator dealer,44.7962,-106.9642,13,P1
+wy-sheridan-q2,generator,standby generator installer,44.7962,-106.9642,13,P1
+wy-sheridan-q3,generator,Generac dealer,44.7962,-106.9642,13,P2
+wy-sheridan-q4,generator,generator shop,44.7962,-106.9642,13,P2
+wy-riverton-q0,generator,generator installation,43.0263,-108.3813,13,P1
+wy-riverton-q1,generator,generator dealer,43.0263,-108.3813,13,P1
+wy-riverton-q2,generator,standby generator installer,43.0263,-108.3813,13,P1
+wy-riverton-q3,generator,Generac dealer,43.0263,-108.3813,13,P2
+wy-riverton-q4,generator,generator shop,43.0263,-108.3813,13,P2
+wy-cody-q0,generator,generator installation,44.5212,-109.0575,13,P1
+wy-cody-q1,generator,generator dealer,44.5212,-109.0575,13,P1
+wy-cody-q2,generator,standby generator installer,44.5212,-109.0575,13,P1
+wy-cody-q3,generator,Generac dealer,44.5212,-109.0575,13,P2
+wy-cody-q4,generator,generator shop,44.5212,-109.0575,13,P2
+wy-rawlins-q0,generator,generator installation,41.7851,-107.2247,13,P1
+wy-rawlins-q1,generator,generator dealer,41.7851,-107.2247,13,P1
+wy-rawlins-q2,generator,standby generator installer,41.7851,-107.2247,13,P1
+wy-rawlins-q3,generator,Generac dealer,41.7851,-107.2247,13,P2
+wy-rawlins-q4,generator,generator shop,41.7851,-107.2247,13,P2
+wy-afton-q0,generator,generator installation,42.7263,-110.932,13,P1
+wy-afton-q1,generator,generator dealer,42.7263,-110.932,13,P1
+wy-afton-q2,generator,standby generator installer,42.7263,-110.932,13,P1
+wy-afton-q3,generator,Generac dealer,42.7263,-110.932,13,P2
+wy-afton-q4,generator,generator shop,42.7263,-110.932,13,P2
