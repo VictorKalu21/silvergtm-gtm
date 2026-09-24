@@ -58,6 +58,10 @@ for o in out:
     else:
         d = md.dom({"website": "", "email_domain": o.get("email_domain", "")})
         if d: o["website"], o["website_from"] = d, "email_domain"
+# fetch-sites.js only reads websites with a scheme; OEM lists give bare hosts.
+for o in out:
+    w = o.get("website") or ""
+    if w and not re.match(r"^https?://", w, re.I): o["website"] = "https://" + w
 cols = mcols + ["lead_source"] + DEXTRA
 with open("leads_combined.csv", "w", newline="") as f:
     w = csv.DictWriter(f, cols, extrasaction="ignore"); w.writeheader(); w.writerows(out)
