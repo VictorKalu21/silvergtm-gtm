@@ -1,17 +1,22 @@
 {
-  "_comment": "Atlas Growth :: US residential standby-generator installers, nationwide (ICP-generators.md). Engine config for google-maps-scrape. Job-specific values live ONLY here. PROVISIONAL until the calibration call: the google_types allow/deny lists were written from the ICP, not yet from a live result set — re-check them against the first calibration tiles (Houston, Tampa, Hartford) before the full run.",
-
+  "_comment": "Atlas Growth :: US residential standby-generator installers, nationwide (ICP-generators.md). Engine config for google-maps-scrape. Job-specific values live ONLY here. Calibrated 2026-09-24 on Houston/Tampa/Hartford (15 rows, 33 calls, 709 unique -> 257 kept): kept set is 131 Electrician + 90 Electric generator shop primaries; stragglers (tool/appliance stores, utility, pawn, tractor/farm/construction equipment) added to the primary deny.",
   "geo": {
     "country": "us",
-    "footprint": { "mode": "areas" },
+    "footprint": {
+      "mode": "areas"
+    },
     "region_from_city": ",\\s*([A-Z]{2})\\b",
     "region_default": "US"
   },
-
   "categories": {
-    "generator": ["generator installation", "generator dealer", "standby generator installer", "Generac dealer", "generator shop"]
+    "generator": [
+      "generator installation",
+      "generator dealer",
+      "standby generator installer",
+      "Generac dealer",
+      "generator shop"
+    ]
   },
-
   "scrape_tuning": {
     "_r": "Same settings as the UK and AU runs (measured 2.61 Maps calls per runsheet row over 1,770 rows). paginate:true pages each viewport via offset; max_pages 6 x limit 150 caps a dense metro; max_depth 1 = at most one quadrant split.",
     "paginate": true,
@@ -21,45 +26,135 @@
     "max_depth": 1,
     "quad_offset": 0.02
   },
-
   "qualify_rules": [
-    {"_r": "1. Must-drop PRIMARY types. Rental yards, big-box and parts counters answer 'generator' queries but install nothing for homeowners. Small-engine / lawn-equipment shops are the Briggs trap: deny only when it is the PRIMARY type, because a real installer can carry an incidental small-engine tag. Vehicle/marine/RV generator work is a different trade.",
-     "field": "google_types", "op": "deny", "label": "off_icp_type", "value": [
-       "equipment rental agency", "tool rental service", "generator rental", "party equipment rental service",
-       "home improvement store", "hardware store", "building materials supplier", "warehouse store",
-       "department store", "discount store",
-       "small engine repair service", "lawn mower repair service", "lawn mower store", "outdoor power equipment store",
-       "auto repair shop", "auto parts store", "truck repair shop", "rv repair shop", "rv dealer",
-       "boat repair shop", "marine supply store", "boat dealer",
-       "electrical supply store", "wholesaler", "industrial equipment supplier",
-       "non-profit organization", "government office"]},
-
-    {"_r": "2. Must-drop by NAME (always fires, primary or secondary type).",
-     "field": "name", "op": "not_contains_any", "label": "name_deny", "value": [
-       "home depot", "lowe's", "lowes", "menards", "ace hardware", "true value", "harbor freight",
-       "tractor supply", "northern tool", "costco", "sam's club", "walmart", "best buy",
-       "sunbelt rentals", "united rentals", "herc rentals", "cat rental", "h&e equipment", "u-haul",
-       "rv center", "rv sales", "marine", "boat", "auto parts", "napa auto", "o'reilly", "autozone",
-       "graybar", "wesco", "consolidated electrical distributors", "crescent electric", "platt electric", "mayer electric", "border states"]},
-
-    {"_r": "3. Positive allow on google_types-ANY (never primary). Generator dealers on Maps are typed Generator shop, Electrician, Electrical installation service, HVAC contractor, Solar energy company or plain Contractor. Plumbing is allowed through on purpose: the plumber rule is decided at the site-text gate (STEP 5e), not here.",
-     "field": "google_types", "op": "allow", "label": "not_in_icp", "value": [
-       "generator", "electric", "energy", "solar", "power", "hvac", "air conditioning", "heating",
-       "plumb", "contractor", "home improvement"]},
-
-    {"_r": "4. Size floor 30 (operator 2026-09-24, same as foundation repair). Consumer-facing trade, so reviews track size. Applies to Maps rows only; OEM dealer-list rows carry no reviews and are not floored.",
-     "field": "review_count", "op": ">=", "value": 30, "label": "too_small"}
+    {
+      "_r": "1. Must-drop PRIMARY types. Rental yards, big-box and parts counters answer 'generator' queries but install nothing for homeowners. Small-engine / lawn-equipment shops are the Briggs trap: deny only when it is the PRIMARY type, because a real installer can carry an incidental small-engine tag. Vehicle/marine/RV generator work is a different trade.",
+      "field": "google_types",
+      "op": "deny",
+      "label": "off_icp_type",
+      "value": [
+        "equipment rental agency",
+        "tool rental service",
+        "generator rental",
+        "party equipment rental service",
+        "home improvement store",
+        "hardware store",
+        "building materials supplier",
+        "warehouse store",
+        "department store",
+        "discount store",
+        "small engine repair service",
+        "lawn mower repair service",
+        "lawn mower store",
+        "outdoor power equipment store",
+        "auto repair shop",
+        "auto parts store",
+        "truck repair shop",
+        "rv repair shop",
+        "rv dealer",
+        "boat repair shop",
+        "marine supply store",
+        "boat dealer",
+        "electrical supply store",
+        "wholesaler",
+        "industrial equipment supplier",
+        "non-profit organization",
+        "government office",
+        "tool store",
+        "appliance store",
+        "electric utility company",
+        "alternator supplier",
+        "pawn shop",
+        "electronics store",
+        "tractor dealer",
+        "garden center",
+        "farm equipment supplier",
+        "construction equipment supplier",
+        "diesel engine dealer",
+        "truck parts supplier"
+      ]
+    },
+    {
+      "_r": "2. Must-drop by NAME (always fires, primary or secondary type).",
+      "field": "name",
+      "op": "not_contains_any",
+      "label": "name_deny",
+      "value": [
+        "home depot",
+        "lowe's",
+        "lowes",
+        "menards",
+        "ace hardware",
+        "true value",
+        "harbor freight",
+        "tractor supply",
+        "northern tool",
+        "costco",
+        "sam's club",
+        "walmart",
+        "best buy",
+        "sunbelt rentals",
+        "united rentals",
+        "herc rentals",
+        "cat rental",
+        "h&e equipment",
+        "u-haul",
+        "rv center",
+        "rv sales",
+        "marine",
+        "boat",
+        "auto parts",
+        "napa auto",
+        "o'reilly",
+        "autozone",
+        "graybar",
+        "wesco",
+        "consolidated electrical distributors",
+        "crescent electric",
+        "platt electric",
+        "mayer electric",
+        "border states"
+      ]
+    },
+    {
+      "_r": "3. Positive allow on google_types-ANY (never primary). Generator dealers on Maps are typed Generator shop, Electrician, Electrical installation service, HVAC contractor, Solar energy company or plain Contractor. Plumbing is allowed through on purpose: the plumber rule is decided at the site-text gate (STEP 5e), not here.",
+      "field": "google_types",
+      "op": "allow",
+      "label": "not_in_icp",
+      "value": [
+        "generator",
+        "electric",
+        "energy",
+        "solar",
+        "power",
+        "hvac",
+        "air conditioning",
+        "heating",
+        "plumb",
+        "contractor",
+        "home improvement"
+      ]
+    },
+    {
+      "_r": "4. Size floor 30 (operator 2026-09-24, same as foundation repair). Consumer-facing trade, so reviews track size. Applies to Maps rows only; OEM dealer-list rows carry no reviews and are not floored.",
+      "field": "review_count",
+      "op": ">=",
+      "value": 30,
+      "label": "too_small"
+    }
   ],
-
   "_no_website_rule": "Deliberately NO {website, exists} rule, same as the foundation config: collapse-domains.js routes no-website rows to the STEP 5d recovery track after the denies have run.",
-
   "brand_families": {
     "_r": "No generator roll-ups labelled yet. Add at GATE 3 once the calibration tiles show which multi-location brands appear (location_count flags them regardless)."
   },
-
   "owner_query": {
     "_r": "Same as the foundation run: the scraper.tech SERP endpoint is title-only, so the LinkedIn leg is the useful harvest. search-owner.js has no working backend; owner-finding runs on the in-session read + sweep rungs.",
-    "bias_terms": ["owner", "president", "general manager", "marketing manager"],
+    "bias_terms": [
+      "owner",
+      "president",
+      "general manager",
+      "marketing manager"
+    ],
     "use_linkedin": true,
     "country": "US"
   }
