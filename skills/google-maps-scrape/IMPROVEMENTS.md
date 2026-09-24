@@ -1200,3 +1200,9 @@ Also `TRADE` / `TRADE_SUBSTR` do not know the Australian trade nouns, so `golden
 ## FACT / ENVIRONMENT (WebSearch budget): each Workflow RUN gets its own ~200-search budget; batches past it silently return empty
 
 **Status:** measured 2026-09-24 (Atlas Growth US generator name→domain, Haiku web-verify). One run of 30 batches: batches 1–8 made 15–29 searches each (~200 total), batches 9–30 made 0 and returned all-blank files without any error. A fresh run of 7 batches immediately afterwards made 179 searches (and the next 176, 181) — so the budget resets per run, confirming the question left open in the 2026-09-20 entry above. **Rule:** size a WebSearch workflow run at ≤ ~7 batches × 25 items (≈180 searches), launch runs back-to-back, and treat any batch reporting 0 searches as not done (delete its output and re-queue).
+
+## MEDIUM (fetch-sites.js): no `http://` rung — small-business sites the cloud egress cannot reach over TLS are written off as 503/timeout
+
+**Status:** OPEN · found 2026-09-24 (Atlas Growth US generator run). ~1,680 of 13,639 domains failed as `503` / `AbortError` / `429` / `500` on both the main pass and a full re-run. The "503" body was Envoy's `upstream connect error … remote connection failure` — the egress never reached the origin over 443 (Scrapling's curl_cffi rung through the proxy got 502 on the same hosts). Re-fetching the same rows with `website = http://<host>/` recovered **365 of 1,038 (35%)**, 161 of them with an on-site email. The other 587 were `ENOTFOUND` (Node surfaces DNS failure as `TypeError: fetch failed`) — dead domains, routed back to name→domain instead.
+
+**Fix (engine, with a test and an operator go):** after PASS 2, a PASS 2b that retries `503`/`AbortError`/connect-error rows once on `http://<host>/` (redirects followed), and a distinct `home_failed:dns` status for `ENOTFOUND` so dead domains are countable instead of hiding inside `TypeError`.
