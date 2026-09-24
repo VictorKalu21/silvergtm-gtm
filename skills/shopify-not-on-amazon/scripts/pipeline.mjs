@@ -9,6 +9,7 @@
 //   RUN=<run> DIR=<dir> node pipeline.mjs      # {RUN}_input.json -> {RUN}_signal.json + {RUN}_ALL.csv
 //   env: CONC (20) DELAY ms between domains per worker (0; use CONC=4 DELAY=1000 from a datacenter IP or Shopify's
 //        'Verifying your connection' challenge locks the IP out) TIMEOUT ms (20000) STALE_DAYS (365) PHYSICAL_MIN (0.5) RETRY (0|1)
+//        SPIDER_API_KEY (route fetches through Spider Cloud residential proxies; pair with RETRY=1 to recover the blocked rows)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 const DIR = process.env.DIR || '.';
 const RUN = process.env.RUN || 'run';
@@ -52,14 +53,32 @@ const any = (t, p) => p.test(t);
 const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); const m = Math.floor(s.length / 2); return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 const uniq = (a) => [...new Set(a.filter(Boolean))];
 
+// SPIDER_API_KEY=<key> routes every fetch through Spider Cloud's residential proxy pool (`/scrape`, request: http, no rendering):
+// Shopify's 'Verifying your connection' 429 wall is per source IP, and ~30% of a datacenter pass stays locked out even after a
+// same-day RETRY. Measured 2026-09-24: ~0.055 credits per page, so a 3-page store costs ~0.17 credits; use it for RETRY=1 only.
+const SPIDER = process.env.SPIDER_API_KEY || '', SPIDER_PROXY = process.env.SPIDER_PROXY || 'residential';
+let spiderCredits = 0;
+async function spiderGet(url) {
+  const r = await fetch('https://api.spider.cloud/scrape', { method: 'POST', headers: { Authorization: `Bearer ${SPIDER}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url, request: 'http', return_format: 'raw', proxy_enabled: true, proxy: SPIDER_PROXY, limit: 1, user_agent: UA }), signal: AbortSignal.timeout(90000) });
+  const j = await r.json().catch(() => null);
+  const page = Array.isArray(j) ? j[0] : (j?.data?.[0] || j);
+  spiderCredits += Number(page?.costs?.total_cost || 0);
+  if (!page || typeof page.content !== 'string') return { status: r.status, url, body: '' };
+  return { status: Number(page.status) || r.status, url: page.url || url, body: page.content };
+}
 async function get(url, json = false) {
   const c = new AbortController(); const t = setTimeout(() => c.abort(), Number(process.env.TIMEOUT) || 20000);
   try {
-    const r = await fetch(url, { redirect: 'follow', signal: c.signal, headers: { 'User-Agent': UA, 'Accept': json ? 'application/json' : 'text/html,*/*', 'Accept-Language': 'en-US,en;q=0.9' } });
-    const body = await r.text();
-    if (json) { try { return { ok: true, status: r.status, finalUrl: r.url, data: JSON.parse(body) }; } catch { return { ok: false, status: r.status, err: 'not_json' }; } }
-    return { ok: true, status: r.status, finalUrl: r.url, html: body };
-  } catch (e) { return { ok: false, err: e.name === 'AbortError' ? 'timeout' : (e.cause?.code || e.message) }; }
+    let status, finalUrl, body;
+    if (SPIDER) { const p = await spiderGet(url); status = p.status; finalUrl = p.url; body = p.body; }
+    else {
+      const r = await fetch(url, { redirect: 'follow', signal: c.signal, headers: { 'User-Agent': UA, 'Accept': json ? 'application/json' : 'text/html,*/*', 'Accept-Language': 'en-US,en;q=0.9' } });
+      status = r.status; finalUrl = r.url; body = await r.text();
+    }
+    if (json) { try { return { ok: true, status, finalUrl, data: JSON.parse(body) }; } catch { return { ok: false, status, err: 'not_json' }; } }
+    return { ok: true, status, finalUrl, html: body };
+  } catch (e) { return { ok: false, err: e.name === 'AbortError' || e.name === 'TimeoutError' ? 'timeout' : (e.cause?.code || e.message) }; }
   finally { clearTimeout(t); }
 }
 
@@ -207,7 +226,7 @@ function gate(r) {
 // RETRY=1 also re-fetches survivors whose /products.json was blocked (catalogOk=false): without the catalog there is no
 // physical/dropship/retailer signal, and that is exactly where retailers slipped through on the second run.
 const todo = input.filter((r) => { const p = done.get(r.domain); return !p || (process.env.RETRY === '1' && (['unreachable', 'blocked'].includes(p.status) || (p.status === 'pass_free_gates' && !p.catalogOk))); });
-console.error(`${RUN}: ${input.length} input, ${done.size} done, ${todo.length} to fetch (CONC=${CONC})`);
+console.error(`${RUN}: ${input.length} input, ${done.size} done, ${todo.length} to fetch (CONC=${CONC}${SPIDER ? ', via Spider ' + SPIDER_PROXY : ''})`);
 let i = 0, n = 0; const t0 = Date.now();
 const flush = () => { const all = input.map((r) => done.get(r.domain)).filter(Boolean); writeFileSync(OUT, JSON.stringify(all, null, 2)); };
 async function worker() {
@@ -228,6 +247,6 @@ const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
 const cols = ['domain', 'rank', 'status', 'shopName', 'retailerScore', 'vendorDistinctShare', 'topVendorShare', 'foreignParentHints', 'podMerchLine', 'contactPage', 'country', 'province', 'city', 'countrySource', 'currency', 'productCount', 'physicalShare', 'medianPrice', 'lastUpdatedDays', 'dropshipScore', 'dropshipWhy', 'amazonOnSite', 'amazonStoreLink', 'amazonLinks', 'emails', 'phones', 'linkedin', 'instagram', 'facebook', 'tiktok', 'types', 'vendors', 'stack', 'title'];
 writeFileSync(`${DIR}/${RUN}_ALL.csv`, [cols.join(',')].concat(results.map((r) => cols.map((c) => esc(Array.isArray(r[c]) ? r[c].join('|') : r[c])).join(','))).join('\n'));
 const by = {}; for (const r of results) by[r.status] = (by[r.status] || 0) + 1;
-console.error(`\n===== ${RUN}: FREE GATES DONE (${((Date.now() - t0) / 1000).toFixed(0)}s) =====`);
+console.error(`\n===== ${RUN}: FREE GATES DONE (${((Date.now() - t0) / 1000).toFixed(0)}s)${SPIDER ? ` spider cost ${spiderCredits.toFixed(4)}` : ''} =====`);
 for (const s of ['pass_free_gates', 'drop_amazon_on_site', 'drop_dropship_pod', 'drop_stale', 'drop_not_physical', 'drop_no_catalog', 'drop_not_us', 'drop_password', 'drop_inactive', 'drop_myshopify_domain', 'not_shopify', 'blocked', 'unreachable']) console.error('  ', s + ':', by[s] || 0);
 console.error(`-> ${by.pass_free_gates || 0} rows advance to classify (prep-classify.mjs) + Amazon SERP check (amazon-serp.mjs)`);

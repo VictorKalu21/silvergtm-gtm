@@ -32,6 +32,7 @@ curl -L -o top-1m.csv.zip https://tranco-list.eu/top-1m.csv.zip && unzip top-1m.
 FROM=1 TO=200000 CONC=800 node seed-tranco-dns.mjs top-1m.csv        # -> {RUN}_seed.csv
 node prep-input.mjs {RUN}_seed.csv                                     # -> {RUN}_input.json
 node pipeline.mjs                                                      # -> {RUN}_signal.json + _ALL.csv   (RETRY=1 re-fetches unreachable/blocked)
+#   then: SPIDER_API_KEY=.. RETRY=1 CONC=6 node pipeline.mjs             # recovers the rows Shopify's bot wall blocked, via residential proxy (~0.17 credits/store)
 node amazon-autocomplete.mjs                                           # -> {RUN}_amazon_ac.json
 #   optional, before the gates: DATAFORSEO_LOGIN=.. DATAFORSEO_PASSWORD=.. SOURCE=input node dataforseo.mjs traffic && MIN_TRAFFIC=20000 node prep-input.mjs --filter
 node prep-classify.mjs                                                 # -> {RUN}_review_batch_N.json ; dispatch Haiku (below)
