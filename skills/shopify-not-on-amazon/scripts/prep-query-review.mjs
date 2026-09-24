@@ -5,7 +5,7 @@
 // {RUN}_query_overrides.json entries for every changed term, and `ONLY=... REPASS=1` re-checks just those.
 //
 //   RUN=<run> DIR=<dir> node prep-query-review.mjs            # -> {RUN}_query_review_N.json (BATCH=110)
-//   RUN=<run> DIR=<dir> node prep-query-review.mjs --merge    # reads {RUN}_query_review_N_out.json -> {RUN}_query_overrides.json + prints ONLY= list
+//   RUN=<run> DIR=<dir> node prep-query-review.mjs --merge    # reads {RUN}_query_review_N_out.json -> {RUN}_query_overrides.json + prints ONLY= list (FORCE=1 re-applies over existing overrides)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', BATCH = Number(process.env.BATCH || 110);
 const rd = (f) => JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8').replace(/^﻿/, ''));
@@ -13,10 +13,15 @@ const keeps = rd(`${RUN}_keeps.json`), v = rd(`${RUN}_amazon_verify.json`);
 const ovr = existsSync(`${DIR}/${RUN}_query_overrides.json`) ? rd(`${RUN}_query_overrides.json`) : {};
 if (process.argv[2] === '--merge') {
   let n = 0, changed = [];
-  for (let i = 0; existsSync(`${DIR}/${RUN}_query_review_${i}_out.json`); i++) for (const r of rd(`${RUN}_query_review_${i}_out.json`)) {
-    n++; const cur = (v[r.domain]?.query || '').toLowerCase().trim(), term = (r.term || '').toLowerCase().trim();
-    if (term && term !== cur && !ovr[r.domain]) { ovr[r.domain] = term; changed.push(r.domain); }
-  }
+  for (let i = 0; existsSync(`${DIR}/${RUN}_query_review_${i}_out.json`); i++) { const curOf = Object.fromEntries(rd(`${RUN}_query_review_${i}.json`).map((x) => [x.domain, x.currentTerm || '']));
+    for (const r of rd(`${RUN}_query_review_${i}_out.json`)) {
+      n++; const cur = (curOf[r.domain] ?? v[r.domain]?.query ?? '').toLowerCase().trim(); let term = (r.term || '').toLowerCase().trim();
+      const root = r.domain.replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');
+      // a single-word term that is not the whole domain root is ambiguous ("marin" for marinbikes.com, "joy" for joyorganics.com): keep the longer current term
+      if (term && !term.includes(' ') && root !== term.replace(/[^a-z0-9]/g, '') && cur.split(/\s+/).filter(Boolean).length >= 2) term = cur;
+      if (term && term !== cur && (!ovr[r.domain] || process.env.FORCE === '1')) { ovr[r.domain] = term; changed.push(r.domain); }
+      else if (term === cur && ovr[r.domain] && process.env.FORCE === '1') { ovr[r.domain] = cur; changed.push(r.domain); }   // reverted: pin the original term so RESCORE re-judges with it
+    } }
   writeFileSync(`${DIR}/${RUN}_query_overrides.json`, JSON.stringify(ovr, null, 1)); writeFileSync(`${DIR}/only_query.txt`, changed.join(','));
   console.error(`${RUN}: ${n} reviewed, ${changed.length} terms changed -> ${RUN}_query_overrides.json; re-check: ONLY=$(cat only_query.txt) REPASS=1 MAX_DP=8`);
   process.exit(0);

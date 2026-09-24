@@ -120,7 +120,7 @@ const SUFFIX = new Set('inc llc co corp ltd llp company store brand brands offic
 const wordsAll = (x) => (x || '').toLowerCase().split(/[\s&'’.,\/-]+/).map(tok).filter(Boolean);   // keep 1-letter tokens: "V-Force" is not "Force"
 // true when NAME carries no distinctive word that the brand name Q lacks ("Force Factor" vs "force usa": 'factor' -> false; "Vincero Collective" vs "vincero": ok)
 const stem = (w) => w.replace(/(ies|es|s|y)$/, '');   // nurseries == nursery
-const noExtraWords = (name, q) => { const qw = new Set(wordsAll(q)); return wordsAll(name).every((w) => qw.has(w) || SUFFIX.has(w) || GENERIC.has(w) || CATEGORY.has(w) || [...qw].some((x) => stem(x) === stem(w) || (x.length >= 5 && (w.startsWith(x) || x.startsWith(w))))); };
+const noExtraWords = (name, q) => { const qw = new Set(wordsAll(q)); return wordsAll(name).every((w) => qw.has(w) || SUFFIX.has(w) || GENERIC.has(w) || CATEGORY.has(w) || [...qw].some((x) => stem(x) === stem(w) || (x.length >= 6 && w.startsWith(x) && w.length - x.length <= 2))); };   // 'marina' is not 'marin'; 'nurseries' == 'nursery' via stem
 const sellerIsBrand = (seller, q) => { if (!seller) return false; const m = matcher(q); const first = tok(q.split(/\s+/)[0]);
   const key0 = wordsAll(q).filter((w) => w.length >= 3 && !GENERIC.has(w))[0] || '';
   const sw = wordsAll(seller).filter((w) => !SUFFIX.has(w) && !GENERIC.has(w) && !CATEGORY.has(w));   // "CEP Sportswear" -> ["cep"], "RBX" -> ["rbx"]
@@ -139,20 +139,22 @@ const bylineIsBrand = (byline, q, title = '', domain = '') => { let raw = byline
   const words = (x) => x.toLowerCase().split(/[\s&'’.,-]+/).map(tok).filter((w) => w.length >= 3 && !GENERIC.has(w));
   const key = words(q).slice(0, 2);
   // exact forms: whole byline == whole brand name, or == the brand's distinctive words joined ("Harney & Sons" for "Harney & Sons Fine Teas", "Alo" for "Alo Yoga")
-  const exact = b === t || (key.length > 1 && b === key.join('')) || (key.length === 1 && b === key[0]);
+  const root = domainRoot(domain), single = key.length === 1;   // one distinctive word = inherently ambiguous ("marin", "matador", "joy")
+  const shortAmbiguous = single && t === key[0] && key[0].length < 5 && root !== key[0];   // "joy" for joyorganics.com: a 3-4 letter whole-query word that is not the domain root
+  const exact = (b === t && !shortAmbiguous) || (key.length > 1 && b === key.join('')) || (single && b === key[0] && (key[0].length >= 5 || root === key[0]));
   // byline == the brand's first distinctive word, and the product title carries the second ("Visit the WARN Store" + "WARN ... winch")
   const firstPlusTitle = key.length === 2 && b === key[0] && key[0].length >= 4 && tok(title).includes(key[1]);
   // a store byline is usually one word shorter than the site name: whole store name == first distinctive brand word, leftover word is a category noun or in the title
   const storeSubset = /^Visit the /i.test(byline) && key.length > 0 && key[0].length >= 4 && b === key[0] && key.slice(1).every((w) => CATEGORY.has(w) || tok(title).includes(w));   // whole store name == the word ("Hudson Baby" must not pass as "Hudson")
   // domain root == the store name plus generic words only ("CHITA" for chitaliving.com, "Vornado" for vornado.com; NOT "Universal" for universalstandard.com)
-  const root = domainRoot(domain);
   // the domain rules apply to "Visit the X Store" and "Brand: X" alike (both are Amazon's own identity of the listing)
   const domainPrefix = b.length >= 5 && !GENERIC.has(b) && root.startsWith(b) && (root.length === b.length || GENERIC.has(root.slice(b.length)) || CATEGORY.has(root.slice(b.length)));
   // store name starts with the whole domain root ("Darn Tough Vermont" for darntough.com, "Thinx for All" for thinx.com; NOT "Pura Vida Moringa" for puravidabracelets.com, NOT "Force Factor" for forceusa.com)
   const rawRoot = (domain || '').toLowerCase().replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');   // RAW root here: forceusa.com must not become "force"
   const storePrefix = rawRoot.length >= 5 && !GENERIC.has(rawRoot) && (b.startsWith(rawRoot) || (rawRoot.length >= 6 && b.includes(rawRoot)));   // "Jordan's Skinny Mixes" for skinnymixes.com, "Poo-Pourri" for pourri.com
   // loose forms only when the byline carries NO distinctive word the brand lacks ("Force Factor" is not "Force", "Berkley Jensen" is not "Berkley")
-  const loose = (noExtraWords(raw, q) && (b.includes(t) || matcher(q)(raw) || firstPlusTitle || storeSubset)) || domainPrefix || storePrefix;   // the domain rules survive a bad search term ("top" for kirby.com)
+  const looseOk = !single || root === key[0] || rawRoot === key[0];   // single-word brands get the loose rules only when the domain root IS that word (kirby.com); marinbikes.com never matches "Marina"
+  const loose = (looseOk && noExtraWords(raw, q) && (b.includes(t) || matcher(q)(raw) || firstPlusTitle || storeSubset)) || domainPrefix || storePrefix;   // the domain rules survive a bad search term ("top" for kirby.com)
   return b.length >= 3 && (exact || loose); };
 function parseSearch(html, t) {
   // mobile results: several data-asin divs per product; group the text by ASIN in page order
@@ -262,7 +264,7 @@ if (process.env.RESCORE === '1' || process.env.RESCORE === '2') {
   const FULL = process.env.RESCORE === '2';   // 2 = recompute from scratch (a stricter rule may DOWNGRADE); 1 = upgrade only
   for (const r of src) {
     const v = done[r.domain]; if (!v) continue;
-    const q = v.query || tok(brandOf(r));
+    const q = QOVR[r.domain] || v.query || tok(brandOf(r)); if (QOVR[r.domain]) v.query = QOVR[r.domain];   // a corrected term re-judges the stored pages
     if (!v.asinsChecked?.length) {   // verdict came from a search-page store tile: re-test the tile's slug, flag for ONLY= re-check when it fails
       if (FULL && v.amazon_status === 'brand_store' && v.storeHref && !v.via) { const slug = decodeURIComponent((v.storeHref.match(/\/stores\/([^\/?"]+)/) || [])[1] || '').replace(/[-_+]/g, ' '); if (slug && !/^page$/i.test(slug) && !bylineIsBrand(`Visit the ${slug} Store`, q, '', r.domain)) console.error(`  RECHECK ${r.domain}: store tile "${slug}" does not carry the brand (q="${q}") -> add to ONLY=`); }
       continue; }

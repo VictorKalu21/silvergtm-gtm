@@ -96,3 +96,15 @@ let bad6=0; for (const [b,q,t,d,exp] of m6) { const got = bylineIsBrand(b,q,t,d)
 const s6 = [['RBX','rbx active',true],['CEP Sportswear','cep compression',true],['OutdoorEquipped','alegria shoes',false],['Force Factor','force usa',false],['DripDrop Hydration','dripdrop',false],['Amazon.com','rbx active',false]];
 for (const [sel,q,exp] of s6) { const got = sib(sel,q); if (got!==exp) { bad6++; console.log('FAIL seller', sel,'|',q,'->',got,'expected',exp); } }
 console.log(bad6 ? bad6+' failures (m6)' : 'all '+(m6.length+s6.length)+' m6 cases pass');
+const m7 = [
+ ['Visit the Marina Store','marin','','marinbikes.com',false],
+ ['Visit the MatadorEquipment Store','matador','','matadorrecords.com',false],
+ ['Visit the Joy Store','joy','','joyorganics.com',false],
+ ['Visit the ClarityMD Store','clarity','','withclarity.com',false],
+ ['Visit the Kirby Store','kirby','','kirby.com',true],
+ ['Visit the BRAHMIN Store','brahmin','','brahmin.com',true],
+ ['Visit the BRUNT Store','brunt','','bruntworkwear.com',true],
+ ['Visit the Marin Bikes Store','marin bikes','','marinbikes.com',true],
+];
+let bad7=0; for (const [b,q,t,d,exp] of m7) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad7++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
+console.log(bad7 ? bad7+' failures (m7)' : 'all '+m7.length+' m7 cases pass');
