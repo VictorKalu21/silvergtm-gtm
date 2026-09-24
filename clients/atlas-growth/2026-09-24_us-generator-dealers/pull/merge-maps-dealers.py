@@ -58,6 +58,23 @@ for o in out:
     else:
         d = md.dom({"website": "", "email_domain": o.get("email_domain", "")})
         if d: o["website"], o["website_from"] = d, "email_domain"
+# name->domain recoveries (free Tier-0.5 resolver, then Haiku web-verify gated by pull/verify-domains.mjs).
+# Fill a missing website, or REPLACE a listed website whose domain is dead (the dead-domain batches).
+import json as _json
+N2D = {}
+if os.path.exists("name2domain/resolved.jsonl"):
+    for l in open("name2domain/resolved.jsonl"):
+        if l.strip(): x = _json.loads(l); N2D[x["place_id"]] = (x["domain"], "name2domain_script")
+if os.path.exists("name2domain/verified.jsonl"):
+    for l in open("name2domain/verified.jsonl"):
+        if l.strip():
+            x = _json.loads(l)
+            if x.get("keep") and x["key"] not in N2D: N2D[x["key"]] = (x["domain"], "name2domain_haiku")
+applied = 0
+for o in out:
+    hit = N2D.get(o["place_id"])
+    if hit: o["website"], o["website_from"] = hit; applied += 1
+print(f"name2domain applied: {applied}")
 # fetch-sites.js only reads websites with a scheme; OEM lists give bare hosts.
 for o in out:
     w = o.get("website") or ""
