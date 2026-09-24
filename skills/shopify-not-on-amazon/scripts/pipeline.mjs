@@ -10,6 +10,7 @@
 //   env: CONC (20) DELAY ms between domains per worker (0; use CONC=4 DELAY=1000 from a datacenter IP or Shopify's
 //        'Verifying your connection' challenge locks the IP out) TIMEOUT ms (20000) STALE_DAYS (365) PHYSICAL_MIN (0.5) RETRY (0|1)
 //        SPIDER_API_KEY (route fetches through Spider Cloud residential proxies; pair with RETRY=1 to recover the blocked rows)
+//        RETRY_ONLY=blocked,unreachable (limit a RETRY pass to those statuses)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 const DIR = process.env.DIR || '.';
 const RUN = process.env.RUN || 'run';
@@ -225,7 +226,9 @@ function gate(r) {
 
 // RETRY=1 also re-fetches survivors whose /products.json was blocked (catalogOk=false): without the catalog there is no
 // physical/dropship/retailer signal, and that is exactly where retailers slipped through on the second run.
-const todo = input.filter((r) => { const p = done.get(r.domain); return !p || (process.env.RETRY === '1' && (['unreachable', 'blocked'].includes(p.status) || (p.status === 'pass_free_gates' && !p.catalogOk))); });
+// RETRY_ONLY=blocked,unreachable narrows a RETRY pass to those statuses (default: also survivors without a catalog).
+const RETRY_ONLY = process.env.RETRY_ONLY ? new Set(process.env.RETRY_ONLY.split(',').map((x) => x.trim())) : null;
+const todo = input.filter((r) => { const p = done.get(r.domain); return !p || (process.env.RETRY === '1' && (RETRY_ONLY ? RETRY_ONLY.has(p.status) : (['unreachable', 'blocked'].includes(p.status) || (p.status === 'pass_free_gates' && !p.catalogOk)))); });
 console.error(`${RUN}: ${input.length} input, ${done.size} done, ${todo.length} to fetch (CONC=${CONC}${SPIDER ? ', via Spider ' + SPIDER_PROXY : ''})`);
 let i = 0, n = 0; const t0 = Date.now();
 const flush = () => { const all = input.map((r) => done.get(r.domain)).filter(Boolean); writeFileSync(OUT, JSON.stringify(all, null, 2)); };
