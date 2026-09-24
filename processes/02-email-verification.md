@@ -12,7 +12,7 @@
 
 | Verifier | Script | When to pick |
 |----------|--------|--------------|
-| **MillionVerifier** | `verify-millionverifier-bounceban.js` | Cheaper per credit, faster, simpler result schema. **Good default for most lists.** |
+| **MillionVerifier** | `verify-millionverifier-bounceban.mjs` | Cheaper per credit, faster, simpler result schema. **Good default for most lists.** |
 | **DeBounce** | `verify-debounce-bounceban.js` | Marginally better catch-all detection on some enterprise domain ranges. Use for high-stakes lists where you want every edge. |
 
 Both feed the **same** BounceBan Stage 2 — the catch-all recovery logic is identical either way.
@@ -45,7 +45,7 @@ raw CSV → dedupe emails → Stage 1 verifier (DeBounce 6 / MillionVerifier 8 c
 
 ```
 # MillionVerifier (default)
-IN="C:/path/to/list.csv" OUT_DIR="verify" node scripts/verify-millionverifier-bounceban.js
+IN="C:/path/to/list.csv" OUT_DIR="verify" node scripts/verify-millionverifier-bounceban.mjs
 
 # — or — DeBounce
 IN="C:/path/to/list.csv" OUT_DIR="verify" node scripts/verify-debounce-bounceban.js

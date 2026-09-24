@@ -13,7 +13,7 @@ Before uploading any contact list to a cold-email campaign. Non-negotiable gate.
 | Verifier | Script | When to pick |
 |----------|--------|--------------|
 | **DeBounce** | `verify-debounce-bounceban.js` | Better catch-all detection on enterprise domains |
-| **MillionVerifier** | `verify-millionverifier-bounceban.js` | Cheaper per credit, faster, good default for most lists |
+| **MillionVerifier** | `verify-millionverifier-bounceban.mjs` | Cheaper per credit, faster, good default for most lists |
 
 Stage 2 is always **BounceBan** — it SMTP-probes the catch-alls and recovers ~60–70% as sendable.
 
@@ -30,10 +30,10 @@ BOUNCEBAN_KEY=...
 
 ```
 # DeBounce + BounceBan
-IN="C:/path/to/list.csv" OUT_DIR="verify" node C:/Users/victo/gtm-processes/scripts/verify-debounce-bounceban.js
+IN="C:/path/to/list.csv" OUT_DIR="verify" node skills/email-verify-debounce-bounceban/scripts/verify-debounce-bounceban.js
 
 # MillionVerifier + BounceBan
-IN="C:/path/to/list.csv" OUT_DIR="verify" node C:/Users/victo/gtm-processes/scripts/verify-millionverifier-bounceban.js
+IN="C:/path/to/list.csv" OUT_DIR="verify" node skills/email-verify-debounce-bounceban/scripts/verify-millionverifier-bounceban.mjs
 ```
 
 The CSV must have an `Email` column (exact, case-sensitive). All other columns are passed through unchanged.
