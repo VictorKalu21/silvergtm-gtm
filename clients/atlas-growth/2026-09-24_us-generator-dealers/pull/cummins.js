@@ -58,7 +58,9 @@ function parsePage(html) {
     const addrHtml = (c.match(/<div class="address-info">([\s\S]*?)<\/div>/) || [, ''])[1];
     const lines = addrHtml.split(/<br\s*\/?>/).map(decode).filter(Boolean);
     const last = lines[lines.length - 1] || '';
-    const cm = last.match(/^(.*?),\s*([A-Z .'-]+?)\s+([A-Z0-9 -]{3,10})?$/i);
+    // Prefer an exact US-state + ZIP match (a greedy postal regex split "NEW YORK 10001" as NEW / YORK 10001).
+    const cm = last.match(/^(.*?),\s*([A-Z .'-]+?)\s+(\d{5}(?:-\d{4})?)$/i) ||
+      last.match(/^(.*?),\s*([A-Z .'-]+?)(?:\s+([A-Z]?\d[A-Z0-9 -]{1,9}))?$/i);
     const web = (c.match(/href="(https?:\/\/(?!maps\.google)[^"]+)"/) || [, ''])[1];
     const email = (c.match(/mailto:([^"?]+)/) || [, ''])[1];
     const mp = byMarker[marker] || {};
