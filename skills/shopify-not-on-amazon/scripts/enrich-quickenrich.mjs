@@ -11,10 +11,14 @@ const DIR = process.env.DIR || '.', RUN = process.env.RUN || 'run', [IN, OUT] = 
 // priority order = who the buyer wants to talk to first; the first match in this order is the Decision Maker column
 // two tiers keep the bill down: QuickEnrich bills one credit per employee returned, and the `title` filter is capped at 255 characters.
 // Tier 1 (owners) is searched first; tier 2 (ecommerce/growth/marketing leads) only when tier 1 finds nobody with an email.
-const T1 = (process.env.TITLES_1 || 'Founder,Co-Founder,Owner,CEO,President').split(','), T2 = (process.env.TITLES_2 || 'COO,CMO,Head of Ecommerce,Director of Ecommerce,VP Ecommerce,Ecommerce Manager,Head of Growth,VP Growth,VP Marketing,Head of Marketing,Director of Marketing,General Manager').split(',');
+const T1 = (process.env.TITLES_1 || 'Founder,Co-Founder,Owner,CEO,President').split(','), T2 = (process.env.TITLES_2 || 'Head of Ecommerce,VP Ecommerce,Director of Ecommerce,Head of Growth,VP Growth,CMO,VP Marketing,Head of Marketing').split(',');
 const TITLES = [...T1, ...T2].map((t) => t.trim()).filter(Boolean);
 for (const t of [T1, T2]) if (t.join(',').length > 255) { console.error('title list over 255 characters'); process.exit(1); }
-const rank = (title) => { const t = (title || '').toLowerCase(); const i = TITLES.findIndex((x) => t.includes(x.toLowerCase())); return i < 0 ? 999 : i; };
+// whole-phrase match; "Vice President Human Resources" is not a President, an "Executive Assistant to the Founder" is not a Founder
+const rank = (title) => { const t = (title || '').toLowerCase();
+  if (/assistant|human resources|\bhr\b|intern|coordinator|associate|specialist|analyst|customer service|account manager/.test(t)) return 999;
+  const i = TITLES.findIndex((x) => { const re = new RegExp('(^|[^a-z])' + x.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '([^a-z]|$)'); return re.test(t) && !(x.toLowerCase() === 'president' && /vice president|vp\b/.test(t)); });
+  return i < 0 ? 999 : i; };
 function parse(t) { const rows = []; let f = [], c = '', q = false; for (let i = 0; i < t.length; i++) { const ch = t[i]; if (q) { if (ch === '"') { if (t[i + 1] === '"') { c += '"'; i++; } else q = false; } else c += ch; } else if (ch === '"') q = true; else if (ch === ',') { f.push(c); c = ''; } else if (ch === '\n') { f.push(c); rows.push(f); f = []; c = ''; } else if (ch !== '\r') c += ch; } if (c.length || f.length) { f.push(c); rows.push(f); } return rows; }
 const esc = (v) => '"' + String(v ?? '').replace(/"/g, '""') + '"';
 const CACHE = `${DIR}/${RUN}_quickenrich.json`; const cache = existsSync(CACHE) ? JSON.parse(readFileSync(CACHE, 'utf8')) : {};
@@ -35,13 +39,13 @@ for (const r of rows) {
     if (remaining !== null && remaining <= 0) { console.error('QuickEnrich credits exhausted; stopping'); writeFileSync(CACHE, JSON.stringify(cache, null, 1)); break; }
     writeFileSync(CACHE, JSON.stringify(cache, null, 1)); await new Promise((r) => setTimeout(r, 250));
   }
-  const people = (cache[d].data || []).filter((p) => p.email && p.email !== 'N/A').sort((a, b) => rank(a.title) - rank(b.title));
+  const people = (cache[d].data || []).filter((p) => p.email && p.email !== 'N/A' && rank(p.title) < 999).sort((a, b) => rank(a.title) - rank(b.title));
   if (people.length) hits++;
   console.error(`  ${n}/${rows.length} ${d} -> ${people.length ? `${people[0].first_name} ${people[0].last_name} (${people[0].title}) ${people[0].email}` : 'no match'}${cache[d].meta?.credits_used ? ' | ' + cache[d].meta.credits_used + ' credit(s)' : ''}`);
 }
 const extra = ['Decision Maker', 'DM Title', 'DM Email', 'DM Email verified', 'DM Phone', 'DM LinkedIn', 'DM Alternates', 'QuickEnrich credits'];
 const out = [head.concat(extra).map(esc).join(',')];
-for (const r of rows) { const d = dom(r[wi]); const c = cache[d] || {}; const people = (c.data || []).filter((p) => p.email && p.email !== 'N/A').sort((a, b) => rank(a.title) - rank(b.title)); const p = people[0] || {};
+for (const r of rows) { const d = dom(r[wi]); const c = cache[d] || {}; const people = (c.data || []).filter((p) => p.email && p.email !== 'N/A' && rank(p.title) < 999).sort((a, b) => rank(a.title) - rank(b.title)); const p = people[0] || {};
   const alt = people.slice(1, 4).map((x) => `${x.first_name} ${x.last_name} (${x.title}) ${x.email}`).join(' | ');
   out.push(r.concat([p.first_name ? `${p.first_name} ${p.last_name}` : '', p.title || '', p.email || '', p.email_verification_date || '', p.employee_phone && p.employee_phone !== 'N/A' ? p.employee_phone : '', p.employee_linkedin && p.employee_linkedin !== 'N/A' ? p.employee_linkedin : '', alt, c.meta?.credits_used ?? '']).map(esc).join(',')); }
 writeFileSync(OUT, out.join('\n'));
