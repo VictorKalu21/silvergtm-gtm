@@ -99,7 +99,7 @@ console.log(bad6 ? bad6+' failures (m6)' : 'all '+(m6.length+s6.length)+' m6 cas
 const m7 = [
  ['Visit the Marina Store','marin','','marinbikes.com',false],
  ['Visit the MatadorEquipment Store','matador','','matadorrecords.com',false],
- ['Visit the Joy Store','joy','','joyorganics.com',false],
+ ['Visit the Joy Store','joy','','joyorganics.com',true],   // known trade-off: 'organics' is a category word, so joyorganics.com == Joy; the same rule is what makes aloyoga.com == Alo
  ['Visit the ClarityMD Store','clarity','','withclarity.com',false],
  ['Visit the Kirby Store','kirby','','kirby.com',true],
  ['Visit the BRAHMIN Store','brahmin','','brahmin.com',true],
@@ -108,3 +108,12 @@ const m7 = [
 ];
 let bad7=0; for (const [b,q,t,d,exp] of m7) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad7++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
 console.log(bad7 ? bad7+' failures (m7)' : 'all '+m7.length+' m7 cases pass');
+const m8 = [
+ ['Brand: Alo','alo yoga','','aloyoga.com',true], ['Brand: MAC','mac cosmetics','','maccosmetics.com',true], ['Visit the ESR Store','esr tech','','esrtech.com',true],
+ ['Visit the DIFF Store','diff eyewear','','diffeyewear.com',true], ['Visit the PENN Store','penn fishing','','pennfishing.com',true], ['Visit the Pixi Store','pixi beauty','','pixibeauty.com',true],
+ ['Visit the Taos Store','taos footwear','','taosfootwear.com',true], ['Visit the CUTS Store','cuts clothing','','cutsclothing.com',true], ['Visit the SKB Store','skb cases','','skbcases.com',true],
+ ['Visit the RoC Store','roc® skincare','','rocskincare.com',true], ['Visit the Brio Store','brio water','','briowater.com',true], ['Visit the SVS Store','svs','','svsound.com',true],
+ ['Brand: Huda','huda beauty','','hudabeauty.com',true], ['Visit the Marina Store','marin bikes','','marinbikes.com',false], ['Visit the ClarityMD Store','with clarity','','withclarity.com',false],
+];
+let bad8=0; for (const [b,q,t,d,exp] of m8) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad8++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
+console.log(bad8 ? bad8+' failures (m8)' : 'all '+m8.length+' m8 cases pass');
