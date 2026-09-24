@@ -19,6 +19,9 @@ if (process.argv[2] === '--merge') {
       const root = r.domain.replace(/\.[a-z.]+$/, '').replace(/[^a-z0-9]/g, '');
       // a single-word term that is not the whole domain root is ambiguous ("marin" for marinbikes.com, "joy" for joyorganics.com): keep the longer current term
       if (term && !term.includes(' ') && root !== term.replace(/[^a-z0-9]/g, '') && cur.split(/\s+/).filter(Boolean).length >= 2) term = cur;
+      // never drop words that are part of the domain itself: "santa cruz bicycles" (santacruzbicycles.com) must not become "santa cruz"
+      const curJ = cur.replace(/[^a-z0-9]/g, ''), newJ = term.replace(/[^a-z0-9]/g, '');
+      if (curJ && root.includes(curJ) && newJ.length < curJ.length) term = cur;
       if (term && term !== cur && (!ovr[r.domain] || process.env.FORCE === '1')) { ovr[r.domain] = term; changed.push(r.domain); }
       else if (term === cur && ovr[r.domain] && process.env.FORCE === '1') { ovr[r.domain] = cur; changed.push(r.domain); }   // reverted: pin the original term so RESCORE re-judges with it
     } }
