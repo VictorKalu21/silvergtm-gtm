@@ -117,3 +117,6 @@ const m8 = [
 ];
 let bad8=0; for (const [b,q,t,d,exp] of m8) { const got = bylineIsBrand(b,q,t,d); if (got!==exp) { bad8++; console.log('FAIL', b,'|',q,'|',d,'->',got,'expected',exp); } }
 console.log(bad8 ? bad8+' failures (m8)' : 'all '+m8.length+' m8 cases pass');
+const s9 = [['Bearded Butcher Blend Seasoning','bearded butchers',true],['Force Factor','force usa',false],['Pura Vida Moringa','pura vida bracelets',true],['Badlands Ranch','badlands',false]];
+let bad9=0; for (const [sel,q,exp] of s9) { const got = sib(sel,q); if (got!==exp) { bad9++; console.log('FAIL seller', sel,'|',q,'->',got,'expected',exp); } }
+console.log(bad9 ? bad9+' failures (s9)' : 'all '+s9.length+' s9 cases pass');
