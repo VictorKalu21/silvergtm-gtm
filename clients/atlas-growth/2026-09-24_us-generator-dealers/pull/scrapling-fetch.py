@@ -2,7 +2,7 @@
 """web-scrape-triage Tier 3 (free rung): Scrapling StealthyFetcher render for sites fetch-sites.js could not read —
 403/anti-bot blocks and JS-rendered shells that came back 'ok' with empty text. Home page only, rendered.
 Writes records in fetch-sites.js's site_text.jsonl shape to owner-scrapling/site_text.jsonl (resumable).
-Usage: python3 pull/scrapling-fetch.py --shard K --of N"""
+Usage: python3 pull/scrapling-fetch.py --shard K --of N [--in leads_scrapling_stealth.csv]"""
 import csv, json, os, re, sys, html, signal
 from scrapling.fetchers import StealthyFetcher
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
@@ -12,7 +12,8 @@ done = set()
 if os.path.exists(OUT):
     for l in open(OUT):
         if l.strip(): done.add(json.loads(l)["place_id"])
-todo = [r for i, r in enumerate(csv.DictReader(open("leads_scrapling.csv"))) if i % N == K and r["place_id"] not in done]
+IN = sys.argv[sys.argv.index("--in") + 1] if "--in" in sys.argv else "leads_scrapling.csv"
+todo = [r for i, r in enumerate(csv.DictReader(open(IN))) if i % N == K and r["place_id"] not in done]
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 BAD = re.compile(r"\.(png|jpe?g|gif|svg|webp)$|example\.com|sentry|wixpress|domain\.com", re.I)
 def to_text(h):
