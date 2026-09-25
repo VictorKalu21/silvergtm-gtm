@@ -20,11 +20,11 @@
    (`atlas-gen-rundata.part00..03`, sent 2026-09-24). Rejoin with `cat atlas-gen-rundata.part0* > rundata.tar.gz`
    (sha256 starts `01fad8f868781c46`), then `tar -xzf rundata.tar.gz -C clients/atlas-growth/`. Excluded as rebuildable: Maps
    shard dirs, `leads_raw.json`, the pre-merge site-text folders (already merged into `owner/site_text.jsonl`), logs.
-2. **Owner-finding, where it stopped:** site read `owner/read` done for batches 0–63 of 138 (resume with the `owner-read`
-   workflow on batches 64–137; its script counts from 0, so pass the ids explicitly or edit the range). BBB web-search sweep
-   `owner/sweep2` done for batches 0–84 of 156; `owner/sweep3` (390 batches, 7,783 leads) not started. Sweep yield ~75%.
-   **≤7 batches per workflow run** (200-search budget per run); re-run any batch that reports 0 searches.
-   After the read finishes, queue its unnamed leads into a further sweep folder with `prep-sweep-batches.js --have`.
+2. **Owner-finding, where it stopped (2026-09-25):** site read STOPPED for good at 66/138 batches — it named 421
+   (16%) at ~16k tokens per name vs the sweep's ~4.4k, so the rest of the read set goes to the sweep instead
+   (`owner/contacts_read.jsonl` holds the 421). Sweeps (BBB registry, ~75% named): `owner/sweep2` 103/156 batches done;
+   `owner/sweep3` 0/390 (new ICP leads); `owner/sweep4` 0/253 (read-set leads still unnamed). Check done batches by a
+   non-empty `batch-N-out.json`. **≤7 batches per workflow run** (200-search budget); re-run any batch with 0 searches.
 3. Then `merge-owner-reads.js` (pass `--trade-words` from the owner prompt) → `combine-owner-contacts.js` → email waterfall
    → verification (**paid, explicit go**) → Plusvibe (`build-plusvibe.js`, `personalize-config` for generators still to write).
 4. Raw emails already on disk: 14,554 of 16,515 ICP leads have ≥1 (12,763 from OEM lists, 7,695 on-site) — unverified.
