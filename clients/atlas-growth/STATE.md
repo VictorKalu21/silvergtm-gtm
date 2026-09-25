@@ -21,8 +21,8 @@ Run folder `2026-09-24_us-generator-dealers/`. ICP `ICP-generators.md`. Config `
 Data is gitignored; this section is how to pick it back up.
 
 ### Restore the data (FIRST, in any new session)
-Operator holds **`atlas-gen-rundata-0925.part00..03`** (sent 2026-09-25; supersedes the 2026-09-24 parts).
-`cat atlas-gen-rundata-0925.part0* > rundata.tar.gz` (sha256 starts `0eeaa19e38c66dd0`) →
+Operator holds **`atlas-gen-rundata-0925b.part00..05`** (sent 2026-09-25; supersedes the 2026-09-24 parts).
+`cat atlas-gen-rundata-0925b.part0* > rundata.tar.gz` (sha256 starts `0eeaa19e38c66dd0`) →
 `tar -xzf rundata.tar.gz -C clients/atlas-growth/`. Excluded as rebuildable: Maps raw shards, `site_text.main.jsonl`
 (pre-merge; `owner/site_text.jsonl` is the merged best), the owner-new/-render/-retry/-scrapling fetch folders, logs.
 Smaller alternative for verification + Plusvibe only: **`atlas-gen-verify-kit.tar.gz`** (6 MB: `leads_icp.csv`,
