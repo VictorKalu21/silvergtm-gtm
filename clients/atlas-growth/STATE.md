@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| **New vertical (opened 2026-09-24)** | **US residential standby-generator installers** — ICP `ICP-generators.md`, run `2026-09-24_us-generator-dealers/`. OEM dealer lists (Generac 13,171 · Briggs 2,444 · Cummins 2,415 via Wayback · Kohler 1,626 · Champion 476) + nationwide Maps (5,041 calls → 6,870 qualified) → 21,680 combined leads. Name→domain: 3,441 websites recovered (789 free resolver + 2,652 Haiku web-verify, deterministic verifier drops invented domains); 16,194 root domains, 83% with usable site text (fetch → http:// rung → Playwright render → Scrapling). STEP 5e fit (Haiku + session-model second opinion): **16,515 ICP leads** (10,998 site verdict · 5,408 OEM-listed no text · 109 Maps generator-type no text). **Owner-finding STOPPED 2026-09-25 (operator: "that's high, stop and move to the next stage"): 7,746 of 16,515 named (46.9%), 7,603 owner-level** — `owner/contacts_final.jsonl`, 8,769 in `owner/leads_unnamed.csv`. **Email waterfall skipped (operator: "we already have emails")**: `build-email-candidates.js` ranks the addresses already on disk (OEM list + on-site + reader) with `email-rank.js` → `owner/emails_candidates.csv`: **14,260 leads with ≥1 address** (18,683 candidates), 6,724 of them named, 2,364 whose top address is built from the named contact's name. Unverified. Next: verification (**paid, explicit go + keys**) → Plusvibe. Cross-run dedupe waived (operator). Rotate the scraper.tech key (pasted in chat 2026-09-24). |
+| **New vertical (opened 2026-09-24)** | **US residential standby-generator installers** — ICP `ICP-generators.md`, run `2026-09-24_us-generator-dealers/`. OEM dealer lists (Generac 13,171 · Briggs 2,444 · Cummins 2,415 via Wayback · Kohler 1,626 · Champion 476) + nationwide Maps (5,041 calls → 6,870 qualified) → 21,680 combined leads. Name→domain: 3,441 websites recovered (789 free resolver + 2,652 Haiku web-verify, deterministic verifier drops invented domains); 16,194 root domains, 83% with usable site text (fetch → http:// rung → Playwright render → Scrapling). STEP 5e fit (Haiku + session-model second opinion): **16,515 ICP leads** (10,998 site verdict · 5,408 OEM-listed no text · 109 Maps generator-type no text). **Owner-finding STOPPED 2026-09-25 (operator: "that's high, stop and move to the next stage"): 7,746 of 16,515 named (46.9%), 7,603 owner-level** — `owner/contacts_final.jsonl`, 8,769 in `owner/leads_unnamed.csv`. **Email waterfall skipped (operator: "we already have emails")**: `build-email-candidates.js` ranks the addresses already on disk (OEM list + on-site + reader) with `email-rank.js` → `owner/emails_candidates.csv`: **14,260 leads with ≥1 address** (18,683 candidates), 6,724 of them named, 2,364 whose top address is built from the named contact's name. Unverified. **Verification queued in 3k tranches, dealer lists first; tranche 01 next (needs keys); 02–05 banked.** Full record below. Cross-run dedupe waived (operator). Rotate the scraper.tech key (pasted in chat 2026-09-24). |
 | Current run | `2026-09-20_au-foundation-repair-maps` — **PLUSVIBE UPLOAD BUILT, NOT UPLOADED** (2026-09-21). 329 worked leads · 93 named · 217 with an email · verified 140/180 sendable · **`owner/plusvibe_upload.csv` 168 rows** (140 personalised from site text, 28 on fallbacks; 4 blank-city rows held in `plusvibe_upload_blankcity.csv`; 12 rows carry a first name under the name rule). Wording signed off 2026-09-21 (rectification for foundation repair). Sweep tranche 1 only (120 of 284 unnamed). All run data gitignored in the run folder. Store: places 5,118 · site_text 364 · registry 52 · contacts 89 · verdicts 180 · ledger 6. |
 | Previous run (UK Maps) | `2026-09-16_uk-foundation-repair-maps` — owner-finding DONE (586/860 named). **Verification DONE 2026-09-17** (MillionVerifier → BounceBan, keys supplied by operator): 444 unique addresses → **370 sendable**, 39 risky, 35 dropped (20 of the drops are persistent MillionVerifier API errors, unverified not invalid). `deliverable/emails_final.csv` 468 rows (392 sendable incl. shared brand mailboxes). **Plusvibe upload BUILT and sent 2026-09-17**: `deliverable/atlas_uk_plusvibe_upload.csv`, **391 rows** (one per lead, sendable addresses only), 364 personalised from site text + 27 config fallbacks, **27 named** under the name rule (357 company mailboxes stay nameless), 0 flags, 0 blank cities after a job-side `owner/city_overrides.json` (42 rows), `check` passed. **Firecrawl residue pass 2026-09-17 (operator key):** 204 blocked sites → **141 recovered (69%)**, 146 credits; 55 unworked leads re-tiered A–C → Opus adjudication → **+29 ICP +9 damp-only = 898 worked leads**; CH + Haiku read on the 38 → **610 named (67.9%)**; emails **495 (55.1%)**, 469 unique, 25 new addresses verified (23 sendable / 2 risky) and **BounceBan recovery over the earlier MV invalid/error rows (operator directive): 18 recovered sendable** (5 of 15 invalid, 13 of 20 error), 7 risky, 10 dropped → **411 unique sendable of 469 (87.6%)**, `emails_final.csv` 435 sendable / 49 risky / 11 dropped. **Plusvibe upload REBUILT and sent: 435 rows** (44 new), 409 personalised, 29 named, 0 blank cities (46 overrides: 41 job-side + 5 after the new `city-fallback`), outcome flag now LIVE via `outcome_by_type` in the UK config, `check` passed. Facebook and UK-directory rungs are dead ends (probes in the source library). **Run closed out** — nine engine changes from it shipped 2026-09-17 with tests |
 | Previous run (export) | `2026-09-16_uk-foundation-repair` — qualify + emails + owner-finding DONE on the operator's UK export; verification NOT run (no MillionVerifier/BounceBan keys) |
@@ -14,25 +14,66 @@
 | Runs shipped | none |
 | Live campaigns | none |
 
-## How to resume the US generator run (written 2026-09-24, paused on the weekly usage limit)
+## US generator run — full record (2026-09-24 → 2026-09-25, saved for piecemeal work)
 
-1. **Restore the data first** (gitignored, not in the repo): the operator has `atlas-generators rundata` as 4 parts
-   (`atlas-gen-rundata.part00..03`, sent 2026-09-24). Rejoin with `cat atlas-gen-rundata.part0* > rundata.tar.gz`
-   (sha256 starts `01fad8f868781c46`), then `tar -xzf rundata.tar.gz -C clients/atlas-growth/`. Excluded as rebuildable: Maps
-   shard dirs, `leads_raw.json`, the pre-merge site-text folders (already merged into `owner/site_text.jsonl`), logs.
-2. **Owner-finding is CLOSED (2026-09-25).** Done: read 66/138 · sweep2 156/156 · sweep3 226/390 · sweep4 129/253 ·
-   sweep5 7/122. Merged with `merge-owner-reads.js` (`--trade-words` from the owner prompt) → `combine-owner-contacts.js`
-   (read, sweep2, sweep3, sweep4, sweep5, in that order) → `owner/contacts_final.jsonl`: **7,746 named** (owner 7,603 ·
-   gm 104 · office_manager 21 · marketing 18). The unrun sweep batches remain queued if the operator ever wants more names.
-3. **Emails: no waterfall (operator 2026-09-25).** `node build-email-candidates.js` (run folder) → `owner/emails_candidates.csv`,
-   emails_final shape with a blank `verdict`, one row per candidate, `rank` 1 = the pick (a local part built from a named
-   contact first, then email-rank's order). 14,260 leads, 14,205 unique top addresses; top domains are free mail
-   (gmail 3,594 · yahoo 796). **Next:** verify rank-1 addresses with MillionVerifier → BounceBan (**paid: explicit go + keys,
-   not in this container**), fall to rank 2 on invalid, write `verdict`, save as `owner/emails_final.csv` → Plusvibe
-   (`build-plusvibe.js base/prep/fill`, generator `personalize-config` still to write, 3-lead then 7-lead test with the
-   operator, `city-fallback` for blank cities).
-4. Watch at Plusvibe `base`: the name rule's last-name-prefix match puts an owner on a trade mailbox
-   (`cannon.electric@outlook.com` → Cody Cannon). It is the engine's rule, so it is flagged here, not patched.
+Run folder `2026-09-24_us-generator-dealers/`. ICP `ICP-generators.md`. Config `atlas-growth-generators-config.json`
+(+ `-dealers-config.json`). Owner prompt `owner-prompts/us-generator-installers.md` (= `<run>/owner-prompt.md`).
+Data is gitignored; this section is how to pick it back up.
+
+### Restore the data (FIRST, in any new session)
+Operator holds **`atlas-gen-rundata-0925.part00..03`** (sent 2026-09-25; supersedes the 2026-09-24 parts).
+`cat atlas-gen-rundata-0925.part0* > rundata.tar.gz` (sha256 starts `0eeaa19e38c66dd0`) →
+`tar -xzf rundata.tar.gz -C clients/atlas-growth/`. Excluded as rebuildable: Maps raw shards, `site_text.main.jsonl`
+(pre-merge; `owner/site_text.jsonl` is the merged best), the owner-new/-render/-retry/-scrapling fetch folders, logs.
+Smaller alternative for verification + Plusvibe only: **`atlas-gen-verify-kit.tar.gz`** (6 MB: `leads_icp.csv`,
+`owner/contacts_final.*`, `owner/emails_candidates.*`, `owner/leads_unnamed.csv`, `owner/verify/`). Plusvibe `prep`
+also needs `owner/site_text.jsonl` (full archive).
+
+### What was done (funnel)
+| stage | result |
+|---|---|
+| OEM dealer locators (`pull/`) | Generac 13,171 · Briggs 2,444 · Cummins 2,415 (Wayback) · Kohler 1,626 · Champion 476 → 20,132 rows → 17,795 companies (union-find merge) → 16,942 after name deny |
+| Google Maps (`maps/`) | 477 anchors × 5 generator-intent queries, 5,041 calls → 28,524 unique → 6,870 qualified (30+ reviews) |
+| Combined | 21,680 leads (`leads_combined.csv`); name→domain recovered 3,441 websites |
+| Site text | 16,194 root domains, 83% usable text (fetch → http:// → Playwright → Scrapling) |
+| STEP 5e fit | **16,515 ICP leads** (`leads_icp.csv`): 12,928 dealer-list · 1,947 both · 1,640 Maps-only |
+| Owner-finding (CLOSED 2026-09-25) | **7,746 named (46.9%), 7,603 owner-level** — `owner/contacts_final.jsonl`; 8,769 in `owner/leads_unnamed.csv`. Read 66/138 · sweep2 156/156 · sweep3 226/390 · sweep4 129/253 · sweep5 7/122 (the unrun batches stay queued) |
+| Emails (no waterfall, operator 2026-09-25) | `build-email-candidates.js` → `owner/emails_candidates.csv`: **14,260 leads with ≥1 address**, 18,683 candidates, `rank` 1 = pick; 2,364 picks built from the named contact's name |
+| Verification queue | `make-verify-tranches.js --size 3000` → `owner/verify/queue.csv` + `tranche_NN.csv` (dealer lists first, operator 2026-09-25) |
+
+### Verification tranches (operator: "do 3k, bank the rest, dealer lists specifically")
+| tranche | rows | content | status |
+|---|---|---|---|
+| **01** | 3,000 | dealer-list · 2,187 owner-name addresses + 813 named owners on company mailboxes (top OEM tiers first) | **NEXT — needs MV + BB keys** |
+| 02 | 3,000 | dealer-list · named owners on company mailboxes | banked |
+| 03 | 3,000 | dealer-list · unnamed (38 named) | banked |
+| 04 | 3,000 | dealer-list · unnamed | banked |
+| 05 | 2,260 | 1,299 dealer-list tail + 961 Maps-only (177 personal, 686 named) | banked |
+
+Tranche files are fixed once written (re-running the script appends new rows to the last tranche, never reshuffles).
+Run one tranche:
+```
+IN=owner/verify/tranche_01.csv OUT_DIR=owner/verify/t01 EMAIL_VERIFY_ENV=<gitignored env with MILLIONVERIFIER_KEY, BOUNCEBAN_KEY> \
+  node ../../../skills/email-verify-debounce-bounceban/scripts/verify-millionverifier-bounceban.js --concurrency 4
+```
+Cost per tranche ≈ 3,000 MV credits + BounceBan on catch-all/unknown/error/invalid (UK run: ~40% of MV rows went to BB).
+After a tranche: rank-2 fallback for its `dropped` rows (from `emails_candidates.csv`), then append the tranche's
+sendable + risky rows to `owner/emails_final.csv` (columns `place_id,email,contact_name,email_kind,found_by,verdict`;
+`build-plusvibe.js base` reads `verdict == sendable`). Mark the tranche DONE in the table above.
+
+### Then Plusvibe (per tranche or at the end)
+`build-plusvibe.js base --leads leads_icp.csv --emails owner/emails_final.csv --contacts owner/contacts_final.jsonl` →
+`city-fallback` → `prep` → Haiku personalise → `fill` → `check`. **Still to write:** the generator
+`personalize-config.json` (offer in `ICP-generators.md`; `outcome_by_type` for residential_generator), agreed on a
+3-lead then 7-lead test with the operator.
+
+### Watch-outs carried
+- Name rule's last-name-prefix match puts an owner on a trade mailbox (`cannon.electric@outlook.com` → Cody Cannon);
+  engine rule, flagged not patched.
+- A few OEM-listed small-engine shops survived 5e (e.g. CRANES OUTDOOR POWER EQUIPMENT); skim tranche 01 before upload.
+- Two sweep3 outputs unparseable (batches 147, 197); rerunnable.
+- Workflow runs cap at ~200 WebSearch calls; ≤7 sweep batches per run.
+- **Rotate the scraper.tech key** (pasted in chat 2026-09-24).
 
 ## How to resume the AU run (written 2026-09-20, after owner-finding)
 
