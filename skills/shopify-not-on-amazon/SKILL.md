@@ -38,9 +38,11 @@ node amazon-autocomplete.mjs                                           # -> {RUN
 node prep-classify.mjs                                                 # -> {RUN}_review_batch_N.json ; dispatch Haiku (below)
 node merge.mjs classify                                                # -> {RUN}_keeps.json
 node amazon-verify.mjs                                                 # -> {RUN}_amazon_verify.json  (CONC=2; when throttled: SEARCH_PASSES=1 BF_VARIANTS=1 MAX_DP=2)
+#   long runs: RUN=.. DIR=.. ./verify-supervisor.sh                    # probes Amazon, runs RETRY=1 passes, pauses 2 h when >40% of the last 20 rows are blocked (a datacenter IP gets ~3k brands per open window)
 #   RETRY=1 (redo blocked)  ONLY=a.com,b.com (redo those; put hand search terms in {RUN}_query_overrides.json first)
 node prep-query-review.mjs                                             # -> {RUN}_query_review_N.json : Haiku returns the brand name as Amazon names the store
-node prep-query-review.mjs --merge && ONLY=$(cat only_query.txt) REPASS=1 MAX_DP=8 node amazon-verify.mjs   # re-check every changed term (5-8% of lead rows)
+node prep-query-review.mjs --merge && ONLY=$(cat only_query.txt) REPASS=1 MAX_DP=8 node amazon-verify.mjs   # re-check every changed term (5-8% of lead rows; run four: 34%)
+#   long re-pass: RUN=.. DIR=.. ./repass-supervisor.sh                 # same throttle handling; a row is done once its stored `query` equals the override
 #   RESCORE=1 (no fetch: re-derive verdicts from the product pages already read, after any matcher change; never downgrades)
 #   optional: node dataforseo.mjs amazon-volume                        # branded searches/mo on Amazon -> {RUN}_dfs_amazon.json
 #   lead review: batch the none/3p/dormant keeps -> Haiku -> {RUN}_lead_review_N_out.json (prompt below)
