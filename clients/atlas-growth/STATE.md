@@ -44,22 +44,21 @@ also needs `owner/site_text.jsonl` (full archive).
 ### Verification tranches (operator: "do 3k, bank the rest, dealer lists specifically")
 | tranche | rows | content | status |
 |---|---|---|---|
-| **01** | 3,000 | dealer-list · 2,187 owner-name addresses + 813 named owners on company mailboxes (top OEM tiers first) | **NEXT — needs MV + BB keys** |
-| 02 | 3,000 | dealer-list · named owners on company mailboxes | banked |
+| **01** | 3,000 | dealer-list · 2,187 owner-name addresses + 813 named owners on company mailboxes (top OEM tiers first) | **DONE 2026-09-25: 2,688 leads sendable (89.6%; 1,954 on the owner's own address, 734 company) · 221 risky-only · 87 none.** MV 2,655 ok-or-recovered of 2,996; BB 991 calls (16 recovered from invalid); rank-2 fallback 51 addresses → 43 sendable. In `owner/emails_final.csv` |
+| 02 | 3,000 | dealer-list · named owners on company mailboxes | banked — **next** |
 | 03 | 3,000 | dealer-list · unnamed (38 named) | banked |
 | 04 | 3,000 | dealer-list · unnamed | banked |
 | 05 | 2,260 | 1,299 dealer-list tail + 961 Maps-only (177 personal, 686 named) | banked |
 
 Tranche files are fixed once written (re-running the script appends new rows to the last tranche, never reshuffles).
-Run one tranche:
+Keys: `$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env` (outside the repo; recreate from the operator in a new container). Run one tranche:
 ```
 IN=owner/verify/tranche_01.csv OUT_DIR=owner/verify/t01 EMAIL_VERIFY_ENV=<gitignored env with MILLIONVERIFIER_KEY, BOUNCEBAN_KEY> \
   node ../../../skills/email-verify-debounce-bounceban/scripts/verify-millionverifier-bounceban.js --concurrency 4
 ```
 Cost per tranche ≈ 3,000 MV credits + BounceBan on catch-all/unknown/error/invalid (UK run: ~40% of MV rows went to BB).
-After a tranche: rank-2 fallback for its `dropped` rows (from `emails_candidates.csv`), then append the tranche's
-sendable + risky rows to `owner/emails_final.csv` (columns `place_id,email,contact_name,email_kind,found_by,verdict`;
-`build-plusvibe.js base` reads `verdict == sendable`). Mark the tranche DONE in the table above.
+After a tranche: `node finalize-tranche.js NN fallback` → verify `owner/verify/tranche_NNb.csv` into `owner/verify/tNNb`
+→ `node finalize-tranche.js NN final` (upserts into `owner/emails_final.csv`; `build-plusvibe.js base` reads `verdict == sendable`). Mark the tranche DONE in the table above.
 
 ### Then Plusvibe (per tranche or at the end)
 `build-plusvibe.js base --leads leads_icp.csv --emails owner/emails_final.csv --contacts owner/contacts_final.jsonl` →
