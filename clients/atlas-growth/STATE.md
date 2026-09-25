@@ -62,7 +62,7 @@ After a tranche: `node finalize-tranche.js NN fallback` → verify `owner/verify
 
 ### Then Plusvibe (per tranche or at the end)
 `build-plusvibe.js base --leads leads_icp.csv --emails owner/emails_final.csv --contacts owner/contacts_final.jsonl` →
-`city-fallback` → `prep` → Haiku personalise → `fill` → `check`. **Still to write:** the generator
+`city-fallback` → `prep` → Haiku personalise → `fill` → `check`. **Config:** `personalize-config-generators.json` (3-lead test signed off 2026-09-25: electricians -> 'generator installation', 'HVAC and generators', original US offer line unchanged; the file is gitignored by `*.json`, force-add was blocked, so it lives only in the run archive/container until the operator adds it). **Next: 7-lead test**, then full fill of the tranche-01 base (`owner/plusvibe_base.csv`, 2,688 rows, 40 blank city). Was: the generator
 `personalize-config.json` (offer in `ICP-generators.md`; `outcome_by_type` for residential_generator), agreed on a
 3-lead then 7-lead test with the operator.
 
