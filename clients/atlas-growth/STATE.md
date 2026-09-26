@@ -62,9 +62,13 @@ After a tranche: `node finalize-tranche.js NN fallback` → verify `owner/verify
 
 ### Then Plusvibe (per tranche or at the end)
 `build-plusvibe.js base --leads leads_icp.csv --emails owner/emails_final.csv --contacts owner/contacts_final.jsonl` →
-`city-fallback` → `prep` → Haiku personalise → `fill` → `check`. **Config:** `personalize-config-generators.json` (3-lead test SIGNED OFF 2026-09-26; surname-prefix first names KEPT (operator); electricians -> 'generator installation', 'HVAC and generators', original US offer line unchanged; force-added to git on operator OK). **Next: 7-lead test**, then full fill of the tranche-01 base (`owner/plusvibe_base.csv`, 2,688 rows, 40 blank city). Was: the generator
+`city-fallback` → `prep` → Haiku personalise → `fill` → `check`. **Config:** `personalize-config-generators.json` (3-lead test SIGNED OFF 2026-09-26; surname-prefix first names KEPT (operator); electricians -> 'generator installation', 'HVAC and generators', original US offer line unchanged; force-added to git on operator OK). **7-lead test run 2026-09-26** (whole-home, backup-power, solar, standby dealer, res+com electrician, no-site-text, blank-city): 0 flags, 0 fallbacks, blank city read from the site; awaiting operator sign-off, then full fill of the tranche-01 base (`owner/plusvibe_base.csv`, 2,688 rows, 40 blank city). Was: the generator
 `personalize-config.json` (offer in `ICP-generators.md`; `outcome_by_type` for residential_generator), agreed on a
 3-lead then 7-lead test with the operator.
+
+### Side lists (2026-09-26, run folder, gitignored)
+- `commercial_only.csv` — 509 firms the 5e check dropped as commercial-only (347 dealer · 122 Maps · 40 both; 297 with an email), with the classifier's `why`.
+- `residential_and_commercial.csv` — 6,245 KEPT leads that also serve commercial: 6,134 whose site says it ("residential and commercial", "homes and businesses" … keyword tag, not a keep/drop gate; 1,993 also mention industrial) + 193 flagged commercial by the OEM list (Briggs commercialIndustrial / Kohler light-commercial). Generac publishes no such flag.
 
 ### Watch-outs carried
 - Name rule's last-name-prefix match puts an owner on a trade mailbox (`cannon.electric@outlook.com` → Cody Cannon);
