@@ -1,0 +1,49 @@
+{
+  "_comment": "Atlas Growth / US residential standby-generator installers (ICP-generators.md). Same template as the signed-off US foundation config (personalize-config.json), trade tables rewritten for generators. Offer: 10 qualified generator estimate appointments that turn into install projects. Drafted 2026-09-25; 3-lead test run twice (operator edits 2026-09-25: electrician wording, HVAC caps, original offer line), then 7-lead, per SKILL STEP 7b. Nothing fills at full volume until both are signed off.",
+  "template": "Hi,\n\nNoticed that you handle {{business_type}} in {{city}}.\n\nWe help you generate 10 qualified {{inspection_type}} that turn into paid {{project_type}} jobs, in under 30 days.\n\nThere's no pay unless I book you a qualified, confirmed {{inspection_singular}}.\n\nOpen to a 15-minute chat?",
+  "instructions": {
+    "business_type": "what this company leads with for homeowners, EXACTLY one of: standby generators, home generators, whole-home generators, home backup power, generator installation, HVAC and generators, solar and backup power (keep the capitals in 'HVAC'; everything else lowercase). Generator-led dealer -> the generator phrase the site itself uses most ('standby' / 'home' / 'whole-home'); 'home backup power' only when the site talks about backup power more than generators. An electrician (generators one service among many, or none shown) -> generator installation. An HVAC firm that also installs generators -> HVAC and generators. A solar firm that sells batteries/generators -> solar and backup power. Never a brand name (not 'generac generators'), never 'commercial', never 'electrical work'. Every company here is already on a generator dealer list or sells generators, so the site need not mention generators: decide by what KIND of business it is (business_name, google_types, site). A heating / air / HVAC / plumbing-and-heating business -> HVAC and generators. An electric / electrical / electrician business -> generator installation. Only a generator- or power-led business gets a generator phrase.",
+    "inspection_type": "the first in-home visit, plural: 'generator' plus 'estimates', 'quotes' or 'assessments', according to which word the company itself uses for its free visit (default estimates). Never the word 'free', never 'in-home', never a brand name.",
+    "inspection_singular": "the singular of inspection_type, e.g. generator estimate, generator quote.",
+    "project_type": "always: install",
+    "city": "ONLY if the 'city' known fact is blank: the city this company is based in, from the website. Otherwise repeat the known city exactly, without the state code."
+  },
+  "rules": "Decide business_type first. inspection_type always names the generator visit (the offer sells generator appointments even to an electrician, HVAC or solar firm). project_type is always 'install'. Operator 2026-09-25: electricians read 'generator installation'; the offer line is the original US email's, unchanged ('in under 30 days', no channel named); 'HVAC' stays capitalised.",
+  "fallbacks": {
+    "business_type": "standby generators",
+    "inspection_type": "generator estimates",
+    "inspection_singular": "generator estimate",
+    "project_type": "install",
+    "city": ""
+  },
+  "outcome_by_type": {
+    "standby generators": [
+      "install"
+    ],
+    "home generators": [
+      "install"
+    ],
+    "whole-home generators": [
+      "install"
+    ],
+    "home backup power": [
+      "install"
+    ],
+    "solar and backup power": [
+      "install"
+    ],
+    "generator installation": [
+      "install"
+    ],
+    "HVAC and generators": [
+      "install"
+    ]
+  },
+  "context_cols": [
+    "city",
+    "state",
+    "google_types",
+    "business_name"
+  ],
+  "max_value_len": 60
+}
