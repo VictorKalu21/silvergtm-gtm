@@ -22,7 +22,7 @@ const caller = path.join(__dirname, 'hr_call.js'); const tmp = path.join(require
 let added = 0, updated = 0, failed = 0;
 for (let i = 0; i < leads.length; i += 100) {
   const batch = leads.slice(i, i + 100);
-  fs.writeFileSync(tmp, JSON.stringify({ listId: Number(listId), items: batch }));
+  fs.writeFileSync(tmp, JSON.stringify({ listId: Number(listId), leads: batch }));
   const out = execFileSync('node', [caller, 'add_leads_to_list_v2', '@' + tmp], { encoding: 'utf8' });
   let m; try { m = JSON.parse(out.trim().split('\n').pop()); } catch { m = null; }
   const a = m && (m.addedLeadsCount ?? m.added ?? 0), u = m && (m.updatedLeadsCount ?? m.updated ?? 0), f = m && (m.failedLeadsCount ?? m.failed ?? 0);
