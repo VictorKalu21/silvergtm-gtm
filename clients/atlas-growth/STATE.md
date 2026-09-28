@@ -70,6 +70,11 @@ After a tranche: `node finalize-tranche.js NN fallback` → verify `owner/verify
 - `commercial_only.csv` — 509 firms the 5e check dropped as commercial-only (347 dealer · 122 Maps · 40 both; 297 with an email), with the classifier's `why`.
 - `residential_and_commercial.csv` — 6,245 KEPT leads that also serve commercial: 6,134 whose site says it ("residential and commercial", "homes and businesses" … keyword tag, not a keep/drop gate; 1,993 also mention industrial) + 193 flagged commercial by the OEM list (Briggs commercialIndustrial / Kohler light-commercial). Generac publishes no such flag.
 
+### Maps-only list (operator 2026-09-28: "about 1k just maps emails")
+- `owner/verify/tranche_05m.csv` = the 961 Maps-only leads with an email (the dealer=false slice of tranche 05). **Verified 2026-09-28:** MV 959 + BB 330 → 877 sendable · 48 risky · 36 dropped; rank-2 fallback 19 → 17 sendable → **886 Maps-only leads sendable (171 on the owner's own address)**, upserted into `owner/emails_final.csv` (tranche tag `05m`/`05mb`). No Maps-only lead was in tranche 01.
+- Personalisation: `owner/personalize-maps/` (base 886; 153 blank cities → 88 geocoded town/city/village applied via `owner/city_overrides_all.json`, 63 county answers held back in `city_overrides_maps_county.json` so the reader takes the town from the site first; 24 batches, workflow `personalize-batches`). Then fill → redo → county fallback for any blank → check → `owner/plusvibe_upload_maps.csv`.
+- For ~1k: top up from the 1,067 unverified Maps+dealer ('both') leads in tranches 02–03, or use the 765 'both' rows already sendable in `plusvibe_upload_t01.csv`.
+
 ### Watch-outs carried
 - Name rule's last-name-prefix match puts an owner on a trade mailbox (`cannon.electric@outlook.com` → Cody Cannon);
   engine rule, flagged not patched.
