@@ -1,6 +1,17 @@
-﻿// HeyReach MCP caller. Usage: node hr_call.js <toolName> '<jsonArgs>'
+// HeyReach MCP caller. Usage: node hr_call.js <toolName> '<jsonArgs>'
 const https = require('https');
-const KEY = 'C4h0moR%2FaB%2Bmm449yurs3NqMXUfyL%2BLy2aWZMEUZtw4%3D';
+// Key comes from HEYREACH_MCP_KEY in the environment, or from HEYREACH_ENV_FILE (a KEY=value file). Never hardcode it here.
+function loadKey() {
+  if (process.env.HEYREACH_MCP_KEY) return process.env.HEYREACH_MCP_KEY;
+  const f = process.env.HEYREACH_ENV_FILE || (process.env.HOME + '/ai-reserve/scoring/work/.heyreach.env');
+  try {
+    for (const line of require('fs').readFileSync(f, 'utf8').split(String.fromCharCode(10))) {
+      if (line.startsWith('HEYREACH_MCP_KEY=')) return line.slice('HEYREACH_MCP_KEY='.length).trim();
+    }
+  } catch {}
+  console.error('HEYREACH_MCP_KEY not set and no env file found'); process.exit(2);
+}
+const KEY = encodeURIComponent(loadKey());
 const URL = 'https://mcp.heyreach.io/mcp?xMcpKey=' + KEY;
 
 const tool = process.argv[2];

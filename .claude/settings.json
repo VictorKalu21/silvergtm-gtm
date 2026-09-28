@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node /home/user/silvergtm-gtm/skills/heyreach-campaign-build/scripts/hr_call.js:*)",
+      "Bash(node /home/user/silvergtm-gtm/skills/heyreach-campaign-build/scripts/hr_push_list.js:*)",
+      "Bash(node skills/heyreach-campaign-build/scripts/hr_call.js:*)",
+      "Bash(node skills/heyreach-campaign-build/scripts/hr_push_list.js:*)"
+    ]
+  }
+}
