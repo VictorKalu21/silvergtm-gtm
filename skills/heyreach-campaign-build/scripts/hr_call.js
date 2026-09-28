@@ -3,12 +3,14 @@ const https = require('https');
 // Key comes from HEYREACH_MCP_KEY in the environment, or from HEYREACH_ENV_FILE (a KEY=value file). Never hardcode it here.
 function loadKey() {
   if (process.env.HEYREACH_MCP_KEY) return process.env.HEYREACH_MCP_KEY;
-  const f = process.env.HEYREACH_ENV_FILE || (process.env.HOME + '/ai-reserve/scoring/work/.heyreach.env');
-  try {
-    for (const line of require('fs').readFileSync(f, 'utf8').split(String.fromCharCode(10))) {
-      if (line.startsWith('HEYREACH_MCP_KEY=')) return line.slice('HEYREACH_MCP_KEY='.length).trim();
-    }
-  } catch {}
+  const candidates = [process.env.HEYREACH_ENV_FILE, process.env.HOME + '/ai-reserve/scoring/work/.heyreach.env', '/home/user/ai-reserve/scoring/work/.heyreach.env'].filter(Boolean);
+  for (const f of candidates) {
+    try {
+      for (const line of require('fs').readFileSync(f, 'utf8').split(String.fromCharCode(10))) {
+        if (line.startsWith('HEYREACH_MCP_KEY=')) return line.slice('HEYREACH_MCP_KEY='.length).trim();
+      }
+    } catch {}
+  }
   console.error('HEYREACH_MCP_KEY not set and no env file found'); process.exit(2);
 }
 const KEY = encodeURIComponent(loadKey());
