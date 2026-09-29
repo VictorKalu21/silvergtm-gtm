@@ -12,7 +12,7 @@ Domain: {{Company Domain}}
 Name: {{Company Name}}
 Description: {{Company Description}}
 
-IDENTITY. The company is the operating business behind the domain and name. The description is a hint only. If the description describes a different company from the domain and name, ignore the description completely. Example: domain st.co.uk, name Sysco, description about STMicroelectronics. The company is Sysco GB (Brakes), a UK foodservice distributor. Any STMicroelectronics result is wrong. Ignore other companies with similar names.
+IDENTITY. The company is the operating business behind the domain and name. The description is a hint only. If the description describes a different company from the domain and name, ignore the description completely. Example: domain northfield-foods.co.uk, name Northfield Foods, description about a semiconductor manufacturer. The company is Northfield Foods, a UK food distributor. Any semiconductor result is wrong. Ignore other companies with similar names.
 
 A SIGNAL IS ONE OF THESE THREE:
 
@@ -56,7 +56,7 @@ Wrong: generic wording, no event, no date. Correct answer is no.
 {"signal_found":"yes","signal_type":"disruption","summary":"The company provides integrated supply chain and logistics services to automotive clients.","source_url":"https://www.example-logistics.com/services","source_date":"2025-03-01","confidence":"medium","checked":["https://www.example-logistics.com/services"]}
 Wrong: describes what they sell, not their own suppliers. Correct answer is no.
 
-{"signal_found":"yes","signal_type":"disruption","summary":"STMicroelectronics faced a microcontroller shortage with lead times up to 55 weeks.","source_url":"https://supplygraph.ai/company-events/...","source_date":"2026-03-01","confidence":"high","checked":["https://supplygraph.ai/company-events/..."]}
+{"signal_found":"yes","signal_type":"disruption","summary":"A semiconductor manufacturer faced a microcontroller shortage with lead times up to 55 weeks.","source_url":"https://supplygraph.ai/company-events/...","source_date":"2026-03-01","confidence":"high","checked":["https://supplygraph.ai/company-events/..."]}
 Wrong twice: different company from the domain and name, and an aggregator rated high.
 
 {"signal_found":"no","signal_type":"none","summary":"No supply chain resilience signal found. Checked newsroom, FY25 annual report and Modern Slavery statement.","source_url":"","source_date":"","confidence":"high","checked":[]}
