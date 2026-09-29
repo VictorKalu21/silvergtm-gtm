@@ -14,7 +14,7 @@ Luna is a different animal from the 4.1 models in this harness. It made 2 to 7 s
 | pepcogroup.eu | yes | yes, structural_response | Pepco press release, 4 May 2026 | 403 to curl | yes, via DHL mirror in v2 run | Company site blocks bots. URL checker must handle this or it flags a true positive. |
 | halfords.com | uncertain | yes: v3 supplier_governance from MSS 2025, v4 structural_response from FY26 annual report | 200 | PDF, not verified from here | v4 claim (dual sourcing, nearshore teams, safety stock) is a real signal if the text holds. v4 also listed a staging azurewebsites URL in checked, which is a leak of a non-public host. |
 | unitestudents.com | no | yes, supplier_governance | FY25 MSS PDF, 15 May 2026 | 200 | PDF, not verified | Peak-season modern slavery audit, 37 suppliers trained. Meets category 3 as written. |
-| heliostowers.com | no | yes, supplier_governance | MSS PDF dated 10 Mar 2026 (file named 2024) | 200 | PDF, not verified | 80% certification of high and medium risk third parties, pilot audits. Meets category 3 as written. |
+| heliostowers.com | no | yes, supplier_governance | MSS PDF dated 10 Mar 2026 (file named 2024) | 200 | yes, PDF text matches (80% certification, pilot audits, 2026 plans) | 80% certification of high and medium risk third parties, pilot audits. Meets category 3 as written. |
 | st.co.uk | Sysco GB | yes, supplier_governance | Sysco GB MSS, Jan 2026, on a brakeshosting.co.uk subdomain | TLS error from here | not verified | Identity solved cleanly, and it went to Sysco GB not Sysco Corp. The host is an odd CDN subdomain the URL checker will hate. |
 
 JSON valid 6 of 6 on both prompts. Identity passed. Every positive has a primary source with a date inside the window. Zero aggregators cited.
@@ -35,7 +35,7 @@ Option 1 is right for a signal column. Option 2 hides the problem in the score.
 Luna at about 0.4 Claygent credits. It out-performed GPT 4.1 at roughly a seventeenth of the cost on this sample, and it is the only cheap model that read pages, held identity, and found the two true positives. The gather-then-judge split is no longer needed to get accuracy out of a cheap model; it is still worth it if you want one research pass to feed all three signal columns.
 
 Caveats for the walkthrough:
-- Six rows. Two of the six "yes" verdicts depend on PDFs I could not text-extract here; confirm inside Clay.
+- Six rows. The Halfords and Unite "yes" verdicts depend on PDFs not text-extracted here; confirm inside Clay. Helios was verified against the PDF text.
 - Luna listed a staging host once. Add "never cite a staging, preview or test hostname" to the source rule.
 - Company sites that block bots (Pepco) and odd CDN hosts (Sysco GB) will fail a naive URL checker. The checker should fetch with a browser user agent and treat 403 with a matching domain as "loads, manual check" rather than "fail".
 
