@@ -1,18 +1,22 @@
 """Dry-run the Claygent supply chain resilience prompt against sample rows.
 
-Usage: OPENAI_API_KEY must be set in the environment.
-    python3 clay/dryrun.py [model] [csv_path]
-Defaults: gpt-4.1-mini, the Clay export in the uploads folder.
+Usage: OPENAI_API_KEY must be set in the environment (a placeholder works behind the agent proxy).
+    python3 clay/dryrun.py [model] [csv_path] [prompt_version]
+Defaults: gpt-4.1-mini, the Clay export in the uploads folder, v3.
+Set STRICT_JSON=1 to ask the Responses API for a JSON object (mirrors Clay's JSON output mode).
 Writes clay/dryrun_<model>.json and prints each row's JSON as it comes back.
 """
 import csv, json, os, re, sys, urllib.request, urllib.error, datetime, glob
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PROMPT = open(os.path.join(HERE, "claygent-supply-chain-resilience-v2.md")).read().split("---\n", 1)[1]
 SAMPLE = ["jdplc.com", "pepcogroup.eu", "halfords.com", "unitestudents.com", "heliostowers.com", "st.co.uk"]
 
 model = sys.argv[1] if len(sys.argv) > 1 else "gpt-4.1-mini"
 csv_path = sys.argv[2] if len(sys.argv) > 2 else (glob.glob("/root/.claude/uploads/*/*Clay_Trial_Task_5*.csv") or [None])[0]
+version = sys.argv[3] if len(sys.argv) > 3 else "v3"
+PROMPT = open(os.path.join(HERE, f"claygent-supply-chain-resilience-{version}.md")).read().split("---\n", 1)[1]
+today = datetime.date.today()
+window_start = today.replace(year=today.year - 1)
 if not csv_path:
     sys.exit("CSV not found; pass its path as the second argument")
 key = os.environ.get("OPENAI_API_KEY") or sys.exit("OPENAI_API_KEY not set")
@@ -22,10 +26,14 @@ desc_col = next(c for c in next(iter(rows.values())) if c.startswith("Company De
 out = []
 for d in SAMPLE:
     r = rows[d]
-    p = (PROMPT.replace("{{today}}", str(datetime.date.today()))
+    p = (PROMPT.replace("{{today}}", str(today))
+                .replace("{{window_start}}", str(window_start))
                 .replace("{{Company Domain}}", d)
+                .replace("{{Company Name}}", r.get("Company Name", ""))
                 .replace("{{Company Description}}", r[desc_col]))
     body = {"model": model, "tools": [{"type": "web_search_preview"}], "input": p}
+    if os.environ.get("STRICT_JSON"):
+        body["text"] = {"format": {"type": "json_object"}}
     req = urllib.request.Request("https://api.openai.com/v1/responses", data=json.dumps(body).encode(),
                                  headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"})
     try:
@@ -41,4 +49,4 @@ for d in SAMPLE:
         js = {"raw": text}
     js["_domain"] = d; js["_searches"] = searches; js["_usage"] = resp.get("usage", {})
     out.append(js); print(json.dumps(js, indent=1, ensure_ascii=False)); sys.stdout.flush()
-json.dump(out, open(os.path.join(HERE, f"dryrun_{model}.json"), "w"), indent=1)
+json.dump(out, open(os.path.join(HERE, f"dryrun_{version}_{model}.json"), "w"), indent=1)
