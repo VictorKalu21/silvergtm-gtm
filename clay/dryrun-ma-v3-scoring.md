@@ -11,6 +11,6 @@ v3 added one line: restructuring must affect people, sites or an operating busin
 | halfords.com | yes (cost line) | yes (programme) | yes, restructuring, 43 underperforming garages plus wholesale tyre closure | Correct and now quantified. |
 | unitestudents.com | yes | yes | yes, acquirer, Empiric, 7,700 beds | Correct, stable, cites the HTML article rather than the PDF. |
 
-6 of 6 correct against verified facts. JSON 6 of 6. Identity 6 of 6. All cited URLs load. 0 aggregators.
+6 of 6 correct against verified facts. JSON 6 of 6. Identity 6 of 6. 0 aggregators. One URL in a `checked` list (a Southern Housing strategic plan PDF, on the "no" row) returns 404; DHL blocks fetches from this container but was verified earlier. Every source_url loads.
 
 v3 is final for M&A. Two prompt lines from two dry runs, each traced to one row and verified on the rerun. Run it in Clay on the same 10 QA rows as supply chain.
