@@ -14,7 +14,10 @@ SAMPLE = ["jdplc.com", "pepcogroup.eu", "halfords.com", "unitestudents.com", "he
 model = sys.argv[1] if len(sys.argv) > 1 else "gpt-4.1-mini"
 csv_path = sys.argv[2] if len(sys.argv) > 2 else (glob.glob("/root/.claude/uploads/*/*Clay_Trial_Task_5*.csv") or [None])[0]
 version = sys.argv[3] if len(sys.argv) > 3 else "v3"
-PROMPT = open(os.path.join(HERE, f"claygent-supply-chain-resilience-{version}.md")).read().split("---\n", 1)[1]
+# version is either a supply-chain version tag (v3) or a prompt filename in clay/ (claygent-ma-restructuring-v1.md)
+prompt_file = version if version.endswith(".md") else f"claygent-supply-chain-resilience-{version}.md"
+PROMPT = open(os.path.join(HERE, prompt_file)).read().split("---\n", 1)[1]
+if os.environ.get("SAMPLE"): SAMPLE = os.environ["SAMPLE"].split(",")
 today = datetime.date.today()
 window_start = today.replace(year=today.year - 1)
 if not csv_path:
@@ -29,7 +32,7 @@ for d in SAMPLE:
     p = (PROMPT.replace("{{today}}", str(today))
                 .replace("{{window_start}}", str(window_start))
                 .replace("{{Company Domain}}", d)
-                .replace("{{Company Name}}", r.get("Company Name", ""))
+                .replace("{{Company Name}}", r.get("Company Name", "")).replace("{{LinkedIn URL}}", r.get("LinkedIn URL", ""))
                 .replace("{{Company Description}}", r[desc_col]))
     body = {"model": model, "tools": [{"type": "web_search_preview"}], "input": p}
     if os.environ.get("STRICT_JSON"):
@@ -55,4 +58,4 @@ for d in SAMPLE:
         js = {"raw": text}
     js["_domain"] = d; js["_searches"] = searches; js["_usage"] = resp.get("usage", {})
     out.append(js); print(json.dumps(js, indent=1, ensure_ascii=False)); sys.stdout.flush()
-json.dump(out, open(os.path.join(HERE, f"dryrun_{version}_{model}.json"), "w"), indent=1)
+json.dump(out, open(os.path.join(HERE, f"dryrun_{version.replace('.md','')}_{model}.json"), "w"), indent=1)
