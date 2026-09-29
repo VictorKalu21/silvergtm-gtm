@@ -36,10 +36,16 @@ for d in SAMPLE:
         body["text"] = {"format": {"type": "json_object"}}
     req = urllib.request.Request("https://api.openai.com/v1/responses", data=json.dumps(body).encode(),
                                  headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"})
-    try:
-        resp = json.load(urllib.request.urlopen(req, timeout=300))
-    except urllib.error.HTTPError as e:
-        print(d, "HTTP", e.code, e.read().decode()[:500]); continue
+    resp = None
+    for attempt in range(3):
+        try:
+            resp = json.load(urllib.request.urlopen(req, timeout=400)); break
+        except urllib.error.HTTPError as e:
+            print(d, "HTTP", e.code, e.read().decode()[:300]); 
+            if e.code < 500: break
+        except Exception as e:
+            print(d, "error", str(e)[:200])
+    if resp is None: continue
     text = "".join(c.get("text", "") for o in resp["output"] if o["type"] == "message" for c in o["content"])
     searches = sum(1 for o in resp["output"] if o["type"] == "web_search_call")
     m = re.search(r"\{.*\}", text, re.S)
