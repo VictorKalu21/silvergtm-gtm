@@ -1,4 +1,4 @@
-// Two-stage email deliverability gate: MillionVerifier all → BounceBan catch-alls/unknowns.
+// Two-stage email deliverability gate: MillionVerifier all → BounceBan on everything not "ok".
 // Sendable = MV "ok" + BounceBan-recovered uncertain emails. Resumable.
 //
 // Env vars:
@@ -65,8 +65,7 @@ async function bounceban(email) {
 function classifyMV(result) {
   const r = (result || '').toLowerCase();
   if (r === 'ok') return 'good';
-  if (r === 'catch_all' || r === 'unknown') return 'uncertain';
-  return 'drop'; // invalid, disposable, spamtrap
+  return 'uncertain'; // everything not ok (catch_all, unknown, invalid, disposable, spamtrap, error) gets a BounceBan probe
 }
 
 (async () => {
@@ -126,7 +125,8 @@ function classifyMV(result) {
     if (d.verdict === 'drop') return { verdict: 'dropped', detail: 'mv:' + d.result };
     const b = bb.get(email);
     if (b && b.result === 'deliverable') return { verdict: 'sendable', detail: 'bounceban:deliverable(recovered)' };
-    return { verdict: 'risky', detail: 'mv:' + d.result + (b ? '|bounceban:' + b.result : '') };
+    const hard = /^(invalid|disposable|spamtrap)$/.test((d.result || '').toLowerCase());
+    return { verdict: hard ? 'dropped' : 'risky', detail: 'mv:' + d.result + (b ? '|bounceban:' + b.result : '') };
   }
 
   const outCols = H.concat(['verify_verdict', 'verify_detail']);

@@ -33,11 +33,10 @@ Both feed the **same** BounceBan Stage 2 — the catch-all recovery logic is ide
 
 ```
 raw CSV → dedupe emails → Stage 1 verifier (DeBounce 6 / MillionVerifier 8 concurrent workers)
-  good / ok           → sendable pool
-  invalid/disposable  → dropped pool
-  catch-all / unknown → BounceBan (4 concurrent workers)
+  ok                  → sendable pool
+  everything else     → BounceBan (4 concurrent workers)
                           deliverable → sendable pool (recovered)
-                          other       → risky pool
+                          other       → risky pool (invalid/disposable/spamtrap that BounceBan also rejects → dropped)
 → write sendable / dropped / risky / full CSVs
 ```
 
@@ -59,8 +58,7 @@ Results checkpoint to `OUT_DIR/mv.jsonl` (MillionVerifier) or `OUT_DIR/debounce.
 | Result | Action |
 |--------|--------|
 | `ok` | sendable |
-| `catch_all` / `unknown` | → BounceBan |
-| `invalid` / `disposable` / `spamtrap` | dropped |
+| anything else (`catch_all` / `unknown` / `invalid` / `disposable` / `spamtrap` / error) | → BounceBan |
 
 *DeBounce result strings:*
 | Result contains | Action |
