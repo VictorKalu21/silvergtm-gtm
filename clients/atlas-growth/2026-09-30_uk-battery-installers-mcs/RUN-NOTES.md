@@ -58,3 +58,18 @@ homeenergyquotes.co.uk, ecoimprovements.co.uk, renewablesexcellence.co.uk (all 2
   heat-pump-led 84 + general electrician 60). `excluded_fit.csv` 106.
 - Companies House running over all 2,704 (no resume flag; if it outlives its window the remainder runs on a
   filtered lead file). Owner read + emails follow on `leads_icp.csv`.
+
+## Text recovery for rows without site text (operator: "use web scrape triage and firecrawl", Firecrawl key 2026-09-30)
+Probe: `GET /v1/team/queue-status` → 200 `maxConcurrency 2`; one `/v1/scrape` → 200, 7.9 KB markdown, 1 credit.
+1. **Firecrawl residue** (`fetch-sites.js --firecrawl-residue`, plan-aware, 10 rpm) over the 208 failed fetches —
+   running; recovered rows are written back into `owner/site_text.jsonl` in place.
+2. **Email-domain rung ($0, `derive-sites-from-email.js`)** for the 1,231 registry-only rows: 914 carry a company
+   email domain → website derived → `fetch-sites.js` → `owner_derived/site_text.jsonl`: **716 ok, 602 with >200
+   chars**. 16 fit batches (stronger model): residential 408 · commercial_only 62 · not_installer 17 ·
+   heat_pump_led 26 · electrician_general 56 · unclear 345. Merged: residential rows keep the derived website
+   and become `residential_battery_derived`; commercial / not-installer → excluded; heat-pump-led / electrician
+   → secondary; unclear stay `no_website_registry_only`.
+3. **name-to-domain** for the 317 freemail rows: job-local `n2d/resolve-uk.mjs` (Tier 0.5, free) resolved **97**;
+   220 residue on 9 Haiku web-verify batches (running). Resolved domains then go through fetch → fit.
+**Lists after step 2: `leads_icp.csv` 1,931** (residential 861 + residential-derived 408 + registry-only 662),
+secondary 585, excluded 185.
