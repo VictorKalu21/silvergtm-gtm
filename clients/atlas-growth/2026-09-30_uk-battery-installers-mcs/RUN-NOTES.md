@@ -150,3 +150,21 @@ Hand overrides (`owner/city_overrides_send_hand.json`, 22 rows, from the registe
 village answers → the town (Wychavon → Droitwich Spa, Tandridge → Lingfield, County Down → Craigavon …) and the 9
 Greater London blanks → Hampton / Wallington / Hornchurch / Worcester Park / Keston / London. **0 blank cities in the
 send base.**
+
+## Verification + Plusvibe build (2026-09-30, operator supplied MV + BB keys in chat — rotate both)
+Keys probed once each (MV credits 7,873 · BB 4,272) then `queue_send.csv` (1,453) → `verify-millionverifier-bounceban.js
+--concurrency 4` (OUT_DIR `owner/verify/send`): MV ok 1,013 · catch_all 353 · unknown 58 · invalid 29 → BounceBan on 440
+(19 recovered from invalid) → **sendable 1,363 · risky 80 · dropped 10**. Rank-2 fallback for the 10 dropped
+(`finalize-send.js fallback`, 8 addresses) → 7 sendable. `finalize-send.js final` → **`owner/emails_final.csv` 1,461
+rows, 1,369 leads sendable (374 on the owner's own address)**. Held rows never verified.
+Plusvibe: `base --leads leads_icp_send_cityclean.csv --city-overrides owner/city_overrides_send.json` → 1,369 rows, 0
+blank city → `prep --batch 40` = 35 batches → 35 Haiku subagents (waves of ≤20; batch 19 wrote unescaped quotes inside
+three evidence strings — repaired job-side, values untouched) → `fill` → **`owner/plusvibe_upload.csv` 1,369 rows, 1,369
+personalised, 0 fallback_only, 0 blank city, 0 flags, redo 0, `check` clean, 374 named, 0 duplicate emails.** Mix:
+solar and battery storage 967 · solar pv 211 · heat pumps and solar 149 · renewable energy installs 35 · home battery
+storage 7. Post-fix: 73 ALL-CAPS Companies House surnames title-cased (Mc/Mac/O' kept). Nominatim answers in the
+upload are towns; the 9 Greater London rows carry the hand override.
+Deliverable `atlas-growth_uk-battery-installers_plusvibe_2026-09-30.tar.gz` (upload, emails_final, 80 risky held out,
+send + held lead lists, 491 held addresses unverified, verify + fill reports) — data gitignored, sent to the operator.
+**NOT UPLOADED to Plusvibe.** Open: the 80 risky addresses (send later or drop); the 501 held rows (491 addresses,
+verify + fill when the operator says so — `queue_held.csv` and `city_overrides_held.json` are ready); the 531 secondary.
