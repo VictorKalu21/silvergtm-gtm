@@ -280,6 +280,11 @@ for (const [nat, slug, lat, lng] of TILES) {
   if (!NATIONS.has(nat)) { console.error(`ERROR: ${slug} bad nation code ${nat} (want ENG|SCT|WLS|NIR)`); process.exit(1); }
 }
 
+// Exported so sibling generators (gen-runsheet-generators-uk.js) reuse the SAME 177-tile UK grid
+// instead of re-typing coordinates. Requiring this file must not write anything, hence the guard.
+module.exports = { ANCHORS, DENSIFY, TILES, NATIONS };
+if (require.main !== module) return;
+
 const HEAD = 'cell_id,icp_type,query,lat,lng,zoom,priority';
 const rows = [];
 for (const [nat, slug, lat, lng, kind] of TILES)

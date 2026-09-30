@@ -1,7 +1,10 @@
-# Atlas Growth — UK pull spec: home backup power (DRAFT, 2026-09-28)
+# Atlas Growth — UK pull spec: home backup power (2026-09-28; GATE decided 2026-09-30)
 
-> Status: **icp-source-planner Phase 0–1 done, waiting on the operator at the GATE below.** Nothing scraped,
-> no credits spent. Probes pasted in the session transcript (2026-09-28).
+> Status: **GATE decided 2026-09-30 — option B (generators only, Google Maps only).** Run folder
+> `2026-09-30_uk-generator-installers-maps/` built end to end (runsheet, config, shards, owner prompt,
+> pipeline, GATE 1 read-back); **nothing scraped, no credits spent — waiting on `SCRAPER_TECH_KEY` and the
+> GATE 1 §4 confirmations.** Option A (MCS battery spine) stays on the shelf, unbuilt. Probes for the
+> source ranking were pasted in the 2026-09-28 session transcript.
 
 ## Why the US spec does not port
 
@@ -57,3 +60,28 @@ to **home battery / backup-power survey appointments** — that is Atlas Growth'
 Stratify MCS by certification-technology mix (battery-only · battery + solar · battery + heat pump) and by nation
 (England · Scotland · Wales · NI); ~50 qualified rows; report email fill, website fill, site-text fit, and overlap
 with the UK foundation lists.
+
+## Google Maps leg (built 2026-09-30, option B)
+
+- **Footprint:** the 2026-09-16 UK foundation grid, unchanged — 177 tiles (ENG 130 · SCT 25 · WLS 13 ·
+  NIR 9, London 13), `areas` mode, zoom 13, pagination on. `gen-runsheet-generators-uk.js` imports the
+  tile arrays from `gen-runsheet-uk.js` so the coordinates cannot drift.
+- **Queries (generator-intent only, no bare "electrician", no battery query):** generator installation ·
+  standby generator installer · backup generator (P1) · generator engineer · generator shop (P2) →
+  **885 rows**, 8 shards, ≈1,300–2,300 Maps calls. A 3-row calibration sheet (London / Manchester /
+  Glasgow) runs first.
+- **Config:** `atlas-growth-generators-uk-config.json` — primary-type deny for hire yards / merchants /
+  DIY / small-engine / vehicle-marine / utilities / manufacturers / engineering consultancies; name deny
+  led by a space-anchored `" hire"` (Speedy Hire drops, Cheshire survives) plus hire brands, merchants,
+  utilities; allow on any type for generator / electric / energy / solar / power / contractor / engineer /
+  gas / heating / plumb; **review floor 5** (UK ghost filter, not the US 30), blank reviews recovered by
+  `recover-unrated-generators-uk-config.json`. Dry-run: `<run>/dryrun-results.md`.
+- **Owner prompt:** `owner-prompts/uk-generator-installers.md` (= `<run>/owner-prompt.md`). UK buckets
+  (MD / Director / Proprietor first; board-level Sales/Commercial Director kept), Companies House
+  authoritative, trade traps: Qualified Supervisor, sales engineer, hire desk, OEM/scheme badges.
+- **Site-text verdicts (STEP 5e):** as the US table — `residential_generator` keep; `hire_only`,
+  `commercial_only`, `small_engine_shop`, `plumber_gas_only`, `not_generator` drop; `unclear` drop unless
+  brand-flagged. `hire_only` is the UK addition.
+- **Read-back + launch sequence:** `<run>/GATE1.md`. Post-scrape steps: `<run>/PIPELINE.md`.
+- **Expected outcome:** low hundreds of real installers nationwide. The calibration sheet is the number
+  check before the full spend.

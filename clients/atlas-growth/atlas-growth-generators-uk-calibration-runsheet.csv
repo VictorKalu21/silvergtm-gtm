@@ -1,0 +1,4 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+cal-eng-london-centre-g0,generator,generator installation,51.5074,-0.1278,13,P1
+cal-eng-manchester-g1,generator,standby generator installer,53.4808,-2.2426,13,P1
+cal-sct-glasgow-g3,generator,generator engineer,55.8642,-4.2518,13,P2
