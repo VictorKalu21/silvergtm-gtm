@@ -80,3 +80,23 @@ electrician_general 27 · not_installer 13 · heat_pump_led 3 · commercial_only
 **Lists after step 3: `leads_icp.csv` 1,887** = residential 861 + residential-derived 408 + residential-n2d 117
 (**1,386 residential-confirmed**) + 501 registry-only; 1,792 of the 1,887 carry a website. Secondary 615, excluded 199.
 Domain cache grown at `clients/atlas-growth/domain_cache.csv` (gitignored) for the next list build.
+
+## Firecrawl residue result (2026-09-30)
+200 attempted (208 failed fetches minus dead 404s), **113 recovered**, 87 failed, 4 × 429 handled; ~200 credits.
+`owner/site_text.jsonl` updated in place (ok 1,262 → 1,375). 132 formerly-`unclear` secondary rows now carry text
+→ 3 fit batches (`classify/recovered/`), merged the same way as the derived/n2d rounds.
+
+## Owner-finding on the 1,887 ICP leads (2026-09-30)
+Companies House over all 2,704: **2,260 matched (84%), 2,246 with active directors** (exact_title 2,099 ·
+postcode 133 · city_only 28 demoted). Site text merged from the three fetch dirs into `owner_all/site_text.jsonl`
+(2,605 records; the Firecrawl residue writes the main file in place, so the merge is a copy).
+`prep-owner-batches.js --ch` → 1,815 items / 46 batches (72 skipped: no evidence of any kind) → 46 Haiku reads →
+`merge-owner-reads.js` (33 guardrail drops: 10 trade-word names, 7 role-word names, 5 single tokens, 4 no
+evidence, 3 business names, 3 excluded titles, 1 unknown id) → `combine-owner-contacts.js`:
+**1,572 of 1,887 named (83.3%), 1,571 owner-level, 2,721 contacts (Companies House 2,541 · website 180)**;
+confidence high 1,392 · medium 178 · low 2. `owner/contacts_final.{jsonl,csv}`.
+Emails (`build-email-candidates.js`: MCS register address = spine, on-site + reader addresses added, engine
+`email-rank.js`): **1,869 of 1,887 leads with ≥1 address (99%), 2,382 candidates; 531 leads whose top address
+is built from the named owner's name, 1,338 on a company mailbox.** Sources: register 1,828 · on-site 491 ·
+reader 63. `owner/emails_candidates.csv`, verdict blank — **verification needs MILLIONVERIFIER_KEY +
+BOUNCEBAN_KEY and an explicit go (~1,900 MV credits + BounceBan on the catch-alls).**
