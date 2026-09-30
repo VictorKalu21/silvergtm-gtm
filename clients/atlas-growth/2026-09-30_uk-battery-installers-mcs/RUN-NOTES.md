@@ -100,3 +100,19 @@ Emails (`build-email-candidates.js`: MCS register address = spine, on-site + rea
 is built from the named owner's name, 1,338 on a company mailbox.** Sources: register 1,828 · on-site 491 ·
 reader 63. `owner/emails_candidates.csv`, verdict blank — **verification needs MILLIONVERIFIER_KEY +
 BOUNCEBAN_KEY and an explicit go (~1,900 MV credits + BounceBan on the catch-alls).**
+
+## Close-out (2026-09-30)
+Firecrawl-recovered rows re-read: +78 residential → **`leads_icp.csv` 1,965** (residential-confirmed 1,464 = 861 +
+408 derived + 117 n2d + 78 recovered; registry-only 501), secondary 531, excluded 205. Nations ENG 1,628 · SCT 159 ·
+WLS 166 · NIR 12; segments battery+solar 1,588 · +heat pump 368 · battery-only 9.
+Second owner round (`owner/read2`, 321 items = 78 new + 243 unnamed): 89 more named → **1,661 of 1,965 named
+(84.5%), 1,660 owner-level, 2,875 contacts** (`combine-owner-contacts.js`, read then read2).
+Emails rebuilt: **1,944 of 1,965 with ≥1 address, 2,467 candidates, 553 on the owner's own mailbox, 1,391 company.**
+Deliverable bundle `atlas-growth_uk-battery-installers_deliverable_2026-09-30.tar.gz` (ICP, secondary, excluded,
+contacts_final, emails_candidates_unverified, raw register) — data gitignored, sent to the operator.
+Write-back: `skills/icp-source-planner/library/mcs-register--uk-battery-installers.md` (validated) and
+`google-maps--uk-generator-installers.md` (failed) + `_index.md`; `IMPROVEMENTS.md` (scheme-less website skip,
+blank-address geo drop recurrence); `STATE.md`.
+**Open:** MV/BB verification (keys + go, ~1,950 credits); Plusvibe 3-lead / 7-lead tests on
+`personalize-config-battery-uk.json`; the 501 registry-only rows are the operator's send/hold call; the 531
+secondary rows (unclear / heat-pump-led / general electrician) are a second wave if wanted.

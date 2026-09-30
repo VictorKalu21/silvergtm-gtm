@@ -1,6 +1,6 @@
 # Atlas Growth — UK pull spec: home backup power (2026-09-28; GATE decided 2026-09-30)
 
-> Status: **GATE decided 2026-09-30 — option B (generators only, Google Maps only).** Run folder
+> Status: **2026-09-30 — option B RUN (32 residential installers, see `google-maps--uk-generator-installers.md`), then option A RUN on the operator's "do this": `2026-09-30_uk-battery-installers-mcs/` → 1,965 ICP leads, 1,661 named, 1,944 with an address (unverified). Option B run folder
 > `2026-09-30_uk-generator-installers-maps/` built end to end (runsheet, config, shards, owner prompt,
 > pipeline, GATE 1 read-back); **nothing scraped, no credits spent — waiting on `SCRAPER_TECH_KEY` and the
 > GATE 1 §4 confirmations.** Option A (MCS battery spine) stays on the shelf, unbuilt. Probes for the

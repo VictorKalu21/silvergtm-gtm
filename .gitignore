@@ -37,3 +37,8 @@ __pycache__/
 
 # personal Claude Code overrides (permission allow rules), never committed
 .claude/settings.local.json
+
+# Deliverable bundles are client data (contacts, emails) — never committed.
+*.tar.gz
+*.tgz
+*.zip
