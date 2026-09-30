@@ -116,3 +116,33 @@ blank-address geo drop recurrence); `STATE.md`.
 **Open:** MV/BB verification (keys + go, ~1,950 credits); Plusvibe 3-lead / 7-lead tests on
 `personalize-config-battery-uk.json`; the 501 registry-only rows are the operator's send/hold call; the 531
 secondary rows (unclear / heat-pump-led / general electrician) are a second wave if wanted.
+
+## Send / hold split + Plusvibe tests (2026-09-30, operator: "hold 501 registry rows, to send later / wording is good")
+**Hold:** `split-send-hold.js` → **`leads_icp_send.csv` 1,464** (every residential-confirmed row) and
+**`leads_icp_held_registry_only.csv` 501** (fit `no_website_registry_only`, to send later). Verification queues staged
+separately so the held rows are never verified or uploaded by accident: `owner/verify/queue_send.csv` **1,453 rank-1
+addresses (401 on the owner's own mailbox, 1,254 named leads; 11 send leads have no address)** and
+`owner/verify/queue_held.csv` 491. Both are the exact `Email`-first input `verify-millionverifier-bounceban.js` takes.
+**Register city clean (job-side, before `base`):** the fill repeats a known city verbatim and the register's city field
+is the installer's own typing — `city-clean.js` on the send list: 129 ALL CAPS → title case, 38 comma-joined address
+fragments → first town, 51 streets/estates + 47 counties/nations/"n/a" → blank (271 changed; held list 97). Blanks go
+to the engine's `city-fallback`, but its `nominatim()` uses Node's global fetch, which ignores the container's
+HTTPS_PROXY: probe curl 200 ×3 / Node fetch 429 ×3 (IMPROVEMENTS OPEN). Workaround `geocode-fixture.js` (curl via the
+proxy, 1 / 1.2 s, resumable → `owner/geocode_fixture.json`) and `city-fallback --geocode-fixture` offline, with a
+67-entry `owner/districts_uk.json` so an LGA ("Reigate and Banstead") is rejected like the seeded ones.
+**3-lead test PASSED:** Underwood Electrical (solar and battery storage, Newcastle), Dwellow (heat pumps and solar,
+Swindon, Adam Raw named on adam@ under the name rule), Always Off-Peak (home battery storage, Harpenden) — 0 flags,
+`check` clean; it surfaced the ALL-CAPS city ("around NEWCASTLE"), fixed by the clean above.
+**7-lead test RUN (`owner/personalize-test7/`):** all five trades + Heatable (brand family) + a blank-city lead
+(GES Green Solar → Cardiff by geocode) + a registry-only lead on the fallbacks (Harlech Electrical, Kirkby). fill:
+7 rows, 6 personalised, 1 fallback_only, 0 blank city, **0 flags, redo 0, `check` clean, 3 named**. Two readings for
+the operator: "Noticed you do solar pv around Saffron Walden" (lower-case pv — "solar panels" would read better)
+and "paid install jobs" for the bundle firms (My Green Power). Test emails are UNVERIFIED addresses marked
+TEST-ONLY; nothing is uploaded.
+**Blocked on:** MILLIONVERIFIER_KEY + BOUNCEBAN_KEY and an explicit go for `queue_send.csv` (~1,453 MV credits +
+BounceBan on the catch-alls). Then: `finalize` → `owner/emails_final.csv` → `base --leads leads_icp_send_cityclean.csv
+--city-overrides owner/city_overrides_send.json` → `prep` → one Haiku per batch → `fill` → `redo` → `check`.
+Geocode result: send 89 of 98 blank cities resolved (47 town · 21 city · 17 village · 4 county; 14 district
+rejections), **9 unresolved = all Greater London addresses, left blank so the reader takes the town from the site**;
+held 45 of 45. ~12 answers are still a district/county ("Tandridge", "Wychavon", "North Kesteven", "Epping Forest",
+"County Down", "Somerset") — hand-override in `owner/city_overrides_send.json` before the full fill.

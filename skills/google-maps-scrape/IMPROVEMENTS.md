@@ -1227,3 +1227,21 @@ feed will. **Job-side fix:** the puller normalises (`pull-mcs.js`, prefix `http:
 operator approval + a test):** normalise the website column on read (prefix `http://` when no scheme, strip
 leading slashes) and print `skipped_no_website` / `skipped_bad_url` counts in the DONE block so a silent skip
 becomes a visible number. Same normalisation belongs in `collapse-domains.js`'s root-domain parse.
+
+## OPEN 2026-09-30 (build-plusvibe.js `city-fallback`, MEDIUM): `nominatim()` uses Node's global `fetch`, which ignores `HTTPS_PROXY` — in a proxied container every geocode goes direct and Nominatim answers 429
+
+Found on the Atlas Growth UK battery-installer run (`2026-09-30_uk-battery-installers-mcs`, 98 blank-city send
+rows). First pass: 61 geocoded, 37 "failed"; second pass minutes later: 0 of 98 — and the second pass overwrote
+the `--out` file with an empty result (the sub-command is not resumable and does not keep an earlier answer).
+3-call probe: `curl` (goes through `$HTTPS_PROXY`) → 200 ×3; Node 22 `fetch` on the same URLs → 429 ×3 — the
+direct egress IP is shared and rate-limited, the proxy's is not. `nominatim()` swallows `!res.ok` as `null`, so
+the report reads `geocode_failed` with no status code. **Job-side workaround:** `geocode-fixture.js` in the run
+folder curls each blank-city row (1 / 1.2 s, resumable) into a place_id-keyed JSON and `city-fallback
+--geocode-fixture` runs offline on it. **Proposed engine fix (needs operator approval + a test):** honour
+`HTTPS_PROXY` (an `undici` `ProxyAgent` / `EnvHttpProxyAgent` dispatcher when the env var is set), count and
+print the HTTP status on a failed geocode, retry a 429 once after the `Retry-After`, and merge into an existing
+`--out` file instead of replacing it.
+
+Also seen on the same run (data, not a bug): the seeded `DISTRICTS_DEFAULT` list misses most UK unitary /
+"X and Y" districts (Reigate and Banstead, Redcar and Cleveland, Newark and Sherwood …); the run passed a
+67-entry `--districts owner/districts_uk.json`. Worth promoting into the seed once a second UK run confirms it.
