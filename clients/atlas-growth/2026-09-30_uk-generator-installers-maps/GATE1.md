@@ -73,8 +73,8 @@ Two sheets, **9 Maps calls, 106 unique businesses**, every tile `ok`, coverage C
 
 | tile × query | rows | pages | note |
 |---|---:|---:|---|
-| London-centre × generator installation | 0 | 1 | genuine thin tile, not an API fault — see next row |
-| London-centre × standby generator installer | 5 | 2 | central London holds hire yards, not installers; the 12 outer-London densify tiles cover the ring |
+| London-centre × generator installation | 0 | 1 | **CORRECTED after the full run:** the same tile × query returned **51 rows** in shard-0, so this was a transient empty response the API marked `ok`, not a thin tile. The wrapper's zero-heal only re-buys an ok-but-0 tile when ANOTHER query at that centre returned >50, which the 3-row calibration could not supply. Lesson: never read a single-query zero as a real zero — pair every calibration tile with a second query. |
+| London-centre × standby generator installer | 5 | 2 | thin on this query even in the full run (6 rows in shard-1); the 12 outer-London densify tiles cover the ring |
 | Manchester × standby generator installer | 30 | 2 | |
 | Manchester × generator installation | 31 | 2 | the query works; the London zero is the tile |
 | Glasgow × generator engineer | 40 | 2 | |
@@ -106,3 +106,28 @@ re-checkable at $0 by re-running qualify at 0 over `excluded_officp.csv` if the 
 rows (8 of 70 here, e.g. KVA Power Installations, LMK Power, Standby Power Solutions) are the unrated-recovery track.
 
 **Decision: launch the 885-row sheet** (operator go = key + "use floor 5", 2026-09-30).
+
+## 7. Full run + GATE 3 read-out (2026-09-30)
+
+| stage | result |
+|---|---|
+| Scrape | 885 rows, 8 shards, **1,789 calls (2.02/row)**, 1 heal pass (1 `failed` event re-bought), 0 unhealed, page depth 1/2/3 = 24/821/41, 24 zero-count tiles |
+| Universe | 17,069 shard rows → **7,022 unique businesses** |
+| Qualify (4 rules) | **2,138 keep** / 4,884 drop: not_in_icp 1,479 (Cash Converters, mobile-phone and lawn-mower shops, tool shops) · name_deny 1,364 (Screwfix 681, Toolstation 300, B&Q 133, ` hire` 127, Machine Mart 60) · off_icp_primary 1,180 (tool rental 203, auto parts 180, pawn 116, lawn-mower repair 74) · too_small 861 |
+| Unrated recovery | +282 (blank reviews + live website) → **2,420** |
+| Footprint gate 0.75° | **1,285 kept** / 1,135 dropped: **1,021 United States**, 4 Canada, 2 Ireland, 108 blank-address service-area listings with junk coordinates (IMPROVEMENTS OPEN 2026-09-20, bit again) |
+| Blank-address recovery (job-side, `recovered_geo_blankaddr.csv`) | +16 with a UK phone or UK domain (Kentec Generators, KVA Power Installations, shentongroup, DDR Electrical…); the other 92 carry US phones/domains → **1,301 in footprint** |
+| Collapse domains | **1,146 owner-finding rows** (74 sibling rows folded, 38 multi-location domains: WB Power 10, shentongroup 9, Generator Power 6, Power Control 5) + **81 no-website** (12 shared-host, 69 none) |
+| By nation | ENG 931 · SCT 125 · WLS 65 · NIR 33 · no postcode 147 |
+| Kept primaries | Electrician 606 · Electric generator shop 170 · Electrical engineer 79 · Engineer 55 · Electrical installation service 53 · Solar 53 · Plumber 12 · Gas engineer 9 |
+
+**Floor 5, measured cost on the real universe:** of the 861 `too_small` drops, 501 sit in the 1–4 band; **127 of
+those are UK generator-named or generator-typed firms, 109 with a website** (WB Power Services London, JB
+Locations, Power Control Swindon…). That is roughly one extra generator specialist for every 1.3 kept
+`Electric generator shop` row. Re-admitting them is a $0 re-run of qualify at floor 1 over
+`excluded_officp.csv` (then the geo gate and collapse again) if the operator wants them.
+
+**Still pending before any spend:** cross-run dedupe (STEP 5c) — the two UK foundation deliverables are not in
+this container. Overlap is expected to be small (different trade; 606 electricians are the risk), but the rule
+is per-client and mandatory, so owner-finding waits on the memory files or an explicit operator waiver (the US
+generator run was waived that way on 2026-09-24).

@@ -818,6 +818,8 @@ visible even when the re-buy is declined. Cost is ~36–90 calls on a run of thi
 **Fix (later, engine, with a test).** A per-country centroid table (or: detect the single most repeated exact coordinate pair among address-less rows) and treat a match as missing coordinates, falling through to the region check. Report the count as `centroid_placeholder` in `footprint_gate_report.json`.
 **Until then:** before the gate, blank `latitude`/`longitude` on rows whose coordinates equal the country centroid to 4 dp and whose `full_address` is empty.
 
+**Recurred 2026-09-30 (atlas-growth UK generators, raises priority to MEDIUM):** 108 of 1,135 geo drops were blank-address rows; their coordinates were not even the country centroid this time (Kentec Generators at lat 35.59 / lng -37.69, mid-Atlantic). 16 were real UK firms (UK phone or `.co.uk` domain) recovered job-side in `<run>/recovered_geo_blankaddr.csv`; the other 92 were US listings. Proposed fix unchanged: when `full_address` is blank, decide by phone country prefix / website TLD before the hub-distance test, and label the row `no_address_kept` so it is auditable.
+
 ## OPEN 2026-09-20 (qualify-leads.js recovery chaining, MEDIUM): a recovery pass can only see the MAIN pass's drop reason, so a row that fails two rules is reachable by neither recovery
 
 **Status:** OPEN (worked around in the AU configs by removing the review floor from the generic recovery) · found 2026-09-20 (Atlas Growth AU Maps probe), MEDIUM impact: 49 of 225 Australian probe rows, all ICP-named.

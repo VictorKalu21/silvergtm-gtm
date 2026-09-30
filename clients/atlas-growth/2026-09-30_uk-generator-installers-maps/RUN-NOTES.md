@@ -28,3 +28,11 @@ universe is sparse and radius-expanded (national + 3 US pins). Config tuned from
 
 ## Probes
 The calibration sheets are the probe (9 calls, output in GATE1 §6 and `calibration*/run_log.json`).
+
+## Full run (2026-09-30) — funnel in GATE1.md §7
+885 rows / 1,789 calls → 7,022 unique → qualify 2,138 + unrated 282 = 2,420 → geo 1,285 + 16 blank-address UK
+recoveries = **1,301 in footprint** → collapse **1,146 owner-finding rows** + 81 no-website. The London
+calibration zero was a transient `ok` empty response (51 rows on the full run) — GATE1 §6 corrected.
+Job-side recovery `recovered_geo_blankaddr.csv`: 16 of 108 blank-address rows (UK phone or UK domain) appended to
+`leads_clean_qualified_infootprint.csv` before collapse; the engine gap is the OPEN 2026-09-20 footprint-gate item.
+**Stopped at GATE 3: dedupe memory absent, no owner-finding started, no credits spent beyond the 1,798 Maps calls.**
