@@ -131,3 +131,17 @@ Locations, Power Control Swindon…). That is roughly one extra generator specia
 this container. Overlap is expected to be small (different trade; 606 electricians are the risk), but the rule
 is per-client and mandatory, so owner-finding waits on the memory files or an explicit operator waiver (the US
 generator run was waived that way on 2026-09-24).
+
+## 8. STEP 5e result and the scope decision (2026-09-30)
+
+| verdict | rows |
+|---|---:|
+| residential_generator (ICP) | **32** |
+| commercial_only (generator firms, no domestic word) | 60 |
+| hire_only | 32 |
+| small_engine_shop / online retail | 38 |
+| not_generator (mostly electricians with no generator service) | 707 |
+| unclear (263 with no site text) | 277 |
+
+Details and the three levers in `RUN-NOTES.md` (STEP 5e). Owner-finding proceeds on the 32 (Companies House
+first) unless the operator widens scope; the 60 commercial-only rows are held in `leads_commercial_only.csv`.

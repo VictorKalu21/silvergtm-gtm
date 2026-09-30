@@ -43,3 +43,30 @@ an electrical contractor already in a UK foundation campaign could be contacted 
 damp/underpinning trades, so the overlap is expected to be small. Owner-finding proceeds on `leads_domains.csv`.
 Site text: `fetch-sites.js --concurrency 12` over 1,146 domains → `owner/site_text.jsonl` (started 2026-09-30).
 Fit classification prompt: `classify-prompt.md` (UK rubric; adds `hire_only`).
+
+## STEP 5e fit classification (2026-09-30)
+Site text: 1,146 domains fetched, **964 ok / 857 with >200 chars**; 182 failed (96 × 403, 33 TLS/TypeError, 19 × 503,
+16 timeouts, 9 × 404, 9 other). `prep-classify.js` → 20 batches × 60; 883 with site text, 263 with none.
+**First pass (Haiku, 20 readers)** audited and found unreliable: `plumber_gas_only` stamped on 60 generic plumbers
+and hardware shops (1 of 61 mentioned a generator); online generator shops, a substation contractor, a marine
+engineer and a fuel supplier as `residential_generator`; 57 `not_generator` rows whose text mentions generators
+(one literally "generator installation"); Shenton Group in `hire_only`; templated `why` lines in batch 000; one
+reader emitted an invented place_id and three rows were skipped; batches 001/006 were rewritten after the audit.
+**Second pass (stronger model, 4 readers, `classify/second-opinion-prompt.md`)** over the 250 contested rows
+(every residential verdict, every drop whose text mentions generators, every unclear-with-text, the 3 skipped):
+**112 of 250 verdicts changed.** Merge rule: second pass wins; `plumber_gas_only` without a generator mention →
+`not_generator`; 0 rows met the contest criteria after the rewrites without being covered.
+
+**Final (`leads_classified.csv`, 1,146):** residential_generator **32** · commercial_only **60** · hire_only 32 ·
+small_engine_shop 38 · not_generator 707 · unclear 277 (263 no text + 14). `leads_icp.csv` = 32,
+`leads_commercial_only.csv` = 60. The UK residential standby-generator market is as small as
+`ICP-generators-uk.md` warned ("low hundreds" was optimistic for homeowner-facing firms on Maps).
+
+Three $0-ish levers, all operator decisions (GATE1 §8):
+1. **Include `commercial_only` (60)** — UK generator installers who sell to businesses, farms and estates but
+   never say "home". The offer's homeowner wording would need adapting.
+2. **Re-admit the floor-5 drops that are generator-typed** — 254 `Electric generator shop` rows died as
+   `too_small` (127 UK generator-named at 1–4 reviews, 109 with a website). The kept list was electrician-dense
+   and the ICP-dense bucket sat below the floor. Costs free fetches + reads.
+3. **Recover the 182 no-text sites** (96 are Cloudflare 403s → Scrapling, slow) — at the observed ~3% residential
+   rate that is ~5 more leads; low value alone, worth it only alongside lever 2.
