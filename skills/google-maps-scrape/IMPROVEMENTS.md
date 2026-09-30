@@ -1216,3 +1216,14 @@ Also `TRADE` / `TRADE_SUBSTR` do not know the Australian trade nouns, so `golden
 **Also measured:** 12 concurrent curls through the egress relay returned `000` on 197 of 281; the same hosts answered one at a time. Keep bulk curl through the relay at ≤ 4 in parallel.
 
 **Fix (engine, with a test and an operator go):** a PASS 2c in `fetch-sites.js` for TLS-error rows only (`rejectUnauthorized:false`), writing `source:"tls_insecure"`, with the name-token + trade-word guard applied before the text is used; plus a distinct `home_failed:tls` status so these rows are countable instead of hiding in `TypeError`. **Until then:** the job-side pass is in `clients/atlas-growth/2026-09-24_us-generator-dealers/owner-uak/` (records in site_text shape).
+
+## OPEN 2026-09-30 (fetch-sites.js, MEDIUM): a scheme-less `website` value ('www.example.com') is silently skipped, not fetched
+
+Found on the Atlas Growth UK battery-installer run (MCS register, `2026-09-30_uk-battery-installers-mcs`): the
+register stores most websites without a scheme. `fetch-sites.js` treats only `http(s)://…` values as fetchable,
+so the run wrote 298 of 1,470 records and reported `DONE: 298 leads` with exit 0 — no count of skipped rows, no
+warning. Google Maps always emits a scheme, which is why no earlier run hit it; any operator export or registry
+feed will. **Job-side fix:** the puller normalises (`pull-mcs.js`, prefix `http://`). **Proposed engine fix (needs
+operator approval + a test):** normalise the website column on read (prefix `http://` when no scheme, strip
+leading slashes) and print `skipped_no_website` / `skipped_bad_url` counts in the DONE block so a silent skip
+becomes a visible number. Same normalisation belongs in `collapse-domains.js`'s root-domain parse.

@@ -49,6 +49,9 @@ async function page(n, N) {
   const seen = new Map();
   for (const l of fs.readFileSync(RAW, 'utf8').split('\n')) if (l.trim()) { const r = JSON.parse(l); seen.set(r.installer_id, r); }
   const techs = r => Object.keys(r).filter(k => k.startsWith('technology_') && r[k] === '1').map(k => k.replace('technology_', '').replace(/_/g, ' '));
+  // The register stores most websites scheme-less ('www.example.com'); fetch-sites.js only processes rows whose
+  // website starts with http(s), so it silently skipped 1,172 of 1,470 on the first run (2026-09-30). Normalise here.
+  const site = w => { w = String(w || '').trim(); if (!w) return ''; if (!/^https?:\/\//i.test(w)) w = 'http://' + w.replace(/^\/+/, ''); return w; };
   const regions = r => Object.keys(r).filter(k => k.startsWith('region_') && r[k] === '1').length;
   const esc = v => { v = v == null ? '' : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
   const H = ['place_id', 'business_id', 'name', 'icp_type', 'google_types', 'full_address', 'city', 'zip', 'neighborhood', 'latitude', 'longitude', 'website', 'phone_number', 'email', 'rating', 'review_count', 'is_claimed', 'verified', 'hours', 'place_link',
@@ -58,7 +61,7 @@ async function page(n, N) {
     const addr = [r.address_line_1, r.address_line_2, r.address_line_3, r.county, r.postcode, 'United Kingdom'].filter(x => x && x.trim()).join(', ');
     const city = (r.address_line_3 || r.address_line_2 || r.county || '').trim();
     out.push([`mcs:${r.installer_id}`, `mcs:${r.installer_id}`, r.name, 'battery', ['MCS battery installer', ...techs(r).map(t => 'MCS ' + t)].join('|'), addr, city, r.postcode, '', r.lat, r.lng,
-      r.website || '', r.telephone || '', r.email || '', '', '', 'true', 'true', '', `https://mcscertified.com/find-an-installer/?installer=${r.installer_id}`,
+      site(r.website), r.telephone || '', r.email || '', '', '', 'true', 'true', '', `https://mcscertified.com/find-an-installer/?installer=${r.installer_id}`,
       r.certification_number, r.certification_body, techs(r).join('|'), r.technology_solar_pv, r.technology_battery, r.technology_ashp, regions(r)].map(esc).join(','));
   }
   fs.writeFileSync(CSV, out.join('\n') + '\n');
