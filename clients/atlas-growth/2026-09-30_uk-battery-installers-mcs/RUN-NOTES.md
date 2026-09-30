@@ -36,3 +36,25 @@ homeenergyquotes.co.uk, ecoimprovements.co.uk, renewablesexcellence.co.uk (all 2
    Companies House (key on file) → owner read with a UK battery-installer prompt → emails (MCS email is the
    spine; on-site harvest adds owner-shaped addresses) → MillionVerifier/BounceBan (keys + go needed) →
    Plusvibe with a UK battery/backup-power personalize config.
+
+## Back half, 2026-09-30 (after the pull)
+- Qualify (`atlas-growth-battery-uk-config.json`, name deny only): 2,794 → **2,785** (−9: Leeds City Council Building
+  Services, British Gas Social Housing / New Heating, E.ON Energy Installation Services ×2, Octopus Energy Services,
+  Good Energy ×2, So Energy). Brand flags (never drops): Sunsave, Project Solar UK, OVO Solar, Heatable.
+- Cross-run dedupe vs the generator Maps run (`dedupe-vs-maps.js`, registrable host + normalised phone; first
+  version wrongly treated every `.co.uk` as a shared host and keyed only 335 sites — fixed): **−81 → 2,704 net-new.**
+- Collapse: **1,470 with website + 1,231 email-only** (the register supplies the address, so these are usable rows).
+- Site text: first run wrote 298 of 1,470 because the register stores scheme-less websites and `fetch-sites.js`
+  silently skips them (IMPROVEMENTS OPEN 2026-09-30, MEDIUM); puller now prefixes `http://`. Second run: **1,262 ok,
+  1,116 with >200 chars, 1,021 with an on-site email**; 208 failed (104 × 403, 53 TLS, 19 × 503, 15 timeouts).
+- STEP 5e fit (`classify-prompt.md`, 25 batches, stronger model straight away after the generator run's Haiku
+  problems; 0 invented ids, 0 missing): **residential_battery 861 · commercial_only 88 · heat_pump_led 84 ·
+  electrician_general 60 · not_installer 18 · unclear 359 (343 no text)**. Audit: 73 commercial_only rows carry a
+  "home" word — nav-menu "Home", samples genuinely commercial (dairy engineering, social-housing retrofit, large-scale
+  solar); 13 residential rows lack a home word (kept, medium confidence).
+- Lists: **`leads_icp.csv` 2,092** = 861 residential + 1,231 registry-only (fit `no_website_registry_only`; the
+  operator decides whether these send — the register proves battery certification, the site could not be read);
+  segments battery+solar 1,705 · +heat pump 378 · battery-only 9. `leads_icp_secondary.csv` 503 (unclear 359 +
+  heat-pump-led 84 + general electrician 60). `excluded_fit.csv` 106.
+- Companies House running over all 2,704 (no resume flag; if it outlives its window the remainder runs on a
+  filtered lead file). Owner read + emails follow on `leads_icp.csv`.
