@@ -70,3 +70,16 @@ Three $0-ish levers, all operator decisions (GATE1 §8):
    and the ICP-dense bucket sat below the floor. Costs free fetches + reads.
 3. **Recover the 182 no-text sites** (96 are Cloudflare 403s → Scrapling, slow) — at the observed ~3% residential
    rate that is ~5 more leads; low value alone, worth it only alongside lever 2.
+
+## Owner-finding + emails on the 32 ICP leads (2026-09-30)
+Companies House (`companies-house.js`, key supplied 2026-09-30) over all 1,301 in-footprint rows: **822 matched
+(63%), 816 with active directors**; basis exact_title 704 · postcode 74 · city_only 41 (demoted low_confidence) ·
+name_overlap 3. On the 32 ICP leads: 20 matched, 0 low-confidence.
+`prep-owner-batches.js --ch` → 1 batch of 32 → one Haiku read with `owner-prompt.md` → `merge-owner-reads.js`
+(UK trade words; 0 guardrail drops) → `combine-owner-contacts.js`: **21 of 32 named (65.6%), all owner-level,
+35 contacts (34 Companies House, 1 website)**. `owner/contacts_final.{jsonl,csv}`.
+Emails (`build-email-candidates.js`, on-site harvest only — no waterfall, no credits): **26 of 32 leads with ≥1
+address, 30 candidates, 2 on the named owner's own address** (colin@…, jim.newall@…), 24 company mailboxes.
+`owner/emails_candidates.csv`, verdict blank — **verification needs MILLIONVERIFIER_KEY + BOUNCEBAN_KEY and an
+explicit go** (email-verify-debounce-bounceban skill; ~30 MV credits + BounceBan on the catch-alls).
+Then: `build-plusvibe.js base/prep/fill/check` with a UK personalize config (quote / site-survey wording).
