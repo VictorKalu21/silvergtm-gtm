@@ -36,3 +36,10 @@ calibration zero was a transient `ok` empty response (51 rows on the full run) â
 Job-side recovery `recovered_geo_blankaddr.csv`: 16 of 108 blank-address rows (UK phone or UK domain) appended to
 `leads_clean_qualified_infootprint.csv` before collapse; the engine gap is the OPEN 2026-09-20 footprint-gate item.
 **Stopped at GATE 3: dedupe memory absent, no owner-finding started, no credits spent beyond the 1,798 Maps calls.**
+
+## Operator waiver (2026-09-30): cross-run dedupe
+Operator: "waive". STEP 5c is skipped for this run (same call as the US generator run, 2026-09-24). Risk accepted:
+an electrical contractor already in a UK foundation campaign could be contacted twice; the two prior UK lists are
+damp/underpinning trades, so the overlap is expected to be small. Owner-finding proceeds on `leads_domains.csv`.
+Site text: `fetch-sites.js --concurrency 12` over 1,146 domains â†’ `owner/site_text.jsonl` (started 2026-09-30).
+Fit classification prompt: `classify-prompt.md` (UK rubric; adds `hire_only`).
