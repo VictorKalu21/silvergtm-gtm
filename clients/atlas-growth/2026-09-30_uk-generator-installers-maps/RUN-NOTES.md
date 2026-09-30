@@ -15,13 +15,16 @@ That resolves the ICP doc's GATE to **option B: generators only, Google Maps onl
 - `owner-prompt.md` = `../owner-prompts/uk-generator-installers.md` (built per STEP 6a; UK roles, Companies
   House authoritative, QS / sales-engineer / hire-desk traps).
 
-## Waiting on the operator
-1. `SCRAPER_TECH_KEY` → `skills/google-maps-scrape/.env` (gitignored). STATE.md says the key pasted on
-   2026-09-24 was to be rotated — supply the current one.
-2. GATE1.md §4 decisions (floor 5 vs 30; keep `generator shop`; offer wording).
-3. The dedupe memory files (two UK foundation deliverables, gitignored) restored into their run folders
-   before PIPELINE STEP 5.
+## Operator go (2026-09-30)
+Key supplied (in `skills/google-maps-scrape/.env`, gitignored) and "use floor 5". `generator shop` kept, offer
+wording as the ICP doc. Still needed before PIPELINE STEP 5: the two UK foundation deliverables (gitignored)
+restored into their run folders as the dedupe memory.
+
+## Calibration (2026-09-30) — GATE1.md §6
+`calibration/` (3 rows, 5 calls, 70 rows) + `calibration2/` (2-row probe of the London zero, 4 calls, 36 rows).
+London-centre is a genuinely thin tile (0 and 5 rows on two queries) while Manchester gives 30–31 per query; the
+universe is sparse and radius-expanded (national + 3 US pins). Config tuned from the evidence and re-qualified at $0.
+**Full sheet launched 2026-09-30 via `run-shards.sh`** (885 rows, 8 workers, ≈1,600 calls expected).
 
 ## Probes
-None yet — the calibration sheet IS the 3-call probe (GATE1 §5). Network from this container reaches
-`api.scraper.tech` (403 without a key, i.e. the host answers).
+The calibration sheets are the probe (9 calls, output in GATE1 §6 and `calibration*/run_log.json`).

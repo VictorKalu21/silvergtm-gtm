@@ -66,3 +66,43 @@ node skills/google-maps-scrape/qualify-leads.js \
 bash clients/atlas-growth/2026-09-30_uk-generator-installers-maps/run-shards.sh
 # 3. then PIPELINE.md, step by step
 ```
+
+## 6. Calibration result (2026-09-30, key supplied by the operator; floor 5 confirmed by the operator)
+
+Two sheets, **9 Maps calls, 106 unique businesses**, every tile `ok`, coverage COMPLETE:
+
+| tile × query | rows | pages | note |
+|---|---:|---:|---|
+| London-centre × generator installation | 0 | 1 | genuine thin tile, not an API fault — see next row |
+| London-centre × standby generator installer | 5 | 2 | central London holds hire yards, not installers; the 12 outer-London densify tiles cover the ring |
+| Manchester × standby generator installer | 30 | 2 | |
+| Manchester × generator installation | 31 | 2 | the query works; the London zero is the tile |
+| Glasgow × generator engineer | 40 | 2 | |
+
+**The universe is sparse and Maps widens its radius to fill:** the Manchester standby query returned firms in
+Tenby, Southampton, Colchester, Aylesford and Peterborough, and three US listings (Oak Ridge NJ, Chicago) — the
+0.75° footprint gate removes the foreign pins (PIPELINE STEP 4). Calls/row measured **1.8** (9 calls / 5 rows),
+so the 885-row sheet should land near **1,600 calls**.
+
+**Rule tune from the evidence ($0, re-run over the same 106 rows):** the bare `electric` stem admitted a motor
+rewinder and the bare `gas` stem admitted a lab-gas supplier via a secondary tag → stems tightened to
+electrician / electrical / electric-vehicle-charging and gas-installation / gas-engineer / gas-fitter; 19 primaries
+added to the deny (rewinds, machine/compressor repair, vehicle repair trading as "Generator Services", electronics /
+chemical / precision / marine engineering, pool contractor, lab equipment, handyman, hydro turbines, diesel-engine
+repair on primary only). `power station` removed from the deny — it matched Google's *Power Station Equipment
+Supplier*, the type UK standby-power suppliers carry.
+
+After the tune: calibration 1 → **21 keep / 49 drop** (too_small 22 · off_icp_primary 25 · name_deny 2);
+calibration 2 → **19 keep / 17 drop** (too_small 14 · off_icp_primary 2 · name_deny 1). Kept rows are electrical
+contractors and named generator firms (Generator Installations (UK) Ltd, Hampshire Generators, Solent Power, DTGen,
+Pleavin Power, Euro Generators (UK), Osprey Power Services, Wallace Power Services, Phaser Industrial Power).
+
+**Cost of floor 5, measured:** 9 named generator firms with 1–4 reviews drop as `too_small` in calibration 1 alone
+(UK Power Generators, WB Power Solutions Manchester, Ingram Installations, Standby Power Systems, Harper Generator
+Services, RGH Diesel Generator Service, Kings Power Solutions, Hampshire Generators (Wales), Generator & Electrical
+Services). This trade sells mostly to businesses, so its Google review counts run low (SKILL STEP 1.5: review
+floors are for consumer-facing ICPs). Operator chose floor 5 knowing the US floor was 30; the 1–4 band stays
+re-checkable at $0 by re-running qualify at 0 over `excluded_officp.csv` if the final list is too small. Blank-review
+rows (8 of 70 here, e.g. KVA Power Installations, LMK Power, Standby Power Solutions) are the unrated-recovery track.
+
+**Decision: launch the 885-row sheet** (operator go = key + "use floor 5", 2026-09-30).
