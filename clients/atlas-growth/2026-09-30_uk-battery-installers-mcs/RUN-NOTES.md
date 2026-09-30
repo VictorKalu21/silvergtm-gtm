@@ -73,3 +73,10 @@ Probe: `GET /v1/team/queue-status` → 200 `maxConcurrency 2`; one `/v1/scrape` 
    220 residue on 9 Haiku web-verify batches (running). Resolved domains then go through fetch → fit.
 **Lists after step 2: `leads_icp.csv` 1,931** (residential 861 + residential-derived 408 + registry-only 662),
 secondary 585, excluded 185.
+
+Step 3 result: name-to-domain found **222 of 317** freemail rows' sites (97 free resolver + 125 Haiku web-verify,
+95 blank — no site exists or not verifiable); fetch → 181 with text → 4 fit batches: residential 117 ·
+electrician_general 27 · not_installer 13 · heat_pump_led 3 · commercial_only 1 · unclear 61.
+**Lists after step 3: `leads_icp.csv` 1,887** = residential 861 + residential-derived 408 + residential-n2d 117
+(**1,386 residential-confirmed**) + 501 registry-only; 1,792 of the 1,887 carry a website. Secondary 615, excluded 199.
+Domain cache grown at `clients/atlas-growth/domain_cache.csv` (gitignored) for the next list build.
