@@ -7,7 +7,12 @@
  * lead identity (full_address, zip, neighborhood, phone, website) so the Clay
  * extraction can ENTITY-MATCH the person to THIS business. Cells kept < Clay's 8KB.
  *
- * Usage: node build-clay-csv.js --leads <qualified.csv> --dir <owner out dir> --out <csv path> [--no-prompt-ok]
+ * Usage: node build-clay-csv.js --leads <leads_annotated.csv> --dir <owner out dir> --out <csv path>
+ *                               [--siblings <domain_siblings.json>] [--no-prompt-ok]
+ *
+ * --siblings (from collapse-domains.js): a sibling branch reads its representative's site/serp
+ * text (one paid lookup per root domain, fanned out here). Emits fanned_from + evidence_tier so
+ * the operator spends the Clay column only on rows that have something to read (tier != NONE).
  *
  * GATE: refuses to build unless a per-vertical owner-prompt.md sits next to the output
  * clay.csv (SKILL STEP 6a). The owner prompt is what makes the Clay extraction target the
@@ -18,7 +23,7 @@ const fs = require('fs');
 const path = require('path');
 function arg(n, d){const i=process.argv.indexOf('--'+n);return i>-1?process.argv[i+1]:d;}
 const has=n=>process.argv.includes('--'+n);
-const LEADS=arg('leads'), DIR=arg('dir'), OUT=arg('out');
+const LEADS=arg('leads'), DIR=arg('dir'), OUT=arg('out'), SIBLINGS=arg('siblings','');
 if(!LEADS||!DIR||!OUT){console.error('ERROR: --leads, --dir and --out required');process.exit(1);}
 
 // --- per-vertical owner-prompt gate (SKILL STEP 6a) ---
@@ -60,6 +65,8 @@ function trimSite(rec){
 const site=new Map(J(path.join(DIR,'site_text.jsonl')).map(s=>[s.place_id,s]));
 const serp=new Map(J(path.join(DIR,'serp_text.jsonl')).map(s=>[s.place_id,s]));
 const ch=new Map(J(path.join(DIR,'companies_house.jsonl')).map(s=>[s.place_id,s])); // authoritative UK directors (optional source)
+// domain fan-out (collapse-domains.js): sibling place_id -> representative place_id whose text it reads
+const sibOf=(SIBLINGS&&fs.existsSync(SIBLINGS))?(JSON.parse(fs.readFileSync(SIBLINGS,'utf8').replace(/^\uFEFF/,'')).sibling_of||{}):{};
 
 // build combined serp_text: linkedin (strongest) -> biased -> broad, capped < 8KB
 function combineSerp(s){
@@ -76,11 +83,13 @@ const rows=pc(fs.readFileSync(LEADS,'utf8')).filter(r=>r.length>1);const H=rows.
 const leads=rows.map(r=>Object.fromEntries(H.map((h,i)=>[h,r[i]])));
 // identity + outreach/personalisation metadata + enrichment text. review_count/rating/google_types
 // are carried for personalisation ({{review_count}}) and segmentation; text blobs stay last (8KB cap).
-const cols=['place_id','business_name','icp_type','google_types','full_address','zip','neighborhood','city','phone','website','emails','rating','review_count','place_link','ch_company','ch_directors','site_text','serp_text'];
+// NEW columns go at the END only — the Clay table maps this schema by name/position; reordering breaks live mappings.
+const cols=['place_id','business_name','icp_type','google_types','full_address','zip','neighborhood','city','phone','website','emails','rating','review_count','place_link','ch_company','ch_directors','site_text','serp_text','root_domain','location_count','brand_family','fanned_from','evidence_tier'];
 const out=[cols.join(',')];
-let maxSite=0,maxSerp=0,withSerp=0,withSite=0;
+let maxSite=0,maxSerp=0,withSerp=0,withSite=0,fannedN=0;const tiers={};
 for(const l of leads){
-  const s=site.get(l.place_id), sp=serp.get(l.place_id);
+  const src=sibOf[l.place_id]||l.place_id;            // sibling -> read the representative's text
+  const s=site.get(src), sp=serp.get(src);
   const st=capBytes(s?trimSite(s):'',CELL_CAP);
   const spt=capBytes(combineSerp(sp),CELL_CAP);
   if(st)withSite++; if(spt)withSerp++;
@@ -89,10 +98,15 @@ for(const l of leads){
   const chOff=(c&&c.matched&&Array.isArray(c.officers))?c.officers:[];
   const chDirectors=chOff.map(d=>d.name+' ('+d.role+(d.likely_principal?', principal':'')+(d.occupation?('; '+d.occupation):'')+')').join('; ');
   const chCompany=(c&&c.matched)?(c.ch_company||''):'';
-  const row={place_id:l.place_id,business_name:l.name,icp_type:l.icp_type,google_types:l.google_types,full_address:l.full_address,zip:l.zip,neighborhood:l.neighborhood,city:l.city,phone:l.phone_number,website:l.website,emails:(s&&s.emails?(Array.isArray(s.emails)?s.emails.join('; '):s.emails):''),rating:l.rating,review_count:l.review_count,place_link:l.place_link,ch_company:chCompany,ch_directors:chDirectors,site_text:st,serp_text:spt};
+  const fanned=src!==l.place_id?src:'';
+  const tier=st&&spt?'SITE+SERP':st?'SITE_ONLY':spt?'SERP_ONLY':chDirectors?'CH_ONLY':'NONE';
+  tiers[tier]=(tiers[tier]||0)+1; if(fanned)fannedN++;
+  const row={place_id:l.place_id,business_name:l.name,icp_type:l.icp_type,google_types:l.google_types,full_address:l.full_address,zip:l.zip,neighborhood:l.neighborhood,city:l.city,phone:l.phone_number,website:l.website,emails:(s&&s.emails?(Array.isArray(s.emails)?s.emails.join('; '):s.emails):''),rating:l.rating,review_count:l.review_count,place_link:l.place_link,ch_company:chCompany,ch_directors:chDirectors,site_text:st,serp_text:spt,root_domain:l.root_domain||'',location_count:l.location_count||'',brand_family:l.brand_family||'',fanned_from:fanned,evidence_tier:tier};
   out.push(cols.map(c=>esc(row[c])).join(','));
 }
 fs.writeFileSync(OUT,out.join('\n')+'\n');
 console.log(`wrote ${leads.length} rows -> ${OUT}`);
 console.log(`  with site_text: ${withSite} | with serp_text: ${withSerp}`);
 console.log(`  max site_text ${maxSite}B | max serp_text ${maxSerp}B (hard-capped < ${CELL_CAP}B for Clay 8KB limit)`);
+console.log(`  evidence_tier: ${Object.entries(tiers).map(([k,v])=>k+'='+v).join(' | ')}${fannedN?` | fanned from a domain representative: ${fannedN}`:''}`);
+if(tiers.NONE)console.log(`  NOTE: ${tiers.NONE} row(s) are evidence_tier=NONE — nothing for the Clay column to read; filter them out before running it.`);

@@ -1,0 +1,78 @@
+{
+  "_comment": "Atlas Growth AU :: FOURTH RECOVERY pass over excluded_officp.csv — the NO-WEBSITE ICP-NAMED track (GATE 3 proposal P1, 2026-09-20). Measured on the 5,118-row universe: the review floor dropped 57 Australian rows as too_small that no other pass took back, and 25 of them are plainly the trade with NO website and blank/1-4 reviews — Joe's Reblocking and Underpinning (Coburg), Solid Reblocking and Underpinning (Craigieburn), Tas Underpinning Pty Ltd (Prospect TAS), Lancaster Restumping Pty Ltd, Total Underpinning Ballarat, Country Side Underpinning (Wodonga), Darren's House Restumping and Levelling. The unrated and low-rated passes both demand a website as the substitute activity signal, which is exactly what these rows lack. This pass takes back a too_small row on the NAME alone — an ICP token in the name is not something a ghost/duplicate pin of a smash repairer carries — and hands it to the no-website recovery track (STEP 5d), where prep-website-recovery.js looks for a site and the lead is otherwise phone-only. Precision risk: a duplicate pin of a REAL restumper (two listings, one unreviewed) — collapse-domains.js cannot merge it without a website, so the duplicate rides as a second row; the adjudication has no text for it and drops it. Bounded at 25 rows on this universe.",
+  "geo": {
+    "country": "au",
+    "footprint": {
+      "mode": "areas"
+    },
+    "region_from_city": "\\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\\b",
+    "region_default": "Australia"
+  },
+  "qualify_rules": [
+    {
+      "_r": "0. Scope gate: too_small only. A deny drop can never be resurrected here.",
+      "field": "drop_reason",
+      "op": "in",
+      "label": "not_a_noweb_candidate",
+      "value": [
+        "too_small"
+      ]
+    },
+    {
+      "_r": "1. NO website — the rows the unrated and low-rated passes refused. (A too_small row WITH a website and an ICP name is already taken by those passes; this rule keeps the three passes disjoint.)",
+      "field": "website",
+      "op": "not_exists",
+      "label": "has_website"
+    },
+    {
+      "_r": "2. The NAME must claim the work — the same token list as recover-generic-au-config.json rule 2.",
+      "field": "name",
+      "op": "contains_any",
+      "label": "name_not_icp",
+      "value": [
+        "underpin",
+        "restump",
+        "re-stump",
+        "reblock",
+        "re-block",
+        "relevel",
+        "re-level",
+        "levelling",
+        "leveling",
+        "house raising",
+        "house raiser",
+        "house lifting",
+        "slab lift",
+        "slab jack",
+        "resin inject",
+        "subsidence",
+        "foundation",
+        "footing",
+        "piling",
+        "pile ",
+        "pier",
+        "stabilis",
+        "stabiliz",
+        "structural",
+        "remedial",
+        "basement",
+        "helical",
+        "screw pile",
+        "stump",
+        "concrete lift",
+        "jacking",
+        "substructure",
+        "piering",
+        "raise and relevel",
+        "ground fix",
+        "groundfix",
+        "mainmark",
+        "uretek",
+        "buildfix",
+        "teretek",
+        "restumping australia",
+        "restumpingaustralia"
+      ]
+    }
+  ]
+}

@@ -8,6 +8,17 @@ recurs across ≥2 distinct sources/clients OR the user promotes it. Mark each e
 
 ---
 
+## 2026-09-12 — Atlas Growth / Google Maps (foundation repair) — via google-maps-scrape, planner NOT entered
+**Status:** OBSERVATION (×3). Obs A is a RECURRENCE of R2 (n=2 now; candidate for the user to re-affirm as binding across skills).
+
+**Obs A — R2 recurred in a different skill: regex/keyword extraction was used where an LLM rubric was prescribed.** Owner names were pulled from site text and SERP snippets with role-vocabulary regexes instead of the job's `owner-prompt.md` read by a model. 24 business names were banked as people. Same failure shape as the YC "$5 per call" false-positive. The prescription existed in two places (google-maps-scrape STEP 6a; this file R2) and was not followed because the model never read either before writing the parser. Fix shipped: google-maps-scrape STEP 0 (inventory sibling skills before improvising) + README.
+
+**Obs B — the planner was skipped, so no source profile was written until after the fact.** The run went straight to google-maps-scrape because the source was "obviously Maps". The cost: the BBB-as-registry finding, the dealer-network roster seam, and the SERP-vendor dud all lived in a chat transcript for a day before landing in `library/`. Candidate rule: even when dispatch is obvious, Phase 7 (library write-back) is mandatory for the dispatched skill, and the dispatched skill's SKILL.md should say so.
+
+**Obs C — "confirm on 3 leads that the source returns the FIELD you need" would have saved two SERP plans.** The scraper.tech SERP product returns `{title,url,description}` with `url` always empty; that was discoverable on the first 3 calls. Generalises R1's "test the axis the source actually varies on" to fields: test the FIELD before the volume.
+
+---
+
 ## 2026-08-02 — Silver GTM / Clay-users multi-source run (claydar + community mirror + reactors)
 **Status:** OBSERVATION (×3)
 

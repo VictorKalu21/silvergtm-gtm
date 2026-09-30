@@ -1,0 +1,14 @@
+{
+  "_comment": "Atlas Growth generators :: qualify config for the OEM DEALER-LIST rows (no google_types, no reviews — operator 2026-09-24: no size floor on dealer rows). Name deny only; fit is judged at the site-text gate (STEP 5e).",
+  "geo": { "country": "us", "footprint": { "mode": "areas" }, "region_from_city": ",\\s*([A-Z]{2})\\b", "region_default": "US" },
+  "qualify_rules": [
+    {"_r": "Cummins' home-standby locator also lists Onan RV service centres, and every OEM list carries big-box, rental and marine outlets. None install home standby for homeowners.",
+     "field": "name", "op": "not_contains_any", "label": "name_deny", "value": [
+       "camping world", "blue compass", "rv sales", "rv center", "rv service", "rv repair", "rvs ", " rv ", "r.v.", "motorhome", "travel center",
+       "lazydays", "general rv", "holiday rambler",
+       "home depot", "lowe's", "lowes", "menards", "ace hardware", "true value", "harbor freight",
+       "tractor supply", "northern tool", "costco", "sam's club", "walmart",
+       "sunbelt rentals", "united rentals", "herc rentals", "cat rental", "u-haul",
+       "marine", "boat", "yacht", "marina", "truck center", "truck repair", "freightliner", "peterbilt", "kenworth"]}
+  ]
+}

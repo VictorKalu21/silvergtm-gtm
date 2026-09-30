@@ -1,0 +1,2 @@
+checked: web-scrape-triage, name-to-domain, email-verify-debounce-bounceban, icp-source-planner, web-visitor-deid-qualify (Fable review 2026-09-12)
+need: scripts written before the gate existed; new ones go through the engine

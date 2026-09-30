@@ -1,7 +1,8 @@
 # Employee-count estimator — TEMPLATE (industry-agnostic, reuse as-is)
 
-A single Clay nano column that estimates how many people work at a business, so the
-`employee_count >= N` size gate (an `enrich_rule`, applied AFTER Clay) has a number to act on.
+A single reader prompt (Haiku per batch, the STEP 6 2b shape) that estimates how many people work at a
+business, so the `employee_count >= N` size gate (an `enrich_rule`) has a number to act on. Not a
+step on any run yet; not Clay.
 Google Maps has no employee count, and structured providers (PDL/Clearbit) are thin on
 5–15-person local firms — so this reads the **live site + search text** instead.
 
@@ -10,9 +11,9 @@ judgment (that's the business-type classifier's job). Reuse it verbatim across c
 The only thing that changes per run is the threshold, and that lives downstream in the config's
 `enrich_rules` (e.g. `{"field":"employee_count","op":">=","value":5}`), NOT in this prompt.
 
-## Clay setup
-ONE nano column. Map in: `{{business_name}}`, `{{city}}`, `{{website}}`, `{{site_text}}`,
-`{{serp_text}}` (and the live URL if the Claygent browses). Output the JSON below.
+## Setup
+ONE reader prompt per batch item. Inputs: `{{business_name}}`, `{{city}}`, `{{website}}`, `{{site_text}}`,
+`{{serp_text}}`. Output the JSON below.
 
 ## PROMPT (copy verbatim)
 
