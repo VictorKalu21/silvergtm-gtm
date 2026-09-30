@@ -42,9 +42,11 @@ of obvious installers means the allow list is missing a UK type stem — fix the
 node skills/google-maps-scrape/qualify-leads.js --in clients/atlas-growth/2026-09-30_uk-generator-installers-maps/excluded_officp.csv --config clients/atlas-growth/recover-unrated-generators-uk-config.json --out clients/atlas-growth/2026-09-30_uk-generator-installers-maps/recover-unrated
 ```
 Expect `rules: 3 active`; a `skipping rule on unknown field "drop_reason"` WARN means the wrong
-input — **STOP**. Append `recover-unrated/leads_clean_qualified.csv` to `leads_clean_qualified.csv`
-through the MAIN header with a place_id-overlap assertion (the snippet in the 2026-09-16 run's
-`PIPELINE.md` STEP 3, with only files A and C). Not idempotent — run once. No generic-recovery pass
+input — **STOP**. Then append once:
+```bash
+node clients/atlas-growth/2026-09-30_uk-generator-installers-maps/append-unrated.js
+```
+(writes through the MAIN header, asserts zero place_id overlap; not idempotent — a second run fails by design). No generic-recovery pass
 this run (config `_no_generic_recovery`).
 
 ## 4. Footprint gate — 0.75°, no `--regions`
@@ -75,8 +77,7 @@ and fill `brand_families` in the config at GATE 3.
 
 ## 7. GATE 3 read-out
 Sample 10 rows per `drop_reason` in `excluded_officp.csv` + `excluded_geo.csv`, bucket the kept list
-by nation (postcode area), list top root domains. Copy `gate3-stats.js` from the 2026-09-16 UK maps
-run if wanted (it is generic over these files). Act on: a drop bucket full of real installers →
+by nation (postcode area), list top root domains. `node <run>/gate3-stats.js` (copied from the 2026-09-16 UK maps run; generic over these files). Act on: a drop bucket full of real installers →
 config fix; a nation far below its tile share → coverage hole, check `calls_summary.json` first.
 
 ## 8. Then
