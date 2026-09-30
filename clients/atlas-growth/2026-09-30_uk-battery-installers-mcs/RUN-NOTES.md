@@ -146,3 +146,7 @@ Geocode result: send 89 of 98 blank cities resolved (47 town · 21 city · 17 vi
 rejections), **9 unresolved = all Greater London addresses, left blank so the reader takes the town from the site**;
 held 45 of 45. ~12 answers are still a district/county ("Tandridge", "Wychavon", "North Kesteven", "Epping Forest",
 "County Down", "Somerset") — hand-override in `owner/city_overrides_send.json` before the full fill.
+Hand overrides (`owner/city_overrides_send_hand.json`, 22 rows, from the register street address): 13 district/
+village answers → the town (Wychavon → Droitwich Spa, Tandridge → Lingfield, County Down → Craigavon …) and the 9
+Greater London blanks → Hampton / Wallington / Hornchurch / Worcester Park / Keston / London. **0 blank cities in the
+send base.**
