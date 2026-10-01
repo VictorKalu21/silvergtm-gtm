@@ -21,7 +21,8 @@ const REGION_DEFAULT=(cfg.geo&&cfg.geo.region_default)||'';
 const FREE_MAIL=/@(gmail|yahoo|hotmail|outlook|aol|icloud|live|msn|protonmail)\./i;
 const DIR=/(facebook|instagram|yelp|google|bbb\.org|mapquest|linkedin|nextdoor|angi|thumbtack|houzz|tripadvisor|youtube|tiktok|birdeye|chamberofcommerce|manta|zoominfo|indeed|wikipedia|amazon|pinterest|glassdoor|crunchbase|dnb\.com|buzzfile|opencorporates|yellowpages|superpages|expertise\.com|wheree\.com|localsearch|sbcglobal\.net|comcast\.net|att\.net|aol\.com|verizon\.net|\.gov|\.edu|\.[a-z]{2}\.us$)/i;
 const host=u=>{try{return new URL(u).host.replace(/^www\./,'').toLowerCase();}catch{return '';}};
-const urlsIn=t=>[...new Set((String(t||'').match(/https?:\/\/[^\s)"']+/g)||[]).map(host).filter(h=>h&&h.includes('.')&&!DIR.test(h)))];
+const {isSharedHost}=require('./shared-hosts'); // one shared-host list across the engine; DIR above stays as the SERP-text directory superset
+const urlsIn=t=>[...new Set((String(t||'').match(/https?:\/\/[^\s)"']+/g)||[]).map(host).filter(h=>h&&h.includes('.')&&!DIR.test(h)&&!isSharedHost(h)))];
 // generic/industry stopwords dropped when tokenizing a business name for the entity-match guard
 const NAME_STOP=new Set(['security','services','service','school','schools','dental','clinic','clinics','group','ltd','llc','inc','co','company','the','and','of','protection','protective','patrol','alarm','alarms','guard','guards','guarding','systems','system','solutions','solution','agency','agencies','associates','enterprises','enterprise','corp','corporation','international','national','professional','plc','pllc','llp']);
 const nameTokens=name=>String(name||'').toLowerCase().split(/[^a-z0-9]+/).filter(w=>w.length>=4&&!NAME_STOP.has(w));
@@ -29,7 +30,7 @@ const nameTokens=name=>String(name||'').toLowerCase().split(/[^a-z0-9]+/).filter
 const hostStem=domain=>String(domain||'').toLowerCase().replace(/\.[a-z]{2,}$/,'').replace(/\./g,'');
 // accept only if a distinctive (len>=4) business-name token is a substring of the host stem (or vice-versa)
 const nameMatchesDomain=(name,domain)=>{const stem=hostStem(domain);if(!stem)return false;return nameTokens(name).some(t=>stem.includes(t)||t.includes(stem));};
-const emailDomain=(t,name)=>{const e=(String(t||'').match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi)||[]).filter(x=>!FREE_MAIL.test(x)&&!/\.(png|jpe?g|gif|webp)$/i.test(x));for(const x of e){const d=x.split('@')[1].toLowerCase();if(DIR.test(d))continue;if(nameMatchesDomain(name,d))return d;}return '';};
+const emailDomain=(t,name)=>{const e=(String(t||'').match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi)||[]).filter(x=>!FREE_MAIL.test(x)&&!/\.(png|jpe?g|gif|webp)$/i.test(x));for(const x of e){const d=x.split('@')[1].toLowerCase();if(DIR.test(d)||isSharedHost(d))continue;if(nameMatchesDomain(name,d))return d;}return '';};
 
 function search(query){
   const qs=new URLSearchParams({query,country:(cfg.geo&&cfg.geo.country||'US').toUpperCase(),limit:10,page:0,start:0,hl:'en'}).toString();

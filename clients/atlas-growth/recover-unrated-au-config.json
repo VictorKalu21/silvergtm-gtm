@@ -1,0 +1,18 @@
+{
+  "_comment": "Atlas Growth AU :: SECOND RECOVERY pass over excluded_officp.csv — the UNRATED track. Clone of recover-unrated-uk-config.json (UK GATE 3 / P7, operator-approved). It reverses exactly one accident: a Maps listing with NO review data at all is deleted by a review FLOOR that was never meant to judge it (qualify-leads.js:92 — num('') is null, so `>= 5` fails a blank identically to a 0; measured on a 3-row probe on the UK run, output in that run's dryrun2-results.md). Deterministic, $0, no re-scrape. Run AFTER the generic recovery: qualify-leads.js --in <run>/excluded_officp.csv --config recover-unrated-au-config.json --out <run>/recover-unrated, then append recover-unrated/leads_clean_qualified.csv to the main qualified list (dedupe on place_id, assert zero overlap against BOTH the main pass and the generic recovery). In the merged list the unrated track is identifiable by review_count == ''.",
+
+  "_r_why_no_entity_rules": "This pass does NOT repeat rules 1-4 of atlas-growth-au-config.json: qualify-leads.js:107 breaks on the FIRST failing rule and writes its label as drop_reason, and the review floor is the LAST rule, so a row carrying drop_reason 'too_small' has by construction already passed the entity deny, the primary deny, the name deny and the positive allow. Re-applying them could only produce the same verdict.",
+
+  "geo": { "country": "au", "footprint": { "mode": "areas" }, "region_from_city": "\\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\\b", "region_default": "Australia" },
+
+  "qualify_rules": [
+    {"_r": "0. RECOVERY SCOPE GATE — one drop reason only, 'too_small', so this pass can never re-litigate a deny. CAVEAT: pointed at a file with NO drop_reason column, qualify-leads.js skips this rule with a WARN and the pass degrades to 'every unrated row with a website', which would readmit charities, smash repairers and hardware chains wholesale. Read the WARN line.",
+     "field": "drop_reason", "op": "in", "label": "not_an_unrated_candidate", "value": ["too_small"]},
+
+    {"_r": "1. UNRATED ONLY. Keeps the blank band and nothing else — the 1-4 band stays dropped (label has_review_count) because those rows were judged on real review data and the floor's verdict on them stands.",
+     "field": "review_count", "op": "not_exists", "label": "has_review_count"},
+
+    {"_r": "2. A LIVE WEBSITE is the substitute signal. With no reviews there is no activity evidence at all, so the pass demands the one other thing a ghost pin does not have. This is the ONLY place in the Atlas Growth AU rule set that gates on website — the main config's _no_website_rule explains why it refuses to for every RATED row. collapse-domains.js still classifies these websites site/shared_host/none downstream, so a Facebook-only unrated firm is admitted here and routed to the no-website track there, which is the correct handling.",
+     "field": "website", "op": "exists", "label": "no_website"}
+  ]
+}

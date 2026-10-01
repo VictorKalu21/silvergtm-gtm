@@ -1,0 +1,2 @@
+2026-09-24 — skills read before any run script: web-scrape-triage (SKILL.md: tier ladder, guardrails), google-maps-scrape (README pipeline table, _normalize_export.js ingest shape: place_id,name,icp_type,full_address,zip,neighborhood,city,phone_number,website), icp-source-planner (dispatch map), name-to-domain (for domain-less Kohler/Champion rows).
+Extraction scripts in pull/ are source pullers only; every row then enters google-maps-scrape at STEP 5b.

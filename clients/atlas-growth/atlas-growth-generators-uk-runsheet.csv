@@ -1,0 +1,886 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+eng-london-centre-g0,generator,generator installation,51.5074,-0.1278,13,P1
+eng-london-centre-g1,generator,standby generator installer,51.5074,-0.1278,13,P1
+eng-london-centre-g2,generator,backup generator,51.5074,-0.1278,13,P1
+eng-london-centre-g3,generator,generator engineer,51.5074,-0.1278,13,P2
+eng-london-centre-g4,generator,generator shop,51.5074,-0.1278,13,P2
+eng-birmingham-g0,generator,generator installation,52.4862,-1.8904,13,P1
+eng-birmingham-g1,generator,standby generator installer,52.4862,-1.8904,13,P1
+eng-birmingham-g2,generator,backup generator,52.4862,-1.8904,13,P1
+eng-birmingham-g3,generator,generator engineer,52.4862,-1.8904,13,P2
+eng-birmingham-g4,generator,generator shop,52.4862,-1.8904,13,P2
+eng-wolverhampton-g0,generator,generator installation,52.5862,-2.1288,13,P1
+eng-wolverhampton-g1,generator,standby generator installer,52.5862,-2.1288,13,P1
+eng-wolverhampton-g2,generator,backup generator,52.5862,-2.1288,13,P1
+eng-wolverhampton-g3,generator,generator engineer,52.5862,-2.1288,13,P2
+eng-wolverhampton-g4,generator,generator shop,52.5862,-2.1288,13,P2
+eng-coventry-g0,generator,generator installation,52.4068,-1.5197,13,P1
+eng-coventry-g1,generator,standby generator installer,52.4068,-1.5197,13,P1
+eng-coventry-g2,generator,backup generator,52.4068,-1.5197,13,P1
+eng-coventry-g3,generator,generator engineer,52.4068,-1.5197,13,P2
+eng-coventry-g4,generator,generator shop,52.4068,-1.5197,13,P2
+eng-stoke-on-trent-g0,generator,generator installation,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-g1,generator,standby generator installer,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-g2,generator,backup generator,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-g3,generator,generator engineer,53.0027,-2.1794,13,P2
+eng-stoke-on-trent-g4,generator,generator shop,53.0027,-2.1794,13,P2
+eng-telford-g0,generator,generator installation,52.6784,-2.4453,13,P1
+eng-telford-g1,generator,standby generator installer,52.6784,-2.4453,13,P1
+eng-telford-g2,generator,backup generator,52.6784,-2.4453,13,P1
+eng-telford-g3,generator,generator engineer,52.6784,-2.4453,13,P2
+eng-telford-g4,generator,generator shop,52.6784,-2.4453,13,P2
+eng-shrewsbury-g0,generator,generator installation,52.7069,-2.7527,13,P1
+eng-shrewsbury-g1,generator,standby generator installer,52.7069,-2.7527,13,P1
+eng-shrewsbury-g2,generator,backup generator,52.7069,-2.7527,13,P1
+eng-shrewsbury-g3,generator,generator engineer,52.7069,-2.7527,13,P2
+eng-shrewsbury-g4,generator,generator shop,52.7069,-2.7527,13,P2
+eng-hereford-g0,generator,generator installation,52.0567,-2.716,13,P1
+eng-hereford-g1,generator,standby generator installer,52.0567,-2.716,13,P1
+eng-hereford-g2,generator,backup generator,52.0567,-2.716,13,P1
+eng-hereford-g3,generator,generator engineer,52.0567,-2.716,13,P2
+eng-hereford-g4,generator,generator shop,52.0567,-2.716,13,P2
+eng-worcester-g0,generator,generator installation,52.1936,-2.2216,13,P1
+eng-worcester-g1,generator,standby generator installer,52.1936,-2.2216,13,P1
+eng-worcester-g2,generator,backup generator,52.1936,-2.2216,13,P1
+eng-worcester-g3,generator,generator engineer,52.1936,-2.2216,13,P2
+eng-worcester-g4,generator,generator shop,52.1936,-2.2216,13,P2
+eng-gloucester-g0,generator,generator installation,51.8642,-2.238,13,P1
+eng-gloucester-g1,generator,standby generator installer,51.8642,-2.238,13,P1
+eng-gloucester-g2,generator,backup generator,51.8642,-2.238,13,P1
+eng-gloucester-g3,generator,generator engineer,51.8642,-2.238,13,P2
+eng-gloucester-g4,generator,generator shop,51.8642,-2.238,13,P2
+eng-cheltenham-g0,generator,generator installation,51.8994,-2.0783,13,P1
+eng-cheltenham-g1,generator,standby generator installer,51.8994,-2.0783,13,P1
+eng-cheltenham-g2,generator,backup generator,51.8994,-2.0783,13,P1
+eng-cheltenham-g3,generator,generator engineer,51.8994,-2.0783,13,P2
+eng-cheltenham-g4,generator,generator shop,51.8994,-2.0783,13,P2
+eng-bristol-g0,generator,generator installation,51.4545,-2.5879,13,P1
+eng-bristol-g1,generator,standby generator installer,51.4545,-2.5879,13,P1
+eng-bristol-g2,generator,backup generator,51.4545,-2.5879,13,P1
+eng-bristol-g3,generator,generator engineer,51.4545,-2.5879,13,P2
+eng-bristol-g4,generator,generator shop,51.4545,-2.5879,13,P2
+eng-bath-g0,generator,generator installation,51.3811,-2.359,13,P1
+eng-bath-g1,generator,standby generator installer,51.3811,-2.359,13,P1
+eng-bath-g2,generator,backup generator,51.3811,-2.359,13,P1
+eng-bath-g3,generator,generator engineer,51.3811,-2.359,13,P2
+eng-bath-g4,generator,generator shop,51.3811,-2.359,13,P2
+eng-weston-super-mare-g0,generator,generator installation,51.346,-2.977,13,P1
+eng-weston-super-mare-g1,generator,standby generator installer,51.346,-2.977,13,P1
+eng-weston-super-mare-g2,generator,backup generator,51.346,-2.977,13,P1
+eng-weston-super-mare-g3,generator,generator engineer,51.346,-2.977,13,P2
+eng-weston-super-mare-g4,generator,generator shop,51.346,-2.977,13,P2
+eng-taunton-g0,generator,generator installation,51.015,-3.1,13,P1
+eng-taunton-g1,generator,standby generator installer,51.015,-3.1,13,P1
+eng-taunton-g2,generator,backup generator,51.015,-3.1,13,P1
+eng-taunton-g3,generator,generator engineer,51.015,-3.1,13,P2
+eng-taunton-g4,generator,generator shop,51.015,-3.1,13,P2
+eng-yeovil-g0,generator,generator installation,50.941,-2.632,13,P1
+eng-yeovil-g1,generator,standby generator installer,50.941,-2.632,13,P1
+eng-yeovil-g2,generator,backup generator,50.941,-2.632,13,P1
+eng-yeovil-g3,generator,generator engineer,50.941,-2.632,13,P2
+eng-yeovil-g4,generator,generator shop,50.941,-2.632,13,P2
+eng-exeter-g0,generator,generator installation,50.7184,-3.5339,13,P1
+eng-exeter-g1,generator,standby generator installer,50.7184,-3.5339,13,P1
+eng-exeter-g2,generator,backup generator,50.7184,-3.5339,13,P1
+eng-exeter-g3,generator,generator engineer,50.7184,-3.5339,13,P2
+eng-exeter-g4,generator,generator shop,50.7184,-3.5339,13,P2
+eng-torquay-g0,generator,generator installation,50.4619,-3.5253,13,P1
+eng-torquay-g1,generator,standby generator installer,50.4619,-3.5253,13,P1
+eng-torquay-g2,generator,backup generator,50.4619,-3.5253,13,P1
+eng-torquay-g3,generator,generator engineer,50.4619,-3.5253,13,P2
+eng-torquay-g4,generator,generator shop,50.4619,-3.5253,13,P2
+eng-plymouth-g0,generator,generator installation,50.3755,-4.1427,13,P1
+eng-plymouth-g1,generator,standby generator installer,50.3755,-4.1427,13,P1
+eng-plymouth-g2,generator,backup generator,50.3755,-4.1427,13,P1
+eng-plymouth-g3,generator,generator engineer,50.3755,-4.1427,13,P2
+eng-plymouth-g4,generator,generator shop,50.3755,-4.1427,13,P2
+eng-barnstaple-g0,generator,generator installation,51.08,-4.06,13,P1
+eng-barnstaple-g1,generator,standby generator installer,51.08,-4.06,13,P1
+eng-barnstaple-g2,generator,backup generator,51.08,-4.06,13,P1
+eng-barnstaple-g3,generator,generator engineer,51.08,-4.06,13,P2
+eng-barnstaple-g4,generator,generator shop,51.08,-4.06,13,P2
+eng-st-austell-g0,generator,generator installation,50.34,-4.79,13,P1
+eng-st-austell-g1,generator,standby generator installer,50.34,-4.79,13,P1
+eng-st-austell-g2,generator,backup generator,50.34,-4.79,13,P1
+eng-st-austell-g3,generator,generator engineer,50.34,-4.79,13,P2
+eng-st-austell-g4,generator,generator shop,50.34,-4.79,13,P2
+eng-truro-g0,generator,generator installation,50.2632,-5.051,13,P1
+eng-truro-g1,generator,standby generator installer,50.2632,-5.051,13,P1
+eng-truro-g2,generator,backup generator,50.2632,-5.051,13,P1
+eng-truro-g3,generator,generator engineer,50.2632,-5.051,13,P2
+eng-truro-g4,generator,generator shop,50.2632,-5.051,13,P2
+eng-penzance-g0,generator,generator installation,50.1186,-5.537,13,P1
+eng-penzance-g1,generator,standby generator installer,50.1186,-5.537,13,P1
+eng-penzance-g2,generator,backup generator,50.1186,-5.537,13,P1
+eng-penzance-g3,generator,generator engineer,50.1186,-5.537,13,P2
+eng-penzance-g4,generator,generator shop,50.1186,-5.537,13,P2
+eng-weymouth-g0,generator,generator installation,50.614,-2.457,13,P1
+eng-weymouth-g1,generator,standby generator installer,50.614,-2.457,13,P1
+eng-weymouth-g2,generator,backup generator,50.614,-2.457,13,P1
+eng-weymouth-g3,generator,generator engineer,50.614,-2.457,13,P2
+eng-weymouth-g4,generator,generator shop,50.614,-2.457,13,P2
+eng-bournemouth-poole-g0,generator,generator installation,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-g1,generator,standby generator installer,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-g2,generator,backup generator,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-g3,generator,generator engineer,50.7192,-1.8808,13,P2
+eng-bournemouth-poole-g4,generator,generator shop,50.7192,-1.8808,13,P2
+eng-salisbury-g0,generator,generator installation,51.0688,-1.7945,13,P1
+eng-salisbury-g1,generator,standby generator installer,51.0688,-1.7945,13,P1
+eng-salisbury-g2,generator,backup generator,51.0688,-1.7945,13,P1
+eng-salisbury-g3,generator,generator engineer,51.0688,-1.7945,13,P2
+eng-salisbury-g4,generator,generator shop,51.0688,-1.7945,13,P2
+eng-swindon-g0,generator,generator installation,51.5685,-1.7722,13,P1
+eng-swindon-g1,generator,standby generator installer,51.5685,-1.7722,13,P1
+eng-swindon-g2,generator,backup generator,51.5685,-1.7722,13,P1
+eng-swindon-g3,generator,generator engineer,51.5685,-1.7722,13,P2
+eng-swindon-g4,generator,generator shop,51.5685,-1.7722,13,P2
+eng-southampton-g0,generator,generator installation,50.9097,-1.4044,13,P1
+eng-southampton-g1,generator,standby generator installer,50.9097,-1.4044,13,P1
+eng-southampton-g2,generator,backup generator,50.9097,-1.4044,13,P1
+eng-southampton-g3,generator,generator engineer,50.9097,-1.4044,13,P2
+eng-southampton-g4,generator,generator shop,50.9097,-1.4044,13,P2
+eng-portsmouth-g0,generator,generator installation,50.8198,-1.088,13,P1
+eng-portsmouth-g1,generator,standby generator installer,50.8198,-1.088,13,P1
+eng-portsmouth-g2,generator,backup generator,50.8198,-1.088,13,P1
+eng-portsmouth-g3,generator,generator engineer,50.8198,-1.088,13,P2
+eng-portsmouth-g4,generator,generator shop,50.8198,-1.088,13,P2
+eng-basingstoke-g0,generator,generator installation,51.2665,-1.087,13,P1
+eng-basingstoke-g1,generator,standby generator installer,51.2665,-1.087,13,P1
+eng-basingstoke-g2,generator,backup generator,51.2665,-1.087,13,P1
+eng-basingstoke-g3,generator,generator engineer,51.2665,-1.087,13,P2
+eng-basingstoke-g4,generator,generator shop,51.2665,-1.087,13,P2
+eng-reading-g0,generator,generator installation,51.4543,-0.9781,13,P1
+eng-reading-g1,generator,standby generator installer,51.4543,-0.9781,13,P1
+eng-reading-g2,generator,backup generator,51.4543,-0.9781,13,P1
+eng-reading-g3,generator,generator engineer,51.4543,-0.9781,13,P2
+eng-reading-g4,generator,generator shop,51.4543,-0.9781,13,P2
+eng-slough-g0,generator,generator installation,51.5105,-0.595,13,P1
+eng-slough-g1,generator,standby generator installer,51.5105,-0.595,13,P1
+eng-slough-g2,generator,backup generator,51.5105,-0.595,13,P1
+eng-slough-g3,generator,generator engineer,51.5105,-0.595,13,P2
+eng-slough-g4,generator,generator shop,51.5105,-0.595,13,P2
+eng-oxford-g0,generator,generator installation,51.752,-1.2577,13,P1
+eng-oxford-g1,generator,standby generator installer,51.752,-1.2577,13,P1
+eng-oxford-g2,generator,backup generator,51.752,-1.2577,13,P1
+eng-oxford-g3,generator,generator engineer,51.752,-1.2577,13,P2
+eng-oxford-g4,generator,generator shop,51.752,-1.2577,13,P2
+eng-aylesbury-g0,generator,generator installation,51.8156,-0.8084,13,P1
+eng-aylesbury-g1,generator,standby generator installer,51.8156,-0.8084,13,P1
+eng-aylesbury-g2,generator,backup generator,51.8156,-0.8084,13,P1
+eng-aylesbury-g3,generator,generator engineer,51.8156,-0.8084,13,P2
+eng-aylesbury-g4,generator,generator shop,51.8156,-0.8084,13,P2
+eng-high-wycombe-g0,generator,generator installation,51.6287,-0.7482,13,P1
+eng-high-wycombe-g1,generator,standby generator installer,51.6287,-0.7482,13,P1
+eng-high-wycombe-g2,generator,backup generator,51.6287,-0.7482,13,P1
+eng-high-wycombe-g3,generator,generator engineer,51.6287,-0.7482,13,P2
+eng-high-wycombe-g4,generator,generator shop,51.6287,-0.7482,13,P2
+eng-milton-keynes-g0,generator,generator installation,52.0406,-0.7594,13,P1
+eng-milton-keynes-g1,generator,standby generator installer,52.0406,-0.7594,13,P1
+eng-milton-keynes-g2,generator,backup generator,52.0406,-0.7594,13,P1
+eng-milton-keynes-g3,generator,generator engineer,52.0406,-0.7594,13,P2
+eng-milton-keynes-g4,generator,generator shop,52.0406,-0.7594,13,P2
+eng-northampton-g0,generator,generator installation,52.2405,-0.9027,13,P1
+eng-northampton-g1,generator,standby generator installer,52.2405,-0.9027,13,P1
+eng-northampton-g2,generator,backup generator,52.2405,-0.9027,13,P1
+eng-northampton-g3,generator,generator engineer,52.2405,-0.9027,13,P2
+eng-northampton-g4,generator,generator shop,52.2405,-0.9027,13,P2
+eng-kettering-corby-g0,generator,generator installation,52.393,-0.729,13,P1
+eng-kettering-corby-g1,generator,standby generator installer,52.393,-0.729,13,P1
+eng-kettering-corby-g2,generator,backup generator,52.393,-0.729,13,P1
+eng-kettering-corby-g3,generator,generator engineer,52.393,-0.729,13,P2
+eng-kettering-corby-g4,generator,generator shop,52.393,-0.729,13,P2
+eng-bedford-g0,generator,generator installation,52.136,-0.467,13,P1
+eng-bedford-g1,generator,standby generator installer,52.136,-0.467,13,P1
+eng-bedford-g2,generator,backup generator,52.136,-0.467,13,P1
+eng-bedford-g3,generator,generator engineer,52.136,-0.467,13,P2
+eng-bedford-g4,generator,generator shop,52.136,-0.467,13,P2
+eng-luton-g0,generator,generator installation,51.8787,-0.42,13,P1
+eng-luton-g1,generator,standby generator installer,51.8787,-0.42,13,P1
+eng-luton-g2,generator,backup generator,51.8787,-0.42,13,P1
+eng-luton-g3,generator,generator engineer,51.8787,-0.42,13,P2
+eng-luton-g4,generator,generator shop,51.8787,-0.42,13,P2
+eng-stevenage-g0,generator,generator installation,51.9038,-0.2018,13,P1
+eng-stevenage-g1,generator,standby generator installer,51.9038,-0.2018,13,P1
+eng-stevenage-g2,generator,backup generator,51.9038,-0.2018,13,P1
+eng-stevenage-g3,generator,generator engineer,51.9038,-0.2018,13,P2
+eng-stevenage-g4,generator,generator shop,51.9038,-0.2018,13,P2
+eng-cambridge-g0,generator,generator installation,52.2053,0.1218,13,P1
+eng-cambridge-g1,generator,standby generator installer,52.2053,0.1218,13,P1
+eng-cambridge-g2,generator,backup generator,52.2053,0.1218,13,P1
+eng-cambridge-g3,generator,generator engineer,52.2053,0.1218,13,P2
+eng-cambridge-g4,generator,generator shop,52.2053,0.1218,13,P2
+eng-peterborough-g0,generator,generator installation,52.5695,-0.2405,13,P1
+eng-peterborough-g1,generator,standby generator installer,52.5695,-0.2405,13,P1
+eng-peterborough-g2,generator,backup generator,52.5695,-0.2405,13,P1
+eng-peterborough-g3,generator,generator engineer,52.5695,-0.2405,13,P2
+eng-peterborough-g4,generator,generator shop,52.5695,-0.2405,13,P2
+eng-kings-lynn-g0,generator,generator installation,52.752,0.402,13,P1
+eng-kings-lynn-g1,generator,standby generator installer,52.752,0.402,13,P1
+eng-kings-lynn-g2,generator,backup generator,52.752,0.402,13,P1
+eng-kings-lynn-g3,generator,generator engineer,52.752,0.402,13,P2
+eng-kings-lynn-g4,generator,generator shop,52.752,0.402,13,P2
+eng-norwich-g0,generator,generator installation,52.6309,1.2974,13,P1
+eng-norwich-g1,generator,standby generator installer,52.6309,1.2974,13,P1
+eng-norwich-g2,generator,backup generator,52.6309,1.2974,13,P1
+eng-norwich-g3,generator,generator engineer,52.6309,1.2974,13,P2
+eng-norwich-g4,generator,generator shop,52.6309,1.2974,13,P2
+eng-great-yarmouth-g0,generator,generator installation,52.6083,1.73,13,P1
+eng-great-yarmouth-g1,generator,standby generator installer,52.6083,1.73,13,P1
+eng-great-yarmouth-g2,generator,backup generator,52.6083,1.73,13,P1
+eng-great-yarmouth-g3,generator,generator engineer,52.6083,1.73,13,P2
+eng-great-yarmouth-g4,generator,generator shop,52.6083,1.73,13,P2
+eng-lowestoft-g0,generator,generator installation,52.48,1.75,13,P1
+eng-lowestoft-g1,generator,standby generator installer,52.48,1.75,13,P1
+eng-lowestoft-g2,generator,backup generator,52.48,1.75,13,P1
+eng-lowestoft-g3,generator,generator engineer,52.48,1.75,13,P2
+eng-lowestoft-g4,generator,generator shop,52.48,1.75,13,P2
+eng-ipswich-g0,generator,generator installation,52.0567,1.1482,13,P1
+eng-ipswich-g1,generator,standby generator installer,52.0567,1.1482,13,P1
+eng-ipswich-g2,generator,backup generator,52.0567,1.1482,13,P1
+eng-ipswich-g3,generator,generator engineer,52.0567,1.1482,13,P2
+eng-ipswich-g4,generator,generator shop,52.0567,1.1482,13,P2
+eng-bury-st-edmunds-g0,generator,generator installation,52.245,0.711,13,P1
+eng-bury-st-edmunds-g1,generator,standby generator installer,52.245,0.711,13,P1
+eng-bury-st-edmunds-g2,generator,backup generator,52.245,0.711,13,P1
+eng-bury-st-edmunds-g3,generator,generator engineer,52.245,0.711,13,P2
+eng-bury-st-edmunds-g4,generator,generator shop,52.245,0.711,13,P2
+eng-colchester-g0,generator,generator installation,51.8959,0.8919,13,P1
+eng-colchester-g1,generator,standby generator installer,51.8959,0.8919,13,P1
+eng-colchester-g2,generator,backup generator,51.8959,0.8919,13,P1
+eng-colchester-g3,generator,generator engineer,51.8959,0.8919,13,P2
+eng-colchester-g4,generator,generator shop,51.8959,0.8919,13,P2
+eng-chelmsford-g0,generator,generator installation,51.7356,0.4685,13,P1
+eng-chelmsford-g1,generator,standby generator installer,51.7356,0.4685,13,P1
+eng-chelmsford-g2,generator,backup generator,51.7356,0.4685,13,P1
+eng-chelmsford-g3,generator,generator engineer,51.7356,0.4685,13,P2
+eng-chelmsford-g4,generator,generator shop,51.7356,0.4685,13,P2
+eng-southend-on-sea-g0,generator,generator installation,51.54,0.71,13,P1
+eng-southend-on-sea-g1,generator,standby generator installer,51.54,0.71,13,P1
+eng-southend-on-sea-g2,generator,backup generator,51.54,0.71,13,P1
+eng-southend-on-sea-g3,generator,generator engineer,51.54,0.71,13,P2
+eng-southend-on-sea-g4,generator,generator shop,51.54,0.71,13,P2
+eng-medway-chatham-g0,generator,generator installation,51.38,0.52,13,P1
+eng-medway-chatham-g1,generator,standby generator installer,51.38,0.52,13,P1
+eng-medway-chatham-g2,generator,backup generator,51.38,0.52,13,P1
+eng-medway-chatham-g3,generator,generator engineer,51.38,0.52,13,P2
+eng-medway-chatham-g4,generator,generator shop,51.38,0.52,13,P2
+eng-maidstone-g0,generator,generator installation,51.272,0.529,13,P1
+eng-maidstone-g1,generator,standby generator installer,51.272,0.529,13,P1
+eng-maidstone-g2,generator,backup generator,51.272,0.529,13,P1
+eng-maidstone-g3,generator,generator engineer,51.272,0.529,13,P2
+eng-maidstone-g4,generator,generator shop,51.272,0.529,13,P2
+eng-canterbury-g0,generator,generator installation,51.2802,1.0789,13,P1
+eng-canterbury-g1,generator,standby generator installer,51.2802,1.0789,13,P1
+eng-canterbury-g2,generator,backup generator,51.2802,1.0789,13,P1
+eng-canterbury-g3,generator,generator engineer,51.2802,1.0789,13,P2
+eng-canterbury-g4,generator,generator shop,51.2802,1.0789,13,P2
+eng-dover-g0,generator,generator installation,51.1279,1.3134,13,P1
+eng-dover-g1,generator,standby generator installer,51.1279,1.3134,13,P1
+eng-dover-g2,generator,backup generator,51.1279,1.3134,13,P1
+eng-dover-g3,generator,generator engineer,51.1279,1.3134,13,P2
+eng-dover-g4,generator,generator shop,51.1279,1.3134,13,P2
+eng-ashford-kent-g0,generator,generator installation,51.1465,0.875,13,P1
+eng-ashford-kent-g1,generator,standby generator installer,51.1465,0.875,13,P1
+eng-ashford-kent-g2,generator,backup generator,51.1465,0.875,13,P1
+eng-ashford-kent-g3,generator,generator engineer,51.1465,0.875,13,P2
+eng-ashford-kent-g4,generator,generator shop,51.1465,0.875,13,P2
+eng-hastings-g0,generator,generator installation,50.8543,0.5735,13,P1
+eng-hastings-g1,generator,standby generator installer,50.8543,0.5735,13,P1
+eng-hastings-g2,generator,backup generator,50.8543,0.5735,13,P1
+eng-hastings-g3,generator,generator engineer,50.8543,0.5735,13,P2
+eng-hastings-g4,generator,generator shop,50.8543,0.5735,13,P2
+eng-eastbourne-g0,generator,generator installation,50.7687,0.29,13,P1
+eng-eastbourne-g1,generator,standby generator installer,50.7687,0.29,13,P1
+eng-eastbourne-g2,generator,backup generator,50.7687,0.29,13,P1
+eng-eastbourne-g3,generator,generator engineer,50.7687,0.29,13,P2
+eng-eastbourne-g4,generator,generator shop,50.7687,0.29,13,P2
+eng-tunbridge-wells-g0,generator,generator installation,51.1324,0.2637,13,P1
+eng-tunbridge-wells-g1,generator,standby generator installer,51.1324,0.2637,13,P1
+eng-tunbridge-wells-g2,generator,backup generator,51.1324,0.2637,13,P1
+eng-tunbridge-wells-g3,generator,generator engineer,51.1324,0.2637,13,P2
+eng-tunbridge-wells-g4,generator,generator shop,51.1324,0.2637,13,P2
+eng-crawley-g0,generator,generator installation,51.1092,-0.1872,13,P1
+eng-crawley-g1,generator,standby generator installer,51.1092,-0.1872,13,P1
+eng-crawley-g2,generator,backup generator,51.1092,-0.1872,13,P1
+eng-crawley-g3,generator,generator engineer,51.1092,-0.1872,13,P2
+eng-crawley-g4,generator,generator shop,51.1092,-0.1872,13,P2
+eng-brighton-hove-g0,generator,generator installation,50.8225,-0.1372,13,P1
+eng-brighton-hove-g1,generator,standby generator installer,50.8225,-0.1372,13,P1
+eng-brighton-hove-g2,generator,backup generator,50.8225,-0.1372,13,P1
+eng-brighton-hove-g3,generator,generator engineer,50.8225,-0.1372,13,P2
+eng-brighton-hove-g4,generator,generator shop,50.8225,-0.1372,13,P2
+eng-guildford-g0,generator,generator installation,51.2362,-0.5704,13,P1
+eng-guildford-g1,generator,standby generator installer,51.2362,-0.5704,13,P1
+eng-guildford-g2,generator,backup generator,51.2362,-0.5704,13,P1
+eng-guildford-g3,generator,generator engineer,51.2362,-0.5704,13,P2
+eng-guildford-g4,generator,generator shop,51.2362,-0.5704,13,P2
+eng-leicester-g0,generator,generator installation,52.6369,-1.1398,13,P1
+eng-leicester-g1,generator,standby generator installer,52.6369,-1.1398,13,P1
+eng-leicester-g2,generator,backup generator,52.6369,-1.1398,13,P1
+eng-leicester-g3,generator,generator engineer,52.6369,-1.1398,13,P2
+eng-leicester-g4,generator,generator shop,52.6369,-1.1398,13,P2
+eng-nottingham-g0,generator,generator installation,52.9548,-1.1581,13,P1
+eng-nottingham-g1,generator,standby generator installer,52.9548,-1.1581,13,P1
+eng-nottingham-g2,generator,backup generator,52.9548,-1.1581,13,P1
+eng-nottingham-g3,generator,generator engineer,52.9548,-1.1581,13,P2
+eng-nottingham-g4,generator,generator shop,52.9548,-1.1581,13,P2
+eng-derby-g0,generator,generator installation,52.9225,-1.4746,13,P1
+eng-derby-g1,generator,standby generator installer,52.9225,-1.4746,13,P1
+eng-derby-g2,generator,backup generator,52.9225,-1.4746,13,P1
+eng-derby-g3,generator,generator engineer,52.9225,-1.4746,13,P2
+eng-derby-g4,generator,generator shop,52.9225,-1.4746,13,P2
+eng-mansfield-g0,generator,generator installation,53.145,-1.198,13,P1
+eng-mansfield-g1,generator,standby generator installer,53.145,-1.198,13,P1
+eng-mansfield-g2,generator,backup generator,53.145,-1.198,13,P1
+eng-mansfield-g3,generator,generator engineer,53.145,-1.198,13,P2
+eng-mansfield-g4,generator,generator shop,53.145,-1.198,13,P2
+eng-chesterfield-g0,generator,generator installation,53.235,-1.421,13,P1
+eng-chesterfield-g1,generator,standby generator installer,53.235,-1.421,13,P1
+eng-chesterfield-g2,generator,backup generator,53.235,-1.421,13,P1
+eng-chesterfield-g3,generator,generator engineer,53.235,-1.421,13,P2
+eng-chesterfield-g4,generator,generator shop,53.235,-1.421,13,P2
+eng-lincoln-g0,generator,generator installation,53.2307,-0.5406,13,P1
+eng-lincoln-g1,generator,standby generator installer,53.2307,-0.5406,13,P1
+eng-lincoln-g2,generator,backup generator,53.2307,-0.5406,13,P1
+eng-lincoln-g3,generator,generator engineer,53.2307,-0.5406,13,P2
+eng-lincoln-g4,generator,generator shop,53.2307,-0.5406,13,P2
+eng-grimsby-g0,generator,generator installation,53.5675,-0.08,13,P1
+eng-grimsby-g1,generator,standby generator installer,53.5675,-0.08,13,P1
+eng-grimsby-g2,generator,backup generator,53.5675,-0.08,13,P1
+eng-grimsby-g3,generator,generator engineer,53.5675,-0.08,13,P2
+eng-grimsby-g4,generator,generator shop,53.5675,-0.08,13,P2
+eng-scunthorpe-g0,generator,generator installation,53.59,-0.65,13,P1
+eng-scunthorpe-g1,generator,standby generator installer,53.59,-0.65,13,P1
+eng-scunthorpe-g2,generator,backup generator,53.59,-0.65,13,P1
+eng-scunthorpe-g3,generator,generator engineer,53.59,-0.65,13,P2
+eng-scunthorpe-g4,generator,generator shop,53.59,-0.65,13,P2
+eng-kingston-upon-hull-g0,generator,generator installation,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-g1,generator,standby generator installer,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-g2,generator,backup generator,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-g3,generator,generator engineer,53.7457,-0.3367,13,P2
+eng-kingston-upon-hull-g4,generator,generator shop,53.7457,-0.3367,13,P2
+eng-york-g0,generator,generator installation,53.96,-1.0873,13,P1
+eng-york-g1,generator,standby generator installer,53.96,-1.0873,13,P1
+eng-york-g2,generator,backup generator,53.96,-1.0873,13,P1
+eng-york-g3,generator,generator engineer,53.96,-1.0873,13,P2
+eng-york-g4,generator,generator shop,53.96,-1.0873,13,P2
+eng-scarborough-g0,generator,generator installation,54.283,-0.399,13,P1
+eng-scarborough-g1,generator,standby generator installer,54.283,-0.399,13,P1
+eng-scarborough-g2,generator,backup generator,54.283,-0.399,13,P1
+eng-scarborough-g3,generator,generator engineer,54.283,-0.399,13,P2
+eng-scarborough-g4,generator,generator shop,54.283,-0.399,13,P2
+eng-leeds-g0,generator,generator installation,53.8008,-1.5491,13,P1
+eng-leeds-g1,generator,standby generator installer,53.8008,-1.5491,13,P1
+eng-leeds-g2,generator,backup generator,53.8008,-1.5491,13,P1
+eng-leeds-g3,generator,generator engineer,53.8008,-1.5491,13,P2
+eng-leeds-g4,generator,generator shop,53.8008,-1.5491,13,P2
+eng-bradford-g0,generator,generator installation,53.796,-1.7594,13,P1
+eng-bradford-g1,generator,standby generator installer,53.796,-1.7594,13,P1
+eng-bradford-g2,generator,backup generator,53.796,-1.7594,13,P1
+eng-bradford-g3,generator,generator engineer,53.796,-1.7594,13,P2
+eng-bradford-g4,generator,generator shop,53.796,-1.7594,13,P2
+eng-huddersfield-g0,generator,generator installation,53.645,-1.785,13,P1
+eng-huddersfield-g1,generator,standby generator installer,53.645,-1.785,13,P1
+eng-huddersfield-g2,generator,backup generator,53.645,-1.785,13,P1
+eng-huddersfield-g3,generator,generator engineer,53.645,-1.785,13,P2
+eng-huddersfield-g4,generator,generator shop,53.645,-1.785,13,P2
+eng-barnsley-g0,generator,generator installation,53.5526,-1.4797,13,P1
+eng-barnsley-g1,generator,standby generator installer,53.5526,-1.4797,13,P1
+eng-barnsley-g2,generator,backup generator,53.5526,-1.4797,13,P1
+eng-barnsley-g3,generator,generator engineer,53.5526,-1.4797,13,P2
+eng-barnsley-g4,generator,generator shop,53.5526,-1.4797,13,P2
+eng-doncaster-g0,generator,generator installation,53.5228,-1.1285,13,P1
+eng-doncaster-g1,generator,standby generator installer,53.5228,-1.1285,13,P1
+eng-doncaster-g2,generator,backup generator,53.5228,-1.1285,13,P1
+eng-doncaster-g3,generator,generator engineer,53.5228,-1.1285,13,P2
+eng-doncaster-g4,generator,generator shop,53.5228,-1.1285,13,P2
+eng-sheffield-g0,generator,generator installation,53.3811,-1.4701,13,P1
+eng-sheffield-g1,generator,standby generator installer,53.3811,-1.4701,13,P1
+eng-sheffield-g2,generator,backup generator,53.3811,-1.4701,13,P1
+eng-sheffield-g3,generator,generator engineer,53.3811,-1.4701,13,P2
+eng-sheffield-g4,generator,generator shop,53.3811,-1.4701,13,P2
+eng-manchester-g0,generator,generator installation,53.4808,-2.2426,13,P1
+eng-manchester-g1,generator,standby generator installer,53.4808,-2.2426,13,P1
+eng-manchester-g2,generator,backup generator,53.4808,-2.2426,13,P1
+eng-manchester-g3,generator,generator engineer,53.4808,-2.2426,13,P2
+eng-manchester-g4,generator,generator shop,53.4808,-2.2426,13,P2
+eng-rochdale-g0,generator,generator installation,53.616,-2.155,13,P1
+eng-rochdale-g1,generator,standby generator installer,53.616,-2.155,13,P1
+eng-rochdale-g2,generator,backup generator,53.616,-2.155,13,P1
+eng-rochdale-g3,generator,generator engineer,53.616,-2.155,13,P2
+eng-rochdale-g4,generator,generator shop,53.616,-2.155,13,P2
+eng-bolton-g0,generator,generator installation,53.5769,-2.4282,13,P1
+eng-bolton-g1,generator,standby generator installer,53.5769,-2.4282,13,P1
+eng-bolton-g2,generator,backup generator,53.5769,-2.4282,13,P1
+eng-bolton-g3,generator,generator engineer,53.5769,-2.4282,13,P2
+eng-bolton-g4,generator,generator shop,53.5769,-2.4282,13,P2
+eng-wigan-g0,generator,generator installation,53.545,-2.6318,13,P1
+eng-wigan-g1,generator,standby generator installer,53.545,-2.6318,13,P1
+eng-wigan-g2,generator,backup generator,53.545,-2.6318,13,P1
+eng-wigan-g3,generator,generator engineer,53.545,-2.6318,13,P2
+eng-wigan-g4,generator,generator shop,53.545,-2.6318,13,P2
+eng-warrington-g0,generator,generator installation,53.39,-2.597,13,P1
+eng-warrington-g1,generator,standby generator installer,53.39,-2.597,13,P1
+eng-warrington-g2,generator,backup generator,53.39,-2.597,13,P1
+eng-warrington-g3,generator,generator engineer,53.39,-2.597,13,P2
+eng-warrington-g4,generator,generator shop,53.39,-2.597,13,P2
+eng-liverpool-g0,generator,generator installation,53.4084,-2.9916,13,P1
+eng-liverpool-g1,generator,standby generator installer,53.4084,-2.9916,13,P1
+eng-liverpool-g2,generator,backup generator,53.4084,-2.9916,13,P1
+eng-liverpool-g3,generator,generator engineer,53.4084,-2.9916,13,P2
+eng-liverpool-g4,generator,generator shop,53.4084,-2.9916,13,P2
+eng-southport-g0,generator,generator installation,53.648,-3.01,13,P1
+eng-southport-g1,generator,standby generator installer,53.648,-3.01,13,P1
+eng-southport-g2,generator,backup generator,53.648,-3.01,13,P1
+eng-southport-g3,generator,generator engineer,53.648,-3.01,13,P2
+eng-southport-g4,generator,generator shop,53.648,-3.01,13,P2
+eng-chester-g0,generator,generator installation,53.1934,-2.8931,13,P1
+eng-chester-g1,generator,standby generator installer,53.1934,-2.8931,13,P1
+eng-chester-g2,generator,backup generator,53.1934,-2.8931,13,P1
+eng-chester-g3,generator,generator engineer,53.1934,-2.8931,13,P2
+eng-chester-g4,generator,generator shop,53.1934,-2.8931,13,P2
+eng-preston-g0,generator,generator installation,53.7632,-2.7031,13,P1
+eng-preston-g1,generator,standby generator installer,53.7632,-2.7031,13,P1
+eng-preston-g2,generator,backup generator,53.7632,-2.7031,13,P1
+eng-preston-g3,generator,generator engineer,53.7632,-2.7031,13,P2
+eng-preston-g4,generator,generator shop,53.7632,-2.7031,13,P2
+eng-blackpool-g0,generator,generator installation,53.8175,-3.0357,13,P1
+eng-blackpool-g1,generator,standby generator installer,53.8175,-3.0357,13,P1
+eng-blackpool-g2,generator,backup generator,53.8175,-3.0357,13,P1
+eng-blackpool-g3,generator,generator engineer,53.8175,-3.0357,13,P2
+eng-blackpool-g4,generator,generator shop,53.8175,-3.0357,13,P2
+eng-blackburn-g0,generator,generator installation,53.7486,-2.482,13,P1
+eng-blackburn-g1,generator,standby generator installer,53.7486,-2.482,13,P1
+eng-blackburn-g2,generator,backup generator,53.7486,-2.482,13,P1
+eng-blackburn-g3,generator,generator engineer,53.7486,-2.482,13,P2
+eng-blackburn-g4,generator,generator shop,53.7486,-2.482,13,P2
+eng-burnley-g0,generator,generator installation,53.789,-2.248,13,P1
+eng-burnley-g1,generator,standby generator installer,53.789,-2.248,13,P1
+eng-burnley-g2,generator,backup generator,53.789,-2.248,13,P1
+eng-burnley-g3,generator,generator engineer,53.789,-2.248,13,P2
+eng-burnley-g4,generator,generator shop,53.789,-2.248,13,P2
+eng-lancaster-g0,generator,generator installation,54.0466,-2.8007,13,P1
+eng-lancaster-g1,generator,standby generator installer,54.0466,-2.8007,13,P1
+eng-lancaster-g2,generator,backup generator,54.0466,-2.8007,13,P1
+eng-lancaster-g3,generator,generator engineer,54.0466,-2.8007,13,P2
+eng-lancaster-g4,generator,generator shop,54.0466,-2.8007,13,P2
+eng-kendal-g0,generator,generator installation,54.328,-2.746,13,P1
+eng-kendal-g1,generator,standby generator installer,54.328,-2.746,13,P1
+eng-kendal-g2,generator,backup generator,54.328,-2.746,13,P1
+eng-kendal-g3,generator,generator engineer,54.328,-2.746,13,P2
+eng-kendal-g4,generator,generator shop,54.328,-2.746,13,P2
+eng-barrow-in-furness-g0,generator,generator installation,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-g1,generator,standby generator installer,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-g2,generator,backup generator,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-g3,generator,generator engineer,54.1108,-3.2261,13,P2
+eng-barrow-in-furness-g4,generator,generator shop,54.1108,-3.2261,13,P2
+eng-workington-g0,generator,generator installation,54.642,-3.544,13,P1
+eng-workington-g1,generator,standby generator installer,54.642,-3.544,13,P1
+eng-workington-g2,generator,backup generator,54.642,-3.544,13,P1
+eng-workington-g3,generator,generator engineer,54.642,-3.544,13,P2
+eng-workington-g4,generator,generator shop,54.642,-3.544,13,P2
+eng-carlisle-g0,generator,generator installation,54.8925,-2.9329,13,P1
+eng-carlisle-g1,generator,standby generator installer,54.8925,-2.9329,13,P1
+eng-carlisle-g2,generator,backup generator,54.8925,-2.9329,13,P1
+eng-carlisle-g3,generator,generator engineer,54.8925,-2.9329,13,P2
+eng-carlisle-g4,generator,generator shop,54.8925,-2.9329,13,P2
+eng-middlesbrough-g0,generator,generator installation,54.5742,-1.235,13,P1
+eng-middlesbrough-g1,generator,standby generator installer,54.5742,-1.235,13,P1
+eng-middlesbrough-g2,generator,backup generator,54.5742,-1.235,13,P1
+eng-middlesbrough-g3,generator,generator engineer,54.5742,-1.235,13,P2
+eng-middlesbrough-g4,generator,generator shop,54.5742,-1.235,13,P2
+eng-hartlepool-g0,generator,generator installation,54.6858,-1.212,13,P1
+eng-hartlepool-g1,generator,standby generator installer,54.6858,-1.212,13,P1
+eng-hartlepool-g2,generator,backup generator,54.6858,-1.212,13,P1
+eng-hartlepool-g3,generator,generator engineer,54.6858,-1.212,13,P2
+eng-hartlepool-g4,generator,generator shop,54.6858,-1.212,13,P2
+eng-darlington-g0,generator,generator installation,54.5235,-1.5598,13,P1
+eng-darlington-g1,generator,standby generator installer,54.5235,-1.5598,13,P1
+eng-darlington-g2,generator,backup generator,54.5235,-1.5598,13,P1
+eng-darlington-g3,generator,generator engineer,54.5235,-1.5598,13,P2
+eng-darlington-g4,generator,generator shop,54.5235,-1.5598,13,P2
+eng-durham-g0,generator,generator installation,54.7767,-1.5757,13,P1
+eng-durham-g1,generator,standby generator installer,54.7767,-1.5757,13,P1
+eng-durham-g2,generator,backup generator,54.7767,-1.5757,13,P1
+eng-durham-g3,generator,generator engineer,54.7767,-1.5757,13,P2
+eng-durham-g4,generator,generator shop,54.7767,-1.5757,13,P2
+eng-sunderland-g0,generator,generator installation,54.9069,-1.3838,13,P1
+eng-sunderland-g1,generator,standby generator installer,54.9069,-1.3838,13,P1
+eng-sunderland-g2,generator,backup generator,54.9069,-1.3838,13,P1
+eng-sunderland-g3,generator,generator engineer,54.9069,-1.3838,13,P2
+eng-sunderland-g4,generator,generator shop,54.9069,-1.3838,13,P2
+eng-newcastle-upon-tyne-g0,generator,generator installation,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-g1,generator,standby generator installer,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-g2,generator,backup generator,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-g3,generator,generator engineer,54.9783,-1.6178,13,P2
+eng-newcastle-upon-tyne-g4,generator,generator shop,54.9783,-1.6178,13,P2
+eng-hexham-g0,generator,generator installation,54.971,-2.101,13,P1
+eng-hexham-g1,generator,standby generator installer,54.971,-2.101,13,P1
+eng-hexham-g2,generator,backup generator,54.971,-2.101,13,P1
+eng-hexham-g3,generator,generator engineer,54.971,-2.101,13,P2
+eng-hexham-g4,generator,generator shop,54.971,-2.101,13,P2
+eng-ashington-morpeth-g0,generator,generator installation,55.181,-1.568,13,P1
+eng-ashington-morpeth-g1,generator,standby generator installer,55.181,-1.568,13,P1
+eng-ashington-morpeth-g2,generator,backup generator,55.181,-1.568,13,P1
+eng-ashington-morpeth-g3,generator,generator engineer,55.181,-1.568,13,P2
+eng-ashington-morpeth-g4,generator,generator shop,55.181,-1.568,13,P2
+eng-berwick-upon-tweed-g0,generator,generator installation,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-g1,generator,standby generator installer,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-g2,generator,backup generator,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-g3,generator,generator engineer,55.771,-2.005,13,P2
+eng-berwick-upon-tweed-g4,generator,generator shop,55.771,-2.005,13,P2
+sct-glasgow-g0,generator,generator installation,55.8642,-4.2518,13,P1
+sct-glasgow-g1,generator,standby generator installer,55.8642,-4.2518,13,P1
+sct-glasgow-g2,generator,backup generator,55.8642,-4.2518,13,P1
+sct-glasgow-g3,generator,generator engineer,55.8642,-4.2518,13,P2
+sct-glasgow-g4,generator,generator shop,55.8642,-4.2518,13,P2
+sct-edinburgh-g0,generator,generator installation,55.9533,-3.1883,13,P1
+sct-edinburgh-g1,generator,standby generator installer,55.9533,-3.1883,13,P1
+sct-edinburgh-g2,generator,backup generator,55.9533,-3.1883,13,P1
+sct-edinburgh-g3,generator,generator engineer,55.9533,-3.1883,13,P2
+sct-edinburgh-g4,generator,generator shop,55.9533,-3.1883,13,P2
+sct-aberdeen-g0,generator,generator installation,57.1497,-2.0943,13,P1
+sct-aberdeen-g1,generator,standby generator installer,57.1497,-2.0943,13,P1
+sct-aberdeen-g2,generator,backup generator,57.1497,-2.0943,13,P1
+sct-aberdeen-g3,generator,generator engineer,57.1497,-2.0943,13,P2
+sct-aberdeen-g4,generator,generator shop,57.1497,-2.0943,13,P2
+sct-dundee-g0,generator,generator installation,56.462,-2.9707,13,P1
+sct-dundee-g1,generator,standby generator installer,56.462,-2.9707,13,P1
+sct-dundee-g2,generator,backup generator,56.462,-2.9707,13,P1
+sct-dundee-g3,generator,generator engineer,56.462,-2.9707,13,P2
+sct-dundee-g4,generator,generator shop,56.462,-2.9707,13,P2
+sct-montrose-arbroath-g0,generator,generator installation,56.71,-2.47,13,P1
+sct-montrose-arbroath-g1,generator,standby generator installer,56.71,-2.47,13,P1
+sct-montrose-arbroath-g2,generator,backup generator,56.71,-2.47,13,P1
+sct-montrose-arbroath-g3,generator,generator engineer,56.71,-2.47,13,P2
+sct-montrose-arbroath-g4,generator,generator shop,56.71,-2.47,13,P2
+sct-perth-g0,generator,generator installation,56.395,-3.4308,13,P1
+sct-perth-g1,generator,standby generator installer,56.395,-3.4308,13,P1
+sct-perth-g2,generator,backup generator,56.395,-3.4308,13,P1
+sct-perth-g3,generator,generator engineer,56.395,-3.4308,13,P2
+sct-perth-g4,generator,generator shop,56.395,-3.4308,13,P2
+sct-stirling-g0,generator,generator installation,56.1165,-3.9369,13,P1
+sct-stirling-g1,generator,standby generator installer,56.1165,-3.9369,13,P1
+sct-stirling-g2,generator,backup generator,56.1165,-3.9369,13,P1
+sct-stirling-g3,generator,generator engineer,56.1165,-3.9369,13,P2
+sct-stirling-g4,generator,generator shop,56.1165,-3.9369,13,P2
+sct-falkirk-g0,generator,generator installation,56.0019,-3.7839,13,P1
+sct-falkirk-g1,generator,standby generator installer,56.0019,-3.7839,13,P1
+sct-falkirk-g2,generator,backup generator,56.0019,-3.7839,13,P1
+sct-falkirk-g3,generator,generator engineer,56.0019,-3.7839,13,P2
+sct-falkirk-g4,generator,generator shop,56.0019,-3.7839,13,P2
+sct-livingston-g0,generator,generator installation,55.883,-3.523,13,P1
+sct-livingston-g1,generator,standby generator installer,55.883,-3.523,13,P1
+sct-livingston-g2,generator,backup generator,55.883,-3.523,13,P1
+sct-livingston-g3,generator,generator engineer,55.883,-3.523,13,P2
+sct-livingston-g4,generator,generator shop,55.883,-3.523,13,P2
+sct-dunfermline-g0,generator,generator installation,56.0719,-3.4393,13,P1
+sct-dunfermline-g1,generator,standby generator installer,56.0719,-3.4393,13,P1
+sct-dunfermline-g2,generator,backup generator,56.0719,-3.4393,13,P1
+sct-dunfermline-g3,generator,generator engineer,56.0719,-3.4393,13,P2
+sct-dunfermline-g4,generator,generator shop,56.0719,-3.4393,13,P2
+sct-kirkcaldy-g0,generator,generator installation,56.113,-3.16,13,P1
+sct-kirkcaldy-g1,generator,standby generator installer,56.113,-3.16,13,P1
+sct-kirkcaldy-g2,generator,backup generator,56.113,-3.16,13,P1
+sct-kirkcaldy-g3,generator,generator engineer,56.113,-3.16,13,P2
+sct-kirkcaldy-g4,generator,generator shop,56.113,-3.16,13,P2
+sct-greenock-g0,generator,generator installation,55.95,-4.76,13,P1
+sct-greenock-g1,generator,standby generator installer,55.95,-4.76,13,P1
+sct-greenock-g2,generator,backup generator,55.95,-4.76,13,P1
+sct-greenock-g3,generator,generator engineer,55.95,-4.76,13,P2
+sct-greenock-g4,generator,generator shop,55.95,-4.76,13,P2
+sct-kilmarnock-g0,generator,generator installation,55.611,-4.496,13,P1
+sct-kilmarnock-g1,generator,standby generator installer,55.611,-4.496,13,P1
+sct-kilmarnock-g2,generator,backup generator,55.611,-4.496,13,P1
+sct-kilmarnock-g3,generator,generator engineer,55.611,-4.496,13,P2
+sct-kilmarnock-g4,generator,generator shop,55.611,-4.496,13,P2
+sct-ayr-g0,generator,generator installation,55.4586,-4.6292,13,P1
+sct-ayr-g1,generator,standby generator installer,55.4586,-4.6292,13,P1
+sct-ayr-g2,generator,backup generator,55.4586,-4.6292,13,P1
+sct-ayr-g3,generator,generator engineer,55.4586,-4.6292,13,P2
+sct-ayr-g4,generator,generator shop,55.4586,-4.6292,13,P2
+sct-stranraer-g0,generator,generator installation,54.902,-5.027,13,P1
+sct-stranraer-g1,generator,standby generator installer,54.902,-5.027,13,P1
+sct-stranraer-g2,generator,backup generator,54.902,-5.027,13,P1
+sct-stranraer-g3,generator,generator engineer,54.902,-5.027,13,P2
+sct-stranraer-g4,generator,generator shop,54.902,-5.027,13,P2
+sct-dumfries-g0,generator,generator installation,55.07,-3.603,13,P1
+sct-dumfries-g1,generator,standby generator installer,55.07,-3.603,13,P1
+sct-dumfries-g2,generator,backup generator,55.07,-3.603,13,P1
+sct-dumfries-g3,generator,generator engineer,55.07,-3.603,13,P2
+sct-dumfries-g4,generator,generator shop,55.07,-3.603,13,P2
+sct-galashiels-borders-g0,generator,generator installation,55.618,-2.808,13,P1
+sct-galashiels-borders-g1,generator,standby generator installer,55.618,-2.808,13,P1
+sct-galashiels-borders-g2,generator,backup generator,55.618,-2.808,13,P1
+sct-galashiels-borders-g3,generator,generator engineer,55.618,-2.808,13,P2
+sct-galashiels-borders-g4,generator,generator shop,55.618,-2.808,13,P2
+sct-inverness-g0,generator,generator installation,57.4778,-4.2247,13,P1
+sct-inverness-g1,generator,standby generator installer,57.4778,-4.2247,13,P1
+sct-inverness-g2,generator,backup generator,57.4778,-4.2247,13,P1
+sct-inverness-g3,generator,generator engineer,57.4778,-4.2247,13,P2
+sct-inverness-g4,generator,generator shop,57.4778,-4.2247,13,P2
+sct-elgin-g0,generator,generator installation,57.65,-3.315,13,P1
+sct-elgin-g1,generator,standby generator installer,57.65,-3.315,13,P1
+sct-elgin-g2,generator,backup generator,57.65,-3.315,13,P1
+sct-elgin-g3,generator,generator engineer,57.65,-3.315,13,P2
+sct-elgin-g4,generator,generator shop,57.65,-3.315,13,P2
+sct-fort-william-g0,generator,generator installation,56.8198,-5.1052,13,P1
+sct-fort-william-g1,generator,standby generator installer,56.8198,-5.1052,13,P1
+sct-fort-william-g2,generator,backup generator,56.8198,-5.1052,13,P1
+sct-fort-william-g3,generator,generator engineer,56.8198,-5.1052,13,P2
+sct-fort-william-g4,generator,generator shop,56.8198,-5.1052,13,P2
+sct-oban-g0,generator,generator installation,56.415,-5.47,13,P1
+sct-oban-g1,generator,standby generator installer,56.415,-5.47,13,P1
+sct-oban-g2,generator,backup generator,56.415,-5.47,13,P1
+sct-oban-g3,generator,generator engineer,56.415,-5.47,13,P2
+sct-oban-g4,generator,generator shop,56.415,-5.47,13,P2
+sct-wick-caithness-g0,generator,generator installation,58.439,-3.094,13,P1
+sct-wick-caithness-g1,generator,standby generator installer,58.439,-3.094,13,P1
+sct-wick-caithness-g2,generator,backup generator,58.439,-3.094,13,P1
+sct-wick-caithness-g3,generator,generator engineer,58.439,-3.094,13,P2
+sct-wick-caithness-g4,generator,generator shop,58.439,-3.094,13,P2
+wls-cardiff-g0,generator,generator installation,51.4816,-3.1791,13,P1
+wls-cardiff-g1,generator,standby generator installer,51.4816,-3.1791,13,P1
+wls-cardiff-g2,generator,backup generator,51.4816,-3.1791,13,P1
+wls-cardiff-g3,generator,generator engineer,51.4816,-3.1791,13,P2
+wls-cardiff-g4,generator,generator shop,51.4816,-3.1791,13,P2
+wls-newport-g0,generator,generator installation,51.5842,-2.9977,13,P1
+wls-newport-g1,generator,standby generator installer,51.5842,-2.9977,13,P1
+wls-newport-g2,generator,backup generator,51.5842,-2.9977,13,P1
+wls-newport-g3,generator,generator engineer,51.5842,-2.9977,13,P2
+wls-newport-g4,generator,generator shop,51.5842,-2.9977,13,P2
+wls-swansea-g0,generator,generator installation,51.6214,-3.9436,13,P1
+wls-swansea-g1,generator,standby generator installer,51.6214,-3.9436,13,P1
+wls-swansea-g2,generator,backup generator,51.6214,-3.9436,13,P1
+wls-swansea-g3,generator,generator engineer,51.6214,-3.9436,13,P2
+wls-swansea-g4,generator,generator shop,51.6214,-3.9436,13,P2
+wls-bridgend-g0,generator,generator installation,51.504,-3.577,13,P1
+wls-bridgend-g1,generator,standby generator installer,51.504,-3.577,13,P1
+wls-bridgend-g2,generator,backup generator,51.504,-3.577,13,P1
+wls-bridgend-g3,generator,generator engineer,51.504,-3.577,13,P2
+wls-bridgend-g4,generator,generator shop,51.504,-3.577,13,P2
+wls-merthyr-tydfil-g0,generator,generator installation,51.748,-3.381,13,P1
+wls-merthyr-tydfil-g1,generator,standby generator installer,51.748,-3.381,13,P1
+wls-merthyr-tydfil-g2,generator,backup generator,51.748,-3.381,13,P1
+wls-merthyr-tydfil-g3,generator,generator engineer,51.748,-3.381,13,P2
+wls-merthyr-tydfil-g4,generator,generator shop,51.748,-3.381,13,P2
+wls-llanelli-g0,generator,generator installation,51.681,-4.162,13,P1
+wls-llanelli-g1,generator,standby generator installer,51.681,-4.162,13,P1
+wls-llanelli-g2,generator,backup generator,51.681,-4.162,13,P1
+wls-llanelli-g3,generator,generator engineer,51.681,-4.162,13,P2
+wls-llanelli-g4,generator,generator shop,51.681,-4.162,13,P2
+wls-carmarthen-g0,generator,generator installation,51.856,-4.31,13,P1
+wls-carmarthen-g1,generator,standby generator installer,51.856,-4.31,13,P1
+wls-carmarthen-g2,generator,backup generator,51.856,-4.31,13,P1
+wls-carmarthen-g3,generator,generator engineer,51.856,-4.31,13,P2
+wls-carmarthen-g4,generator,generator shop,51.856,-4.31,13,P2
+wls-haverfordwest-g0,generator,generator installation,51.801,-4.97,13,P1
+wls-haverfordwest-g1,generator,standby generator installer,51.801,-4.97,13,P1
+wls-haverfordwest-g2,generator,backup generator,51.801,-4.97,13,P1
+wls-haverfordwest-g3,generator,generator engineer,51.801,-4.97,13,P2
+wls-haverfordwest-g4,generator,generator shop,51.801,-4.97,13,P2
+wls-aberystwyth-g0,generator,generator installation,52.414,-4.081,13,P1
+wls-aberystwyth-g1,generator,standby generator installer,52.414,-4.081,13,P1
+wls-aberystwyth-g2,generator,backup generator,52.414,-4.081,13,P1
+wls-aberystwyth-g3,generator,generator engineer,52.414,-4.081,13,P2
+wls-aberystwyth-g4,generator,generator shop,52.414,-4.081,13,P2
+wls-newtown-powys-g0,generator,generator installation,52.515,-3.313,13,P1
+wls-newtown-powys-g1,generator,standby generator installer,52.515,-3.313,13,P1
+wls-newtown-powys-g2,generator,backup generator,52.515,-3.313,13,P1
+wls-newtown-powys-g3,generator,generator engineer,52.515,-3.313,13,P2
+wls-newtown-powys-g4,generator,generator shop,52.515,-3.313,13,P2
+wls-wrexham-g0,generator,generator installation,53.0428,-2.9927,13,P1
+wls-wrexham-g1,generator,standby generator installer,53.0428,-2.9927,13,P1
+wls-wrexham-g2,generator,backup generator,53.0428,-2.9927,13,P1
+wls-wrexham-g3,generator,generator engineer,53.0428,-2.9927,13,P2
+wls-wrexham-g4,generator,generator shop,53.0428,-2.9927,13,P2
+wls-rhyl-colwyn-bay-g0,generator,generator installation,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-g1,generator,standby generator installer,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-g2,generator,backup generator,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-g3,generator,generator engineer,53.319,-3.489,13,P2
+wls-rhyl-colwyn-bay-g4,generator,generator shop,53.319,-3.489,13,P2
+wls-bangor-gwynedd-g0,generator,generator installation,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-g1,generator,standby generator installer,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-g2,generator,backup generator,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-g3,generator,generator engineer,53.2274,-4.1293,13,P2
+wls-bangor-gwynedd-g4,generator,generator shop,53.2274,-4.1293,13,P2
+nir-belfast-g0,generator,generator installation,54.5973,-5.9301,13,P1
+nir-belfast-g1,generator,standby generator installer,54.5973,-5.9301,13,P1
+nir-belfast-g2,generator,backup generator,54.5973,-5.9301,13,P1
+nir-belfast-g3,generator,generator engineer,54.5973,-5.9301,13,P2
+nir-belfast-g4,generator,generator shop,54.5973,-5.9301,13,P2
+nir-lisburn-g0,generator,generator installation,54.5162,-6.058,13,P1
+nir-lisburn-g1,generator,standby generator installer,54.5162,-6.058,13,P1
+nir-lisburn-g2,generator,backup generator,54.5162,-6.058,13,P1
+nir-lisburn-g3,generator,generator engineer,54.5162,-6.058,13,P2
+nir-lisburn-g4,generator,generator shop,54.5162,-6.058,13,P2
+nir-craigavon-g0,generator,generator installation,54.447,-6.387,13,P1
+nir-craigavon-g1,generator,standby generator installer,54.447,-6.387,13,P1
+nir-craigavon-g2,generator,backup generator,54.447,-6.387,13,P1
+nir-craigavon-g3,generator,generator engineer,54.447,-6.387,13,P2
+nir-craigavon-g4,generator,generator shop,54.447,-6.387,13,P2
+nir-newry-g0,generator,generator installation,54.1751,-6.3402,13,P1
+nir-newry-g1,generator,standby generator installer,54.1751,-6.3402,13,P1
+nir-newry-g2,generator,backup generator,54.1751,-6.3402,13,P1
+nir-newry-g3,generator,generator engineer,54.1751,-6.3402,13,P2
+nir-newry-g4,generator,generator shop,54.1751,-6.3402,13,P2
+nir-ballymena-g0,generator,generator installation,54.8643,-6.2758,13,P1
+nir-ballymena-g1,generator,standby generator installer,54.8643,-6.2758,13,P1
+nir-ballymena-g2,generator,backup generator,54.8643,-6.2758,13,P1
+nir-ballymena-g3,generator,generator engineer,54.8643,-6.2758,13,P2
+nir-ballymena-g4,generator,generator shop,54.8643,-6.2758,13,P2
+nir-coleraine-g0,generator,generator installation,55.132,-6.668,13,P1
+nir-coleraine-g1,generator,standby generator installer,55.132,-6.668,13,P1
+nir-coleraine-g2,generator,backup generator,55.132,-6.668,13,P1
+nir-coleraine-g3,generator,generator engineer,55.132,-6.668,13,P2
+nir-coleraine-g4,generator,generator shop,55.132,-6.668,13,P2
+nir-londonderry-g0,generator,generator installation,54.9966,-7.3086,13,P1
+nir-londonderry-g1,generator,standby generator installer,54.9966,-7.3086,13,P1
+nir-londonderry-g2,generator,backup generator,54.9966,-7.3086,13,P1
+nir-londonderry-g3,generator,generator engineer,54.9966,-7.3086,13,P2
+nir-londonderry-g4,generator,generator shop,54.9966,-7.3086,13,P2
+nir-omagh-g0,generator,generator installation,54.598,-7.31,13,P1
+nir-omagh-g1,generator,standby generator installer,54.598,-7.31,13,P1
+nir-omagh-g2,generator,backup generator,54.598,-7.31,13,P1
+nir-omagh-g3,generator,generator engineer,54.598,-7.31,13,P2
+nir-omagh-g4,generator,generator shop,54.598,-7.31,13,P2
+nir-enniskillen-g0,generator,generator installation,54.344,-7.631,13,P1
+nir-enniskillen-g1,generator,standby generator installer,54.344,-7.631,13,P1
+nir-enniskillen-g2,generator,backup generator,54.344,-7.631,13,P1
+nir-enniskillen-g3,generator,generator engineer,54.344,-7.631,13,P2
+nir-enniskillen-g4,generator,generator shop,54.344,-7.631,13,P2
+eng-london-north-wood-green-g0,generator,generator installation,51.597,-0.11,13,P1
+eng-london-north-wood-green-g1,generator,standby generator installer,51.597,-0.11,13,P1
+eng-london-north-wood-green-g2,generator,backup generator,51.597,-0.11,13,P1
+eng-london-north-wood-green-g3,generator,generator engineer,51.597,-0.11,13,P2
+eng-london-north-wood-green-g4,generator,generator shop,51.597,-0.11,13,P2
+eng-london-south-streatham-g0,generator,generator installation,51.428,-0.123,13,P1
+eng-london-south-streatham-g1,generator,standby generator installer,51.428,-0.123,13,P1
+eng-london-south-streatham-g2,generator,backup generator,51.428,-0.123,13,P1
+eng-london-south-streatham-g3,generator,generator engineer,51.428,-0.123,13,P2
+eng-london-south-streatham-g4,generator,generator shop,51.428,-0.123,13,P2
+eng-london-east-stratford-g0,generator,generator installation,51.5416,-0.0042,13,P1
+eng-london-east-stratford-g1,generator,standby generator installer,51.5416,-0.0042,13,P1
+eng-london-east-stratford-g2,generator,backup generator,51.5416,-0.0042,13,P1
+eng-london-east-stratford-g3,generator,generator engineer,51.5416,-0.0042,13,P2
+eng-london-east-stratford-g4,generator,generator shop,51.5416,-0.0042,13,P2
+eng-london-west-ealing-g0,generator,generator installation,51.513,-0.304,13,P1
+eng-london-west-ealing-g1,generator,standby generator installer,51.513,-0.304,13,P1
+eng-london-west-ealing-g2,generator,backup generator,51.513,-0.304,13,P1
+eng-london-west-ealing-g3,generator,generator engineer,51.513,-0.304,13,P2
+eng-london-west-ealing-g4,generator,generator shop,51.513,-0.304,13,P2
+eng-london-croydon-g0,generator,generator installation,51.3762,-0.0982,13,P1
+eng-london-croydon-g1,generator,standby generator installer,51.3762,-0.0982,13,P1
+eng-london-croydon-g2,generator,backup generator,51.3762,-0.0982,13,P1
+eng-london-croydon-g3,generator,generator engineer,51.3762,-0.0982,13,P2
+eng-london-croydon-g4,generator,generator shop,51.3762,-0.0982,13,P2
+eng-london-bromley-g0,generator,generator installation,51.406,0.015,13,P1
+eng-london-bromley-g1,generator,standby generator installer,51.406,0.015,13,P1
+eng-london-bromley-g2,generator,backup generator,51.406,0.015,13,P1
+eng-london-bromley-g3,generator,generator engineer,51.406,0.015,13,P2
+eng-london-bromley-g4,generator,generator shop,51.406,0.015,13,P2
+eng-london-romford-g0,generator,generator installation,51.575,0.183,13,P1
+eng-london-romford-g1,generator,standby generator installer,51.575,0.183,13,P1
+eng-london-romford-g2,generator,backup generator,51.575,0.183,13,P1
+eng-london-romford-g3,generator,generator engineer,51.575,0.183,13,P2
+eng-london-romford-g4,generator,generator shop,51.575,0.183,13,P2
+eng-london-enfield-g0,generator,generator installation,51.652,-0.081,13,P1
+eng-london-enfield-g1,generator,standby generator installer,51.652,-0.081,13,P1
+eng-london-enfield-g2,generator,backup generator,51.652,-0.081,13,P1
+eng-london-enfield-g3,generator,generator engineer,51.652,-0.081,13,P2
+eng-london-enfield-g4,generator,generator shop,51.652,-0.081,13,P2
+eng-london-harrow-g0,generator,generator installation,51.58,-0.342,13,P1
+eng-london-harrow-g1,generator,standby generator installer,51.58,-0.342,13,P1
+eng-london-harrow-g2,generator,backup generator,51.58,-0.342,13,P1
+eng-london-harrow-g3,generator,generator engineer,51.58,-0.342,13,P2
+eng-london-harrow-g4,generator,generator shop,51.58,-0.342,13,P2
+eng-london-kingston-g0,generator,generator installation,51.412,-0.3,13,P1
+eng-london-kingston-g1,generator,standby generator installer,51.412,-0.3,13,P1
+eng-london-kingston-g2,generator,backup generator,51.412,-0.3,13,P1
+eng-london-kingston-g3,generator,generator engineer,51.412,-0.3,13,P2
+eng-london-kingston-g4,generator,generator shop,51.412,-0.3,13,P2
+eng-london-uxbridge-g0,generator,generator installation,51.546,-0.478,13,P1
+eng-london-uxbridge-g1,generator,standby generator installer,51.546,-0.478,13,P1
+eng-london-uxbridge-g2,generator,backup generator,51.546,-0.478,13,P1
+eng-london-uxbridge-g3,generator,generator engineer,51.546,-0.478,13,P2
+eng-london-uxbridge-g4,generator,generator shop,51.546,-0.478,13,P2
+eng-london-watford-g0,generator,generator installation,51.6565,-0.3903,13,P1
+eng-london-watford-g1,generator,standby generator installer,51.6565,-0.3903,13,P1
+eng-london-watford-g2,generator,backup generator,51.6565,-0.3903,13,P1
+eng-london-watford-g3,generator,generator engineer,51.6565,-0.3903,13,P2
+eng-london-watford-g4,generator,generator shop,51.6565,-0.3903,13,P2
+eng-bham-solihull-g0,generator,generator installation,52.412,-1.778,13,P1
+eng-bham-solihull-g1,generator,standby generator installer,52.412,-1.778,13,P1
+eng-bham-solihull-g2,generator,backup generator,52.412,-1.778,13,P1
+eng-bham-solihull-g3,generator,generator engineer,52.412,-1.778,13,P2
+eng-bham-solihull-g4,generator,generator shop,52.412,-1.778,13,P2
+eng-bham-sutton-coldfield-g0,generator,generator installation,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-g1,generator,standby generator installer,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-g2,generator,backup generator,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-g3,generator,generator engineer,52.563,-1.824,13,P2
+eng-bham-sutton-coldfield-g4,generator,generator shop,52.563,-1.824,13,P2
+eng-bham-walsall-g0,generator,generator installation,52.586,-1.982,13,P1
+eng-bham-walsall-g1,generator,standby generator installer,52.586,-1.982,13,P1
+eng-bham-walsall-g2,generator,backup generator,52.586,-1.982,13,P1
+eng-bham-walsall-g3,generator,generator engineer,52.586,-1.982,13,P2
+eng-bham-walsall-g4,generator,generator shop,52.586,-1.982,13,P2
+eng-mcr-altrincham-g0,generator,generator installation,53.387,-2.351,13,P1
+eng-mcr-altrincham-g1,generator,standby generator installer,53.387,-2.351,13,P1
+eng-mcr-altrincham-g2,generator,backup generator,53.387,-2.351,13,P1
+eng-mcr-altrincham-g3,generator,generator engineer,53.387,-2.351,13,P2
+eng-mcr-altrincham-g4,generator,generator shop,53.387,-2.351,13,P2
+eng-mcr-bury-g0,generator,generator installation,53.593,-2.297,13,P1
+eng-mcr-bury-g1,generator,standby generator installer,53.593,-2.297,13,P1
+eng-mcr-bury-g2,generator,backup generator,53.593,-2.297,13,P1
+eng-mcr-bury-g3,generator,generator engineer,53.593,-2.297,13,P2
+eng-mcr-bury-g4,generator,generator shop,53.593,-2.297,13,P2
+eng-mcr-ashton-under-lyne-g0,generator,generator installation,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-g1,generator,standby generator installer,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-g2,generator,backup generator,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-g3,generator,generator engineer,53.49,-2.097,13,P2
+eng-mcr-ashton-under-lyne-g4,generator,generator shop,53.49,-2.097,13,P2
+eng-leeds-north-moortown-g0,generator,generator installation,53.838,-1.548,13,P1
+eng-leeds-north-moortown-g1,generator,standby generator installer,53.838,-1.548,13,P1
+eng-leeds-north-moortown-g2,generator,backup generator,53.838,-1.548,13,P1
+eng-leeds-north-moortown-g3,generator,generator engineer,53.838,-1.548,13,P2
+eng-leeds-north-moortown-g4,generator,generator shop,53.838,-1.548,13,P2
+eng-bradford-keighley-g0,generator,generator installation,53.867,-1.911,13,P1
+eng-bradford-keighley-g1,generator,standby generator installer,53.867,-1.911,13,P1
+eng-bradford-keighley-g2,generator,backup generator,53.867,-1.911,13,P1
+eng-bradford-keighley-g3,generator,generator engineer,53.867,-1.911,13,P2
+eng-bradford-keighley-g4,generator,generator shop,53.867,-1.911,13,P2
+sct-glasgow-paisley-g0,generator,generator installation,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-g1,generator,standby generator installer,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-g2,generator,backup generator,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-g3,generator,generator engineer,55.8456,-4.4239,13,P2
+sct-glasgow-paisley-g4,generator,generator shop,55.8456,-4.4239,13,P2
+sct-glasgow-east-kilbride-g0,generator,generator installation,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-g1,generator,standby generator installer,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-g2,generator,backup generator,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-g3,generator,generator engineer,55.7644,-4.177,13,P2
+sct-glasgow-east-kilbride-g4,generator,generator shop,55.7644,-4.177,13,P2
+eng-liverpool-south-garston-g0,generator,generator installation,53.355,-2.88,13,P1
+eng-liverpool-south-garston-g1,generator,standby generator installer,53.355,-2.88,13,P1
+eng-liverpool-south-garston-g2,generator,backup generator,53.355,-2.88,13,P1
+eng-liverpool-south-garston-g3,generator,generator engineer,53.355,-2.88,13,P2
+eng-liverpool-south-garston-g4,generator,generator shop,53.355,-2.88,13,P2
+eng-sheffield-north-g0,generator,generator installation,53.46,-1.47,13,P1
+eng-sheffield-north-g1,generator,standby generator installer,53.46,-1.47,13,P1
+eng-sheffield-north-g2,generator,backup generator,53.46,-1.47,13,P1
+eng-sheffield-north-g3,generator,generator engineer,53.46,-1.47,13,P2
+eng-sheffield-north-g4,generator,generator shop,53.46,-1.47,13,P2
+eng-bristol-north-filton-g0,generator,generator installation,51.51,-2.57,13,P1
+eng-bristol-north-filton-g1,generator,standby generator installer,51.51,-2.57,13,P1
+eng-bristol-north-filton-g2,generator,backup generator,51.51,-2.57,13,P1
+eng-bristol-north-filton-g3,generator,generator engineer,51.51,-2.57,13,P2
+eng-bristol-north-filton-g4,generator,generator shop,51.51,-2.57,13,P2
+eng-newcastle-gateshead-sth-g0,generator,generator installation,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-g1,generator,standby generator installer,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-g2,generator,backup generator,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-g3,generator,generator engineer,54.9,-1.52,13,P2
+eng-newcastle-gateshead-sth-g4,generator,generator shop,54.9,-1.52,13,P2
+sct-edinburgh-west-g0,generator,generator installation,55.92,-3.28,13,P1
+sct-edinburgh-west-g1,generator,standby generator installer,55.92,-3.28,13,P1
+sct-edinburgh-west-g2,generator,backup generator,55.92,-3.28,13,P1
+sct-edinburgh-west-g3,generator,generator engineer,55.92,-3.28,13,P2
+sct-edinburgh-west-g4,generator,generator shop,55.92,-3.28,13,P2

@@ -1,0 +1,96 @@
+{
+  "_comment": "Atlas Growth :: UK standby / backup generator installers (ICP-generators-uk.md, option B — Maps-only, operator 2026-09-30). Engine config for google-maps-scrape. Mirrors atlas-growth-generators-config.json (the US run) for the trade vocabulary and atlas-growth-uk-config.json for UK geo, UK title conventions and the VOLUME-SAFE posture: the real ICP gate is the downstream site-text fit (STEP 5e), so nothing here may drop a plausible installer. UK-specific hazard this config exists for: on UK Maps the word 'generator' belongs to the HIRE trade (Aggreko, Speedy, HSS, GAP, local plant-hire yards) and to commercial diesel-set suppliers, neither of which installs anything for a homeowner. Job-specific values live ONLY here — never edit an engine script to tune this run. PROVISIONAL until the 3-row calibration sheet is read (GATE1.md).",
+
+  "geo": {
+    "_r": "areas mode: the runsheet tiles ARE the footprint (the 2026-09-16 UK grid, 177 tiles, imported by gen-runsheet-generators-uk.js). region_from_city null — no state token in a UK city string, so footprint-gate.js runs its hub-distance + foreign-country checks only. region_default 'UK' removes the whole [united kingdom, uk, england, scotland, wales] alias group from the foreign-country blocklist; 'ireland' stays in it, correctly (Republic of Ireland pins drop; Northern Ireland addresses end in 'United Kingdom' and survive).",
+    "country": "gb",
+    "footprint": { "mode": "areas" },
+    "region_from_city": null,
+    "region_default": "UK"
+  },
+
+  "categories": {
+    "_r": "The 5 runsheet queries (gen-runsheet-generators-uk.js). All generator-INTENT: no bare 'electrician' (every electrician in the country, no backup-power signal) and no battery-storage query (that is option A, a separate MCS-spine list and a separate offer).",
+    "generator": ["generator installation", "standby generator installer", "backup generator", "generator engineer", "generator shop"]
+  },
+
+  "scrape_tuning": {
+    "_r": "Same settings as the UK foundation and US generator runs (measured 2.61 Maps calls per runsheet row over 1,770 UK rows). paginate:true pages each viewport via offset; max_pages 6 x limit 150 caps a dense London tile; max_depth 1 = at most one quadrant split; quad_offset 0.02 (~2.2 km) is UK-town scale. The generator universe is far sparser than damp-proofing, so expect most tiles to exhaust in 1–2 pages and calls/row to land nearer 1.5 than 2.6.",
+    "paginate": true,
+    "max_pages": 6,
+    "limit": 150,
+    "saturation": 90,
+    "max_depth": 1,
+    "quad_offset": 0.02
+  },
+
+  "qualify_rules": [
+    {"_r": "1. PRIMARY-type deny (engine default: matches google_types[0] only). The entity kinds that answer a 'generator' query on UK Maps and install nothing for a homeowner: HIRE yards (the dominant UK 'generator' business), builders/electrical merchants, DIY sheds, small-engine / garden-machinery / agricultural dealers (the Briggs trap from the US run), vehicle / caravan / marine electrics (alternators and leisure-battery work are a different trade), utilities and manufacturers. Primary-only on purpose: a real installer routinely carries 'Electrical supply store' or 'Small engine repair service' as a SECONDARY tag, and a scope:'any' deny would delete it (the sharp-shannon 2026-09-13 bank-branch lesson). Engineering consultancies and structural/civil engineers are denied on primary because rule 3 admits the 'engineer' stem (UK generator firms are typed 'Electrical engineer' / 'Mechanical engineer'). CALIBRATION 2026-09-30 (3+2 tiles, 106 rows, 9 calls) added the second block: motor rewinders (ABCO Rewinds), machine/compressor repairers, a vehicle repair shop trading as 'Generator Services', electronics/chemical/precision engineering firms, a marine engineer, a pool contractor typed Engineering consultant, a lab-gas supplier (PEAK Scientific — 'Gas Company' as a SECONDARY tag), a handyman carrying an Electrician tag, and a hydro-turbine maker. 'diesel engine repair' is denied on PRIMARY only — Argyle Diesel Electrics / Engen Diesels are engine shops, while Phaser Industrial Power carries it as a secondary tag under Electric generator shop and survives. NO 'electrician' or 'electrical installation service' anywhere in a deny — that IS the ICP's most common primary.",
+     "field": "google_types", "op": "deny", "label": "off_icp_primary", "value": [
+       "equipment rental agency", "tool rental service", "generator rental", "party equipment rental service",
+       "crane rental agency", "construction equipment supplier", "construction machine rental service",
+       "home improvement store", "hardware store", "diy store", "building materials supplier", "building materials store",
+       "builders merchant", "warehouse store", "department store", "discount store", "variety store",
+       "small engine repair service", "lawn mower repair service", "lawn mower store", "outdoor power equipment store",
+       "garden machinery", "agricultural machinery", "farm equipment supplier", "tractor dealer", "garden center", "garden centre",
+       "auto repair shop", "car repair and maintenance", "auto parts store", "car battery store", "auto electrical service",
+       "truck repair shop", "truck parts supplier", "motorcycle dealer", "motorcycle repair", "rv repair shop", "rv dealer",
+       "caravan dealer", "caravan repair", "motorhome dealer", "boat repair shop", "boat dealer", "marine supply store", "marina",
+       "electrical supply store", "electrical wholesaler", "wholesaler", "industrial equipment supplier", "welding supply store",
+       "tool store", "appliance store", "electronics store", "pawn shop", "second hand shop",
+       "electric utility company", "energy supplier", "gas company",
+       "alternator supplier", "diesel engine dealer", "diesel engine repair", "engine rebuilding service", "manufacturer",
+       "electric motor repair", "machine repair service", "air compressor", "vehicle repair shop", "electronics manufacturer",
+       "electronic engineering service", "chemical engineering service", "precision engineer", "marine engineer",
+       "swimming pool contractor", "scientific equipment supplier", "laboratory equipment supplier", "handyman",
+       "environment renewable natural resources",
+       "structural engineer", "civil engineer", "engineering consultant", "consulting engineer", "chartered surveyor",
+       "event venue", "event management company", "wedding venue", "audio visual equipment rental service",
+       "non-profit organization", "charity", "government office", "college", "university", "hospital"]},
+
+    {"_r": "2. NAME deny (exact substring, always fires, primary or secondary). Every term is multi-word, a brand, or space-anchored, per the sharp-shannon substring lesson. The hire term is ' hire' WITH A LEADING SPACE and nothing else: a bare 'hire' sits inside Cheshire / Hampshire / Lancashire / Yorkshire / Wiltshire / Sapphire, and every 'hire <word>' compound (hire ltd, hire centre, hire services, hire shop) sits inside 'Cheshire Ltd' / 'Cheshire Centre' / 'Cheshire Services' too — the leading space is what makes 'Speedy Hire', 'HSS Hire', 'Generator Hire Ltd', 'ABC Plant Hire' match while every shire name does not (in a shire name the letters 'hire' follow an 's', never a space). 'Hire Station' (word-initial) is the one brand named explicitly. Never bare 'sse' (Essex, Sussex), never bare 'edf' (Bedford), never bare 'marine'/'boat' (Marine Drive, Boatman), never 'cef' (CEF branches are primaried Electrical supply store and die at rule 1). Hire is first because hire yards are the bulk of UK 'generator' listings; then merchants, DIY sheds, utilities, and the vehicle/leisure vocabulary. DELIBERATE OMISSIONS: no OEM names (a UK independent trades as 'Pramac approved dealer' / 'Generac dealer' and that is an ICP signal, not a chain); no 'power' or 'energy' compounds (they are the ICP's own vocabulary); no bare 'council'/'college'/'university' (type deny covers them). No chain/roll-up drop anywhere: operator standing directive is keep the roll-up, flag the brand (brand_families).",
+     "field": "name", "op": "not_contains_any", "label": "name_deny", "value": [
+       " hire", "hire station", "generator rental", "generators rental", "speedy services", "aggreko", "sunbelt",
+       "gap group", "a-plant",
+       "jewson", "travis perkins", "buildbase", "huws gray", "selco builders", "mkm building", "screwfix", "toolstation",
+       "machine mart", "b&q", "wickes", "homebase", "halfords", "euro car parts", "the range",
+       "city electrical factors", "edmundson", "rexel", "yesss", "electrical wholesale", "electrical wholesalers",
+       "electric center", "electric centre", "medlock", "denmans", "kew electrical",
+       "national grid", "uk power networks", "northern powergrid", "western power distribution", "scottish power",
+       "sse energy", "sse plc", "octopus energy", "british gas", "edf energy", "e.on", "ovo energy", "npower", "utility warehouse",
+       "car parts", "autoparts", "auto parts", "auto electrical", "auto electrics", "car electrics", "vehicle electrics",
+       "caravan", "motorhome", "campervan", "narrowboat", "boatyard", "boat yard", "marine electrical", "marine engineer",
+       "chandlery", "chandlers",
+       "borough council", "city council", "county council", "district council", "parish council", "nhs trust", "nhs foundation",
+       "ministry of defence", "royal navy"]},
+
+    {"_r": "3. Positive allow on google_types-ANY (never primary_type — Google mis-primaries real firms constantly; a generator installer comes back 'Contractor | Electrician' or 'Mechanical engineer | Electric generator shop'). UK generator installers on Maps are typed Electric generator shop, Electrician, Electrical installation service, Electrical engineer, Mechanical engineer, Contractor, Energy equipment and solutions, Solar energy company / equipment supplier, Gas installation service / Gas engineer (LPG standby sets), Heating contractor, Plumber. 'engineer' is admitted because that is the UK label for this trade; rule 1 already removed the structural/civil/consultancy primaries it would otherwise let in. 'gas', 'heating' and 'plumb' are admitted on purpose: a UK gas engineer who installs LPG generators is ICP and a plumber who does not dies at the site-text gate (STEP 5e), exactly the US plumber rule. 'power' covers 'Power Station Equipment Supplier' — Google's type for UK standby-power suppliers (shentongroup in the calibration; commercial-only firms of that kind are the site-text gate's call, so 'power station' is deliberately NOT in the rule-1 deny) — and 'Backup power' style tags. 'battery' is deliberately ABSENT: it would admit car-battery retailers and belongs to option A. CALIBRATION 2026-09-30 tightened two stems: the bare 'electric' also matched 'Electric motor repair shop' and let a rewinder through, so it is now 'electrician' + 'electrical' + 'electric vehicle charging' (every real row in the calibration carried one of those: Electrician, Electrical engineer, Electrical installation service, Electric generator shop matches 'generator'); and the bare 'gas' matched PEAK Scientific's secondary 'Gas Company', so it is now the three installer types only.",
+     "field": "google_types", "op": "allow", "label": "not_in_icp", "value": [
+       "generator", "electrician", "electrical", "electric vehicle charging", "energy", "solar", "power", "contractor",
+       "construction company", "engineer", "gas installation", "gas engineer", "gas fitter", "heating", "hvac",
+       "air conditioning", "plumb", "home improvement", "installation service"]},
+
+    {"_r": "4. Review floor 5, label too_small. A GHOST-LISTING filter, not a size gate — the US generator run's floor of 30 (operator 2026-09-24) is wrong for the UK, where this trade is a few hundred small owner-operated electrical firms with single-digit review counts (the UK foundation run measured the same shape and shipped at 5). 5 removes unclaimed, zero-activity duplicate pins and nothing else. BLANK review_count also fails this rule (qualify-leads.js:92, num('') -> null -> false) — that is the unrated track, recovered by recover-unrated-generators-uk-config.json, never by lowering the floor. Re-checkable at $0 by re-running qualify at 0 over excluded_officp.csv. GATE 1 asks the operator to confirm 5 vs 30.",
+     "field": "review_count", "op": ">=", "value": 5, "label": "too_small"}
+  ],
+
+  "_no_website_rule": "Deliberately NO {website, exists} rule, as in every Atlas Growth config: collapse-domains.js classifies website as site/shared_host/none AFTER the geo gate and dedupe, so no-website and Facebook/Checkatrade-only firms pass the denies first and feed the STEP 5d recovery track.",
+
+  "_no_generic_recovery": "No recover-generic config for this run. The UK foundation run needed one because its allow deliberately refused 'Construction company' / 'Contractor' (general builders would flood a damp list). Here those stems are IN the allow (rule 3): a 'Contractor'-typed firm returned by a generator-intent query is a plausible installer, and the site-text gate decides. The only recovery pass is the unrated one.",
+
+  "brand_families": {
+    "_r": "No UK generator-installer roll-ups labelled yet. The names known from the pull spec (Pramac-Generac UK, Kentec, Powerplant Ltd, WB Power Services/Rehlko, Total Electrical & Mechanical Solutions) are distributors and commercial specialists, not residential roll-ups, and would fail the substring test's distinctiveness bar anyway. Add at GATE 3 once the merged list shows which multi-location names appear (collapse-domains.js flags them by location_count regardless)."
+  },
+
+  "_r_site_l2_keywords": "fetch-sites.js reads site_l2_keywords as a flat ARRAY. UK trade sites put the mailbox on the contact page, not the about page (the 2026-09-16 UK run added an email for 211 companies purely from on-site harvest), and generator sites add quote/survey pages.",
+  "site_l2_keywords": ["contact", "contact-us", "contactus", "get-in-touch", "enquiries", "enquiry",
+                       "request-a-quote", "free-quote", "get-a-quote", "site-survey", "free-survey", "book-a-survey",
+                       "about", "about-us", "our-team", "meet-the-team"],
+
+  "owner_query": {
+    "_r": "UK bias terms, same as the UK foundation run: the budget holder at an owner-operated electrical firm is the MANAGING DIRECTOR or a named DIRECTOR (Companies House titles), or the proprietor at a sole trader; 'president'/'GM' are American. country GB so the SERP is localised. The 2026-09-16 UK run measured own-site text naming someone on ~4% of UK ICP sites vs Companies House naming a director for 64% — run companies-house.js FIRST and treat this query as the residue pass.",
+    "bias_terms": ["owner", "managing director", "director", "founder"],
+    "use_linkedin": true,
+    "country": "GB"
+  }
+}

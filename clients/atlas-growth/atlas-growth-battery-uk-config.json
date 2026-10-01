@@ -1,0 +1,29 @@
+{
+  "_comment": "Atlas Growth :: UK home battery / backup-power installers from the MCS register (ICP-generators-uk.md option A, operator go 2026-09-30). Engine config for the google-maps-scrape BACK HALF only — there is no Maps scrape; pull-mcs.js writes mcs_leads.csv in the engine lead shape. Registry membership proves the trade (icp-source-planner R3), so the qualify stage is a NAME deny for national energy suppliers / social-housing arms plus a brand flag, and nothing else. No review floor (MCS rows carry no reviews). Domestic-vs-commercial is the site-text gate's call (STEP 5e), and no-website rows are FULLY USABLE here (the register supplies the email), so they are never a recovery track — they skip site text and go straight to Companies House + the MCS mailbox.",
+  "geo": { "country": "gb", "footprint": { "mode": "areas" }, "region_from_city": null, "region_default": "UK" },
+  "categories": { "battery": ["MCS Find an Installer — technology_battery"] },
+  "qualify_rules": [
+    {"_r": "1. NAME deny — the national suppliers and social-housing / council arms the ICP doc says to drop (no homeowner-facing owner to sell a lead-gen retainer to; procurement, not a proprietor). Multi-word only, per the substring lesson: no bare 'sse' (Essex), no bare 'eon' (Aeon), no bare 'egg' (Gregg), no bare 'ovo' (Novo). 'social housing', 'housing association', 'council' catch the public-sector installers (British Gas Social Housing Ltd is on the register).",
+     "field": "name", "op": "not_contains_any", "label": "national_supplier_or_public", "value": [
+       "octopus energy", "british gas", "edf energy", "e.on ", "e.on next", "ovo energy", "scottish power", "sse energy", "shell energy",
+       "centrica", "utility warehouse", "good energy", "so energy", "social housing", "housing association", "borough council",
+       "city council", "county council", "district council", "nhs ", "university"]}
+  ],
+  "brand_families": {
+    "_r": "Roll-ups and national installers on the register — FLAG, never drop (operator standing directive). Substring test against name + root domain, so every term is distinctive. Add more at GATE 3 from collapse-domains.js location_count.",
+    "Project Solar UK": ["project solar"],
+    "Heatable": ["heatable"],
+    "OVO Solar (Energy Hub)": ["ovo solar", "energy hub (south wales)"],
+    "Effective Energy": ["effective energy"],
+    "Green Energy Together": ["green energy together"],
+    "Egg (Liberty Global)": ["egg energy", "eggenergy"],
+    "Hometree": ["hometree"],
+    "Sunsave": ["sunsave"],
+    "Otovo": ["otovo"],
+    "Solar Together": ["solar together"]
+  },
+  "_r_site_l2_keywords": "UK trade sites keep the mailbox on the contact page; battery/solar sites add survey/quote pages.",
+  "site_l2_keywords": ["contact", "contact-us", "contactus", "get-in-touch", "enquiries", "enquiry", "request-a-quote", "free-quote", "get-a-quote",
+                       "free-survey", "book-a-survey", "home-survey", "site-survey", "about", "about-us", "our-team", "meet-the-team"],
+  "owner_query": { "_r": "UK bias terms; Companies House first (key on file), this is the residue pass.", "bias_terms": ["owner", "managing director", "director", "founder"], "use_linkedin": true, "country": "GB" }
+}

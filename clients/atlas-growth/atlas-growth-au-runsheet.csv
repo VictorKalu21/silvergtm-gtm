@@ -1,0 +1,1821 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+nsw-sydney-cbd-q0,foundation,underpinning,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q1,foundation,restumping,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q2,foundation,reblocking,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q3,foundation,foundation repair,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q4,foundation,house levelling,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q5,foundation,house relevelling,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q6,foundation,slab lifting,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q7,foundation,resin injection underpinning,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q8,foundation,subsidence repair,-33.8688,151.2093,13,P1
+nsw-sydney-cbd-q9,adjacent,house raising,-33.8688,151.2093,13,P2
+nsw-newcastle-q0,foundation,underpinning,-32.9283,151.7817,13,P1
+nsw-newcastle-q1,foundation,restumping,-32.9283,151.7817,13,P1
+nsw-newcastle-q2,foundation,reblocking,-32.9283,151.7817,13,P1
+nsw-newcastle-q3,foundation,foundation repair,-32.9283,151.7817,13,P1
+nsw-newcastle-q4,foundation,house levelling,-32.9283,151.7817,13,P1
+nsw-newcastle-q5,foundation,house relevelling,-32.9283,151.7817,13,P1
+nsw-newcastle-q6,foundation,slab lifting,-32.9283,151.7817,13,P1
+nsw-newcastle-q7,foundation,resin injection underpinning,-32.9283,151.7817,13,P1
+nsw-newcastle-q8,foundation,subsidence repair,-32.9283,151.7817,13,P1
+nsw-newcastle-q9,adjacent,house raising,-32.9283,151.7817,13,P2
+nsw-maitland-q0,foundation,underpinning,-32.7335,151.557,13,P1
+nsw-maitland-q1,foundation,restumping,-32.7335,151.557,13,P1
+nsw-maitland-q2,foundation,reblocking,-32.7335,151.557,13,P1
+nsw-maitland-q3,foundation,foundation repair,-32.7335,151.557,13,P1
+nsw-maitland-q4,foundation,house levelling,-32.7335,151.557,13,P1
+nsw-maitland-q5,foundation,house relevelling,-32.7335,151.557,13,P1
+nsw-maitland-q6,foundation,slab lifting,-32.7335,151.557,13,P1
+nsw-maitland-q7,foundation,resin injection underpinning,-32.7335,151.557,13,P1
+nsw-maitland-q8,foundation,subsidence repair,-32.7335,151.557,13,P1
+nsw-maitland-q9,adjacent,house raising,-32.7335,151.557,13,P2
+nsw-cessnock-q0,foundation,underpinning,-32.834,151.356,13,P1
+nsw-cessnock-q1,foundation,restumping,-32.834,151.356,13,P1
+nsw-cessnock-q2,foundation,reblocking,-32.834,151.356,13,P1
+nsw-cessnock-q3,foundation,foundation repair,-32.834,151.356,13,P1
+nsw-cessnock-q4,foundation,house levelling,-32.834,151.356,13,P1
+nsw-cessnock-q5,foundation,house relevelling,-32.834,151.356,13,P1
+nsw-cessnock-q6,foundation,slab lifting,-32.834,151.356,13,P1
+nsw-cessnock-q7,foundation,resin injection underpinning,-32.834,151.356,13,P1
+nsw-cessnock-q8,foundation,subsidence repair,-32.834,151.356,13,P1
+nsw-cessnock-q9,adjacent,house raising,-32.834,151.356,13,P2
+nsw-nelson-bay-q0,foundation,underpinning,-32.715,152.144,13,P1
+nsw-nelson-bay-q1,foundation,restumping,-32.715,152.144,13,P1
+nsw-nelson-bay-q2,foundation,reblocking,-32.715,152.144,13,P1
+nsw-nelson-bay-q3,foundation,foundation repair,-32.715,152.144,13,P1
+nsw-nelson-bay-q4,foundation,house levelling,-32.715,152.144,13,P1
+nsw-nelson-bay-q5,foundation,house relevelling,-32.715,152.144,13,P1
+nsw-nelson-bay-q6,foundation,slab lifting,-32.715,152.144,13,P1
+nsw-nelson-bay-q7,foundation,resin injection underpinning,-32.715,152.144,13,P1
+nsw-nelson-bay-q8,foundation,subsidence repair,-32.715,152.144,13,P1
+nsw-nelson-bay-q9,adjacent,house raising,-32.715,152.144,13,P2
+nsw-singleton-q0,foundation,underpinning,-32.567,151.169,13,P1
+nsw-singleton-q1,foundation,restumping,-32.567,151.169,13,P1
+nsw-singleton-q2,foundation,reblocking,-32.567,151.169,13,P1
+nsw-singleton-q3,foundation,foundation repair,-32.567,151.169,13,P1
+nsw-singleton-q4,foundation,house levelling,-32.567,151.169,13,P1
+nsw-singleton-q5,foundation,house relevelling,-32.567,151.169,13,P1
+nsw-singleton-q6,foundation,slab lifting,-32.567,151.169,13,P1
+nsw-singleton-q7,foundation,resin injection underpinning,-32.567,151.169,13,P1
+nsw-singleton-q8,foundation,subsidence repair,-32.567,151.169,13,P1
+nsw-singleton-q9,adjacent,house raising,-32.567,151.169,13,P2
+nsw-muswellbrook-q0,foundation,underpinning,-32.265,150.89,13,P1
+nsw-muswellbrook-q1,foundation,restumping,-32.265,150.89,13,P1
+nsw-muswellbrook-q2,foundation,reblocking,-32.265,150.89,13,P1
+nsw-muswellbrook-q3,foundation,foundation repair,-32.265,150.89,13,P1
+nsw-muswellbrook-q4,foundation,house levelling,-32.265,150.89,13,P1
+nsw-muswellbrook-q5,foundation,house relevelling,-32.265,150.89,13,P1
+nsw-muswellbrook-q6,foundation,slab lifting,-32.265,150.89,13,P1
+nsw-muswellbrook-q7,foundation,resin injection underpinning,-32.265,150.89,13,P1
+nsw-muswellbrook-q8,foundation,subsidence repair,-32.265,150.89,13,P1
+nsw-muswellbrook-q9,adjacent,house raising,-32.265,150.89,13,P2
+nsw-gosford-central-coast-q0,foundation,underpinning,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q1,foundation,restumping,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q2,foundation,reblocking,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q3,foundation,foundation repair,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q4,foundation,house levelling,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q5,foundation,house relevelling,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q6,foundation,slab lifting,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q7,foundation,resin injection underpinning,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q8,foundation,subsidence repair,-33.4269,151.3417,13,P1
+nsw-gosford-central-coast-q9,adjacent,house raising,-33.4269,151.3417,13,P2
+nsw-wollongong-q0,foundation,underpinning,-34.4278,150.8931,13,P1
+nsw-wollongong-q1,foundation,restumping,-34.4278,150.8931,13,P1
+nsw-wollongong-q2,foundation,reblocking,-34.4278,150.8931,13,P1
+nsw-wollongong-q3,foundation,foundation repair,-34.4278,150.8931,13,P1
+nsw-wollongong-q4,foundation,house levelling,-34.4278,150.8931,13,P1
+nsw-wollongong-q5,foundation,house relevelling,-34.4278,150.8931,13,P1
+nsw-wollongong-q6,foundation,slab lifting,-34.4278,150.8931,13,P1
+nsw-wollongong-q7,foundation,resin injection underpinning,-34.4278,150.8931,13,P1
+nsw-wollongong-q8,foundation,subsidence repair,-34.4278,150.8931,13,P1
+nsw-wollongong-q9,adjacent,house raising,-34.4278,150.8931,13,P2
+nsw-shellharbour-kiama-q0,foundation,underpinning,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q1,foundation,restumping,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q2,foundation,reblocking,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q3,foundation,foundation repair,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q4,foundation,house levelling,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q5,foundation,house relevelling,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q6,foundation,slab lifting,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q7,foundation,resin injection underpinning,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q8,foundation,subsidence repair,-34.578,150.868,13,P1
+nsw-shellharbour-kiama-q9,adjacent,house raising,-34.578,150.868,13,P2
+nsw-nowra-q0,foundation,underpinning,-34.883,150.6,13,P1
+nsw-nowra-q1,foundation,restumping,-34.883,150.6,13,P1
+nsw-nowra-q2,foundation,reblocking,-34.883,150.6,13,P1
+nsw-nowra-q3,foundation,foundation repair,-34.883,150.6,13,P1
+nsw-nowra-q4,foundation,house levelling,-34.883,150.6,13,P1
+nsw-nowra-q5,foundation,house relevelling,-34.883,150.6,13,P1
+nsw-nowra-q6,foundation,slab lifting,-34.883,150.6,13,P1
+nsw-nowra-q7,foundation,resin injection underpinning,-34.883,150.6,13,P1
+nsw-nowra-q8,foundation,subsidence repair,-34.883,150.6,13,P1
+nsw-nowra-q9,adjacent,house raising,-34.883,150.6,13,P2
+nsw-ulladulla-q0,foundation,underpinning,-35.359,150.473,13,P1
+nsw-ulladulla-q1,foundation,restumping,-35.359,150.473,13,P1
+nsw-ulladulla-q2,foundation,reblocking,-35.359,150.473,13,P1
+nsw-ulladulla-q3,foundation,foundation repair,-35.359,150.473,13,P1
+nsw-ulladulla-q4,foundation,house levelling,-35.359,150.473,13,P1
+nsw-ulladulla-q5,foundation,house relevelling,-35.359,150.473,13,P1
+nsw-ulladulla-q6,foundation,slab lifting,-35.359,150.473,13,P1
+nsw-ulladulla-q7,foundation,resin injection underpinning,-35.359,150.473,13,P1
+nsw-ulladulla-q8,foundation,subsidence repair,-35.359,150.473,13,P1
+nsw-ulladulla-q9,adjacent,house raising,-35.359,150.473,13,P2
+nsw-batemans-bay-q0,foundation,underpinning,-35.708,150.174,13,P1
+nsw-batemans-bay-q1,foundation,restumping,-35.708,150.174,13,P1
+nsw-batemans-bay-q2,foundation,reblocking,-35.708,150.174,13,P1
+nsw-batemans-bay-q3,foundation,foundation repair,-35.708,150.174,13,P1
+nsw-batemans-bay-q4,foundation,house levelling,-35.708,150.174,13,P1
+nsw-batemans-bay-q5,foundation,house relevelling,-35.708,150.174,13,P1
+nsw-batemans-bay-q6,foundation,slab lifting,-35.708,150.174,13,P1
+nsw-batemans-bay-q7,foundation,resin injection underpinning,-35.708,150.174,13,P1
+nsw-batemans-bay-q8,foundation,subsidence repair,-35.708,150.174,13,P1
+nsw-batemans-bay-q9,adjacent,house raising,-35.708,150.174,13,P2
+nsw-bega-q0,foundation,underpinning,-36.674,149.841,13,P1
+nsw-bega-q1,foundation,restumping,-36.674,149.841,13,P1
+nsw-bega-q2,foundation,reblocking,-36.674,149.841,13,P1
+nsw-bega-q3,foundation,foundation repair,-36.674,149.841,13,P1
+nsw-bega-q4,foundation,house levelling,-36.674,149.841,13,P1
+nsw-bega-q5,foundation,house relevelling,-36.674,149.841,13,P1
+nsw-bega-q6,foundation,slab lifting,-36.674,149.841,13,P1
+nsw-bega-q7,foundation,resin injection underpinning,-36.674,149.841,13,P1
+nsw-bega-q8,foundation,subsidence repair,-36.674,149.841,13,P1
+nsw-bega-q9,adjacent,house raising,-36.674,149.841,13,P2
+nsw-bowral-q0,foundation,underpinning,-34.479,150.418,13,P1
+nsw-bowral-q1,foundation,restumping,-34.479,150.418,13,P1
+nsw-bowral-q2,foundation,reblocking,-34.479,150.418,13,P1
+nsw-bowral-q3,foundation,foundation repair,-34.479,150.418,13,P1
+nsw-bowral-q4,foundation,house levelling,-34.479,150.418,13,P1
+nsw-bowral-q5,foundation,house relevelling,-34.479,150.418,13,P1
+nsw-bowral-q6,foundation,slab lifting,-34.479,150.418,13,P1
+nsw-bowral-q7,foundation,resin injection underpinning,-34.479,150.418,13,P1
+nsw-bowral-q8,foundation,subsidence repair,-34.479,150.418,13,P1
+nsw-bowral-q9,adjacent,house raising,-34.479,150.418,13,P2
+nsw-goulburn-q0,foundation,underpinning,-34.754,149.718,13,P1
+nsw-goulburn-q1,foundation,restumping,-34.754,149.718,13,P1
+nsw-goulburn-q2,foundation,reblocking,-34.754,149.718,13,P1
+nsw-goulburn-q3,foundation,foundation repair,-34.754,149.718,13,P1
+nsw-goulburn-q4,foundation,house levelling,-34.754,149.718,13,P1
+nsw-goulburn-q5,foundation,house relevelling,-34.754,149.718,13,P1
+nsw-goulburn-q6,foundation,slab lifting,-34.754,149.718,13,P1
+nsw-goulburn-q7,foundation,resin injection underpinning,-34.754,149.718,13,P1
+nsw-goulburn-q8,foundation,subsidence repair,-34.754,149.718,13,P1
+nsw-goulburn-q9,adjacent,house raising,-34.754,149.718,13,P2
+nsw-queanbeyan-q0,foundation,underpinning,-35.353,149.232,13,P1
+nsw-queanbeyan-q1,foundation,restumping,-35.353,149.232,13,P1
+nsw-queanbeyan-q2,foundation,reblocking,-35.353,149.232,13,P1
+nsw-queanbeyan-q3,foundation,foundation repair,-35.353,149.232,13,P1
+nsw-queanbeyan-q4,foundation,house levelling,-35.353,149.232,13,P1
+nsw-queanbeyan-q5,foundation,house relevelling,-35.353,149.232,13,P1
+nsw-queanbeyan-q6,foundation,slab lifting,-35.353,149.232,13,P1
+nsw-queanbeyan-q7,foundation,resin injection underpinning,-35.353,149.232,13,P1
+nsw-queanbeyan-q8,foundation,subsidence repair,-35.353,149.232,13,P1
+nsw-queanbeyan-q9,adjacent,house raising,-35.353,149.232,13,P2
+nsw-katoomba-blue-mountains-q0,foundation,underpinning,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q1,foundation,restumping,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q2,foundation,reblocking,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q3,foundation,foundation repair,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q4,foundation,house levelling,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q5,foundation,house relevelling,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q6,foundation,slab lifting,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q7,foundation,resin injection underpinning,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q8,foundation,subsidence repair,-33.714,150.312,13,P1
+nsw-katoomba-blue-mountains-q9,adjacent,house raising,-33.714,150.312,13,P2
+nsw-lithgow-q0,foundation,underpinning,-33.483,150.157,13,P1
+nsw-lithgow-q1,foundation,restumping,-33.483,150.157,13,P1
+nsw-lithgow-q2,foundation,reblocking,-33.483,150.157,13,P1
+nsw-lithgow-q3,foundation,foundation repair,-33.483,150.157,13,P1
+nsw-lithgow-q4,foundation,house levelling,-33.483,150.157,13,P1
+nsw-lithgow-q5,foundation,house relevelling,-33.483,150.157,13,P1
+nsw-lithgow-q6,foundation,slab lifting,-33.483,150.157,13,P1
+nsw-lithgow-q7,foundation,resin injection underpinning,-33.483,150.157,13,P1
+nsw-lithgow-q8,foundation,subsidence repair,-33.483,150.157,13,P1
+nsw-lithgow-q9,adjacent,house raising,-33.483,150.157,13,P2
+nsw-bathurst-q0,foundation,underpinning,-33.419,149.578,13,P1
+nsw-bathurst-q1,foundation,restumping,-33.419,149.578,13,P1
+nsw-bathurst-q2,foundation,reblocking,-33.419,149.578,13,P1
+nsw-bathurst-q3,foundation,foundation repair,-33.419,149.578,13,P1
+nsw-bathurst-q4,foundation,house levelling,-33.419,149.578,13,P1
+nsw-bathurst-q5,foundation,house relevelling,-33.419,149.578,13,P1
+nsw-bathurst-q6,foundation,slab lifting,-33.419,149.578,13,P1
+nsw-bathurst-q7,foundation,resin injection underpinning,-33.419,149.578,13,P1
+nsw-bathurst-q8,foundation,subsidence repair,-33.419,149.578,13,P1
+nsw-bathurst-q9,adjacent,house raising,-33.419,149.578,13,P2
+nsw-orange-q0,foundation,underpinning,-33.284,149.1,13,P1
+nsw-orange-q1,foundation,restumping,-33.284,149.1,13,P1
+nsw-orange-q2,foundation,reblocking,-33.284,149.1,13,P1
+nsw-orange-q3,foundation,foundation repair,-33.284,149.1,13,P1
+nsw-orange-q4,foundation,house levelling,-33.284,149.1,13,P1
+nsw-orange-q5,foundation,house relevelling,-33.284,149.1,13,P1
+nsw-orange-q6,foundation,slab lifting,-33.284,149.1,13,P1
+nsw-orange-q7,foundation,resin injection underpinning,-33.284,149.1,13,P1
+nsw-orange-q8,foundation,subsidence repair,-33.284,149.1,13,P1
+nsw-orange-q9,adjacent,house raising,-33.284,149.1,13,P2
+nsw-mudgee-q0,foundation,underpinning,-32.594,149.588,13,P1
+nsw-mudgee-q1,foundation,restumping,-32.594,149.588,13,P1
+nsw-mudgee-q2,foundation,reblocking,-32.594,149.588,13,P1
+nsw-mudgee-q3,foundation,foundation repair,-32.594,149.588,13,P1
+nsw-mudgee-q4,foundation,house levelling,-32.594,149.588,13,P1
+nsw-mudgee-q5,foundation,house relevelling,-32.594,149.588,13,P1
+nsw-mudgee-q6,foundation,slab lifting,-32.594,149.588,13,P1
+nsw-mudgee-q7,foundation,resin injection underpinning,-32.594,149.588,13,P1
+nsw-mudgee-q8,foundation,subsidence repair,-32.594,149.588,13,P1
+nsw-mudgee-q9,adjacent,house raising,-32.594,149.588,13,P2
+nsw-dubbo-q0,foundation,underpinning,-32.2569,148.6011,13,P1
+nsw-dubbo-q1,foundation,restumping,-32.2569,148.6011,13,P1
+nsw-dubbo-q2,foundation,reblocking,-32.2569,148.6011,13,P1
+nsw-dubbo-q3,foundation,foundation repair,-32.2569,148.6011,13,P1
+nsw-dubbo-q4,foundation,house levelling,-32.2569,148.6011,13,P1
+nsw-dubbo-q5,foundation,house relevelling,-32.2569,148.6011,13,P1
+nsw-dubbo-q6,foundation,slab lifting,-32.2569,148.6011,13,P1
+nsw-dubbo-q7,foundation,resin injection underpinning,-32.2569,148.6011,13,P1
+nsw-dubbo-q8,foundation,subsidence repair,-32.2569,148.6011,13,P1
+nsw-dubbo-q9,adjacent,house raising,-32.2569,148.6011,13,P2
+nsw-parkes-q0,foundation,underpinning,-33.137,148.176,13,P1
+nsw-parkes-q1,foundation,restumping,-33.137,148.176,13,P1
+nsw-parkes-q2,foundation,reblocking,-33.137,148.176,13,P1
+nsw-parkes-q3,foundation,foundation repair,-33.137,148.176,13,P1
+nsw-parkes-q4,foundation,house levelling,-33.137,148.176,13,P1
+nsw-parkes-q5,foundation,house relevelling,-33.137,148.176,13,P1
+nsw-parkes-q6,foundation,slab lifting,-33.137,148.176,13,P1
+nsw-parkes-q7,foundation,resin injection underpinning,-33.137,148.176,13,P1
+nsw-parkes-q8,foundation,subsidence repair,-33.137,148.176,13,P1
+nsw-parkes-q9,adjacent,house raising,-33.137,148.176,13,P2
+nsw-wagga-wagga-q0,foundation,underpinning,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q1,foundation,restumping,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q2,foundation,reblocking,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q3,foundation,foundation repair,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q4,foundation,house levelling,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q5,foundation,house relevelling,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q6,foundation,slab lifting,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q7,foundation,resin injection underpinning,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q8,foundation,subsidence repair,-35.1082,147.3598,13,P1
+nsw-wagga-wagga-q9,adjacent,house raising,-35.1082,147.3598,13,P2
+nsw-albury-q0,foundation,underpinning,-36.0737,146.9135,13,P1
+nsw-albury-q1,foundation,restumping,-36.0737,146.9135,13,P1
+nsw-albury-q2,foundation,reblocking,-36.0737,146.9135,13,P1
+nsw-albury-q3,foundation,foundation repair,-36.0737,146.9135,13,P1
+nsw-albury-q4,foundation,house levelling,-36.0737,146.9135,13,P1
+nsw-albury-q5,foundation,house relevelling,-36.0737,146.9135,13,P1
+nsw-albury-q6,foundation,slab lifting,-36.0737,146.9135,13,P1
+nsw-albury-q7,foundation,resin injection underpinning,-36.0737,146.9135,13,P1
+nsw-albury-q8,foundation,subsidence repair,-36.0737,146.9135,13,P1
+nsw-albury-q9,adjacent,house raising,-36.0737,146.9135,13,P2
+nsw-griffith-q0,foundation,underpinning,-34.29,146.04,13,P1
+nsw-griffith-q1,foundation,restumping,-34.29,146.04,13,P1
+nsw-griffith-q2,foundation,reblocking,-34.29,146.04,13,P1
+nsw-griffith-q3,foundation,foundation repair,-34.29,146.04,13,P1
+nsw-griffith-q4,foundation,house levelling,-34.29,146.04,13,P1
+nsw-griffith-q5,foundation,house relevelling,-34.29,146.04,13,P1
+nsw-griffith-q6,foundation,slab lifting,-34.29,146.04,13,P1
+nsw-griffith-q7,foundation,resin injection underpinning,-34.29,146.04,13,P1
+nsw-griffith-q8,foundation,subsidence repair,-34.29,146.04,13,P1
+nsw-griffith-q9,adjacent,house raising,-34.29,146.04,13,P2
+nsw-broken-hill-q0,foundation,underpinning,-31.953,141.453,13,P1
+nsw-broken-hill-q1,foundation,restumping,-31.953,141.453,13,P1
+nsw-broken-hill-q2,foundation,reblocking,-31.953,141.453,13,P1
+nsw-broken-hill-q3,foundation,foundation repair,-31.953,141.453,13,P1
+nsw-broken-hill-q4,foundation,house levelling,-31.953,141.453,13,P1
+nsw-broken-hill-q5,foundation,house relevelling,-31.953,141.453,13,P1
+nsw-broken-hill-q6,foundation,slab lifting,-31.953,141.453,13,P1
+nsw-broken-hill-q7,foundation,resin injection underpinning,-31.953,141.453,13,P1
+nsw-broken-hill-q8,foundation,subsidence repair,-31.953,141.453,13,P1
+nsw-broken-hill-q9,adjacent,house raising,-31.953,141.453,13,P2
+nsw-tamworth-q0,foundation,underpinning,-31.09,150.929,13,P1
+nsw-tamworth-q1,foundation,restumping,-31.09,150.929,13,P1
+nsw-tamworth-q2,foundation,reblocking,-31.09,150.929,13,P1
+nsw-tamworth-q3,foundation,foundation repair,-31.09,150.929,13,P1
+nsw-tamworth-q4,foundation,house levelling,-31.09,150.929,13,P1
+nsw-tamworth-q5,foundation,house relevelling,-31.09,150.929,13,P1
+nsw-tamworth-q6,foundation,slab lifting,-31.09,150.929,13,P1
+nsw-tamworth-q7,foundation,resin injection underpinning,-31.09,150.929,13,P1
+nsw-tamworth-q8,foundation,subsidence repair,-31.09,150.929,13,P1
+nsw-tamworth-q9,adjacent,house raising,-31.09,150.929,13,P2
+nsw-armidale-q0,foundation,underpinning,-30.515,151.665,13,P1
+nsw-armidale-q1,foundation,restumping,-30.515,151.665,13,P1
+nsw-armidale-q2,foundation,reblocking,-30.515,151.665,13,P1
+nsw-armidale-q3,foundation,foundation repair,-30.515,151.665,13,P1
+nsw-armidale-q4,foundation,house levelling,-30.515,151.665,13,P1
+nsw-armidale-q5,foundation,house relevelling,-30.515,151.665,13,P1
+nsw-armidale-q6,foundation,slab lifting,-30.515,151.665,13,P1
+nsw-armidale-q7,foundation,resin injection underpinning,-30.515,151.665,13,P1
+nsw-armidale-q8,foundation,subsidence repair,-30.515,151.665,13,P1
+nsw-armidale-q9,adjacent,house raising,-30.515,151.665,13,P2
+nsw-inverell-q0,foundation,underpinning,-29.774,151.112,13,P1
+nsw-inverell-q1,foundation,restumping,-29.774,151.112,13,P1
+nsw-inverell-q2,foundation,reblocking,-29.774,151.112,13,P1
+nsw-inverell-q3,foundation,foundation repair,-29.774,151.112,13,P1
+nsw-inverell-q4,foundation,house levelling,-29.774,151.112,13,P1
+nsw-inverell-q5,foundation,house relevelling,-29.774,151.112,13,P1
+nsw-inverell-q6,foundation,slab lifting,-29.774,151.112,13,P1
+nsw-inverell-q7,foundation,resin injection underpinning,-29.774,151.112,13,P1
+nsw-inverell-q8,foundation,subsidence repair,-29.774,151.112,13,P1
+nsw-inverell-q9,adjacent,house raising,-29.774,151.112,13,P2
+nsw-moree-q0,foundation,underpinning,-29.465,149.841,13,P1
+nsw-moree-q1,foundation,restumping,-29.465,149.841,13,P1
+nsw-moree-q2,foundation,reblocking,-29.465,149.841,13,P1
+nsw-moree-q3,foundation,foundation repair,-29.465,149.841,13,P1
+nsw-moree-q4,foundation,house levelling,-29.465,149.841,13,P1
+nsw-moree-q5,foundation,house relevelling,-29.465,149.841,13,P1
+nsw-moree-q6,foundation,slab lifting,-29.465,149.841,13,P1
+nsw-moree-q7,foundation,resin injection underpinning,-29.465,149.841,13,P1
+nsw-moree-q8,foundation,subsidence repair,-29.465,149.841,13,P1
+nsw-moree-q9,adjacent,house raising,-29.465,149.841,13,P2
+nsw-taree-q0,foundation,underpinning,-31.911,152.461,13,P1
+nsw-taree-q1,foundation,restumping,-31.911,152.461,13,P1
+nsw-taree-q2,foundation,reblocking,-31.911,152.461,13,P1
+nsw-taree-q3,foundation,foundation repair,-31.911,152.461,13,P1
+nsw-taree-q4,foundation,house levelling,-31.911,152.461,13,P1
+nsw-taree-q5,foundation,house relevelling,-31.911,152.461,13,P1
+nsw-taree-q6,foundation,slab lifting,-31.911,152.461,13,P1
+nsw-taree-q7,foundation,resin injection underpinning,-31.911,152.461,13,P1
+nsw-taree-q8,foundation,subsidence repair,-31.911,152.461,13,P1
+nsw-taree-q9,adjacent,house raising,-31.911,152.461,13,P2
+nsw-forster-tuncurry-q0,foundation,underpinning,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q1,foundation,restumping,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q2,foundation,reblocking,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q3,foundation,foundation repair,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q4,foundation,house levelling,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q5,foundation,house relevelling,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q6,foundation,slab lifting,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q7,foundation,resin injection underpinning,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q8,foundation,subsidence repair,-32.181,152.514,13,P1
+nsw-forster-tuncurry-q9,adjacent,house raising,-32.181,152.514,13,P2
+nsw-port-macquarie-q0,foundation,underpinning,-31.4333,152.9,13,P1
+nsw-port-macquarie-q1,foundation,restumping,-31.4333,152.9,13,P1
+nsw-port-macquarie-q2,foundation,reblocking,-31.4333,152.9,13,P1
+nsw-port-macquarie-q3,foundation,foundation repair,-31.4333,152.9,13,P1
+nsw-port-macquarie-q4,foundation,house levelling,-31.4333,152.9,13,P1
+nsw-port-macquarie-q5,foundation,house relevelling,-31.4333,152.9,13,P1
+nsw-port-macquarie-q6,foundation,slab lifting,-31.4333,152.9,13,P1
+nsw-port-macquarie-q7,foundation,resin injection underpinning,-31.4333,152.9,13,P1
+nsw-port-macquarie-q8,foundation,subsidence repair,-31.4333,152.9,13,P1
+nsw-port-macquarie-q9,adjacent,house raising,-31.4333,152.9,13,P2
+nsw-coffs-harbour-q0,foundation,underpinning,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q1,foundation,restumping,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q2,foundation,reblocking,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q3,foundation,foundation repair,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q4,foundation,house levelling,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q5,foundation,house relevelling,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q6,foundation,slab lifting,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q7,foundation,resin injection underpinning,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q8,foundation,subsidence repair,-30.2963,153.1157,13,P1
+nsw-coffs-harbour-q9,adjacent,house raising,-30.2963,153.1157,13,P2
+nsw-grafton-q0,foundation,underpinning,-29.69,152.933,13,P1
+nsw-grafton-q1,foundation,restumping,-29.69,152.933,13,P1
+nsw-grafton-q2,foundation,reblocking,-29.69,152.933,13,P1
+nsw-grafton-q3,foundation,foundation repair,-29.69,152.933,13,P1
+nsw-grafton-q4,foundation,house levelling,-29.69,152.933,13,P1
+nsw-grafton-q5,foundation,house relevelling,-29.69,152.933,13,P1
+nsw-grafton-q6,foundation,slab lifting,-29.69,152.933,13,P1
+nsw-grafton-q7,foundation,resin injection underpinning,-29.69,152.933,13,P1
+nsw-grafton-q8,foundation,subsidence repair,-29.69,152.933,13,P1
+nsw-grafton-q9,adjacent,house raising,-29.69,152.933,13,P2
+nsw-lismore-q0,foundation,underpinning,-28.8135,153.2773,13,P1
+nsw-lismore-q1,foundation,restumping,-28.8135,153.2773,13,P1
+nsw-lismore-q2,foundation,reblocking,-28.8135,153.2773,13,P1
+nsw-lismore-q3,foundation,foundation repair,-28.8135,153.2773,13,P1
+nsw-lismore-q4,foundation,house levelling,-28.8135,153.2773,13,P1
+nsw-lismore-q5,foundation,house relevelling,-28.8135,153.2773,13,P1
+nsw-lismore-q6,foundation,slab lifting,-28.8135,153.2773,13,P1
+nsw-lismore-q7,foundation,resin injection underpinning,-28.8135,153.2773,13,P1
+nsw-lismore-q8,foundation,subsidence repair,-28.8135,153.2773,13,P1
+nsw-lismore-q9,adjacent,house raising,-28.8135,153.2773,13,P2
+nsw-ballina-q0,foundation,underpinning,-28.864,153.565,13,P1
+nsw-ballina-q1,foundation,restumping,-28.864,153.565,13,P1
+nsw-ballina-q2,foundation,reblocking,-28.864,153.565,13,P1
+nsw-ballina-q3,foundation,foundation repair,-28.864,153.565,13,P1
+nsw-ballina-q4,foundation,house levelling,-28.864,153.565,13,P1
+nsw-ballina-q5,foundation,house relevelling,-28.864,153.565,13,P1
+nsw-ballina-q6,foundation,slab lifting,-28.864,153.565,13,P1
+nsw-ballina-q7,foundation,resin injection underpinning,-28.864,153.565,13,P1
+nsw-ballina-q8,foundation,subsidence repair,-28.864,153.565,13,P1
+nsw-ballina-q9,adjacent,house raising,-28.864,153.565,13,P2
+nsw-tweed-heads-q0,foundation,underpinning,-28.177,153.543,13,P1
+nsw-tweed-heads-q1,foundation,restumping,-28.177,153.543,13,P1
+nsw-tweed-heads-q2,foundation,reblocking,-28.177,153.543,13,P1
+nsw-tweed-heads-q3,foundation,foundation repair,-28.177,153.543,13,P1
+nsw-tweed-heads-q4,foundation,house levelling,-28.177,153.543,13,P1
+nsw-tweed-heads-q5,foundation,house relevelling,-28.177,153.543,13,P1
+nsw-tweed-heads-q6,foundation,slab lifting,-28.177,153.543,13,P1
+nsw-tweed-heads-q7,foundation,resin injection underpinning,-28.177,153.543,13,P1
+nsw-tweed-heads-q8,foundation,subsidence repair,-28.177,153.543,13,P1
+nsw-tweed-heads-q9,adjacent,house raising,-28.177,153.543,13,P2
+vic-melbourne-cbd-q0,foundation,underpinning,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q1,foundation,restumping,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q2,foundation,reblocking,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q3,foundation,foundation repair,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q4,foundation,house levelling,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q5,foundation,house relevelling,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q6,foundation,slab lifting,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q7,foundation,resin injection underpinning,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q8,foundation,subsidence repair,-37.8136,144.9631,13,P1
+vic-melbourne-cbd-q9,adjacent,house raising,-37.8136,144.9631,13,P2
+vic-geelong-q0,foundation,underpinning,-38.1499,144.3617,13,P1
+vic-geelong-q1,foundation,restumping,-38.1499,144.3617,13,P1
+vic-geelong-q2,foundation,reblocking,-38.1499,144.3617,13,P1
+vic-geelong-q3,foundation,foundation repair,-38.1499,144.3617,13,P1
+vic-geelong-q4,foundation,house levelling,-38.1499,144.3617,13,P1
+vic-geelong-q5,foundation,house relevelling,-38.1499,144.3617,13,P1
+vic-geelong-q6,foundation,slab lifting,-38.1499,144.3617,13,P1
+vic-geelong-q7,foundation,resin injection underpinning,-38.1499,144.3617,13,P1
+vic-geelong-q8,foundation,subsidence repair,-38.1499,144.3617,13,P1
+vic-geelong-q9,adjacent,house raising,-38.1499,144.3617,13,P2
+vic-ocean-grove-torquay-q0,foundation,underpinning,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q1,foundation,restumping,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q2,foundation,reblocking,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q3,foundation,foundation repair,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q4,foundation,house levelling,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q5,foundation,house relevelling,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q6,foundation,slab lifting,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q7,foundation,resin injection underpinning,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q8,foundation,subsidence repair,-38.261,144.52,13,P1
+vic-ocean-grove-torquay-q9,adjacent,house raising,-38.261,144.52,13,P2
+vic-colac-q0,foundation,underpinning,-38.34,143.585,13,P1
+vic-colac-q1,foundation,restumping,-38.34,143.585,13,P1
+vic-colac-q2,foundation,reblocking,-38.34,143.585,13,P1
+vic-colac-q3,foundation,foundation repair,-38.34,143.585,13,P1
+vic-colac-q4,foundation,house levelling,-38.34,143.585,13,P1
+vic-colac-q5,foundation,house relevelling,-38.34,143.585,13,P1
+vic-colac-q6,foundation,slab lifting,-38.34,143.585,13,P1
+vic-colac-q7,foundation,resin injection underpinning,-38.34,143.585,13,P1
+vic-colac-q8,foundation,subsidence repair,-38.34,143.585,13,P1
+vic-colac-q9,adjacent,house raising,-38.34,143.585,13,P2
+vic-warrnambool-q0,foundation,underpinning,-38.3818,142.488,13,P1
+vic-warrnambool-q1,foundation,restumping,-38.3818,142.488,13,P1
+vic-warrnambool-q2,foundation,reblocking,-38.3818,142.488,13,P1
+vic-warrnambool-q3,foundation,foundation repair,-38.3818,142.488,13,P1
+vic-warrnambool-q4,foundation,house levelling,-38.3818,142.488,13,P1
+vic-warrnambool-q5,foundation,house relevelling,-38.3818,142.488,13,P1
+vic-warrnambool-q6,foundation,slab lifting,-38.3818,142.488,13,P1
+vic-warrnambool-q7,foundation,resin injection underpinning,-38.3818,142.488,13,P1
+vic-warrnambool-q8,foundation,subsidence repair,-38.3818,142.488,13,P1
+vic-warrnambool-q9,adjacent,house raising,-38.3818,142.488,13,P2
+vic-portland-vic-q0,foundation,underpinning,-38.346,141.604,13,P1
+vic-portland-vic-q1,foundation,restumping,-38.346,141.604,13,P1
+vic-portland-vic-q2,foundation,reblocking,-38.346,141.604,13,P1
+vic-portland-vic-q3,foundation,foundation repair,-38.346,141.604,13,P1
+vic-portland-vic-q4,foundation,house levelling,-38.346,141.604,13,P1
+vic-portland-vic-q5,foundation,house relevelling,-38.346,141.604,13,P1
+vic-portland-vic-q6,foundation,slab lifting,-38.346,141.604,13,P1
+vic-portland-vic-q7,foundation,resin injection underpinning,-38.346,141.604,13,P1
+vic-portland-vic-q8,foundation,subsidence repair,-38.346,141.604,13,P1
+vic-portland-vic-q9,adjacent,house raising,-38.346,141.604,13,P2
+vic-hamilton-vic-q0,foundation,underpinning,-37.744,142.024,13,P1
+vic-hamilton-vic-q1,foundation,restumping,-37.744,142.024,13,P1
+vic-hamilton-vic-q2,foundation,reblocking,-37.744,142.024,13,P1
+vic-hamilton-vic-q3,foundation,foundation repair,-37.744,142.024,13,P1
+vic-hamilton-vic-q4,foundation,house levelling,-37.744,142.024,13,P1
+vic-hamilton-vic-q5,foundation,house relevelling,-37.744,142.024,13,P1
+vic-hamilton-vic-q6,foundation,slab lifting,-37.744,142.024,13,P1
+vic-hamilton-vic-q7,foundation,resin injection underpinning,-37.744,142.024,13,P1
+vic-hamilton-vic-q8,foundation,subsidence repair,-37.744,142.024,13,P1
+vic-hamilton-vic-q9,adjacent,house raising,-37.744,142.024,13,P2
+vic-ararat-q0,foundation,underpinning,-37.284,142.931,13,P1
+vic-ararat-q1,foundation,restumping,-37.284,142.931,13,P1
+vic-ararat-q2,foundation,reblocking,-37.284,142.931,13,P1
+vic-ararat-q3,foundation,foundation repair,-37.284,142.931,13,P1
+vic-ararat-q4,foundation,house levelling,-37.284,142.931,13,P1
+vic-ararat-q5,foundation,house relevelling,-37.284,142.931,13,P1
+vic-ararat-q6,foundation,slab lifting,-37.284,142.931,13,P1
+vic-ararat-q7,foundation,resin injection underpinning,-37.284,142.931,13,P1
+vic-ararat-q8,foundation,subsidence repair,-37.284,142.931,13,P1
+vic-ararat-q9,adjacent,house raising,-37.284,142.931,13,P2
+vic-horsham-q0,foundation,underpinning,-36.711,142.199,13,P1
+vic-horsham-q1,foundation,restumping,-36.711,142.199,13,P1
+vic-horsham-q2,foundation,reblocking,-36.711,142.199,13,P1
+vic-horsham-q3,foundation,foundation repair,-36.711,142.199,13,P1
+vic-horsham-q4,foundation,house levelling,-36.711,142.199,13,P1
+vic-horsham-q5,foundation,house relevelling,-36.711,142.199,13,P1
+vic-horsham-q6,foundation,slab lifting,-36.711,142.199,13,P1
+vic-horsham-q7,foundation,resin injection underpinning,-36.711,142.199,13,P1
+vic-horsham-q8,foundation,subsidence repair,-36.711,142.199,13,P1
+vic-horsham-q9,adjacent,house raising,-36.711,142.199,13,P2
+vic-ballarat-q0,foundation,underpinning,-37.5622,143.8503,13,P1
+vic-ballarat-q1,foundation,restumping,-37.5622,143.8503,13,P1
+vic-ballarat-q2,foundation,reblocking,-37.5622,143.8503,13,P1
+vic-ballarat-q3,foundation,foundation repair,-37.5622,143.8503,13,P1
+vic-ballarat-q4,foundation,house levelling,-37.5622,143.8503,13,P1
+vic-ballarat-q5,foundation,house relevelling,-37.5622,143.8503,13,P1
+vic-ballarat-q6,foundation,slab lifting,-37.5622,143.8503,13,P1
+vic-ballarat-q7,foundation,resin injection underpinning,-37.5622,143.8503,13,P1
+vic-ballarat-q8,foundation,subsidence repair,-37.5622,143.8503,13,P1
+vic-ballarat-q9,adjacent,house raising,-37.5622,143.8503,13,P2
+vic-bendigo-q0,foundation,underpinning,-36.757,144.2794,13,P1
+vic-bendigo-q1,foundation,restumping,-36.757,144.2794,13,P1
+vic-bendigo-q2,foundation,reblocking,-36.757,144.2794,13,P1
+vic-bendigo-q3,foundation,foundation repair,-36.757,144.2794,13,P1
+vic-bendigo-q4,foundation,house levelling,-36.757,144.2794,13,P1
+vic-bendigo-q5,foundation,house relevelling,-36.757,144.2794,13,P1
+vic-bendigo-q6,foundation,slab lifting,-36.757,144.2794,13,P1
+vic-bendigo-q7,foundation,resin injection underpinning,-36.757,144.2794,13,P1
+vic-bendigo-q8,foundation,subsidence repair,-36.757,144.2794,13,P1
+vic-bendigo-q9,adjacent,house raising,-36.757,144.2794,13,P2
+vic-castlemaine-q0,foundation,underpinning,-37.064,144.217,13,P1
+vic-castlemaine-q1,foundation,restumping,-37.064,144.217,13,P1
+vic-castlemaine-q2,foundation,reblocking,-37.064,144.217,13,P1
+vic-castlemaine-q3,foundation,foundation repair,-37.064,144.217,13,P1
+vic-castlemaine-q4,foundation,house levelling,-37.064,144.217,13,P1
+vic-castlemaine-q5,foundation,house relevelling,-37.064,144.217,13,P1
+vic-castlemaine-q6,foundation,slab lifting,-37.064,144.217,13,P1
+vic-castlemaine-q7,foundation,resin injection underpinning,-37.064,144.217,13,P1
+vic-castlemaine-q8,foundation,subsidence repair,-37.064,144.217,13,P1
+vic-castlemaine-q9,adjacent,house raising,-37.064,144.217,13,P2
+vic-kyneton-q0,foundation,underpinning,-37.245,144.451,13,P1
+vic-kyneton-q1,foundation,restumping,-37.245,144.451,13,P1
+vic-kyneton-q2,foundation,reblocking,-37.245,144.451,13,P1
+vic-kyneton-q3,foundation,foundation repair,-37.245,144.451,13,P1
+vic-kyneton-q4,foundation,house levelling,-37.245,144.451,13,P1
+vic-kyneton-q5,foundation,house relevelling,-37.245,144.451,13,P1
+vic-kyneton-q6,foundation,slab lifting,-37.245,144.451,13,P1
+vic-kyneton-q7,foundation,resin injection underpinning,-37.245,144.451,13,P1
+vic-kyneton-q8,foundation,subsidence repair,-37.245,144.451,13,P1
+vic-kyneton-q9,adjacent,house raising,-37.245,144.451,13,P2
+vic-sunbury-q0,foundation,underpinning,-37.579,144.726,13,P1
+vic-sunbury-q1,foundation,restumping,-37.579,144.726,13,P1
+vic-sunbury-q2,foundation,reblocking,-37.579,144.726,13,P1
+vic-sunbury-q3,foundation,foundation repair,-37.579,144.726,13,P1
+vic-sunbury-q4,foundation,house levelling,-37.579,144.726,13,P1
+vic-sunbury-q5,foundation,house relevelling,-37.579,144.726,13,P1
+vic-sunbury-q6,foundation,slab lifting,-37.579,144.726,13,P1
+vic-sunbury-q7,foundation,resin injection underpinning,-37.579,144.726,13,P1
+vic-sunbury-q8,foundation,subsidence repair,-37.579,144.726,13,P1
+vic-sunbury-q9,adjacent,house raising,-37.579,144.726,13,P2
+vic-melton-q0,foundation,underpinning,-37.683,144.583,13,P1
+vic-melton-q1,foundation,restumping,-37.683,144.583,13,P1
+vic-melton-q2,foundation,reblocking,-37.683,144.583,13,P1
+vic-melton-q3,foundation,foundation repair,-37.683,144.583,13,P1
+vic-melton-q4,foundation,house levelling,-37.683,144.583,13,P1
+vic-melton-q5,foundation,house relevelling,-37.683,144.583,13,P1
+vic-melton-q6,foundation,slab lifting,-37.683,144.583,13,P1
+vic-melton-q7,foundation,resin injection underpinning,-37.683,144.583,13,P1
+vic-melton-q8,foundation,subsidence repair,-37.683,144.583,13,P1
+vic-melton-q9,adjacent,house raising,-37.683,144.583,13,P2
+vic-echuca-q0,foundation,underpinning,-36.129,144.752,13,P1
+vic-echuca-q1,foundation,restumping,-36.129,144.752,13,P1
+vic-echuca-q2,foundation,reblocking,-36.129,144.752,13,P1
+vic-echuca-q3,foundation,foundation repair,-36.129,144.752,13,P1
+vic-echuca-q4,foundation,house levelling,-36.129,144.752,13,P1
+vic-echuca-q5,foundation,house relevelling,-36.129,144.752,13,P1
+vic-echuca-q6,foundation,slab lifting,-36.129,144.752,13,P1
+vic-echuca-q7,foundation,resin injection underpinning,-36.129,144.752,13,P1
+vic-echuca-q8,foundation,subsidence repair,-36.129,144.752,13,P1
+vic-echuca-q9,adjacent,house raising,-36.129,144.752,13,P2
+vic-swan-hill-q0,foundation,underpinning,-35.338,143.554,13,P1
+vic-swan-hill-q1,foundation,restumping,-35.338,143.554,13,P1
+vic-swan-hill-q2,foundation,reblocking,-35.338,143.554,13,P1
+vic-swan-hill-q3,foundation,foundation repair,-35.338,143.554,13,P1
+vic-swan-hill-q4,foundation,house levelling,-35.338,143.554,13,P1
+vic-swan-hill-q5,foundation,house relevelling,-35.338,143.554,13,P1
+vic-swan-hill-q6,foundation,slab lifting,-35.338,143.554,13,P1
+vic-swan-hill-q7,foundation,resin injection underpinning,-35.338,143.554,13,P1
+vic-swan-hill-q8,foundation,subsidence repair,-35.338,143.554,13,P1
+vic-swan-hill-q9,adjacent,house raising,-35.338,143.554,13,P2
+vic-mildura-q0,foundation,underpinning,-34.208,142.1246,13,P1
+vic-mildura-q1,foundation,restumping,-34.208,142.1246,13,P1
+vic-mildura-q2,foundation,reblocking,-34.208,142.1246,13,P1
+vic-mildura-q3,foundation,foundation repair,-34.208,142.1246,13,P1
+vic-mildura-q4,foundation,house levelling,-34.208,142.1246,13,P1
+vic-mildura-q5,foundation,house relevelling,-34.208,142.1246,13,P1
+vic-mildura-q6,foundation,slab lifting,-34.208,142.1246,13,P1
+vic-mildura-q7,foundation,resin injection underpinning,-34.208,142.1246,13,P1
+vic-mildura-q8,foundation,subsidence repair,-34.208,142.1246,13,P1
+vic-mildura-q9,adjacent,house raising,-34.208,142.1246,13,P2
+vic-shepparton-q0,foundation,underpinning,-36.3833,145.4,13,P1
+vic-shepparton-q1,foundation,restumping,-36.3833,145.4,13,P1
+vic-shepparton-q2,foundation,reblocking,-36.3833,145.4,13,P1
+vic-shepparton-q3,foundation,foundation repair,-36.3833,145.4,13,P1
+vic-shepparton-q4,foundation,house levelling,-36.3833,145.4,13,P1
+vic-shepparton-q5,foundation,house relevelling,-36.3833,145.4,13,P1
+vic-shepparton-q6,foundation,slab lifting,-36.3833,145.4,13,P1
+vic-shepparton-q7,foundation,resin injection underpinning,-36.3833,145.4,13,P1
+vic-shepparton-q8,foundation,subsidence repair,-36.3833,145.4,13,P1
+vic-shepparton-q9,adjacent,house raising,-36.3833,145.4,13,P2
+vic-benalla-q0,foundation,underpinning,-36.551,145.984,13,P1
+vic-benalla-q1,foundation,restumping,-36.551,145.984,13,P1
+vic-benalla-q2,foundation,reblocking,-36.551,145.984,13,P1
+vic-benalla-q3,foundation,foundation repair,-36.551,145.984,13,P1
+vic-benalla-q4,foundation,house levelling,-36.551,145.984,13,P1
+vic-benalla-q5,foundation,house relevelling,-36.551,145.984,13,P1
+vic-benalla-q6,foundation,slab lifting,-36.551,145.984,13,P1
+vic-benalla-q7,foundation,resin injection underpinning,-36.551,145.984,13,P1
+vic-benalla-q8,foundation,subsidence repair,-36.551,145.984,13,P1
+vic-benalla-q9,adjacent,house raising,-36.551,145.984,13,P2
+vic-wangaratta-q0,foundation,underpinning,-36.358,146.3125,13,P1
+vic-wangaratta-q1,foundation,restumping,-36.358,146.3125,13,P1
+vic-wangaratta-q2,foundation,reblocking,-36.358,146.3125,13,P1
+vic-wangaratta-q3,foundation,foundation repair,-36.358,146.3125,13,P1
+vic-wangaratta-q4,foundation,house levelling,-36.358,146.3125,13,P1
+vic-wangaratta-q5,foundation,house relevelling,-36.358,146.3125,13,P1
+vic-wangaratta-q6,foundation,slab lifting,-36.358,146.3125,13,P1
+vic-wangaratta-q7,foundation,resin injection underpinning,-36.358,146.3125,13,P1
+vic-wangaratta-q8,foundation,subsidence repair,-36.358,146.3125,13,P1
+vic-wangaratta-q9,adjacent,house raising,-36.358,146.3125,13,P2
+vic-wodonga-q0,foundation,underpinning,-36.1214,146.8881,13,P1
+vic-wodonga-q1,foundation,restumping,-36.1214,146.8881,13,P1
+vic-wodonga-q2,foundation,reblocking,-36.1214,146.8881,13,P1
+vic-wodonga-q3,foundation,foundation repair,-36.1214,146.8881,13,P1
+vic-wodonga-q4,foundation,house levelling,-36.1214,146.8881,13,P1
+vic-wodonga-q5,foundation,house relevelling,-36.1214,146.8881,13,P1
+vic-wodonga-q6,foundation,slab lifting,-36.1214,146.8881,13,P1
+vic-wodonga-q7,foundation,resin injection underpinning,-36.1214,146.8881,13,P1
+vic-wodonga-q8,foundation,subsidence repair,-36.1214,146.8881,13,P1
+vic-wodonga-q9,adjacent,house raising,-36.1214,146.8881,13,P2
+vic-pakenham-q0,foundation,underpinning,-38.071,145.485,13,P1
+vic-pakenham-q1,foundation,restumping,-38.071,145.485,13,P1
+vic-pakenham-q2,foundation,reblocking,-38.071,145.485,13,P1
+vic-pakenham-q3,foundation,foundation repair,-38.071,145.485,13,P1
+vic-pakenham-q4,foundation,house levelling,-38.071,145.485,13,P1
+vic-pakenham-q5,foundation,house relevelling,-38.071,145.485,13,P1
+vic-pakenham-q6,foundation,slab lifting,-38.071,145.485,13,P1
+vic-pakenham-q7,foundation,resin injection underpinning,-38.071,145.485,13,P1
+vic-pakenham-q8,foundation,subsidence repair,-38.071,145.485,13,P1
+vic-pakenham-q9,adjacent,house raising,-38.071,145.485,13,P2
+vic-warragul-drouin-q0,foundation,underpinning,-38.16,145.931,13,P1
+vic-warragul-drouin-q1,foundation,restumping,-38.16,145.931,13,P1
+vic-warragul-drouin-q2,foundation,reblocking,-38.16,145.931,13,P1
+vic-warragul-drouin-q3,foundation,foundation repair,-38.16,145.931,13,P1
+vic-warragul-drouin-q4,foundation,house levelling,-38.16,145.931,13,P1
+vic-warragul-drouin-q5,foundation,house relevelling,-38.16,145.931,13,P1
+vic-warragul-drouin-q6,foundation,slab lifting,-38.16,145.931,13,P1
+vic-warragul-drouin-q7,foundation,resin injection underpinning,-38.16,145.931,13,P1
+vic-warragul-drouin-q8,foundation,subsidence repair,-38.16,145.931,13,P1
+vic-warragul-drouin-q9,adjacent,house raising,-38.16,145.931,13,P2
+vic-traralgon-q0,foundation,underpinning,-38.195,146.541,13,P1
+vic-traralgon-q1,foundation,restumping,-38.195,146.541,13,P1
+vic-traralgon-q2,foundation,reblocking,-38.195,146.541,13,P1
+vic-traralgon-q3,foundation,foundation repair,-38.195,146.541,13,P1
+vic-traralgon-q4,foundation,house levelling,-38.195,146.541,13,P1
+vic-traralgon-q5,foundation,house relevelling,-38.195,146.541,13,P1
+vic-traralgon-q6,foundation,slab lifting,-38.195,146.541,13,P1
+vic-traralgon-q7,foundation,resin injection underpinning,-38.195,146.541,13,P1
+vic-traralgon-q8,foundation,subsidence repair,-38.195,146.541,13,P1
+vic-traralgon-q9,adjacent,house raising,-38.195,146.541,13,P2
+vic-sale-q0,foundation,underpinning,-38.11,147.068,13,P1
+vic-sale-q1,foundation,restumping,-38.11,147.068,13,P1
+vic-sale-q2,foundation,reblocking,-38.11,147.068,13,P1
+vic-sale-q3,foundation,foundation repair,-38.11,147.068,13,P1
+vic-sale-q4,foundation,house levelling,-38.11,147.068,13,P1
+vic-sale-q5,foundation,house relevelling,-38.11,147.068,13,P1
+vic-sale-q6,foundation,slab lifting,-38.11,147.068,13,P1
+vic-sale-q7,foundation,resin injection underpinning,-38.11,147.068,13,P1
+vic-sale-q8,foundation,subsidence repair,-38.11,147.068,13,P1
+vic-sale-q9,adjacent,house raising,-38.11,147.068,13,P2
+vic-bairnsdale-q0,foundation,underpinning,-37.825,147.611,13,P1
+vic-bairnsdale-q1,foundation,restumping,-37.825,147.611,13,P1
+vic-bairnsdale-q2,foundation,reblocking,-37.825,147.611,13,P1
+vic-bairnsdale-q3,foundation,foundation repair,-37.825,147.611,13,P1
+vic-bairnsdale-q4,foundation,house levelling,-37.825,147.611,13,P1
+vic-bairnsdale-q5,foundation,house relevelling,-37.825,147.611,13,P1
+vic-bairnsdale-q6,foundation,slab lifting,-37.825,147.611,13,P1
+vic-bairnsdale-q7,foundation,resin injection underpinning,-37.825,147.611,13,P1
+vic-bairnsdale-q8,foundation,subsidence repair,-37.825,147.611,13,P1
+vic-bairnsdale-q9,adjacent,house raising,-37.825,147.611,13,P2
+vic-leongatha-q0,foundation,underpinning,-38.476,145.946,13,P1
+vic-leongatha-q1,foundation,restumping,-38.476,145.946,13,P1
+vic-leongatha-q2,foundation,reblocking,-38.476,145.946,13,P1
+vic-leongatha-q3,foundation,foundation repair,-38.476,145.946,13,P1
+vic-leongatha-q4,foundation,house levelling,-38.476,145.946,13,P1
+vic-leongatha-q5,foundation,house relevelling,-38.476,145.946,13,P1
+vic-leongatha-q6,foundation,slab lifting,-38.476,145.946,13,P1
+vic-leongatha-q7,foundation,resin injection underpinning,-38.476,145.946,13,P1
+vic-leongatha-q8,foundation,subsidence repair,-38.476,145.946,13,P1
+vic-leongatha-q9,adjacent,house raising,-38.476,145.946,13,P2
+vic-wonthaggi-q0,foundation,underpinning,-38.605,145.592,13,P1
+vic-wonthaggi-q1,foundation,restumping,-38.605,145.592,13,P1
+vic-wonthaggi-q2,foundation,reblocking,-38.605,145.592,13,P1
+vic-wonthaggi-q3,foundation,foundation repair,-38.605,145.592,13,P1
+vic-wonthaggi-q4,foundation,house levelling,-38.605,145.592,13,P1
+vic-wonthaggi-q5,foundation,house relevelling,-38.605,145.592,13,P1
+vic-wonthaggi-q6,foundation,slab lifting,-38.605,145.592,13,P1
+vic-wonthaggi-q7,foundation,resin injection underpinning,-38.605,145.592,13,P1
+vic-wonthaggi-q8,foundation,subsidence repair,-38.605,145.592,13,P1
+vic-wonthaggi-q9,adjacent,house raising,-38.605,145.592,13,P2
+vic-mornington-q0,foundation,underpinning,-38.217,145.039,13,P1
+vic-mornington-q1,foundation,restumping,-38.217,145.039,13,P1
+vic-mornington-q2,foundation,reblocking,-38.217,145.039,13,P1
+vic-mornington-q3,foundation,foundation repair,-38.217,145.039,13,P1
+vic-mornington-q4,foundation,house levelling,-38.217,145.039,13,P1
+vic-mornington-q5,foundation,house relevelling,-38.217,145.039,13,P1
+vic-mornington-q6,foundation,slab lifting,-38.217,145.039,13,P1
+vic-mornington-q7,foundation,resin injection underpinning,-38.217,145.039,13,P1
+vic-mornington-q8,foundation,subsidence repair,-38.217,145.039,13,P1
+vic-mornington-q9,adjacent,house raising,-38.217,145.039,13,P2
+qld-brisbane-cbd-q0,foundation,underpinning,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q1,foundation,restumping,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q2,foundation,reblocking,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q3,foundation,foundation repair,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q4,foundation,house levelling,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q5,foundation,house relevelling,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q6,foundation,slab lifting,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q7,foundation,resin injection underpinning,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q8,foundation,subsidence repair,-27.4698,153.0251,13,P1
+qld-brisbane-cbd-q9,adjacent,house raising,-27.4698,153.0251,13,P2
+qld-ipswich-q0,foundation,underpinning,-27.6144,152.7608,13,P1
+qld-ipswich-q1,foundation,restumping,-27.6144,152.7608,13,P1
+qld-ipswich-q2,foundation,reblocking,-27.6144,152.7608,13,P1
+qld-ipswich-q3,foundation,foundation repair,-27.6144,152.7608,13,P1
+qld-ipswich-q4,foundation,house levelling,-27.6144,152.7608,13,P1
+qld-ipswich-q5,foundation,house relevelling,-27.6144,152.7608,13,P1
+qld-ipswich-q6,foundation,slab lifting,-27.6144,152.7608,13,P1
+qld-ipswich-q7,foundation,resin injection underpinning,-27.6144,152.7608,13,P1
+qld-ipswich-q8,foundation,subsidence repair,-27.6144,152.7608,13,P1
+qld-ipswich-q9,adjacent,house raising,-27.6144,152.7608,13,P2
+qld-logan-central-q0,foundation,underpinning,-27.639,153.108,13,P1
+qld-logan-central-q1,foundation,restumping,-27.639,153.108,13,P1
+qld-logan-central-q2,foundation,reblocking,-27.639,153.108,13,P1
+qld-logan-central-q3,foundation,foundation repair,-27.639,153.108,13,P1
+qld-logan-central-q4,foundation,house levelling,-27.639,153.108,13,P1
+qld-logan-central-q5,foundation,house relevelling,-27.639,153.108,13,P1
+qld-logan-central-q6,foundation,slab lifting,-27.639,153.108,13,P1
+qld-logan-central-q7,foundation,resin injection underpinning,-27.639,153.108,13,P1
+qld-logan-central-q8,foundation,subsidence repair,-27.639,153.108,13,P1
+qld-logan-central-q9,adjacent,house raising,-27.639,153.108,13,P2
+qld-beaudesert-q0,foundation,underpinning,-27.988,152.996,13,P1
+qld-beaudesert-q1,foundation,restumping,-27.988,152.996,13,P1
+qld-beaudesert-q2,foundation,reblocking,-27.988,152.996,13,P1
+qld-beaudesert-q3,foundation,foundation repair,-27.988,152.996,13,P1
+qld-beaudesert-q4,foundation,house levelling,-27.988,152.996,13,P1
+qld-beaudesert-q5,foundation,house relevelling,-27.988,152.996,13,P1
+qld-beaudesert-q6,foundation,slab lifting,-27.988,152.996,13,P1
+qld-beaudesert-q7,foundation,resin injection underpinning,-27.988,152.996,13,P1
+qld-beaudesert-q8,foundation,subsidence repair,-27.988,152.996,13,P1
+qld-beaudesert-q9,adjacent,house raising,-27.988,152.996,13,P2
+qld-caboolture-q0,foundation,underpinning,-27.084,152.951,13,P1
+qld-caboolture-q1,foundation,restumping,-27.084,152.951,13,P1
+qld-caboolture-q2,foundation,reblocking,-27.084,152.951,13,P1
+qld-caboolture-q3,foundation,foundation repair,-27.084,152.951,13,P1
+qld-caboolture-q4,foundation,house levelling,-27.084,152.951,13,P1
+qld-caboolture-q5,foundation,house relevelling,-27.084,152.951,13,P1
+qld-caboolture-q6,foundation,slab lifting,-27.084,152.951,13,P1
+qld-caboolture-q7,foundation,resin injection underpinning,-27.084,152.951,13,P1
+qld-caboolture-q8,foundation,subsidence repair,-27.084,152.951,13,P1
+qld-caboolture-q9,adjacent,house raising,-27.084,152.951,13,P2
+qld-redcliffe-q0,foundation,underpinning,-27.23,153.1,13,P1
+qld-redcliffe-q1,foundation,restumping,-27.23,153.1,13,P1
+qld-redcliffe-q2,foundation,reblocking,-27.23,153.1,13,P1
+qld-redcliffe-q3,foundation,foundation repair,-27.23,153.1,13,P1
+qld-redcliffe-q4,foundation,house levelling,-27.23,153.1,13,P1
+qld-redcliffe-q5,foundation,house relevelling,-27.23,153.1,13,P1
+qld-redcliffe-q6,foundation,slab lifting,-27.23,153.1,13,P1
+qld-redcliffe-q7,foundation,resin injection underpinning,-27.23,153.1,13,P1
+qld-redcliffe-q8,foundation,subsidence repair,-27.23,153.1,13,P1
+qld-redcliffe-q9,adjacent,house raising,-27.23,153.1,13,P2
+qld-cleveland-redlands-q0,foundation,underpinning,-27.527,153.265,13,P1
+qld-cleveland-redlands-q1,foundation,restumping,-27.527,153.265,13,P1
+qld-cleveland-redlands-q2,foundation,reblocking,-27.527,153.265,13,P1
+qld-cleveland-redlands-q3,foundation,foundation repair,-27.527,153.265,13,P1
+qld-cleveland-redlands-q4,foundation,house levelling,-27.527,153.265,13,P1
+qld-cleveland-redlands-q5,foundation,house relevelling,-27.527,153.265,13,P1
+qld-cleveland-redlands-q6,foundation,slab lifting,-27.527,153.265,13,P1
+qld-cleveland-redlands-q7,foundation,resin injection underpinning,-27.527,153.265,13,P1
+qld-cleveland-redlands-q8,foundation,subsidence repair,-27.527,153.265,13,P1
+qld-cleveland-redlands-q9,adjacent,house raising,-27.527,153.265,13,P2
+qld-gold-coast-southport-q0,foundation,underpinning,-27.967,153.4,13,P1
+qld-gold-coast-southport-q1,foundation,restumping,-27.967,153.4,13,P1
+qld-gold-coast-southport-q2,foundation,reblocking,-27.967,153.4,13,P1
+qld-gold-coast-southport-q3,foundation,foundation repair,-27.967,153.4,13,P1
+qld-gold-coast-southport-q4,foundation,house levelling,-27.967,153.4,13,P1
+qld-gold-coast-southport-q5,foundation,house relevelling,-27.967,153.4,13,P1
+qld-gold-coast-southport-q6,foundation,slab lifting,-27.967,153.4,13,P1
+qld-gold-coast-southport-q7,foundation,resin injection underpinning,-27.967,153.4,13,P1
+qld-gold-coast-southport-q8,foundation,subsidence repair,-27.967,153.4,13,P1
+qld-gold-coast-southport-q9,adjacent,house raising,-27.967,153.4,13,P2
+qld-sunshine-coast-maroochydore-q0,foundation,underpinning,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q1,foundation,restumping,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q2,foundation,reblocking,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q3,foundation,foundation repair,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q4,foundation,house levelling,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q5,foundation,house relevelling,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q6,foundation,slab lifting,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q7,foundation,resin injection underpinning,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q8,foundation,subsidence repair,-26.653,153.093,13,P1
+qld-sunshine-coast-maroochydore-q9,adjacent,house raising,-26.653,153.093,13,P2
+qld-gympie-q0,foundation,underpinning,-26.19,152.665,13,P1
+qld-gympie-q1,foundation,restumping,-26.19,152.665,13,P1
+qld-gympie-q2,foundation,reblocking,-26.19,152.665,13,P1
+qld-gympie-q3,foundation,foundation repair,-26.19,152.665,13,P1
+qld-gympie-q4,foundation,house levelling,-26.19,152.665,13,P1
+qld-gympie-q5,foundation,house relevelling,-26.19,152.665,13,P1
+qld-gympie-q6,foundation,slab lifting,-26.19,152.665,13,P1
+qld-gympie-q7,foundation,resin injection underpinning,-26.19,152.665,13,P1
+qld-gympie-q8,foundation,subsidence repair,-26.19,152.665,13,P1
+qld-gympie-q9,adjacent,house raising,-26.19,152.665,13,P2
+qld-toowoomba-q0,foundation,underpinning,-27.5598,151.9507,13,P1
+qld-toowoomba-q1,foundation,restumping,-27.5598,151.9507,13,P1
+qld-toowoomba-q2,foundation,reblocking,-27.5598,151.9507,13,P1
+qld-toowoomba-q3,foundation,foundation repair,-27.5598,151.9507,13,P1
+qld-toowoomba-q4,foundation,house levelling,-27.5598,151.9507,13,P1
+qld-toowoomba-q5,foundation,house relevelling,-27.5598,151.9507,13,P1
+qld-toowoomba-q6,foundation,slab lifting,-27.5598,151.9507,13,P1
+qld-toowoomba-q7,foundation,resin injection underpinning,-27.5598,151.9507,13,P1
+qld-toowoomba-q8,foundation,subsidence repair,-27.5598,151.9507,13,P1
+qld-toowoomba-q9,adjacent,house raising,-27.5598,151.9507,13,P2
+qld-warwick-q0,foundation,underpinning,-28.215,152.034,13,P1
+qld-warwick-q1,foundation,restumping,-28.215,152.034,13,P1
+qld-warwick-q2,foundation,reblocking,-28.215,152.034,13,P1
+qld-warwick-q3,foundation,foundation repair,-28.215,152.034,13,P1
+qld-warwick-q4,foundation,house levelling,-28.215,152.034,13,P1
+qld-warwick-q5,foundation,house relevelling,-28.215,152.034,13,P1
+qld-warwick-q6,foundation,slab lifting,-28.215,152.034,13,P1
+qld-warwick-q7,foundation,resin injection underpinning,-28.215,152.034,13,P1
+qld-warwick-q8,foundation,subsidence repair,-28.215,152.034,13,P1
+qld-warwick-q9,adjacent,house raising,-28.215,152.034,13,P2
+qld-dalby-q0,foundation,underpinning,-27.183,151.263,13,P1
+qld-dalby-q1,foundation,restumping,-27.183,151.263,13,P1
+qld-dalby-q2,foundation,reblocking,-27.183,151.263,13,P1
+qld-dalby-q3,foundation,foundation repair,-27.183,151.263,13,P1
+qld-dalby-q4,foundation,house levelling,-27.183,151.263,13,P1
+qld-dalby-q5,foundation,house relevelling,-27.183,151.263,13,P1
+qld-dalby-q6,foundation,slab lifting,-27.183,151.263,13,P1
+qld-dalby-q7,foundation,resin injection underpinning,-27.183,151.263,13,P1
+qld-dalby-q8,foundation,subsidence repair,-27.183,151.263,13,P1
+qld-dalby-q9,adjacent,house raising,-27.183,151.263,13,P2
+qld-kingaroy-q0,foundation,underpinning,-26.541,151.838,13,P1
+qld-kingaroy-q1,foundation,restumping,-26.541,151.838,13,P1
+qld-kingaroy-q2,foundation,reblocking,-26.541,151.838,13,P1
+qld-kingaroy-q3,foundation,foundation repair,-26.541,151.838,13,P1
+qld-kingaroy-q4,foundation,house levelling,-26.541,151.838,13,P1
+qld-kingaroy-q5,foundation,house relevelling,-26.541,151.838,13,P1
+qld-kingaroy-q6,foundation,slab lifting,-26.541,151.838,13,P1
+qld-kingaroy-q7,foundation,resin injection underpinning,-26.541,151.838,13,P1
+qld-kingaroy-q8,foundation,subsidence repair,-26.541,151.838,13,P1
+qld-kingaroy-q9,adjacent,house raising,-26.541,151.838,13,P2
+qld-roma-q0,foundation,underpinning,-26.572,148.787,13,P1
+qld-roma-q1,foundation,restumping,-26.572,148.787,13,P1
+qld-roma-q2,foundation,reblocking,-26.572,148.787,13,P1
+qld-roma-q3,foundation,foundation repair,-26.572,148.787,13,P1
+qld-roma-q4,foundation,house levelling,-26.572,148.787,13,P1
+qld-roma-q5,foundation,house relevelling,-26.572,148.787,13,P1
+qld-roma-q6,foundation,slab lifting,-26.572,148.787,13,P1
+qld-roma-q7,foundation,resin injection underpinning,-26.572,148.787,13,P1
+qld-roma-q8,foundation,subsidence repair,-26.572,148.787,13,P1
+qld-roma-q9,adjacent,house raising,-26.572,148.787,13,P2
+qld-maryborough-qld-q0,foundation,underpinning,-25.541,152.701,13,P1
+qld-maryborough-qld-q1,foundation,restumping,-25.541,152.701,13,P1
+qld-maryborough-qld-q2,foundation,reblocking,-25.541,152.701,13,P1
+qld-maryborough-qld-q3,foundation,foundation repair,-25.541,152.701,13,P1
+qld-maryborough-qld-q4,foundation,house levelling,-25.541,152.701,13,P1
+qld-maryborough-qld-q5,foundation,house relevelling,-25.541,152.701,13,P1
+qld-maryborough-qld-q6,foundation,slab lifting,-25.541,152.701,13,P1
+qld-maryborough-qld-q7,foundation,resin injection underpinning,-25.541,152.701,13,P1
+qld-maryborough-qld-q8,foundation,subsidence repair,-25.541,152.701,13,P1
+qld-maryborough-qld-q9,adjacent,house raising,-25.541,152.701,13,P2
+qld-hervey-bay-q0,foundation,underpinning,-25.288,152.841,13,P1
+qld-hervey-bay-q1,foundation,restumping,-25.288,152.841,13,P1
+qld-hervey-bay-q2,foundation,reblocking,-25.288,152.841,13,P1
+qld-hervey-bay-q3,foundation,foundation repair,-25.288,152.841,13,P1
+qld-hervey-bay-q4,foundation,house levelling,-25.288,152.841,13,P1
+qld-hervey-bay-q5,foundation,house relevelling,-25.288,152.841,13,P1
+qld-hervey-bay-q6,foundation,slab lifting,-25.288,152.841,13,P1
+qld-hervey-bay-q7,foundation,resin injection underpinning,-25.288,152.841,13,P1
+qld-hervey-bay-q8,foundation,subsidence repair,-25.288,152.841,13,P1
+qld-hervey-bay-q9,adjacent,house raising,-25.288,152.841,13,P2
+qld-bundaberg-q0,foundation,underpinning,-24.8661,152.3489,13,P1
+qld-bundaberg-q1,foundation,restumping,-24.8661,152.3489,13,P1
+qld-bundaberg-q2,foundation,reblocking,-24.8661,152.3489,13,P1
+qld-bundaberg-q3,foundation,foundation repair,-24.8661,152.3489,13,P1
+qld-bundaberg-q4,foundation,house levelling,-24.8661,152.3489,13,P1
+qld-bundaberg-q5,foundation,house relevelling,-24.8661,152.3489,13,P1
+qld-bundaberg-q6,foundation,slab lifting,-24.8661,152.3489,13,P1
+qld-bundaberg-q7,foundation,resin injection underpinning,-24.8661,152.3489,13,P1
+qld-bundaberg-q8,foundation,subsidence repair,-24.8661,152.3489,13,P1
+qld-bundaberg-q9,adjacent,house raising,-24.8661,152.3489,13,P2
+qld-gladstone-q0,foundation,underpinning,-23.843,151.256,13,P1
+qld-gladstone-q1,foundation,restumping,-23.843,151.256,13,P1
+qld-gladstone-q2,foundation,reblocking,-23.843,151.256,13,P1
+qld-gladstone-q3,foundation,foundation repair,-23.843,151.256,13,P1
+qld-gladstone-q4,foundation,house levelling,-23.843,151.256,13,P1
+qld-gladstone-q5,foundation,house relevelling,-23.843,151.256,13,P1
+qld-gladstone-q6,foundation,slab lifting,-23.843,151.256,13,P1
+qld-gladstone-q7,foundation,resin injection underpinning,-23.843,151.256,13,P1
+qld-gladstone-q8,foundation,subsidence repair,-23.843,151.256,13,P1
+qld-gladstone-q9,adjacent,house raising,-23.843,151.256,13,P2
+qld-rockhampton-q0,foundation,underpinning,-23.3791,150.51,13,P1
+qld-rockhampton-q1,foundation,restumping,-23.3791,150.51,13,P1
+qld-rockhampton-q2,foundation,reblocking,-23.3791,150.51,13,P1
+qld-rockhampton-q3,foundation,foundation repair,-23.3791,150.51,13,P1
+qld-rockhampton-q4,foundation,house levelling,-23.3791,150.51,13,P1
+qld-rockhampton-q5,foundation,house relevelling,-23.3791,150.51,13,P1
+qld-rockhampton-q6,foundation,slab lifting,-23.3791,150.51,13,P1
+qld-rockhampton-q7,foundation,resin injection underpinning,-23.3791,150.51,13,P1
+qld-rockhampton-q8,foundation,subsidence repair,-23.3791,150.51,13,P1
+qld-rockhampton-q9,adjacent,house raising,-23.3791,150.51,13,P2
+qld-yeppoon-q0,foundation,underpinning,-23.133,150.744,13,P1
+qld-yeppoon-q1,foundation,restumping,-23.133,150.744,13,P1
+qld-yeppoon-q2,foundation,reblocking,-23.133,150.744,13,P1
+qld-yeppoon-q3,foundation,foundation repair,-23.133,150.744,13,P1
+qld-yeppoon-q4,foundation,house levelling,-23.133,150.744,13,P1
+qld-yeppoon-q5,foundation,house relevelling,-23.133,150.744,13,P1
+qld-yeppoon-q6,foundation,slab lifting,-23.133,150.744,13,P1
+qld-yeppoon-q7,foundation,resin injection underpinning,-23.133,150.744,13,P1
+qld-yeppoon-q8,foundation,subsidence repair,-23.133,150.744,13,P1
+qld-yeppoon-q9,adjacent,house raising,-23.133,150.744,13,P2
+qld-emerald-q0,foundation,underpinning,-23.527,148.158,13,P1
+qld-emerald-q1,foundation,restumping,-23.527,148.158,13,P1
+qld-emerald-q2,foundation,reblocking,-23.527,148.158,13,P1
+qld-emerald-q3,foundation,foundation repair,-23.527,148.158,13,P1
+qld-emerald-q4,foundation,house levelling,-23.527,148.158,13,P1
+qld-emerald-q5,foundation,house relevelling,-23.527,148.158,13,P1
+qld-emerald-q6,foundation,slab lifting,-23.527,148.158,13,P1
+qld-emerald-q7,foundation,resin injection underpinning,-23.527,148.158,13,P1
+qld-emerald-q8,foundation,subsidence repair,-23.527,148.158,13,P1
+qld-emerald-q9,adjacent,house raising,-23.527,148.158,13,P2
+qld-mackay-q0,foundation,underpinning,-21.1411,149.1861,13,P1
+qld-mackay-q1,foundation,restumping,-21.1411,149.1861,13,P1
+qld-mackay-q2,foundation,reblocking,-21.1411,149.1861,13,P1
+qld-mackay-q3,foundation,foundation repair,-21.1411,149.1861,13,P1
+qld-mackay-q4,foundation,house levelling,-21.1411,149.1861,13,P1
+qld-mackay-q5,foundation,house relevelling,-21.1411,149.1861,13,P1
+qld-mackay-q6,foundation,slab lifting,-21.1411,149.1861,13,P1
+qld-mackay-q7,foundation,resin injection underpinning,-21.1411,149.1861,13,P1
+qld-mackay-q8,foundation,subsidence repair,-21.1411,149.1861,13,P1
+qld-mackay-q9,adjacent,house raising,-21.1411,149.1861,13,P2
+qld-airlie-beach-proserpine-q0,foundation,underpinning,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q1,foundation,restumping,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q2,foundation,reblocking,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q3,foundation,foundation repair,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q4,foundation,house levelling,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q5,foundation,house relevelling,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q6,foundation,slab lifting,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q7,foundation,resin injection underpinning,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q8,foundation,subsidence repair,-20.401,148.581,13,P1
+qld-airlie-beach-proserpine-q9,adjacent,house raising,-20.401,148.581,13,P2
+qld-ayr-burdekin-q0,foundation,underpinning,-19.574,147.406,13,P1
+qld-ayr-burdekin-q1,foundation,restumping,-19.574,147.406,13,P1
+qld-ayr-burdekin-q2,foundation,reblocking,-19.574,147.406,13,P1
+qld-ayr-burdekin-q3,foundation,foundation repair,-19.574,147.406,13,P1
+qld-ayr-burdekin-q4,foundation,house levelling,-19.574,147.406,13,P1
+qld-ayr-burdekin-q5,foundation,house relevelling,-19.574,147.406,13,P1
+qld-ayr-burdekin-q6,foundation,slab lifting,-19.574,147.406,13,P1
+qld-ayr-burdekin-q7,foundation,resin injection underpinning,-19.574,147.406,13,P1
+qld-ayr-burdekin-q8,foundation,subsidence repair,-19.574,147.406,13,P1
+qld-ayr-burdekin-q9,adjacent,house raising,-19.574,147.406,13,P2
+qld-townsville-q0,foundation,underpinning,-19.259,146.8169,13,P1
+qld-townsville-q1,foundation,restumping,-19.259,146.8169,13,P1
+qld-townsville-q2,foundation,reblocking,-19.259,146.8169,13,P1
+qld-townsville-q3,foundation,foundation repair,-19.259,146.8169,13,P1
+qld-townsville-q4,foundation,house levelling,-19.259,146.8169,13,P1
+qld-townsville-q5,foundation,house relevelling,-19.259,146.8169,13,P1
+qld-townsville-q6,foundation,slab lifting,-19.259,146.8169,13,P1
+qld-townsville-q7,foundation,resin injection underpinning,-19.259,146.8169,13,P1
+qld-townsville-q8,foundation,subsidence repair,-19.259,146.8169,13,P1
+qld-townsville-q9,adjacent,house raising,-19.259,146.8169,13,P2
+qld-innisfail-q0,foundation,underpinning,-17.523,146.03,13,P1
+qld-innisfail-q1,foundation,restumping,-17.523,146.03,13,P1
+qld-innisfail-q2,foundation,reblocking,-17.523,146.03,13,P1
+qld-innisfail-q3,foundation,foundation repair,-17.523,146.03,13,P1
+qld-innisfail-q4,foundation,house levelling,-17.523,146.03,13,P1
+qld-innisfail-q5,foundation,house relevelling,-17.523,146.03,13,P1
+qld-innisfail-q6,foundation,slab lifting,-17.523,146.03,13,P1
+qld-innisfail-q7,foundation,resin injection underpinning,-17.523,146.03,13,P1
+qld-innisfail-q8,foundation,subsidence repair,-17.523,146.03,13,P1
+qld-innisfail-q9,adjacent,house raising,-17.523,146.03,13,P2
+qld-cairns-q0,foundation,underpinning,-16.9186,145.7781,13,P1
+qld-cairns-q1,foundation,restumping,-16.9186,145.7781,13,P1
+qld-cairns-q2,foundation,reblocking,-16.9186,145.7781,13,P1
+qld-cairns-q3,foundation,foundation repair,-16.9186,145.7781,13,P1
+qld-cairns-q4,foundation,house levelling,-16.9186,145.7781,13,P1
+qld-cairns-q5,foundation,house relevelling,-16.9186,145.7781,13,P1
+qld-cairns-q6,foundation,slab lifting,-16.9186,145.7781,13,P1
+qld-cairns-q7,foundation,resin injection underpinning,-16.9186,145.7781,13,P1
+qld-cairns-q8,foundation,subsidence repair,-16.9186,145.7781,13,P1
+qld-cairns-q9,adjacent,house raising,-16.9186,145.7781,13,P2
+qld-mareeba-q0,foundation,underpinning,-17,145.423,13,P1
+qld-mareeba-q1,foundation,restumping,-17,145.423,13,P1
+qld-mareeba-q2,foundation,reblocking,-17,145.423,13,P1
+qld-mareeba-q3,foundation,foundation repair,-17,145.423,13,P1
+qld-mareeba-q4,foundation,house levelling,-17,145.423,13,P1
+qld-mareeba-q5,foundation,house relevelling,-17,145.423,13,P1
+qld-mareeba-q6,foundation,slab lifting,-17,145.423,13,P1
+qld-mareeba-q7,foundation,resin injection underpinning,-17,145.423,13,P1
+qld-mareeba-q8,foundation,subsidence repair,-17,145.423,13,P1
+qld-mareeba-q9,adjacent,house raising,-17,145.423,13,P2
+qld-mount-isa-q0,foundation,underpinning,-20.7256,139.4927,13,P1
+qld-mount-isa-q1,foundation,restumping,-20.7256,139.4927,13,P1
+qld-mount-isa-q2,foundation,reblocking,-20.7256,139.4927,13,P1
+qld-mount-isa-q3,foundation,foundation repair,-20.7256,139.4927,13,P1
+qld-mount-isa-q4,foundation,house levelling,-20.7256,139.4927,13,P1
+qld-mount-isa-q5,foundation,house relevelling,-20.7256,139.4927,13,P1
+qld-mount-isa-q6,foundation,slab lifting,-20.7256,139.4927,13,P1
+qld-mount-isa-q7,foundation,resin injection underpinning,-20.7256,139.4927,13,P1
+qld-mount-isa-q8,foundation,subsidence repair,-20.7256,139.4927,13,P1
+qld-mount-isa-q9,adjacent,house raising,-20.7256,139.4927,13,P2
+wa-perth-cbd-q0,foundation,underpinning,-31.9505,115.8605,13,P1
+wa-perth-cbd-q1,foundation,restumping,-31.9505,115.8605,13,P1
+wa-perth-cbd-q2,foundation,reblocking,-31.9505,115.8605,13,P1
+wa-perth-cbd-q3,foundation,foundation repair,-31.9505,115.8605,13,P1
+wa-perth-cbd-q4,foundation,house levelling,-31.9505,115.8605,13,P1
+wa-perth-cbd-q5,foundation,house relevelling,-31.9505,115.8605,13,P1
+wa-perth-cbd-q6,foundation,slab lifting,-31.9505,115.8605,13,P1
+wa-perth-cbd-q7,foundation,resin injection underpinning,-31.9505,115.8605,13,P1
+wa-perth-cbd-q8,foundation,subsidence repair,-31.9505,115.8605,13,P1
+wa-perth-cbd-q9,adjacent,house raising,-31.9505,115.8605,13,P2
+wa-fremantle-q0,foundation,underpinning,-32.0569,115.7439,13,P1
+wa-fremantle-q1,foundation,restumping,-32.0569,115.7439,13,P1
+wa-fremantle-q2,foundation,reblocking,-32.0569,115.7439,13,P1
+wa-fremantle-q3,foundation,foundation repair,-32.0569,115.7439,13,P1
+wa-fremantle-q4,foundation,house levelling,-32.0569,115.7439,13,P1
+wa-fremantle-q5,foundation,house relevelling,-32.0569,115.7439,13,P1
+wa-fremantle-q6,foundation,slab lifting,-32.0569,115.7439,13,P1
+wa-fremantle-q7,foundation,resin injection underpinning,-32.0569,115.7439,13,P1
+wa-fremantle-q8,foundation,subsidence repair,-32.0569,115.7439,13,P1
+wa-fremantle-q9,adjacent,house raising,-32.0569,115.7439,13,P2
+wa-joondalup-q0,foundation,underpinning,-31.744,115.766,13,P1
+wa-joondalup-q1,foundation,restumping,-31.744,115.766,13,P1
+wa-joondalup-q2,foundation,reblocking,-31.744,115.766,13,P1
+wa-joondalup-q3,foundation,foundation repair,-31.744,115.766,13,P1
+wa-joondalup-q4,foundation,house levelling,-31.744,115.766,13,P1
+wa-joondalup-q5,foundation,house relevelling,-31.744,115.766,13,P1
+wa-joondalup-q6,foundation,slab lifting,-31.744,115.766,13,P1
+wa-joondalup-q7,foundation,resin injection underpinning,-31.744,115.766,13,P1
+wa-joondalup-q8,foundation,subsidence repair,-31.744,115.766,13,P1
+wa-joondalup-q9,adjacent,house raising,-31.744,115.766,13,P2
+wa-rockingham-q0,foundation,underpinning,-32.277,115.729,13,P1
+wa-rockingham-q1,foundation,restumping,-32.277,115.729,13,P1
+wa-rockingham-q2,foundation,reblocking,-32.277,115.729,13,P1
+wa-rockingham-q3,foundation,foundation repair,-32.277,115.729,13,P1
+wa-rockingham-q4,foundation,house levelling,-32.277,115.729,13,P1
+wa-rockingham-q5,foundation,house relevelling,-32.277,115.729,13,P1
+wa-rockingham-q6,foundation,slab lifting,-32.277,115.729,13,P1
+wa-rockingham-q7,foundation,resin injection underpinning,-32.277,115.729,13,P1
+wa-rockingham-q8,foundation,subsidence repair,-32.277,115.729,13,P1
+wa-rockingham-q9,adjacent,house raising,-32.277,115.729,13,P2
+wa-mandurah-q0,foundation,underpinning,-32.5269,115.7217,13,P1
+wa-mandurah-q1,foundation,restumping,-32.5269,115.7217,13,P1
+wa-mandurah-q2,foundation,reblocking,-32.5269,115.7217,13,P1
+wa-mandurah-q3,foundation,foundation repair,-32.5269,115.7217,13,P1
+wa-mandurah-q4,foundation,house levelling,-32.5269,115.7217,13,P1
+wa-mandurah-q5,foundation,house relevelling,-32.5269,115.7217,13,P1
+wa-mandurah-q6,foundation,slab lifting,-32.5269,115.7217,13,P1
+wa-mandurah-q7,foundation,resin injection underpinning,-32.5269,115.7217,13,P1
+wa-mandurah-q8,foundation,subsidence repair,-32.5269,115.7217,13,P1
+wa-mandurah-q9,adjacent,house raising,-32.5269,115.7217,13,P2
+wa-bunbury-q0,foundation,underpinning,-33.3271,115.6414,13,P1
+wa-bunbury-q1,foundation,restumping,-33.3271,115.6414,13,P1
+wa-bunbury-q2,foundation,reblocking,-33.3271,115.6414,13,P1
+wa-bunbury-q3,foundation,foundation repair,-33.3271,115.6414,13,P1
+wa-bunbury-q4,foundation,house levelling,-33.3271,115.6414,13,P1
+wa-bunbury-q5,foundation,house relevelling,-33.3271,115.6414,13,P1
+wa-bunbury-q6,foundation,slab lifting,-33.3271,115.6414,13,P1
+wa-bunbury-q7,foundation,resin injection underpinning,-33.3271,115.6414,13,P1
+wa-bunbury-q8,foundation,subsidence repair,-33.3271,115.6414,13,P1
+wa-bunbury-q9,adjacent,house raising,-33.3271,115.6414,13,P2
+wa-busselton-q0,foundation,underpinning,-33.652,115.345,13,P1
+wa-busselton-q1,foundation,restumping,-33.652,115.345,13,P1
+wa-busselton-q2,foundation,reblocking,-33.652,115.345,13,P1
+wa-busselton-q3,foundation,foundation repair,-33.652,115.345,13,P1
+wa-busselton-q4,foundation,house levelling,-33.652,115.345,13,P1
+wa-busselton-q5,foundation,house relevelling,-33.652,115.345,13,P1
+wa-busselton-q6,foundation,slab lifting,-33.652,115.345,13,P1
+wa-busselton-q7,foundation,resin injection underpinning,-33.652,115.345,13,P1
+wa-busselton-q8,foundation,subsidence repair,-33.652,115.345,13,P1
+wa-busselton-q9,adjacent,house raising,-33.652,115.345,13,P2
+wa-albany-q0,foundation,underpinning,-35.0269,117.8837,13,P1
+wa-albany-q1,foundation,restumping,-35.0269,117.8837,13,P1
+wa-albany-q2,foundation,reblocking,-35.0269,117.8837,13,P1
+wa-albany-q3,foundation,foundation repair,-35.0269,117.8837,13,P1
+wa-albany-q4,foundation,house levelling,-35.0269,117.8837,13,P1
+wa-albany-q5,foundation,house relevelling,-35.0269,117.8837,13,P1
+wa-albany-q6,foundation,slab lifting,-35.0269,117.8837,13,P1
+wa-albany-q7,foundation,resin injection underpinning,-35.0269,117.8837,13,P1
+wa-albany-q8,foundation,subsidence repair,-35.0269,117.8837,13,P1
+wa-albany-q9,adjacent,house raising,-35.0269,117.8837,13,P2
+wa-esperance-q0,foundation,underpinning,-33.861,121.891,13,P1
+wa-esperance-q1,foundation,restumping,-33.861,121.891,13,P1
+wa-esperance-q2,foundation,reblocking,-33.861,121.891,13,P1
+wa-esperance-q3,foundation,foundation repair,-33.861,121.891,13,P1
+wa-esperance-q4,foundation,house levelling,-33.861,121.891,13,P1
+wa-esperance-q5,foundation,house relevelling,-33.861,121.891,13,P1
+wa-esperance-q6,foundation,slab lifting,-33.861,121.891,13,P1
+wa-esperance-q7,foundation,resin injection underpinning,-33.861,121.891,13,P1
+wa-esperance-q8,foundation,subsidence repair,-33.861,121.891,13,P1
+wa-esperance-q9,adjacent,house raising,-33.861,121.891,13,P2
+wa-kalgoorlie-q0,foundation,underpinning,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q1,foundation,restumping,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q2,foundation,reblocking,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q3,foundation,foundation repair,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q4,foundation,house levelling,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q5,foundation,house relevelling,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q6,foundation,slab lifting,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q7,foundation,resin injection underpinning,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q8,foundation,subsidence repair,-30.7489,121.4658,13,P1
+wa-kalgoorlie-q9,adjacent,house raising,-30.7489,121.4658,13,P2
+wa-northam-q0,foundation,underpinning,-31.653,116.665,13,P1
+wa-northam-q1,foundation,restumping,-31.653,116.665,13,P1
+wa-northam-q2,foundation,reblocking,-31.653,116.665,13,P1
+wa-northam-q3,foundation,foundation repair,-31.653,116.665,13,P1
+wa-northam-q4,foundation,house levelling,-31.653,116.665,13,P1
+wa-northam-q5,foundation,house relevelling,-31.653,116.665,13,P1
+wa-northam-q6,foundation,slab lifting,-31.653,116.665,13,P1
+wa-northam-q7,foundation,resin injection underpinning,-31.653,116.665,13,P1
+wa-northam-q8,foundation,subsidence repair,-31.653,116.665,13,P1
+wa-northam-q9,adjacent,house raising,-31.653,116.665,13,P2
+wa-geraldton-q0,foundation,underpinning,-28.7774,114.6144,13,P1
+wa-geraldton-q1,foundation,restumping,-28.7774,114.6144,13,P1
+wa-geraldton-q2,foundation,reblocking,-28.7774,114.6144,13,P1
+wa-geraldton-q3,foundation,foundation repair,-28.7774,114.6144,13,P1
+wa-geraldton-q4,foundation,house levelling,-28.7774,114.6144,13,P1
+wa-geraldton-q5,foundation,house relevelling,-28.7774,114.6144,13,P1
+wa-geraldton-q6,foundation,slab lifting,-28.7774,114.6144,13,P1
+wa-geraldton-q7,foundation,resin injection underpinning,-28.7774,114.6144,13,P1
+wa-geraldton-q8,foundation,subsidence repair,-28.7774,114.6144,13,P1
+wa-geraldton-q9,adjacent,house raising,-28.7774,114.6144,13,P2
+wa-karratha-q0,foundation,underpinning,-20.7364,116.8464,13,P1
+wa-karratha-q1,foundation,restumping,-20.7364,116.8464,13,P1
+wa-karratha-q2,foundation,reblocking,-20.7364,116.8464,13,P1
+wa-karratha-q3,foundation,foundation repair,-20.7364,116.8464,13,P1
+wa-karratha-q4,foundation,house levelling,-20.7364,116.8464,13,P1
+wa-karratha-q5,foundation,house relevelling,-20.7364,116.8464,13,P1
+wa-karratha-q6,foundation,slab lifting,-20.7364,116.8464,13,P1
+wa-karratha-q7,foundation,resin injection underpinning,-20.7364,116.8464,13,P1
+wa-karratha-q8,foundation,subsidence repair,-20.7364,116.8464,13,P1
+wa-karratha-q9,adjacent,house raising,-20.7364,116.8464,13,P2
+wa-port-hedland-q0,foundation,underpinning,-20.31,118.6,13,P1
+wa-port-hedland-q1,foundation,restumping,-20.31,118.6,13,P1
+wa-port-hedland-q2,foundation,reblocking,-20.31,118.6,13,P1
+wa-port-hedland-q3,foundation,foundation repair,-20.31,118.6,13,P1
+wa-port-hedland-q4,foundation,house levelling,-20.31,118.6,13,P1
+wa-port-hedland-q5,foundation,house relevelling,-20.31,118.6,13,P1
+wa-port-hedland-q6,foundation,slab lifting,-20.31,118.6,13,P1
+wa-port-hedland-q7,foundation,resin injection underpinning,-20.31,118.6,13,P1
+wa-port-hedland-q8,foundation,subsidence repair,-20.31,118.6,13,P1
+wa-port-hedland-q9,adjacent,house raising,-20.31,118.6,13,P2
+wa-broome-q0,foundation,underpinning,-17.9614,122.2359,13,P1
+wa-broome-q1,foundation,restumping,-17.9614,122.2359,13,P1
+wa-broome-q2,foundation,reblocking,-17.9614,122.2359,13,P1
+wa-broome-q3,foundation,foundation repair,-17.9614,122.2359,13,P1
+wa-broome-q4,foundation,house levelling,-17.9614,122.2359,13,P1
+wa-broome-q5,foundation,house relevelling,-17.9614,122.2359,13,P1
+wa-broome-q6,foundation,slab lifting,-17.9614,122.2359,13,P1
+wa-broome-q7,foundation,resin injection underpinning,-17.9614,122.2359,13,P1
+wa-broome-q8,foundation,subsidence repair,-17.9614,122.2359,13,P1
+wa-broome-q9,adjacent,house raising,-17.9614,122.2359,13,P2
+sa-adelaide-cbd-q0,foundation,underpinning,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q1,foundation,restumping,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q2,foundation,reblocking,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q3,foundation,foundation repair,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q4,foundation,house levelling,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q5,foundation,house relevelling,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q6,foundation,slab lifting,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q7,foundation,resin injection underpinning,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q8,foundation,subsidence repair,-34.9285,138.6007,13,P1
+sa-adelaide-cbd-q9,adjacent,house raising,-34.9285,138.6007,13,P2
+sa-gawler-q0,foundation,underpinning,-34.598,138.745,13,P1
+sa-gawler-q1,foundation,restumping,-34.598,138.745,13,P1
+sa-gawler-q2,foundation,reblocking,-34.598,138.745,13,P1
+sa-gawler-q3,foundation,foundation repair,-34.598,138.745,13,P1
+sa-gawler-q4,foundation,house levelling,-34.598,138.745,13,P1
+sa-gawler-q5,foundation,house relevelling,-34.598,138.745,13,P1
+sa-gawler-q6,foundation,slab lifting,-34.598,138.745,13,P1
+sa-gawler-q7,foundation,resin injection underpinning,-34.598,138.745,13,P1
+sa-gawler-q8,foundation,subsidence repair,-34.598,138.745,13,P1
+sa-gawler-q9,adjacent,house raising,-34.598,138.745,13,P2
+sa-mount-barker-q0,foundation,underpinning,-35.067,138.856,13,P1
+sa-mount-barker-q1,foundation,restumping,-35.067,138.856,13,P1
+sa-mount-barker-q2,foundation,reblocking,-35.067,138.856,13,P1
+sa-mount-barker-q3,foundation,foundation repair,-35.067,138.856,13,P1
+sa-mount-barker-q4,foundation,house levelling,-35.067,138.856,13,P1
+sa-mount-barker-q5,foundation,house relevelling,-35.067,138.856,13,P1
+sa-mount-barker-q6,foundation,slab lifting,-35.067,138.856,13,P1
+sa-mount-barker-q7,foundation,resin injection underpinning,-35.067,138.856,13,P1
+sa-mount-barker-q8,foundation,subsidence repair,-35.067,138.856,13,P1
+sa-mount-barker-q9,adjacent,house raising,-35.067,138.856,13,P2
+sa-victor-harbor-q0,foundation,underpinning,-35.552,138.621,13,P1
+sa-victor-harbor-q1,foundation,restumping,-35.552,138.621,13,P1
+sa-victor-harbor-q2,foundation,reblocking,-35.552,138.621,13,P1
+sa-victor-harbor-q3,foundation,foundation repair,-35.552,138.621,13,P1
+sa-victor-harbor-q4,foundation,house levelling,-35.552,138.621,13,P1
+sa-victor-harbor-q5,foundation,house relevelling,-35.552,138.621,13,P1
+sa-victor-harbor-q6,foundation,slab lifting,-35.552,138.621,13,P1
+sa-victor-harbor-q7,foundation,resin injection underpinning,-35.552,138.621,13,P1
+sa-victor-harbor-q8,foundation,subsidence repair,-35.552,138.621,13,P1
+sa-victor-harbor-q9,adjacent,house raising,-35.552,138.621,13,P2
+sa-murray-bridge-q0,foundation,underpinning,-35.119,139.274,13,P1
+sa-murray-bridge-q1,foundation,restumping,-35.119,139.274,13,P1
+sa-murray-bridge-q2,foundation,reblocking,-35.119,139.274,13,P1
+sa-murray-bridge-q3,foundation,foundation repair,-35.119,139.274,13,P1
+sa-murray-bridge-q4,foundation,house levelling,-35.119,139.274,13,P1
+sa-murray-bridge-q5,foundation,house relevelling,-35.119,139.274,13,P1
+sa-murray-bridge-q6,foundation,slab lifting,-35.119,139.274,13,P1
+sa-murray-bridge-q7,foundation,resin injection underpinning,-35.119,139.274,13,P1
+sa-murray-bridge-q8,foundation,subsidence repair,-35.119,139.274,13,P1
+sa-murray-bridge-q9,adjacent,house raising,-35.119,139.274,13,P2
+sa-renmark-berri-q0,foundation,underpinning,-34.174,140.747,13,P1
+sa-renmark-berri-q1,foundation,restumping,-34.174,140.747,13,P1
+sa-renmark-berri-q2,foundation,reblocking,-34.174,140.747,13,P1
+sa-renmark-berri-q3,foundation,foundation repair,-34.174,140.747,13,P1
+sa-renmark-berri-q4,foundation,house levelling,-34.174,140.747,13,P1
+sa-renmark-berri-q5,foundation,house relevelling,-34.174,140.747,13,P1
+sa-renmark-berri-q6,foundation,slab lifting,-34.174,140.747,13,P1
+sa-renmark-berri-q7,foundation,resin injection underpinning,-34.174,140.747,13,P1
+sa-renmark-berri-q8,foundation,subsidence repair,-34.174,140.747,13,P1
+sa-renmark-berri-q9,adjacent,house raising,-34.174,140.747,13,P2
+sa-mount-gambier-q0,foundation,underpinning,-37.8284,140.7804,13,P1
+sa-mount-gambier-q1,foundation,restumping,-37.8284,140.7804,13,P1
+sa-mount-gambier-q2,foundation,reblocking,-37.8284,140.7804,13,P1
+sa-mount-gambier-q3,foundation,foundation repair,-37.8284,140.7804,13,P1
+sa-mount-gambier-q4,foundation,house levelling,-37.8284,140.7804,13,P1
+sa-mount-gambier-q5,foundation,house relevelling,-37.8284,140.7804,13,P1
+sa-mount-gambier-q6,foundation,slab lifting,-37.8284,140.7804,13,P1
+sa-mount-gambier-q7,foundation,resin injection underpinning,-37.8284,140.7804,13,P1
+sa-mount-gambier-q8,foundation,subsidence repair,-37.8284,140.7804,13,P1
+sa-mount-gambier-q9,adjacent,house raising,-37.8284,140.7804,13,P2
+sa-kadina-yorke-q0,foundation,underpinning,-33.964,137.714,13,P1
+sa-kadina-yorke-q1,foundation,restumping,-33.964,137.714,13,P1
+sa-kadina-yorke-q2,foundation,reblocking,-33.964,137.714,13,P1
+sa-kadina-yorke-q3,foundation,foundation repair,-33.964,137.714,13,P1
+sa-kadina-yorke-q4,foundation,house levelling,-33.964,137.714,13,P1
+sa-kadina-yorke-q5,foundation,house relevelling,-33.964,137.714,13,P1
+sa-kadina-yorke-q6,foundation,slab lifting,-33.964,137.714,13,P1
+sa-kadina-yorke-q7,foundation,resin injection underpinning,-33.964,137.714,13,P1
+sa-kadina-yorke-q8,foundation,subsidence repair,-33.964,137.714,13,P1
+sa-kadina-yorke-q9,adjacent,house raising,-33.964,137.714,13,P2
+sa-port-pirie-q0,foundation,underpinning,-33.177,138.017,13,P1
+sa-port-pirie-q1,foundation,restumping,-33.177,138.017,13,P1
+sa-port-pirie-q2,foundation,reblocking,-33.177,138.017,13,P1
+sa-port-pirie-q3,foundation,foundation repair,-33.177,138.017,13,P1
+sa-port-pirie-q4,foundation,house levelling,-33.177,138.017,13,P1
+sa-port-pirie-q5,foundation,house relevelling,-33.177,138.017,13,P1
+sa-port-pirie-q6,foundation,slab lifting,-33.177,138.017,13,P1
+sa-port-pirie-q7,foundation,resin injection underpinning,-33.177,138.017,13,P1
+sa-port-pirie-q8,foundation,subsidence repair,-33.177,138.017,13,P1
+sa-port-pirie-q9,adjacent,house raising,-33.177,138.017,13,P2
+sa-port-augusta-q0,foundation,underpinning,-32.492,137.765,13,P1
+sa-port-augusta-q1,foundation,restumping,-32.492,137.765,13,P1
+sa-port-augusta-q2,foundation,reblocking,-32.492,137.765,13,P1
+sa-port-augusta-q3,foundation,foundation repair,-32.492,137.765,13,P1
+sa-port-augusta-q4,foundation,house levelling,-32.492,137.765,13,P1
+sa-port-augusta-q5,foundation,house relevelling,-32.492,137.765,13,P1
+sa-port-augusta-q6,foundation,slab lifting,-32.492,137.765,13,P1
+sa-port-augusta-q7,foundation,resin injection underpinning,-32.492,137.765,13,P1
+sa-port-augusta-q8,foundation,subsidence repair,-32.492,137.765,13,P1
+sa-port-augusta-q9,adjacent,house raising,-32.492,137.765,13,P2
+sa-whyalla-q0,foundation,underpinning,-33.033,137.564,13,P1
+sa-whyalla-q1,foundation,restumping,-33.033,137.564,13,P1
+sa-whyalla-q2,foundation,reblocking,-33.033,137.564,13,P1
+sa-whyalla-q3,foundation,foundation repair,-33.033,137.564,13,P1
+sa-whyalla-q4,foundation,house levelling,-33.033,137.564,13,P1
+sa-whyalla-q5,foundation,house relevelling,-33.033,137.564,13,P1
+sa-whyalla-q6,foundation,slab lifting,-33.033,137.564,13,P1
+sa-whyalla-q7,foundation,resin injection underpinning,-33.033,137.564,13,P1
+sa-whyalla-q8,foundation,subsidence repair,-33.033,137.564,13,P1
+sa-whyalla-q9,adjacent,house raising,-33.033,137.564,13,P2
+sa-port-lincoln-q0,foundation,underpinning,-34.726,135.858,13,P1
+sa-port-lincoln-q1,foundation,restumping,-34.726,135.858,13,P1
+sa-port-lincoln-q2,foundation,reblocking,-34.726,135.858,13,P1
+sa-port-lincoln-q3,foundation,foundation repair,-34.726,135.858,13,P1
+sa-port-lincoln-q4,foundation,house levelling,-34.726,135.858,13,P1
+sa-port-lincoln-q5,foundation,house relevelling,-34.726,135.858,13,P1
+sa-port-lincoln-q6,foundation,slab lifting,-34.726,135.858,13,P1
+sa-port-lincoln-q7,foundation,resin injection underpinning,-34.726,135.858,13,P1
+sa-port-lincoln-q8,foundation,subsidence repair,-34.726,135.858,13,P1
+sa-port-lincoln-q9,adjacent,house raising,-34.726,135.858,13,P2
+tas-hobart-q0,foundation,underpinning,-42.8821,147.3272,13,P1
+tas-hobart-q1,foundation,restumping,-42.8821,147.3272,13,P1
+tas-hobart-q2,foundation,reblocking,-42.8821,147.3272,13,P1
+tas-hobart-q3,foundation,foundation repair,-42.8821,147.3272,13,P1
+tas-hobart-q4,foundation,house levelling,-42.8821,147.3272,13,P1
+tas-hobart-q5,foundation,house relevelling,-42.8821,147.3272,13,P1
+tas-hobart-q6,foundation,slab lifting,-42.8821,147.3272,13,P1
+tas-hobart-q7,foundation,resin injection underpinning,-42.8821,147.3272,13,P1
+tas-hobart-q8,foundation,subsidence repair,-42.8821,147.3272,13,P1
+tas-hobart-q9,adjacent,house raising,-42.8821,147.3272,13,P2
+tas-kingston-tas-q0,foundation,underpinning,-42.976,147.306,13,P1
+tas-kingston-tas-q1,foundation,restumping,-42.976,147.306,13,P1
+tas-kingston-tas-q2,foundation,reblocking,-42.976,147.306,13,P1
+tas-kingston-tas-q3,foundation,foundation repair,-42.976,147.306,13,P1
+tas-kingston-tas-q4,foundation,house levelling,-42.976,147.306,13,P1
+tas-kingston-tas-q5,foundation,house relevelling,-42.976,147.306,13,P1
+tas-kingston-tas-q6,foundation,slab lifting,-42.976,147.306,13,P1
+tas-kingston-tas-q7,foundation,resin injection underpinning,-42.976,147.306,13,P1
+tas-kingston-tas-q8,foundation,subsidence repair,-42.976,147.306,13,P1
+tas-kingston-tas-q9,adjacent,house raising,-42.976,147.306,13,P2
+tas-launceston-q0,foundation,underpinning,-41.4332,147.1441,13,P1
+tas-launceston-q1,foundation,restumping,-41.4332,147.1441,13,P1
+tas-launceston-q2,foundation,reblocking,-41.4332,147.1441,13,P1
+tas-launceston-q3,foundation,foundation repair,-41.4332,147.1441,13,P1
+tas-launceston-q4,foundation,house levelling,-41.4332,147.1441,13,P1
+tas-launceston-q5,foundation,house relevelling,-41.4332,147.1441,13,P1
+tas-launceston-q6,foundation,slab lifting,-41.4332,147.1441,13,P1
+tas-launceston-q7,foundation,resin injection underpinning,-41.4332,147.1441,13,P1
+tas-launceston-q8,foundation,subsidence repair,-41.4332,147.1441,13,P1
+tas-launceston-q9,adjacent,house raising,-41.4332,147.1441,13,P2
+tas-devonport-q0,foundation,underpinning,-41.18,146.35,13,P1
+tas-devonport-q1,foundation,restumping,-41.18,146.35,13,P1
+tas-devonport-q2,foundation,reblocking,-41.18,146.35,13,P1
+tas-devonport-q3,foundation,foundation repair,-41.18,146.35,13,P1
+tas-devonport-q4,foundation,house levelling,-41.18,146.35,13,P1
+tas-devonport-q5,foundation,house relevelling,-41.18,146.35,13,P1
+tas-devonport-q6,foundation,slab lifting,-41.18,146.35,13,P1
+tas-devonport-q7,foundation,resin injection underpinning,-41.18,146.35,13,P1
+tas-devonport-q8,foundation,subsidence repair,-41.18,146.35,13,P1
+tas-devonport-q9,adjacent,house raising,-41.18,146.35,13,P2
+tas-ulverstone-q0,foundation,underpinning,-41.157,146.17,13,P1
+tas-ulverstone-q1,foundation,restumping,-41.157,146.17,13,P1
+tas-ulverstone-q2,foundation,reblocking,-41.157,146.17,13,P1
+tas-ulverstone-q3,foundation,foundation repair,-41.157,146.17,13,P1
+tas-ulverstone-q4,foundation,house levelling,-41.157,146.17,13,P1
+tas-ulverstone-q5,foundation,house relevelling,-41.157,146.17,13,P1
+tas-ulverstone-q6,foundation,slab lifting,-41.157,146.17,13,P1
+tas-ulverstone-q7,foundation,resin injection underpinning,-41.157,146.17,13,P1
+tas-ulverstone-q8,foundation,subsidence repair,-41.157,146.17,13,P1
+tas-ulverstone-q9,adjacent,house raising,-41.157,146.17,13,P2
+tas-burnie-q0,foundation,underpinning,-41.052,145.904,13,P1
+tas-burnie-q1,foundation,restumping,-41.052,145.904,13,P1
+tas-burnie-q2,foundation,reblocking,-41.052,145.904,13,P1
+tas-burnie-q3,foundation,foundation repair,-41.052,145.904,13,P1
+tas-burnie-q4,foundation,house levelling,-41.052,145.904,13,P1
+tas-burnie-q5,foundation,house relevelling,-41.052,145.904,13,P1
+tas-burnie-q6,foundation,slab lifting,-41.052,145.904,13,P1
+tas-burnie-q7,foundation,resin injection underpinning,-41.052,145.904,13,P1
+tas-burnie-q8,foundation,subsidence repair,-41.052,145.904,13,P1
+tas-burnie-q9,adjacent,house raising,-41.052,145.904,13,P2
+act-canberra-civic-q0,foundation,underpinning,-35.2809,149.13,13,P1
+act-canberra-civic-q1,foundation,restumping,-35.2809,149.13,13,P1
+act-canberra-civic-q2,foundation,reblocking,-35.2809,149.13,13,P1
+act-canberra-civic-q3,foundation,foundation repair,-35.2809,149.13,13,P1
+act-canberra-civic-q4,foundation,house levelling,-35.2809,149.13,13,P1
+act-canberra-civic-q5,foundation,house relevelling,-35.2809,149.13,13,P1
+act-canberra-civic-q6,foundation,slab lifting,-35.2809,149.13,13,P1
+act-canberra-civic-q7,foundation,resin injection underpinning,-35.2809,149.13,13,P1
+act-canberra-civic-q8,foundation,subsidence repair,-35.2809,149.13,13,P1
+act-canberra-civic-q9,adjacent,house raising,-35.2809,149.13,13,P2
+act-tuggeranong-q0,foundation,underpinning,-35.414,149.066,13,P1
+act-tuggeranong-q1,foundation,restumping,-35.414,149.066,13,P1
+act-tuggeranong-q2,foundation,reblocking,-35.414,149.066,13,P1
+act-tuggeranong-q3,foundation,foundation repair,-35.414,149.066,13,P1
+act-tuggeranong-q4,foundation,house levelling,-35.414,149.066,13,P1
+act-tuggeranong-q5,foundation,house relevelling,-35.414,149.066,13,P1
+act-tuggeranong-q6,foundation,slab lifting,-35.414,149.066,13,P1
+act-tuggeranong-q7,foundation,resin injection underpinning,-35.414,149.066,13,P1
+act-tuggeranong-q8,foundation,subsidence repair,-35.414,149.066,13,P1
+act-tuggeranong-q9,adjacent,house raising,-35.414,149.066,13,P2
+nt-darwin-q0,foundation,underpinning,-12.4634,130.8456,13,P1
+nt-darwin-q1,foundation,restumping,-12.4634,130.8456,13,P1
+nt-darwin-q2,foundation,reblocking,-12.4634,130.8456,13,P1
+nt-darwin-q3,foundation,foundation repair,-12.4634,130.8456,13,P1
+nt-darwin-q4,foundation,house levelling,-12.4634,130.8456,13,P1
+nt-darwin-q5,foundation,house relevelling,-12.4634,130.8456,13,P1
+nt-darwin-q6,foundation,slab lifting,-12.4634,130.8456,13,P1
+nt-darwin-q7,foundation,resin injection underpinning,-12.4634,130.8456,13,P1
+nt-darwin-q8,foundation,subsidence repair,-12.4634,130.8456,13,P1
+nt-darwin-q9,adjacent,house raising,-12.4634,130.8456,13,P2
+nt-palmerston-nt-q0,foundation,underpinning,-12.486,130.983,13,P1
+nt-palmerston-nt-q1,foundation,restumping,-12.486,130.983,13,P1
+nt-palmerston-nt-q2,foundation,reblocking,-12.486,130.983,13,P1
+nt-palmerston-nt-q3,foundation,foundation repair,-12.486,130.983,13,P1
+nt-palmerston-nt-q4,foundation,house levelling,-12.486,130.983,13,P1
+nt-palmerston-nt-q5,foundation,house relevelling,-12.486,130.983,13,P1
+nt-palmerston-nt-q6,foundation,slab lifting,-12.486,130.983,13,P1
+nt-palmerston-nt-q7,foundation,resin injection underpinning,-12.486,130.983,13,P1
+nt-palmerston-nt-q8,foundation,subsidence repair,-12.486,130.983,13,P1
+nt-palmerston-nt-q9,adjacent,house raising,-12.486,130.983,13,P2
+nt-alice-springs-q0,foundation,underpinning,-23.698,133.8807,13,P1
+nt-alice-springs-q1,foundation,restumping,-23.698,133.8807,13,P1
+nt-alice-springs-q2,foundation,reblocking,-23.698,133.8807,13,P1
+nt-alice-springs-q3,foundation,foundation repair,-23.698,133.8807,13,P1
+nt-alice-springs-q4,foundation,house levelling,-23.698,133.8807,13,P1
+nt-alice-springs-q5,foundation,house relevelling,-23.698,133.8807,13,P1
+nt-alice-springs-q6,foundation,slab lifting,-23.698,133.8807,13,P1
+nt-alice-springs-q7,foundation,resin injection underpinning,-23.698,133.8807,13,P1
+nt-alice-springs-q8,foundation,subsidence repair,-23.698,133.8807,13,P1
+nt-alice-springs-q9,adjacent,house raising,-23.698,133.8807,13,P2
+nsw-syd-parramatta-q0,foundation,underpinning,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q1,foundation,restumping,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q2,foundation,reblocking,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q3,foundation,foundation repair,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q4,foundation,house levelling,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q5,foundation,house relevelling,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q6,foundation,slab lifting,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q7,foundation,resin injection underpinning,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q8,foundation,subsidence repair,-33.815,151.0011,13,P1
+nsw-syd-parramatta-q9,adjacent,house raising,-33.815,151.0011,13,P2
+nsw-syd-penrith-q0,foundation,underpinning,-33.751,150.694,13,P1
+nsw-syd-penrith-q1,foundation,restumping,-33.751,150.694,13,P1
+nsw-syd-penrith-q2,foundation,reblocking,-33.751,150.694,13,P1
+nsw-syd-penrith-q3,foundation,foundation repair,-33.751,150.694,13,P1
+nsw-syd-penrith-q4,foundation,house levelling,-33.751,150.694,13,P1
+nsw-syd-penrith-q5,foundation,house relevelling,-33.751,150.694,13,P1
+nsw-syd-penrith-q6,foundation,slab lifting,-33.751,150.694,13,P1
+nsw-syd-penrith-q7,foundation,resin injection underpinning,-33.751,150.694,13,P1
+nsw-syd-penrith-q8,foundation,subsidence repair,-33.751,150.694,13,P1
+nsw-syd-penrith-q9,adjacent,house raising,-33.751,150.694,13,P2
+nsw-syd-blacktown-q0,foundation,underpinning,-33.771,150.906,13,P1
+nsw-syd-blacktown-q1,foundation,restumping,-33.771,150.906,13,P1
+nsw-syd-blacktown-q2,foundation,reblocking,-33.771,150.906,13,P1
+nsw-syd-blacktown-q3,foundation,foundation repair,-33.771,150.906,13,P1
+nsw-syd-blacktown-q4,foundation,house levelling,-33.771,150.906,13,P1
+nsw-syd-blacktown-q5,foundation,house relevelling,-33.771,150.906,13,P1
+nsw-syd-blacktown-q6,foundation,slab lifting,-33.771,150.906,13,P1
+nsw-syd-blacktown-q7,foundation,resin injection underpinning,-33.771,150.906,13,P1
+nsw-syd-blacktown-q8,foundation,subsidence repair,-33.771,150.906,13,P1
+nsw-syd-blacktown-q9,adjacent,house raising,-33.771,150.906,13,P2
+nsw-syd-castle-hill-q0,foundation,underpinning,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q1,foundation,restumping,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q2,foundation,reblocking,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q3,foundation,foundation repair,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q4,foundation,house levelling,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q5,foundation,house relevelling,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q6,foundation,slab lifting,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q7,foundation,resin injection underpinning,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q8,foundation,subsidence repair,-33.731,151.006,13,P1
+nsw-syd-castle-hill-q9,adjacent,house raising,-33.731,151.006,13,P2
+nsw-syd-hornsby-q0,foundation,underpinning,-33.702,151.099,13,P1
+nsw-syd-hornsby-q1,foundation,restumping,-33.702,151.099,13,P1
+nsw-syd-hornsby-q2,foundation,reblocking,-33.702,151.099,13,P1
+nsw-syd-hornsby-q3,foundation,foundation repair,-33.702,151.099,13,P1
+nsw-syd-hornsby-q4,foundation,house levelling,-33.702,151.099,13,P1
+nsw-syd-hornsby-q5,foundation,house relevelling,-33.702,151.099,13,P1
+nsw-syd-hornsby-q6,foundation,slab lifting,-33.702,151.099,13,P1
+nsw-syd-hornsby-q7,foundation,resin injection underpinning,-33.702,151.099,13,P1
+nsw-syd-hornsby-q8,foundation,subsidence repair,-33.702,151.099,13,P1
+nsw-syd-hornsby-q9,adjacent,house raising,-33.702,151.099,13,P2
+nsw-syd-chatswood-q0,foundation,underpinning,-33.797,151.183,13,P1
+nsw-syd-chatswood-q1,foundation,restumping,-33.797,151.183,13,P1
+nsw-syd-chatswood-q2,foundation,reblocking,-33.797,151.183,13,P1
+nsw-syd-chatswood-q3,foundation,foundation repair,-33.797,151.183,13,P1
+nsw-syd-chatswood-q4,foundation,house levelling,-33.797,151.183,13,P1
+nsw-syd-chatswood-q5,foundation,house relevelling,-33.797,151.183,13,P1
+nsw-syd-chatswood-q6,foundation,slab lifting,-33.797,151.183,13,P1
+nsw-syd-chatswood-q7,foundation,resin injection underpinning,-33.797,151.183,13,P1
+nsw-syd-chatswood-q8,foundation,subsidence repair,-33.797,151.183,13,P1
+nsw-syd-chatswood-q9,adjacent,house raising,-33.797,151.183,13,P2
+nsw-syd-dee-why-northern-beaches-q0,foundation,underpinning,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q1,foundation,restumping,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q2,foundation,reblocking,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q3,foundation,foundation repair,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q4,foundation,house levelling,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q5,foundation,house relevelling,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q6,foundation,slab lifting,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q7,foundation,resin injection underpinning,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q8,foundation,subsidence repair,-33.753,151.287,13,P1
+nsw-syd-dee-why-northern-beaches-q9,adjacent,house raising,-33.753,151.287,13,P2
+nsw-syd-randwick-eastern-suburbs-q0,foundation,underpinning,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q1,foundation,restumping,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q2,foundation,reblocking,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q3,foundation,foundation repair,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q4,foundation,house levelling,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q5,foundation,house relevelling,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q6,foundation,slab lifting,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q7,foundation,resin injection underpinning,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q8,foundation,subsidence repair,-33.914,151.241,13,P1
+nsw-syd-randwick-eastern-suburbs-q9,adjacent,house raising,-33.914,151.241,13,P2
+nsw-syd-bankstown-q0,foundation,underpinning,-33.918,151.035,13,P1
+nsw-syd-bankstown-q1,foundation,restumping,-33.918,151.035,13,P1
+nsw-syd-bankstown-q2,foundation,reblocking,-33.918,151.035,13,P1
+nsw-syd-bankstown-q3,foundation,foundation repair,-33.918,151.035,13,P1
+nsw-syd-bankstown-q4,foundation,house levelling,-33.918,151.035,13,P1
+nsw-syd-bankstown-q5,foundation,house relevelling,-33.918,151.035,13,P1
+nsw-syd-bankstown-q6,foundation,slab lifting,-33.918,151.035,13,P1
+nsw-syd-bankstown-q7,foundation,resin injection underpinning,-33.918,151.035,13,P1
+nsw-syd-bankstown-q8,foundation,subsidence repair,-33.918,151.035,13,P1
+nsw-syd-bankstown-q9,adjacent,house raising,-33.918,151.035,13,P2
+nsw-syd-liverpool-q0,foundation,underpinning,-33.92,150.924,13,P1
+nsw-syd-liverpool-q1,foundation,restumping,-33.92,150.924,13,P1
+nsw-syd-liverpool-q2,foundation,reblocking,-33.92,150.924,13,P1
+nsw-syd-liverpool-q3,foundation,foundation repair,-33.92,150.924,13,P1
+nsw-syd-liverpool-q4,foundation,house levelling,-33.92,150.924,13,P1
+nsw-syd-liverpool-q5,foundation,house relevelling,-33.92,150.924,13,P1
+nsw-syd-liverpool-q6,foundation,slab lifting,-33.92,150.924,13,P1
+nsw-syd-liverpool-q7,foundation,resin injection underpinning,-33.92,150.924,13,P1
+nsw-syd-liverpool-q8,foundation,subsidence repair,-33.92,150.924,13,P1
+nsw-syd-liverpool-q9,adjacent,house raising,-33.92,150.924,13,P2
+nsw-syd-campbelltown-q0,foundation,underpinning,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q1,foundation,restumping,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q2,foundation,reblocking,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q3,foundation,foundation repair,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q4,foundation,house levelling,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q5,foundation,house relevelling,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q6,foundation,slab lifting,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q7,foundation,resin injection underpinning,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q8,foundation,subsidence repair,-34.065,150.814,13,P1
+nsw-syd-campbelltown-q9,adjacent,house raising,-34.065,150.814,13,P2
+nsw-syd-sutherland-q0,foundation,underpinning,-34.031,151.057,13,P1
+nsw-syd-sutherland-q1,foundation,restumping,-34.031,151.057,13,P1
+nsw-syd-sutherland-q2,foundation,reblocking,-34.031,151.057,13,P1
+nsw-syd-sutherland-q3,foundation,foundation repair,-34.031,151.057,13,P1
+nsw-syd-sutherland-q4,foundation,house levelling,-34.031,151.057,13,P1
+nsw-syd-sutherland-q5,foundation,house relevelling,-34.031,151.057,13,P1
+nsw-syd-sutherland-q6,foundation,slab lifting,-34.031,151.057,13,P1
+nsw-syd-sutherland-q7,foundation,resin injection underpinning,-34.031,151.057,13,P1
+nsw-syd-sutherland-q8,foundation,subsidence repair,-34.031,151.057,13,P1
+nsw-syd-sutherland-q9,adjacent,house raising,-34.031,151.057,13,P2
+vic-mel-dandenong-q0,foundation,underpinning,-37.987,145.215,13,P1
+vic-mel-dandenong-q1,foundation,restumping,-37.987,145.215,13,P1
+vic-mel-dandenong-q2,foundation,reblocking,-37.987,145.215,13,P1
+vic-mel-dandenong-q3,foundation,foundation repair,-37.987,145.215,13,P1
+vic-mel-dandenong-q4,foundation,house levelling,-37.987,145.215,13,P1
+vic-mel-dandenong-q5,foundation,house relevelling,-37.987,145.215,13,P1
+vic-mel-dandenong-q6,foundation,slab lifting,-37.987,145.215,13,P1
+vic-mel-dandenong-q7,foundation,resin injection underpinning,-37.987,145.215,13,P1
+vic-mel-dandenong-q8,foundation,subsidence repair,-37.987,145.215,13,P1
+vic-mel-dandenong-q9,adjacent,house raising,-37.987,145.215,13,P2
+vic-mel-frankston-q0,foundation,underpinning,-38.144,145.123,13,P1
+vic-mel-frankston-q1,foundation,restumping,-38.144,145.123,13,P1
+vic-mel-frankston-q2,foundation,reblocking,-38.144,145.123,13,P1
+vic-mel-frankston-q3,foundation,foundation repair,-38.144,145.123,13,P1
+vic-mel-frankston-q4,foundation,house levelling,-38.144,145.123,13,P1
+vic-mel-frankston-q5,foundation,house relevelling,-38.144,145.123,13,P1
+vic-mel-frankston-q6,foundation,slab lifting,-38.144,145.123,13,P1
+vic-mel-frankston-q7,foundation,resin injection underpinning,-38.144,145.123,13,P1
+vic-mel-frankston-q8,foundation,subsidence repair,-38.144,145.123,13,P1
+vic-mel-frankston-q9,adjacent,house raising,-38.144,145.123,13,P2
+vic-mel-cheltenham-moorabbin-q0,foundation,underpinning,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q1,foundation,restumping,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q2,foundation,reblocking,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q3,foundation,foundation repair,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q4,foundation,house levelling,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q5,foundation,house relevelling,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q6,foundation,slab lifting,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q7,foundation,resin injection underpinning,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q8,foundation,subsidence repair,-37.967,145.054,13,P1
+vic-mel-cheltenham-moorabbin-q9,adjacent,house raising,-37.967,145.054,13,P2
+vic-mel-box-hill-q0,foundation,underpinning,-37.819,145.122,13,P1
+vic-mel-box-hill-q1,foundation,restumping,-37.819,145.122,13,P1
+vic-mel-box-hill-q2,foundation,reblocking,-37.819,145.122,13,P1
+vic-mel-box-hill-q3,foundation,foundation repair,-37.819,145.122,13,P1
+vic-mel-box-hill-q4,foundation,house levelling,-37.819,145.122,13,P1
+vic-mel-box-hill-q5,foundation,house relevelling,-37.819,145.122,13,P1
+vic-mel-box-hill-q6,foundation,slab lifting,-37.819,145.122,13,P1
+vic-mel-box-hill-q7,foundation,resin injection underpinning,-37.819,145.122,13,P1
+vic-mel-box-hill-q8,foundation,subsidence repair,-37.819,145.122,13,P1
+vic-mel-box-hill-q9,adjacent,house raising,-37.819,145.122,13,P2
+vic-mel-ringwood-q0,foundation,underpinning,-37.814,145.229,13,P1
+vic-mel-ringwood-q1,foundation,restumping,-37.814,145.229,13,P1
+vic-mel-ringwood-q2,foundation,reblocking,-37.814,145.229,13,P1
+vic-mel-ringwood-q3,foundation,foundation repair,-37.814,145.229,13,P1
+vic-mel-ringwood-q4,foundation,house levelling,-37.814,145.229,13,P1
+vic-mel-ringwood-q5,foundation,house relevelling,-37.814,145.229,13,P1
+vic-mel-ringwood-q6,foundation,slab lifting,-37.814,145.229,13,P1
+vic-mel-ringwood-q7,foundation,resin injection underpinning,-37.814,145.229,13,P1
+vic-mel-ringwood-q8,foundation,subsidence repair,-37.814,145.229,13,P1
+vic-mel-ringwood-q9,adjacent,house raising,-37.814,145.229,13,P2
+vic-mel-greensborough-q0,foundation,underpinning,-37.705,145.103,13,P1
+vic-mel-greensborough-q1,foundation,restumping,-37.705,145.103,13,P1
+vic-mel-greensborough-q2,foundation,reblocking,-37.705,145.103,13,P1
+vic-mel-greensborough-q3,foundation,foundation repair,-37.705,145.103,13,P1
+vic-mel-greensborough-q4,foundation,house levelling,-37.705,145.103,13,P1
+vic-mel-greensborough-q5,foundation,house relevelling,-37.705,145.103,13,P1
+vic-mel-greensborough-q6,foundation,slab lifting,-37.705,145.103,13,P1
+vic-mel-greensborough-q7,foundation,resin injection underpinning,-37.705,145.103,13,P1
+vic-mel-greensborough-q8,foundation,subsidence repair,-37.705,145.103,13,P1
+vic-mel-greensborough-q9,adjacent,house raising,-37.705,145.103,13,P2
+vic-mel-preston-northcote-q0,foundation,underpinning,-37.742,145,13,P1
+vic-mel-preston-northcote-q1,foundation,restumping,-37.742,145,13,P1
+vic-mel-preston-northcote-q2,foundation,reblocking,-37.742,145,13,P1
+vic-mel-preston-northcote-q3,foundation,foundation repair,-37.742,145,13,P1
+vic-mel-preston-northcote-q4,foundation,house levelling,-37.742,145,13,P1
+vic-mel-preston-northcote-q5,foundation,house relevelling,-37.742,145,13,P1
+vic-mel-preston-northcote-q6,foundation,slab lifting,-37.742,145,13,P1
+vic-mel-preston-northcote-q7,foundation,resin injection underpinning,-37.742,145,13,P1
+vic-mel-preston-northcote-q8,foundation,subsidence repair,-37.742,145,13,P1
+vic-mel-preston-northcote-q9,adjacent,house raising,-37.742,145,13,P2
+vic-mel-craigieburn-q0,foundation,underpinning,-37.6,144.941,13,P1
+vic-mel-craigieburn-q1,foundation,restumping,-37.6,144.941,13,P1
+vic-mel-craigieburn-q2,foundation,reblocking,-37.6,144.941,13,P1
+vic-mel-craigieburn-q3,foundation,foundation repair,-37.6,144.941,13,P1
+vic-mel-craigieburn-q4,foundation,house levelling,-37.6,144.941,13,P1
+vic-mel-craigieburn-q5,foundation,house relevelling,-37.6,144.941,13,P1
+vic-mel-craigieburn-q6,foundation,slab lifting,-37.6,144.941,13,P1
+vic-mel-craigieburn-q7,foundation,resin injection underpinning,-37.6,144.941,13,P1
+vic-mel-craigieburn-q8,foundation,subsidence repair,-37.6,144.941,13,P1
+vic-mel-craigieburn-q9,adjacent,house raising,-37.6,144.941,13,P2
+vic-mel-footscray-sunshine-q0,foundation,underpinning,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q1,foundation,restumping,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q2,foundation,reblocking,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q3,foundation,foundation repair,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q4,foundation,house levelling,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q5,foundation,house relevelling,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q6,foundation,slab lifting,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q7,foundation,resin injection underpinning,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q8,foundation,subsidence repair,-37.79,144.86,13,P1
+vic-mel-footscray-sunshine-q9,adjacent,house raising,-37.79,144.86,13,P2
+vic-mel-werribee-q0,foundation,underpinning,-37.9,144.66,13,P1
+vic-mel-werribee-q1,foundation,restumping,-37.9,144.66,13,P1
+vic-mel-werribee-q2,foundation,reblocking,-37.9,144.66,13,P1
+vic-mel-werribee-q3,foundation,foundation repair,-37.9,144.66,13,P1
+vic-mel-werribee-q4,foundation,house levelling,-37.9,144.66,13,P1
+vic-mel-werribee-q5,foundation,house relevelling,-37.9,144.66,13,P1
+vic-mel-werribee-q6,foundation,slab lifting,-37.9,144.66,13,P1
+vic-mel-werribee-q7,foundation,resin injection underpinning,-37.9,144.66,13,P1
+vic-mel-werribee-q8,foundation,subsidence repair,-37.9,144.66,13,P1
+vic-mel-werribee-q9,adjacent,house raising,-37.9,144.66,13,P2
+qld-bne-chermside-q0,foundation,underpinning,-27.385,153.031,13,P1
+qld-bne-chermside-q1,foundation,restumping,-27.385,153.031,13,P1
+qld-bne-chermside-q2,foundation,reblocking,-27.385,153.031,13,P1
+qld-bne-chermside-q3,foundation,foundation repair,-27.385,153.031,13,P1
+qld-bne-chermside-q4,foundation,house levelling,-27.385,153.031,13,P1
+qld-bne-chermside-q5,foundation,house relevelling,-27.385,153.031,13,P1
+qld-bne-chermside-q6,foundation,slab lifting,-27.385,153.031,13,P1
+qld-bne-chermside-q7,foundation,resin injection underpinning,-27.385,153.031,13,P1
+qld-bne-chermside-q8,foundation,subsidence repair,-27.385,153.031,13,P1
+qld-bne-chermside-q9,adjacent,house raising,-27.385,153.031,13,P2
+qld-bne-strathpine-q0,foundation,underpinning,-27.304,152.991,13,P1
+qld-bne-strathpine-q1,foundation,restumping,-27.304,152.991,13,P1
+qld-bne-strathpine-q2,foundation,reblocking,-27.304,152.991,13,P1
+qld-bne-strathpine-q3,foundation,foundation repair,-27.304,152.991,13,P1
+qld-bne-strathpine-q4,foundation,house levelling,-27.304,152.991,13,P1
+qld-bne-strathpine-q5,foundation,house relevelling,-27.304,152.991,13,P1
+qld-bne-strathpine-q6,foundation,slab lifting,-27.304,152.991,13,P1
+qld-bne-strathpine-q7,foundation,resin injection underpinning,-27.304,152.991,13,P1
+qld-bne-strathpine-q8,foundation,subsidence repair,-27.304,152.991,13,P1
+qld-bne-strathpine-q9,adjacent,house raising,-27.304,152.991,13,P2
+qld-bne-indooroopilly-q0,foundation,underpinning,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q1,foundation,restumping,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q2,foundation,reblocking,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q3,foundation,foundation repair,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q4,foundation,house levelling,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q5,foundation,house relevelling,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q6,foundation,slab lifting,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q7,foundation,resin injection underpinning,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q8,foundation,subsidence repair,-27.499,152.974,13,P1
+qld-bne-indooroopilly-q9,adjacent,house raising,-27.499,152.974,13,P2
+qld-bne-carindale-q0,foundation,underpinning,-27.505,153.102,13,P1
+qld-bne-carindale-q1,foundation,restumping,-27.505,153.102,13,P1
+qld-bne-carindale-q2,foundation,reblocking,-27.505,153.102,13,P1
+qld-bne-carindale-q3,foundation,foundation repair,-27.505,153.102,13,P1
+qld-bne-carindale-q4,foundation,house levelling,-27.505,153.102,13,P1
+qld-bne-carindale-q5,foundation,house relevelling,-27.505,153.102,13,P1
+qld-bne-carindale-q6,foundation,slab lifting,-27.505,153.102,13,P1
+qld-bne-carindale-q7,foundation,resin injection underpinning,-27.505,153.102,13,P1
+qld-bne-carindale-q8,foundation,subsidence repair,-27.505,153.102,13,P1
+qld-bne-carindale-q9,adjacent,house raising,-27.505,153.102,13,P2
+qld-bne-springwood-q0,foundation,underpinning,-27.613,153.133,13,P1
+qld-bne-springwood-q1,foundation,restumping,-27.613,153.133,13,P1
+qld-bne-springwood-q2,foundation,reblocking,-27.613,153.133,13,P1
+qld-bne-springwood-q3,foundation,foundation repair,-27.613,153.133,13,P1
+qld-bne-springwood-q4,foundation,house levelling,-27.613,153.133,13,P1
+qld-bne-springwood-q5,foundation,house relevelling,-27.613,153.133,13,P1
+qld-bne-springwood-q6,foundation,slab lifting,-27.613,153.133,13,P1
+qld-bne-springwood-q7,foundation,resin injection underpinning,-27.613,153.133,13,P1
+qld-bne-springwood-q8,foundation,subsidence repair,-27.613,153.133,13,P1
+qld-bne-springwood-q9,adjacent,house raising,-27.613,153.133,13,P2
+qld-bne-browns-plains-q0,foundation,underpinning,-27.66,153.05,13,P1
+qld-bne-browns-plains-q1,foundation,restumping,-27.66,153.05,13,P1
+qld-bne-browns-plains-q2,foundation,reblocking,-27.66,153.05,13,P1
+qld-bne-browns-plains-q3,foundation,foundation repair,-27.66,153.05,13,P1
+qld-bne-browns-plains-q4,foundation,house levelling,-27.66,153.05,13,P1
+qld-bne-browns-plains-q5,foundation,house relevelling,-27.66,153.05,13,P1
+qld-bne-browns-plains-q6,foundation,slab lifting,-27.66,153.05,13,P1
+qld-bne-browns-plains-q7,foundation,resin injection underpinning,-27.66,153.05,13,P1
+qld-bne-browns-plains-q8,foundation,subsidence repair,-27.66,153.05,13,P1
+qld-bne-browns-plains-q9,adjacent,house raising,-27.66,153.05,13,P2
+qld-gc-helensvale-coomera-q0,foundation,underpinning,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q1,foundation,restumping,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q2,foundation,reblocking,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q3,foundation,foundation repair,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q4,foundation,house levelling,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q5,foundation,house relevelling,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q6,foundation,slab lifting,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q7,foundation,resin injection underpinning,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q8,foundation,subsidence repair,-27.917,153.334,13,P1
+qld-gc-helensvale-coomera-q9,adjacent,house raising,-27.917,153.334,13,P2
+qld-gc-robina-q0,foundation,underpinning,-28.07,153.39,13,P1
+qld-gc-robina-q1,foundation,restumping,-28.07,153.39,13,P1
+qld-gc-robina-q2,foundation,reblocking,-28.07,153.39,13,P1
+qld-gc-robina-q3,foundation,foundation repair,-28.07,153.39,13,P1
+qld-gc-robina-q4,foundation,house levelling,-28.07,153.39,13,P1
+qld-gc-robina-q5,foundation,house relevelling,-28.07,153.39,13,P1
+qld-gc-robina-q6,foundation,slab lifting,-28.07,153.39,13,P1
+qld-gc-robina-q7,foundation,resin injection underpinning,-28.07,153.39,13,P1
+qld-gc-robina-q8,foundation,subsidence repair,-28.07,153.39,13,P1
+qld-gc-robina-q9,adjacent,house raising,-28.07,153.39,13,P2
+qld-gc-coolangatta-q0,foundation,underpinning,-28.168,153.535,13,P1
+qld-gc-coolangatta-q1,foundation,restumping,-28.168,153.535,13,P1
+qld-gc-coolangatta-q2,foundation,reblocking,-28.168,153.535,13,P1
+qld-gc-coolangatta-q3,foundation,foundation repair,-28.168,153.535,13,P1
+qld-gc-coolangatta-q4,foundation,house levelling,-28.168,153.535,13,P1
+qld-gc-coolangatta-q5,foundation,house relevelling,-28.168,153.535,13,P1
+qld-gc-coolangatta-q6,foundation,slab lifting,-28.168,153.535,13,P1
+qld-gc-coolangatta-q7,foundation,resin injection underpinning,-28.168,153.535,13,P1
+qld-gc-coolangatta-q8,foundation,subsidence repair,-28.168,153.535,13,P1
+qld-gc-coolangatta-q9,adjacent,house raising,-28.168,153.535,13,P2
+qld-sc-caloundra-q0,foundation,underpinning,-26.803,153.138,13,P1
+qld-sc-caloundra-q1,foundation,restumping,-26.803,153.138,13,P1
+qld-sc-caloundra-q2,foundation,reblocking,-26.803,153.138,13,P1
+qld-sc-caloundra-q3,foundation,foundation repair,-26.803,153.138,13,P1
+qld-sc-caloundra-q4,foundation,house levelling,-26.803,153.138,13,P1
+qld-sc-caloundra-q5,foundation,house relevelling,-26.803,153.138,13,P1
+qld-sc-caloundra-q6,foundation,slab lifting,-26.803,153.138,13,P1
+qld-sc-caloundra-q7,foundation,resin injection underpinning,-26.803,153.138,13,P1
+qld-sc-caloundra-q8,foundation,subsidence repair,-26.803,153.138,13,P1
+qld-sc-caloundra-q9,adjacent,house raising,-26.803,153.138,13,P2
+qld-sc-noosa-q0,foundation,underpinning,-26.398,153.09,13,P1
+qld-sc-noosa-q1,foundation,restumping,-26.398,153.09,13,P1
+qld-sc-noosa-q2,foundation,reblocking,-26.398,153.09,13,P1
+qld-sc-noosa-q3,foundation,foundation repair,-26.398,153.09,13,P1
+qld-sc-noosa-q4,foundation,house levelling,-26.398,153.09,13,P1
+qld-sc-noosa-q5,foundation,house relevelling,-26.398,153.09,13,P1
+qld-sc-noosa-q6,foundation,slab lifting,-26.398,153.09,13,P1
+qld-sc-noosa-q7,foundation,resin injection underpinning,-26.398,153.09,13,P1
+qld-sc-noosa-q8,foundation,subsidence repair,-26.398,153.09,13,P1
+qld-sc-noosa-q9,adjacent,house raising,-26.398,153.09,13,P2
+wa-per-wanneroo-q0,foundation,underpinning,-31.748,115.803,13,P1
+wa-per-wanneroo-q1,foundation,restumping,-31.748,115.803,13,P1
+wa-per-wanneroo-q2,foundation,reblocking,-31.748,115.803,13,P1
+wa-per-wanneroo-q3,foundation,foundation repair,-31.748,115.803,13,P1
+wa-per-wanneroo-q4,foundation,house levelling,-31.748,115.803,13,P1
+wa-per-wanneroo-q5,foundation,house relevelling,-31.748,115.803,13,P1
+wa-per-wanneroo-q6,foundation,slab lifting,-31.748,115.803,13,P1
+wa-per-wanneroo-q7,foundation,resin injection underpinning,-31.748,115.803,13,P1
+wa-per-wanneroo-q8,foundation,subsidence repair,-31.748,115.803,13,P1
+wa-per-wanneroo-q9,adjacent,house raising,-31.748,115.803,13,P2
+wa-per-morley-q0,foundation,underpinning,-31.888,115.907,13,P1
+wa-per-morley-q1,foundation,restumping,-31.888,115.907,13,P1
+wa-per-morley-q2,foundation,reblocking,-31.888,115.907,13,P1
+wa-per-morley-q3,foundation,foundation repair,-31.888,115.907,13,P1
+wa-per-morley-q4,foundation,house levelling,-31.888,115.907,13,P1
+wa-per-morley-q5,foundation,house relevelling,-31.888,115.907,13,P1
+wa-per-morley-q6,foundation,slab lifting,-31.888,115.907,13,P1
+wa-per-morley-q7,foundation,resin injection underpinning,-31.888,115.907,13,P1
+wa-per-morley-q8,foundation,subsidence repair,-31.888,115.907,13,P1
+wa-per-morley-q9,adjacent,house raising,-31.888,115.907,13,P2
+wa-per-midland-q0,foundation,underpinning,-31.889,116.01,13,P1
+wa-per-midland-q1,foundation,restumping,-31.889,116.01,13,P1
+wa-per-midland-q2,foundation,reblocking,-31.889,116.01,13,P1
+wa-per-midland-q3,foundation,foundation repair,-31.889,116.01,13,P1
+wa-per-midland-q4,foundation,house levelling,-31.889,116.01,13,P1
+wa-per-midland-q5,foundation,house relevelling,-31.889,116.01,13,P1
+wa-per-midland-q6,foundation,slab lifting,-31.889,116.01,13,P1
+wa-per-midland-q7,foundation,resin injection underpinning,-31.889,116.01,13,P1
+wa-per-midland-q8,foundation,subsidence repair,-31.889,116.01,13,P1
+wa-per-midland-q9,adjacent,house raising,-31.889,116.01,13,P2
+wa-per-cannington-q0,foundation,underpinning,-32.017,115.934,13,P1
+wa-per-cannington-q1,foundation,restumping,-32.017,115.934,13,P1
+wa-per-cannington-q2,foundation,reblocking,-32.017,115.934,13,P1
+wa-per-cannington-q3,foundation,foundation repair,-32.017,115.934,13,P1
+wa-per-cannington-q4,foundation,house levelling,-32.017,115.934,13,P1
+wa-per-cannington-q5,foundation,house relevelling,-32.017,115.934,13,P1
+wa-per-cannington-q6,foundation,slab lifting,-32.017,115.934,13,P1
+wa-per-cannington-q7,foundation,resin injection underpinning,-32.017,115.934,13,P1
+wa-per-cannington-q8,foundation,subsidence repair,-32.017,115.934,13,P1
+wa-per-cannington-q9,adjacent,house raising,-32.017,115.934,13,P2
+wa-per-armadale-q0,foundation,underpinning,-32.15,116.014,13,P1
+wa-per-armadale-q1,foundation,restumping,-32.15,116.014,13,P1
+wa-per-armadale-q2,foundation,reblocking,-32.15,116.014,13,P1
+wa-per-armadale-q3,foundation,foundation repair,-32.15,116.014,13,P1
+wa-per-armadale-q4,foundation,house levelling,-32.15,116.014,13,P1
+wa-per-armadale-q5,foundation,house relevelling,-32.15,116.014,13,P1
+wa-per-armadale-q6,foundation,slab lifting,-32.15,116.014,13,P1
+wa-per-armadale-q7,foundation,resin injection underpinning,-32.15,116.014,13,P1
+wa-per-armadale-q8,foundation,subsidence repair,-32.15,116.014,13,P1
+wa-per-armadale-q9,adjacent,house raising,-32.15,116.014,13,P2
+wa-per-cockburn-success-q0,foundation,underpinning,-32.143,115.85,13,P1
+wa-per-cockburn-success-q1,foundation,restumping,-32.143,115.85,13,P1
+wa-per-cockburn-success-q2,foundation,reblocking,-32.143,115.85,13,P1
+wa-per-cockburn-success-q3,foundation,foundation repair,-32.143,115.85,13,P1
+wa-per-cockburn-success-q4,foundation,house levelling,-32.143,115.85,13,P1
+wa-per-cockburn-success-q5,foundation,house relevelling,-32.143,115.85,13,P1
+wa-per-cockburn-success-q6,foundation,slab lifting,-32.143,115.85,13,P1
+wa-per-cockburn-success-q7,foundation,resin injection underpinning,-32.143,115.85,13,P1
+wa-per-cockburn-success-q8,foundation,subsidence repair,-32.143,115.85,13,P1
+wa-per-cockburn-success-q9,adjacent,house raising,-32.143,115.85,13,P2
+sa-adl-elizabeth-q0,foundation,underpinning,-34.713,138.671,13,P1
+sa-adl-elizabeth-q1,foundation,restumping,-34.713,138.671,13,P1
+sa-adl-elizabeth-q2,foundation,reblocking,-34.713,138.671,13,P1
+sa-adl-elizabeth-q3,foundation,foundation repair,-34.713,138.671,13,P1
+sa-adl-elizabeth-q4,foundation,house levelling,-34.713,138.671,13,P1
+sa-adl-elizabeth-q5,foundation,house relevelling,-34.713,138.671,13,P1
+sa-adl-elizabeth-q6,foundation,slab lifting,-34.713,138.671,13,P1
+sa-adl-elizabeth-q7,foundation,resin injection underpinning,-34.713,138.671,13,P1
+sa-adl-elizabeth-q8,foundation,subsidence repair,-34.713,138.671,13,P1
+sa-adl-elizabeth-q9,adjacent,house raising,-34.713,138.671,13,P2
+sa-adl-modbury-q0,foundation,underpinning,-34.832,138.683,13,P1
+sa-adl-modbury-q1,foundation,restumping,-34.832,138.683,13,P1
+sa-adl-modbury-q2,foundation,reblocking,-34.832,138.683,13,P1
+sa-adl-modbury-q3,foundation,foundation repair,-34.832,138.683,13,P1
+sa-adl-modbury-q4,foundation,house levelling,-34.832,138.683,13,P1
+sa-adl-modbury-q5,foundation,house relevelling,-34.832,138.683,13,P1
+sa-adl-modbury-q6,foundation,slab lifting,-34.832,138.683,13,P1
+sa-adl-modbury-q7,foundation,resin injection underpinning,-34.832,138.683,13,P1
+sa-adl-modbury-q8,foundation,subsidence repair,-34.832,138.683,13,P1
+sa-adl-modbury-q9,adjacent,house raising,-34.832,138.683,13,P2
+sa-adl-glenelg-west-beach-q0,foundation,underpinning,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q1,foundation,restumping,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q2,foundation,reblocking,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q3,foundation,foundation repair,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q4,foundation,house levelling,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q5,foundation,house relevelling,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q6,foundation,slab lifting,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q7,foundation,resin injection underpinning,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q8,foundation,subsidence repair,-34.98,138.515,13,P1
+sa-adl-glenelg-west-beach-q9,adjacent,house raising,-34.98,138.515,13,P2
+sa-adl-marion-oaklands-q0,foundation,underpinning,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q1,foundation,restumping,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q2,foundation,reblocking,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q3,foundation,foundation repair,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q4,foundation,house levelling,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q5,foundation,house relevelling,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q6,foundation,slab lifting,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q7,foundation,resin injection underpinning,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q8,foundation,subsidence repair,-35.013,138.559,13,P1
+sa-adl-marion-oaklands-q9,adjacent,house raising,-35.013,138.559,13,P2
+sa-adl-noarlunga-q0,foundation,underpinning,-35.139,138.498,13,P1
+sa-adl-noarlunga-q1,foundation,restumping,-35.139,138.498,13,P1
+sa-adl-noarlunga-q2,foundation,reblocking,-35.139,138.498,13,P1
+sa-adl-noarlunga-q3,foundation,foundation repair,-35.139,138.498,13,P1
+sa-adl-noarlunga-q4,foundation,house levelling,-35.139,138.498,13,P1
+sa-adl-noarlunga-q5,foundation,house relevelling,-35.139,138.498,13,P1
+sa-adl-noarlunga-q6,foundation,slab lifting,-35.139,138.498,13,P1
+sa-adl-noarlunga-q7,foundation,resin injection underpinning,-35.139,138.498,13,P1
+sa-adl-noarlunga-q8,foundation,subsidence repair,-35.139,138.498,13,P1
+sa-adl-noarlunga-q9,adjacent,house raising,-35.139,138.498,13,P2
