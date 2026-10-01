@@ -1,8 +1,8 @@
 # Claygent prompt: source check (v1)
 
-One Claygent per row. Checks the supply chain and M&A source URLs against their summaries. Hiring is verified by the enrichment that produced it and is not checked here. Model: GPT 5.6 Luna. Runs on every row; a row with two "no" signals costs one short call and returns two "skip" results.
+One Claygent per row. Checks the supply chain and M&A source URLs against their summaries. Hiring is verified by the enrichment that produced it and is not checked here. Model: GPT 5.6 Luna. Runs only on rows where at least one signal is "yes" (formula gate in Clay). A "no" signal is skipped; a wrong "no" never reaches the note, so it is a recall problem for the signal column, not a trust problem for this step.
 
-Inputs: `{{SC Signal Found}}`, `{{SC Summary}}`, `{{SC Source Url}}`, `{{SC Source Date}}`, `{{SC Reasoning}}`, `{{MA Signal Found}}`, `{{MA Summary}}`, `{{MA Source Url}}`, `{{MA Source Date}}`, `{{MA Reasoning}}`, `{{today}}`, `{{window_start}}`.
+Inputs: `{{SC Signal Found}}`, `{{SC Summary}}`, `{{SC Source Url}}`, `{{SC Source Date}}`, `{{MA Signal Found}}`, `{{MA Summary}}`, `{{MA Source Url}}`, `{{MA Source Date}}`, `{{today}}`, `{{window_start}}`.
 
 Downstream: a formula column reads `sc.status` and `ma.status`; anything other than "pass" or "skip" flags the row, and the note step only uses signals whose status is "pass".
 
@@ -15,19 +15,16 @@ found: {{SC Signal Found}}
 claim: {{SC Summary}}
 url: {{SC Source Url}}
 date: {{SC Source Date}}
-reasoning: {{SC Reasoning}}
 
 SIGNAL B, M&A or restructuring
 found: {{MA Signal Found}}
 claim: {{MA Summary}}
 url: {{MA Source Url}}
 date: {{MA Source Date}}
-reasoning: {{MA Reasoning}}
 
 FOR EACH SIGNAL:
 
-If found is "no":
-- Read the reasoning. If it names a specific event with a date on or after {{window_start}} that it describes as qualifying, or if it says the correct answer should be yes, set status "fail" and reason "verdict contradicts reasoning". Otherwise set status "skip". Do not open any page.
+If found is "no": set status "skip" and leave the other fields empty. Do not open any page.
 
 If found is "yes":
 1. Open the url. Do not follow links away from it except a redirect to the same article or a PDF the page links to as the document itself.
@@ -47,7 +44,7 @@ If found is "yes":
 RULES:
 - A page that is about the right company and the right topic but does not contain the claim's specific facts is a fail, not a pass. Topic match is not claim support.
 - A PDF counts as a page. If the url is a PDF and it opens, read it.
-- Never pass a claim because the reasoning says the fact came from somewhere else. The claim must be on the cited page.
+- Never pass a claim because the fact might exist on some other page. The claim must be on the cited page.
 - Never fail a claim for wording differences. "Completed the acquisition of X on 23 June" supports "acquired X in June".
 - Do not open any url other than the two given.
 
@@ -69,8 +66,5 @@ Claim: "In May 2026 the group expanded its logistics partnership to five distrib
 Claim: "The company put 130 regional HR roles into consultation." Page: a trade publication article behind a subscriber wall; headline visible, body not.
 {"status":"blocked","loads":"blocked","quote":"","page_date":"","reason":"Subscriber wall on a trade publication; headline matches, body not readable."}
 
-Signal found "no", reasoning ends: "Both acquisitions are within the window and the correct classification should be acquirer." 
-{"status":"fail","loads":"","quote":"","page_date":"","reason":"verdict contradicts reasoning"}
-
-Signal found "no", reasoning describes routine disclosures only.
+Signal found "no".
 {"status":"skip","loads":"","quote":"","page_date":"","reason":""}
