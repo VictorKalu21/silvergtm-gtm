@@ -2,9 +2,9 @@
 
 AI column, no web access. Changes from v1: source-check status is passed in and applied inside the prompt rather than by a formula upstream; open jobs added as a hiring input alongside new leadership; the maturity band is a theme (account_maturity) rather than a separate field; four themes in all, one per signal family plus maturity.
 
-Inputs: `{{Firmographic Score}}`, `{{SC Summary}}`, `{{SC Check}}`, `{{MA Summary}}`, `{{MA Check}}`, `{{New Leadership}}`, `{{Jobs Found}}`.
+Inputs: `{{Firmographic Score}}`, `{{SC Summary}}`, `{{SC Check}}`, `{{SC Corrected}}`, `{{MA Summary}}`, `{{MA Check}}`, `{{MA Corrected}}`, `{{New Leadership}}`, `{{Jobs Found}}`.
 
-`SC Check` and `MA Check` are the status field from the source-check column: pass, pass_with_correction, fail, blocked, or empty when the signal was "no". When the status is pass_with_correction, map `corrected_claim` into the summary input instead of the original summary.
+`SC Check` and `MA Check` are the status field from the source-check column: pass, pass_with_correction, fail, blocked, or empty when the signal was "no". `SC Corrected` and `MA Corrected` are the checker's `corrected_claim` field, empty unless the status is pass_with_correction. The prompt picks the corrected wording itself.
 
 ---
 
@@ -19,13 +19,15 @@ Maturity score: {{Firmographic Score}} out of 10. What the score means:
 Evidence:
 Supply chain: {{SC Summary}}
 Supply chain check: {{SC Check}}
+Supply chain corrected wording: {{SC Corrected}}
 M&A or restructuring: {{MA Summary}}
 M&A check: {{MA Check}}
+M&A corrected wording: {{MA Corrected}}
 New leadership: {{New Leadership}}
 Open jobs: {{Jobs Found}}
 
 STEPS
-1. Keep a signal only if its check is "pass" or "pass_with_correction". Drop it if the check is "fail", "blocked", or empty. New leadership and open jobs come from verified enrichments and have no check; keep them if non-empty.
+1. Keep a signal only if its check is "pass" or "pass_with_correction". Drop it if the check is "fail", "blocked", or empty. When the check is "pass_with_correction", use the corrected wording as that signal's text and ignore the original summary. New leadership and open jobs come from verified enrichments and have no check; keep them if non-empty.
 2. List each kept piece of evidence as a finding. New leadership is one finding per person named. Open jobs is one finding listing the roles.
 3. Merge findings that describe the same real-world event: the same deal, the same programme, the same site, or the same person. Keep one finding, keep the fuller wording, and list both origins. Two different events at the same company are not merged.
 4. Give each finding one theme from this list only, matching where it came from: supply_chain for the supply chain signal, ma_restructuring for the M&A or restructuring signal, hiring_leadership for new leadership and open jobs. A merged finding takes the theme of its fuller wording.
@@ -45,8 +47,8 @@ Score 7. Supply chain: "In July 2026 the company invested about £30m in automat
 Score 9. Supply chain: "The retailer completed consolidation of its outdoor distribution centres into one site in September 2026." check pass. M&A: "The retailer announced a programme to close about 175 stores over three years." check fail. Leadership: "Maria Lopez, Chief Procurement Officer". Jobs: "Head of Health and Safety; Procurement Director".
 {"findings":[{"theme":"account_maturity","summary":"Group-level functions and a large supplier base; a priority account.","origins":["firmographic"],"merged":false},{"theme":"supply_chain","summary":"Completed consolidation of its outdoor distribution centres into one site in September 2026.","origins":["supply_chain"],"merged":false},{"theme":"hiring_leadership","summary":"Maria Lopez joined as Chief Procurement Officer.","origins":["leadership"],"merged":false},{"theme":"hiring_leadership","summary":"Hiring a Head of Health and Safety and a Procurement Director.","origins":["jobs"],"merged":false}],"dropped":["ma"],"finding_count":3}
 
-Score 8. Supply chain: "In May 2026 the group moved distribution for five sites to a new logistics partner." check pass. M&A: "In May 2026 the group outsourced its European distribution centre operations to a third-party logistics provider." check pass_with_correction. Leadership: empty. Jobs: empty.
-{"findings":[{"theme":"account_maturity","summary":"Group-level functions and a large supplier base; a priority account.","origins":["firmographic"],"merged":false},{"theme":"supply_chain","summary":"Moved distribution for five European sites to a new third-party logistics partner in May 2026.","origins":["supply_chain","ma"],"merged":true}],"dropped":[],"finding_count":1}
+Score 8. Supply chain: "In May 2026 the group moved distribution for five sites to a new logistics partner." check pass. M&A: "In April 2026 the group outsourced its European distribution centre operations to a third-party logistics provider." check pass_with_correction, corrected wording: "On 4 May 2026 the group outsourced its European distribution centre operations to a third-party logistics provider." Leadership: empty. Jobs: empty.
+{"findings":[{"theme":"account_maturity","summary":"Group-level functions and a large supplier base; a priority account.","origins":["firmographic"],"merged":false},{"theme":"supply_chain","summary":"On 4 May 2026 the group moved distribution for five European sites to a new third-party logistics partner.","origins":["supply_chain","ma"],"merged":true}],"dropped":[],"finding_count":1}
 
 Score 2. Supply chain: empty, check empty. M&A: empty, check empty. Leadership: empty. Jobs: empty.
 {"findings":[{"theme":"account_maturity","summary":"Too small to have a dedicated procurement or H&S function; not a buyer today.","origins":["firmographic"],"merged":false}],"dropped":[],"finding_count":0}
