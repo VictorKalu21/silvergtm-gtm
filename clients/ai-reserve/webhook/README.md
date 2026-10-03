@@ -26,3 +26,9 @@ Events: Smartlead reply + lead-category-updated (interested); HeyReach reply + c
 4. UNVERIFIED: registration bodies and payload field names were written from memory. Per repo rules,
    probe with 3 calls (create, list, fire a real event) and paste output before trusting them; the
    raw-payload tail on every Telegram message shows the true field names to fix in `worker.js`.
+
+## STATUS 2026-10-03
+- Worker live: https://ai-reserve-telegram-relay.victorrisa28.workers.dev (secrets set; keys in gitignored clients/ai-reserve/.env).
+- Smartlead webhooks (EMAIL_REPLY + LEAD_CATEGORY_UPDATED, all categories) on active campaigns 4037433, 4037432, 4037424, 3750904. Probed: POST /campaigns/{id}/webhooks returned ok + GET lists it.
+- HeyReach (MCP create_webhook, campaignIds=[] = all campaigns; the array is required despite the schema saying optional): MESSAGE_REPLY_RECEIVED id 88107, CONNECTION_REQUEST_ACCEPTED.
+- Smoke test delivered to Telegram. Payload field names still unverified until the first real events; check the raw tail.
