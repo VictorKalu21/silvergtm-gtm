@@ -15,6 +15,7 @@
 | Previous run (US) | `2026-09-11_foundation-repair` — closed out 2026-09-13 (US) |
 | Runs shipped | none |
 | Live campaigns | none |
+| **Deliverability (2026-10-04)** | EmailGuard placement tests via PlusVibe (operator sending; no PlusVibe API key). 5 Google-hosted sending domains (getaltasgrowth.co/.info, findaltasgrowth.co/.info, onlyonealtasgrowth.co) with the live copy: **Gmail 4/4 spam, Microsoft 3/3 inbox.** Copy test (plain text, no spintax/links/offer) from findaltasgrowth.co: **Gmail 3/3 inbox** → the **live copy is the Gmail filter, not the domains** (Microsoft seeds still pending at write-up). Open: rewrite the copy to keep the pay-per-inspection offer without the "10 in 30 days" promise, the "you don't pay unless" wording and the heavy spintax; place-test the new copy (1 EmailGuard credit left this month) before rollout; hold Gmail-hosted leads until it passes. Domain names misspell the brand ("altas"). Buy reserve domains (.com, correct spelling, 2–3 inboxes each). |
 
 ## US generator run — full record (2026-09-24 → 2026-09-25, saved for piecemeal work)
 

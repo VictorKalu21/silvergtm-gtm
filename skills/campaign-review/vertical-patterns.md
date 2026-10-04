@@ -108,6 +108,13 @@ Two motions, classify every campaign first:
 
 ---
 
+### Pay-per-inspection lead gen → Home-services contractors, Google-hosted inboxes (PlusVibe) [unconfirmed, n=2 accounts, 1 day]
+*Atlas Growth + Silver GTM's own account, PlusVibe, 2026-10-04. Placement data only, no reply data yet.*
+- **Gmail spam / Microsoft inbox split, account-wide:** EmailGuard seeds — Gmail 8/8 spam, Microsoft 6/6 inbox across 9 Google-hosted `.co`/`.info` domains (brand-prefix names: get-/find-/work-/onlyone-). Same copy on both providers, so not infra-wide.
+- **Copy was the filter:** a domain that went to Gmail spam with the live copy landed **Gmail 3/3 inbox** with a plain-text question (no spintax, no links/signature, no numbers, no offer). Live copy carried a numeric outcome promise ("book 10 inspections… within 30 days"), payment language ("you don't pay unless"), heavy spintax and a signature merge.
+- **A Microsoft-365 domain with 17 inboxes on it** was rejected outright by Gmail ("very low reputation of the sending domain", `bounce_type: SENDER`, 17/17) and went to spam at Microsoft 3/3 — the >10-inboxes-per-domain spam-cannon pattern, first-hand.
+- Watch: Atlas's sending domains misspell the brand ("altas") — a lookalike/phishing signal.
+
 ## SELLER-SOURCING
 
 ### Agency M&A / acquisition → Marketing/PR agency owners
