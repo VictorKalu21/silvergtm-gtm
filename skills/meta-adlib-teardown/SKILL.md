@@ -101,6 +101,35 @@ Two lenses that sharpen it beyond raw angle share (both repay the effort):
   distinct buyers (homeowner vs landlord/letting-agent vs commercial). Note which buyer each champion
   targets and which segment the strongest copy serves — it's often where the client's whitespace is.
 
+### 5. Look at the ACTUAL creative of the top 3-5 live winners (optional but high-value)
+The copy + `display_format` only tell half the story — **you must look at what's actually in the
+winning creative.** The highest-value visual intel (real team photo vs stock graphic vs review card
+vs before/after) is invisible in the CSV. Do this ONLY for the top **3-5 LIVE long-runners** (not the
+whole set — fetching media is the expensive step), then feed it into the creative brief.
+
+```
+py -3.13 scripts/fetch-creatives.py <workdir> [N=5]
+```
+This reads the swipe file, picks the top N by `days_running` **filtered to `is_active=true`** (one
+ad per advertiser), re-fetches each ad's single-ad page, reads the REAL media (videos[] preview
+frame → images[] → cards[]), and downloads a still to `<workdir>/creatives/`.
+
+1. **Phase 1 — describe each still with vision** (open the downloaded image): what's physically shown
+   (real crew / branded van / customer review card / before-after / stock model), the on-image text,
+   and the proof device. The recurring, actionable finding is often a FORMAT lesson the copy misses
+   (e.g. UK damp winners = authentic real-team/van/review photos, NOT polished stock graphics).
+2. **Phase 2 (heavier, do later) — video voiceover**: pull `video_sd_url`, extract audio, transcribe
+   (STT). Only worth it once Phase 1 shows the winners are video.
+
+**GOTCHA (seen live): `display_format` lies, and so can the snapshot.** An ad labelled `IMAGE` with
+`videos=[]` in the captured snapshot can still be a video in the live ad (the `videos[]` array didn't
+populate in the headless pull). Treat the downloaded still as "a frame of the winner," confirm
+video-vs-image by eye, and don't trust the format field — this is exactly why the top few get a human
+look instead of a metadata read.
+
+> The swipe file + report are also the input to the **`ad-creative`** skill's Mode 3 ("seed from a
+> competitor swipe file") — model the real LIVE long-runners, matched to the winning creative format.
+
 ## Operating notes
 - **Always confirm the vertical, country, and who counts as "in-vertical"** before building the
   config — the allowlist curation depends on it.

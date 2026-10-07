@@ -23,7 +23,12 @@ dec = json.JSONDecoder()
 JUNK = re.compile(
     r"\b(shein|temu|drama|dramabox|webfic|pocket ?fm|novel|romance|chapters|story|stories|"
     r"manga|webtoon|archero|game|gaming|royale|puzzle|casino|slots?|boutique|beauty|cosmetic|"
-    r"perfume|fashion|jewel|clothing|streaming|movies?|tv\b|music|detroit|mated|shimmer)\b",
+    r"perfume|fashion|jewel|clothing|streaming|movies?|tv\b|music|detroit|mated|shimmer|"
+    # health/supplement affiliate spam (recur when 'mold/health/air-quality' terms over-match):
+    r"blood pressure|cholesterol|arthritis|nerve support|heart health|wellness (hub|community|journal)|"
+    r"supplement|vitamin|probiotic|collagen|keto|detox|menopause|prostate|testosterone|weight ?loss|"
+    r"support community|health (haven|hub|finds|project|support)|essential health|lifestyle trends|"
+    r"success blueprint|business explained|scientology|prometics|odor eliminat)\b",
     re.I)
 
 def fetch(country, q):

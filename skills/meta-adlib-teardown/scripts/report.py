@@ -51,6 +51,16 @@ def main():
             if a == "(untagged)": continue
             w[a] += r["dr"]; cnt[a] += 1
     AG = sorted(w.items(), key=lambda kv: -kv[1])
+
+    # Creative TYPE breakdown (display_format) — which formats actually win, days-weighted + live count.
+    FMT = {}
+    for r in rows:
+        t = (r.get("display_format") or "(blank)").upper()
+        f = FMT.setdefault(t, {"n": 0, "days": 0.0, "live": 0, "maxd": 0.0})
+        f["n"] += 1; f["days"] += r["dr"]; f["live"] += 1 if r["live"] else 0
+        f["maxd"] = max(f["maxd"], r["dr"])
+    FMT = sorted(FMT.items(), key=lambda kv: -kv[1]["days"])
+
     txtrows = [r for r in rows if len((r["body"] or "").strip()) > 15]
     def pctang(a):
         n = sum(1 for r in txtrows if a in r["angle"].split("|"))
@@ -95,6 +105,12 @@ def main():
             f'<div class="bar"><div class="bl">{a} <em>&times;{cnt[a]} &middot; {pctang(a):.0f}%</em></div>'
             f'<div class="bt"><div class="bf" style="width:{100*v/mx:.0f}%;background:{COLORS.get(a,"#94a3b8")}"></div></div></div>'
             for a, v in AG)
+
+    def fmt_rows():
+        return "\n".join(
+            f'<tr><td>{esc(t)}</td><td class="npill">{s["n"]}</td><td class="npill">{s["live"]}</td>'
+            f'<td class="npill">{int(s["days"]):,}</td><td class="npill">{int(s["maxd"])}</td></tr>'
+            for t, s in FMT)
 
     def card(g):
         ang = " ".join(chip(a) for a in g["angle_set"] if a != "(untagged)")
@@ -149,6 +165,9 @@ h2{{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim
 .stat{{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:20px}}
 .stat .big{{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1}} .stat .big small{{font-size:14px;color:var(--dim);font-weight:600}}
 .stat .lab{{color:var(--dim);font-size:12.5px;margin-top:8px}}
+table.m{{width:100%;border-collapse:collapse;background:var(--pan);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:4px 0 8px}}
+table.m th{{text-align:left;padding:10px 14px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line)}}
+table.m td{{padding:9px 14px;border-bottom:1px solid var(--line)}} table.m tr:last-child td{{border-bottom:0}}
 .bar{{margin:10px 0}} .bl{{font-size:13.5px;margin-bottom:4px}} .bl em{{color:var(--dim);font-style:normal}}
 .bt{{height:9px;background:#0d1119;border-radius:6px;overflow:hidden}} .bf{{height:100%;border-radius:6px}}
 .card{{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}}
@@ -189,6 +208,16 @@ footer{{margin-top:50px;color:var(--dim);font-size:12.5px;border-top:1px solid v
   Bar length = total days-running carried by that angle (a durability-weighted vote, not a raw count);
   <em>&times;n &middot; %</em> = ad count &amp; share of copy ads.</p>
 {angle_bars()}
+<h2>Winning creative types (by format)</h2>
+<p style="color:var(--dim);font-size:13.5px;margin:-6px 0 14px;max-width:760px">
+  Which creative FORMATS the market actually commits to. "Total days" = days-running summed across
+  that format (the durability vote); "Live" = how many are running right now. A format that's common
+  but short-lived is noise; one with high total-days + live count is where the money stays.
+  <b>Caveat:</b> this uses Meta's `display_format` label, which can mislabel a video as IMAGE &mdash;
+  confirm the top winners' real format by eye (run <code>fetch-creatives.py</code>).</p>
+<table class="m"><tr><th>Format</th><th>Ads</th><th>Live</th><th>Total days</th><th>Longest</th></tr>
+{fmt_rows()}
+</table>
 <h2>Swipe file — the champions (deduped, top 10 by longevity)</h2>
 {champions}
 <h2>Browse the swipe ({len(G)} unique-copy groups)</h2>
