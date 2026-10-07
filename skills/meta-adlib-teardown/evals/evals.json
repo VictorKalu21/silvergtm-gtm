@@ -1,0 +1,14 @@
+{
+  "skill_name": "meta-adlib-teardown",
+  "notes": "Lean eval: one deterministic process eval (report+distill from an existing swipe file, no scraping) run with-skill vs baseline. Triggering accuracy is evaluated separately via claude -p (trigger-eval.json).",
+  "evals": [
+    {
+      "id": 0,
+      "name": "damp-report-distill",
+      "prompt": "I've got a CSV of competitor ads I scraped off the Meta Ad Library for UK damp-remediation contractors — it's at inputs/swipe_file_full.csv (897 ads, 24 advertisers, with columns including advertiser, days_running, is_active, angle, cta, title, body). Turn this into a competitor teardown: an interactive HTML report I can click through, plus a short written analysis of what the winning ads do, which angles the market rewards, and what a contractor should steal. Save the report and the writeup to the outputs folder.",
+      "files": ["inputs/swipe_file_full.csv"],
+      "expected_output": "An HTML report (built via the skill's report.py engine) + a markdown teardown that ranks by days_running, reads the angle distribution, and names specific swipe exemplars with their copy. Baseline likely hand-rolls a weaker ad-hoc analysis.",
+      "assertions": []
+    }
+  ]
+}
