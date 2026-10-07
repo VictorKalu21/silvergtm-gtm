@@ -5,16 +5,18 @@ D = "data/ai-reserve/ms"; rows = {}
 for fn in sorted(glob.glob(f"{D}/*.jsonl")):
     slice_name = os.path.basename(fn)[:-6]
     for l in open(fn, encoding="utf-8"):
-        o = json.loads(l); r = rows.setdefault(o["id"], {"slices": set(), "raw": o})
-        r["slices"].add(slice_name)
+        o = json.loads(l); r = rows.setdefault(o["partnerId"], {"slices": set(), "raw": o, "locs": {}})
+        r["slices"].add(slice_name); a = (o.get("location") or {}).get("address") or {}
+        r["locs"][o["id"]] = f'{a.get("city") or ""}, {a.get("state") or ""}, {a.get("country") or ""}'.strip(", ")
 def li(url):
     m = re.search(r"linkedin\.com/company/([^/?#]+)", url or ""); return m.group(1) if m else ""
 out = []
 for pid, r in rows.items():
     o = r["raw"]; a = (o.get("location") or {}).get("address") or {}
     out.append({
-        "id": pid, "partner_id": o.get("partnerId"), "name": o.get("name"), "linkedin": o.get("linkedInOrganizationProfile") or "", "linkedin_slug": li(o.get("linkedInOrganizationProfile")),
+        "id": o.get("id"), "partner_id": pid, "name": o.get("name"), "linkedin": o.get("linkedInOrganizationProfile") or "", "linkedin_slug": li(o.get("linkedInOrganizationProfile")),
         "country": a.get("country"), "state": a.get("state"), "city": a.get("city"),
+        "n_locations": len(r["locs"]), "locations": " | ".join(sorted(set(r["locs"].values()))), "countries": ";".join(sorted({v.split(", ")[-1] for v in r["locs"].values()})),
         "azure_expert_msp": "Azure Expert MSPs" in (o.get("programQualificationsMsp") or []),
         "designations": ";".join(o.get("solutionsPartnerDesignations") or []),
         "has_dataai": "AzureDataAICompetency" in (o.get("solutionsPartnerDesignations") or []), "has_infra": "AzureInfraCompetency" in (o.get("solutionsPartnerDesignations") or []),
