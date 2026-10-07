@@ -108,6 +108,13 @@ Two motions, classify every campaign first:
 
 ---
 
+### Visitor-ID offer copy (Silver GTM) on Google-hosted cold domains (PlusVibe) [unconfirmed, n=2 domain sets, 1 day]
+*Silver GTM's own copy, sent from Silver GTM's and Atlas Growth's domains, PlusVibe, 2026-10-04. Placement data only, no reply data yet.*
+- **Gmail spam / Microsoft inbox split:** EmailGuard seeds — Gmail 8/8 spam, Microsoft 6/6 inbox across 9 Google-hosted `.co`/`.info` domains (brand-prefix names: get-/find-/work-/onlyone-), all sending the SAME Silver GTM copy.
+- **The copy was the filter, not the domains:** an Atlas domain that went to Gmail spam with that copy landed **Gmail 3/3 inbox** with a plain-text question (no spintax, no links/signature, no numbers, no offer). Lesson: before blaming domains for an account-wide Gmail-spam result, check whether every domain sent the same copy, then run the copy test.
+- **A Microsoft-365 domain with 17 inboxes on it** was rejected outright by Gmail ("very low reputation of the sending domain", `bounce_type: SENDER`, 17/17) and went to spam at Microsoft 3/3 — the >10-inboxes-per-domain spam-cannon pattern, first-hand. That one IS the domain, whatever the copy.
+- Atlas's own pay-per-inspection copy (home-services contractors) was not tested that day.
+
 ## SELLER-SOURCING
 
 ### Agency M&A / acquisition → Marketing/PR agency owners
