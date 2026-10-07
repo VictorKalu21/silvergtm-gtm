@@ -1,6 +1,6 @@
 # AI Reserve · Channel-partner play — scope + business case
 
-**Date:** 2026-10-07 · **Status:** SCOPED, NOT RUN (directories probed, nothing pulled at volume)
+**Date:** 2026-10-07 · **Status:** PULLED 2026-10-07 (AWS + Microsoft + Google, US/CA/IL) — draft rubric applied, awaiting Emerson's weights. Results in §6.
 **Trigger:** Emerson check-in 2026-10-02 — two inbound-from-cold wins (In Balance IT → Tim Currie → OpsGuru) suggest cloud/AI consultancies and MSPs are both a *customer* and a *channel*. Find more firms shaped like those two.
 
 ---
@@ -121,3 +121,25 @@ Method detail and gotchas live in `skills/icp-source-planner/library/cloud-partn
 - https://www.opsguru.io/ and https://www.opsguru.io/about-us (fetched 2026-10-07)
 - https://www.inbalanceit.com/ , /leadership-team/ , /partners/ (fetched 2026-10-07)
 - https://prospeo.io/c/in-balance-it-solutions (headcount/founded estimates)
+
+---
+
+## 6. Run results — 2026-10-07 (US · Canada · Israel)
+
+Files (gitignored, in `data/ai-reserve/`): `channel-partners-master.csv` (all sources merged), `channel-partners-tierA.csv`, `channel-partners-tierB.csv`, plus per-source `aws-partners.csv` / `aws-scored.csv`, `ms-partners.csv` / `ms-scored.csv`, `gcp-partners.csv`.
+
+| Source | Pulled (unique) | Of which consulting/services | After draft rubric |
+|---|---|---|---|
+| AWS Partner Finder — all partners, US 3,691 · CA 406 · IL 233 | 4,040 | 1,734 (2,306 are ISVs) | 374 shortlist · 148 at score ≥9 |
+| Microsoft directory — elite slices only (Azure Expert MSP, Data & AI / Infra designations, Azure+AI+MSP) | 963 | 963 | 399 shortlist · 44 at score 9 |
+| Google Cloud Partner Finder — all tiers via facet×keyword union | 1,218 | 1,218 | 107 shortlist (Premier/Diamond + AI competency) |
+| **Merged master** (domain + name match) | **3,389** | 2,860 after kills | **Tier A 200 · Tier B 362** |
+
+- Tier A = AI capability validated by a cloud vendor AND an MSP or resale motion AND total score ≥9. 161 of 200 have published AWS customer case studies to cite; 179 have a domain; 66 are in two or three directories; 32 list a FinOps practice.
+- Tier A HQ mix: US 144 · Israel 11 · Canada 13 · other (with a NA office) 32.
+- **Validation:** OpsGuru scores 12/14 and ranks in the top 10 of Tier A on the rubric alone (AWS Premier + MSP + Solution Provider + AI competency + Google Premier). Its Google Cloud brand MyOps (IL) also surfaced independently. In Balance IT is in none of the three directories, as predicted.
+- Top of Tier A by score: ProfiSea (IL, 3 clouds), Adastra (ON), TeraSky (IL), Commit (IL), Dedicatted (ON), OpsGuru (BC), Quantiphi (MA), RapidScale (GA), Sela (IL), AppSquadz (PA), Ollion (WA), zeb (NJ).
+
+**What changed vs the scope:** the cloud-directory universe is ~3,400 services firms, not the ~650 estimated from AWS AI facets alone, because the pull took every partner (so the rubric can be re-weighted without re-scraping). Israel over-indexes in Tier A relative to size — consistent with the "technically deep" OpsGuru pattern Emerson described.
+
+**Open decisions for Emerson:** rubric weights; FinOps-practice firms (32 in Tier A) as targets or competitors; whether to include foreign-HQ firms with a NA office (32); which 25–40 to work first while in stealth.
