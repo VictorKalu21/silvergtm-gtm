@@ -25,7 +25,9 @@ Atlas Growth, 871 leads:**
   ~16%. These firms say "family-owned since 1987" and name nobody — the phrase is marketing copy,
   not a contact. Do not budget site text as the primary source for this vertical.
 - **BBB Business Profiles are the owner registry.** A BBB profile lists the principal by name and
-  title. In testing, BBB ranked #1 for the plain `"<business>" <city> <ST> owner` query on
+  title. Scripted: `bbb-lookup.js` matches each lead to its profile through BBB's keyless search JSON
+  (phone → name+city → low_confidence candidates, like a Companies House town-only match) and, with
+  `--profiles` + `FIRECRAWL_KEY`, renders the Cloudflare-walled profile for the principals block. In testing, BBB ranked #1 for the plain `"<business>" <city> <ST> owner` query on
   unrelated leads in TX/CO/OK/MS, and resolved owners the website never mentioned (8/8 leads that
   site text had failed on). Secondary registries, in observed order of usefulness: ZoomInfo person
   pages, LinkedIn company/person pages, local chamber-of-commerce member profiles, Procore.

@@ -1245,3 +1245,133 @@ print the HTTP status on a failed geocode, retry a 429 once after the `Retry-Aft
 Also seen on the same run (data, not a bug): the seeded `DISTRICTS_DEFAULT` list misses most UK unitary /
 "X and Y" districts (Reigate and Banstead, Redcar and Cleveland, Newark and Sherwood …); the run passed a
 67-entry `--districts owner/districts_uk.json`. Worth promoting into the seed once a second UK run confirms it.
+
+---
+
+# Batch 2026-10-07 — local-business playbook gaps (operator brief: ZIP × category sweeps, keyword rows, socials, BBB / Yellow Pages, boolean email searches, blind permutations, LinkedIn reverse lookup)
+
+Checked against the live branch first: the email waterfall, owner-finding rungs, registry rungs, domain collapse,
+store, pagination and the Plusvibe upload were already built; the items below are what the playbook adds that the
+skill genuinely lacked. Every script has a test under `tests/`; every tool claim below has its probe output.
+
+## DONE 2026-10-07 (reference data + `gap-tiles.js`): ZIP centroids and the full category list are on disk; postal run sheets and the STEP 5 gap loop are generated
+
+**Problem.** STEP 2 mapped ICP labels to Google categories from memory (a wrong category list cost a run — see
+"Ask the operator to sanity-check the category list" above) and STEP 5's gap loop told the agent to add a row "at
+the ZIP's centroid" with no centroid data anywhere in the repo, so both were hand work every run.
+**Fix.** `references/google-maps-categories.md` — 4,027 native categories (Dalton Luka's list, every `<li>` between
+`Acupuncturist` and `Zoo` on https://daltonluka.com/blog/google-my-business-categories, fetched 2026-10-07; the
+PlePer list is JS-rendered and was not used). `references/us-zip-centroids.csv` — 33,791 `zip,lat,lng` rows from the
+US Census 2024 ZCTA gazetteer (`2024_Gaz_zcta_national.zip`, public domain; 851 KB; `.gitignore` now allows
+`skills/*/references/*.csv`). `gap-tiles.js` BUILD mode writes a postal run sheet from the config allowlist
+(`--queries "Q:icp,…"`, `--min-sep-km` merges urban ZIPs closer than a zoom-14 viewport, PO-box ZIPs with no ZCTA
+are listed not dropped, refuses to overwrite without `--force`, exits 2 on prefix/areas configs); HEAL mode writes
+`gap-runsheet.csv` from `run_log.json` `footprint_codes_with_no_results` × the run sheet's queries. Test:
+`tests/gap-tiles.test.js` (15 checks). Wired into SKILL.md STEP 2, STEP 3, STEP 5.
+
+## DONE 2026-10-07 (method, SKILL STEP 3 + 5b): keyword rows (`kw:<icp>`, P3) + keyword-row recovery through classify
+
+**Problem.** Category rows only find businesses Google tagged with the category. Businesses mis-categorise
+themselves (the playbook's point; the LH tax-res run already did keyword queries implicitly and leaked gov offices
+because nothing marked them as keyword-sourced). The engine accepted any `query` string all along; the method never
+said to use it, and the `google_types` allow-list drops keyword-found leads by construction (no ICP tag is why they
+were missed).
+**Fix (no engine change).** Keyword rows carry `icp_type` = `kw:<icp>` and priority P3 (scrape.js merges icp tags per
+place_id, so a lead found both ways reads `plumber|kw:plumber`). STEP 5b: rows in `excluded_officp.csv` with `kw:` in
+`icp_type` AND the allow rule's label as `drop_reason` go through the classify track (prep-classify → Haiku →
+apply-classify) and the in-ICP verdicts are unioned back before the geo gate; a `kw:` row dropped by a name/gov/chain
+deny stays dropped. `gap-tiles.js` parses `"septic pumping:kw:septic"` (first colon only; tested).
+
+## DONE 2026-10-07 (engine, fetch-sites.js): social profile URLs captured on the site record (`socials`)
+
+**Problem.** `links()` skipped every social host, so the lead's own Facebook / Instagram / LinkedIn page — where
+the playbook's boolean email searches (`site:instagram.com/<handle> "@gmail"`) and the owner read look next — was
+thrown away. 0 files in the repo captured a social handle.
+**Fix.** `socialLinks(raw)` scans RAW URLs (HTML or Firecrawl markdown) for facebook / instagram / linkedin / x /
+tiktok / youtube / yelp profile URLs, drops share / intent / login / plugin / explore / bare-root links, keeps LinkedIn
+`/company/` `/in/` `/school/` only and YouTube channel forms only, normalises `www.`/`m.`, caps 2 per network;
+`mergeSocials` unions across pages. `processLead` writes `rec.socials`; `store/schema.sql` + `store.js` carry a
+`socials jsonb` column (`alter table … add column if not exists` for existing DBs). Test:
+`tests/fetch-sites-socials.test.js` (13 checks incl. an end-to-end run against a local server). Existing
+fetch-sites tests (emails, gate, firecrawl) and `store.test.js` still pass. Residue (`--firecrawl-residue`)
+recoveries: see the OPEN note below.
+
+## DONE 2026-10-07 (new rung script, `bbb-lookup.js`): BBB search match per lead — free; the principal needs Firecrawl
+
+**Probe (2026-10-07, from the cloud egress, plain curl):**
+- `GET https://www.bbb.org/api/search?find_text=plumber&find_loc=Phoenix%2C%20AZ&page=1` → 200, 118 KB JSON,
+  `totalResults` set, `results[]` = `{businessName, address, city, state, postalcode, phone[], categories[{name}],
+  rating:"A+", bbbMember, outOfBusinessStatus, reportUrl, businessId, bbbId, location}`. **No people.**
+  `?input=&location=` (the parameter names an earlier note implied) → 200 with `totalResults: 0`.
+- Name search `find_text=George%20Brazil%20Plumbing&find_loc=Phoenix%2C%20AZ` → 1 result, name wrapped in `<em>`
+  highlight tags (stripped by the script).
+- Profile page `reportUrl` with full Chrome headers (UA, Accept, Accept-Language, Sec-Fetch-*) → **403 "Just a
+  moment… | Better Business Bureau"** = Cloudflare. `/api/businessprofile/<id>` and `/api/profile/<bbb>/<id>` → 404.
+  So the principal block is Tier-3 (Firecrawl), exactly as the P3 note above said.
+**What shipped.** Deterministic matcher (phone last-10 → `matched:phone`; name-token overlap ≥ 0.6 + city →
+`matched:name+city`; ≥ 0.6 alone or ≥ 0.4 in-city → `low_confidence`, a candidate for the reader like a CH town-only
+match), slim record (rating, accredited, categories, out-of-business, profile URL), resumable JSONL, ≤ 4 workers,
+stops on 403/429/503. `--profiles` renders matched profiles through Firecrawl (rate-paced, `FIRECRAWL_KEY`) and
+`parsePrincipals()` reads "Business Management / Principal Contacts / Customer Contact" lines (`Name, Title`).
+Test: `tests/bbb-lookup.test.js` (14 checks, real search fixture).
+**OPEN (needs one paid run):** the principals parser's fixture is SYNTHETIC — no Firecrawl key in this session.
+First `--profiles` run: paste three real markdown renders here (a miss keeps `profile_sample` on the record for
+this), fix the regex to the real shape, flip this to DONE. Until then its names are candidates, not answers.
+**Also OPEN:** `prep-owner-batches.js` does not yet read `bbb.jsonl` — pass the principals in the way `--ch` carries
+the Companies House block (same `registry` shape; small change, needs a test).
+
+## DONE 2026-10-07 (new source script, `yp-search.js`): Yellow Pages listings as a universe cross-check — free, no owner
+
+**Probe (2026-10-07):** `GET https://www.yellowpages.com/search?search_terms=plumber&geo_location_terms=Phoenix%2C+AZ`
+→ 200, 320 KB, server-rendered, 30 `<div class="result" id="lid-<ypid>">` cards, "Showing 1-30 of 1108", `?page=2`
+pagination. Card fields: name + `/mip/` URL, categories, `track-visit-website` (direct URL, no redirect), phone,
+street address, locality "City, ST 12345", `mip_claimed_status` in `data-analytics`. Detail page (`/mip/…`, 200,
+156 KB): **no owner / principal** — only "Email Business" (a form). YP is a universe source, not a people source.
+**What shipped.** term × location × page loop, 1.2 s politeness, resumable state, dedupe on ypid with `found_by`,
+stops on 403/429/503 (exit 3). Output `yp_listings.csv`. Join to Maps on phone → root domain → name+zip; the
+unmatched remainder is Maps' blind spot and goes through keyword-recovery classify. Test: `tests/yp-search.test.js`
+(12 checks, fixture trimmed from the real page). Wired as SKILL STEP 6 2f (optional).
+
+## DONE 2026-10-07 (email-waterfall engine, `waterfall.js --estimate-pattern`): blind permutation is a GATED step
+
+**Operator decision 2026-10-07:** "we can try blind permutation but it's killing credits — add it as a step and ask
+me to skip." The 2026-09-13 "no blind guessing" rule stands as the DEFAULT; the blind `pattern` rung is offered,
+sized, and skipped unless the operator says go. `--estimate-pattern` runs the cascade dry (checkpoints only, nothing
+bought), strips `pattern` from the rungs, and prints `contacts_for_pattern`, `domains`, `candidates`,
+`mv_credits_max` (= contacts × patterns), `bb_credits_max` (= contacts when `bb` is on); writes no files. Test:
+`email-waterfall/tests/waterfall-estimate.test.js` (5 checks); `waterfall-dry-run.test.js` unchanged and passing.
+Method: SKILL.md STEP 6e-blind + `email-waterfall/SKILL.md` "Blind `pattern` rung" + HANDOFF.md (the operator sees
+the question in plain words). Measured basis for the offer: 15 of 81 owners, ~4 MV credits per owner found, BB on.
+
+## OPEN 2026-10-07 (method designed, blocked): boolean email searches over the site + socials — needs the SERP backend
+
+The playbook's `site:{website} "info@" OR "@gmail" OR "@yahoo"` (and the same over the lead's Instagram / Facebook)
+is designed as SKILL STEP 6 2e and has its inputs now (`socials` on the site record). It cannot be scripted until
+`search-owner.js` is re-pointed (CRITICAL above: scraper.tech's SERP product is gone; the serper.dev backend is
+still only in a run folder). Interim: WebSearch inside the sweep for the still-unemailed residue only. When the
+backend lands: one query per surface per lead, verify every hit (MV + BB), checkpoint per lead.
+
+## OPEN 2026-10-07 (optional last rung, documented): LinkedIn reverse lookup → personal email
+
+Designed in `email-waterfall/SKILL.md` (last section) and SKILL STEP 6e-li: vendor databases keyed on the profile
+URL return the personal Gmail/Yahoo address; ContactOut ≈ $0.10/credit, FullEnrich 3 credits ≈ $0.17 per personal
+email, Datagma (prices from vendor pages 2026-10-07, unprobed). Not built: 20-contact probe on free credits first,
+US lists only. Needs a key and an operator go before any code.
+
+## NOTE 2026-10-07 — SERP prices corrected across the skills (stale "free tier" claims)
+
+Brave Search API retired its free 2,000/month tier in Feb 2026: now $5 per 1,000 requests with $5 of free credit a
+month (~1,000 queries), card required. Item 5 above ("free 2,000 queries/month; $5/1k after") and the
+`web-scrape-triage` Tier-2 text ("never pay a SERP key — Brave free tier") were written against the old plan and are
+corrected (triage SKILL.md + methods.md edited 2026-10-07). serper.dev ≈ $1 per 1,000 (2,500 free) is the cheaper
+backend. **Unverified operator claim:** "Brave gives 200k queries for $25" (≈ $0.125 per 1,000) matches no published
+Brave plan found on 2026-10-07 — ask for the link before planning around it; a legacy/enterprise quote, or a
+different vendor, is the likely explanation. TinyFish (agent $0.016 per step, $8 free, Starter $15/month for 1,650
+credits; its Search + Fetch APIs are free) and Spider Cloud (~$0.48 per 1,000 pages) were priced for the record; neither
+is wired in — Spider would be a cheaper PASS-3 than Firecrawl per page only if it clears Cloudflare, which needs a 3-site probe.
+
+## DONE 2026-10-07 (fetch-sites.js): Firecrawl recoveries (PASS 3 and `--firecrawl-residue`) also get `socials`
+
+`applyFirecrawl` now merges `socialLinks(md)` + `socialLinks(html)` into `rec.socials` next to the email merge, so a
+Cloudflare-walled site recovered through Firecrawl carries its footer profiles like a plain-fetched one. Covered by
+`tests/fetch-sites-firecrawl.test.js` (socials assertion on the recovered record).

@@ -3,9 +3,14 @@
 const fs = require('fs'), path = require('path');
 const argv = process.argv;
 const arg = (n, d) => { const i = argv.indexOf('--' + n); return i > -1 ? argv[i + 1] : d; };
-const DRY = argv.includes('--dry-run');
+// --estimate-pattern: the blind-permutation step (google-maps-scrape SKILL STEP 6e) is credit-hungry, so it is
+// never run on a nod. This mode runs the cascade dry (checkpoints only, nothing bought), strips the blind
+// `pattern` rung, and prints how many contacts would reach it and the MillionVerifier / BounceBan credits it
+// could burn at most — the number the operator sees before saying go or skip. Writes no files.
+const ESTIMATE = argv.includes('--estimate-pattern');
+const DRY = argv.includes('--dry-run') || ESTIMATE;
 const IN = process.env.IN, OUT_DIR = process.env.OUT_DIR || 'waterfall';
-const RUNGS = arg('rungs', 'quickenrich,aiark,trykitt').split(',').map(s => s.trim()).filter(Boolean);
+const RUNGS = arg('rungs', 'quickenrich,aiark,trykitt').split(',').map(s => s.trim()).filter(Boolean).filter(r => !(ESTIMATE && r === 'pattern'));
 const VERIFY = arg('verify', 'mv').split(',').map(s => s.trim());
 const LIMIT = parseInt(arg('limit', '0'), 10), CONC = parseInt(arg('concurrency', '3'), 10);
 if (!IN) { console.error('IN=<csv> required'); process.exit(1); }
@@ -172,6 +177,14 @@ async function pool(items, fn, n) { const out = new Array(items.length); let i =
 (async () => {
   let arkBefore = null; if (!DRY && RUNGS.includes('aiark') && K.ark) { try { arkBefore = (await http('https://api.ai-ark.com/api/developer-portal/v1/payments/credits', { headers: { 'X-TOKEN': K.ark } })).body.total; } catch (e) { } }
   const results = await pool(rows, cascade, CONC);
+  if (ESTIMATE) {
+    const todo = results.filter(x => x.wf_verdict !== 'sendable').filter(r => { const { first, last } = names(r); return first && last && String(r.root_domain || '').trim(); });
+    const domains = [...new Set(todo.map(r => r.root_domain.trim().toLowerCase()))];
+    const est = { contacts_in: results.length, already_sendable: results.length - results.filter(x => x.wf_verdict !== 'sendable').length, contacts_for_pattern: todo.length, domains: domains.length,
+      patterns: PATTERNS, candidates: todo.length * PATTERNS.length, mv_credits_max: todo.length * PATTERNS.length, bb_credits_max: VERIFY.includes('bb') ? todo.length : 0,
+      note: 'mv_credits_max = every candidate verified; a catch-all domain stops after its first candidate (1 MV + 1 BB) and ships nothing. Run only on an explicit operator go: add pattern to --rungs.' };
+    console.log(JSON.stringify(est, null, 2)); return;
+  }
   const HH = [...H, 'wf_email', 'wf_rung', 'wf_verdict', 'wf_detail', 'wf_phone', 'wf_trail'];
   const stem = path.basename(IN).replace(/\.csv$/i, '');
   fs.writeFileSync(path.join(OUT_DIR, `${stem}_waterfall.csv`), [HH.join(',')].concat(results.map(o => HH.map(h => esc(o[h])).join(','))).join('\n') + '\n');

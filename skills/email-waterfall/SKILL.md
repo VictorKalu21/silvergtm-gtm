@@ -27,8 +27,10 @@ checkpoints to its own JSONL so reruns are free.
 
 ```
 IN=<contacts.csv> OUT_DIR=<dir> node skills/email-waterfall/scripts/waterfall.js \
-  [--rungs quickenrich,aiark,trykitt] [--verify mv|mv,bb] [--limit N] [--concurrency 3] [--dry-run]
+  [--rungs quickenrich,aiark,trykitt] [--verify mv|mv,bb] [--limit N] [--concurrency 3] [--dry-run] [--estimate-pattern]
 ```
+`--estimate-pattern` runs the cascade dry (checkpoints only, nothing bought), leaves the blind `pattern` rung out, and prints
+`contacts_for_pattern`, `mv_credits_max`, `bb_credits_max` — the numbers the operator sees before the blind step below is run or skipped. Writes no files. Test: `node tests/waterfall-estimate.test.js`.
 Keys: the same env file as email-verify (`$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env`):
 `QUICKENRICH_KEY`, `AIARK_KEY`, `TRYKITT_KEY`, `MILLIONVERIFIER_KEY`, `BOUNCEBAN_KEY`. `--dry-run` classifies from
 checkpoints only. Test: `node tests/waterfall-dry-run.test.js`.
@@ -85,6 +87,17 @@ normalised company name + city, then verify. For an LA/AR-heavy list this rung g
   Net measured contribution: 0 found, 1 credit spent, 99 left. **Rung parked**: not runnable at test scale on a trial
   key, and the 400 needs a side-by-side diff of the runner body against a working curl before any paid key is tried.
 
+## Blind `pattern` rung — a GATED step, never a default (operator decision 2026-10-07)
+Blind permutation (`first`, `first.last`, `flast`, … × domain, verifier decides) is in the cascade as `pattern` and it works —
+15 of 81 owners on the 2026-09-12 test, ~4 MillionVerifier credits per owner found, with BounceBan on — but it burns credits on
+every contact it touches whether or not it finds anything, and on a catch-all domain it finds nothing and still spends. So:
+1. After the cheap rungs, run `--estimate-pattern` (same `--rungs`/`--verify`/`--patterns` you would use) and read the three numbers.
+2. Put them to the operator with `AskUserQuestion`: "Run blind permutations on N contacts for up to X MillionVerifier + Y BounceBan
+   credits, or skip?" **Default = skip.** Never infer a go from an earlier run's go.
+3. On an explicit go only: add `pattern` to `--rungs` (after `pattern_seeded`), always `--verify mv,bb` (without BounceBan every
+   catch-all domain passes every permutation and the list is poison), and `--limit N` to cap the burn to what was approved.
+4. Report cost per sendable for the rung in `report.json`; that number decides whether it is offered again on this vertical.
+
 ## `pattern_seeded` rung (operator rule 2026-09-13: no blind guessing)
 Blind pattern guessing had quality problems in the operator's past runs. The seeded rung only fires where the SAME
 domain already has a verified sendable address with a known person (this run's QuickEnrich hits, on-site personal
@@ -97,3 +110,19 @@ for explicit probes only.
   credits per sendable**; 138 MV + 41 BB credits. Seeded pattern fired on 10 contacts, 2 sendable: with ~20% vendor
   coverage there are few seeds, so the fan-out is small by construction. Owners 98/678 sendable, colleagues 23/106.
   Names read off sites: 19%; names from search sweeps: 15%.
+
+## LinkedIn reverse lookup → PERSONAL email (optional last rung, paid, probe-gated)
+How it works: vendors keep people databases keyed on the LinkedIn profile URL (built from breach dumps, opt-in panels and
+ATS/CRM syncs), so a `linkedin.com/in/<slug>` resolves to the person's Gmail/Yahoo/Outlook address even when no work
+mailbox exists — the usual case for an owner-operator whose "company email" is the one you already tried. Input = the
+profile URL (from `socials.linkedin` on the site record, or the owner sweep's LinkedIn rung); output = personal email,
+sometimes a mobile. It is a rung for contacts that end the waterfall with `none`, never a first call.
+- **Vendors + list price (checked 2026-10-07, confirm before buying):** ContactOut ≈ $0.10 per email credit, LinkedIn URL is the
+  best input · FullEnrich 3 credits per personal email ≈ $0.17 (1 credit ≈ $0.055 for a work/reverse-email lookup), charges only on
+  a hit · Datagma (1 credit = 1 verified email; reverse endpoints not publicly priced). Prospeo / Wiza / Kaspr do the same job.
+- **Run it as a 20-contact probe** with the vendor's own free credits, verify every return (MV + BB), and compute cost per
+  SENDABLE before any paid batch — exactly the rule the other rungs follow.
+- **Where it is allowed:** US B2B outreach to a personal address in a business context with a working opt-out is the normal
+  CAN-SPAM case. UK/EU: PECR/GDPR treat a sole trader's or partner's personal mailbox as an individual subscriber — do not run
+  this rung on UK/EU lists. This is a note on the rung's scope, not legal advice; the client confirms their own position.
+

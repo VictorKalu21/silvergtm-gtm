@@ -39,6 +39,7 @@ Claude will then ask you the intake questions below. Answer them; Claude does th
 - On that same job, expect **two lists**: the confirmed one to work now, and a smaller "pending" one Claude is holding back because it only saw those places once. They are not discarded — they get promoted if they show up again.
 
 ## Cost awareness
+- **Blind email guessing is never automatic.** Near the end of a run Claude may ask: "run blind permutations on N contacts for up to X MillionVerifier + Y BounceBan credits, or skip?" Say **skip** unless you have credits to spare — it finds maybe 1 in 5 of those contacts and the credits are gone either way.
 Each web search spends a credit from a shared budget. Claude qualifies the list **before** spending owner-finding credits, so you're not paying to research businesses you'd drop. If you only need a quick count, ask Claude for "scrape only, no owner-finding."
 
 ## When to call the technical person

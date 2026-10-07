@@ -120,6 +120,11 @@ A gate is a stop. The run does not proceed past one on its own.
 | `owner-prompt.template.md` | the fixed scaffold every job's `owner-prompt.md` is built from |
 | `owner-prompts.md` | an older worked example, legacy two-column layout, for the reasoning only |
 | `HANDOFF.md` | the intake form and glossary for a non-technical operator |
+| `references/google-maps-categories.md` | every native Google Maps category (4,027; Dalton Luka's list, 2026-10-07) — STEP 2 maps ICP labels against it |
+| `references/us-zip-centroids.csv` | US Census 2024 ZCTA centroids (33,791 ZIPs) — `gap-tiles.js` places postal-mode tiles and heals STEP 5 gaps from it |
+| `gap-tiles.js` | postal run sheet from the config allowlist; gap run sheet from `run_log.json` |
+| `bbb-lookup.js` | BBB search match per lead (free); `--profiles` renders the principal block through Firecrawl |
+| `yp-search.js` | Yellow Pages listings for a term × location (free) — universe cross-check, no owner there |
 | `IMPROVEMENTS.md` | the bug and lesson backlog; read the OPEN items before a big run |
 | `*.js` | the engine scripts named in section 3 |
 | `owner-read-subagent.md`, `owner-sweep-subagent.md` | the prompts for the Haiku readers in flows 2b and 2c |
@@ -178,6 +183,11 @@ Three searches on leads the site failed on tell you which registry a vertical us
 | In-session WebSearch | tokens, no key | calls in one message run in parallel; ten at a time is tested. Results vary between runs |
 | SERP vendor | per query | only after the free rungs in `web-scrape-triage` are exhausted at real volume |
 | Email finders (QuickEnrich, then paid finders as 50-contact probes) | credits per found address | `email-waterfall`; never spent without an explicit go |
+| Blind email permutations (`pattern` rung) | MillionVerifier credit per candidate (up to 6 per contact) + BounceBan on catch-alls | GATED: `--estimate-pattern` first, operator says go or skip, default skip; ~4 MV credits per owner found when it works |
+| BBB search match (`bbb-lookup.js`) | free, keyless | ≤ 4 parallel through the relay; the profile page (where the principal is) is Firecrawl, paid per page |
+| Yellow Pages listings (`yp-search.js`) | free, keyless | universe cross-check only — no owner on YP; one page per 1.2 s |
+| SERP key (when the backend is re-pointed) | serper ≈ $1 per 1,000 · Brave $5 per 1,000 + $5 free credit/month (its free tier is gone, Feb 2026) | a 1,000-lead sweep at 2–7 queries per lead = $2–14 on serper, $10–35 on Brave |
+| LinkedIn reverse lookup → personal email | ContactOut ≈ $0.10 · FullEnrich ≈ $0.17 per personal email | 20-contact probe first; US lists only |
 
 The cheapest source per owner found is a dedicated team page. The most expensive is a paid
 vendor whose results turn out to be title-only. Confirm on three leads that a source returns the

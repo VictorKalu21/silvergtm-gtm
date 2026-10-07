@@ -38,6 +38,41 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 const L2_DEFAULT = ['about', 'team', 'meet', 'our-story', 'story', 'staff', 'provider', 'providers', 'doctor', 'doctors', 'dentist', 'owner', 'founder', 'leadership', 'who-we-are', 'about-us', 'our-team', 'meet-the', 'contact', 'contact-us', 'get-in-touch', 'enquir'];
 const SKIP_EXT = /\.(pdf|jpe?g|png|gif|svg|webp|mp4|zip|css|js|ico|woff2?)($|\?)/i;
 const SOCIAL = /(facebook|instagram|twitter|x\.com|linkedin|youtube|tiktok|yelp|maps\.google|goo\.gl)\./i;
+// ---- social profile capture (not crawled) ----------------------------------------------------
+// The lead's own Facebook / Instagram / LinkedIn / X / TikTok / YouTube / Yelp pages are recorded on the
+// record as `socials` so the owner read and the boolean email searches (`site:instagram.com/<handle>
+// "@gmail"`) have somewhere to go. Share / intent / login / plugin links and bare network roots are not
+// profiles and are dropped; LinkedIn keeps only /company/, /in/, /school/; YouTube only channel forms.
+// Scans RAW URLs (works on HTML and on Firecrawl markdown alike). Max 2 per network.
+const SOCIAL_NETS = [
+  ['facebook', /(^|\.)(facebook\.com|fb\.com|fb\.me)$/i], ['instagram', /(^|\.)instagram\.com$/i], ['linkedin', /(^|\.)linkedin\.com$/i],
+  ['x', /(^|\.)(twitter\.com|x\.com)$/i], ['tiktok', /(^|\.)tiktok\.com$/i], ['youtube', /(^|\.)(youtube\.com|youtu\.be)$/i], ['yelp', /(^|\.)yelp\.(com|co\.uk|ca|com\.au)$/i],
+];
+const SOCIAL_JUNK_FIRST = new Set(['sharer', 'sharer.php', 'share', 'dialog', 'plugins', 'login', 'signup', 'hashtag', 'explore', 'intent', 'policies', 'privacy', 'help', 'legal', 'tr', 'about', 'business', 'ads', 'marketplace', 'groups', 'events', 'watch', 'reel', 'reels', 'p', 'stories', 'home.php', 'search', 'feed', 'posts', 'pulse', 'shareArticle', 'embed', 'playlist', 'results', 'biz', 'writeareview', 'i', 'tag', 'accounts', 'legal', 'settings', 'static']);
+const URL_RE = /https?:\/\/[^\s"'<>()\[\]\\]+/gi;
+function socialLinks(raw, max = 2) {
+  const out = {};
+  for (const m of String(raw || '').match(URL_RE) || []) {
+    let u; try { u = new URL(m.replace(/[.,;:!?]+$/, '').replace(/&amp;/g, '&')); } catch { continue; }
+    const host = u.host.toLowerCase().replace(/^(www|m|mobile|business)\./, '');
+    const net = SOCIAL_NETS.find(([, re]) => re.test(host)); if (!net) continue;
+    const segs = u.pathname.split('/').filter(Boolean);
+    if (!segs.length) continue;
+    let keep;
+    if (net[0] === 'linkedin') { if (!/^(company|in|school)$/i.test(segs[0]) || segs.length < 2) continue; keep = segs.slice(0, 2); }
+    else if (net[0] === 'youtube') { if (!/^@/.test(segs[0]) && !/^(channel|c|user)$/i.test(segs[0])) continue; keep = /^@/.test(segs[0]) ? segs.slice(0, 1) : segs.slice(0, 2); if (keep.length < (/^@/.test(segs[0]) ? 1 : 2)) continue; }
+    else if (net[0] === 'facebook' && (segs[0] === 'pages' || segs[0] === 'people' || segs[0] === 'pg')) { if (segs.length < 2) continue; keep = segs.slice(0, 3); }
+    else if (net[0] === 'facebook' && segs[0] === 'profile.php') { const id = u.searchParams.get('id'); if (!id) continue; keep = ['profile.php?id=' + id]; }
+    else if (net[0] === 'yelp') { if (segs[0] !== 'biz' || segs.length < 2) continue; keep = segs.slice(0, 2); }
+    else { if (SOCIAL_JUNK_FIRST.has(segs[0]) || /\.(php|html)$/i.test(segs[0]) || segs[0].length < 2) continue; keep = segs.slice(0, 1); }
+    if (SOCIAL_JUNK_FIRST.has(keep[0]) && net[0] !== 'facebook' && net[0] !== 'yelp') continue;
+    const url = 'https://' + host + '/' + keep.join('/');
+    const list = out[net[0]] = out[net[0]] || [];
+    if (!list.includes(url) && list.length < max) list.push(url);
+  }
+  return out;
+}
+function mergeSocials(list, max = 2) { const out = {}; for (const s of list) for (const [k, v] of Object.entries(s || {})) { const l = out[k] = out[k] || []; for (const u of v) if (!l.includes(u) && l.length < max) l.push(u); } return out; }
 const PAGE_TIMEOUT = 8000;     // per-request abort (main pass)
 const MAX_L2 = 6;              // how many second-level pages to follow
 const HOME_CAP = 6000, L2_CAP = 2800, TOTAL_CAP = 18000; // char caps
@@ -242,7 +277,7 @@ function mergeEmailSources(lists, cap = 8) {
   return { emails, by_source: Object.fromEntries(emails.map(e => [e, best.get(e)])) };
 }
 
-module.exports = { L2_DEFAULT, htmlToText, emailsIn, extractEmails, mergeEmailSources, cfDecode, cleanEmail, keepEmail };
+module.exports = { L2_DEFAULT, htmlToText, emailsIn, extractEmails, mergeEmailSources, cfDecode, cleanEmail, keepEmail, socialLinks, mergeSocials };
 if (require.main !== module) return;   // required by a test: nothing below runs (argv parse + fetches)
 
 // ---- run path ----------------------------------------------------------------------------------
@@ -372,6 +407,7 @@ function applyFirecrawl(rec, r) {
   rec.pages = [{ url: rec.website, label: 'home', text: text.slice(0, HOME_CAP) }];
   rec.emails = merged.emails;
   rec.emails_by_source = merged.by_source;
+  rec.socials = mergeSocials([rec.socials || {}, socialLinks(r.md), socialLinks(r.html || '')]);   // a rendered page carries the footer links too
   rec.text = text;
   rec.pages_fetched = 1;
   rec.source = 'firecrawl';
@@ -452,7 +488,7 @@ async function residueMode() {
 }
 
 async function processLead(lead, timeout) {
-  const rec = { place_id: lead.place_id, name: lead.name, website: lead.website, neighborhood: lead.neighborhood, city: lead.city, phone: lead.phone_number, full_address: lead.full_address, status: 'ok', pages: [], emails: [], emails_by_source: {} };
+  const rec = { place_id: lead.place_id, name: lead.name, website: lead.website, neighborhood: lead.neighborhood, city: lead.city, phone: lead.phone_number, full_address: lead.full_address, status: 'ok', pages: [], emails: [], emails_by_source: {}, socials: {} };
   const home = await getPage(lead.website, timeout);
   if (!home.ok) { rec.status = 'home_failed:' + (home.status || home.err); rec.text = ''; return rec; }
   const base = home.finalUrl || lead.website;
@@ -481,6 +517,7 @@ async function processLead(lead, timeout) {
   const merged = mergeEmailSources([...raws.map(r => extractEmails(r.html, r.text)), emailsIn(combined).map(e => ({ email: e, source: 'text' }))]);
   rec.emails = merged.emails;                 // flat array, unchanged shape — downstream scripts read it
   rec.emails_by_source = merged.by_source;    // { address: mailto|jsonld|cfemail|tag_split|text }
+  rec.socials = mergeSocials(raws.map(r => socialLinks(r.html)));   // profile URLs, not crawled
   rec.text = combined;
   rec.pages_fetched = rec.pages.length;
   return rec;

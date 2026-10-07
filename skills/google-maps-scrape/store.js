@@ -163,6 +163,7 @@ class Store {
       root_domain: rd, fetched_at: rec.fetched_at || new Date().toISOString(), status: String(rec.status || 'unknown'),
       source: rec.source || source || 'plain', pages: Array.isArray(rec.pages) ? rec.pages : [], text: rec.text || null,
       emails: Array.isArray(rec.emails) ? rec.emails : [], emails_by_source: rec.emails_by_source && typeof rec.emails_by_source === 'object' ? rec.emails_by_source : {},
+      socials: rec.socials && typeof rec.socials === 'object' ? rec.socials : {},
     };
   }
   async upsertSiteText(records, source) {

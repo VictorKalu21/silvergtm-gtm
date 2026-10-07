@@ -12,7 +12,7 @@ Pulled from: google-maps-scrape skill, the Form D / portfolio / AI-Reserve pipel
 - If yes, parse it (regex/DOM) — no browser, no cost. Wins: DesignRush (cards in HTML), Form D bulk datasets, company sites.
 - Technique (`fetch-sites.js` pattern): plain Node fetch of homepage + a few L2 pages (about/team/careers) → strip to clean text (drop script/style, collapse ws) → char-cap → write incrementally (resume-safe). No browser.
 
-**Tier 2 — Free-first search-driven discovery (cheap → $0).** Don't need a specific site — need to FIND pages? **Don't pay a SERP key (serper/scraper.tech) for this — free rungs cover it:** built-in **WebSearch** tool (no key, interactive) → **Jina search `https://s.jina.ai/?q=`** (free, keyless ~20 RPM; free key → 500 RPM — the scriptable free SERP for pipelines) → **Brave Search API** (free tier ~2k/mo, structured REST). Paid SERP only past those limits.
+**Tier 2 — Free-first search-driven discovery (cheap → $0).** Don't need a specific site — need to FIND pages? Free first: built-in **WebSearch** tool (no key, interactive, ~200 calls/session) → **Jina search `https://s.jina.ai/?q=`** (needs a key since 2026-09; free key gets the free tier) → paid SERP for any scripted sweep: **serper.dev** (~$1/1k, 2,500 free) or **Brave Search API** ($5/1k + $5 free credit/month; its free 2k/mo tier was retired Feb 2026 — corrected 2026-10-07; scraper.tech's SERP product is discontinued).
 - Uses: find job posts mentioning a tool (`Clay "GTM Engineer" site:jobs.lever.co`), resolve a company's domain (`<name> <city>` → take the company's own site, not an aggregator), surface profile pages.
 
 **Tier 3 — Rendered fetch / anti-bot unlocker (paid, last resort).** Site returns a Cloudflare/anti-bot challenge (403 "Just a moment", "Enable JavaScript")?
@@ -25,7 +25,7 @@ Pulled from: google-maps-scrape skill, the Form D / portfolio / AI-Reserve pipel
 
 ## Tool / key inventory (on this machine)
 - **WebSearch** (built-in tool): SERP discovery + domain resolution, no key. The Tier-2 workhorse.
-- **Free scriptable SERP** (no serper/scraper.tech key): **Jina `s.jina.ai`** (keyless ~20 RPM) + **Brave Search API** (free tier ~2k/mo). Use these for pipeline SERP before ever paying.
+- **Scriptable SERP**: **Jina `s.jina.ai`** (key required) · **serper.dev** (~$1/1k, 2,500 free) · **Brave Search API** ($5/1k, $5 free credit/month — no free tier any more, checked 2026-10-07). Probe 3 leads for the field you need before building a sweep on any of them.
 - **Cheap grounded models** (name→domain last-mile + page extraction, off Claude session): **Gemini 3.x Flash** (native Google Search grounding, 5k free grounded/mo), **DeepSeek V4** (~$0.14/M, native web search), **Kimi K2** (`$web_search` builtin).
 - **Firecrawl**: key `fc-...` (provided per-session, not stored on disk) — rendered scrape + Cloudflare bypass. Roll after use. Live calls must run via **PowerShell** — the Bash sandbox has no network (DNS fails).
 - **Companies House** (`COMPANIES_HOUSE_KEY`): UK company data.

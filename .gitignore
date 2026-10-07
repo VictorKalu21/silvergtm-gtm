@@ -42,3 +42,6 @@ __pycache__/
 *.tar.gz
 *.tgz
 *.zip
+
+# Reference data shipped with a skill (public, no PII): ZIP centroids, category lists.
+!skills/*/references/*.csv

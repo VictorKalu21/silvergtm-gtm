@@ -21,7 +21,8 @@ const CF_HEX = cfEncode('sales@piledsolutions.co.uk', 0x5b);
 const GOOD_MD = 'KHB Piling — underpinning and piling contractors across the North West. '.repeat(6);
 const GOOD_HTML = `<html><body><h1>KHB Piling</h1><p>${GOOD_MD}</p>
   <a href="mailto:info@khbpiling.co.uk">Email us</a>
-  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="${CF_HEX}">[email&#160;protected]</a></body></html>`;
+  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="${CF_HEX}">[email&#160;protected]</a>
+  <a href="https://www.facebook.com/KHBPiling">Facebook</a> <a href="https://www.facebook.com/sharer/sharer.php?u=x">share</a></body></html>`;
 const CHALLENGE_MD = 'Just a moment...\nEnable JavaScript and cookies to continue. ' + 'x'.repeat(400);
 const THIN_MD = 'Domain parked.';                       // under the 200-char floor
 const FIXTURES = { '/good': GOOD_MD, '/403site': 'Recovered behind the WAF. ' + 'y'.repeat(400), '/challenge': CHALLENGE_MD, '/thin': THIN_MD };
@@ -122,6 +123,8 @@ server.listen(0, '127.0.0.1', async () => {
   check('(d) the RAW html email rungs run on the recovered page',
     byId.P5.emails.includes('info@khbpiling.co.uk') && byId.P5.emails.includes('sales@piledsolutions.co.uk') &&
     byId.P5.emails_by_source['info@khbpiling.co.uk'] === 'mailto' && byId.P5.emails_by_source['sales@piledsolutions.co.uk'] === 'cfemail');
+  check('a Firecrawl recovery also carries socials from the rendered html (share link dropped)',
+    byId.P5.socials && byId.P5.socials.facebook && byId.P5.socials.facebook.join() === 'https://facebook.com/KHBPiling');
 
   // --- resumable: a second run attempts nothing ---
   order = []; queueStatusCalls = 0;

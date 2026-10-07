@@ -53,8 +53,10 @@ create table if not exists site_text (
   pages            jsonb not null default '[]'::jsonb,
   text             text,
   emails           jsonb not null default '[]'::jsonb,
-  emails_by_source jsonb not null default '{}'::jsonb
+  emails_by_source jsonb not null default '{}'::jsonb,
+  socials          jsonb not null default '{}'::jsonb   -- { facebook:[url], instagram:[url], linkedin:[url], ... } (fetch-sites socialLinks)
 );
+alter table site_text add column if not exists socials jsonb not null default '{}'::jsonb;
 
 -- One verdict per address. A verdict younger than 90 days is reused and never re-bought (store.js enforces it).
 create table if not exists email_verdicts (
