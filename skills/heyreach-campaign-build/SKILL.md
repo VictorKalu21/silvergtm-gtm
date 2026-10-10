@@ -17,7 +17,7 @@ Some HeyReach accounts' REST keys 401; the reliable path is the **MCP endpoint**
 
 ## Step 1 — Push leads into a list
 
-1. `create_empty_list` with `listType: "USER_LIST"` (campaigns only accept USER_LISTs). Note the returned `id`.
+1. `create_empty_list` with `listName` + `listType: "USER_LIST"` (campaigns only accept USER_LISTs; the arg is `listName`, not `name` — wrong key gives an opaque "An error occurred invoking" with no hint). Note the returned `id`.
 2. Batch the CSV into ≤100-lead chunks and call `add_leads_to_list_v2` per chunk via the helper script. Per lead send: `profileUrl` (required in practice — skip rows without a LinkedIn URL and report the count), `firstName`, `lastName`, `position`, `companyName`, `emailAddress`, `location`.
 3. Put segmentation data (persona/track, company score, signal fields) into `customUserFields: [{name, value}]` — this is the only way sequences and exports can see it later.
 4. Duplicate `profileUrl`s dedupe silently (added count < sent count is normal). Report added/updated/failed per batch.
@@ -62,6 +62,8 @@ The sequence is a nested tree. Per node: `nodeType`, `actionDelay`, `actionDelay
 ### Editing a live campaign instead
 
 `update_campaign_sequence` refuses IN_PROGRESS campaigns → `pause_campaign` → update → `resume_campaign`. Safe-update preserves lead states and does not re-message. Fix `payload.messages[]` AND `payload.fallbackMessage` — both render.
+
+**Once a campaign has ever started, only the COPY can change — not the STRUCTURE.** Changing node types, adding/removing nodes, or re-wiring branches on a PAUSED campaign returns `"You cannot update the sequence structure after a campaign has been started. Create a new campaign if you want to modify the sequence."` (definitive, 2026-10-10). Re-sending the identical tree with only `payload.messages[]` / `fallbackMessage` text changed is accepted and verified by re-GET. So: swap messages in place on paused campaigns; to add a follow-up step, build a new campaign. DRAFT campaigns (never started) accept full structural rewrites. If you must re-run a started campaign's leads with a new structure, use `get_leads_from_campaign` (paginate 100/page; rows carry `leadCampaignStatus`, `leadConnectionStatus`, `leadMessageStatus`) to pick exactly who to carry over — e.g. everyone with `leadMessageStatus == "None"` if the user wants "only not-yet-messaged", which the campaign-level exclusion flags cannot express (they exclude anyone *contacted*, including accepted-not-messaged).
 
 ## Output to the user
 
