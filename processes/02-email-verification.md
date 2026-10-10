@@ -102,6 +102,10 @@ Check balances before large runs: MillionVerifier `https://app.millionverifier.c
 - Duplicate emails are verified once; all rows for that email get the same verdict.
 - BounceBan has a 90-second per-request timeout — do not kill mid-run. Use the resumable checkpoints instead.
 - Risky ≠ necessarily bad. For high-value accounts (e.g. VC-funded AI cos) you may choose to send to risky too, with a tighter sequence.
+- **Cloud / proxied sessions (Claude Code on the web): Node ignores the session proxy by default.** `fetch` and the `https` module do not read `HTTPS_PROXY`, so calls to proxy-authenticated hosts (BounceBan, MillionVerifier) go out direct with no credentials. BounceBan then answers `{"msg":"Authorization information is missing or invalid."}` — no `id`, no `result` — and the script logs a bare `{"email":...}` row for every catch-all, which the merge step reads as risky. Fix: run with `NODE_USE_ENV_PROXY=1` (Node ≥ 22.21) and drop the `Authorization` header — the proxy injects the key. curl is already proxied, so a one-off curl working while the script fails is the tell. No credits are consumed by the failed calls. (Seen 2026-10-10, AI Reserve Tier A run.)
+- **BounceBan can return an async "not yet complete" response** (`{"id":"...","msg":"The email verification process is not yet complete..."}`) instead of the final verdict. Do **not** re-submit the same email — each submit costs a credit. Poll `GET /v1/verify/single/status?id=<id>` (free) until `status: "success"`. The current script's 5× retry loop re-submits; a proxy-aware rewrite that submits once and polls is in the 2026-10-10 session notes and should replace it.
+- **DeBounce returns transient `result: "error"` rows** (16 of 672 on a 6-worker run) that `classifyDebounce` treats as *drop*. They are not verdicts. Strip `"result":"error"` lines from `debounce.jsonl` and re-run — the checkpoint makes this a 16-call retry, and on the retry 15/16 resolved (14 good, 1 catch-all). Treat a row that still errors after the retry as unverified, not dropped, and say so in the report.
+- **Dedupe/decide the list *before* verifying, not after.** On the AI Reserve Tier A run the persona/concentration cuts removed 342 of 1,014 rows (34%) ahead of Stage 1 — that is ~340 DeBounce credits and ~130 BounceBan credits not spent on contacts that were never going to be uploaded.
 - MillionVerifier also returns `free` (Gmail/Yahoo) and `role` (info@/support@) flags — logged in `mv.jsonl` but not applied to the verdict by default. For B2B-only sending, add a post-filter to suppress `role`/`free` if needed.
 
 ## Worked example — AI Reserve Portfolio (2026-08-30, DeBounce path)
@@ -118,3 +122,23 @@ Check balances before large runs: MillionVerifier `https://app.millionverifier.c
 | Risky | 15 |
 | Dropped | 100 |
 | BounceBan credits used | ~230 |
+
+## Worked example — AI Reserve, "AI Cloud and MSP Cos, Tier A (Direct Offer)" (2026-10-10, DeBounce path, cloud session)
+
+Input was a 1,014-row Apollo export cut to 672 by persona/concentration rules first (sales/marketing/HR/legal/PMO titles, Apollo seniority Entry/Senior/Manager, delivery managers, CISOs, 7 already in Smartlead, 5 bad emails, 4 in-file dupes). Verified via `NODE_USE_ENV_PROXY=1`, BounceBan submit-once + poll.
+
+| Stage | Count |
+|-------|-------|
+| Input (post-cut) | 672 |
+| Unique emails | 672 |
+| DeBounce: Safe to Send | 408 |
+| DeBounce: catch-all / unknown → BounceBan | 262 |
+| DeBounce: dropped (1 hard bounce + 1 persistent error) | 2 |
+| BounceBan: deliverable (recovered) | 247 |
+| BounceBan: undeliverable / risky | 15 |
+| **SENDABLE → uploaded to Smartlead** | **655** |
+| Risky (held back) | 15 |
+| DeBounce credits used | 672 (+16 retries) |
+| BounceBan credits used | 262 |
+
+Post-upload check: `GET /campaigns/{id}/analytics` → `campaign_lead_stats.total = 655`, matching the sendable count. The 15 risky were all `Accept All` domains BounceBan marked `undeliverable` — including a CFO and two presidents — so "risky" here means a real catch-all with no SMTP confirmation, not junk; worth a tighter follow-up sequence if the account matters.
