@@ -1,6 +1,6 @@
 # GATE 2 — drop-reason audit, UK home extensions (2026-10-11)
 
-Universe 41,689 unique (4,060 Maps calls, 1,770 rows, 2.29 calls/row, 0 unhealed tiles) → **qualified 25,480 (61%)**: main 21,151 + bare-type recovery 2,612 + name recovery 1,717 → footprint gate **24,065** (far_from_hubs 1,400 · wrong_country 15) → dedupe waived → collapse **16,813 owner-finding rows** (924 domain siblings folded) + **6,328 no-website** (706 shared-host · 5,622 none).
+Universe 41,689 unique (4,060 Maps calls, 1,770 rows, 2.29 calls/row, 0 unhealed tiles) → **qualified 25,480 (61%)**: main 21,151 + bare-type recovery 2,612 + name recovery 1,717 → footprint gate 24,065 (far_from_hubs 1,400 · wrong_country 15) **+ 568 blank-address UK recoveries = 24,633** (`recover-blank-address.py`: 768 of the geo drops had no address and sat on a country centroid — the OPEN footprint-gate issue; the 568 with a UK phone are taken back with lat/lng blanked, the 200 with a foreign or missing phone stay out) → dedupe waived → collapse **17,070 owner-finding rows** (969 domain siblings folded) + **6,593 no-website** (733 shared-host · 5,860 none).
 
 ## Kept list by track and primary type
 
