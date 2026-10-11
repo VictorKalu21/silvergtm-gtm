@@ -36,6 +36,7 @@ Built 2026-10-11 from `2026-10-11_us-restoration-remediational`. Source: remedia
 | facebook_url | 6830 | 59.1% |
 | instagram_url | 4993 | 43.2% |
 | owner_name | 883 | 7.6% |
+| bbb_url | 5534 | 47.9% |
 | evidence | 11558 | 100.0% |
 
 ## Qualified by evidence source

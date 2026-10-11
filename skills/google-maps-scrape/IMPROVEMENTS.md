@@ -2,6 +2,13 @@
 
 Technical backlog for the skill's engine. Not operator-facing (see HANDOFF.md for that).
 
+## FACT (owner-sweep, 2c): the WebSearch cap is 200 calls per USER TURN, shared by every agent in it — not per session, and it does not reset when the orchestrator's own response ends
+
+**Status:** FACT, no engine change · measured 2026-10-11 (Atlas Growth, `2026-10-11_us-restoration-remediational`, `owner/sweep2` + `owner/sweep3`). SKILL 2c says "200-WebSearch budget (`CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION`) … at most 6 batches at a time" — the unit is wrong and it matters for planning.
+
+- Probe: 6 sweep batches of 20 launched in one turn ran **200 searches exactly** (37+36+35+30+34+28) with no refusal; the next 4 batches, launched after a stop-hook message (a new user turn), ran 141 more. Then 20 batches launched in the same turn as those 4 got 0–12 searches each and every agent reported the tool's own text: `web search budget is used up (limit: 200 WebSearch calls per turn, shared by every agent in it)` / `You've hit your usage limit`. A fresh wave of 5 launched after my own reply (no user message in between) got **0 searches** — the orchestrator ending its response does not start a new turn.
+- Consequences: (1) a sweep moves ~115 leads per user message (1.7 searches per lead measured here); 10k unnamed leads is not a WebSearch job — it is DataForSEO `search-owner.js --mode standard` + a Haiku re-read, or the env var raised on the environment; (2) more than ~5 batches of 20 in one turn starves every agent, and the starved agents write `[]` for leads they never searched, which `merge-owner-reads.js` would bank as "searched, nobody found". The run-folder `AGENT-PROMPT.md` now tells the reader to stop at the cap and omit unsearched leads from the out file; the engine's `owner-sweep-subagent.md` should say the same (SKILL/prompt change, gated).
+
 ## MEDIUM (fetch-sites.js): the run never ends when the last in-flight fetches hang — PASS 2 (free retry) is never reached
 
 **Status:** OPEN (no engine change made — the process was killed by hand after 15 min with no log movement; the 662 transient failures it would have retried were classified on the directory profile description instead) · found 2026-10-11 (Atlas Growth, 2026-10-11_us-restoration-remediational, 13,842 domains at concurrency 12), MEDIUM impact: **the free recovery pass silently never runs** on a large list, and the operator has no signal beyond a frozen counter.

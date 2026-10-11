@@ -22,7 +22,7 @@ function writeCsv(f, rows, cols) { fs.writeFileSync(f, [cols.map(esc).join(','),
 function readJsonl(f) { if (!fs.existsSync(f)) return []; return fs.readFileSync(f, 'utf8').split(/\r?\n/).filter(Boolean).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean); }
 const TRADE = ['restoration','restore','remediation','mold','water','fire','flood','dry','damage','cleanup','clean','pro','pros','environmental','services','solutions','company','inc','llc','group','team','emergency','rapid','response','servpro','servicemaster','puroclean'];
 const VERDICT = { residential_restoration: 'Qualified', restoration_unconfirmed: 'Review', unclear: 'Review', commercial_only: 'Exclude', inspection_only: 'Exclude', cleaning_only: 'Exclude', adjacent_trade: 'Exclude', not_restoration: 'Exclude' };
-const COLS = ['verdict','verdict_reason','classify_confidence','evidence_source','company_name','website','website_domain','google_maps_url','phone','email','email_source','street','city','state','zip','google_rating','google_reviews','pct_5star','open_24_7','services_directory','services_offered','services_summary','insurance_work','evidence','facebook_url','instagram_url','linkedin_url','owner_name','owner_title','owner_evidence','brand_family','org_group','location_count','is_multi_location','metro','exclude_stage','place_id','latitude','longitude','directory_url'];
+const COLS = ['verdict','verdict_reason','classify_confidence','evidence_source','company_name','website','website_domain','google_maps_url','phone','email','email_source','street','city','state','zip','google_rating','google_reviews','pct_5star','open_24_7','services_directory','services_offered','services_summary','insurance_work','evidence','facebook_url','instagram_url','linkedin_url','owner_name','owner_title','owner_evidence','bbb_status','bbb_rating','bbb_accredited','bbb_url','brand_family','org_group','location_count','is_multi_location','metro','exclude_stage','place_id','latitude','longitude','directory_url'];
 
 function assemble(run) {
   const annotated = readCsv(path.join(run, 'leads_annotated.csv'));
@@ -36,6 +36,9 @@ function assemble(run) {
   for (const o of readJsonl(path.join(run, 'ownwords_text.jsonl'))) if (!textSrc.has(o.place_id)) textSrc.set(o.place_id, 'directory profile');
   const site = new Map(); for (const o of readJsonl(path.join(run, 'owner', 'site_text.jsonl'))) if (o.place_id) site.set(o.place_id, o);
   const owners = new Map(); for (const o of readJsonl(path.join(run, 'owner', 'contacts_final.jsonl'))) if (o.place_id) owners.set(o.place_id, o);
+  // BBB rung (bbb-lookup.js): evidence only — status matched|low_confidence|miss, rating, accreditation, profile URL. No people.
+  const bbb = new Map(); for (const o of readJsonl(path.join(run, 'owner', 'bbb.jsonl'))) if (o.place_id && o.status !== 'miss' && o.bbb) bbb.set(o.place_id, o);
+  const bbbCols = pid => { const b = bbb.get(pid); return b ? { bbb_status: b.status, bbb_rating: b.bbb.rating || '', bbb_accredited: b.bbb.accredited === true ? 'yes' : b.bbb.accredited === false ? 'no' : '', bbb_url: b.bbb.profile_url || '' } : { bbb_status: '', bbb_rating: '', bbb_accredited: '', bbb_url: '' }; };
   const rows = [];
   const cityState = s => { const m = String(s || '').match(/^(.*?),\s*([A-Z]{2})$/); return m ? { city: m[1], state: m[2] } : { city: s, state: '' }; };
   const street = (addr, city) => { const a = String(addr || ''); const i = a.indexOf(', ' + city); return i > 0 ? a.slice(0, i) : (a.split(',').length > 2 ? a.split(',')[0] : ''); };
@@ -65,13 +68,14 @@ function assemble(run) {
       insurance_work: v ? (v.insurance_work === true ? 'yes' : v.insurance_work === false ? 'no' : '') : '', evidence: v ? (v.evidence || '') : '',
       facebook_url: first(soc.facebook), instagram_url: first(soc.instagram), linkedin_url: first(soc.linkedin),
       owner_name: own ? (own.primary_name || '') : '', owner_title: own ? ((own.contacts || [])[0] || {}).title || '' : '', owner_evidence: own ? ((own.contacts || [])[0] || {}).evidence || '' : '',
+      ...bbbCols(r.place_id),
       brand_family: r.brand_family, org_group: r.root_domain, location_count: r.location_count, is_multi_location: r.is_multi_location, metro: r.metro,
       exclude_stage: verdict === 'Exclude' ? 'site_text' : '', place_id: r.place_id, latitude: r.latitude, longitude: r.longitude, directory_url: r.directory_url,
     });
   }
   for (const r of drops) {
     const { city, state } = cityState(r.city);
-    rows.push({ verdict: 'Exclude', verdict_reason: r.drop_reason, classify_confidence: '', evidence_source: '', company_name: r.name, website: r.website, website_domain: '', google_maps_url: r.place_link, phone: r.phone_number, email: '', email_source: '', street: street(r.full_address, city), city, state, zip: r.zip, google_rating: r.rating, google_reviews: r.review_count, pct_5star: r.pct_5star, open_24_7: r.hours ? 'yes' : '', services_directory: r.google_types.split('|').map(t => t.replace(/ service$/, '')).join(' | '), services_offered: '', services_summary: '', insurance_work: '', evidence: '', facebook_url: '', instagram_url: '', linkedin_url: '', owner_name: '', owner_title: '', owner_evidence: '', brand_family: '', org_group: '', location_count: '', is_multi_location: '', metro: r.metro, exclude_stage: 'directory_qualify', place_id: r.place_id, latitude: r.latitude, longitude: r.longitude, directory_url: r.directory_url });
+    rows.push({ verdict: 'Exclude', verdict_reason: r.drop_reason, classify_confidence: '', evidence_source: '', company_name: r.name, website: r.website, website_domain: '', google_maps_url: r.place_link, phone: r.phone_number, email: '', email_source: '', street: street(r.full_address, city), city, state, zip: r.zip, google_rating: r.rating, google_reviews: r.review_count, pct_5star: r.pct_5star, open_24_7: r.hours ? 'yes' : '', services_directory: r.google_types.split('|').map(t => t.replace(/ service$/, '')).join(' | '), services_offered: '', services_summary: '', insurance_work: '', evidence: '', facebook_url: '', instagram_url: '', linkedin_url: '', owner_name: '', owner_title: '', owner_evidence: '', bbb_status: '', bbb_rating: '', bbb_accredited: '', bbb_url: '', brand_family: '', org_group: '', location_count: '', is_multi_location: '', metro: r.metro, exclude_stage: 'directory_qualify', place_id: r.place_id, latitude: r.latitude, longitude: r.longitude, directory_url: r.directory_url });
   }
   const out = path.join(run, 'deliverable'); fs.mkdirSync(out, { recursive: true });
   writeCsv(path.join(out, 'restoration_all.csv'), rows, COLS);
@@ -84,7 +88,7 @@ function assemble(run) {
   lines.push('## Totals', '', '| verdict | rows |', '|---|---|'); for (const [k, n] of cnt(rows, 'verdict')) lines.push(`| ${k} | ${n} |`);
   lines.push('', '## Verdict reasons', '', '| reason | rows |', '|---|---|'); for (const [k, n] of cnt(rows, 'verdict_reason')) lines.push(`| ${k} | ${n} |`);
   lines.push('', '## Qualified: field fill', '', '| field | filled | % |', '|---|---|---|');
-  for (const f of ['website', 'phone', 'email', 'street', 'facebook_url', 'instagram_url', 'owner_name', 'evidence']) { const n = q.filter(r => r[f]).length; lines.push(`| ${f} | ${n} | ${pct(n, q.length)} |`); }
+  for (const f of ['website', 'phone', 'email', 'street', 'facebook_url', 'instagram_url', 'owner_name', 'bbb_url', 'evidence']) { const n = q.filter(r => r[f]).length; lines.push(`| ${f} | ${n} | ${pct(n, q.length)} |`); }
   lines.push('', '## Qualified by evidence source', '', '| source | rows |', '|---|---|'); for (const [k, n] of cnt(q, 'evidence_source')) lines.push(`| ${k || '(none)'} | ${n} |`);
   lines.push('', '## Qualified: franchise / brand families (kept and flagged)', '', '| brand | rows |', '|---|---|'); for (const [k, n] of cnt(q, 'brand_family')) lines.push(`| ${k || '(independent)'} | ${n} |`);
   lines.push('', '## Qualified by state', '', '| state | rows |', '|---|---|'); for (const [k, n] of cnt(q, 'state')) lines.push(`| ${k} | ${n} |`);
