@@ -2,6 +2,13 @@
 
 Technical backlog for the skill's engine. Not operator-facing (see HANDOFF.md for that).
 
+## MEDIUM (fetch-sites.js): the run never ends when the last in-flight fetches hang — PASS 2 (free retry) is never reached
+
+**Status:** OPEN (no engine change made — the process was killed by hand after 15 min with no log movement; the 662 transient failures it would have retried were classified on the directory profile description instead) · found 2026-10-11 (Atlas Growth, 2026-10-11_us-restoration-remediational, 13,842 domains at concurrency 12), MEDIUM impact: **the free recovery pass silently never runs** on a large list, and the operator has no signal beyond a frozen counter.
+**Problem.** At `13840/13842` the log stopped; the node process stayed alive at ~37% CPU and 2.7 GB RSS for 15+ minutes with no new line and no `RETRY:` banner. The two outstanding rows never logged a status, so the AbortError timeout did not fire for them — the hang is after the fetch (HTML parse / page-text extraction on a pathological page, or a stream that never closes), where no timeout guards it. `site_text.jsonl` was complete to 13,840 rows (resume-safe incremental writes did their job), but PASS 2 sits after the main loop and never started.
+**Fix (later, engine, with a test and an operator go).** (a) Wrap the per-row parse in the same deadline as the fetch (a `Promise.race` with a timer around the whole row, not just the request), so a row cannot hold the loop open; (b) print a STALL warning when no row has completed for N seconds (run-scrape.js already does this for tiles); (c) make PASS 2 runnable on its own over an existing `site_text.jsonl` (`--retry-residue`, the free sibling of `--firecrawl-residue`) so a killed run can still recover its transient failures.
+**Until then:** when the counter freezes within a few rows of the end, kill the process; the jsonl is complete for every row that logged. Re-run transient failures job-side if they matter for the run.
+
 ## MEDIUM (owner-finding, three scripts disagree on what "named" means): a read record with `contacts` but no `primary_name` is invisible to the deliverable AND excluded from the sweep
 
 **Status:** OPEN (no engine change made — worked around job-side with `build_have.py` in the run folder) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run), MEDIUM impact: **silent lead loss at the last step**, on exactly the leads a reader half-answered.
