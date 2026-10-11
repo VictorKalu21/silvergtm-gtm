@@ -46,7 +46,7 @@ if want collapse; then
   if [ ! -s $R/leads_domains.csv ]; then
     # keyword candidates ride the same collapse so their sites are fetched for classify
     node -e "
-const fs=require('fs');const a=fs.readFileSync('$R/leads_netnew.csv','utf8').trimEnd().split('\n');const k=fs.existsSync('$R/kw/leads_clean_qualified_infootprint.csv')?fs.readFileSync('$R/kw/leads_clean_qualified_infootprint.csv','utf8').trimEnd().split('\n'):[];
+const fs=require('fs');const a=fs.readFileSync('$R/leads_netnew.csv','utf8').trimEnd().split('\n');const k=fs.existsSync('$R/kw/keyword_adjacent.csv')?fs.readFileSync('$R/kw/keyword_adjacent.csv','utf8').trimEnd().split('\n'):[];
 const H=a[0].split(',');const hk=k.length?k[0].split(','):[];const idx=hk.map(h=>H.indexOf(h));
 // keyword rows carry drop_reason as an extra trailing column; re-project onto the netnew header by position (same leads_clean columns first)
 const rows=[...a];for(const l of k.slice(1)){rows.push(l.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).slice(0,H.length).join(','))}
