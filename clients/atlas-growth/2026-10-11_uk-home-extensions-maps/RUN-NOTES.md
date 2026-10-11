@@ -2,8 +2,8 @@
 
 Client: **Atlas Growth** (confirmed by the operator 2026-10-11) · Vertical: UK residential home-extension contractors
 (extensions · loft conversions · garage/basement conversions · design-and-build) · ICP: `../ICP-extensions-uk.md` ·
-Config: `../atlas-growth-extensions-uk-config.json` + recoveries `../recover-{baretype,generic,unrated,baretype-unrated,generic-unrated}-extensions-uk-config.json`
-(+ `../recover-lowrated-extensions-uk-config.json`, lever L4) · Runsheet: `../atlas-growth-extensions-uk-runsheet.csv` +
+Config: `../atlas-growth-extensions-uk-config.json` + recoveries `../recover-{baretype,generic}-extensions-uk-config.json`
+ · Runsheet: `../atlas-growth-extensions-uk-runsheet.csv` +
 `../atlas-growth-extensions-uk-calibration-runsheet.csv` from `../gen-runsheet-extensions-uk.js` (177-tile UK grid imported from
 `gen-runsheet-uk.js`) · Shards: `../shards-extensions-uk/shard-0..7.csv` · Owner prompt: `owner-prompt.md`
 (= `../owner-prompts/uk-home-extensions.md`) · Classify prompt: `classify-prompt.md`. All data in this folder is gitignored.
@@ -18,14 +18,14 @@ Config: `../atlas-growth-extensions-uk-config.json` + recoveries `../recover-{ba
 | 4 | Lever L1 `--broad` | **OFF** (default queries) |
 | 5 | Lever L2 conservatories | **OUT** — window installers / glaziers denied on primary; classify tags `conservatory_glazing_only` for a later ship if wanted |
 | 6 | Lever L3 keyword-candidates track | OFF (not raised; the name recoveries are the keyword recovery) |
-| 7 | Qualify | as built (entity deny → primary deny → name deny → generic-type allow → floor 5) + five $0 recoveries |
+| 7 | Qualify | entity deny → primary deny → name deny → generic-type allow, **no review floor**, + two $0 recoveries (bare-type primary; trade/design primary with an extension/loft/build name) |
 | 8 | Designers | EXCLUDED as companies and as people; design-and-build IN |
 | 9 | Offer | "We help home extension builders book 10 qualified extension design consultations that turn into build projects every month using Facebook lead generation." (PROPOSED, not objected to) |
 | 10 | Target role | MD / Director / Owner / Partner → GM / Ops / Construction Director → Marketing → Sales/Commercial Director |
 | 11 | **Dedupe** | **WAIVED** by the operator (feeds not on this container); `pipeline.sh` runs `build-netnew.js` for the record and passes through on `ref files used: 0` |
 | 12 | Calibration | **DONE** — below |
-| — | **Lever L4 low-rated floor** | **OPEN QUESTION** (surfaced by the calibration, numbers below) |
-| — | **GO on the full sheet (~5,200 calls)** | **PENDING** |
+| — | **Review floor** | **ZERO** (operator 2026-10-11: "zero review floor") — floor rule removed from the main config and both recoveries; the unrated / low-rated passes deleted as dead code (they exist in commit 030ec1e if a floor ever returns) |
+| — | **GO on the full sheet (~5,200 calls)** | **LAUNCHED 2026-10-11** — `bash run-shards.sh`, 8 shards, through the harness background runner |
 
 ## Scraper key (2026-10-11)
 
@@ -98,11 +98,24 @@ Floor 5 removed **157 of 554 (28%)** on the calibration: 40 unrated-with-website
 `LOWRATED=1 bash pipeline.sh qualify`. **Default OFF until the operator says.** Either way the site-text classify is the
 real gate, so the cost of "on" is fetches, not precision.
 
+### Zero floor — the preview re-run (2026-10-11, `maps/calibration/dryrun3/`)
+
+```
+main (4 rules): KEEP 365 (66%)  drops {hard_off_icp_type 25, not_in_icp 72, off_icp_primary 91, name_deny 1}
+recover-baretype +28 · recover-generic +43
+TOTAL qualified: 436 of 554 (78%)   remaining drops {off_icp_primary 57, not_in_icp 35, hard_off_icp_type 25, name_deny 1}
+qualified with a website 313 of 365 main rows; 63 main rows carry no review data at all
+```
+
+So the Maps stage keeps ~78% of a dense-tile universe; the site-text classify (STEP 5e) is the gate that decides the
+list, as the ICP doc says. Expect the fetch volume to scale with that: on a ~25–40k universe, roughly 15–30k rows to
+collapse and fetch.
+
 ## Pipeline (every step through the engine; commands relative to repo root)
 1. Scrape: `bash <run>/run-shards.sh` (8 × `run-scrape.js` over `shards-extensions-uk/`, `RESUME=1` to resume; `CAL=1` = the
    calibration sheet, done) → `maps/shard-N/`. Launch through the harness's background runner.
 2. Merge: `node <run>/merge-shards.js` → `maps/leads_clean.csv` + `coverage_summary.json` (must say ALL SHARDS COMPLETE).
-3. Qualify: main config → five recoveries (+ L4 when `LOWRATED=1`) → `union-qualified.js` → `leads_qualified.csv` (+`track`),
+3. Qualify: main config → two recoveries → `union-qualified.js` → `leads_qualified.csv` (+`track`),
    `excluded_maps.csv`. **GATE 2: drop-reason audit** on the full universe (counts + 20 samples per bucket).
 4. Geo gate: `footprint-gate.js` (areas mode; US/IE bleed drops) → `leads_clean_qualified_infootprint.csv`.
 5. Dedupe: waived; `build-netnew.js` runs for the record and passes through.
@@ -131,3 +144,5 @@ real gate, so the cost of "on" is fetches, not precision.
   validated (1 call). **Calibration 10 calls / 554 unique / 3.33 calls per row.** GATE 2 preview 290 of 554 (52%) after
   config fixes (web designers, hairdressers, `remodeller`, `design+build`, building consultant, unrated recovery variants);
   lever L4 built (73 rows on calibration). Full sheet priced ~5,200 calls (4,600–5,900). Awaiting go.
+- 2026-10-11 — operator: **zero review floor**. Floor removed everywhere, unrated/low-rated passes deleted; preview 436 of 554 (78%).
+  **FULL SCRAPE LAUNCHED** (8 shards, `run-shards.sh`, background). Next: `pipeline.sh` once `coverage_summary.json` says ALL SHARDS COMPLETE.

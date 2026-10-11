@@ -1,16 +1,35 @@
 {
-  "_comment": "Atlas Growth UK extensions :: RECOVERY pass 1 over excluded_officp.csv — the BARE-TYPE track. The main config's rule-4 allow is a substring test, so it cannot name the bare Google types 'Contractor' and 'Builder' without also admitting 'Roofing contractor', 'Electrical contractor', 'Deck builder', 'Shed builder'. qualify-leads.js's derived field primary_type with op 'in' IS an exact, case-insensitive test, so this pass takes back exactly the rows whose PRIMARY identity is the bare type — the core of the UK extension ICP ('J Smith Building Services', typed Contractor and nothing else) — with NO name requirement. Deterministic, $0, no re-scrape. Run: node skills/google-maps-scrape/qualify-leads.js --in <run>/maps/excluded_officp.csv --config clients/atlas-growth/recover-baretype-extensions-uk-config.json --out <run>/maps/recover-baretype",
-
-  "geo": { "country": "gb", "footprint": { "mode": "areas" }, "region_from_city": null, "region_default": "UK" },
-
+  "_comment": "Atlas Growth UK extensions :: RECOVERY pass 1 over excluded_officp.csv — the BARE-TYPE track. The main config's rule-4 allow is a substring test, so it cannot name the bare Google types 'Contractor' and 'Builder' without also admitting 'Roofing contractor', 'Electrical contractor', 'Deck builder', 'Shed builder'. qualify-leads.js's derived field primary_type with op 'in' IS an exact, case-insensitive test, so this pass takes back exactly the rows whose PRIMARY identity is the bare type — the core of the UK extension ICP ('J Smith Building Services', typed Contractor and nothing else) — with NO name requirement. Deterministic, $0, no re-scrape. Run: node skills/google-maps-scrape/qualify-leads.js --in <run>/maps/excluded_officp.csv --config clients/atlas-growth/recover-baretype-extensions-uk-config.json --out <run>/maps/recover-baretype NO REVIEW FLOOR (operator 2026-10-11, 'zero review floor'): the pass keeps every review band, with or without a website; the former -unrated variant is therefore folded into this one.",
+  "geo": {
+    "country": "gb",
+    "footprint": {
+      "mode": "areas"
+    },
+    "region_from_city": null,
+    "region_default": "UK"
+  },
   "qualify_rules": [
-    {"_r": "0. RECOVERY SCOPE GATE — only rows the main pass dropped at its positive allow (drop_reason not_in_icp). A row removed by a deny (hard_off_icp_type / off_icp_primary / name_deny) or the floor (too_small) is refused before any other rule is read; this pass can never re-litigate a deny. CAVEAT (same as every recovery config in this client): pointed at a file with NO drop_reason column, `in` reads an empty string and every row is refused — that is the safe failure.",
-     "field": "drop_reason", "op": "in", "label": "not_a_recovery_candidate", "value": ["not_in_icp"]},
-
-    {"_r": "1. The bare generic types, PRIMARY only, exact match. 'contractor' and 'builder' are the two Google types a UK general builder most often carries alone; 'remodeler' / 'remodeller' (Google serves the UK spelling too — calibration 2026-10-11: 'Chins Construction | Remodeller') is the generic (non-kitchen, non-bathroom) remodel type; 'building firm' is already a main-pass allow substring and is listed here only so a primary 'Building firm' row dropped for some other allow reason cannot slip away. A row primaried 'Roofing contractor' does NOT match ('roofing contractor' != 'contractor') — that row belongs to the generic name recovery, where its name must claim loft/extension work.",
-     "field": "primary_type", "op": "in", "label": "not_bare_generic_primary", "value": ["contractor", "builder", "remodeler", "remodeller", "building firm"]},
-
-    {"_r": "2. Same ghost-listing floor as the main pass (rule 0 already blocks too_small rows; belt and braces for the degraded-run case).",
-     "field": "review_count", "op": ">=", "value": 5, "label": "too_small"}
+    {
+      "_r": "0. RECOVERY SCOPE GATE — only rows the main pass dropped at its positive allow (drop_reason not_in_icp). A row removed by a deny (hard_off_icp_type / off_icp_primary / name_deny) or the floor (too_small) is refused before any other rule is read; this pass can never re-litigate a deny. CAVEAT (same as every recovery config in this client): pointed at a file with NO drop_reason column, `in` reads an empty string and every row is refused — that is the safe failure.",
+      "field": "drop_reason",
+      "op": "in",
+      "label": "not_a_recovery_candidate",
+      "value": [
+        "not_in_icp"
+      ]
+    },
+    {
+      "_r": "1. The bare generic types, PRIMARY only, exact match. 'contractor' and 'builder' are the two Google types a UK general builder most often carries alone; 'remodeler' / 'remodeller' (Google serves the UK spelling too — calibration 2026-10-11: 'Chins Construction | Remodeller') is the generic (non-kitchen, non-bathroom) remodel type; 'building firm' is already a main-pass allow substring and is listed here only so a primary 'Building firm' row dropped for some other allow reason cannot slip away. A row primaried 'Roofing contractor' does NOT match ('roofing contractor' != 'contractor') — that row belongs to the generic name recovery, where its name must claim loft/extension work.",
+      "field": "primary_type",
+      "op": "in",
+      "label": "not_bare_generic_primary",
+      "value": [
+        "contractor",
+        "builder",
+        "remodeler",
+        "remodeller",
+        "building firm"
+      ]
+    }
   ]
 }

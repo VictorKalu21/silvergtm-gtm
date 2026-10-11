@@ -2,7 +2,7 @@
 
 > Opened 2026-10-11. Status: **GATE 1 read-back AGREED 2026-10-11 (client atlas · default queries ·
 > conservatories OUT · dedupe WAIVED); scraper key validated; 3-row calibration DONE (10 calls, 554
-> unique, 3.33 calls/row on dense tiles); full sheet priced ~5,200 calls — AWAITING GO.** Brief, in
+> unique, 3.33 calls/row on dense tiles); full sheet priced ~5,200 calls; **zero review floor** (operator); **FULL SCRAPE LAUNCHED 2026-10-11**.** Brief, in
 > the operator's words: "want to scrape residential home extension contractors in the uk". Run
 > folder: `2026-10-11_uk-home-extensions-maps/` (`RUN-NOTES.md` has the calibration and GATE 2 preview).
 
@@ -104,22 +104,24 @@ foundation config.** Rules run in order; the first failure is the recorded `drop
    custom home builder · building firm · building company · garage builder`. The bare `contractor`
    and `builder` are deliberately absent (substring semantics would admit every `Roofing
    contractor` and `Shed builder`) and come back through the recoveries below.
-5. **Review floor 5** (`too_small`) — the ghost-listing filter the UK foundation run validated; 30
-   would delete the trade. Blank review counts are taken back by the unrated recovery.
+5. **No review floor** — operator decision 2026-10-11 ("zero review floor"). The calibration showed
+   the foundation run's floor of 5 removing 28% of a dense-tile universe, 73 of 554 being 1–4-review
+   firms with a live website whose names read as the ICP; this trade is full of small and new firms.
+   Ghost pins are left to the no-website track and the site-text classify.
 
-**Five recovery passes over `excluded_officp.csv`, $0, deterministic (+ one lever):**
+**Two recovery passes over `excluded_officp.csv`, $0, deterministic, no floor:**
 
 | pass | config | takes back |
 |---|---|---|
-| bare-type | `recover-baretype-extensions-uk-config.json` | rows whose **PRIMARY** type is exactly `Contractor` / `Builder` / `Remodeler` / `Remodeller` / `Building firm` (exact match via `primary_type in`), ≥ 5 reviews, no name requirement — the core of the ICP (`J Smith Building Services`, typed Contractor) |
-| name-claims-it | `recover-generic-extensions-uk-config.json` | trade or design primaries (roofer, carpenter, joiner, plasterer, bricklayer, handyman, property maintenance, landscaper, architect, kitchen/bathroom remodeler, glazier, building consultant, property management) whose **name** says extension / loft / conversion / design-and-build (incl. `design+build`) / build / construction / renovation, ≥ 5 reviews. The only recovery that reaches `off_icp_primary`, and only through that type list |
-| unrated | `recover-unrated-extensions-uk-config.json` | floor drops with a blank `review_count` + a live website (P7 from the foundation run) |
-| bare-type-unrated · name-unrated | `recover-baretype-unrated-…` · `recover-generic-unrated-…` | the same two nets for rows with a **blank** `review_count` + a live website. Needed because a blank-review row that fails the allow is recorded `not_in_icp`, never `too_small`, so the unrated pass cannot see it (OPEN engine limitation, IMPROVEMENTS 2026-09-20); +17 rows on the calibration |
-| **lever L4** low-rated | `recover-lowrated-extensions-uk-config.json` (**OFF** — operator decision) | floor drops with **1–4 reviews + a live website**: 73 of 554 on the calibration, ICP-looking names; `LOWRATED=1 bash pipeline.sh qualify` |
+| bare-type | `recover-baretype-extensions-uk-config.json` | rows whose **PRIMARY** type is exactly `Contractor` / `Builder` / `Remodeler` / `Remodeller` / `Building firm` (exact match via `primary_type in`), no name requirement — the core of the ICP (`J Smith Building Services`, typed Contractor) |
+| name-claims-it | `recover-generic-extensions-uk-config.json` | trade or design primaries (roofer, carpenter, joiner, plasterer, bricklayer, handyman, property maintenance, landscaper, architect, kitchen/bathroom remodeler, glazier, building consultant, property management) whose **name** says extension / loft / conversion / design-and-build (incl. `design+build`) / build / construction / renovation. The only recovery that reaches `off_icp_primary`, and only through that type list |
 
-**Calibration GATE 2 preview (554 real rows, 3 dense tiles, 2026-10-11):** main 208 + recoveries 82 = **290 qualified
-(52%)**; L4 would make it 363 (65%). Remaining drops are architecture practices, engineers, interior designers, web
-designers, hairdressers, 1–3-review trade rows and no-website rows. Full numbers in `RUN-NOTES.md`.
+(With a floor of 5 the set also carried unrated and low-rated passes — commit `030ec1e` — deleted when the operator set
+the floor to zero; a blank-review bare-`Contractor` row is now simply a bare-type recovery.)
+
+**Calibration GATE 2 preview (554 real rows, 3 dense tiles, 2026-10-11, zero floor):** main 365 + recoveries 71 =
+**436 qualified (78%)**. Remaining drops are architecture practices, engineers, interior designers, web designers,
+hairdressers and trade rows with no extension claim. Full numbers in `RUN-NOTES.md`.
 
 **Dry-run on a 20-row fixture (2026-10-11, scratchpad, output in `RUN-NOTES.md`):** 20 of 20 rows
 landed where the rules intend — design-and-build firm, garage-conversion builder and Build Team
@@ -158,7 +160,7 @@ orangery/conservatory · renovation · new-build · design-and-build), a verbati
   extensions comes back by name; classify tags the survivors `conservatory_glazing_only` so the
   bucket can be shipped later if the client wants it.
 - **Loft, garage and basement conversions are IN.** Same buyer, same survey-led job, same creative.
-- **Review floor 5, no website rule, no chain drop** — carried over from the UK foundation run.
+- **No review floor (operator), no website rule, no chain drop.**
   Roll-ups (Build Team, Simply Extend, Econoloft, Absolute Lofts, Landmark Lofts, The Loft Room —
   a draft list, extended after calibration) are kept and flagged via `brand_families`.
 - **National housebuilders are name-denied** as an off-ICP entity kind, not as a chain drop.

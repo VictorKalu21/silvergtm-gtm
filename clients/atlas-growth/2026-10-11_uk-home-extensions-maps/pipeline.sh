@@ -25,11 +25,10 @@ fi
 if want qualify; then
   if [ ! -s $R/leads_qualified.csv ]; then
     node $E/qualify-leads.js --in $R/maps/leads_clean.csv --config $CFG --out $R/maps
-    for t in baretype generic unrated baretype-unrated generic-unrated; do
+    for t in baretype generic; do
       node $E/qualify-leads.js --in $R/maps/excluded_officp.csv --config $C/recover-$t-extensions-uk-config.json --out $R/maps/recover-$t
     done
-    # lever L4 (operator): the 1-4 review band with a website — LOWRATED=1 bash pipeline.sh qualify
-    [ "${LOWRATED:-0}" = 1 ] && node $E/qualify-leads.js --in $R/maps/excluded_officp.csv --config $C/recover-lowrated-extensions-uk-config.json --out $R/maps/recover-lowrated
+    # zero review floor (operator 2026-10-11): no too_small bucket, so no unrated / low-rated passes
     node $R/union-qualified.js --run $R
   else echo "[qualify] skip"; fi
 fi
