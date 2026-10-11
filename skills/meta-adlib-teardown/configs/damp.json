@@ -1,0 +1,60 @@
+{
+  "vertical": "damp",
+  "display_name": "UK Damp Remediation",
+  "countries": ["GB"],
+  "discovery_terms": {
+    "GB": [
+      "damp proofing", "rising damp treatment", "penetrating damp",
+      "damp proof course", "DPC injection", "condensation control",
+      "mould treatment", "mould removal", "basement waterproofing",
+      "cellar tanking", "tanking", "structural waterproofing",
+      "woodworm treatment", "timber treatment", "dry rot treatment", "wet rot",
+      "damp specialist", "damp survey", "free damp survey",
+      "damp patches walls", "damp proofing company",
+      "Peter Cox", "Timberwise", "Rentokil Property Care", "Tapco HomeDry", "Kenwood Damp"
+    ]
+  },
+  "angle_taxonomy": {
+    "technical-authority": "survey|diagnos|root cause|\\bcause\\b|moisture|\\bdpc\\b|damp.?proof course|injection|membrane|tanking|ventilation|\\bpiv\\b|bridging|u.?value|specialist|surveyor",
+    "problem-symptom": "damp patch|rising damp|penetrat|condensation|\\bmould\\b|black mould|crumbl|blown plaster|salt|tide.?mark|must(y|iness)|peel|flak|wet wall|stain|green|algae|effloresc",
+    "trust-proof": "checkatrade|trustmark|trustpilot|\\bwhich\\b|\\bpca\\b|property care association|accredit|certified|csrt|crds|insured|family.?run|years? (of )?experience|rated|review|approved|trusted",
+    "free-survey-offer": "free (survey|quote|estimate|inspection|consultation|assessment)|no obligation|finance|spread the cost|0%|% off|discount|save £|grant|funded",
+    "guarantee-warranty": "guarantee|warrant|\\d+.?year|insurance.?backed|gpi|lifetime|certificate|certif",
+    "speed-urgency": "same.?day|fast|quick|don.?t (wait|ignore|delay)|worsen|act (now|fast)|before it|spread|limited|this (month|week)|book now|slots?",
+    "property-value": "protect (your )?(home|property|investment)|add value|resale|sell(ing)?|mortgage|survey failed|buyer|house price",
+    "health-home": "health|asthma|allerg|child|baby|breathe|spore|air quality|respiratory|unhealthy|toxic"
+  },
+  "angle_colors": {
+    "technical-authority": "#22d3ee", "problem-symptom": "#f87171", "trust-proof": "#34d399",
+    "free-survey-offer": "#a3e635", "guarantee-warranty": "#60a5fa", "speed-urgency": "#fb923c",
+    "property-value": "#fbbf24", "health-home": "#e879f9"
+  },
+  "allowlist": [
+    ["448884351815756", "GB", "Tapco Homedry"],
+    ["395322753971572", "GB", "Damp Proofing Solutions"],
+    ["107988168724", "GB", "Timberwise (UK) Ltd"],
+    ["449277415452608", "GB", "Timberwise (UK) Ltd [2]"],
+    ["111523815205258", "GB", "Basement Waterproofing Solutions"],
+    ["694193751001373", "GB", "Preservation Shop"],
+    ["1330296030157267", "GB", "Goldcrest Roofing and Damp Proofing Ltd"],
+    ["448369965034983", "GB", "North West Damp Proofing"],
+    ["451713811357616", "GB", "Damp HQ"],
+    ["123464872380038", "GB", "Weatherdry Damp Proofing & Insulation"],
+    ["488625207931501", "GB", "Prokil Damp & Timber Specialists"],
+    ["503951986142172", "GB", "Sussex Damp Experts"],
+    ["133885043146209", "GB", "Structural Surveys UK"],
+    ["316405101881126", "GB", "SMPS Building Preservation"],
+    ["970806306124004", "GB", "Solway Damp & Timber Care"],
+    ["15221543247", "GB", "P.A.D Builders Plastering & Damp"],
+    ["274582752734322", "GB", "Rentokil Property Care"],
+    ["333763939825518", "GB", "SealTight UK Damp Proofing & Insulation"],
+    ["621110307761485", "GB", "Bramley & Stone Heritage Damp & Timber"],
+    ["121024424606822", "GB", "Wise Property Care"],
+    ["1091991740672533", "GB", "Premier Damp & Building LTD"],
+    ["173472772671592", "GB", "Peter Cox"],
+    ["108841180582630", "GB", "Damp Doctors"],
+    ["980013858524794", "GB", "Northeast Damp Control"]
+  ],
+  "exclude": [],
+  "notes": "Generic terms (tanking/mould/which) pull heavy keyword-collision junk (SHEIN/DramaBox/games/webnovels/ecommerce). The allowlist above was curated from discover_GB.csv; suppliers/trade-stores (Permagard, Charltons, Timber retailers), trade bodies (Federation of Damp), and off-vertical (Spray Foam Survey, bathroom reno, claims-management, ECO-grant) were dropped."
+}

@@ -1,0 +1,67 @@
+{
+  "vertical": "cladding",
+  "display_name": "Cladding & Render (UK vs US)",
+  "countries": ["GB", "US"],
+  "discovery_terms": {
+    "GB": [
+      "house rendering", "silicone render", "monocouche render", "K Rend",
+      "rendering services", "external rendering", "render repair", "re-render",
+      "pebbledash removal", "house cladding", "external cladding",
+      "fibre cement cladding", "Cedral cladding", "timber cladding", "composite cladding",
+      "render your home", "free rendering quote", "free cladding quote",
+      "improve kerb appeal", "exterior makeover", "external wall insulation",
+      "RendWise", "Alb Render", "Linx Render", "AMO Rendering", "Central Facades", "Freefoam"
+    ],
+    "US": [
+      "stucco", "stucco repair", "stucco remediation", "re-stucco", "EIFS",
+      "stucco contractor", "siding replacement", "siding installation",
+      "James Hardie", "HardiePlank", "fiber cement siding", "LP SmartSide",
+      "vinyl siding", "exterior remodel", "home exterior makeover", "curb appeal",
+      "free siding quote", "siding contractor"
+    ]
+  },
+  "angle_taxonomy": {
+    "transformation": "transform|makeover|new look|stunning|dream home|kerb appeal|curb appeal|modern(ise|ize)?",
+    "problem-repair": "crack(ed|ing|s)?|damp|pebbledash|peel|flak|crumbl|tired|old render|worn|stain|algae|blown|falling off",
+    "energy-insulation": "insulat|\\bewi\\b|external wall insulation|energy|heating bill|warm(er)?|u.?value|epc|draught",
+    "durability-maintenance": "maintenance.?free|never paint|weatherproof|waterproof|crack.?resist|self.?clean|\\d+.?year|guarantee|warrant|durable|lifetime",
+    "free-quote": "free (quote|survey|estimate|consultation|inspection)|get a quote|request a quote|no.?obligation",
+    "financing": "financ|0%|apply now|monthly payment|spread the cost|pay over|installment|instalment|affirm|klarna|no money down|buy now pay",
+    "trust-proof": "review|rated|checkatrade|trustmark|trustpilot|accredit|insured|certified|approved|gaf|alside|preferred partner|family.?run|trusted|years? (of )?experience",
+    "aesthetic-color": "colour|color|silicone|any colour|shade|render system|k.?rend|monocouche|finish|texture|smooth",
+    "urgency-scarcity": "limited|this (month|week)|spaces?|book now|only \\d+|ends|hurry|last chance|slots?"
+  },
+  "angle_colors": {
+    "transformation": "#e879f9", "problem-repair": "#f87171", "energy-insulation": "#34d399",
+    "durability-maintenance": "#60a5fa", "free-quote": "#a3e635", "financing": "#fbbf24",
+    "trust-proof": "#22d3ee", "aesthetic-color": "#a78bfa", "urgency-scarcity": "#fb923c"
+  },
+  "allowlist": [
+    ["256151054445678", "GB", "EWI Store - Render Specialists"],
+    ["711800962006286", "GB", "Durham Render Specialists"],
+    ["183764124812479", "GB", "Colour Clad"],
+    ["673821826089494", "GB", "Linx Design and Build"],
+    ["544579702602631", "GB", "BRS Rendering & EWI"],
+    ["107144361132214", "GB", "Monocouche Render Systems"],
+    ["153697044504537", "GB", "EDC Render Plaster UK"],
+    ["109704517330135", "GB", "PureSeal Services UK"],
+    ["109824904158910", "GB", "Trend Rendering"],
+    ["512173502225092", "GB", "External Coatings"],
+    ["177664888930715", "US", "Power Home Remodeling"],
+    ["321728374360722", "US", "Hatch Painting Co."],
+    ["112653166893126", "US", "JarArt Stucco Contractor"],
+    ["120891324595632", "US", "ARC Contracting"],
+    ["351674225002749", "US", "Reaction Exteriors"],
+    ["111700947254095", "US", "Stucco Pro"],
+    ["65501467974", "US", "Alpha Windows & Siding"],
+    ["162495597766566", "US", "Plum ProExteriors"],
+    ["103279392340969", "US", "Titan Stucco"],
+    ["104567427775126", "US", "TSG Plastering"],
+    ["149889088374766", "US", "Global Home Improvement"],
+    ["80489164703", "US", "James Hardie"],
+    ["847646328594278", "US", "LP Building Solutions (Homeowners)"],
+    ["530861850105355", "US", "Cost Guide - Siding"]
+  ],
+  "exclude": [],
+  "notes": "UK↔US vocab translation is essential (render→stucco, cladding→siding, kerb→curb) — without it the US pull looks empty. Keyword-collision false positives removed: ReRender (AI 3D-render SaaS), partially PureSeal (trade-chemicals ecommerce). Suppliers (EWI Store) and lead-brokers (Cost Guide) kept but should be flagged as non-contractors in the writeup."
+}

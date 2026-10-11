@@ -10,7 +10,11 @@
 # site_text / serp_text / companies_house / classify batches — scraped page text + business PII.
 *.jsonl
 *.json
-!scripts/**/*.json   # allow config/fixtures if ever needed
+# allow config/fixtures if ever needed
+!scripts/**/*.json
+# skill engine configs (per-vertical, no client data) + trigger/behaviour test cases
+!skills/**/configs/*.json
+!skills/**/evals/*.json
 /data/
 /out/
 *.xlsx

@@ -1,0 +1,18 @@
+[
+  {"query": "can you look at what my competitors are running on facebook ads? i'm in the UK damp proofing game and want to see what's working for the other firms before i redo my own ads", "should_trigger": true},
+  {"query": "build me a swipe file of the longest-running meta ads in the mattress-in-a-box niche so i can see which angles actually survive", "should_trigger": true},
+  {"query": "i want to tear down the facebook/instagram advertising in the UK conservatory market — who's advertising, what angles, which ads have run the longest", "should_trigger": true},
+  {"query": "scrape the meta ad library for a list of solar installers advertising in texas and pull their ad copy", "should_trigger": true},
+  {"query": "before i write new creative for this client i want to see what ads their competitors have been running for ages on facebook — the proven ones", "should_trigger": true},
+  {"query": "what ad angles are working in the UK rendering/cladding space right now? i want evidence from live ads not guesses", "should_trigger": true},
+  {"query": "spy on this advertiser's facebook ads — here's their page — and tell me which of their ads are winners", "should_trigger": true},
+  {"query": "pull competitor ads from the facebook ad library for the pest control vertical and rank them by how long they've been live", "should_trigger": true},
+  {"query": "i need intel on what's working in paid social for home-improvement contractors — an ad teardown basically", "should_trigger": true},
+  {"query": "add a new vertical to the ad library research — this time UK bifold door companies", "should_trigger": true},
+  {"query": "write me 5 facebook ad variations for my damp proofing offer, primary text and headlines", "should_trigger": false},
+  {"query": "should i run facebook ads or google ads for my cladding business, and what budget?", "should_trigger": false},
+  {"query": "set up conversion tracking and the meta pixel on my thank you page so i can see my lead cost", "should_trigger": false},
+  {"query": "do a deep competitive profile of Rentokil — their revenue, positioning, market share and strategy", "should_trigger": false},
+  {"query": "scrape google maps for damp proofing companies near Cardiff with their phone numbers", "should_trigger": false},
+  {"query": "my facebook ad account got restricted, how do i fix it and appeal?", "should_trigger": false}
+]
