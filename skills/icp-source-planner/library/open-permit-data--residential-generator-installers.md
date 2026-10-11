@@ -79,3 +79,11 @@ Gulf and Sunbelt sources are residential-heavy (NOLA 84%, Baton Rouge 87%, Cape 
 **Recommendation:** use permits as a **high-precision seed + scoring signal, not the nationwide universe**. Pull the ~6 Tier-A Gulf/Sunbelt feeds (about 700–900 residential generator installers with install counts) as the "proven installer" tier. Build national breadth from state electrical-contractor rosters (TX TDLR, FL DBPR, LA LSLBC-Electrical, AR) plus the Generac/Kohler dealer locators. Use permit counts to rank.
 
 **Runs:** 2026-09-24 — Atlas Growth (Phase 2 deep-dive) — 13,167 generator permits / 2,271 raw distinct contractor names (1,098 residential) across 22 jurisdictions — partial (strong in the Gulf/Sunbelt, no national coverage).
+
+## Addendum 2026-10-11 — home ADDITION permits (Atlas Growth home-additions planning, probe only)
+Same feeds, different keyword. Austin `3syk-w9eu`, 24 months, `permit_class_mapped='Residential' AND upper(work_class) like '%ADDITION%'`:
+8,122 residential "Addition and Remodel" permits; **with `permittype='BP'` → 1,091 distinct named contractors**, top names are
+addition/remodel design-build firms (Together Design & Build 34, CG&S Design-Build 22, Green Bay Remodeling 19, CBA Design & Build 13).
+**Without the BP filter the top 15 are all electricians/plumbers/HVAC** pulling sub-permits on the same jobs — filter to the building
+permit type for a GC/remodeler ICP. NOLA `rcm3-fn58`, `upper(description) like '%ADDITION%'`, 24 months → 1,402 permits, 766 distinct
+`contractors` (persons and firms mixed, as before). Still a proof-of-work tier + install-count rank, not the national spine.
