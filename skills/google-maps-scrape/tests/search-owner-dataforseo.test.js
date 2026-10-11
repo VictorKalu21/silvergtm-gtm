@@ -4,7 +4,7 @@
  * accounting and the --max-cost stop (exit 3). No network. */
 const fs = require('fs'), path = require('path'), os = require('os'), { spawnSync } = require('child_process');
 const SO = path.join(__dirname, '..', 'search-owner.js');
-const { locationCode, parseDataforseo, emailsFromText, buildEmailQueries, overBudget, isTransientFailure } = require(SO);
+const { locationCode, parseDataforseo, emailsFromText, emailsFromResults, buildEmailQueries, overBudget, isTransientFailure } = require(SO);
 let fails = 0; const check = (name, c) => { console.log((c ? 'PASS ' : 'FAIL ') + name); if (!c) fails++; };
 
 const okResp = (items, cost = 0.002) => ({ status_code: 20000, cost, tasks_count: 1, tasks_error: 0, tasks: [{ status_code: 20000, cost, result: [{ items }] }] });
@@ -23,6 +23,13 @@ check('gb -> 2826, override wins', locationCode('gb') === 2826 && locationCode('
 // 3. emails
 const em = emailsFromText('Contact info@acmepools.com or jane.doe@acmepools.com; logo@2x.png; user@example.com');
 check('email extraction + junk filter', em.length === 2 && em.includes('info@acmepools.com') && em.includes('jane.doe@acmepools.com'));
+// 3b. strict attribution: own-domain address, or any address on the lead's own site / social page; spam on a stranger's page is loose only
+const er = emailsFromResults([
+  { title: 'Contact', description: 'info@acmepools.com', url: 'https://www.acmepools.com/contact' },
+  { title: 'Acme Pools - Facebook', description: 'Email us at acmepoolsfl@gmail.com', url: 'https://www.facebook.com/acmepools' },
+  { title: 'Random directory', description: 'xphotoframeeditor@gmail.com sales@acmepools.com', url: 'https://mapquest.com/x' },
+], 'www.acmepools.com', ['https://facebook.com/acmepools']);
+check('emailsFromResults: own site + own facebook + own-domain address strict; stranger-page gmail loose only', er.strict.length === 3 && er.strict.includes('acmepoolsfl@gmail.com') && er.strict.includes('sales@acmepools.com') && !er.strict.includes('xphotoframeeditor@gmail.com') && er.loose.includes('xphotoframeeditor@gmail.com'));
 // 4. email queries
 const eq = buildEmailQueries({ website: 'https://www.acmepools.com/' }, { facebook: ['https://facebook.com/acmepools'], instagram: ['https://instagram.com/acmepools'] }, h => /facebook\.com$/.test(h));
 check('site + facebook + instagram queries', eq.length === 3 && eq[0].surface === 'site' && eq[0].query.startsWith('site:acmepools.com (') && eq[1].query.startsWith('site:facebook.com/acmepools'));

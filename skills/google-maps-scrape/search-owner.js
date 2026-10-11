@@ -74,6 +74,24 @@ function parseDataforseo(json) {
 function emailsFromText(txt) {
   return [...new Set((String(txt || '').match(EMAIL_RE) || []).map(e => e.toLowerCase()))].filter(e => !EMAIL_JUNK.test(e) && !EMAIL_JUNK.test(e.split('@')[1] || ''));
 }
+// Rung-2e precision (measured 2026-10-11, 100-lead probe): the vendor does not strictly honour `site:`, so the raw
+// snippet harvest carried spam addresses repeated across leads. An address is attributed to the lead ONLY when it
+// sits on a result from the lead's own site or its own social page, or its domain IS the lead's root domain.
+function emailsFromResults(results, leadHost, socialUrls) {
+  const own = new Set([leadHost].filter(Boolean).map(h => h.replace(/^www\./, '').toLowerCase()));
+  const socialPaths = (socialUrls || []).map(u => { try { const x = new URL(u); return (x.host.replace(/^(www|m)\./, '') + x.pathname.replace(/\/+$/, '')).toLowerCase(); } catch { return ''; } }).filter(Boolean);
+  const strict = new Set(), loose = new Set();
+  for (const r of results || []) {
+    let rh = '', rp = ''; try { const x = new URL(r.url); rh = x.host.replace(/^(www|m)\./, '').toLowerCase(); rp = (rh + x.pathname.replace(/\/+$/, '')).toLowerCase(); } catch { }
+    const onOwnPage = (rh && own.has(rh)) || socialPaths.some(sp => rp.startsWith(sp));
+    for (const e of emailsFromText(`${r.title || ''} ${r.description || ''} ${r.url || ''}`)) {
+      loose.add(e);
+      const ed = e.split('@')[1] || '';
+      if (onOwnPage || own.has(ed) || [...own].some(h => ed.endsWith('.' + h))) strict.add(e);
+    }
+  }
+  return { strict: [...strict], loose: [...loose] };
+}
 function hostOf(u) { try { return new URL(/^https?:\/\//i.test(u) ? u : 'http://' + u).host.replace(/^www\./, '').toLowerCase(); } catch { return ''; } }
 // Boolean mailbox queries for one lead: its own site (unless it is a shared host) + each captured social page.
 function buildEmailQueries(lead, socials, sharedHostTest) {
@@ -96,7 +114,7 @@ function bundle(query, r) { const rs = Array.isArray(r.results) ? r.results.slic
 function n(r) { return Array.isArray(r.results) ? r.results.length : 0; }
 function failed(r) { return r.status !== 'ok'; }
 
-module.exports = { locationCode, parseDataforseo, emailsFromText, buildEmailQueries, overBudget, isTransientFailure, bundle, hostOf, DFS_LOCATIONS, MAILBOX_TERMS };
+module.exports = { locationCode, parseDataforseo, emailsFromText, emailsFromResults, buildEmailQueries, overBudget, isTransientFailure, bundle, hostOf, DFS_LOCATIONS, MAILBOX_TERMS };
 if (require.main !== module) return;
 
 // ---------------- main ----------------
@@ -281,7 +299,9 @@ try { sharedHost = require('./shared-hosts').isSharedHost; } catch { sharedHost 
     const rbr = res2.has(p.base) ? res2.get(p.base) : { status: 'not_needed', results: [] };
     const emailRuns = p.emailQ.map(e => ({ ...e, r: get(res1, e.query) }));
     const emailText = emailRuns.map(e => bundle(e.query, e.r)).join('\n\n').slice(0, TEXT_CAP);
-    const emailsFound = emailsFromText(emailRuns.map(e => (e.r.results || []).map(x => `${x.title} ${x.description} ${x.url}`).join(' ')).join(' '));
+    const soc = socialsById.get(p.l.place_id) || {}; const socialUrls = [...(soc.facebook || []), ...(soc.instagram || [])];
+    const em = emailsFromResults(emailRuns.flatMap(e => e.r.results || []), hostOf(p.l.website || ''), socialUrls);
+    const emailsFound = em.strict;
     const anyOk = n(rb) > 0 || n(rl) > 0 || n(rbr) > 0 || emailRuns.some(e => n(e.r) > 0);
     const attempted = [rb, rl, rbr, ...emailRuns.map(e => e.r)].filter(r => !/^(skipped|not_needed)$/.test(r.status));
     const allFailed = attempted.length > 0 && attempted.every(failed);
@@ -294,7 +314,7 @@ try { sharedHost = require('./shared-hosts').isSharedHost; } catch { sharedHost 
       biased_query: EMAIL_ONLY ? '' : p.biased, biased_text: EMAIL_ONLY ? '' : bundle(p.biased, rb),
       linkedin_text: (USE_LI && !EMAIL_ONLY) ? bundle(p.li, rl) : '',
       broad_text: n(rbr) > 0 ? bundle(p.base, rbr) : '',
-      email_queries: p.emailQ.map(e => e.query), email_text: emailText, emails_from_serp: emailsFound,
+      email_queries: p.emailQ.map(e => e.query), email_text: emailText, emails_from_serp: emailsFound, emails_from_serp_loose: em.loose,
       rung_status: { biased: rb.status, linkedin: rl.status, broad: rbr.status, email: emailRuns.map(e => e.r.status) },
       results_count: n(rb) + n(rl) + n(rbr) + emailRuns.reduce((a, e) => a + n(e.r), 0), status, backend: BACKEND, mode: MODE
     }) + '\n');
