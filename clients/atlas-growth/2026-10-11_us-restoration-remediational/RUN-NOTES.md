@@ -53,3 +53,8 @@ All data in this folder is gitignored.
 - 2026-10-11 — `assemble.js` → `deliverable/`: **Qualified 11,558 (residential_restoration) · Review 8,040 (unconfirmed 5,027 + unclear 3,013) · Exclude 10,239** (directory drops 4,832 · adjacent 1,583 · commercial 1,205 · not_restoration 1,185 · inspection 817 · cleaning 617). Qualified fill: phone 99.3% · website 93.0% · street 82.4% · Facebook 59.1% · email 35.3% (on-site harvest, unverified) · owner 0% (not run). Brand-flagged Qualified 3,376 (SERVPRO 1,362 · ServiceMaster 544 · PuroClean 347 · Rainbow 231 · Paul Davis 208 …), independents 8,182.
 - 2026-10-11 — Owner-finding STAGED, NOT RUN (gate: offer + target role in `owner-prompt.md` DECISIONS are PROPOSED, not signed off): `leads_icp.csv` 11,558 → `prep-owner-batches.js --batch 40` → **142 batches (5,673 leads with site text)**; 5,885 skipped (5,363 `nothing` = siblings whose text sits under the representative place_id + no-website rows; 522 `no_text`). On a go: `owner-read` workflow or one Haiku agent per batch → `merge-owner-reads.js --trade-words …` → BBB rung → sweep tranche → `combine-owner-contacts.js`. No DataForSEO / MV / BB keys on this container.
 - 2026-10-11 — READ-BACK: operator "offer and role approved, keep franchises, run owner finding". Owner-finding STARTED on the 142 prepared batches.
+
+### Owner-read progress (checkpoint)
+- Batches 0–70 complete and validated (every in-batch place_id present in its out file): 2,840 leads read, 396 with a named contact (~14%).
+- Batches 71–90 in flight (20 concurrent Haiku readers); 91–141 queued.
+- BBB rung at 5,059/11,558, still running in background (`bbb.log`).
