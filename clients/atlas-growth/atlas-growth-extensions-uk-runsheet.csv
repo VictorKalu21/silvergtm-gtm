@@ -1,0 +1,1771 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+eng-london-centre-x0,extension,house extensions,51.5074,-0.1278,13,P1
+eng-london-centre-x1,extension,home extensions,51.5074,-0.1278,13,P1
+eng-london-centre-x2,extension,extension builders,51.5074,-0.1278,13,P1
+eng-london-centre-x3,extension,loft conversions,51.5074,-0.1278,13,P1
+eng-london-centre-x4,extension,garage conversions,51.5074,-0.1278,13,P1
+eng-london-centre-x5,extension,single storey extension,51.5074,-0.1278,13,P1
+eng-london-centre-x6,extension,double storey extension,51.5074,-0.1278,13,P1
+eng-london-centre-x7,extension,design and build,51.5074,-0.1278,13,P1
+eng-london-centre-x8,adjacent,home renovations,51.5074,-0.1278,13,P2
+eng-london-centre-x9,adjacent,basement conversions,51.5074,-0.1278,13,P2
+eng-birmingham-x0,extension,house extensions,52.4862,-1.8904,13,P1
+eng-birmingham-x1,extension,home extensions,52.4862,-1.8904,13,P1
+eng-birmingham-x2,extension,extension builders,52.4862,-1.8904,13,P1
+eng-birmingham-x3,extension,loft conversions,52.4862,-1.8904,13,P1
+eng-birmingham-x4,extension,garage conversions,52.4862,-1.8904,13,P1
+eng-birmingham-x5,extension,single storey extension,52.4862,-1.8904,13,P1
+eng-birmingham-x6,extension,double storey extension,52.4862,-1.8904,13,P1
+eng-birmingham-x7,extension,design and build,52.4862,-1.8904,13,P1
+eng-birmingham-x8,adjacent,home renovations,52.4862,-1.8904,13,P2
+eng-birmingham-x9,adjacent,basement conversions,52.4862,-1.8904,13,P2
+eng-wolverhampton-x0,extension,house extensions,52.5862,-2.1288,13,P1
+eng-wolverhampton-x1,extension,home extensions,52.5862,-2.1288,13,P1
+eng-wolverhampton-x2,extension,extension builders,52.5862,-2.1288,13,P1
+eng-wolverhampton-x3,extension,loft conversions,52.5862,-2.1288,13,P1
+eng-wolverhampton-x4,extension,garage conversions,52.5862,-2.1288,13,P1
+eng-wolverhampton-x5,extension,single storey extension,52.5862,-2.1288,13,P1
+eng-wolverhampton-x6,extension,double storey extension,52.5862,-2.1288,13,P1
+eng-wolverhampton-x7,extension,design and build,52.5862,-2.1288,13,P1
+eng-wolverhampton-x8,adjacent,home renovations,52.5862,-2.1288,13,P2
+eng-wolverhampton-x9,adjacent,basement conversions,52.5862,-2.1288,13,P2
+eng-coventry-x0,extension,house extensions,52.4068,-1.5197,13,P1
+eng-coventry-x1,extension,home extensions,52.4068,-1.5197,13,P1
+eng-coventry-x2,extension,extension builders,52.4068,-1.5197,13,P1
+eng-coventry-x3,extension,loft conversions,52.4068,-1.5197,13,P1
+eng-coventry-x4,extension,garage conversions,52.4068,-1.5197,13,P1
+eng-coventry-x5,extension,single storey extension,52.4068,-1.5197,13,P1
+eng-coventry-x6,extension,double storey extension,52.4068,-1.5197,13,P1
+eng-coventry-x7,extension,design and build,52.4068,-1.5197,13,P1
+eng-coventry-x8,adjacent,home renovations,52.4068,-1.5197,13,P2
+eng-coventry-x9,adjacent,basement conversions,52.4068,-1.5197,13,P2
+eng-stoke-on-trent-x0,extension,house extensions,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-x1,extension,home extensions,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-x2,extension,extension builders,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-x3,extension,loft conversions,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-x4,extension,garage conversions,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-x5,extension,single storey extension,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-x6,extension,double storey extension,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-x7,extension,design and build,53.0027,-2.1794,13,P1
+eng-stoke-on-trent-x8,adjacent,home renovations,53.0027,-2.1794,13,P2
+eng-stoke-on-trent-x9,adjacent,basement conversions,53.0027,-2.1794,13,P2
+eng-telford-x0,extension,house extensions,52.6784,-2.4453,13,P1
+eng-telford-x1,extension,home extensions,52.6784,-2.4453,13,P1
+eng-telford-x2,extension,extension builders,52.6784,-2.4453,13,P1
+eng-telford-x3,extension,loft conversions,52.6784,-2.4453,13,P1
+eng-telford-x4,extension,garage conversions,52.6784,-2.4453,13,P1
+eng-telford-x5,extension,single storey extension,52.6784,-2.4453,13,P1
+eng-telford-x6,extension,double storey extension,52.6784,-2.4453,13,P1
+eng-telford-x7,extension,design and build,52.6784,-2.4453,13,P1
+eng-telford-x8,adjacent,home renovations,52.6784,-2.4453,13,P2
+eng-telford-x9,adjacent,basement conversions,52.6784,-2.4453,13,P2
+eng-shrewsbury-x0,extension,house extensions,52.7069,-2.7527,13,P1
+eng-shrewsbury-x1,extension,home extensions,52.7069,-2.7527,13,P1
+eng-shrewsbury-x2,extension,extension builders,52.7069,-2.7527,13,P1
+eng-shrewsbury-x3,extension,loft conversions,52.7069,-2.7527,13,P1
+eng-shrewsbury-x4,extension,garage conversions,52.7069,-2.7527,13,P1
+eng-shrewsbury-x5,extension,single storey extension,52.7069,-2.7527,13,P1
+eng-shrewsbury-x6,extension,double storey extension,52.7069,-2.7527,13,P1
+eng-shrewsbury-x7,extension,design and build,52.7069,-2.7527,13,P1
+eng-shrewsbury-x8,adjacent,home renovations,52.7069,-2.7527,13,P2
+eng-shrewsbury-x9,adjacent,basement conversions,52.7069,-2.7527,13,P2
+eng-hereford-x0,extension,house extensions,52.0567,-2.716,13,P1
+eng-hereford-x1,extension,home extensions,52.0567,-2.716,13,P1
+eng-hereford-x2,extension,extension builders,52.0567,-2.716,13,P1
+eng-hereford-x3,extension,loft conversions,52.0567,-2.716,13,P1
+eng-hereford-x4,extension,garage conversions,52.0567,-2.716,13,P1
+eng-hereford-x5,extension,single storey extension,52.0567,-2.716,13,P1
+eng-hereford-x6,extension,double storey extension,52.0567,-2.716,13,P1
+eng-hereford-x7,extension,design and build,52.0567,-2.716,13,P1
+eng-hereford-x8,adjacent,home renovations,52.0567,-2.716,13,P2
+eng-hereford-x9,adjacent,basement conversions,52.0567,-2.716,13,P2
+eng-worcester-x0,extension,house extensions,52.1936,-2.2216,13,P1
+eng-worcester-x1,extension,home extensions,52.1936,-2.2216,13,P1
+eng-worcester-x2,extension,extension builders,52.1936,-2.2216,13,P1
+eng-worcester-x3,extension,loft conversions,52.1936,-2.2216,13,P1
+eng-worcester-x4,extension,garage conversions,52.1936,-2.2216,13,P1
+eng-worcester-x5,extension,single storey extension,52.1936,-2.2216,13,P1
+eng-worcester-x6,extension,double storey extension,52.1936,-2.2216,13,P1
+eng-worcester-x7,extension,design and build,52.1936,-2.2216,13,P1
+eng-worcester-x8,adjacent,home renovations,52.1936,-2.2216,13,P2
+eng-worcester-x9,adjacent,basement conversions,52.1936,-2.2216,13,P2
+eng-gloucester-x0,extension,house extensions,51.8642,-2.238,13,P1
+eng-gloucester-x1,extension,home extensions,51.8642,-2.238,13,P1
+eng-gloucester-x2,extension,extension builders,51.8642,-2.238,13,P1
+eng-gloucester-x3,extension,loft conversions,51.8642,-2.238,13,P1
+eng-gloucester-x4,extension,garage conversions,51.8642,-2.238,13,P1
+eng-gloucester-x5,extension,single storey extension,51.8642,-2.238,13,P1
+eng-gloucester-x6,extension,double storey extension,51.8642,-2.238,13,P1
+eng-gloucester-x7,extension,design and build,51.8642,-2.238,13,P1
+eng-gloucester-x8,adjacent,home renovations,51.8642,-2.238,13,P2
+eng-gloucester-x9,adjacent,basement conversions,51.8642,-2.238,13,P2
+eng-cheltenham-x0,extension,house extensions,51.8994,-2.0783,13,P1
+eng-cheltenham-x1,extension,home extensions,51.8994,-2.0783,13,P1
+eng-cheltenham-x2,extension,extension builders,51.8994,-2.0783,13,P1
+eng-cheltenham-x3,extension,loft conversions,51.8994,-2.0783,13,P1
+eng-cheltenham-x4,extension,garage conversions,51.8994,-2.0783,13,P1
+eng-cheltenham-x5,extension,single storey extension,51.8994,-2.0783,13,P1
+eng-cheltenham-x6,extension,double storey extension,51.8994,-2.0783,13,P1
+eng-cheltenham-x7,extension,design and build,51.8994,-2.0783,13,P1
+eng-cheltenham-x8,adjacent,home renovations,51.8994,-2.0783,13,P2
+eng-cheltenham-x9,adjacent,basement conversions,51.8994,-2.0783,13,P2
+eng-bristol-x0,extension,house extensions,51.4545,-2.5879,13,P1
+eng-bristol-x1,extension,home extensions,51.4545,-2.5879,13,P1
+eng-bristol-x2,extension,extension builders,51.4545,-2.5879,13,P1
+eng-bristol-x3,extension,loft conversions,51.4545,-2.5879,13,P1
+eng-bristol-x4,extension,garage conversions,51.4545,-2.5879,13,P1
+eng-bristol-x5,extension,single storey extension,51.4545,-2.5879,13,P1
+eng-bristol-x6,extension,double storey extension,51.4545,-2.5879,13,P1
+eng-bristol-x7,extension,design and build,51.4545,-2.5879,13,P1
+eng-bristol-x8,adjacent,home renovations,51.4545,-2.5879,13,P2
+eng-bristol-x9,adjacent,basement conversions,51.4545,-2.5879,13,P2
+eng-bath-x0,extension,house extensions,51.3811,-2.359,13,P1
+eng-bath-x1,extension,home extensions,51.3811,-2.359,13,P1
+eng-bath-x2,extension,extension builders,51.3811,-2.359,13,P1
+eng-bath-x3,extension,loft conversions,51.3811,-2.359,13,P1
+eng-bath-x4,extension,garage conversions,51.3811,-2.359,13,P1
+eng-bath-x5,extension,single storey extension,51.3811,-2.359,13,P1
+eng-bath-x6,extension,double storey extension,51.3811,-2.359,13,P1
+eng-bath-x7,extension,design and build,51.3811,-2.359,13,P1
+eng-bath-x8,adjacent,home renovations,51.3811,-2.359,13,P2
+eng-bath-x9,adjacent,basement conversions,51.3811,-2.359,13,P2
+eng-weston-super-mare-x0,extension,house extensions,51.346,-2.977,13,P1
+eng-weston-super-mare-x1,extension,home extensions,51.346,-2.977,13,P1
+eng-weston-super-mare-x2,extension,extension builders,51.346,-2.977,13,P1
+eng-weston-super-mare-x3,extension,loft conversions,51.346,-2.977,13,P1
+eng-weston-super-mare-x4,extension,garage conversions,51.346,-2.977,13,P1
+eng-weston-super-mare-x5,extension,single storey extension,51.346,-2.977,13,P1
+eng-weston-super-mare-x6,extension,double storey extension,51.346,-2.977,13,P1
+eng-weston-super-mare-x7,extension,design and build,51.346,-2.977,13,P1
+eng-weston-super-mare-x8,adjacent,home renovations,51.346,-2.977,13,P2
+eng-weston-super-mare-x9,adjacent,basement conversions,51.346,-2.977,13,P2
+eng-taunton-x0,extension,house extensions,51.015,-3.1,13,P1
+eng-taunton-x1,extension,home extensions,51.015,-3.1,13,P1
+eng-taunton-x2,extension,extension builders,51.015,-3.1,13,P1
+eng-taunton-x3,extension,loft conversions,51.015,-3.1,13,P1
+eng-taunton-x4,extension,garage conversions,51.015,-3.1,13,P1
+eng-taunton-x5,extension,single storey extension,51.015,-3.1,13,P1
+eng-taunton-x6,extension,double storey extension,51.015,-3.1,13,P1
+eng-taunton-x7,extension,design and build,51.015,-3.1,13,P1
+eng-taunton-x8,adjacent,home renovations,51.015,-3.1,13,P2
+eng-taunton-x9,adjacent,basement conversions,51.015,-3.1,13,P2
+eng-yeovil-x0,extension,house extensions,50.941,-2.632,13,P1
+eng-yeovil-x1,extension,home extensions,50.941,-2.632,13,P1
+eng-yeovil-x2,extension,extension builders,50.941,-2.632,13,P1
+eng-yeovil-x3,extension,loft conversions,50.941,-2.632,13,P1
+eng-yeovil-x4,extension,garage conversions,50.941,-2.632,13,P1
+eng-yeovil-x5,extension,single storey extension,50.941,-2.632,13,P1
+eng-yeovil-x6,extension,double storey extension,50.941,-2.632,13,P1
+eng-yeovil-x7,extension,design and build,50.941,-2.632,13,P1
+eng-yeovil-x8,adjacent,home renovations,50.941,-2.632,13,P2
+eng-yeovil-x9,adjacent,basement conversions,50.941,-2.632,13,P2
+eng-exeter-x0,extension,house extensions,50.7184,-3.5339,13,P1
+eng-exeter-x1,extension,home extensions,50.7184,-3.5339,13,P1
+eng-exeter-x2,extension,extension builders,50.7184,-3.5339,13,P1
+eng-exeter-x3,extension,loft conversions,50.7184,-3.5339,13,P1
+eng-exeter-x4,extension,garage conversions,50.7184,-3.5339,13,P1
+eng-exeter-x5,extension,single storey extension,50.7184,-3.5339,13,P1
+eng-exeter-x6,extension,double storey extension,50.7184,-3.5339,13,P1
+eng-exeter-x7,extension,design and build,50.7184,-3.5339,13,P1
+eng-exeter-x8,adjacent,home renovations,50.7184,-3.5339,13,P2
+eng-exeter-x9,adjacent,basement conversions,50.7184,-3.5339,13,P2
+eng-torquay-x0,extension,house extensions,50.4619,-3.5253,13,P1
+eng-torquay-x1,extension,home extensions,50.4619,-3.5253,13,P1
+eng-torquay-x2,extension,extension builders,50.4619,-3.5253,13,P1
+eng-torquay-x3,extension,loft conversions,50.4619,-3.5253,13,P1
+eng-torquay-x4,extension,garage conversions,50.4619,-3.5253,13,P1
+eng-torquay-x5,extension,single storey extension,50.4619,-3.5253,13,P1
+eng-torquay-x6,extension,double storey extension,50.4619,-3.5253,13,P1
+eng-torquay-x7,extension,design and build,50.4619,-3.5253,13,P1
+eng-torquay-x8,adjacent,home renovations,50.4619,-3.5253,13,P2
+eng-torquay-x9,adjacent,basement conversions,50.4619,-3.5253,13,P2
+eng-plymouth-x0,extension,house extensions,50.3755,-4.1427,13,P1
+eng-plymouth-x1,extension,home extensions,50.3755,-4.1427,13,P1
+eng-plymouth-x2,extension,extension builders,50.3755,-4.1427,13,P1
+eng-plymouth-x3,extension,loft conversions,50.3755,-4.1427,13,P1
+eng-plymouth-x4,extension,garage conversions,50.3755,-4.1427,13,P1
+eng-plymouth-x5,extension,single storey extension,50.3755,-4.1427,13,P1
+eng-plymouth-x6,extension,double storey extension,50.3755,-4.1427,13,P1
+eng-plymouth-x7,extension,design and build,50.3755,-4.1427,13,P1
+eng-plymouth-x8,adjacent,home renovations,50.3755,-4.1427,13,P2
+eng-plymouth-x9,adjacent,basement conversions,50.3755,-4.1427,13,P2
+eng-barnstaple-x0,extension,house extensions,51.08,-4.06,13,P1
+eng-barnstaple-x1,extension,home extensions,51.08,-4.06,13,P1
+eng-barnstaple-x2,extension,extension builders,51.08,-4.06,13,P1
+eng-barnstaple-x3,extension,loft conversions,51.08,-4.06,13,P1
+eng-barnstaple-x4,extension,garage conversions,51.08,-4.06,13,P1
+eng-barnstaple-x5,extension,single storey extension,51.08,-4.06,13,P1
+eng-barnstaple-x6,extension,double storey extension,51.08,-4.06,13,P1
+eng-barnstaple-x7,extension,design and build,51.08,-4.06,13,P1
+eng-barnstaple-x8,adjacent,home renovations,51.08,-4.06,13,P2
+eng-barnstaple-x9,adjacent,basement conversions,51.08,-4.06,13,P2
+eng-st-austell-x0,extension,house extensions,50.34,-4.79,13,P1
+eng-st-austell-x1,extension,home extensions,50.34,-4.79,13,P1
+eng-st-austell-x2,extension,extension builders,50.34,-4.79,13,P1
+eng-st-austell-x3,extension,loft conversions,50.34,-4.79,13,P1
+eng-st-austell-x4,extension,garage conversions,50.34,-4.79,13,P1
+eng-st-austell-x5,extension,single storey extension,50.34,-4.79,13,P1
+eng-st-austell-x6,extension,double storey extension,50.34,-4.79,13,P1
+eng-st-austell-x7,extension,design and build,50.34,-4.79,13,P1
+eng-st-austell-x8,adjacent,home renovations,50.34,-4.79,13,P2
+eng-st-austell-x9,adjacent,basement conversions,50.34,-4.79,13,P2
+eng-truro-x0,extension,house extensions,50.2632,-5.051,13,P1
+eng-truro-x1,extension,home extensions,50.2632,-5.051,13,P1
+eng-truro-x2,extension,extension builders,50.2632,-5.051,13,P1
+eng-truro-x3,extension,loft conversions,50.2632,-5.051,13,P1
+eng-truro-x4,extension,garage conversions,50.2632,-5.051,13,P1
+eng-truro-x5,extension,single storey extension,50.2632,-5.051,13,P1
+eng-truro-x6,extension,double storey extension,50.2632,-5.051,13,P1
+eng-truro-x7,extension,design and build,50.2632,-5.051,13,P1
+eng-truro-x8,adjacent,home renovations,50.2632,-5.051,13,P2
+eng-truro-x9,adjacent,basement conversions,50.2632,-5.051,13,P2
+eng-penzance-x0,extension,house extensions,50.1186,-5.537,13,P1
+eng-penzance-x1,extension,home extensions,50.1186,-5.537,13,P1
+eng-penzance-x2,extension,extension builders,50.1186,-5.537,13,P1
+eng-penzance-x3,extension,loft conversions,50.1186,-5.537,13,P1
+eng-penzance-x4,extension,garage conversions,50.1186,-5.537,13,P1
+eng-penzance-x5,extension,single storey extension,50.1186,-5.537,13,P1
+eng-penzance-x6,extension,double storey extension,50.1186,-5.537,13,P1
+eng-penzance-x7,extension,design and build,50.1186,-5.537,13,P1
+eng-penzance-x8,adjacent,home renovations,50.1186,-5.537,13,P2
+eng-penzance-x9,adjacent,basement conversions,50.1186,-5.537,13,P2
+eng-weymouth-x0,extension,house extensions,50.614,-2.457,13,P1
+eng-weymouth-x1,extension,home extensions,50.614,-2.457,13,P1
+eng-weymouth-x2,extension,extension builders,50.614,-2.457,13,P1
+eng-weymouth-x3,extension,loft conversions,50.614,-2.457,13,P1
+eng-weymouth-x4,extension,garage conversions,50.614,-2.457,13,P1
+eng-weymouth-x5,extension,single storey extension,50.614,-2.457,13,P1
+eng-weymouth-x6,extension,double storey extension,50.614,-2.457,13,P1
+eng-weymouth-x7,extension,design and build,50.614,-2.457,13,P1
+eng-weymouth-x8,adjacent,home renovations,50.614,-2.457,13,P2
+eng-weymouth-x9,adjacent,basement conversions,50.614,-2.457,13,P2
+eng-bournemouth-poole-x0,extension,house extensions,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-x1,extension,home extensions,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-x2,extension,extension builders,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-x3,extension,loft conversions,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-x4,extension,garage conversions,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-x5,extension,single storey extension,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-x6,extension,double storey extension,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-x7,extension,design and build,50.7192,-1.8808,13,P1
+eng-bournemouth-poole-x8,adjacent,home renovations,50.7192,-1.8808,13,P2
+eng-bournemouth-poole-x9,adjacent,basement conversions,50.7192,-1.8808,13,P2
+eng-salisbury-x0,extension,house extensions,51.0688,-1.7945,13,P1
+eng-salisbury-x1,extension,home extensions,51.0688,-1.7945,13,P1
+eng-salisbury-x2,extension,extension builders,51.0688,-1.7945,13,P1
+eng-salisbury-x3,extension,loft conversions,51.0688,-1.7945,13,P1
+eng-salisbury-x4,extension,garage conversions,51.0688,-1.7945,13,P1
+eng-salisbury-x5,extension,single storey extension,51.0688,-1.7945,13,P1
+eng-salisbury-x6,extension,double storey extension,51.0688,-1.7945,13,P1
+eng-salisbury-x7,extension,design and build,51.0688,-1.7945,13,P1
+eng-salisbury-x8,adjacent,home renovations,51.0688,-1.7945,13,P2
+eng-salisbury-x9,adjacent,basement conversions,51.0688,-1.7945,13,P2
+eng-swindon-x0,extension,house extensions,51.5685,-1.7722,13,P1
+eng-swindon-x1,extension,home extensions,51.5685,-1.7722,13,P1
+eng-swindon-x2,extension,extension builders,51.5685,-1.7722,13,P1
+eng-swindon-x3,extension,loft conversions,51.5685,-1.7722,13,P1
+eng-swindon-x4,extension,garage conversions,51.5685,-1.7722,13,P1
+eng-swindon-x5,extension,single storey extension,51.5685,-1.7722,13,P1
+eng-swindon-x6,extension,double storey extension,51.5685,-1.7722,13,P1
+eng-swindon-x7,extension,design and build,51.5685,-1.7722,13,P1
+eng-swindon-x8,adjacent,home renovations,51.5685,-1.7722,13,P2
+eng-swindon-x9,adjacent,basement conversions,51.5685,-1.7722,13,P2
+eng-southampton-x0,extension,house extensions,50.9097,-1.4044,13,P1
+eng-southampton-x1,extension,home extensions,50.9097,-1.4044,13,P1
+eng-southampton-x2,extension,extension builders,50.9097,-1.4044,13,P1
+eng-southampton-x3,extension,loft conversions,50.9097,-1.4044,13,P1
+eng-southampton-x4,extension,garage conversions,50.9097,-1.4044,13,P1
+eng-southampton-x5,extension,single storey extension,50.9097,-1.4044,13,P1
+eng-southampton-x6,extension,double storey extension,50.9097,-1.4044,13,P1
+eng-southampton-x7,extension,design and build,50.9097,-1.4044,13,P1
+eng-southampton-x8,adjacent,home renovations,50.9097,-1.4044,13,P2
+eng-southampton-x9,adjacent,basement conversions,50.9097,-1.4044,13,P2
+eng-portsmouth-x0,extension,house extensions,50.8198,-1.088,13,P1
+eng-portsmouth-x1,extension,home extensions,50.8198,-1.088,13,P1
+eng-portsmouth-x2,extension,extension builders,50.8198,-1.088,13,P1
+eng-portsmouth-x3,extension,loft conversions,50.8198,-1.088,13,P1
+eng-portsmouth-x4,extension,garage conversions,50.8198,-1.088,13,P1
+eng-portsmouth-x5,extension,single storey extension,50.8198,-1.088,13,P1
+eng-portsmouth-x6,extension,double storey extension,50.8198,-1.088,13,P1
+eng-portsmouth-x7,extension,design and build,50.8198,-1.088,13,P1
+eng-portsmouth-x8,adjacent,home renovations,50.8198,-1.088,13,P2
+eng-portsmouth-x9,adjacent,basement conversions,50.8198,-1.088,13,P2
+eng-basingstoke-x0,extension,house extensions,51.2665,-1.087,13,P1
+eng-basingstoke-x1,extension,home extensions,51.2665,-1.087,13,P1
+eng-basingstoke-x2,extension,extension builders,51.2665,-1.087,13,P1
+eng-basingstoke-x3,extension,loft conversions,51.2665,-1.087,13,P1
+eng-basingstoke-x4,extension,garage conversions,51.2665,-1.087,13,P1
+eng-basingstoke-x5,extension,single storey extension,51.2665,-1.087,13,P1
+eng-basingstoke-x6,extension,double storey extension,51.2665,-1.087,13,P1
+eng-basingstoke-x7,extension,design and build,51.2665,-1.087,13,P1
+eng-basingstoke-x8,adjacent,home renovations,51.2665,-1.087,13,P2
+eng-basingstoke-x9,adjacent,basement conversions,51.2665,-1.087,13,P2
+eng-reading-x0,extension,house extensions,51.4543,-0.9781,13,P1
+eng-reading-x1,extension,home extensions,51.4543,-0.9781,13,P1
+eng-reading-x2,extension,extension builders,51.4543,-0.9781,13,P1
+eng-reading-x3,extension,loft conversions,51.4543,-0.9781,13,P1
+eng-reading-x4,extension,garage conversions,51.4543,-0.9781,13,P1
+eng-reading-x5,extension,single storey extension,51.4543,-0.9781,13,P1
+eng-reading-x6,extension,double storey extension,51.4543,-0.9781,13,P1
+eng-reading-x7,extension,design and build,51.4543,-0.9781,13,P1
+eng-reading-x8,adjacent,home renovations,51.4543,-0.9781,13,P2
+eng-reading-x9,adjacent,basement conversions,51.4543,-0.9781,13,P2
+eng-slough-x0,extension,house extensions,51.5105,-0.595,13,P1
+eng-slough-x1,extension,home extensions,51.5105,-0.595,13,P1
+eng-slough-x2,extension,extension builders,51.5105,-0.595,13,P1
+eng-slough-x3,extension,loft conversions,51.5105,-0.595,13,P1
+eng-slough-x4,extension,garage conversions,51.5105,-0.595,13,P1
+eng-slough-x5,extension,single storey extension,51.5105,-0.595,13,P1
+eng-slough-x6,extension,double storey extension,51.5105,-0.595,13,P1
+eng-slough-x7,extension,design and build,51.5105,-0.595,13,P1
+eng-slough-x8,adjacent,home renovations,51.5105,-0.595,13,P2
+eng-slough-x9,adjacent,basement conversions,51.5105,-0.595,13,P2
+eng-oxford-x0,extension,house extensions,51.752,-1.2577,13,P1
+eng-oxford-x1,extension,home extensions,51.752,-1.2577,13,P1
+eng-oxford-x2,extension,extension builders,51.752,-1.2577,13,P1
+eng-oxford-x3,extension,loft conversions,51.752,-1.2577,13,P1
+eng-oxford-x4,extension,garage conversions,51.752,-1.2577,13,P1
+eng-oxford-x5,extension,single storey extension,51.752,-1.2577,13,P1
+eng-oxford-x6,extension,double storey extension,51.752,-1.2577,13,P1
+eng-oxford-x7,extension,design and build,51.752,-1.2577,13,P1
+eng-oxford-x8,adjacent,home renovations,51.752,-1.2577,13,P2
+eng-oxford-x9,adjacent,basement conversions,51.752,-1.2577,13,P2
+eng-aylesbury-x0,extension,house extensions,51.8156,-0.8084,13,P1
+eng-aylesbury-x1,extension,home extensions,51.8156,-0.8084,13,P1
+eng-aylesbury-x2,extension,extension builders,51.8156,-0.8084,13,P1
+eng-aylesbury-x3,extension,loft conversions,51.8156,-0.8084,13,P1
+eng-aylesbury-x4,extension,garage conversions,51.8156,-0.8084,13,P1
+eng-aylesbury-x5,extension,single storey extension,51.8156,-0.8084,13,P1
+eng-aylesbury-x6,extension,double storey extension,51.8156,-0.8084,13,P1
+eng-aylesbury-x7,extension,design and build,51.8156,-0.8084,13,P1
+eng-aylesbury-x8,adjacent,home renovations,51.8156,-0.8084,13,P2
+eng-aylesbury-x9,adjacent,basement conversions,51.8156,-0.8084,13,P2
+eng-high-wycombe-x0,extension,house extensions,51.6287,-0.7482,13,P1
+eng-high-wycombe-x1,extension,home extensions,51.6287,-0.7482,13,P1
+eng-high-wycombe-x2,extension,extension builders,51.6287,-0.7482,13,P1
+eng-high-wycombe-x3,extension,loft conversions,51.6287,-0.7482,13,P1
+eng-high-wycombe-x4,extension,garage conversions,51.6287,-0.7482,13,P1
+eng-high-wycombe-x5,extension,single storey extension,51.6287,-0.7482,13,P1
+eng-high-wycombe-x6,extension,double storey extension,51.6287,-0.7482,13,P1
+eng-high-wycombe-x7,extension,design and build,51.6287,-0.7482,13,P1
+eng-high-wycombe-x8,adjacent,home renovations,51.6287,-0.7482,13,P2
+eng-high-wycombe-x9,adjacent,basement conversions,51.6287,-0.7482,13,P2
+eng-milton-keynes-x0,extension,house extensions,52.0406,-0.7594,13,P1
+eng-milton-keynes-x1,extension,home extensions,52.0406,-0.7594,13,P1
+eng-milton-keynes-x2,extension,extension builders,52.0406,-0.7594,13,P1
+eng-milton-keynes-x3,extension,loft conversions,52.0406,-0.7594,13,P1
+eng-milton-keynes-x4,extension,garage conversions,52.0406,-0.7594,13,P1
+eng-milton-keynes-x5,extension,single storey extension,52.0406,-0.7594,13,P1
+eng-milton-keynes-x6,extension,double storey extension,52.0406,-0.7594,13,P1
+eng-milton-keynes-x7,extension,design and build,52.0406,-0.7594,13,P1
+eng-milton-keynes-x8,adjacent,home renovations,52.0406,-0.7594,13,P2
+eng-milton-keynes-x9,adjacent,basement conversions,52.0406,-0.7594,13,P2
+eng-northampton-x0,extension,house extensions,52.2405,-0.9027,13,P1
+eng-northampton-x1,extension,home extensions,52.2405,-0.9027,13,P1
+eng-northampton-x2,extension,extension builders,52.2405,-0.9027,13,P1
+eng-northampton-x3,extension,loft conversions,52.2405,-0.9027,13,P1
+eng-northampton-x4,extension,garage conversions,52.2405,-0.9027,13,P1
+eng-northampton-x5,extension,single storey extension,52.2405,-0.9027,13,P1
+eng-northampton-x6,extension,double storey extension,52.2405,-0.9027,13,P1
+eng-northampton-x7,extension,design and build,52.2405,-0.9027,13,P1
+eng-northampton-x8,adjacent,home renovations,52.2405,-0.9027,13,P2
+eng-northampton-x9,adjacent,basement conversions,52.2405,-0.9027,13,P2
+eng-kettering-corby-x0,extension,house extensions,52.393,-0.729,13,P1
+eng-kettering-corby-x1,extension,home extensions,52.393,-0.729,13,P1
+eng-kettering-corby-x2,extension,extension builders,52.393,-0.729,13,P1
+eng-kettering-corby-x3,extension,loft conversions,52.393,-0.729,13,P1
+eng-kettering-corby-x4,extension,garage conversions,52.393,-0.729,13,P1
+eng-kettering-corby-x5,extension,single storey extension,52.393,-0.729,13,P1
+eng-kettering-corby-x6,extension,double storey extension,52.393,-0.729,13,P1
+eng-kettering-corby-x7,extension,design and build,52.393,-0.729,13,P1
+eng-kettering-corby-x8,adjacent,home renovations,52.393,-0.729,13,P2
+eng-kettering-corby-x9,adjacent,basement conversions,52.393,-0.729,13,P2
+eng-bedford-x0,extension,house extensions,52.136,-0.467,13,P1
+eng-bedford-x1,extension,home extensions,52.136,-0.467,13,P1
+eng-bedford-x2,extension,extension builders,52.136,-0.467,13,P1
+eng-bedford-x3,extension,loft conversions,52.136,-0.467,13,P1
+eng-bedford-x4,extension,garage conversions,52.136,-0.467,13,P1
+eng-bedford-x5,extension,single storey extension,52.136,-0.467,13,P1
+eng-bedford-x6,extension,double storey extension,52.136,-0.467,13,P1
+eng-bedford-x7,extension,design and build,52.136,-0.467,13,P1
+eng-bedford-x8,adjacent,home renovations,52.136,-0.467,13,P2
+eng-bedford-x9,adjacent,basement conversions,52.136,-0.467,13,P2
+eng-luton-x0,extension,house extensions,51.8787,-0.42,13,P1
+eng-luton-x1,extension,home extensions,51.8787,-0.42,13,P1
+eng-luton-x2,extension,extension builders,51.8787,-0.42,13,P1
+eng-luton-x3,extension,loft conversions,51.8787,-0.42,13,P1
+eng-luton-x4,extension,garage conversions,51.8787,-0.42,13,P1
+eng-luton-x5,extension,single storey extension,51.8787,-0.42,13,P1
+eng-luton-x6,extension,double storey extension,51.8787,-0.42,13,P1
+eng-luton-x7,extension,design and build,51.8787,-0.42,13,P1
+eng-luton-x8,adjacent,home renovations,51.8787,-0.42,13,P2
+eng-luton-x9,adjacent,basement conversions,51.8787,-0.42,13,P2
+eng-stevenage-x0,extension,house extensions,51.9038,-0.2018,13,P1
+eng-stevenage-x1,extension,home extensions,51.9038,-0.2018,13,P1
+eng-stevenage-x2,extension,extension builders,51.9038,-0.2018,13,P1
+eng-stevenage-x3,extension,loft conversions,51.9038,-0.2018,13,P1
+eng-stevenage-x4,extension,garage conversions,51.9038,-0.2018,13,P1
+eng-stevenage-x5,extension,single storey extension,51.9038,-0.2018,13,P1
+eng-stevenage-x6,extension,double storey extension,51.9038,-0.2018,13,P1
+eng-stevenage-x7,extension,design and build,51.9038,-0.2018,13,P1
+eng-stevenage-x8,adjacent,home renovations,51.9038,-0.2018,13,P2
+eng-stevenage-x9,adjacent,basement conversions,51.9038,-0.2018,13,P2
+eng-cambridge-x0,extension,house extensions,52.2053,0.1218,13,P1
+eng-cambridge-x1,extension,home extensions,52.2053,0.1218,13,P1
+eng-cambridge-x2,extension,extension builders,52.2053,0.1218,13,P1
+eng-cambridge-x3,extension,loft conversions,52.2053,0.1218,13,P1
+eng-cambridge-x4,extension,garage conversions,52.2053,0.1218,13,P1
+eng-cambridge-x5,extension,single storey extension,52.2053,0.1218,13,P1
+eng-cambridge-x6,extension,double storey extension,52.2053,0.1218,13,P1
+eng-cambridge-x7,extension,design and build,52.2053,0.1218,13,P1
+eng-cambridge-x8,adjacent,home renovations,52.2053,0.1218,13,P2
+eng-cambridge-x9,adjacent,basement conversions,52.2053,0.1218,13,P2
+eng-peterborough-x0,extension,house extensions,52.5695,-0.2405,13,P1
+eng-peterborough-x1,extension,home extensions,52.5695,-0.2405,13,P1
+eng-peterborough-x2,extension,extension builders,52.5695,-0.2405,13,P1
+eng-peterborough-x3,extension,loft conversions,52.5695,-0.2405,13,P1
+eng-peterborough-x4,extension,garage conversions,52.5695,-0.2405,13,P1
+eng-peterborough-x5,extension,single storey extension,52.5695,-0.2405,13,P1
+eng-peterborough-x6,extension,double storey extension,52.5695,-0.2405,13,P1
+eng-peterborough-x7,extension,design and build,52.5695,-0.2405,13,P1
+eng-peterborough-x8,adjacent,home renovations,52.5695,-0.2405,13,P2
+eng-peterborough-x9,adjacent,basement conversions,52.5695,-0.2405,13,P2
+eng-kings-lynn-x0,extension,house extensions,52.752,0.402,13,P1
+eng-kings-lynn-x1,extension,home extensions,52.752,0.402,13,P1
+eng-kings-lynn-x2,extension,extension builders,52.752,0.402,13,P1
+eng-kings-lynn-x3,extension,loft conversions,52.752,0.402,13,P1
+eng-kings-lynn-x4,extension,garage conversions,52.752,0.402,13,P1
+eng-kings-lynn-x5,extension,single storey extension,52.752,0.402,13,P1
+eng-kings-lynn-x6,extension,double storey extension,52.752,0.402,13,P1
+eng-kings-lynn-x7,extension,design and build,52.752,0.402,13,P1
+eng-kings-lynn-x8,adjacent,home renovations,52.752,0.402,13,P2
+eng-kings-lynn-x9,adjacent,basement conversions,52.752,0.402,13,P2
+eng-norwich-x0,extension,house extensions,52.6309,1.2974,13,P1
+eng-norwich-x1,extension,home extensions,52.6309,1.2974,13,P1
+eng-norwich-x2,extension,extension builders,52.6309,1.2974,13,P1
+eng-norwich-x3,extension,loft conversions,52.6309,1.2974,13,P1
+eng-norwich-x4,extension,garage conversions,52.6309,1.2974,13,P1
+eng-norwich-x5,extension,single storey extension,52.6309,1.2974,13,P1
+eng-norwich-x6,extension,double storey extension,52.6309,1.2974,13,P1
+eng-norwich-x7,extension,design and build,52.6309,1.2974,13,P1
+eng-norwich-x8,adjacent,home renovations,52.6309,1.2974,13,P2
+eng-norwich-x9,adjacent,basement conversions,52.6309,1.2974,13,P2
+eng-great-yarmouth-x0,extension,house extensions,52.6083,1.73,13,P1
+eng-great-yarmouth-x1,extension,home extensions,52.6083,1.73,13,P1
+eng-great-yarmouth-x2,extension,extension builders,52.6083,1.73,13,P1
+eng-great-yarmouth-x3,extension,loft conversions,52.6083,1.73,13,P1
+eng-great-yarmouth-x4,extension,garage conversions,52.6083,1.73,13,P1
+eng-great-yarmouth-x5,extension,single storey extension,52.6083,1.73,13,P1
+eng-great-yarmouth-x6,extension,double storey extension,52.6083,1.73,13,P1
+eng-great-yarmouth-x7,extension,design and build,52.6083,1.73,13,P1
+eng-great-yarmouth-x8,adjacent,home renovations,52.6083,1.73,13,P2
+eng-great-yarmouth-x9,adjacent,basement conversions,52.6083,1.73,13,P2
+eng-lowestoft-x0,extension,house extensions,52.48,1.75,13,P1
+eng-lowestoft-x1,extension,home extensions,52.48,1.75,13,P1
+eng-lowestoft-x2,extension,extension builders,52.48,1.75,13,P1
+eng-lowestoft-x3,extension,loft conversions,52.48,1.75,13,P1
+eng-lowestoft-x4,extension,garage conversions,52.48,1.75,13,P1
+eng-lowestoft-x5,extension,single storey extension,52.48,1.75,13,P1
+eng-lowestoft-x6,extension,double storey extension,52.48,1.75,13,P1
+eng-lowestoft-x7,extension,design and build,52.48,1.75,13,P1
+eng-lowestoft-x8,adjacent,home renovations,52.48,1.75,13,P2
+eng-lowestoft-x9,adjacent,basement conversions,52.48,1.75,13,P2
+eng-ipswich-x0,extension,house extensions,52.0567,1.1482,13,P1
+eng-ipswich-x1,extension,home extensions,52.0567,1.1482,13,P1
+eng-ipswich-x2,extension,extension builders,52.0567,1.1482,13,P1
+eng-ipswich-x3,extension,loft conversions,52.0567,1.1482,13,P1
+eng-ipswich-x4,extension,garage conversions,52.0567,1.1482,13,P1
+eng-ipswich-x5,extension,single storey extension,52.0567,1.1482,13,P1
+eng-ipswich-x6,extension,double storey extension,52.0567,1.1482,13,P1
+eng-ipswich-x7,extension,design and build,52.0567,1.1482,13,P1
+eng-ipswich-x8,adjacent,home renovations,52.0567,1.1482,13,P2
+eng-ipswich-x9,adjacent,basement conversions,52.0567,1.1482,13,P2
+eng-bury-st-edmunds-x0,extension,house extensions,52.245,0.711,13,P1
+eng-bury-st-edmunds-x1,extension,home extensions,52.245,0.711,13,P1
+eng-bury-st-edmunds-x2,extension,extension builders,52.245,0.711,13,P1
+eng-bury-st-edmunds-x3,extension,loft conversions,52.245,0.711,13,P1
+eng-bury-st-edmunds-x4,extension,garage conversions,52.245,0.711,13,P1
+eng-bury-st-edmunds-x5,extension,single storey extension,52.245,0.711,13,P1
+eng-bury-st-edmunds-x6,extension,double storey extension,52.245,0.711,13,P1
+eng-bury-st-edmunds-x7,extension,design and build,52.245,0.711,13,P1
+eng-bury-st-edmunds-x8,adjacent,home renovations,52.245,0.711,13,P2
+eng-bury-st-edmunds-x9,adjacent,basement conversions,52.245,0.711,13,P2
+eng-colchester-x0,extension,house extensions,51.8959,0.8919,13,P1
+eng-colchester-x1,extension,home extensions,51.8959,0.8919,13,P1
+eng-colchester-x2,extension,extension builders,51.8959,0.8919,13,P1
+eng-colchester-x3,extension,loft conversions,51.8959,0.8919,13,P1
+eng-colchester-x4,extension,garage conversions,51.8959,0.8919,13,P1
+eng-colchester-x5,extension,single storey extension,51.8959,0.8919,13,P1
+eng-colchester-x6,extension,double storey extension,51.8959,0.8919,13,P1
+eng-colchester-x7,extension,design and build,51.8959,0.8919,13,P1
+eng-colchester-x8,adjacent,home renovations,51.8959,0.8919,13,P2
+eng-colchester-x9,adjacent,basement conversions,51.8959,0.8919,13,P2
+eng-chelmsford-x0,extension,house extensions,51.7356,0.4685,13,P1
+eng-chelmsford-x1,extension,home extensions,51.7356,0.4685,13,P1
+eng-chelmsford-x2,extension,extension builders,51.7356,0.4685,13,P1
+eng-chelmsford-x3,extension,loft conversions,51.7356,0.4685,13,P1
+eng-chelmsford-x4,extension,garage conversions,51.7356,0.4685,13,P1
+eng-chelmsford-x5,extension,single storey extension,51.7356,0.4685,13,P1
+eng-chelmsford-x6,extension,double storey extension,51.7356,0.4685,13,P1
+eng-chelmsford-x7,extension,design and build,51.7356,0.4685,13,P1
+eng-chelmsford-x8,adjacent,home renovations,51.7356,0.4685,13,P2
+eng-chelmsford-x9,adjacent,basement conversions,51.7356,0.4685,13,P2
+eng-southend-on-sea-x0,extension,house extensions,51.54,0.71,13,P1
+eng-southend-on-sea-x1,extension,home extensions,51.54,0.71,13,P1
+eng-southend-on-sea-x2,extension,extension builders,51.54,0.71,13,P1
+eng-southend-on-sea-x3,extension,loft conversions,51.54,0.71,13,P1
+eng-southend-on-sea-x4,extension,garage conversions,51.54,0.71,13,P1
+eng-southend-on-sea-x5,extension,single storey extension,51.54,0.71,13,P1
+eng-southend-on-sea-x6,extension,double storey extension,51.54,0.71,13,P1
+eng-southend-on-sea-x7,extension,design and build,51.54,0.71,13,P1
+eng-southend-on-sea-x8,adjacent,home renovations,51.54,0.71,13,P2
+eng-southend-on-sea-x9,adjacent,basement conversions,51.54,0.71,13,P2
+eng-medway-chatham-x0,extension,house extensions,51.38,0.52,13,P1
+eng-medway-chatham-x1,extension,home extensions,51.38,0.52,13,P1
+eng-medway-chatham-x2,extension,extension builders,51.38,0.52,13,P1
+eng-medway-chatham-x3,extension,loft conversions,51.38,0.52,13,P1
+eng-medway-chatham-x4,extension,garage conversions,51.38,0.52,13,P1
+eng-medway-chatham-x5,extension,single storey extension,51.38,0.52,13,P1
+eng-medway-chatham-x6,extension,double storey extension,51.38,0.52,13,P1
+eng-medway-chatham-x7,extension,design and build,51.38,0.52,13,P1
+eng-medway-chatham-x8,adjacent,home renovations,51.38,0.52,13,P2
+eng-medway-chatham-x9,adjacent,basement conversions,51.38,0.52,13,P2
+eng-maidstone-x0,extension,house extensions,51.272,0.529,13,P1
+eng-maidstone-x1,extension,home extensions,51.272,0.529,13,P1
+eng-maidstone-x2,extension,extension builders,51.272,0.529,13,P1
+eng-maidstone-x3,extension,loft conversions,51.272,0.529,13,P1
+eng-maidstone-x4,extension,garage conversions,51.272,0.529,13,P1
+eng-maidstone-x5,extension,single storey extension,51.272,0.529,13,P1
+eng-maidstone-x6,extension,double storey extension,51.272,0.529,13,P1
+eng-maidstone-x7,extension,design and build,51.272,0.529,13,P1
+eng-maidstone-x8,adjacent,home renovations,51.272,0.529,13,P2
+eng-maidstone-x9,adjacent,basement conversions,51.272,0.529,13,P2
+eng-canterbury-x0,extension,house extensions,51.2802,1.0789,13,P1
+eng-canterbury-x1,extension,home extensions,51.2802,1.0789,13,P1
+eng-canterbury-x2,extension,extension builders,51.2802,1.0789,13,P1
+eng-canterbury-x3,extension,loft conversions,51.2802,1.0789,13,P1
+eng-canterbury-x4,extension,garage conversions,51.2802,1.0789,13,P1
+eng-canterbury-x5,extension,single storey extension,51.2802,1.0789,13,P1
+eng-canterbury-x6,extension,double storey extension,51.2802,1.0789,13,P1
+eng-canterbury-x7,extension,design and build,51.2802,1.0789,13,P1
+eng-canterbury-x8,adjacent,home renovations,51.2802,1.0789,13,P2
+eng-canterbury-x9,adjacent,basement conversions,51.2802,1.0789,13,P2
+eng-dover-x0,extension,house extensions,51.1279,1.3134,13,P1
+eng-dover-x1,extension,home extensions,51.1279,1.3134,13,P1
+eng-dover-x2,extension,extension builders,51.1279,1.3134,13,P1
+eng-dover-x3,extension,loft conversions,51.1279,1.3134,13,P1
+eng-dover-x4,extension,garage conversions,51.1279,1.3134,13,P1
+eng-dover-x5,extension,single storey extension,51.1279,1.3134,13,P1
+eng-dover-x6,extension,double storey extension,51.1279,1.3134,13,P1
+eng-dover-x7,extension,design and build,51.1279,1.3134,13,P1
+eng-dover-x8,adjacent,home renovations,51.1279,1.3134,13,P2
+eng-dover-x9,adjacent,basement conversions,51.1279,1.3134,13,P2
+eng-ashford-kent-x0,extension,house extensions,51.1465,0.875,13,P1
+eng-ashford-kent-x1,extension,home extensions,51.1465,0.875,13,P1
+eng-ashford-kent-x2,extension,extension builders,51.1465,0.875,13,P1
+eng-ashford-kent-x3,extension,loft conversions,51.1465,0.875,13,P1
+eng-ashford-kent-x4,extension,garage conversions,51.1465,0.875,13,P1
+eng-ashford-kent-x5,extension,single storey extension,51.1465,0.875,13,P1
+eng-ashford-kent-x6,extension,double storey extension,51.1465,0.875,13,P1
+eng-ashford-kent-x7,extension,design and build,51.1465,0.875,13,P1
+eng-ashford-kent-x8,adjacent,home renovations,51.1465,0.875,13,P2
+eng-ashford-kent-x9,adjacent,basement conversions,51.1465,0.875,13,P2
+eng-hastings-x0,extension,house extensions,50.8543,0.5735,13,P1
+eng-hastings-x1,extension,home extensions,50.8543,0.5735,13,P1
+eng-hastings-x2,extension,extension builders,50.8543,0.5735,13,P1
+eng-hastings-x3,extension,loft conversions,50.8543,0.5735,13,P1
+eng-hastings-x4,extension,garage conversions,50.8543,0.5735,13,P1
+eng-hastings-x5,extension,single storey extension,50.8543,0.5735,13,P1
+eng-hastings-x6,extension,double storey extension,50.8543,0.5735,13,P1
+eng-hastings-x7,extension,design and build,50.8543,0.5735,13,P1
+eng-hastings-x8,adjacent,home renovations,50.8543,0.5735,13,P2
+eng-hastings-x9,adjacent,basement conversions,50.8543,0.5735,13,P2
+eng-eastbourne-x0,extension,house extensions,50.7687,0.29,13,P1
+eng-eastbourne-x1,extension,home extensions,50.7687,0.29,13,P1
+eng-eastbourne-x2,extension,extension builders,50.7687,0.29,13,P1
+eng-eastbourne-x3,extension,loft conversions,50.7687,0.29,13,P1
+eng-eastbourne-x4,extension,garage conversions,50.7687,0.29,13,P1
+eng-eastbourne-x5,extension,single storey extension,50.7687,0.29,13,P1
+eng-eastbourne-x6,extension,double storey extension,50.7687,0.29,13,P1
+eng-eastbourne-x7,extension,design and build,50.7687,0.29,13,P1
+eng-eastbourne-x8,adjacent,home renovations,50.7687,0.29,13,P2
+eng-eastbourne-x9,adjacent,basement conversions,50.7687,0.29,13,P2
+eng-tunbridge-wells-x0,extension,house extensions,51.1324,0.2637,13,P1
+eng-tunbridge-wells-x1,extension,home extensions,51.1324,0.2637,13,P1
+eng-tunbridge-wells-x2,extension,extension builders,51.1324,0.2637,13,P1
+eng-tunbridge-wells-x3,extension,loft conversions,51.1324,0.2637,13,P1
+eng-tunbridge-wells-x4,extension,garage conversions,51.1324,0.2637,13,P1
+eng-tunbridge-wells-x5,extension,single storey extension,51.1324,0.2637,13,P1
+eng-tunbridge-wells-x6,extension,double storey extension,51.1324,0.2637,13,P1
+eng-tunbridge-wells-x7,extension,design and build,51.1324,0.2637,13,P1
+eng-tunbridge-wells-x8,adjacent,home renovations,51.1324,0.2637,13,P2
+eng-tunbridge-wells-x9,adjacent,basement conversions,51.1324,0.2637,13,P2
+eng-crawley-x0,extension,house extensions,51.1092,-0.1872,13,P1
+eng-crawley-x1,extension,home extensions,51.1092,-0.1872,13,P1
+eng-crawley-x2,extension,extension builders,51.1092,-0.1872,13,P1
+eng-crawley-x3,extension,loft conversions,51.1092,-0.1872,13,P1
+eng-crawley-x4,extension,garage conversions,51.1092,-0.1872,13,P1
+eng-crawley-x5,extension,single storey extension,51.1092,-0.1872,13,P1
+eng-crawley-x6,extension,double storey extension,51.1092,-0.1872,13,P1
+eng-crawley-x7,extension,design and build,51.1092,-0.1872,13,P1
+eng-crawley-x8,adjacent,home renovations,51.1092,-0.1872,13,P2
+eng-crawley-x9,adjacent,basement conversions,51.1092,-0.1872,13,P2
+eng-brighton-hove-x0,extension,house extensions,50.8225,-0.1372,13,P1
+eng-brighton-hove-x1,extension,home extensions,50.8225,-0.1372,13,P1
+eng-brighton-hove-x2,extension,extension builders,50.8225,-0.1372,13,P1
+eng-brighton-hove-x3,extension,loft conversions,50.8225,-0.1372,13,P1
+eng-brighton-hove-x4,extension,garage conversions,50.8225,-0.1372,13,P1
+eng-brighton-hove-x5,extension,single storey extension,50.8225,-0.1372,13,P1
+eng-brighton-hove-x6,extension,double storey extension,50.8225,-0.1372,13,P1
+eng-brighton-hove-x7,extension,design and build,50.8225,-0.1372,13,P1
+eng-brighton-hove-x8,adjacent,home renovations,50.8225,-0.1372,13,P2
+eng-brighton-hove-x9,adjacent,basement conversions,50.8225,-0.1372,13,P2
+eng-guildford-x0,extension,house extensions,51.2362,-0.5704,13,P1
+eng-guildford-x1,extension,home extensions,51.2362,-0.5704,13,P1
+eng-guildford-x2,extension,extension builders,51.2362,-0.5704,13,P1
+eng-guildford-x3,extension,loft conversions,51.2362,-0.5704,13,P1
+eng-guildford-x4,extension,garage conversions,51.2362,-0.5704,13,P1
+eng-guildford-x5,extension,single storey extension,51.2362,-0.5704,13,P1
+eng-guildford-x6,extension,double storey extension,51.2362,-0.5704,13,P1
+eng-guildford-x7,extension,design and build,51.2362,-0.5704,13,P1
+eng-guildford-x8,adjacent,home renovations,51.2362,-0.5704,13,P2
+eng-guildford-x9,adjacent,basement conversions,51.2362,-0.5704,13,P2
+eng-leicester-x0,extension,house extensions,52.6369,-1.1398,13,P1
+eng-leicester-x1,extension,home extensions,52.6369,-1.1398,13,P1
+eng-leicester-x2,extension,extension builders,52.6369,-1.1398,13,P1
+eng-leicester-x3,extension,loft conversions,52.6369,-1.1398,13,P1
+eng-leicester-x4,extension,garage conversions,52.6369,-1.1398,13,P1
+eng-leicester-x5,extension,single storey extension,52.6369,-1.1398,13,P1
+eng-leicester-x6,extension,double storey extension,52.6369,-1.1398,13,P1
+eng-leicester-x7,extension,design and build,52.6369,-1.1398,13,P1
+eng-leicester-x8,adjacent,home renovations,52.6369,-1.1398,13,P2
+eng-leicester-x9,adjacent,basement conversions,52.6369,-1.1398,13,P2
+eng-nottingham-x0,extension,house extensions,52.9548,-1.1581,13,P1
+eng-nottingham-x1,extension,home extensions,52.9548,-1.1581,13,P1
+eng-nottingham-x2,extension,extension builders,52.9548,-1.1581,13,P1
+eng-nottingham-x3,extension,loft conversions,52.9548,-1.1581,13,P1
+eng-nottingham-x4,extension,garage conversions,52.9548,-1.1581,13,P1
+eng-nottingham-x5,extension,single storey extension,52.9548,-1.1581,13,P1
+eng-nottingham-x6,extension,double storey extension,52.9548,-1.1581,13,P1
+eng-nottingham-x7,extension,design and build,52.9548,-1.1581,13,P1
+eng-nottingham-x8,adjacent,home renovations,52.9548,-1.1581,13,P2
+eng-nottingham-x9,adjacent,basement conversions,52.9548,-1.1581,13,P2
+eng-derby-x0,extension,house extensions,52.9225,-1.4746,13,P1
+eng-derby-x1,extension,home extensions,52.9225,-1.4746,13,P1
+eng-derby-x2,extension,extension builders,52.9225,-1.4746,13,P1
+eng-derby-x3,extension,loft conversions,52.9225,-1.4746,13,P1
+eng-derby-x4,extension,garage conversions,52.9225,-1.4746,13,P1
+eng-derby-x5,extension,single storey extension,52.9225,-1.4746,13,P1
+eng-derby-x6,extension,double storey extension,52.9225,-1.4746,13,P1
+eng-derby-x7,extension,design and build,52.9225,-1.4746,13,P1
+eng-derby-x8,adjacent,home renovations,52.9225,-1.4746,13,P2
+eng-derby-x9,adjacent,basement conversions,52.9225,-1.4746,13,P2
+eng-mansfield-x0,extension,house extensions,53.145,-1.198,13,P1
+eng-mansfield-x1,extension,home extensions,53.145,-1.198,13,P1
+eng-mansfield-x2,extension,extension builders,53.145,-1.198,13,P1
+eng-mansfield-x3,extension,loft conversions,53.145,-1.198,13,P1
+eng-mansfield-x4,extension,garage conversions,53.145,-1.198,13,P1
+eng-mansfield-x5,extension,single storey extension,53.145,-1.198,13,P1
+eng-mansfield-x6,extension,double storey extension,53.145,-1.198,13,P1
+eng-mansfield-x7,extension,design and build,53.145,-1.198,13,P1
+eng-mansfield-x8,adjacent,home renovations,53.145,-1.198,13,P2
+eng-mansfield-x9,adjacent,basement conversions,53.145,-1.198,13,P2
+eng-chesterfield-x0,extension,house extensions,53.235,-1.421,13,P1
+eng-chesterfield-x1,extension,home extensions,53.235,-1.421,13,P1
+eng-chesterfield-x2,extension,extension builders,53.235,-1.421,13,P1
+eng-chesterfield-x3,extension,loft conversions,53.235,-1.421,13,P1
+eng-chesterfield-x4,extension,garage conversions,53.235,-1.421,13,P1
+eng-chesterfield-x5,extension,single storey extension,53.235,-1.421,13,P1
+eng-chesterfield-x6,extension,double storey extension,53.235,-1.421,13,P1
+eng-chesterfield-x7,extension,design and build,53.235,-1.421,13,P1
+eng-chesterfield-x8,adjacent,home renovations,53.235,-1.421,13,P2
+eng-chesterfield-x9,adjacent,basement conversions,53.235,-1.421,13,P2
+eng-lincoln-x0,extension,house extensions,53.2307,-0.5406,13,P1
+eng-lincoln-x1,extension,home extensions,53.2307,-0.5406,13,P1
+eng-lincoln-x2,extension,extension builders,53.2307,-0.5406,13,P1
+eng-lincoln-x3,extension,loft conversions,53.2307,-0.5406,13,P1
+eng-lincoln-x4,extension,garage conversions,53.2307,-0.5406,13,P1
+eng-lincoln-x5,extension,single storey extension,53.2307,-0.5406,13,P1
+eng-lincoln-x6,extension,double storey extension,53.2307,-0.5406,13,P1
+eng-lincoln-x7,extension,design and build,53.2307,-0.5406,13,P1
+eng-lincoln-x8,adjacent,home renovations,53.2307,-0.5406,13,P2
+eng-lincoln-x9,adjacent,basement conversions,53.2307,-0.5406,13,P2
+eng-grimsby-x0,extension,house extensions,53.5675,-0.08,13,P1
+eng-grimsby-x1,extension,home extensions,53.5675,-0.08,13,P1
+eng-grimsby-x2,extension,extension builders,53.5675,-0.08,13,P1
+eng-grimsby-x3,extension,loft conversions,53.5675,-0.08,13,P1
+eng-grimsby-x4,extension,garage conversions,53.5675,-0.08,13,P1
+eng-grimsby-x5,extension,single storey extension,53.5675,-0.08,13,P1
+eng-grimsby-x6,extension,double storey extension,53.5675,-0.08,13,P1
+eng-grimsby-x7,extension,design and build,53.5675,-0.08,13,P1
+eng-grimsby-x8,adjacent,home renovations,53.5675,-0.08,13,P2
+eng-grimsby-x9,adjacent,basement conversions,53.5675,-0.08,13,P2
+eng-scunthorpe-x0,extension,house extensions,53.59,-0.65,13,P1
+eng-scunthorpe-x1,extension,home extensions,53.59,-0.65,13,P1
+eng-scunthorpe-x2,extension,extension builders,53.59,-0.65,13,P1
+eng-scunthorpe-x3,extension,loft conversions,53.59,-0.65,13,P1
+eng-scunthorpe-x4,extension,garage conversions,53.59,-0.65,13,P1
+eng-scunthorpe-x5,extension,single storey extension,53.59,-0.65,13,P1
+eng-scunthorpe-x6,extension,double storey extension,53.59,-0.65,13,P1
+eng-scunthorpe-x7,extension,design and build,53.59,-0.65,13,P1
+eng-scunthorpe-x8,adjacent,home renovations,53.59,-0.65,13,P2
+eng-scunthorpe-x9,adjacent,basement conversions,53.59,-0.65,13,P2
+eng-kingston-upon-hull-x0,extension,house extensions,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-x1,extension,home extensions,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-x2,extension,extension builders,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-x3,extension,loft conversions,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-x4,extension,garage conversions,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-x5,extension,single storey extension,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-x6,extension,double storey extension,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-x7,extension,design and build,53.7457,-0.3367,13,P1
+eng-kingston-upon-hull-x8,adjacent,home renovations,53.7457,-0.3367,13,P2
+eng-kingston-upon-hull-x9,adjacent,basement conversions,53.7457,-0.3367,13,P2
+eng-york-x0,extension,house extensions,53.96,-1.0873,13,P1
+eng-york-x1,extension,home extensions,53.96,-1.0873,13,P1
+eng-york-x2,extension,extension builders,53.96,-1.0873,13,P1
+eng-york-x3,extension,loft conversions,53.96,-1.0873,13,P1
+eng-york-x4,extension,garage conversions,53.96,-1.0873,13,P1
+eng-york-x5,extension,single storey extension,53.96,-1.0873,13,P1
+eng-york-x6,extension,double storey extension,53.96,-1.0873,13,P1
+eng-york-x7,extension,design and build,53.96,-1.0873,13,P1
+eng-york-x8,adjacent,home renovations,53.96,-1.0873,13,P2
+eng-york-x9,adjacent,basement conversions,53.96,-1.0873,13,P2
+eng-scarborough-x0,extension,house extensions,54.283,-0.399,13,P1
+eng-scarborough-x1,extension,home extensions,54.283,-0.399,13,P1
+eng-scarborough-x2,extension,extension builders,54.283,-0.399,13,P1
+eng-scarborough-x3,extension,loft conversions,54.283,-0.399,13,P1
+eng-scarborough-x4,extension,garage conversions,54.283,-0.399,13,P1
+eng-scarborough-x5,extension,single storey extension,54.283,-0.399,13,P1
+eng-scarborough-x6,extension,double storey extension,54.283,-0.399,13,P1
+eng-scarborough-x7,extension,design and build,54.283,-0.399,13,P1
+eng-scarborough-x8,adjacent,home renovations,54.283,-0.399,13,P2
+eng-scarborough-x9,adjacent,basement conversions,54.283,-0.399,13,P2
+eng-leeds-x0,extension,house extensions,53.8008,-1.5491,13,P1
+eng-leeds-x1,extension,home extensions,53.8008,-1.5491,13,P1
+eng-leeds-x2,extension,extension builders,53.8008,-1.5491,13,P1
+eng-leeds-x3,extension,loft conversions,53.8008,-1.5491,13,P1
+eng-leeds-x4,extension,garage conversions,53.8008,-1.5491,13,P1
+eng-leeds-x5,extension,single storey extension,53.8008,-1.5491,13,P1
+eng-leeds-x6,extension,double storey extension,53.8008,-1.5491,13,P1
+eng-leeds-x7,extension,design and build,53.8008,-1.5491,13,P1
+eng-leeds-x8,adjacent,home renovations,53.8008,-1.5491,13,P2
+eng-leeds-x9,adjacent,basement conversions,53.8008,-1.5491,13,P2
+eng-bradford-x0,extension,house extensions,53.796,-1.7594,13,P1
+eng-bradford-x1,extension,home extensions,53.796,-1.7594,13,P1
+eng-bradford-x2,extension,extension builders,53.796,-1.7594,13,P1
+eng-bradford-x3,extension,loft conversions,53.796,-1.7594,13,P1
+eng-bradford-x4,extension,garage conversions,53.796,-1.7594,13,P1
+eng-bradford-x5,extension,single storey extension,53.796,-1.7594,13,P1
+eng-bradford-x6,extension,double storey extension,53.796,-1.7594,13,P1
+eng-bradford-x7,extension,design and build,53.796,-1.7594,13,P1
+eng-bradford-x8,adjacent,home renovations,53.796,-1.7594,13,P2
+eng-bradford-x9,adjacent,basement conversions,53.796,-1.7594,13,P2
+eng-huddersfield-x0,extension,house extensions,53.645,-1.785,13,P1
+eng-huddersfield-x1,extension,home extensions,53.645,-1.785,13,P1
+eng-huddersfield-x2,extension,extension builders,53.645,-1.785,13,P1
+eng-huddersfield-x3,extension,loft conversions,53.645,-1.785,13,P1
+eng-huddersfield-x4,extension,garage conversions,53.645,-1.785,13,P1
+eng-huddersfield-x5,extension,single storey extension,53.645,-1.785,13,P1
+eng-huddersfield-x6,extension,double storey extension,53.645,-1.785,13,P1
+eng-huddersfield-x7,extension,design and build,53.645,-1.785,13,P1
+eng-huddersfield-x8,adjacent,home renovations,53.645,-1.785,13,P2
+eng-huddersfield-x9,adjacent,basement conversions,53.645,-1.785,13,P2
+eng-barnsley-x0,extension,house extensions,53.5526,-1.4797,13,P1
+eng-barnsley-x1,extension,home extensions,53.5526,-1.4797,13,P1
+eng-barnsley-x2,extension,extension builders,53.5526,-1.4797,13,P1
+eng-barnsley-x3,extension,loft conversions,53.5526,-1.4797,13,P1
+eng-barnsley-x4,extension,garage conversions,53.5526,-1.4797,13,P1
+eng-barnsley-x5,extension,single storey extension,53.5526,-1.4797,13,P1
+eng-barnsley-x6,extension,double storey extension,53.5526,-1.4797,13,P1
+eng-barnsley-x7,extension,design and build,53.5526,-1.4797,13,P1
+eng-barnsley-x8,adjacent,home renovations,53.5526,-1.4797,13,P2
+eng-barnsley-x9,adjacent,basement conversions,53.5526,-1.4797,13,P2
+eng-doncaster-x0,extension,house extensions,53.5228,-1.1285,13,P1
+eng-doncaster-x1,extension,home extensions,53.5228,-1.1285,13,P1
+eng-doncaster-x2,extension,extension builders,53.5228,-1.1285,13,P1
+eng-doncaster-x3,extension,loft conversions,53.5228,-1.1285,13,P1
+eng-doncaster-x4,extension,garage conversions,53.5228,-1.1285,13,P1
+eng-doncaster-x5,extension,single storey extension,53.5228,-1.1285,13,P1
+eng-doncaster-x6,extension,double storey extension,53.5228,-1.1285,13,P1
+eng-doncaster-x7,extension,design and build,53.5228,-1.1285,13,P1
+eng-doncaster-x8,adjacent,home renovations,53.5228,-1.1285,13,P2
+eng-doncaster-x9,adjacent,basement conversions,53.5228,-1.1285,13,P2
+eng-sheffield-x0,extension,house extensions,53.3811,-1.4701,13,P1
+eng-sheffield-x1,extension,home extensions,53.3811,-1.4701,13,P1
+eng-sheffield-x2,extension,extension builders,53.3811,-1.4701,13,P1
+eng-sheffield-x3,extension,loft conversions,53.3811,-1.4701,13,P1
+eng-sheffield-x4,extension,garage conversions,53.3811,-1.4701,13,P1
+eng-sheffield-x5,extension,single storey extension,53.3811,-1.4701,13,P1
+eng-sheffield-x6,extension,double storey extension,53.3811,-1.4701,13,P1
+eng-sheffield-x7,extension,design and build,53.3811,-1.4701,13,P1
+eng-sheffield-x8,adjacent,home renovations,53.3811,-1.4701,13,P2
+eng-sheffield-x9,adjacent,basement conversions,53.3811,-1.4701,13,P2
+eng-manchester-x0,extension,house extensions,53.4808,-2.2426,13,P1
+eng-manchester-x1,extension,home extensions,53.4808,-2.2426,13,P1
+eng-manchester-x2,extension,extension builders,53.4808,-2.2426,13,P1
+eng-manchester-x3,extension,loft conversions,53.4808,-2.2426,13,P1
+eng-manchester-x4,extension,garage conversions,53.4808,-2.2426,13,P1
+eng-manchester-x5,extension,single storey extension,53.4808,-2.2426,13,P1
+eng-manchester-x6,extension,double storey extension,53.4808,-2.2426,13,P1
+eng-manchester-x7,extension,design and build,53.4808,-2.2426,13,P1
+eng-manchester-x8,adjacent,home renovations,53.4808,-2.2426,13,P2
+eng-manchester-x9,adjacent,basement conversions,53.4808,-2.2426,13,P2
+eng-rochdale-x0,extension,house extensions,53.616,-2.155,13,P1
+eng-rochdale-x1,extension,home extensions,53.616,-2.155,13,P1
+eng-rochdale-x2,extension,extension builders,53.616,-2.155,13,P1
+eng-rochdale-x3,extension,loft conversions,53.616,-2.155,13,P1
+eng-rochdale-x4,extension,garage conversions,53.616,-2.155,13,P1
+eng-rochdale-x5,extension,single storey extension,53.616,-2.155,13,P1
+eng-rochdale-x6,extension,double storey extension,53.616,-2.155,13,P1
+eng-rochdale-x7,extension,design and build,53.616,-2.155,13,P1
+eng-rochdale-x8,adjacent,home renovations,53.616,-2.155,13,P2
+eng-rochdale-x9,adjacent,basement conversions,53.616,-2.155,13,P2
+eng-bolton-x0,extension,house extensions,53.5769,-2.4282,13,P1
+eng-bolton-x1,extension,home extensions,53.5769,-2.4282,13,P1
+eng-bolton-x2,extension,extension builders,53.5769,-2.4282,13,P1
+eng-bolton-x3,extension,loft conversions,53.5769,-2.4282,13,P1
+eng-bolton-x4,extension,garage conversions,53.5769,-2.4282,13,P1
+eng-bolton-x5,extension,single storey extension,53.5769,-2.4282,13,P1
+eng-bolton-x6,extension,double storey extension,53.5769,-2.4282,13,P1
+eng-bolton-x7,extension,design and build,53.5769,-2.4282,13,P1
+eng-bolton-x8,adjacent,home renovations,53.5769,-2.4282,13,P2
+eng-bolton-x9,adjacent,basement conversions,53.5769,-2.4282,13,P2
+eng-wigan-x0,extension,house extensions,53.545,-2.6318,13,P1
+eng-wigan-x1,extension,home extensions,53.545,-2.6318,13,P1
+eng-wigan-x2,extension,extension builders,53.545,-2.6318,13,P1
+eng-wigan-x3,extension,loft conversions,53.545,-2.6318,13,P1
+eng-wigan-x4,extension,garage conversions,53.545,-2.6318,13,P1
+eng-wigan-x5,extension,single storey extension,53.545,-2.6318,13,P1
+eng-wigan-x6,extension,double storey extension,53.545,-2.6318,13,P1
+eng-wigan-x7,extension,design and build,53.545,-2.6318,13,P1
+eng-wigan-x8,adjacent,home renovations,53.545,-2.6318,13,P2
+eng-wigan-x9,adjacent,basement conversions,53.545,-2.6318,13,P2
+eng-warrington-x0,extension,house extensions,53.39,-2.597,13,P1
+eng-warrington-x1,extension,home extensions,53.39,-2.597,13,P1
+eng-warrington-x2,extension,extension builders,53.39,-2.597,13,P1
+eng-warrington-x3,extension,loft conversions,53.39,-2.597,13,P1
+eng-warrington-x4,extension,garage conversions,53.39,-2.597,13,P1
+eng-warrington-x5,extension,single storey extension,53.39,-2.597,13,P1
+eng-warrington-x6,extension,double storey extension,53.39,-2.597,13,P1
+eng-warrington-x7,extension,design and build,53.39,-2.597,13,P1
+eng-warrington-x8,adjacent,home renovations,53.39,-2.597,13,P2
+eng-warrington-x9,adjacent,basement conversions,53.39,-2.597,13,P2
+eng-liverpool-x0,extension,house extensions,53.4084,-2.9916,13,P1
+eng-liverpool-x1,extension,home extensions,53.4084,-2.9916,13,P1
+eng-liverpool-x2,extension,extension builders,53.4084,-2.9916,13,P1
+eng-liverpool-x3,extension,loft conversions,53.4084,-2.9916,13,P1
+eng-liverpool-x4,extension,garage conversions,53.4084,-2.9916,13,P1
+eng-liverpool-x5,extension,single storey extension,53.4084,-2.9916,13,P1
+eng-liverpool-x6,extension,double storey extension,53.4084,-2.9916,13,P1
+eng-liverpool-x7,extension,design and build,53.4084,-2.9916,13,P1
+eng-liverpool-x8,adjacent,home renovations,53.4084,-2.9916,13,P2
+eng-liverpool-x9,adjacent,basement conversions,53.4084,-2.9916,13,P2
+eng-southport-x0,extension,house extensions,53.648,-3.01,13,P1
+eng-southport-x1,extension,home extensions,53.648,-3.01,13,P1
+eng-southport-x2,extension,extension builders,53.648,-3.01,13,P1
+eng-southport-x3,extension,loft conversions,53.648,-3.01,13,P1
+eng-southport-x4,extension,garage conversions,53.648,-3.01,13,P1
+eng-southport-x5,extension,single storey extension,53.648,-3.01,13,P1
+eng-southport-x6,extension,double storey extension,53.648,-3.01,13,P1
+eng-southport-x7,extension,design and build,53.648,-3.01,13,P1
+eng-southport-x8,adjacent,home renovations,53.648,-3.01,13,P2
+eng-southport-x9,adjacent,basement conversions,53.648,-3.01,13,P2
+eng-chester-x0,extension,house extensions,53.1934,-2.8931,13,P1
+eng-chester-x1,extension,home extensions,53.1934,-2.8931,13,P1
+eng-chester-x2,extension,extension builders,53.1934,-2.8931,13,P1
+eng-chester-x3,extension,loft conversions,53.1934,-2.8931,13,P1
+eng-chester-x4,extension,garage conversions,53.1934,-2.8931,13,P1
+eng-chester-x5,extension,single storey extension,53.1934,-2.8931,13,P1
+eng-chester-x6,extension,double storey extension,53.1934,-2.8931,13,P1
+eng-chester-x7,extension,design and build,53.1934,-2.8931,13,P1
+eng-chester-x8,adjacent,home renovations,53.1934,-2.8931,13,P2
+eng-chester-x9,adjacent,basement conversions,53.1934,-2.8931,13,P2
+eng-preston-x0,extension,house extensions,53.7632,-2.7031,13,P1
+eng-preston-x1,extension,home extensions,53.7632,-2.7031,13,P1
+eng-preston-x2,extension,extension builders,53.7632,-2.7031,13,P1
+eng-preston-x3,extension,loft conversions,53.7632,-2.7031,13,P1
+eng-preston-x4,extension,garage conversions,53.7632,-2.7031,13,P1
+eng-preston-x5,extension,single storey extension,53.7632,-2.7031,13,P1
+eng-preston-x6,extension,double storey extension,53.7632,-2.7031,13,P1
+eng-preston-x7,extension,design and build,53.7632,-2.7031,13,P1
+eng-preston-x8,adjacent,home renovations,53.7632,-2.7031,13,P2
+eng-preston-x9,adjacent,basement conversions,53.7632,-2.7031,13,P2
+eng-blackpool-x0,extension,house extensions,53.8175,-3.0357,13,P1
+eng-blackpool-x1,extension,home extensions,53.8175,-3.0357,13,P1
+eng-blackpool-x2,extension,extension builders,53.8175,-3.0357,13,P1
+eng-blackpool-x3,extension,loft conversions,53.8175,-3.0357,13,P1
+eng-blackpool-x4,extension,garage conversions,53.8175,-3.0357,13,P1
+eng-blackpool-x5,extension,single storey extension,53.8175,-3.0357,13,P1
+eng-blackpool-x6,extension,double storey extension,53.8175,-3.0357,13,P1
+eng-blackpool-x7,extension,design and build,53.8175,-3.0357,13,P1
+eng-blackpool-x8,adjacent,home renovations,53.8175,-3.0357,13,P2
+eng-blackpool-x9,adjacent,basement conversions,53.8175,-3.0357,13,P2
+eng-blackburn-x0,extension,house extensions,53.7486,-2.482,13,P1
+eng-blackburn-x1,extension,home extensions,53.7486,-2.482,13,P1
+eng-blackburn-x2,extension,extension builders,53.7486,-2.482,13,P1
+eng-blackburn-x3,extension,loft conversions,53.7486,-2.482,13,P1
+eng-blackburn-x4,extension,garage conversions,53.7486,-2.482,13,P1
+eng-blackburn-x5,extension,single storey extension,53.7486,-2.482,13,P1
+eng-blackburn-x6,extension,double storey extension,53.7486,-2.482,13,P1
+eng-blackburn-x7,extension,design and build,53.7486,-2.482,13,P1
+eng-blackburn-x8,adjacent,home renovations,53.7486,-2.482,13,P2
+eng-blackburn-x9,adjacent,basement conversions,53.7486,-2.482,13,P2
+eng-burnley-x0,extension,house extensions,53.789,-2.248,13,P1
+eng-burnley-x1,extension,home extensions,53.789,-2.248,13,P1
+eng-burnley-x2,extension,extension builders,53.789,-2.248,13,P1
+eng-burnley-x3,extension,loft conversions,53.789,-2.248,13,P1
+eng-burnley-x4,extension,garage conversions,53.789,-2.248,13,P1
+eng-burnley-x5,extension,single storey extension,53.789,-2.248,13,P1
+eng-burnley-x6,extension,double storey extension,53.789,-2.248,13,P1
+eng-burnley-x7,extension,design and build,53.789,-2.248,13,P1
+eng-burnley-x8,adjacent,home renovations,53.789,-2.248,13,P2
+eng-burnley-x9,adjacent,basement conversions,53.789,-2.248,13,P2
+eng-lancaster-x0,extension,house extensions,54.0466,-2.8007,13,P1
+eng-lancaster-x1,extension,home extensions,54.0466,-2.8007,13,P1
+eng-lancaster-x2,extension,extension builders,54.0466,-2.8007,13,P1
+eng-lancaster-x3,extension,loft conversions,54.0466,-2.8007,13,P1
+eng-lancaster-x4,extension,garage conversions,54.0466,-2.8007,13,P1
+eng-lancaster-x5,extension,single storey extension,54.0466,-2.8007,13,P1
+eng-lancaster-x6,extension,double storey extension,54.0466,-2.8007,13,P1
+eng-lancaster-x7,extension,design and build,54.0466,-2.8007,13,P1
+eng-lancaster-x8,adjacent,home renovations,54.0466,-2.8007,13,P2
+eng-lancaster-x9,adjacent,basement conversions,54.0466,-2.8007,13,P2
+eng-kendal-x0,extension,house extensions,54.328,-2.746,13,P1
+eng-kendal-x1,extension,home extensions,54.328,-2.746,13,P1
+eng-kendal-x2,extension,extension builders,54.328,-2.746,13,P1
+eng-kendal-x3,extension,loft conversions,54.328,-2.746,13,P1
+eng-kendal-x4,extension,garage conversions,54.328,-2.746,13,P1
+eng-kendal-x5,extension,single storey extension,54.328,-2.746,13,P1
+eng-kendal-x6,extension,double storey extension,54.328,-2.746,13,P1
+eng-kendal-x7,extension,design and build,54.328,-2.746,13,P1
+eng-kendal-x8,adjacent,home renovations,54.328,-2.746,13,P2
+eng-kendal-x9,adjacent,basement conversions,54.328,-2.746,13,P2
+eng-barrow-in-furness-x0,extension,house extensions,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-x1,extension,home extensions,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-x2,extension,extension builders,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-x3,extension,loft conversions,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-x4,extension,garage conversions,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-x5,extension,single storey extension,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-x6,extension,double storey extension,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-x7,extension,design and build,54.1108,-3.2261,13,P1
+eng-barrow-in-furness-x8,adjacent,home renovations,54.1108,-3.2261,13,P2
+eng-barrow-in-furness-x9,adjacent,basement conversions,54.1108,-3.2261,13,P2
+eng-workington-x0,extension,house extensions,54.642,-3.544,13,P1
+eng-workington-x1,extension,home extensions,54.642,-3.544,13,P1
+eng-workington-x2,extension,extension builders,54.642,-3.544,13,P1
+eng-workington-x3,extension,loft conversions,54.642,-3.544,13,P1
+eng-workington-x4,extension,garage conversions,54.642,-3.544,13,P1
+eng-workington-x5,extension,single storey extension,54.642,-3.544,13,P1
+eng-workington-x6,extension,double storey extension,54.642,-3.544,13,P1
+eng-workington-x7,extension,design and build,54.642,-3.544,13,P1
+eng-workington-x8,adjacent,home renovations,54.642,-3.544,13,P2
+eng-workington-x9,adjacent,basement conversions,54.642,-3.544,13,P2
+eng-carlisle-x0,extension,house extensions,54.8925,-2.9329,13,P1
+eng-carlisle-x1,extension,home extensions,54.8925,-2.9329,13,P1
+eng-carlisle-x2,extension,extension builders,54.8925,-2.9329,13,P1
+eng-carlisle-x3,extension,loft conversions,54.8925,-2.9329,13,P1
+eng-carlisle-x4,extension,garage conversions,54.8925,-2.9329,13,P1
+eng-carlisle-x5,extension,single storey extension,54.8925,-2.9329,13,P1
+eng-carlisle-x6,extension,double storey extension,54.8925,-2.9329,13,P1
+eng-carlisle-x7,extension,design and build,54.8925,-2.9329,13,P1
+eng-carlisle-x8,adjacent,home renovations,54.8925,-2.9329,13,P2
+eng-carlisle-x9,adjacent,basement conversions,54.8925,-2.9329,13,P2
+eng-middlesbrough-x0,extension,house extensions,54.5742,-1.235,13,P1
+eng-middlesbrough-x1,extension,home extensions,54.5742,-1.235,13,P1
+eng-middlesbrough-x2,extension,extension builders,54.5742,-1.235,13,P1
+eng-middlesbrough-x3,extension,loft conversions,54.5742,-1.235,13,P1
+eng-middlesbrough-x4,extension,garage conversions,54.5742,-1.235,13,P1
+eng-middlesbrough-x5,extension,single storey extension,54.5742,-1.235,13,P1
+eng-middlesbrough-x6,extension,double storey extension,54.5742,-1.235,13,P1
+eng-middlesbrough-x7,extension,design and build,54.5742,-1.235,13,P1
+eng-middlesbrough-x8,adjacent,home renovations,54.5742,-1.235,13,P2
+eng-middlesbrough-x9,adjacent,basement conversions,54.5742,-1.235,13,P2
+eng-hartlepool-x0,extension,house extensions,54.6858,-1.212,13,P1
+eng-hartlepool-x1,extension,home extensions,54.6858,-1.212,13,P1
+eng-hartlepool-x2,extension,extension builders,54.6858,-1.212,13,P1
+eng-hartlepool-x3,extension,loft conversions,54.6858,-1.212,13,P1
+eng-hartlepool-x4,extension,garage conversions,54.6858,-1.212,13,P1
+eng-hartlepool-x5,extension,single storey extension,54.6858,-1.212,13,P1
+eng-hartlepool-x6,extension,double storey extension,54.6858,-1.212,13,P1
+eng-hartlepool-x7,extension,design and build,54.6858,-1.212,13,P1
+eng-hartlepool-x8,adjacent,home renovations,54.6858,-1.212,13,P2
+eng-hartlepool-x9,adjacent,basement conversions,54.6858,-1.212,13,P2
+eng-darlington-x0,extension,house extensions,54.5235,-1.5598,13,P1
+eng-darlington-x1,extension,home extensions,54.5235,-1.5598,13,P1
+eng-darlington-x2,extension,extension builders,54.5235,-1.5598,13,P1
+eng-darlington-x3,extension,loft conversions,54.5235,-1.5598,13,P1
+eng-darlington-x4,extension,garage conversions,54.5235,-1.5598,13,P1
+eng-darlington-x5,extension,single storey extension,54.5235,-1.5598,13,P1
+eng-darlington-x6,extension,double storey extension,54.5235,-1.5598,13,P1
+eng-darlington-x7,extension,design and build,54.5235,-1.5598,13,P1
+eng-darlington-x8,adjacent,home renovations,54.5235,-1.5598,13,P2
+eng-darlington-x9,adjacent,basement conversions,54.5235,-1.5598,13,P2
+eng-durham-x0,extension,house extensions,54.7767,-1.5757,13,P1
+eng-durham-x1,extension,home extensions,54.7767,-1.5757,13,P1
+eng-durham-x2,extension,extension builders,54.7767,-1.5757,13,P1
+eng-durham-x3,extension,loft conversions,54.7767,-1.5757,13,P1
+eng-durham-x4,extension,garage conversions,54.7767,-1.5757,13,P1
+eng-durham-x5,extension,single storey extension,54.7767,-1.5757,13,P1
+eng-durham-x6,extension,double storey extension,54.7767,-1.5757,13,P1
+eng-durham-x7,extension,design and build,54.7767,-1.5757,13,P1
+eng-durham-x8,adjacent,home renovations,54.7767,-1.5757,13,P2
+eng-durham-x9,adjacent,basement conversions,54.7767,-1.5757,13,P2
+eng-sunderland-x0,extension,house extensions,54.9069,-1.3838,13,P1
+eng-sunderland-x1,extension,home extensions,54.9069,-1.3838,13,P1
+eng-sunderland-x2,extension,extension builders,54.9069,-1.3838,13,P1
+eng-sunderland-x3,extension,loft conversions,54.9069,-1.3838,13,P1
+eng-sunderland-x4,extension,garage conversions,54.9069,-1.3838,13,P1
+eng-sunderland-x5,extension,single storey extension,54.9069,-1.3838,13,P1
+eng-sunderland-x6,extension,double storey extension,54.9069,-1.3838,13,P1
+eng-sunderland-x7,extension,design and build,54.9069,-1.3838,13,P1
+eng-sunderland-x8,adjacent,home renovations,54.9069,-1.3838,13,P2
+eng-sunderland-x9,adjacent,basement conversions,54.9069,-1.3838,13,P2
+eng-newcastle-upon-tyne-x0,extension,house extensions,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-x1,extension,home extensions,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-x2,extension,extension builders,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-x3,extension,loft conversions,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-x4,extension,garage conversions,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-x5,extension,single storey extension,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-x6,extension,double storey extension,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-x7,extension,design and build,54.9783,-1.6178,13,P1
+eng-newcastle-upon-tyne-x8,adjacent,home renovations,54.9783,-1.6178,13,P2
+eng-newcastle-upon-tyne-x9,adjacent,basement conversions,54.9783,-1.6178,13,P2
+eng-hexham-x0,extension,house extensions,54.971,-2.101,13,P1
+eng-hexham-x1,extension,home extensions,54.971,-2.101,13,P1
+eng-hexham-x2,extension,extension builders,54.971,-2.101,13,P1
+eng-hexham-x3,extension,loft conversions,54.971,-2.101,13,P1
+eng-hexham-x4,extension,garage conversions,54.971,-2.101,13,P1
+eng-hexham-x5,extension,single storey extension,54.971,-2.101,13,P1
+eng-hexham-x6,extension,double storey extension,54.971,-2.101,13,P1
+eng-hexham-x7,extension,design and build,54.971,-2.101,13,P1
+eng-hexham-x8,adjacent,home renovations,54.971,-2.101,13,P2
+eng-hexham-x9,adjacent,basement conversions,54.971,-2.101,13,P2
+eng-ashington-morpeth-x0,extension,house extensions,55.181,-1.568,13,P1
+eng-ashington-morpeth-x1,extension,home extensions,55.181,-1.568,13,P1
+eng-ashington-morpeth-x2,extension,extension builders,55.181,-1.568,13,P1
+eng-ashington-morpeth-x3,extension,loft conversions,55.181,-1.568,13,P1
+eng-ashington-morpeth-x4,extension,garage conversions,55.181,-1.568,13,P1
+eng-ashington-morpeth-x5,extension,single storey extension,55.181,-1.568,13,P1
+eng-ashington-morpeth-x6,extension,double storey extension,55.181,-1.568,13,P1
+eng-ashington-morpeth-x7,extension,design and build,55.181,-1.568,13,P1
+eng-ashington-morpeth-x8,adjacent,home renovations,55.181,-1.568,13,P2
+eng-ashington-morpeth-x9,adjacent,basement conversions,55.181,-1.568,13,P2
+eng-berwick-upon-tweed-x0,extension,house extensions,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-x1,extension,home extensions,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-x2,extension,extension builders,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-x3,extension,loft conversions,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-x4,extension,garage conversions,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-x5,extension,single storey extension,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-x6,extension,double storey extension,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-x7,extension,design and build,55.771,-2.005,13,P1
+eng-berwick-upon-tweed-x8,adjacent,home renovations,55.771,-2.005,13,P2
+eng-berwick-upon-tweed-x9,adjacent,basement conversions,55.771,-2.005,13,P2
+sct-glasgow-x0,extension,house extensions,55.8642,-4.2518,13,P1
+sct-glasgow-x1,extension,home extensions,55.8642,-4.2518,13,P1
+sct-glasgow-x2,extension,extension builders,55.8642,-4.2518,13,P1
+sct-glasgow-x3,extension,loft conversions,55.8642,-4.2518,13,P1
+sct-glasgow-x4,extension,garage conversions,55.8642,-4.2518,13,P1
+sct-glasgow-x5,extension,single storey extension,55.8642,-4.2518,13,P1
+sct-glasgow-x6,extension,double storey extension,55.8642,-4.2518,13,P1
+sct-glasgow-x7,extension,design and build,55.8642,-4.2518,13,P1
+sct-glasgow-x8,adjacent,home renovations,55.8642,-4.2518,13,P2
+sct-glasgow-x9,adjacent,basement conversions,55.8642,-4.2518,13,P2
+sct-edinburgh-x0,extension,house extensions,55.9533,-3.1883,13,P1
+sct-edinburgh-x1,extension,home extensions,55.9533,-3.1883,13,P1
+sct-edinburgh-x2,extension,extension builders,55.9533,-3.1883,13,P1
+sct-edinburgh-x3,extension,loft conversions,55.9533,-3.1883,13,P1
+sct-edinburgh-x4,extension,garage conversions,55.9533,-3.1883,13,P1
+sct-edinburgh-x5,extension,single storey extension,55.9533,-3.1883,13,P1
+sct-edinburgh-x6,extension,double storey extension,55.9533,-3.1883,13,P1
+sct-edinburgh-x7,extension,design and build,55.9533,-3.1883,13,P1
+sct-edinburgh-x8,adjacent,home renovations,55.9533,-3.1883,13,P2
+sct-edinburgh-x9,adjacent,basement conversions,55.9533,-3.1883,13,P2
+sct-aberdeen-x0,extension,house extensions,57.1497,-2.0943,13,P1
+sct-aberdeen-x1,extension,home extensions,57.1497,-2.0943,13,P1
+sct-aberdeen-x2,extension,extension builders,57.1497,-2.0943,13,P1
+sct-aberdeen-x3,extension,loft conversions,57.1497,-2.0943,13,P1
+sct-aberdeen-x4,extension,garage conversions,57.1497,-2.0943,13,P1
+sct-aberdeen-x5,extension,single storey extension,57.1497,-2.0943,13,P1
+sct-aberdeen-x6,extension,double storey extension,57.1497,-2.0943,13,P1
+sct-aberdeen-x7,extension,design and build,57.1497,-2.0943,13,P1
+sct-aberdeen-x8,adjacent,home renovations,57.1497,-2.0943,13,P2
+sct-aberdeen-x9,adjacent,basement conversions,57.1497,-2.0943,13,P2
+sct-dundee-x0,extension,house extensions,56.462,-2.9707,13,P1
+sct-dundee-x1,extension,home extensions,56.462,-2.9707,13,P1
+sct-dundee-x2,extension,extension builders,56.462,-2.9707,13,P1
+sct-dundee-x3,extension,loft conversions,56.462,-2.9707,13,P1
+sct-dundee-x4,extension,garage conversions,56.462,-2.9707,13,P1
+sct-dundee-x5,extension,single storey extension,56.462,-2.9707,13,P1
+sct-dundee-x6,extension,double storey extension,56.462,-2.9707,13,P1
+sct-dundee-x7,extension,design and build,56.462,-2.9707,13,P1
+sct-dundee-x8,adjacent,home renovations,56.462,-2.9707,13,P2
+sct-dundee-x9,adjacent,basement conversions,56.462,-2.9707,13,P2
+sct-montrose-arbroath-x0,extension,house extensions,56.71,-2.47,13,P1
+sct-montrose-arbroath-x1,extension,home extensions,56.71,-2.47,13,P1
+sct-montrose-arbroath-x2,extension,extension builders,56.71,-2.47,13,P1
+sct-montrose-arbroath-x3,extension,loft conversions,56.71,-2.47,13,P1
+sct-montrose-arbroath-x4,extension,garage conversions,56.71,-2.47,13,P1
+sct-montrose-arbroath-x5,extension,single storey extension,56.71,-2.47,13,P1
+sct-montrose-arbroath-x6,extension,double storey extension,56.71,-2.47,13,P1
+sct-montrose-arbroath-x7,extension,design and build,56.71,-2.47,13,P1
+sct-montrose-arbroath-x8,adjacent,home renovations,56.71,-2.47,13,P2
+sct-montrose-arbroath-x9,adjacent,basement conversions,56.71,-2.47,13,P2
+sct-perth-x0,extension,house extensions,56.395,-3.4308,13,P1
+sct-perth-x1,extension,home extensions,56.395,-3.4308,13,P1
+sct-perth-x2,extension,extension builders,56.395,-3.4308,13,P1
+sct-perth-x3,extension,loft conversions,56.395,-3.4308,13,P1
+sct-perth-x4,extension,garage conversions,56.395,-3.4308,13,P1
+sct-perth-x5,extension,single storey extension,56.395,-3.4308,13,P1
+sct-perth-x6,extension,double storey extension,56.395,-3.4308,13,P1
+sct-perth-x7,extension,design and build,56.395,-3.4308,13,P1
+sct-perth-x8,adjacent,home renovations,56.395,-3.4308,13,P2
+sct-perth-x9,adjacent,basement conversions,56.395,-3.4308,13,P2
+sct-stirling-x0,extension,house extensions,56.1165,-3.9369,13,P1
+sct-stirling-x1,extension,home extensions,56.1165,-3.9369,13,P1
+sct-stirling-x2,extension,extension builders,56.1165,-3.9369,13,P1
+sct-stirling-x3,extension,loft conversions,56.1165,-3.9369,13,P1
+sct-stirling-x4,extension,garage conversions,56.1165,-3.9369,13,P1
+sct-stirling-x5,extension,single storey extension,56.1165,-3.9369,13,P1
+sct-stirling-x6,extension,double storey extension,56.1165,-3.9369,13,P1
+sct-stirling-x7,extension,design and build,56.1165,-3.9369,13,P1
+sct-stirling-x8,adjacent,home renovations,56.1165,-3.9369,13,P2
+sct-stirling-x9,adjacent,basement conversions,56.1165,-3.9369,13,P2
+sct-falkirk-x0,extension,house extensions,56.0019,-3.7839,13,P1
+sct-falkirk-x1,extension,home extensions,56.0019,-3.7839,13,P1
+sct-falkirk-x2,extension,extension builders,56.0019,-3.7839,13,P1
+sct-falkirk-x3,extension,loft conversions,56.0019,-3.7839,13,P1
+sct-falkirk-x4,extension,garage conversions,56.0019,-3.7839,13,P1
+sct-falkirk-x5,extension,single storey extension,56.0019,-3.7839,13,P1
+sct-falkirk-x6,extension,double storey extension,56.0019,-3.7839,13,P1
+sct-falkirk-x7,extension,design and build,56.0019,-3.7839,13,P1
+sct-falkirk-x8,adjacent,home renovations,56.0019,-3.7839,13,P2
+sct-falkirk-x9,adjacent,basement conversions,56.0019,-3.7839,13,P2
+sct-livingston-x0,extension,house extensions,55.883,-3.523,13,P1
+sct-livingston-x1,extension,home extensions,55.883,-3.523,13,P1
+sct-livingston-x2,extension,extension builders,55.883,-3.523,13,P1
+sct-livingston-x3,extension,loft conversions,55.883,-3.523,13,P1
+sct-livingston-x4,extension,garage conversions,55.883,-3.523,13,P1
+sct-livingston-x5,extension,single storey extension,55.883,-3.523,13,P1
+sct-livingston-x6,extension,double storey extension,55.883,-3.523,13,P1
+sct-livingston-x7,extension,design and build,55.883,-3.523,13,P1
+sct-livingston-x8,adjacent,home renovations,55.883,-3.523,13,P2
+sct-livingston-x9,adjacent,basement conversions,55.883,-3.523,13,P2
+sct-dunfermline-x0,extension,house extensions,56.0719,-3.4393,13,P1
+sct-dunfermline-x1,extension,home extensions,56.0719,-3.4393,13,P1
+sct-dunfermline-x2,extension,extension builders,56.0719,-3.4393,13,P1
+sct-dunfermline-x3,extension,loft conversions,56.0719,-3.4393,13,P1
+sct-dunfermline-x4,extension,garage conversions,56.0719,-3.4393,13,P1
+sct-dunfermline-x5,extension,single storey extension,56.0719,-3.4393,13,P1
+sct-dunfermline-x6,extension,double storey extension,56.0719,-3.4393,13,P1
+sct-dunfermline-x7,extension,design and build,56.0719,-3.4393,13,P1
+sct-dunfermline-x8,adjacent,home renovations,56.0719,-3.4393,13,P2
+sct-dunfermline-x9,adjacent,basement conversions,56.0719,-3.4393,13,P2
+sct-kirkcaldy-x0,extension,house extensions,56.113,-3.16,13,P1
+sct-kirkcaldy-x1,extension,home extensions,56.113,-3.16,13,P1
+sct-kirkcaldy-x2,extension,extension builders,56.113,-3.16,13,P1
+sct-kirkcaldy-x3,extension,loft conversions,56.113,-3.16,13,P1
+sct-kirkcaldy-x4,extension,garage conversions,56.113,-3.16,13,P1
+sct-kirkcaldy-x5,extension,single storey extension,56.113,-3.16,13,P1
+sct-kirkcaldy-x6,extension,double storey extension,56.113,-3.16,13,P1
+sct-kirkcaldy-x7,extension,design and build,56.113,-3.16,13,P1
+sct-kirkcaldy-x8,adjacent,home renovations,56.113,-3.16,13,P2
+sct-kirkcaldy-x9,adjacent,basement conversions,56.113,-3.16,13,P2
+sct-greenock-x0,extension,house extensions,55.95,-4.76,13,P1
+sct-greenock-x1,extension,home extensions,55.95,-4.76,13,P1
+sct-greenock-x2,extension,extension builders,55.95,-4.76,13,P1
+sct-greenock-x3,extension,loft conversions,55.95,-4.76,13,P1
+sct-greenock-x4,extension,garage conversions,55.95,-4.76,13,P1
+sct-greenock-x5,extension,single storey extension,55.95,-4.76,13,P1
+sct-greenock-x6,extension,double storey extension,55.95,-4.76,13,P1
+sct-greenock-x7,extension,design and build,55.95,-4.76,13,P1
+sct-greenock-x8,adjacent,home renovations,55.95,-4.76,13,P2
+sct-greenock-x9,adjacent,basement conversions,55.95,-4.76,13,P2
+sct-kilmarnock-x0,extension,house extensions,55.611,-4.496,13,P1
+sct-kilmarnock-x1,extension,home extensions,55.611,-4.496,13,P1
+sct-kilmarnock-x2,extension,extension builders,55.611,-4.496,13,P1
+sct-kilmarnock-x3,extension,loft conversions,55.611,-4.496,13,P1
+sct-kilmarnock-x4,extension,garage conversions,55.611,-4.496,13,P1
+sct-kilmarnock-x5,extension,single storey extension,55.611,-4.496,13,P1
+sct-kilmarnock-x6,extension,double storey extension,55.611,-4.496,13,P1
+sct-kilmarnock-x7,extension,design and build,55.611,-4.496,13,P1
+sct-kilmarnock-x8,adjacent,home renovations,55.611,-4.496,13,P2
+sct-kilmarnock-x9,adjacent,basement conversions,55.611,-4.496,13,P2
+sct-ayr-x0,extension,house extensions,55.4586,-4.6292,13,P1
+sct-ayr-x1,extension,home extensions,55.4586,-4.6292,13,P1
+sct-ayr-x2,extension,extension builders,55.4586,-4.6292,13,P1
+sct-ayr-x3,extension,loft conversions,55.4586,-4.6292,13,P1
+sct-ayr-x4,extension,garage conversions,55.4586,-4.6292,13,P1
+sct-ayr-x5,extension,single storey extension,55.4586,-4.6292,13,P1
+sct-ayr-x6,extension,double storey extension,55.4586,-4.6292,13,P1
+sct-ayr-x7,extension,design and build,55.4586,-4.6292,13,P1
+sct-ayr-x8,adjacent,home renovations,55.4586,-4.6292,13,P2
+sct-ayr-x9,adjacent,basement conversions,55.4586,-4.6292,13,P2
+sct-stranraer-x0,extension,house extensions,54.902,-5.027,13,P1
+sct-stranraer-x1,extension,home extensions,54.902,-5.027,13,P1
+sct-stranraer-x2,extension,extension builders,54.902,-5.027,13,P1
+sct-stranraer-x3,extension,loft conversions,54.902,-5.027,13,P1
+sct-stranraer-x4,extension,garage conversions,54.902,-5.027,13,P1
+sct-stranraer-x5,extension,single storey extension,54.902,-5.027,13,P1
+sct-stranraer-x6,extension,double storey extension,54.902,-5.027,13,P1
+sct-stranraer-x7,extension,design and build,54.902,-5.027,13,P1
+sct-stranraer-x8,adjacent,home renovations,54.902,-5.027,13,P2
+sct-stranraer-x9,adjacent,basement conversions,54.902,-5.027,13,P2
+sct-dumfries-x0,extension,house extensions,55.07,-3.603,13,P1
+sct-dumfries-x1,extension,home extensions,55.07,-3.603,13,P1
+sct-dumfries-x2,extension,extension builders,55.07,-3.603,13,P1
+sct-dumfries-x3,extension,loft conversions,55.07,-3.603,13,P1
+sct-dumfries-x4,extension,garage conversions,55.07,-3.603,13,P1
+sct-dumfries-x5,extension,single storey extension,55.07,-3.603,13,P1
+sct-dumfries-x6,extension,double storey extension,55.07,-3.603,13,P1
+sct-dumfries-x7,extension,design and build,55.07,-3.603,13,P1
+sct-dumfries-x8,adjacent,home renovations,55.07,-3.603,13,P2
+sct-dumfries-x9,adjacent,basement conversions,55.07,-3.603,13,P2
+sct-galashiels-borders-x0,extension,house extensions,55.618,-2.808,13,P1
+sct-galashiels-borders-x1,extension,home extensions,55.618,-2.808,13,P1
+sct-galashiels-borders-x2,extension,extension builders,55.618,-2.808,13,P1
+sct-galashiels-borders-x3,extension,loft conversions,55.618,-2.808,13,P1
+sct-galashiels-borders-x4,extension,garage conversions,55.618,-2.808,13,P1
+sct-galashiels-borders-x5,extension,single storey extension,55.618,-2.808,13,P1
+sct-galashiels-borders-x6,extension,double storey extension,55.618,-2.808,13,P1
+sct-galashiels-borders-x7,extension,design and build,55.618,-2.808,13,P1
+sct-galashiels-borders-x8,adjacent,home renovations,55.618,-2.808,13,P2
+sct-galashiels-borders-x9,adjacent,basement conversions,55.618,-2.808,13,P2
+sct-inverness-x0,extension,house extensions,57.4778,-4.2247,13,P1
+sct-inverness-x1,extension,home extensions,57.4778,-4.2247,13,P1
+sct-inverness-x2,extension,extension builders,57.4778,-4.2247,13,P1
+sct-inverness-x3,extension,loft conversions,57.4778,-4.2247,13,P1
+sct-inverness-x4,extension,garage conversions,57.4778,-4.2247,13,P1
+sct-inverness-x5,extension,single storey extension,57.4778,-4.2247,13,P1
+sct-inverness-x6,extension,double storey extension,57.4778,-4.2247,13,P1
+sct-inverness-x7,extension,design and build,57.4778,-4.2247,13,P1
+sct-inverness-x8,adjacent,home renovations,57.4778,-4.2247,13,P2
+sct-inverness-x9,adjacent,basement conversions,57.4778,-4.2247,13,P2
+sct-elgin-x0,extension,house extensions,57.65,-3.315,13,P1
+sct-elgin-x1,extension,home extensions,57.65,-3.315,13,P1
+sct-elgin-x2,extension,extension builders,57.65,-3.315,13,P1
+sct-elgin-x3,extension,loft conversions,57.65,-3.315,13,P1
+sct-elgin-x4,extension,garage conversions,57.65,-3.315,13,P1
+sct-elgin-x5,extension,single storey extension,57.65,-3.315,13,P1
+sct-elgin-x6,extension,double storey extension,57.65,-3.315,13,P1
+sct-elgin-x7,extension,design and build,57.65,-3.315,13,P1
+sct-elgin-x8,adjacent,home renovations,57.65,-3.315,13,P2
+sct-elgin-x9,adjacent,basement conversions,57.65,-3.315,13,P2
+sct-fort-william-x0,extension,house extensions,56.8198,-5.1052,13,P1
+sct-fort-william-x1,extension,home extensions,56.8198,-5.1052,13,P1
+sct-fort-william-x2,extension,extension builders,56.8198,-5.1052,13,P1
+sct-fort-william-x3,extension,loft conversions,56.8198,-5.1052,13,P1
+sct-fort-william-x4,extension,garage conversions,56.8198,-5.1052,13,P1
+sct-fort-william-x5,extension,single storey extension,56.8198,-5.1052,13,P1
+sct-fort-william-x6,extension,double storey extension,56.8198,-5.1052,13,P1
+sct-fort-william-x7,extension,design and build,56.8198,-5.1052,13,P1
+sct-fort-william-x8,adjacent,home renovations,56.8198,-5.1052,13,P2
+sct-fort-william-x9,adjacent,basement conversions,56.8198,-5.1052,13,P2
+sct-oban-x0,extension,house extensions,56.415,-5.47,13,P1
+sct-oban-x1,extension,home extensions,56.415,-5.47,13,P1
+sct-oban-x2,extension,extension builders,56.415,-5.47,13,P1
+sct-oban-x3,extension,loft conversions,56.415,-5.47,13,P1
+sct-oban-x4,extension,garage conversions,56.415,-5.47,13,P1
+sct-oban-x5,extension,single storey extension,56.415,-5.47,13,P1
+sct-oban-x6,extension,double storey extension,56.415,-5.47,13,P1
+sct-oban-x7,extension,design and build,56.415,-5.47,13,P1
+sct-oban-x8,adjacent,home renovations,56.415,-5.47,13,P2
+sct-oban-x9,adjacent,basement conversions,56.415,-5.47,13,P2
+sct-wick-caithness-x0,extension,house extensions,58.439,-3.094,13,P1
+sct-wick-caithness-x1,extension,home extensions,58.439,-3.094,13,P1
+sct-wick-caithness-x2,extension,extension builders,58.439,-3.094,13,P1
+sct-wick-caithness-x3,extension,loft conversions,58.439,-3.094,13,P1
+sct-wick-caithness-x4,extension,garage conversions,58.439,-3.094,13,P1
+sct-wick-caithness-x5,extension,single storey extension,58.439,-3.094,13,P1
+sct-wick-caithness-x6,extension,double storey extension,58.439,-3.094,13,P1
+sct-wick-caithness-x7,extension,design and build,58.439,-3.094,13,P1
+sct-wick-caithness-x8,adjacent,home renovations,58.439,-3.094,13,P2
+sct-wick-caithness-x9,adjacent,basement conversions,58.439,-3.094,13,P2
+wls-cardiff-x0,extension,house extensions,51.4816,-3.1791,13,P1
+wls-cardiff-x1,extension,home extensions,51.4816,-3.1791,13,P1
+wls-cardiff-x2,extension,extension builders,51.4816,-3.1791,13,P1
+wls-cardiff-x3,extension,loft conversions,51.4816,-3.1791,13,P1
+wls-cardiff-x4,extension,garage conversions,51.4816,-3.1791,13,P1
+wls-cardiff-x5,extension,single storey extension,51.4816,-3.1791,13,P1
+wls-cardiff-x6,extension,double storey extension,51.4816,-3.1791,13,P1
+wls-cardiff-x7,extension,design and build,51.4816,-3.1791,13,P1
+wls-cardiff-x8,adjacent,home renovations,51.4816,-3.1791,13,P2
+wls-cardiff-x9,adjacent,basement conversions,51.4816,-3.1791,13,P2
+wls-newport-x0,extension,house extensions,51.5842,-2.9977,13,P1
+wls-newport-x1,extension,home extensions,51.5842,-2.9977,13,P1
+wls-newport-x2,extension,extension builders,51.5842,-2.9977,13,P1
+wls-newport-x3,extension,loft conversions,51.5842,-2.9977,13,P1
+wls-newport-x4,extension,garage conversions,51.5842,-2.9977,13,P1
+wls-newport-x5,extension,single storey extension,51.5842,-2.9977,13,P1
+wls-newport-x6,extension,double storey extension,51.5842,-2.9977,13,P1
+wls-newport-x7,extension,design and build,51.5842,-2.9977,13,P1
+wls-newport-x8,adjacent,home renovations,51.5842,-2.9977,13,P2
+wls-newport-x9,adjacent,basement conversions,51.5842,-2.9977,13,P2
+wls-swansea-x0,extension,house extensions,51.6214,-3.9436,13,P1
+wls-swansea-x1,extension,home extensions,51.6214,-3.9436,13,P1
+wls-swansea-x2,extension,extension builders,51.6214,-3.9436,13,P1
+wls-swansea-x3,extension,loft conversions,51.6214,-3.9436,13,P1
+wls-swansea-x4,extension,garage conversions,51.6214,-3.9436,13,P1
+wls-swansea-x5,extension,single storey extension,51.6214,-3.9436,13,P1
+wls-swansea-x6,extension,double storey extension,51.6214,-3.9436,13,P1
+wls-swansea-x7,extension,design and build,51.6214,-3.9436,13,P1
+wls-swansea-x8,adjacent,home renovations,51.6214,-3.9436,13,P2
+wls-swansea-x9,adjacent,basement conversions,51.6214,-3.9436,13,P2
+wls-bridgend-x0,extension,house extensions,51.504,-3.577,13,P1
+wls-bridgend-x1,extension,home extensions,51.504,-3.577,13,P1
+wls-bridgend-x2,extension,extension builders,51.504,-3.577,13,P1
+wls-bridgend-x3,extension,loft conversions,51.504,-3.577,13,P1
+wls-bridgend-x4,extension,garage conversions,51.504,-3.577,13,P1
+wls-bridgend-x5,extension,single storey extension,51.504,-3.577,13,P1
+wls-bridgend-x6,extension,double storey extension,51.504,-3.577,13,P1
+wls-bridgend-x7,extension,design and build,51.504,-3.577,13,P1
+wls-bridgend-x8,adjacent,home renovations,51.504,-3.577,13,P2
+wls-bridgend-x9,adjacent,basement conversions,51.504,-3.577,13,P2
+wls-merthyr-tydfil-x0,extension,house extensions,51.748,-3.381,13,P1
+wls-merthyr-tydfil-x1,extension,home extensions,51.748,-3.381,13,P1
+wls-merthyr-tydfil-x2,extension,extension builders,51.748,-3.381,13,P1
+wls-merthyr-tydfil-x3,extension,loft conversions,51.748,-3.381,13,P1
+wls-merthyr-tydfil-x4,extension,garage conversions,51.748,-3.381,13,P1
+wls-merthyr-tydfil-x5,extension,single storey extension,51.748,-3.381,13,P1
+wls-merthyr-tydfil-x6,extension,double storey extension,51.748,-3.381,13,P1
+wls-merthyr-tydfil-x7,extension,design and build,51.748,-3.381,13,P1
+wls-merthyr-tydfil-x8,adjacent,home renovations,51.748,-3.381,13,P2
+wls-merthyr-tydfil-x9,adjacent,basement conversions,51.748,-3.381,13,P2
+wls-llanelli-x0,extension,house extensions,51.681,-4.162,13,P1
+wls-llanelli-x1,extension,home extensions,51.681,-4.162,13,P1
+wls-llanelli-x2,extension,extension builders,51.681,-4.162,13,P1
+wls-llanelli-x3,extension,loft conversions,51.681,-4.162,13,P1
+wls-llanelli-x4,extension,garage conversions,51.681,-4.162,13,P1
+wls-llanelli-x5,extension,single storey extension,51.681,-4.162,13,P1
+wls-llanelli-x6,extension,double storey extension,51.681,-4.162,13,P1
+wls-llanelli-x7,extension,design and build,51.681,-4.162,13,P1
+wls-llanelli-x8,adjacent,home renovations,51.681,-4.162,13,P2
+wls-llanelli-x9,adjacent,basement conversions,51.681,-4.162,13,P2
+wls-carmarthen-x0,extension,house extensions,51.856,-4.31,13,P1
+wls-carmarthen-x1,extension,home extensions,51.856,-4.31,13,P1
+wls-carmarthen-x2,extension,extension builders,51.856,-4.31,13,P1
+wls-carmarthen-x3,extension,loft conversions,51.856,-4.31,13,P1
+wls-carmarthen-x4,extension,garage conversions,51.856,-4.31,13,P1
+wls-carmarthen-x5,extension,single storey extension,51.856,-4.31,13,P1
+wls-carmarthen-x6,extension,double storey extension,51.856,-4.31,13,P1
+wls-carmarthen-x7,extension,design and build,51.856,-4.31,13,P1
+wls-carmarthen-x8,adjacent,home renovations,51.856,-4.31,13,P2
+wls-carmarthen-x9,adjacent,basement conversions,51.856,-4.31,13,P2
+wls-haverfordwest-x0,extension,house extensions,51.801,-4.97,13,P1
+wls-haverfordwest-x1,extension,home extensions,51.801,-4.97,13,P1
+wls-haverfordwest-x2,extension,extension builders,51.801,-4.97,13,P1
+wls-haverfordwest-x3,extension,loft conversions,51.801,-4.97,13,P1
+wls-haverfordwest-x4,extension,garage conversions,51.801,-4.97,13,P1
+wls-haverfordwest-x5,extension,single storey extension,51.801,-4.97,13,P1
+wls-haverfordwest-x6,extension,double storey extension,51.801,-4.97,13,P1
+wls-haverfordwest-x7,extension,design and build,51.801,-4.97,13,P1
+wls-haverfordwest-x8,adjacent,home renovations,51.801,-4.97,13,P2
+wls-haverfordwest-x9,adjacent,basement conversions,51.801,-4.97,13,P2
+wls-aberystwyth-x0,extension,house extensions,52.414,-4.081,13,P1
+wls-aberystwyth-x1,extension,home extensions,52.414,-4.081,13,P1
+wls-aberystwyth-x2,extension,extension builders,52.414,-4.081,13,P1
+wls-aberystwyth-x3,extension,loft conversions,52.414,-4.081,13,P1
+wls-aberystwyth-x4,extension,garage conversions,52.414,-4.081,13,P1
+wls-aberystwyth-x5,extension,single storey extension,52.414,-4.081,13,P1
+wls-aberystwyth-x6,extension,double storey extension,52.414,-4.081,13,P1
+wls-aberystwyth-x7,extension,design and build,52.414,-4.081,13,P1
+wls-aberystwyth-x8,adjacent,home renovations,52.414,-4.081,13,P2
+wls-aberystwyth-x9,adjacent,basement conversions,52.414,-4.081,13,P2
+wls-newtown-powys-x0,extension,house extensions,52.515,-3.313,13,P1
+wls-newtown-powys-x1,extension,home extensions,52.515,-3.313,13,P1
+wls-newtown-powys-x2,extension,extension builders,52.515,-3.313,13,P1
+wls-newtown-powys-x3,extension,loft conversions,52.515,-3.313,13,P1
+wls-newtown-powys-x4,extension,garage conversions,52.515,-3.313,13,P1
+wls-newtown-powys-x5,extension,single storey extension,52.515,-3.313,13,P1
+wls-newtown-powys-x6,extension,double storey extension,52.515,-3.313,13,P1
+wls-newtown-powys-x7,extension,design and build,52.515,-3.313,13,P1
+wls-newtown-powys-x8,adjacent,home renovations,52.515,-3.313,13,P2
+wls-newtown-powys-x9,adjacent,basement conversions,52.515,-3.313,13,P2
+wls-wrexham-x0,extension,house extensions,53.0428,-2.9927,13,P1
+wls-wrexham-x1,extension,home extensions,53.0428,-2.9927,13,P1
+wls-wrexham-x2,extension,extension builders,53.0428,-2.9927,13,P1
+wls-wrexham-x3,extension,loft conversions,53.0428,-2.9927,13,P1
+wls-wrexham-x4,extension,garage conversions,53.0428,-2.9927,13,P1
+wls-wrexham-x5,extension,single storey extension,53.0428,-2.9927,13,P1
+wls-wrexham-x6,extension,double storey extension,53.0428,-2.9927,13,P1
+wls-wrexham-x7,extension,design and build,53.0428,-2.9927,13,P1
+wls-wrexham-x8,adjacent,home renovations,53.0428,-2.9927,13,P2
+wls-wrexham-x9,adjacent,basement conversions,53.0428,-2.9927,13,P2
+wls-rhyl-colwyn-bay-x0,extension,house extensions,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-x1,extension,home extensions,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-x2,extension,extension builders,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-x3,extension,loft conversions,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-x4,extension,garage conversions,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-x5,extension,single storey extension,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-x6,extension,double storey extension,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-x7,extension,design and build,53.319,-3.489,13,P1
+wls-rhyl-colwyn-bay-x8,adjacent,home renovations,53.319,-3.489,13,P2
+wls-rhyl-colwyn-bay-x9,adjacent,basement conversions,53.319,-3.489,13,P2
+wls-bangor-gwynedd-x0,extension,house extensions,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-x1,extension,home extensions,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-x2,extension,extension builders,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-x3,extension,loft conversions,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-x4,extension,garage conversions,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-x5,extension,single storey extension,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-x6,extension,double storey extension,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-x7,extension,design and build,53.2274,-4.1293,13,P1
+wls-bangor-gwynedd-x8,adjacent,home renovations,53.2274,-4.1293,13,P2
+wls-bangor-gwynedd-x9,adjacent,basement conversions,53.2274,-4.1293,13,P2
+nir-belfast-x0,extension,house extensions,54.5973,-5.9301,13,P1
+nir-belfast-x1,extension,home extensions,54.5973,-5.9301,13,P1
+nir-belfast-x2,extension,extension builders,54.5973,-5.9301,13,P1
+nir-belfast-x3,extension,loft conversions,54.5973,-5.9301,13,P1
+nir-belfast-x4,extension,garage conversions,54.5973,-5.9301,13,P1
+nir-belfast-x5,extension,single storey extension,54.5973,-5.9301,13,P1
+nir-belfast-x6,extension,double storey extension,54.5973,-5.9301,13,P1
+nir-belfast-x7,extension,design and build,54.5973,-5.9301,13,P1
+nir-belfast-x8,adjacent,home renovations,54.5973,-5.9301,13,P2
+nir-belfast-x9,adjacent,basement conversions,54.5973,-5.9301,13,P2
+nir-lisburn-x0,extension,house extensions,54.5162,-6.058,13,P1
+nir-lisburn-x1,extension,home extensions,54.5162,-6.058,13,P1
+nir-lisburn-x2,extension,extension builders,54.5162,-6.058,13,P1
+nir-lisburn-x3,extension,loft conversions,54.5162,-6.058,13,P1
+nir-lisburn-x4,extension,garage conversions,54.5162,-6.058,13,P1
+nir-lisburn-x5,extension,single storey extension,54.5162,-6.058,13,P1
+nir-lisburn-x6,extension,double storey extension,54.5162,-6.058,13,P1
+nir-lisburn-x7,extension,design and build,54.5162,-6.058,13,P1
+nir-lisburn-x8,adjacent,home renovations,54.5162,-6.058,13,P2
+nir-lisburn-x9,adjacent,basement conversions,54.5162,-6.058,13,P2
+nir-craigavon-x0,extension,house extensions,54.447,-6.387,13,P1
+nir-craigavon-x1,extension,home extensions,54.447,-6.387,13,P1
+nir-craigavon-x2,extension,extension builders,54.447,-6.387,13,P1
+nir-craigavon-x3,extension,loft conversions,54.447,-6.387,13,P1
+nir-craigavon-x4,extension,garage conversions,54.447,-6.387,13,P1
+nir-craigavon-x5,extension,single storey extension,54.447,-6.387,13,P1
+nir-craigavon-x6,extension,double storey extension,54.447,-6.387,13,P1
+nir-craigavon-x7,extension,design and build,54.447,-6.387,13,P1
+nir-craigavon-x8,adjacent,home renovations,54.447,-6.387,13,P2
+nir-craigavon-x9,adjacent,basement conversions,54.447,-6.387,13,P2
+nir-newry-x0,extension,house extensions,54.1751,-6.3402,13,P1
+nir-newry-x1,extension,home extensions,54.1751,-6.3402,13,P1
+nir-newry-x2,extension,extension builders,54.1751,-6.3402,13,P1
+nir-newry-x3,extension,loft conversions,54.1751,-6.3402,13,P1
+nir-newry-x4,extension,garage conversions,54.1751,-6.3402,13,P1
+nir-newry-x5,extension,single storey extension,54.1751,-6.3402,13,P1
+nir-newry-x6,extension,double storey extension,54.1751,-6.3402,13,P1
+nir-newry-x7,extension,design and build,54.1751,-6.3402,13,P1
+nir-newry-x8,adjacent,home renovations,54.1751,-6.3402,13,P2
+nir-newry-x9,adjacent,basement conversions,54.1751,-6.3402,13,P2
+nir-ballymena-x0,extension,house extensions,54.8643,-6.2758,13,P1
+nir-ballymena-x1,extension,home extensions,54.8643,-6.2758,13,P1
+nir-ballymena-x2,extension,extension builders,54.8643,-6.2758,13,P1
+nir-ballymena-x3,extension,loft conversions,54.8643,-6.2758,13,P1
+nir-ballymena-x4,extension,garage conversions,54.8643,-6.2758,13,P1
+nir-ballymena-x5,extension,single storey extension,54.8643,-6.2758,13,P1
+nir-ballymena-x6,extension,double storey extension,54.8643,-6.2758,13,P1
+nir-ballymena-x7,extension,design and build,54.8643,-6.2758,13,P1
+nir-ballymena-x8,adjacent,home renovations,54.8643,-6.2758,13,P2
+nir-ballymena-x9,adjacent,basement conversions,54.8643,-6.2758,13,P2
+nir-coleraine-x0,extension,house extensions,55.132,-6.668,13,P1
+nir-coleraine-x1,extension,home extensions,55.132,-6.668,13,P1
+nir-coleraine-x2,extension,extension builders,55.132,-6.668,13,P1
+nir-coleraine-x3,extension,loft conversions,55.132,-6.668,13,P1
+nir-coleraine-x4,extension,garage conversions,55.132,-6.668,13,P1
+nir-coleraine-x5,extension,single storey extension,55.132,-6.668,13,P1
+nir-coleraine-x6,extension,double storey extension,55.132,-6.668,13,P1
+nir-coleraine-x7,extension,design and build,55.132,-6.668,13,P1
+nir-coleraine-x8,adjacent,home renovations,55.132,-6.668,13,P2
+nir-coleraine-x9,adjacent,basement conversions,55.132,-6.668,13,P2
+nir-londonderry-x0,extension,house extensions,54.9966,-7.3086,13,P1
+nir-londonderry-x1,extension,home extensions,54.9966,-7.3086,13,P1
+nir-londonderry-x2,extension,extension builders,54.9966,-7.3086,13,P1
+nir-londonderry-x3,extension,loft conversions,54.9966,-7.3086,13,P1
+nir-londonderry-x4,extension,garage conversions,54.9966,-7.3086,13,P1
+nir-londonderry-x5,extension,single storey extension,54.9966,-7.3086,13,P1
+nir-londonderry-x6,extension,double storey extension,54.9966,-7.3086,13,P1
+nir-londonderry-x7,extension,design and build,54.9966,-7.3086,13,P1
+nir-londonderry-x8,adjacent,home renovations,54.9966,-7.3086,13,P2
+nir-londonderry-x9,adjacent,basement conversions,54.9966,-7.3086,13,P2
+nir-omagh-x0,extension,house extensions,54.598,-7.31,13,P1
+nir-omagh-x1,extension,home extensions,54.598,-7.31,13,P1
+nir-omagh-x2,extension,extension builders,54.598,-7.31,13,P1
+nir-omagh-x3,extension,loft conversions,54.598,-7.31,13,P1
+nir-omagh-x4,extension,garage conversions,54.598,-7.31,13,P1
+nir-omagh-x5,extension,single storey extension,54.598,-7.31,13,P1
+nir-omagh-x6,extension,double storey extension,54.598,-7.31,13,P1
+nir-omagh-x7,extension,design and build,54.598,-7.31,13,P1
+nir-omagh-x8,adjacent,home renovations,54.598,-7.31,13,P2
+nir-omagh-x9,adjacent,basement conversions,54.598,-7.31,13,P2
+nir-enniskillen-x0,extension,house extensions,54.344,-7.631,13,P1
+nir-enniskillen-x1,extension,home extensions,54.344,-7.631,13,P1
+nir-enniskillen-x2,extension,extension builders,54.344,-7.631,13,P1
+nir-enniskillen-x3,extension,loft conversions,54.344,-7.631,13,P1
+nir-enniskillen-x4,extension,garage conversions,54.344,-7.631,13,P1
+nir-enniskillen-x5,extension,single storey extension,54.344,-7.631,13,P1
+nir-enniskillen-x6,extension,double storey extension,54.344,-7.631,13,P1
+nir-enniskillen-x7,extension,design and build,54.344,-7.631,13,P1
+nir-enniskillen-x8,adjacent,home renovations,54.344,-7.631,13,P2
+nir-enniskillen-x9,adjacent,basement conversions,54.344,-7.631,13,P2
+eng-london-north-wood-green-x0,extension,house extensions,51.597,-0.11,13,P1
+eng-london-north-wood-green-x1,extension,home extensions,51.597,-0.11,13,P1
+eng-london-north-wood-green-x2,extension,extension builders,51.597,-0.11,13,P1
+eng-london-north-wood-green-x3,extension,loft conversions,51.597,-0.11,13,P1
+eng-london-north-wood-green-x4,extension,garage conversions,51.597,-0.11,13,P1
+eng-london-north-wood-green-x5,extension,single storey extension,51.597,-0.11,13,P1
+eng-london-north-wood-green-x6,extension,double storey extension,51.597,-0.11,13,P1
+eng-london-north-wood-green-x7,extension,design and build,51.597,-0.11,13,P1
+eng-london-north-wood-green-x8,adjacent,home renovations,51.597,-0.11,13,P2
+eng-london-north-wood-green-x9,adjacent,basement conversions,51.597,-0.11,13,P2
+eng-london-south-streatham-x0,extension,house extensions,51.428,-0.123,13,P1
+eng-london-south-streatham-x1,extension,home extensions,51.428,-0.123,13,P1
+eng-london-south-streatham-x2,extension,extension builders,51.428,-0.123,13,P1
+eng-london-south-streatham-x3,extension,loft conversions,51.428,-0.123,13,P1
+eng-london-south-streatham-x4,extension,garage conversions,51.428,-0.123,13,P1
+eng-london-south-streatham-x5,extension,single storey extension,51.428,-0.123,13,P1
+eng-london-south-streatham-x6,extension,double storey extension,51.428,-0.123,13,P1
+eng-london-south-streatham-x7,extension,design and build,51.428,-0.123,13,P1
+eng-london-south-streatham-x8,adjacent,home renovations,51.428,-0.123,13,P2
+eng-london-south-streatham-x9,adjacent,basement conversions,51.428,-0.123,13,P2
+eng-london-east-stratford-x0,extension,house extensions,51.5416,-0.0042,13,P1
+eng-london-east-stratford-x1,extension,home extensions,51.5416,-0.0042,13,P1
+eng-london-east-stratford-x2,extension,extension builders,51.5416,-0.0042,13,P1
+eng-london-east-stratford-x3,extension,loft conversions,51.5416,-0.0042,13,P1
+eng-london-east-stratford-x4,extension,garage conversions,51.5416,-0.0042,13,P1
+eng-london-east-stratford-x5,extension,single storey extension,51.5416,-0.0042,13,P1
+eng-london-east-stratford-x6,extension,double storey extension,51.5416,-0.0042,13,P1
+eng-london-east-stratford-x7,extension,design and build,51.5416,-0.0042,13,P1
+eng-london-east-stratford-x8,adjacent,home renovations,51.5416,-0.0042,13,P2
+eng-london-east-stratford-x9,adjacent,basement conversions,51.5416,-0.0042,13,P2
+eng-london-west-ealing-x0,extension,house extensions,51.513,-0.304,13,P1
+eng-london-west-ealing-x1,extension,home extensions,51.513,-0.304,13,P1
+eng-london-west-ealing-x2,extension,extension builders,51.513,-0.304,13,P1
+eng-london-west-ealing-x3,extension,loft conversions,51.513,-0.304,13,P1
+eng-london-west-ealing-x4,extension,garage conversions,51.513,-0.304,13,P1
+eng-london-west-ealing-x5,extension,single storey extension,51.513,-0.304,13,P1
+eng-london-west-ealing-x6,extension,double storey extension,51.513,-0.304,13,P1
+eng-london-west-ealing-x7,extension,design and build,51.513,-0.304,13,P1
+eng-london-west-ealing-x8,adjacent,home renovations,51.513,-0.304,13,P2
+eng-london-west-ealing-x9,adjacent,basement conversions,51.513,-0.304,13,P2
+eng-london-croydon-x0,extension,house extensions,51.3762,-0.0982,13,P1
+eng-london-croydon-x1,extension,home extensions,51.3762,-0.0982,13,P1
+eng-london-croydon-x2,extension,extension builders,51.3762,-0.0982,13,P1
+eng-london-croydon-x3,extension,loft conversions,51.3762,-0.0982,13,P1
+eng-london-croydon-x4,extension,garage conversions,51.3762,-0.0982,13,P1
+eng-london-croydon-x5,extension,single storey extension,51.3762,-0.0982,13,P1
+eng-london-croydon-x6,extension,double storey extension,51.3762,-0.0982,13,P1
+eng-london-croydon-x7,extension,design and build,51.3762,-0.0982,13,P1
+eng-london-croydon-x8,adjacent,home renovations,51.3762,-0.0982,13,P2
+eng-london-croydon-x9,adjacent,basement conversions,51.3762,-0.0982,13,P2
+eng-london-bromley-x0,extension,house extensions,51.406,0.015,13,P1
+eng-london-bromley-x1,extension,home extensions,51.406,0.015,13,P1
+eng-london-bromley-x2,extension,extension builders,51.406,0.015,13,P1
+eng-london-bromley-x3,extension,loft conversions,51.406,0.015,13,P1
+eng-london-bromley-x4,extension,garage conversions,51.406,0.015,13,P1
+eng-london-bromley-x5,extension,single storey extension,51.406,0.015,13,P1
+eng-london-bromley-x6,extension,double storey extension,51.406,0.015,13,P1
+eng-london-bromley-x7,extension,design and build,51.406,0.015,13,P1
+eng-london-bromley-x8,adjacent,home renovations,51.406,0.015,13,P2
+eng-london-bromley-x9,adjacent,basement conversions,51.406,0.015,13,P2
+eng-london-romford-x0,extension,house extensions,51.575,0.183,13,P1
+eng-london-romford-x1,extension,home extensions,51.575,0.183,13,P1
+eng-london-romford-x2,extension,extension builders,51.575,0.183,13,P1
+eng-london-romford-x3,extension,loft conversions,51.575,0.183,13,P1
+eng-london-romford-x4,extension,garage conversions,51.575,0.183,13,P1
+eng-london-romford-x5,extension,single storey extension,51.575,0.183,13,P1
+eng-london-romford-x6,extension,double storey extension,51.575,0.183,13,P1
+eng-london-romford-x7,extension,design and build,51.575,0.183,13,P1
+eng-london-romford-x8,adjacent,home renovations,51.575,0.183,13,P2
+eng-london-romford-x9,adjacent,basement conversions,51.575,0.183,13,P2
+eng-london-enfield-x0,extension,house extensions,51.652,-0.081,13,P1
+eng-london-enfield-x1,extension,home extensions,51.652,-0.081,13,P1
+eng-london-enfield-x2,extension,extension builders,51.652,-0.081,13,P1
+eng-london-enfield-x3,extension,loft conversions,51.652,-0.081,13,P1
+eng-london-enfield-x4,extension,garage conversions,51.652,-0.081,13,P1
+eng-london-enfield-x5,extension,single storey extension,51.652,-0.081,13,P1
+eng-london-enfield-x6,extension,double storey extension,51.652,-0.081,13,P1
+eng-london-enfield-x7,extension,design and build,51.652,-0.081,13,P1
+eng-london-enfield-x8,adjacent,home renovations,51.652,-0.081,13,P2
+eng-london-enfield-x9,adjacent,basement conversions,51.652,-0.081,13,P2
+eng-london-harrow-x0,extension,house extensions,51.58,-0.342,13,P1
+eng-london-harrow-x1,extension,home extensions,51.58,-0.342,13,P1
+eng-london-harrow-x2,extension,extension builders,51.58,-0.342,13,P1
+eng-london-harrow-x3,extension,loft conversions,51.58,-0.342,13,P1
+eng-london-harrow-x4,extension,garage conversions,51.58,-0.342,13,P1
+eng-london-harrow-x5,extension,single storey extension,51.58,-0.342,13,P1
+eng-london-harrow-x6,extension,double storey extension,51.58,-0.342,13,P1
+eng-london-harrow-x7,extension,design and build,51.58,-0.342,13,P1
+eng-london-harrow-x8,adjacent,home renovations,51.58,-0.342,13,P2
+eng-london-harrow-x9,adjacent,basement conversions,51.58,-0.342,13,P2
+eng-london-kingston-x0,extension,house extensions,51.412,-0.3,13,P1
+eng-london-kingston-x1,extension,home extensions,51.412,-0.3,13,P1
+eng-london-kingston-x2,extension,extension builders,51.412,-0.3,13,P1
+eng-london-kingston-x3,extension,loft conversions,51.412,-0.3,13,P1
+eng-london-kingston-x4,extension,garage conversions,51.412,-0.3,13,P1
+eng-london-kingston-x5,extension,single storey extension,51.412,-0.3,13,P1
+eng-london-kingston-x6,extension,double storey extension,51.412,-0.3,13,P1
+eng-london-kingston-x7,extension,design and build,51.412,-0.3,13,P1
+eng-london-kingston-x8,adjacent,home renovations,51.412,-0.3,13,P2
+eng-london-kingston-x9,adjacent,basement conversions,51.412,-0.3,13,P2
+eng-london-uxbridge-x0,extension,house extensions,51.546,-0.478,13,P1
+eng-london-uxbridge-x1,extension,home extensions,51.546,-0.478,13,P1
+eng-london-uxbridge-x2,extension,extension builders,51.546,-0.478,13,P1
+eng-london-uxbridge-x3,extension,loft conversions,51.546,-0.478,13,P1
+eng-london-uxbridge-x4,extension,garage conversions,51.546,-0.478,13,P1
+eng-london-uxbridge-x5,extension,single storey extension,51.546,-0.478,13,P1
+eng-london-uxbridge-x6,extension,double storey extension,51.546,-0.478,13,P1
+eng-london-uxbridge-x7,extension,design and build,51.546,-0.478,13,P1
+eng-london-uxbridge-x8,adjacent,home renovations,51.546,-0.478,13,P2
+eng-london-uxbridge-x9,adjacent,basement conversions,51.546,-0.478,13,P2
+eng-london-watford-x0,extension,house extensions,51.6565,-0.3903,13,P1
+eng-london-watford-x1,extension,home extensions,51.6565,-0.3903,13,P1
+eng-london-watford-x2,extension,extension builders,51.6565,-0.3903,13,P1
+eng-london-watford-x3,extension,loft conversions,51.6565,-0.3903,13,P1
+eng-london-watford-x4,extension,garage conversions,51.6565,-0.3903,13,P1
+eng-london-watford-x5,extension,single storey extension,51.6565,-0.3903,13,P1
+eng-london-watford-x6,extension,double storey extension,51.6565,-0.3903,13,P1
+eng-london-watford-x7,extension,design and build,51.6565,-0.3903,13,P1
+eng-london-watford-x8,adjacent,home renovations,51.6565,-0.3903,13,P2
+eng-london-watford-x9,adjacent,basement conversions,51.6565,-0.3903,13,P2
+eng-bham-solihull-x0,extension,house extensions,52.412,-1.778,13,P1
+eng-bham-solihull-x1,extension,home extensions,52.412,-1.778,13,P1
+eng-bham-solihull-x2,extension,extension builders,52.412,-1.778,13,P1
+eng-bham-solihull-x3,extension,loft conversions,52.412,-1.778,13,P1
+eng-bham-solihull-x4,extension,garage conversions,52.412,-1.778,13,P1
+eng-bham-solihull-x5,extension,single storey extension,52.412,-1.778,13,P1
+eng-bham-solihull-x6,extension,double storey extension,52.412,-1.778,13,P1
+eng-bham-solihull-x7,extension,design and build,52.412,-1.778,13,P1
+eng-bham-solihull-x8,adjacent,home renovations,52.412,-1.778,13,P2
+eng-bham-solihull-x9,adjacent,basement conversions,52.412,-1.778,13,P2
+eng-bham-sutton-coldfield-x0,extension,house extensions,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-x1,extension,home extensions,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-x2,extension,extension builders,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-x3,extension,loft conversions,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-x4,extension,garage conversions,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-x5,extension,single storey extension,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-x6,extension,double storey extension,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-x7,extension,design and build,52.563,-1.824,13,P1
+eng-bham-sutton-coldfield-x8,adjacent,home renovations,52.563,-1.824,13,P2
+eng-bham-sutton-coldfield-x9,adjacent,basement conversions,52.563,-1.824,13,P2
+eng-bham-walsall-x0,extension,house extensions,52.586,-1.982,13,P1
+eng-bham-walsall-x1,extension,home extensions,52.586,-1.982,13,P1
+eng-bham-walsall-x2,extension,extension builders,52.586,-1.982,13,P1
+eng-bham-walsall-x3,extension,loft conversions,52.586,-1.982,13,P1
+eng-bham-walsall-x4,extension,garage conversions,52.586,-1.982,13,P1
+eng-bham-walsall-x5,extension,single storey extension,52.586,-1.982,13,P1
+eng-bham-walsall-x6,extension,double storey extension,52.586,-1.982,13,P1
+eng-bham-walsall-x7,extension,design and build,52.586,-1.982,13,P1
+eng-bham-walsall-x8,adjacent,home renovations,52.586,-1.982,13,P2
+eng-bham-walsall-x9,adjacent,basement conversions,52.586,-1.982,13,P2
+eng-mcr-altrincham-x0,extension,house extensions,53.387,-2.351,13,P1
+eng-mcr-altrincham-x1,extension,home extensions,53.387,-2.351,13,P1
+eng-mcr-altrincham-x2,extension,extension builders,53.387,-2.351,13,P1
+eng-mcr-altrincham-x3,extension,loft conversions,53.387,-2.351,13,P1
+eng-mcr-altrincham-x4,extension,garage conversions,53.387,-2.351,13,P1
+eng-mcr-altrincham-x5,extension,single storey extension,53.387,-2.351,13,P1
+eng-mcr-altrincham-x6,extension,double storey extension,53.387,-2.351,13,P1
+eng-mcr-altrincham-x7,extension,design and build,53.387,-2.351,13,P1
+eng-mcr-altrincham-x8,adjacent,home renovations,53.387,-2.351,13,P2
+eng-mcr-altrincham-x9,adjacent,basement conversions,53.387,-2.351,13,P2
+eng-mcr-bury-x0,extension,house extensions,53.593,-2.297,13,P1
+eng-mcr-bury-x1,extension,home extensions,53.593,-2.297,13,P1
+eng-mcr-bury-x2,extension,extension builders,53.593,-2.297,13,P1
+eng-mcr-bury-x3,extension,loft conversions,53.593,-2.297,13,P1
+eng-mcr-bury-x4,extension,garage conversions,53.593,-2.297,13,P1
+eng-mcr-bury-x5,extension,single storey extension,53.593,-2.297,13,P1
+eng-mcr-bury-x6,extension,double storey extension,53.593,-2.297,13,P1
+eng-mcr-bury-x7,extension,design and build,53.593,-2.297,13,P1
+eng-mcr-bury-x8,adjacent,home renovations,53.593,-2.297,13,P2
+eng-mcr-bury-x9,adjacent,basement conversions,53.593,-2.297,13,P2
+eng-mcr-ashton-under-lyne-x0,extension,house extensions,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-x1,extension,home extensions,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-x2,extension,extension builders,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-x3,extension,loft conversions,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-x4,extension,garage conversions,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-x5,extension,single storey extension,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-x6,extension,double storey extension,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-x7,extension,design and build,53.49,-2.097,13,P1
+eng-mcr-ashton-under-lyne-x8,adjacent,home renovations,53.49,-2.097,13,P2
+eng-mcr-ashton-under-lyne-x9,adjacent,basement conversions,53.49,-2.097,13,P2
+eng-leeds-north-moortown-x0,extension,house extensions,53.838,-1.548,13,P1
+eng-leeds-north-moortown-x1,extension,home extensions,53.838,-1.548,13,P1
+eng-leeds-north-moortown-x2,extension,extension builders,53.838,-1.548,13,P1
+eng-leeds-north-moortown-x3,extension,loft conversions,53.838,-1.548,13,P1
+eng-leeds-north-moortown-x4,extension,garage conversions,53.838,-1.548,13,P1
+eng-leeds-north-moortown-x5,extension,single storey extension,53.838,-1.548,13,P1
+eng-leeds-north-moortown-x6,extension,double storey extension,53.838,-1.548,13,P1
+eng-leeds-north-moortown-x7,extension,design and build,53.838,-1.548,13,P1
+eng-leeds-north-moortown-x8,adjacent,home renovations,53.838,-1.548,13,P2
+eng-leeds-north-moortown-x9,adjacent,basement conversions,53.838,-1.548,13,P2
+eng-bradford-keighley-x0,extension,house extensions,53.867,-1.911,13,P1
+eng-bradford-keighley-x1,extension,home extensions,53.867,-1.911,13,P1
+eng-bradford-keighley-x2,extension,extension builders,53.867,-1.911,13,P1
+eng-bradford-keighley-x3,extension,loft conversions,53.867,-1.911,13,P1
+eng-bradford-keighley-x4,extension,garage conversions,53.867,-1.911,13,P1
+eng-bradford-keighley-x5,extension,single storey extension,53.867,-1.911,13,P1
+eng-bradford-keighley-x6,extension,double storey extension,53.867,-1.911,13,P1
+eng-bradford-keighley-x7,extension,design and build,53.867,-1.911,13,P1
+eng-bradford-keighley-x8,adjacent,home renovations,53.867,-1.911,13,P2
+eng-bradford-keighley-x9,adjacent,basement conversions,53.867,-1.911,13,P2
+sct-glasgow-paisley-x0,extension,house extensions,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-x1,extension,home extensions,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-x2,extension,extension builders,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-x3,extension,loft conversions,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-x4,extension,garage conversions,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-x5,extension,single storey extension,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-x6,extension,double storey extension,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-x7,extension,design and build,55.8456,-4.4239,13,P1
+sct-glasgow-paisley-x8,adjacent,home renovations,55.8456,-4.4239,13,P2
+sct-glasgow-paisley-x9,adjacent,basement conversions,55.8456,-4.4239,13,P2
+sct-glasgow-east-kilbride-x0,extension,house extensions,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-x1,extension,home extensions,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-x2,extension,extension builders,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-x3,extension,loft conversions,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-x4,extension,garage conversions,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-x5,extension,single storey extension,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-x6,extension,double storey extension,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-x7,extension,design and build,55.7644,-4.177,13,P1
+sct-glasgow-east-kilbride-x8,adjacent,home renovations,55.7644,-4.177,13,P2
+sct-glasgow-east-kilbride-x9,adjacent,basement conversions,55.7644,-4.177,13,P2
+eng-liverpool-south-garston-x0,extension,house extensions,53.355,-2.88,13,P1
+eng-liverpool-south-garston-x1,extension,home extensions,53.355,-2.88,13,P1
+eng-liverpool-south-garston-x2,extension,extension builders,53.355,-2.88,13,P1
+eng-liverpool-south-garston-x3,extension,loft conversions,53.355,-2.88,13,P1
+eng-liverpool-south-garston-x4,extension,garage conversions,53.355,-2.88,13,P1
+eng-liverpool-south-garston-x5,extension,single storey extension,53.355,-2.88,13,P1
+eng-liverpool-south-garston-x6,extension,double storey extension,53.355,-2.88,13,P1
+eng-liverpool-south-garston-x7,extension,design and build,53.355,-2.88,13,P1
+eng-liverpool-south-garston-x8,adjacent,home renovations,53.355,-2.88,13,P2
+eng-liverpool-south-garston-x9,adjacent,basement conversions,53.355,-2.88,13,P2
+eng-sheffield-north-x0,extension,house extensions,53.46,-1.47,13,P1
+eng-sheffield-north-x1,extension,home extensions,53.46,-1.47,13,P1
+eng-sheffield-north-x2,extension,extension builders,53.46,-1.47,13,P1
+eng-sheffield-north-x3,extension,loft conversions,53.46,-1.47,13,P1
+eng-sheffield-north-x4,extension,garage conversions,53.46,-1.47,13,P1
+eng-sheffield-north-x5,extension,single storey extension,53.46,-1.47,13,P1
+eng-sheffield-north-x6,extension,double storey extension,53.46,-1.47,13,P1
+eng-sheffield-north-x7,extension,design and build,53.46,-1.47,13,P1
+eng-sheffield-north-x8,adjacent,home renovations,53.46,-1.47,13,P2
+eng-sheffield-north-x9,adjacent,basement conversions,53.46,-1.47,13,P2
+eng-bristol-north-filton-x0,extension,house extensions,51.51,-2.57,13,P1
+eng-bristol-north-filton-x1,extension,home extensions,51.51,-2.57,13,P1
+eng-bristol-north-filton-x2,extension,extension builders,51.51,-2.57,13,P1
+eng-bristol-north-filton-x3,extension,loft conversions,51.51,-2.57,13,P1
+eng-bristol-north-filton-x4,extension,garage conversions,51.51,-2.57,13,P1
+eng-bristol-north-filton-x5,extension,single storey extension,51.51,-2.57,13,P1
+eng-bristol-north-filton-x6,extension,double storey extension,51.51,-2.57,13,P1
+eng-bristol-north-filton-x7,extension,design and build,51.51,-2.57,13,P1
+eng-bristol-north-filton-x8,adjacent,home renovations,51.51,-2.57,13,P2
+eng-bristol-north-filton-x9,adjacent,basement conversions,51.51,-2.57,13,P2
+eng-newcastle-gateshead-sth-x0,extension,house extensions,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-x1,extension,home extensions,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-x2,extension,extension builders,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-x3,extension,loft conversions,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-x4,extension,garage conversions,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-x5,extension,single storey extension,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-x6,extension,double storey extension,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-x7,extension,design and build,54.9,-1.52,13,P1
+eng-newcastle-gateshead-sth-x8,adjacent,home renovations,54.9,-1.52,13,P2
+eng-newcastle-gateshead-sth-x9,adjacent,basement conversions,54.9,-1.52,13,P2
+sct-edinburgh-west-x0,extension,house extensions,55.92,-3.28,13,P1
+sct-edinburgh-west-x1,extension,home extensions,55.92,-3.28,13,P1
+sct-edinburgh-west-x2,extension,extension builders,55.92,-3.28,13,P1
+sct-edinburgh-west-x3,extension,loft conversions,55.92,-3.28,13,P1
+sct-edinburgh-west-x4,extension,garage conversions,55.92,-3.28,13,P1
+sct-edinburgh-west-x5,extension,single storey extension,55.92,-3.28,13,P1
+sct-edinburgh-west-x6,extension,double storey extension,55.92,-3.28,13,P1
+sct-edinburgh-west-x7,extension,design and build,55.92,-3.28,13,P1
+sct-edinburgh-west-x8,adjacent,home renovations,55.92,-3.28,13,P2
+sct-edinburgh-west-x9,adjacent,basement conversions,55.92,-3.28,13,P2

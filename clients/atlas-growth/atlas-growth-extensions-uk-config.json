@@ -1,0 +1,126 @@
+{
+  "_comment": "Atlas Growth :: UK residential home-extension contractors (extensions / loft conversions / garage conversions / design-and-build). Engine config for google-maps-scrape. Mirrors clients/atlas-growth/atlas-growth-uk-config.json (the 2026-09-16 UK foundation run) for geo + scrape tuning; the RULE POSTURE IS INVERTED: on the foundation run the generic construction buckets were noise to be refused and recovered by name — here they ARE the ICP (an extension builder is typed 'Construction company' / 'Contractor' / 'Builder' / 'General contractor' and nothing more specific; Google has no 'extension' or 'loft conversion' category at all, checked against references/google-maps-categories.md 2026-10-11). So the Maps stage is volume-safe and the real ICP verdict is the STEP 5e site-text classification (classify-prompt.md in the run folder: extension_builder / builder_unconfirmed / design_only / ...). Job-specific values live ONLY here — never edit an engine script to tune this run. DRAFT at GATE 1 (2026-10-11): nothing below has been run against a real UK universe yet; the 3-row calibration sheet in gen-runsheet-extensions-uk.js is what calibrates it.",
+
+  "geo": {
+    "_r": "Identical to atlas-growth-uk-config.json: areas mode (the 177 runsheet tiles ARE the footprint), country gb, no region token in a UK city string, region_default 'UK' so footprint-gate.js never drops 'United Kingdom / England / Scotland / Wales' as a foreign country while Republic-of-Ireland pins still drop on 'ireland'. The 2026-09-16 UK run measured US service-area pins arriving in a UK pull (872 far_from_hubs drops) — the footprint gate is doing primary work here, never ship without it.",
+    "country": "gb",
+    "footprint": { "mode": "areas" },
+    "region_from_city": null,
+    "region_default": "UK"
+  },
+
+  "categories": {
+    "_r": "Runsheet queries by icp_type (gen-runsheet-extensions-uk.js is the source of truth; this block documents them). P1 = direct extension/conversion intent — Maps text-matches the query against name + description + category, which is the only way to reach a trade Google has no category for. P2 = the adjacent self-labels an extension builder carries (renovation / refurbishment / basement conversion; basement overlaps the foundation run and the cross-run dedupe handles it). P3 (OFF by default, --broad) = the bare 'builders' / 'building contractors' queries: they return every builder in every town (max_pages x 177 tiles ≈ 1,000+ calls each) and the extra rows are general builders with no extension signal — a universe-size lever for the operator, not the default.",
+    "extension": ["house extensions", "home extensions", "extension builders", "loft conversions", "garage conversions", "single storey extension", "double storey extension", "design and build"],
+    "adjacent": ["home renovations", "basement conversions"],
+    "broad_off_by_default": ["builders", "building contractors"]
+  },
+
+  "scrape_tuning": {
+    "_r": "Copied from the validated UK foundation config: paginate via offset to exhaustion, max_pages 6 x limit 150 = 900 records per tile ceiling (caps the worst-case London spend), saturation inert under paginate, one quadrant split at UK-town scale. That run measured 2.61 calls per runsheet row, page-depth {1:87, 2:1498, 3:483, 4:22} with no spike at max_pages — the same shape is expected here, but 'house extensions' at a London tile is denser than 'underpinning', so the calibration sheet reads page depth before the full run is priced.",
+    "paginate": true,
+    "max_pages": 6,
+    "limit": 150,
+    "saturation": 90,
+    "max_depth": 1,
+    "quad_offset": 0.02
+  },
+
+  "qualify_rules": [
+    {"_r": "1. HARD entity deny, scope:'any' — the only rule allowed to match a SECONDARY google_type, so every term is an entity kind that can never be a tag on a real builder (sharp-shannon 2026-09-13: a bare 'atm' under scope:any deleted 71 bank branches). Same list as the UK foundation config plus the homonym this vertical's own word drags in: 'extensions' on Maps is also HAIR and LASH extensions, so the salon/beauty types are denied here (and 'hair extension' / 'lash extension' in the name deny below for the ones typed 'Beauty salon' only as a secondary). No bare 'school' / 'care' / 'club' / 'park' — those stems collide with real trading names.",
+     "field": "google_types", "op": "deny", "scope": "any", "label": "hard_off_icp_type", "value": [
+       "auto body shop", "car repair and maintenance", "car repair", "truck repair", "motorcycle repair",
+       "car dealer", "used car dealer", "tyre shop", "car wash",
+       "non-profit organization", "charity", "charitable organization", "social services organization",
+       "college", "university", "primary school", "secondary school", "high school", "sixth form",
+       "hospital", "medical clinic", "hospice", "nursing home", "dental clinic", "veterinary",
+       "church", "mosque", "synagogue", "hindu temple", "place of worship", "monastery", "cathedral",
+       "funeral home", "cemetery", "crematorium",
+       "real estate agency", "estate agent", "letting agency",
+       "insurance agency", "law firm", "solicitor", "recruiter", "travel agency",
+       "hair salon", "hair extensions supplier", "hair extension technician", "beauty salon", "nail salon", "eyelash salon", "barber shop"]},
+
+    {"_r": "2. PRIMARY-type deny (engine default: google_types[0] only). Entity kinds that legitimately appear as a SECONDARY tag on a real extension builder, so they are judged on primary identity only: a design-and-build firm carrying 'Architect' second survives; an architecture practice primaried 'Architect' is removed. DECISIONS, each a visible call for GATE 1: (a) ARCHITECTS / ARCHITECTURAL DESIGNERS / BUILDING DESIGNERS / DESIGN AGENCIES are denied on primary. They sell the drawings and the planning application, not the build; by analogy with the operator's 2026-10-11 pools decision ('designers EXCLUDED') a design-only practice is not a buyer of a build-project lead-gen retainer. A genuine design-and-build firm that Google primaries 'Architect' is NOT lost: it dies here as off_icp_primary and recover-generic-extensions-uk-config.json readmits architect-typed rows whose NAME claims building ('design and build', 'build', 'construction', 'extension', 'loft'), after which the site-text gate decides. (b) KITCHEN / BATHROOM REMODELER on primary = UK kitchen and bathroom fitters and showrooms, denied; a builder carrying the tag second survives; a kitchen-extension specialist primaried this way comes back through the same name recovery. (c) WINDOW INSTALLATION / GLAZIER / DOUBLE GLAZING on primary = the conservatory and glazing trade. Conservatories and orangeries ARE a glazed extension, so this is a scope decision for the operator: denied by default (a glazing company does not build the brick-and-block extension the offer's creative will show), recoverable through the name recovery when the name claims extensions, and classify tags the survivors conservatory_glazing_only so the bucket can be shipped later if the client wants it. (d) NO deny on roofing contractor / carpenter / joiner / bricklayer / masonry / plasterer / handyman / property maintenance / landscaper: loft-conversion specialists are routinely primaried Roofing contractor or Carpenter, and a primary deny would put them in off_icp_primary where the name recovery's scope gate cannot reach them. They fall out at the rule-4 allow instead and come back by NAME. (e) Engineers, surveyors, inspectors, merchants, hire, manufacturers, plumbers, electricians, heating, drainage, removals, skips, property management: the same supplier-not-contractor and referral-source-not-buyer buckets as the UK foundation config.",
+     "field": "google_types", "op": "deny", "label": "off_icp_primary", "value": [
+       "architect", "architecture firm", "architectural designer", "building designer", "design agency", "interior designer", "landscape architect",
+       "structural engineer", "civil engineer", "engineering consultant", "consulting engineer", "design engineer",
+       "chartered surveyor", "quantity surveyor", "land surveyor", "building inspector", "home inspector", "property inspector", "building consultant",
+       "building materials supplier", "building materials store", "building materials market", "home improvement store",
+       "hardware store", "concrete product supplier", "ready mix concrete supplier",
+       "lumber store", "timber merchant", "paint store", "tile store", "kitchen furniture store", "kitchen supply store",
+       "window supplier", "roofing supply store", "masonry supply store", "garage door supplier", "door supplier",
+       "tool rental service", "equipment rental agency", "plant hire", "building equipment hire service",
+       "manufacturer", "wholesaler", "distribution service",
+       "plumber", "electrician", "heating contractor", "boiler", "drainage service", "septic system service",
+       "kitchen remodeler", "bathroom remodeler",
+       "window installation service", "glazier", "double glazing",
+       "mover", "moving company", "moving and storage service",
+       "waste management service", "skip rental service",
+       "property management company", "property investment company", "property administration service",
+       "real estate developer", "housing development"]},
+
+    {"_r": "3. NAME deny (exact substring, any row). Multi-word or unambiguous terms only (sharp-shannon: 'spa' ate 'Coworking space'). Traps this vertical has: (a) the hair/lash homonym of 'extensions'; (b) NATIONAL NEW-BUILD HOUSEBUILDERS — Google types them 'Home builder', which rule 4 allows, but Barratt / Persimmon / Taylor Wimpey build estates, not extensions, and are not ICP at any branch. This is NOT a chain drop of ICP roll-ups (the standing directive keeps those and flags the brand — see brand_families); it removes an off-ICP entity kind that happens to share a Google type with the ICP. (c) Merchants, hire, surveyors, engineers, drains, plumbing-and-heating, estate agents, councils and NHS trusts, bodyshops — the UK foundation list, kept because 'design and build' and 'home renovations' drag the same things in. DELIBERATE OMISSIONS: no bare 'architect' / 'architects' — 'Smith Architects & Builders' is a real design-and-build trading style and rule 2 already removes the architect-primaried practices; no 'design' (too common in builder names); no 'conservator' (a conservatory firm named for extensions is a classify question, not a name deny); no bare 'property' or 'developments' (local builders trade as '<X> Property Developments').",
+     "field": "name", "op": "not_contains_any", "label": "name_deny", "value": [
+       "hair extension", "lash extension", "eyelash", "hair salon", "hair studio", "nail bar", "beauty salon",
+       "barratt", "persimmon", "taylor wimpey", "bellway", "redrow", "berkeley homes", "bovis homes", "vistry",
+       "crest nicholson", "countryside properties", "mccarthy stone", "keepmoat", "miller homes", "cala homes",
+       "bloor homes", "david wilson homes", "charles church", "linden homes", "st modwen", "avant homes",
+       "strata homes", "gleeson homes", "stewart milne", "lovell homes", "wates", "kier ", "galliford",
+       "community foundation", "charitable trust", "charitable incorporated", "charity shop",
+       "foundation trust", "nhs foundation", "almshouse", "housing association", "hospice",
+       "air ambulance", "food bank", "scout group", "rotary club", "parish council",
+       "town council", "borough council", "county council", "city council", "church of england",
+       "methodist church", "baptist church", "parish church", "islamic centre", "gurdwara",
+       "collision", "auto body", "autobody", "body shop", "bodyshop", "accident repair",
+       "crash repair", "panel beater", "car body", "vehicle repair", "mot centre",
+       "builders merchant", "builders merchants", "building supplies", "timber merchant",
+       "plant hire", "tool hire", "scaffolding hire", "skip hire", "hire centre",
+       "travis perkins", "jewson", "buildbase", "huws gray", "selco builders", "mkm building",
+       "screwfix", "toolstation", "wickes", "howdens", "b&q", "homebase",
+       "ready mix", "ready-mix", "readymix", "sand & gravel", "sand and gravel", "quarry products",
+       "chartered surveyor", "quantity surveyor", "consulting engineer", "engineering consultants", "planning consultant",
+       "drain jetting", "drain unblocking", "blocked drains", "drain clearance", "drain lining",
+       "drain survey", "cctv drain", "24 hour drainage", "emergency drainage",
+       "plumbing & heating", "plumbing and heating", "boiler repair", "boiler service",
+       "estate agents", "lettings", "sales & lettings", "mortgage advice", "self storage"]},
+
+    {"_r": "4. Positive allow on google_types-ANY (never primary_type — Google mis-primaries UK builders constantly). These are the generic construction buckets the foundation config REFUSED; here they are the ICP, because Google has no extension/loft/conversion category and types this trade 'Construction company' / 'General contractor' / 'Home builder' / 'Building firm' / 'Garage builder' (garage builders convert garages). Substring semantics, so two bare terms are DELIBERATELY ABSENT: 'contractor' (would admit every 'Roofing contractor' / 'Electrical contractor' / 'Painting contractor' through the allow) and 'builder' (admits 'Deck builder', 'Shed builder', 'Boat builders'). A row whose PRIMARY type is the bare 'Contractor' or 'Builder' is taken back by recover-baretype-extensions-uk-config.json (primary_type in [...], exact match, no name requirement — they are the core of this ICP); a row that carries them only as a SECONDARY tag under a trade primary (roofer, carpenter, plasterer …) is taken back by recover-generic-extensions-uk-config.json when its NAME claims extension / loft / conversion / build work. 'remodeler' is likewise absent (would admit 'Kitchen remodeler' as a secondary tag) and rides the bare-type recovery as a primary.",
+     "field": "google_types", "op": "allow", "label": "not_in_icp", "value": [
+       "construction company", "general contractor", "home builder", "custom home builder",
+       "building firm", "building company", "garage builder"]},
+
+    {"_r": "5. Review floor 5, label too_small — the GHOST-LISTING filter the UK foundation run validated (3-to-10-person owner-operated firms with single-digit review counts; 30 would delete the trade). Blank review_count fails this floor exactly like a 0 (qualify-leads.js:92, measured 2026-09-16), so recover-unrated-extensions-uk-config.json takes back unrated listings that carry a live website. Re-checkable at $0 by re-running qualify at 0 over excluded_officp.csv.",
+     "field": "review_count", "op": ">=", "value": 5, "label": "too_small"}
+  ],
+
+  "_no_website_rule": "Deliberately NO {website, exists} rule. collapse-domains.js classifies website as site / shared_host / none after the geo gate; no-website and Facebook-only builders are the STEP 5d recovery track, not junk — a large share of real UK owner-operated builders trade from a Facebook page alone.",
+
+  "_no_gov_deny": "No standing government deny: none of the 10 queries carries institutional intent. Councils and NHS trusts are covered by rule 1 (types) and rule 3 (names).",
+
+  "_no_chain_drop": "No chain/franchise deny of ICP firms (standing directive: keep roll-ups, flag the brand via brand_families + location_count). The national new-build housebuilders in the rule-3 name deny are not ICP chains — they are an off-ICP entity kind sharing the 'Home builder' type.",
+
+  "brand_families": {
+    "_r": "DRAFT list of UK extension / loft roll-ups to FLAG, never drop. Substring test against '<name> <root_domain>' (collapse-domains.js), so every term must be distinctive: 'build team' is the London design-and-build brand (buildteam.com) and could in principle collide with an independent trading as 'The Build Team' — accepted, the flag is advisory. Deliberately NOT listed: Everest and Anglian (national window/conservatory brands — 'everest' and 'anglian' are common independent-builder name tokens, and the glazing trade is outside the default scope anyway), Resi (an online architecture platform, design-only, not a builder). Extend after the calibration run shows which brands actually appear.",
+    "Build Team": ["build team", "buildteam"],
+    "Simply Extend": ["simply extend", "simplyextend"],
+    "Econoloft": ["econoloft"],
+    "Absolute Lofts": ["absolute lofts", "absolutelofts"],
+    "Landmark Lofts": ["landmark lofts", "landmarklofts"],
+    "The Loft Room": ["the loft room", "theloftroom"]
+  },
+
+  "_r_site_l2_keywords": "fetch-sites.js reads site_l2_keywords as a flat array. UK contact-page spellings (the mailbox on a UK trade site lives on the contact page, not the about page — the UK foundation run harvested +211 emails this way) plus the pages where an extension builder names people and describes its services (about / team / services / extensions / loft-conversions / projects / portfolio / case-studies). The services-type pages matter for STEP 5e: prep-classify.js prefers a services page slice for the verdict.",
+  "site_l2_keywords": ["contact", "contact-us", "contactus", "get-in-touch", "enquiries", "enquiry", "free-quote", "get-a-quote", "request-a-quote",
+                       "about", "about-us", "our-team", "meet-the-team", "team",
+                       "services", "our-services", "extensions", "house-extensions", "home-extensions", "loft-conversions", "loft-conversion",
+                       "garage-conversions", "design-and-build", "projects", "our-projects", "portfolio", "case-studies", "gallery"],
+
+  "owner_query": {
+    "_r": "UK bias terms (president / GM are American). The budget holder at an owner-operated UK building firm is the Managing Director or a named Director (Companies House titles), or the founder/proprietor at a sole trader. Companies House is the registry rung and runs FIRST (UK foundation run: 504 of 586 names came from it; own-site text named someone on ~4% of UK trade sites); owner_query is the residue pass. serp_backend dataforseo in standard mode, with --max-cost REQUIRED and put to the operator before any tranche ($0.0018 per query measured 2026-10-11 in standard mode).",
+    "bias_terms": ["owner", "managing director", "director", "founder"],
+    "use_linkedin": true,
+    "country": "GB",
+    "serp_backend": "dataforseo",
+    "serp_mode": "standard"
+  }
+}

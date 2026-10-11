@@ -1,0 +1,4 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+cal-eng-london-centre-x0,extension,house extensions,51.5074,-0.1278,13,P1
+cal-eng-manchester-x3,extension,loft conversions,53.4808,-2.2426,13,P1
+cal-sct-glasgow-x7,extension,design and build,55.8642,-4.2518,13,P1
