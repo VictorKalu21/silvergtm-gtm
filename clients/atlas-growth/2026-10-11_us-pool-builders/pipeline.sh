@@ -55,6 +55,11 @@ fs.writeFileSync('$R/leads_for_collapse.csv',rows.join('\n')+'\n');console.log('
   else echo "[collapse] skip"; fi
 fi
 if want fetch; then
+  # The fetch was run as 4 parallel shards (owner/domains-N.csv -> owner/fetch-N/site_text.jsonl) to fit the
+  # 22,823-domain list into ~1 h; concatenate them into the canonical owner/site_text.jsonl when present.
+  if [ ! -s $R/owner/site_text.jsonl ] && ls $R/owner/fetch-*/site_text.jsonl >/dev/null 2>&1; then
+    cat $R/owner/fetch-*/site_text.jsonl > $R/owner/site_text.jsonl && echo "[fetch] concatenated $(wc -l < $R/owner/site_text.jsonl) shard records into owner/site_text.jsonl"
+  fi
   if [ ! -s $R/owner/site_text.jsonl ]; then
     [ -f $R/owner-prompt.md ] || { echo "owner-prompt.md missing (STEP 6a gate)"; exit 1; }
     node $E/fetch-sites.js --in $R/leads_domains.csv --out $R/owner --concurrency 12 --config $CFG
