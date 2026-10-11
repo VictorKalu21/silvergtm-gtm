@@ -2,6 +2,14 @@
 
 Technical backlog for the skill's engine. Not operator-facing (see SKILL.md for that).
 
+## FACT (cloud-session proxy, 2026-10-11): BounceBan is authenticated by the proxy, MillionVerifier is NOT — the runner cannot run its stage 1 on a Claude Code cloud container without a key
+
+**Status:** FACT, no engine change · probed 2026-10-11 (Atlas Growth, `2026-10-11_us-restoration-remediational`, 2,000-address gate staged). The container lists both `api.bounceban.com` and `api.millionverifier.com` as "Allow + inject" hosts, but injection only works where the credential is a request HEADER.
+
+- BounceBan: `curl https://api.bounceban.com/v1/account` with no header → `{"available_credits":3168,…}` (×3); with a placeholder `Authorization: PROXY` header → same (the proxy overwrites it). So `BOUNCEBAN_KEY=<any non-empty string>` satisfies the runner's key check and the real key is injected.
+- MillionVerifier: the key is a query parameter (`?api=KEY`), which the proxy does not rewrite. `/api/v3/credits` with no key → `{"result":"error","error":"No apikey specified"}`; `?api=PROXY` → `{"result":"error","error":"apikey_not_found"}` (the placeholder reached the vendor unchanged); `X-Api-Key` / `apikey` / `api` / `Authorization` headers → `No apikey specified`. No local env file on the container.
+- Consequence: on a cloud session, stage 1 needs `MILLIONVERIFIER_KEY` as a real env var (or `EMAIL_VERIFY_ENV`), or the run is BounceBan-only (every address costs a BB credit instead of ~45%). The runner has no `--bb-only` mode; add one if BounceBan-only becomes a standard path (would need an operator decision — a one-stage gate spends BB credits on addresses MV would have settled for less).
+
 ## HIGH (verify-millionverifier-bounceban.js routing): BounceBan never saw the MV results it is best at — `invalid` was dropped outright and `error` rows silently never reached stage 2
 
 **Status:** DONE 2026-09-17 — `invalid` now routes to BounceBan (a `deliverable` overrides to sendable with `bb:recovered_from_invalid`, anything else stays dropped with the MV reason), a stage-1 call that throws is checkpointed as `result: "error"` so the address still reaches stage 2, an address with no stage-1 record at all is selected too, `disposable` stays dropped, and `--bb-on` names the routed set (default `catch_all,unknown,error,invalid`; `--bb-on catch_all,unknown,error` is the old behaviour) · test: `tests/verify-dry-run.test.js` (24 checks, no network) · found 2026-09-17 (Atlas Growth, 2026-09-16 UK MAPS run, 444-address verification), HIGH impact — sendable addresses were being thrown away by the gate itself.

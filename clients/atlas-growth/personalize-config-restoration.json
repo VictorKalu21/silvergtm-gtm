@@ -1,0 +1,34 @@
+{
+  "_status": "PROPOSED 2026-10-11 — not yet agreed. Per SKILL STEP 7b the config is agreed with the operator on a 3-lead then a 7-lead test before the full set. Offer wording from ICP-restoration-us.md (AGREED): 'book 10 qualified mold and water damage inspection appointments that turn into remediation projects every month using Facebook lead generation'.",
+  "template": "Hi,\n\nNoticed that you handle {{business_type}} in {{city}}.\n\nWe help you book 10 qualified {{inspection_type}} a month that turn into paid {{project_type}} jobs, using Facebook lead generation.\n\nThere's no pay unless I book you a qualified, confirmed {{inspection_singular}}.\n\nOpen to a 15-minute chat?",
+  "instructions": {
+    "business_type": "the restoration service this company leads with on its website, lowercase, EXACTLY one of: water damage restoration, mold remediation, fire damage restoration, storm damage restoration, sewage cleanup, biohazard cleanup. Use the one they put first or name in their headline, not one they list among many. A franchise branch (SERVPRO, ServiceMaster, PuroClean, Paul Davis, Rainbow, 911 Restoration …) is 'water damage restoration' unless its own page leads with mold or fire. Never any other phrase (not 'disaster restoration', not 'property restoration', not 'cleaning').",
+    "inspection_type": "the first visit to a homeowner, plural: the TRADE NOUN of business_type plus 'inspections' or 'assessments' according to which word the company itself uses (default 'inspections'). Trade noun by business_type: water damage restoration -> water damage; mold remediation -> mold; fire damage restoration -> fire damage; storm damage restoration -> storm damage; sewage cleanup -> sewage; biohazard cleanup -> biohazard. Never the word 'free'. Never the whole business_type phrase. Never 'restoration', 'remediation' or 'cleanup' in this value.",
+    "inspection_singular": "the singular of inspection_type, e.g. water damage inspection, mold inspection, fire damage assessment.",
+    "project_type": "the outcome noun of the SAME trade, singular, homeowner wording, reads before the word 'jobs'. By business_type: water damage restoration -> restoration; mold remediation -> remediation; fire damage restoration -> restoration; storm damage restoration -> restoration; sewage cleanup -> cleanup; biohazard cleanup -> cleanup. Never plural, never a technical term (say remediation, not abatement; say restoration, not mitigation).",
+    "city": "ONLY if the 'city' known fact is blank: the city this company is based in, from the website. Otherwise repeat the known city exactly."
+  },
+  "rules": "Decide business_type first, then derive inspection_type and project_type from it with the tables above. No single word may appear in more than one of business_type, inspection_type, project_type: business_type names the trade once; inspection_type is the visit; project_type is the outcome. A company whose page leads with inspection or testing only (no remediation) still gets the trade it tests for; the offer is about inspections that turn into jobs.",
+  "fallbacks": {
+    "business_type": "water damage restoration",
+    "inspection_type": "water damage inspections",
+    "inspection_singular": "water damage inspection",
+    "project_type": "restoration",
+    "city": ""
+  },
+  "outcome_by_type": {
+    "water damage restoration": ["restoration"],
+    "mold remediation": ["remediation"],
+    "fire damage restoration": ["restoration"],
+    "storm damage restoration": ["restoration"],
+    "sewage cleanup": ["cleanup"],
+    "biohazard cleanup": ["cleanup"]
+  },
+  "context_cols": [
+    "city",
+    "state",
+    "google_types",
+    "business_name"
+  ],
+  "max_value_len": 60
+}
