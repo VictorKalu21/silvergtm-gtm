@@ -4,7 +4,7 @@
  * accounting and the --max-cost stop (exit 3). No network. */
 const fs = require('fs'), path = require('path'), os = require('os'), { spawnSync } = require('child_process');
 const SO = path.join(__dirname, '..', 'search-owner.js');
-const { locationCode, parseDataforseo, emailsFromText, buildEmailQueries, overBudget } = require(SO);
+const { locationCode, parseDataforseo, emailsFromText, buildEmailQueries, overBudget, isTransientFailure } = require(SO);
 let fails = 0; const check = (name, c) => { console.log((c ? 'PASS ' : 'FAIL ') + name); if (!c) fails++; };
 
 const okResp = (items, cost = 0.002) => ({ status_code: 20000, cost, tasks_count: 1, tasks_error: 0, tasks: [{ status_code: 20000, cost, result: [{ items }] }] });
@@ -29,6 +29,7 @@ check('site + facebook + instagram queries', eq.length === 3 && eq[0].surface ==
 const eqShared = buildEmailQueries({ website: 'https://facebook.com/acmepools' }, null, h => /facebook\.com$/.test(h));
 check('shared-host website -> no site query', eqShared.length === 0);
 check('overBudget', overBudget(1.0, 1.0) && !overBudget(0.5, 1.0) && !overBudget(5, Infinity));
+check('transient-failure predicate: vendor upstream error retried, empty page not', isTransientFailure('failed:Internal SE Server Error.') && isTransientFailure('timeout') && !isTransientFailure('failed:No Search Results.') && !isTransientFailure('ok'));
 
 // 5. end-to-end stubbed run
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'so-dfs-'));

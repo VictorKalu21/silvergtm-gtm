@@ -89,11 +89,14 @@ function buildEmailQueries(lead, socials, sharedHostTest) {
   return out;
 }
 function overBudget(spent, max) { return Number.isFinite(max) && spent >= max; }
+// DataForSEO returns its own upstream failures as task-level statuses that are worth ONE retry (measured 2026-10-11:
+// 'Internal SE Server Error.' on 3 of 6 live owner queries, billed anyway); 'No Search Results.' is a real empty page, not retried.
+function isTransientFailure(status) { return /timeout|error|parse|internal se server|retry|temporar|overload|too many/i.test(String(status || '')) && !/no search results/i.test(String(status || '')); }
 function bundle(query, r) { const rs = Array.isArray(r.results) ? r.results.slice(0, RESULT_CAP) : []; return (`Search query: "${query}"\n\n` + rs.map((x, i) => `${i + 1}. ${x.title || ''}\n   ${(x.description || '').trim()}\n   ${x.url || ''}`).join('\n')).slice(0, TEXT_CAP); }
 function n(r) { return Array.isArray(r.results) ? r.results.length : 0; }
 function failed(r) { return r.status !== 'ok'; }
 
-module.exports = { locationCode, parseDataforseo, emailsFromText, buildEmailQueries, overBudget, bundle, hostOf, DFS_LOCATIONS, MAILBOX_TERMS };
+module.exports = { locationCode, parseDataforseo, emailsFromText, buildEmailQueries, overBudget, isTransientFailure, bundle, hostOf, DFS_LOCATIONS, MAILBOX_TERMS };
 if (require.main !== module) return;
 
 // ---------------- main ----------------
@@ -142,7 +145,7 @@ if (BACKEND === 'dataforseo') {
   if (!STUB && !KEY) { console.error('ERROR: SCRAPER_TECH_SEARCH_KEY not in ' + ENVPATH + ' (NOTE: this backend was discontinued by the vendor; use --backend dataforseo)'); process.exit(1); }
 } else { console.error('ERROR: unknown backend "' + BACKEND + '" (scraper_tech | dataforseo)'); process.exit(1); }
 
-let spent = 0, calls = 0, batchesPosted = 0;
+let spent = 0, calls = 0, batchesPosted = 0, reposted = 0;
 function dfsRequest(method, p, bodyObj) {
   const body = bodyObj == null ? '' : JSON.stringify(bodyObj);
   const opts = { host: 'api.dataforseo.com', path: p, method, headers: { 'Authorization': 'Basic ' + DFS_AUTH, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }, timeout: CALL_TIMEOUT };
@@ -166,7 +169,7 @@ async function searchLive(query) {
   return r;
 }
 // one retry only on a clear network transient (NOT on quota/api fail — retrying that just burns quota)
-async function searchRetry(q) { let r = await searchLive(q); if (r.status !== 'ok' && /timeout|error|parse/i.test(r.status || '')) { await sleep(DELAY * 4); r = await searchLive(q); } return r; }
+async function searchRetry(q) { let r = await searchLive(q); if (r.status !== 'ok' && isTransientFailure(r.status)) { await sleep(DELAY * 4); r = await searchLive(q); } return r; }
 
 // ---- executors: run a list of queries, return Map(query -> normalised response) ----
 async function runLive(queries, stopFn) {
@@ -206,7 +209,14 @@ async function runStandard(queries, stopFn, stateFile) {
       const task = Array.isArray(j.tasks) ? j.tasks[0] : null;
       if (!task) continue;
       if (task.status_code === 20000) { const r = parseDataforseo({ status_code: 20000, cost: 0, tasks: [task] }); const x = pending.get(id); out.set(x, r); state.posted[x].got = r; pending.delete(id); }
-      else if (task.status_code && task.status_code !== 40601 && task.status_code !== 40602 && task.status_code >= 40000 && task.status_code < 50000) { const x = pending.get(id); const r = { status: 'failed:' + (task.status_message || task.status_code), results: [], cost: 0 }; out.set(x, r); state.posted[x].got = r; pending.delete(id); } // 40601/40602 = task in queue / handed
+      else if (task.status_code && task.status_code !== 40601 && task.status_code !== 40602 && task.status_code >= 40000 && task.status_code < 60000) { // 40601/40602 = task in queue / handed
+        const x = pending.get(id); const msg = task.status_message || String(task.status_code); pending.delete(id);
+        if (isTransientFailure(msg) && !state.posted[x].retried && !stopFn()) { // re-post ONCE (vendor-side upstream failure, billed anyway)
+          const j2 = await dfsRequest('POST', DFS_POST, [taskBody(x)]); calls++; const t2 = Array.isArray(j2.tasks) ? j2.tasks[0] : null;
+          if (t2 && t2.id && (t2.status_code === 20100 || t2.status_code === 20000)) { spent += Number(t2.cost || 0); state.posted[x] = { id: t2.id, cost: Number(t2.cost || 0), retried: true }; pending.set(t2.id, x); reposted++; continue; }
+        }
+        const r = { status: 'failed:' + msg, results: [], cost: 0 }; out.set(x, r); state.posted[x].got = r;
+      }
     }
     if (Date.now() - lastReadyCheck > 60000) lastReadyCheck = Date.now();
     saveState();
@@ -240,7 +250,7 @@ try { sharedHost = require('./shared-hosts').isSharedHost; } catch { sharedHost 
   const targets = leads.filter(l => !doneIds.has(l.place_id)).slice(0, LEAD_LIMIT);
   let done = 0, hadName = 0, hadEmail = 0, budgetHit = false;
   const stopFn = () => { if (overBudget(spent, MAX_COST)) { budgetHit = true; return true; } return false; };
-  const writeCost = () => { if (BACKEND !== 'dataforseo') return; fs.writeFileSync(costFile, JSON.stringify({ backend: BACKEND, mode: MODE, calls_this_run: calls, batches_posted: batchesPosted, spent_usd_this_run: +(spent - spentBefore).toFixed(4), spent_usd_total_before_this_run_included: +spent.toFixed(4), max_cost_usd: MAX_COST, budget_hit: budgetHit, leads_done_this_run: done, leads_targeted: targets.length, location_code: DFS_LOCATION, depth: DFS_DEPTH, updated: new Date().toISOString() }, null, 2)); };
+  const writeCost = () => { if (BACKEND !== 'dataforseo') return; fs.writeFileSync(costFile, JSON.stringify({ backend: BACKEND, mode: MODE, calls_this_run: calls, batches_posted: batchesPosted, reposted_after_vendor_error: reposted, spent_usd_this_run: +(spent - spentBefore).toFixed(4), spent_usd_total_before_this_run_included: +spent.toFixed(4), max_cost_usd: MAX_COST, budget_hit: budgetHit, leads_done_this_run: done, leads_targeted: targets.length, location_code: DFS_LOCATION, depth: DFS_DEPTH, updated: new Date().toISOString() }, null, 2)); };
 
   // query plan per lead
   const plan = targets.map(l => {
