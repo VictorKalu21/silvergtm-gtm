@@ -129,7 +129,7 @@ A gate is a stop. The run does not proceed past one on its own.
 | `*.js` | the engine scripts named in section 3 |
 | `owner-read-subagent.md`, `owner-sweep-subagent.md` | the prompts for the Haiku readers in flows 2b and 2c |
 | `tests/` | the engine's test suite; run it after any engine change |
-| `.env` | `SCRAPER_TECH_KEY` and, if a SERP backend exists, its key; never committed |
+| `.env` | `SCRAPER_TECH_KEY`, `DATAFORSEO_LOGIN` + `DATAFORSEO_PASSWORD` (SERP backend), optional `FIRECRAWL_KEY`; never committed |
 
 **The client folder** (`clients/<client>/`) holds everything about one client:
 
@@ -186,7 +186,7 @@ Three searches on leads the site failed on tell you which registry a vertical us
 | Blind email permutations (`pattern` rung) | MillionVerifier credit per candidate (up to 6 per contact) + BounceBan on catch-alls | GATED: `--estimate-pattern` first, operator says go or skip, default skip; ~4 MV credits per owner found when it works |
 | BBB search match (`bbb-lookup.js`) | free, keyless | ≤ 4 parallel through the relay; the profile page (where the principal is) is Firecrawl, paid per page |
 | Yellow Pages listings (`yp-search.js`) | free, keyless | universe cross-check only — no owner on YP; one page per 1.2 s |
-| SERP key (when the backend is re-pointed) | serper ≈ $1 per 1,000 · Brave $5 per 1,000 + $5 free credit/month (its free tier is gone, Feb 2026) | a 1,000-lead sweep at 2–7 queries per lead = $2–14 on serper, $10–35 on Brave |
+| SERP (DataForSEO Live, the wired backend) | $0.002 per SERP of 10 results (standard queue $0.0006, async, not wired) | a 1,000-lead cascade at 2–3 queries per lead ≈ $4–6; `--max-cost` caps it; serper ≈ $1/1k and Brave $5/1k are not wired |
 | LinkedIn reverse lookup → personal email | ContactOut ≈ $0.10 · FullEnrich ≈ $0.17 per personal email | 20-contact probe first; US lists only |
 
 The cheapest source per owner found is a dedicated team page. The most expensive is a paid
@@ -221,7 +221,7 @@ The OPEN items in `IMPROVEMENTS.md`, in the order they bite:
 - `readRunsheet` does not honour the quoting `writeRunsheet` emits. A city with a comma breaks a resume.
 - `fetch-sites.js` caps L2 pages at 2,800 characters. Team rosters sit past the cap.
 - `fetch-sites.js` lets a TypeError or AbortError escape a worker. The pool then exits silently with promises pending.
-- `search-owner.js` has no live backend. It degrades silently when a vendor returns empty `url` fields.
+- `search-owner.js` needs `--backend dataforseo --max-cost <usd>` (and DataForSEO credentials in `.env`); its default backend is the discontinued scraper.tech product, kept only so old run folders read.
 - Out-of-business flags in site text are not gated.
 - `areas` mode has no footprint gate. Use `footprint-gate.js` after qualify.
 - A review-count floor is wrong for B2B ICPs. It drops most real firms.
