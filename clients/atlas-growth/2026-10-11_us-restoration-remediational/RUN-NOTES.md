@@ -70,3 +70,10 @@ All data in this folder is gitignored.
 - Session WebSearch budget: the skill's 200-per-session cap did not bite here (341 searches ran, no empty batches). Watching per-batch search counts on later waves; a batch reporting far fewer searches than leads means the cap hit.
 - `combine-owner-contacts.js` (read first, sweep fills) → `owner/contacts_final.jsonl`: 883 named / 11,558 (7.6%), 852 owner-level primaries. Deliverable rebuilt.
 - Decision: continue the sweep over the remaining unnamed leads in waves of 20 batches (`owner/sweep3`), stopping if the search cap appears.
+
+### BBB rung (2d) finished
+- `bbb-lookup.js` over all 11,558 Qualified leads: 4,346 matched (phone or name+city), 1,188 low_confidence (candidate only), 6,024 miss, 0 errors/blocked. No principals (profile pages are Cloudflare-walled; `--profiles` needs a Firecrawl key, none on this container) — so this rung is evidence (rating, accreditation, profile URL), not names.
+
+### Sweep3 wave 1 — FAILED on the WebSearch cap (lesson recorded)
+- Launched 20 sweep batches in one turn. The cap is **200 WebSearch calls per TURN, shared by every agent in it** (agent error text: "web search budget is used up (limit: 200 WebSearch calls per turn, shared by every agent in it)" and "You've hit your usage limit"). The skill's "≤6 batches at a time, one run at a time" rule exists for exactly this; 20 was wrong.
+- Result: 0–10 first-pass searches per batch, no registry retries, [] written for unsearched leads. All wave-1 out files discarded (an all-empty row would merge as "searched, nobody found"). Re-running from batch 0 in waves of 5 batches (~100 leads, ~175 searches) per turn with `owner/sweep3/AGENT-PROMPT.md` (agents now stop at the cap and omit unsearched leads from the out file).
