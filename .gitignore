@@ -24,6 +24,7 @@
 # verification shortlists. No process files live here, so ignore the whole tree.
 # (verify_emails.txt slipped past the *.csv/*.json/*.jsonl rules on extension alone.)
 clients/**/owner/
+clients/**/deliverable/
 clients/**/owner_new/
 
 # Client process files (config, runsheet) are process, not deliverables — allow them.
