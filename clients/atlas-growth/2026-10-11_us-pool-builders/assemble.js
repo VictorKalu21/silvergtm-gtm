@@ -47,7 +47,7 @@ function hav(a, b, c, d) { const R = 6371, t = x => x * Math.PI / 180; const dl 
 const VERDICT = { inground_builder: 'Qualified', builder_unconfirmed: 'Review', unclear: 'Review', service_only: 'Exclude', retail_only: 'Exclude', commercial_only: 'Exclude', not_pool: 'Exclude' };
 const POOL_LABEL = { fiberglass: 'fiberglass', gunite_concrete: 'concrete/gunite', vinyl_liner: 'other (vinyl liner)', other: 'other' };
 function poolTypeField(types) { const t = (types || []).map(x => POOL_LABEL[x] || x); if (!t.length) return 'unknown'; return [...new Set(t)].join(' | '); }
-const COLS = ['verdict', 'verdict_reason', 'priority', 'company_name', 'website', 'website_domain', 'google_maps_url', 'phone', 'phone_e164', 'email', 'email_source', 'full_address', 'city', 'state', 'zip', 'google_rating', 'google_reviews', 'business_category', 'google_types', 'services_offered', 'build_evidence', 'evidence_source', 'pool_type', 'facebook_url', 'instagram_url', 'owner_name', 'owner_title', 'brand_family', 'org_group', 'location_count', 'is_multi_location', 'discovery_queries', 'discovered_near_tile', 'duplicate_of', 'website_fetch_status', 'classify_confidence', 'exclude_stage', 'place_id', 'latitude', 'longitude'];
+const COLS = ['verdict', 'verdict_reason', 'priority', 'company_name', 'website', 'website_domain', 'google_maps_url', 'phone', 'phone_e164', 'email', 'email_source', 'full_address', 'city', 'state', 'zip', 'location_source', 'google_rating', 'google_reviews', 'business_category', 'google_types', 'services_offered', 'build_evidence', 'evidence_source', 'pool_type', 'facebook_url', 'instagram_url', 'owner_name', 'owner_title', 'brand_family', 'org_group', 'location_count', 'is_multi_location', 'discovery_queries', 'discovered_near_tile', 'duplicate_of', 'website_fetch_status', 'classify_confidence', 'exclude_stage', 'place_id', 'latitude', 'longitude'];
 
 function assemble(run) {
   const annotated = readCsv(path.join(run, 'leads_annotated.csv'));
@@ -61,14 +61,17 @@ function assemble(run) {
   const owners = new Map(); for (const o of readJsonl(path.join(run, 'owner', 'contacts_final.jsonl'))) if (o.place_id) owners.set(o.place_id, o);
   const tiles = readCsv(path.join(run, '..', 'atlas-growth-pools-runsheet.csv')).map(t => ({ id: t.cell_id, lat: +t.lat, lng: +t.lng })).filter(t => isFinite(t.lat));
   const tileSeen = new Set(); const tileCenters = []; for (const t of tiles) { const k = t.lat.toFixed(3) + ',' + t.lng.toFixed(3); if (tileSeen.has(k)) continue; tileSeen.add(k); const m = t.id.match(/^([a-z]{2})-(.+)-q\d+$/); tileCenters.push({ lat: t.lat, lng: t.lng, label: m ? `${m[2].replace(/-/g, ' ')}, ${m[1].toUpperCase()}` : t.id }); }
-  const nearestTile = (la, ln) => { if (!isFinite(la) || !tileCenters.length) return ''; let best = null, bd = Infinity; for (const t of tileCenters) { const d = hav(la, ln, t.lat, t.lng); if (d < bd) { bd = d; best = t; } } return best ? best.label : ''; };
+  const nearestTileObj = (la, ln) => { if (!isFinite(la) || !tileCenters.length) return null; let best = null, bd = Infinity; for (const t of tileCenters) { const d = hav(la, ln, t.lat, t.lng); if (d < bd) { bd = d; best = t; } } return best; };
+  const nearestTile = (la, ln) => { const t = nearestTileObj(la, ln); return t ? t.label : ''; };
+  // service-area listings carry no address (10,741 of 34,848 on this run) but do carry lat/lng: fall back to the nearest tile's city/state
+  const locate = (addr, city, la, ln) => { const sz = stateZip(addr, city); let c = cityOf(city, addr); let src = 'address'; if (!sz.state) { const t = nearestTileObj(+la, +ln); if (t) { const m = t.label.match(/^(.*), ([A-Z]{2})$/); if (m) { sz.state = m[2]; if (!c) c = m[1].replace(/\b\w/g, ch => ch.toUpperCase()); src = 'nearest_tile'; } } else src = 'unknown'; } return { ...sz, city: c, source: src }; };
   const siteFor = pid => site.get(pid) || site.get(siblings[pid]) || null;
 
   const rows = [];
   for (const a of annotated) {
     const v = verdicts.get(a.place_id) || null;
     const st = siteFor(a.place_id); const sp = serp.get(a.place_id); const ow = owners.get(a.place_id);
-    const { state, zip } = stateZip(a.full_address, a.city); const ph = normPhone(a.phone_number); const w = normUrl(a.website);
+    const loc = locate(a.full_address, a.city, a.latitude, a.longitude); const { state, zip } = loc; const ph = normPhone(a.phone_number); const w = normUrl(a.website);
     const bt = v ? v.business_type : (st && st.status === 'ok' ? 'unclassified' : 'unclear');
     const verdict = VERDICT[bt] || (bt === 'unclassified' ? 'Review' : 'Review');
     const emails = [...new Set([...(st && st.emails || []), ...(sp && sp.emails_from_serp || [])])];
@@ -81,7 +84,7 @@ function assemble(run) {
     rows.push({
       verdict, verdict_reason: v ? `${bt}${v.why ? ': ' + v.why : ''}` : (bt === 'unclear' ? 'no usable site text' : 'no classify verdict'), priority,
       company_name: a.name, website: w.url, website_domain: w.domain, google_maps_url: a.place_link || '', phone: ph.display, phone_e164: ph.e164,
-      email: ownEmail, email_source: emailSrc, full_address: a.full_address, city: cityOf(a.city, a.full_address), state, zip,
+      email: ownEmail, email_source: emailSrc, full_address: a.full_address, city: loc.city, state, zip, location_source: loc.source,
       google_rating: a.rating, google_reviews: a.review_count, business_category: String(a.google_types || '').split('|')[0], google_types: a.google_types,
       services_offered: v ? (v.services || '') : '', build_evidence: v ? (v.evidence || '') : '', evidence_source: evidencePage,
       pool_type: v ? poolTypeField(v.pool_types) : 'unknown', facebook_url: (socials.facebook || [])[0] || '', instagram_url: (socials.instagram || [])[0] || '',
@@ -103,7 +106,7 @@ function assemble(run) {
   }
   const dupes = rows.filter(r => r.duplicate_of); const unique = rows.filter(r => !r.duplicate_of);
   // Maps-stage drops -> excluded with stage
-  const mapsRows = mapsDrops.map(a => { const { state, zip } = stateZip(a.full_address, a.city); const ph = normPhone(a.phone_number); const w = normUrl(a.website); return { verdict: 'Exclude', verdict_reason: 'maps_qualify: ' + (a.drop_reason || a.reason || ''), priority: '', company_name: a.name, website: w.url, website_domain: w.domain, google_maps_url: a.place_link || '', phone: ph.display, phone_e164: ph.e164, email: '', email_source: '', full_address: a.full_address, city: cityOf(a.city, a.full_address), state, zip, google_rating: a.rating, google_reviews: a.review_count, business_category: String(a.google_types || '').split('|')[0], google_types: a.google_types, services_offered: '', build_evidence: '', evidence_source: '', pool_type: 'unknown', facebook_url: '', instagram_url: '', owner_name: '', owner_title: '', brand_family: '', org_group: w.domain, location_count: '', is_multi_location: '', discovery_queries: a.icp_type || '', discovered_near_tile: nearestTile(+a.latitude, +a.longitude), duplicate_of: '', website_fetch_status: 'not_fetched', classify_confidence: '', exclude_stage: 'maps_qualify', place_id: a.place_id, latitude: a.latitude, longitude: a.longitude }; });
+  const mapsRows = mapsDrops.map(a => { const loc = locate(a.full_address, a.city, a.latitude, a.longitude); const { state, zip } = loc; const ph = normPhone(a.phone_number); const w = normUrl(a.website); return { verdict: 'Exclude', verdict_reason: 'maps_qualify: ' + (a.drop_reason || a.reason || ''), priority: '', company_name: a.name, website: w.url, website_domain: w.domain, google_maps_url: a.place_link || '', phone: ph.display, phone_e164: ph.e164, email: '', email_source: '', full_address: a.full_address, city: loc.city, state, zip, location_source: loc.source, google_rating: a.rating, google_reviews: a.review_count, business_category: String(a.google_types || '').split('|')[0], google_types: a.google_types, services_offered: '', build_evidence: '', evidence_source: '', pool_type: 'unknown', facebook_url: '', instagram_url: '', owner_name: '', owner_title: '', brand_family: '', org_group: w.domain, location_count: '', is_multi_location: '', discovery_queries: a.icp_type || '', discovered_near_tile: nearestTile(+a.latitude, +a.longitude), duplicate_of: '', website_fetch_status: 'not_fetched', classify_confidence: '', exclude_stage: 'maps_qualify', place_id: a.place_id, latitude: a.latitude, longitude: a.longitude }; });
   const all = [...unique, ...mapsRows];
   const out = path.join(run, 'deliverable'); fs.mkdirSync(out, { recursive: true });
   writeCsv(path.join(out, 'pool_builders_all.csv'), [...all, ...dupes], COLS);
@@ -134,7 +137,8 @@ if (SELF_TEST) {
     'A3,Premier Pools of Austin,pool,Swimming pool contractor,"1 Pool Way, Austin, TX 78701","Austin, TX",78701,30.27,-97.74,https://premierpoolsandspas.com/austin,512-555-0102,4.5,210,https://maps.google.com/?cid=3,site,premierpoolsandspas.com,2,true,Premier Pools & Spas,A3',
     'A4,Premier Pools of Round Rock,pool,Swimming pool contractor,"9 Lake Rd, Round Rock, TX 78664","Round Rock, TX",78664,30.50,-97.68,https://premierpoolsandspas.com/roundrock,512-555-0199,4.6,80,https://maps.google.com/?cid=4,site,premierpoolsandspas.com,2,true,Premier Pools & Spas,A3',
     'A5,Pool Troopers,pool,Pool cleaning service,"3 Route Rd, Fort Myers, FL 33901","Fort Myers, FL",33901,26.64,-81.87,https://pooltroopers.com/,239-555-0104,4.2,88,https://maps.google.com/?cid=5,site,pooltroopers.com,1,false,Pool Troopers (service),A5',
-    'A6,Gunite Guys,kw:pool,General contractor,"7 Dry Rd, Mesa, AZ 85201","Mesa, AZ",85201,33.42,-111.83,https://guniteguys.example/,480-555-0106,5.0,2,https://maps.google.com/?cid=6,site,guniteguys.example,1,false,,A6'].join('\n') + '\n');
+    'A6,Gunite Guys,kw:pool,General contractor,"7 Dry Rd, Mesa, AZ 85201","Mesa, AZ",85201,33.42,-111.83,https://guniteguys.example/,480-555-0106,5.0,2,https://maps.google.com/?cid=6,site,guniteguys.example,1,false,,A6',
+    'A7,SAB Pools,pool,Swimming pool contractor,,,,27.96,-82.47,,813-555-0107,4.9,12,https://maps.google.com/?cid=7,none,,1,false,,A7'].join('\n') + '\n');
   fs.writeFileSync(path.join(run, 'excluded_maps.csv'), 'place_id,name,icp_type,google_types,full_address,city,zip,latitude,longitude,website,phone_number,rating,review_count,place_link,drop_reason\nX1,Rack & Cue Billiards,pool,Pool hall,"5 Cue St, Houston, TX 77001","Houston, TX",77001,29.76,-95.37,,713-555-0106,4.4,150,https://maps.google.com/?cid=9,off_icp_type\n');
   fs.writeFileSync(path.join(run, 'classify', 'out', 'batch_000.json'), JSON.stringify([
     { place_id: 'A1', business_type: 'inground_builder', confidence: 'high', why: 'builds gunite pools', pool_types: ['gunite_concrete', 'fiberglass'], evidence: 'We design and build custom gunite and fiberglass pools', services: 'custom pools, remodels' },
@@ -151,13 +155,16 @@ if (SELF_TEST) {
   const q = readCsv(path.join(run, 'deliverable', 'pool_builders_qualified.csv')), all = readCsv(path.join(run, 'deliverable', 'pool_builders_all.csv')), ex = readCsv(path.join(run, 'deliverable', 'pool_builders_excluded.csv')), rv = readCsv(path.join(run, 'deliverable', 'pool_builders_review.csv'));
   check('A2 collapsed into A1 (same phone+street) and reported', s.duplicates_collapsed_phone_or_name_plus_street === 1 && all.find(r => r.place_id === 'A2').duplicate_of === 'A1');
   check('branches on one domain both kept as Qualified', q.filter(r => r.org_group === 'premierpoolsandspas.com').length === 2);
-  check('qualified = 3, review = 1, excluded = 2 (1 site-text + 1 maps)', s.qualified === 3 && s.review === 1 && s.excluded_total === 2 && s.maps_stage_excluded === 1 && ex.find(r => r.place_id === 'X1').exclude_stage === 'maps_qualify');
+  check('qualified = 3, review = 2 (incl. the SAB), excluded = 2 (1 site-text + 1 maps)', s.qualified === 3 && s.review === 2 && s.excluded_total === 2 && s.maps_stage_excluded === 1 && ex.find(r => r.place_id === 'X1').exclude_stage === 'maps_qualify');
   const a1 = q.find(r => r.place_id === 'A1');
   check('A1: phone normalised, email from site, facebook, owner, pool types, evidence page, tile', a1.phone === '(813) 555-0101' && a1.phone_e164 === '+18135550101' && a1.email === 'info@blueskypools.com' && a1.email_source === 'website' && a1.facebook_url === 'https://facebook.com/blueskypools' && a1.owner_name === 'Jane Doe' && a1.owner_title === 'Owner' && a1.pool_type === 'concrete/gunite | fiberglass' && a1.evidence_source === 'http://blueskypools.com/' && a1.discovered_near_tile === 'tampa, FL' && a1.state === 'FL' && a1.zip === '33602' && a1.priority === 'A');
   const a4 = q.find(r => r.place_id === 'A4');
   check('A4 (sibling) gets the representative site status and the SERP email only where its own', a4.website_fetch_status === 'ok' && a4.email === '' );
   check('A3 email came from serp', q.find(r => r.place_id === 'A3').email === 'sales@premierpoolsandspas.com' && q.find(r => r.place_id === 'A3').email_source === 'serp');
-  check('A6 review with unknown fetch', rv[0].place_id === 'A6' && rv[0].website_fetch_status === 'home_failed:403' && rv[0].pool_type === 'concrete/gunite');
+  const a6 = rv.find(r => r.place_id === 'A6');
+  check('A6 review with unknown fetch', a6 && a6.website_fetch_status === 'home_failed:403' && a6.pool_type === 'concrete/gunite');
+  const a7 = all.find(r => r.place_id === 'A7');
+  check('address-less SAB row located from the nearest tile', a7.state === 'FL' && a7.city === 'Tampa' && a7.location_source === 'nearest_tile' && a7.verdict === 'Review');
   check('summary by state + fill', s.by_state.FL.qualified === 1 && s.by_state.TX.qualified === 2 && s.fill_qualified_pct.phone === 100 && fs.existsSync(path.join(run, 'deliverable', 'summary.md')));
   console.log(fails ? `${fails} FAILED` : 'ALL PASS'); process.exit(fails ? 1 : 0);
 }
