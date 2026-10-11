@@ -5,7 +5,7 @@ Anchors are DERIVED, never hand-typed (SKILL STEP 3). Source: geonamescache (Geo
 US subset ~3.4k cities with lat/lng + population). Population-ordered greedy selection with a minimum
 spacing between accepted centres, so a dense metro gets a ring of suburb centres and a small state
 still gets its top cities. Sunbelt (P1) states use tighter spacing and a lower population floor
-because the pool-builder universe is far denser there. A rural-fill pass then adds any town >= 5k
+because the pool-builder universe is far denser there (spacing 25/35 km: with offset pagination on, one zoom-13 tile drains a metro, and the 2026-09-11 foundation run measured hand-added suburb tiles as mostly duplicate place_ids). A rural-fill pass then adds any town >= 5k
 that is farther than 0.8 deg from every accepted centre, so no populated area is left unsearched.
 
 Usage: pip install geonamescache && python3 clients/atlas-growth/gen-tiles-pools.py --out <tiles.json>
@@ -17,8 +17,8 @@ from collections import Counter
 import geonamescache
 
 P1_STATES = {"FL","TX","AZ","CA","GA","NV","NC","SC","TN","AL","LA","MS","OK","AR","NM","HI","UT","VA"}
-P1_SPACING_KM, P1_POP_MIN = 14.0, 20000
-P2_SPACING_KM, P2_POP_MIN = 22.0, 40000
+P1_SPACING_KM, P1_POP_MIN = 25.0, 25000
+P2_SPACING_KM, P2_POP_MIN = 35.0, 50000
 MIN_PER_STATE = 4
 RURAL_FILL_POP, RURAL_FILL_DEG = 5000, 0.8
 NAME_FIX = {"New York City": "New York"}

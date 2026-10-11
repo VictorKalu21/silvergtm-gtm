@@ -1,0 +1,95 @@
+{
+  "_comment": "Atlas Growth :: US residential in-ground swimming-pool builders, nationwide, warm states first (ICP-pools.md). Engine config for google-maps-scrape. Job-specific values live ONLY here. Qualification is LENIENT by operator decision 2026-10-11: no review floor, no website rule; the universe is cut by type/name denies here and the real Qualified/Review/Exclude verdict comes from the site-text gate (STEP 5e, classify-prompt.md).",
+  "geo": {
+    "country": "us",
+    "footprint": { "mode": "areas" },
+    "region_from_city": ",\\s*([A-Z]{2})\\b",
+    "region_default": "US"
+  },
+  "categories": {
+    "_r": "STEP 2: the ONLY native category for this trade is 'Swimming pool contractor' (references/google-maps-categories.md; the siblings are supply store / repair service / cleaning service, which are the adjacent-but-wrong set). Every other brief phrase is a keyword row (kw:pool, P3) that searchmaps.php fuzzy-matches against names and descriptions — that is where the builder typed 'General contractor' or 'Landscaper' surfaces.",
+    "pool": ["Swimming pool contractor"],
+    "kw:pool": ["swimming pool builder", "inground pool installation", "fiberglass pool installation", "gunite pool construction", "custom pool builder", "pool construction company"]
+  },
+  "scrape_tuning": {
+    "_r": "Same settings as the US generator run (measured ~2.1-2.6 Maps calls per runsheet row). paginate:true pages each viewport via offset; max_pages 6 x limit 150 caps a dense metro; max_depth 1 = at most one quadrant split.",
+    "paginate": true,
+    "max_pages": 6,
+    "limit": 150,
+    "saturation": 90,
+    "max_depth": 1,
+    "quad_offset": 0.02
+  },
+  "qualify_rules": [
+    {
+      "_r": "1. Must-drop PRIMARY types: the 'pool' homonym (billiards), places to swim (public/hotel/apartment/club pools, swim schools), and the venues/offices that answer 'swimming pool' queries. Primary-only on purpose: a builder carrying an incidental 'Hot tub store' or 'Swimming pool supply store' tag must survive to the site-text gate. Substring-matched, so every term is multi-word or unambiguous (IMPROVEMENTS: short deny terms delete whole ICPs).",
+      "field": "google_types",
+      "op": "deny",
+      "label": "off_icp_type",
+      "value": [
+        "pool hall", "pool billard club", "billiards", "billiard",
+        "public swimming pool", "indoor swimming pool", "outdoor swimming pool", "swimming facility",
+        "swimming school", "swimming instructor", "baby swimming school", "swimming competition", "swimming lake", "water polo pool",
+        "water park", "amusement park", "water slide", "swim club", "aquatic centre", "aquatic center",
+        "gym", "fitness center", "health club", "athletic club", "country club", "golf club",
+        "hotel", "resort", "motel", "apartment", "condominium", "homeowners association", "vacation home rental", "campground", "rv park",
+        "community center", "recreation center", "park", "parking",
+        "government office", "city government office", "county government office",
+        "real estate agency", "property management company", "lifeguard"
+      ]
+    },
+    {
+      "_r": "2. Must-drop by NAME (always fires, primary or secondary type): the billiards homonym, big-box and pool-retail chains that sell but never build, swim schools / public aquatic facilities, and civic bodies. Every term is multi-word or a brand (substring trap).",
+      "field": "name",
+      "op": "not_contains_any",
+      "label": "name_deny",
+      "value": [
+        "billiard", "billard", "pool hall", "pool table", "pool & dart", "pool and dart", "bar & grill", "sports bar",
+        "leslie's", "leslies", "pinch a penny", "home depot", "lowe's", "lowes", "walmart", "costco", "sam's club", "namco", "watson's", "family leisure", "ace hardware", "tractor supply",
+        "ymca", "ywca", "swim school", "swim academy", "swim lessons", "swim club", "swim team", "aquatic center", "aquatics center", "water park", "waterpark",
+        "city of", "county of", "parks and recreation", "parks & recreation", "apartments", "apartment homes", "homeowners association"
+      ]
+    },
+    {
+      "_r": "3. Positive allow on google_types-ANY (never primary). Keeps every row Google tagged with any pool/spa type — contractor, supply store, cleaning, repair, hot tub — and lets the site-text gate separate builders from service/retail (the brief keeps a builder that also cleans). Rows WITHOUT any pool tag are dropped here as not_in_icp and come back two ways at $0: (a) keyword rows (icp_type kw:pool) go to classify per SKILL STEP 5b keyword recovery; (b) generic contractor/landscaper types whose NAME says pool are re-admitted by recover-generic-pools-config.json.",
+      "field": "google_types",
+      "op": "allow",
+      "label": "not_in_icp",
+      "value": ["swimming pool", "pool cleaning", "pool contractor", "pool repair", "pool supply", "hot tub", "spa"]
+    }
+  ],
+  "_no_review_floor": "Operator 2026-10-11: LENIENT. No review_count floor (coverage over precision; the brief wants the largest possible list and the $30k+ profile is judged from site text, not review volume). Re-add {review_count >= N} here if the Review bucket is too large to work.",
+  "_no_website_rule": "Deliberately NO {website, exists} rule: collapse-domains.js routes no-website and shared-host rows to the STEP 5d recovery track AFTER the denies have run, so a blocklisted chain cannot ride in through the recovery track.",
+  "brand_families": {
+    "_r": "Keep every branch, flag the brand (same directive as foundation repair). Multi-location builders and franchise systems that appear on Maps under these names; matched as lowercase substrings of '<name> <root_domain>', so every term is distinctive. Manufacturer-dealer networks (Latham, Leisure Pools, Thursday Pools, Imagine Pools) are listed because a dealer branch sometimes trades under the maker's name; the site-text gate decides whether the row is a factory (not_pool) or an installing dealer (inground_builder).",
+    "Blue Haven Pools": ["blue haven"],
+    "Anthony & Sylvan": ["anthony & sylvan", "anthony and sylvan", "anthonysylvan"],
+    "Premier Pools & Spas": ["premier pools"],
+    "Presidential Pools": ["presidential pools"],
+    "Shasta Pools": ["shasta pools", "shastapools"],
+    "California Pools": ["california pools"],
+    "Paddock Pools": ["paddock pools"],
+    "Cody Pools": ["cody pools"],
+    "Riverbend Sandler": ["riverbend sandler"],
+    "Platinum Pools": ["platinum pools"],
+    "Morehead Pools": ["morehead pools"],
+    "Pulliam Pools": ["pulliam pools"],
+    "Aquamarine Pools": ["aquamarine pools"],
+    "Blue World Pools": ["blue world pools"],
+    "Leisure Pools (mfr network)": ["leisure pools"],
+    "Latham (mfr network)": ["latham pool", "lathampool"],
+    "Thursday Pools (mfr network)": ["thursday pools"],
+    "Imagine Pools (mfr network)": ["imagine pools"],
+    "ASP - America's Swimming Pool Co (service franchise)": ["america's swimming pool", "asp pool", "asppoolco"],
+    "Pool Troopers (service)": ["pool troopers"],
+    "Pool Scouts (service)": ["pool scouts"],
+    "Poolwerx (retail/service)": ["poolwerx"]
+  },
+  "owner_query": {
+    "_r": "search-owner.js has no working backend (scraper.tech SERP discontinued). Owner-finding runs on the in-session read + sweep rungs; a DataForSEO backend is a pending engine change (see RUN-NOTES).",
+    "bias_terms": ["owner", "president", "general manager", "marketing manager"],
+    "use_linkedin": true,
+    "country": "US"
+  },
+  "site_l2_keywords": ["services", "service", "pool-construction", "construction", "build", "builders", "new-pool", "inground", "in-ground", "fiberglass", "gunite", "concrete", "vinyl", "design", "process", "gallery", "financing", "pools", "custom-pools"]
+}
