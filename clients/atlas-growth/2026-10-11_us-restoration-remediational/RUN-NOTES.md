@@ -63,3 +63,10 @@ All data in this folder is gitignored.
 - 142 batches validated (every in-batch place_id present); 5,673 leads read (the leads with site text); 5,885 skipped before the read (5,363 no source text at all, 522 source had no readable text) — these go to the sweep.
 - `merge-owner-reads.js --trade-words …` → `owner/contacts_read.jsonl`: 792 leads named (14.0% of read), 1,114 contacts, 962 owner-level; 28 contacts excluded by title (marketing-rep trap), 3 business-name-as-person and 2 single-token names dropped. All evidence from `website`.
 - Rung 3 sweep: first tranche queued with `prep-sweep-batches.js --limit 200` (10 batches of 20, registry bbb.org); batches 0–5 launched as one wave (session WebSearch budget), 6–9 after.
+
+### Rung 3 sweep — first tranche measured (200 leads)
+- 10 batches of 20, registry bbb.org, Haiku, ≤2 WebSearch per lead: **341 searches, 91 named (45.5%), 3.7 searches per named lead**, 1.7 searches per lead. 132 contacts, 120 owner-level; merge dropped nothing.
+- Franchise branches named far better than independents on this rung (first 6 batches: 32/55 franchise vs 20/65 independent) — BBB and franchise-network pages name the owner-operator, which the brand site never does.
+- Session WebSearch budget: the skill's 200-per-session cap did not bite here (341 searches ran, no empty batches). Watching per-batch search counts on later waves; a batch reporting far fewer searches than leads means the cap hit.
+- `combine-owner-contacts.js` (read first, sweep fills) → `owner/contacts_final.jsonl`: 883 named / 11,558 (7.6%), 852 owner-level primaries. Deliverable rebuilt.
+- Decision: continue the sweep over the remaining unnamed leads in waves of 20 batches (`owner/sweep3`), stopping if the search cap appears.

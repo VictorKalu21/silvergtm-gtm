@@ -35,7 +35,7 @@ Built 2026-10-11 from `2026-10-11_us-restoration-remediational`. Source: remedia
 | street | 9527 | 82.4% |
 | facebook_url | 6830 | 59.1% |
 | instagram_url | 4993 | 43.2% |
-| owner_name | 792 | 6.9% |
+| owner_name | 883 | 7.6% |
 | evidence | 11558 | 100.0% |
 
 ## Qualified by evidence source
