@@ -1,0 +1,65 @@
+{
+  "_comment": "Atlas Growth :: home additions RECOVERY pass over excluded_officp.csv (RUN-NOTES STEP 5b step 2). The main config's allow-list drops any row with no remodel/GC/builder google_type. This pass takes those rows back ONLY when the business NAME says the trade \u2014 the type+name pairing qualify-leads.js cannot express as one rule. Addition builders typed bare 'Contractor', 'Carpenter', 'Building firm', 'Garage builder', 'Handyman' come back here. Deterministic, $0, no re-scrape. Recovered rows are routed to the site-text gate like every other row. No review floor here on purpose (IMPROVEMENTS 2026-09-20: a floor inside a name-gated recovery only strands rows).",
+  "geo": {
+    "country": "us",
+    "footprint": {
+      "mode": "areas"
+    },
+    "region_from_city": ",\\s*([A-Z]{2})\\b",
+    "region_default": "US"
+  },
+  "qualify_rules": [
+    {
+      "_r": "Scope: only rows the main allow rule dropped (not_in_icp). A row a primary-type deny or the name deny dropped (roofer, landscaper, pool builder, big box, civic) stays dropped even when its name says 'construction' \u2014 those rules saw it (dry-run 2026-10-11: 'Sunshine Roofing & Construction' leaked back without this).",
+      "field": "drop_reason",
+      "op": "in",
+      "label": "not_allow_drop",
+      "value": [
+        "not_in_icp"
+      ]
+    },
+    {
+      "_r": "Generic types an addition builder gets typed as. Deny-listed primaries never reach this file with the allow label, so no venue term is needed here.",
+      "field": "google_types",
+      "op": "allow",
+      "label": "not_generic_contractor",
+      "value": [
+        "contractor",
+        "construction",
+        "building firm",
+        "builder",
+        "carpenter",
+        "handyman",
+        "garage",
+        "design",
+        "home improvement",
+        "service establishment",
+        "corporate office",
+        "establishment"
+      ]
+    },
+    {
+      "_r": "The name must claim the trade. Multi-letter stems only (substring trap): 'addition' also matches 'additions'; 'renovat' matches renovation/renovations/renovators.",
+      "field": "name",
+      "op": "contains_any",
+      "label": "name_not_addition",
+      "value": [
+        "addition",
+        "remodel",
+        "renovat",
+        "design build",
+        "design-build",
+        "design & build",
+        "design and build",
+        "construction",
+        "builders",
+        "building",
+        "homes",
+        "home improvement",
+        "custom home",
+        "carpentry",
+        "restoration & construction"
+      ]
+    }
+  ]
+}

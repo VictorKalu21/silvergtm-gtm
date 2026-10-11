@@ -1,8 +1,7 @@
 # Atlas Growth — ICP: residential home addition contractors (US)
 
-> Opened 2026-10-11. Status: **PROPOSED — Phase 1 gate (icp-source-planner).** Client assumed Atlas Growth
-> (every prior residential home-services vertical in this repo is theirs: foundation repair, generators, pools);
-> confirm at the gate. Brief in the operator's words: "scrape residential home addition contractors in the US".
+> Opened 2026-10-11. Status: **Phase 1 gate ANSWERED 2026-10-11 (atlas · warm states first · lenient · Maps). STEP 3
+> read-back pending; scrape blocked on the scraper.tech key (not on this container).** Offer + target role still PROPOSED. Brief in the operator's words: "scrape residential home addition contractors in the US".
 
 ## The offer (PROPOSED — same family as foundation repair / generators / pools, reworded for the trade)
 
@@ -103,10 +102,11 @@ this container). Open decision 5.
 
 ## Open decisions (answer at the Phase 1 gate)
 
-1. **Client** — Atlas Growth assumed. Confirm, or name the client.
-2. **Footprint** — nationwide warm-states-first (pools precedent), or a named state list.
-3. **Strictness** — lenient Maps stage + site-text verdict (pools), or a review floor (foundation repair used 30–50).
-4. **Scope edges** — are kitchen/bath-only remodelers and ADU-only builders in or out? Sunroom-only firms?
-5. **Dedupe** — waive again, or supply the prior shipped feeds.
-6. **Sources** — which of the ranked candidates in `2026-10-11_us-home-additions/source-candidates.md` to deep-dive (recommendation there).
-7. **Offer line + target role** — sign off the PROPOSED wording above.
+1. ~~Client~~ — Atlas Growth (operator 2026-10-11).
+2. ~~Footprint~~ — warm states first (operator 2026-10-11); phase 2 = the other states via `--states all`.
+3. ~~Strictness~~ — lenient (operator 2026-10-11).
+4. **Scope edges** — routine call pending objection: kitchen/bath-only → Review; ADU-only → Qualified; sunroom firms that build the structure → Qualified, enclosure installers → Exclude.
+5. **Dedupe** — waived as on the last two runs (routine call pending objection).
+6. ~~Sources~~ — Google Maps (operator 2026-10-11); QR Top 500 join + permit rank stay available as free add-ons.
+7. **Offer line + target role** — PROPOSED wording above stands until changed; sign off at the read-back.
+8. **Query set** — core (7 queries, 2,527 rows) or full (14 queries, 5,054 rows): see RUN-NOTES.

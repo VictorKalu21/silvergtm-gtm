@@ -1,0 +1,2528 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+al-huntsville-q0,addition,Remodeler,34.7304,-86.5859,13,P1
+al-huntsville-q1,addition,General contractor,34.7304,-86.5859,13,P1
+al-huntsville-q2,addition,Custom home builder,34.7304,-86.5859,13,P2
+al-huntsville-q3,kw:addition,home addition contractor,34.7304,-86.5859,13,P3
+al-huntsville-q4,kw:addition,room addition contractor,34.7304,-86.5859,13,P3
+al-huntsville-q5,kw:addition,second story addition,34.7304,-86.5859,13,P3
+al-huntsville-q6,kw:addition,design build remodeling,34.7304,-86.5859,13,P3
+al-birmingham-q0,addition,Remodeler,33.5207,-86.8025,13,P1
+al-birmingham-q1,addition,General contractor,33.5207,-86.8025,13,P1
+al-birmingham-q2,addition,Custom home builder,33.5207,-86.8025,13,P2
+al-birmingham-q3,kw:addition,home addition contractor,33.5207,-86.8025,13,P3
+al-birmingham-q4,kw:addition,room addition contractor,33.5207,-86.8025,13,P3
+al-birmingham-q5,kw:addition,second story addition,33.5207,-86.8025,13,P3
+al-birmingham-q6,kw:addition,design build remodeling,33.5207,-86.8025,13,P3
+al-montgomery-q0,addition,Remodeler,32.3668,-86.3,13,P1
+al-montgomery-q1,addition,General contractor,32.3668,-86.3,13,P1
+al-montgomery-q2,addition,Custom home builder,32.3668,-86.3,13,P2
+al-montgomery-q3,kw:addition,home addition contractor,32.3668,-86.3,13,P3
+al-montgomery-q4,kw:addition,room addition contractor,32.3668,-86.3,13,P3
+al-montgomery-q5,kw:addition,second story addition,32.3668,-86.3,13,P3
+al-montgomery-q6,kw:addition,design build remodeling,32.3668,-86.3,13,P3
+al-mobile-q0,addition,Remodeler,30.6944,-88.043,13,P1
+al-mobile-q1,addition,General contractor,30.6944,-88.043,13,P1
+al-mobile-q2,addition,Custom home builder,30.6944,-88.043,13,P2
+al-mobile-q3,kw:addition,home addition contractor,30.6944,-88.043,13,P3
+al-mobile-q4,kw:addition,room addition contractor,30.6944,-88.043,13,P3
+al-mobile-q5,kw:addition,second story addition,30.6944,-88.043,13,P3
+al-mobile-q6,kw:addition,design build remodeling,30.6944,-88.043,13,P3
+al-tuscaloosa-q0,addition,Remodeler,33.2098,-87.5692,13,P1
+al-tuscaloosa-q1,addition,General contractor,33.2098,-87.5692,13,P1
+al-tuscaloosa-q2,addition,Custom home builder,33.2098,-87.5692,13,P2
+al-tuscaloosa-q3,kw:addition,home addition contractor,33.2098,-87.5692,13,P3
+al-tuscaloosa-q4,kw:addition,room addition contractor,33.2098,-87.5692,13,P3
+al-tuscaloosa-q5,kw:addition,second story addition,33.2098,-87.5692,13,P3
+al-tuscaloosa-q6,kw:addition,design build remodeling,33.2098,-87.5692,13,P3
+al-dothan-q0,addition,Remodeler,31.2232,-85.3905,13,P1
+al-dothan-q1,addition,General contractor,31.2232,-85.3905,13,P1
+al-dothan-q2,addition,Custom home builder,31.2232,-85.3905,13,P2
+al-dothan-q3,kw:addition,home addition contractor,31.2232,-85.3905,13,P3
+al-dothan-q4,kw:addition,room addition contractor,31.2232,-85.3905,13,P3
+al-dothan-q5,kw:addition,second story addition,31.2232,-85.3905,13,P3
+al-dothan-q6,kw:addition,design build remodeling,31.2232,-85.3905,13,P3
+al-auburn-q0,addition,Remodeler,32.6099,-85.4808,13,P1
+al-auburn-q1,addition,General contractor,32.6099,-85.4808,13,P1
+al-auburn-q2,addition,Custom home builder,32.6099,-85.4808,13,P2
+al-auburn-q3,kw:addition,home addition contractor,32.6099,-85.4808,13,P3
+al-auburn-q4,kw:addition,room addition contractor,32.6099,-85.4808,13,P3
+al-auburn-q5,kw:addition,second story addition,32.6099,-85.4808,13,P3
+al-auburn-q6,kw:addition,design build remodeling,32.6099,-85.4808,13,P3
+al-decatur-q0,addition,Remodeler,34.6059,-86.9833,13,P1
+al-decatur-q1,addition,General contractor,34.6059,-86.9833,13,P1
+al-decatur-q2,addition,Custom home builder,34.6059,-86.9833,13,P2
+al-decatur-q3,kw:addition,home addition contractor,34.6059,-86.9833,13,P3
+al-decatur-q4,kw:addition,room addition contractor,34.6059,-86.9833,13,P3
+al-decatur-q5,kw:addition,second story addition,34.6059,-86.9833,13,P3
+al-decatur-q6,kw:addition,design build remodeling,34.6059,-86.9833,13,P3
+al-florence-q0,addition,Remodeler,34.7998,-87.6773,13,P1
+al-florence-q1,addition,General contractor,34.7998,-87.6773,13,P1
+al-florence-q2,addition,Custom home builder,34.7998,-87.6773,13,P2
+al-florence-q3,kw:addition,home addition contractor,34.7998,-87.6773,13,P3
+al-florence-q4,kw:addition,room addition contractor,34.7998,-87.6773,13,P3
+al-florence-q5,kw:addition,second story addition,34.7998,-87.6773,13,P3
+al-florence-q6,kw:addition,design build remodeling,34.7998,-87.6773,13,P3
+al-phenix-city-q0,addition,Remodeler,32.471,-85.0008,13,P1
+al-phenix-city-q1,addition,General contractor,32.471,-85.0008,13,P1
+al-phenix-city-q2,addition,Custom home builder,32.471,-85.0008,13,P2
+al-phenix-city-q3,kw:addition,home addition contractor,32.471,-85.0008,13,P3
+al-phenix-city-q4,kw:addition,room addition contractor,32.471,-85.0008,13,P3
+al-phenix-city-q5,kw:addition,second story addition,32.471,-85.0008,13,P3
+al-phenix-city-q6,kw:addition,design build remodeling,32.471,-85.0008,13,P3
+al-gadsden-q0,addition,Remodeler,34.0143,-86.0064,13,P1
+al-gadsden-q1,addition,General contractor,34.0143,-86.0064,13,P1
+al-gadsden-q2,addition,Custom home builder,34.0143,-86.0064,13,P2
+al-gadsden-q3,kw:addition,home addition contractor,34.0143,-86.0064,13,P3
+al-gadsden-q4,kw:addition,room addition contractor,34.0143,-86.0064,13,P3
+al-gadsden-q5,kw:addition,second story addition,34.0143,-86.0064,13,P3
+al-gadsden-q6,kw:addition,design build remodeling,34.0143,-86.0064,13,P3
+al-alabaster-q0,addition,Remodeler,33.2443,-86.8164,13,P1
+al-alabaster-q1,addition,General contractor,33.2443,-86.8164,13,P1
+al-alabaster-q2,addition,Custom home builder,33.2443,-86.8164,13,P2
+al-alabaster-q3,kw:addition,home addition contractor,33.2443,-86.8164,13,P3
+al-alabaster-q4,kw:addition,room addition contractor,33.2443,-86.8164,13,P3
+al-alabaster-q5,kw:addition,second story addition,33.2443,-86.8164,13,P3
+al-alabaster-q6,kw:addition,design build remodeling,33.2443,-86.8164,13,P3
+al-enterprise-q0,addition,Remodeler,31.3152,-85.8552,13,P1
+al-enterprise-q1,addition,General contractor,31.3152,-85.8552,13,P1
+al-enterprise-q2,addition,Custom home builder,31.3152,-85.8552,13,P2
+al-enterprise-q3,kw:addition,home addition contractor,31.3152,-85.8552,13,P3
+al-enterprise-q4,kw:addition,room addition contractor,31.3152,-85.8552,13,P3
+al-enterprise-q5,kw:addition,second story addition,31.3152,-85.8552,13,P3
+al-enterprise-q6,kw:addition,design build remodeling,31.3152,-85.8552,13,P3
+ar-little-rock-q0,addition,Remodeler,34.7465,-92.2896,13,P1
+ar-little-rock-q1,addition,General contractor,34.7465,-92.2896,13,P1
+ar-little-rock-q2,addition,Custom home builder,34.7465,-92.2896,13,P2
+ar-little-rock-q3,kw:addition,home addition contractor,34.7465,-92.2896,13,P3
+ar-little-rock-q4,kw:addition,room addition contractor,34.7465,-92.2896,13,P3
+ar-little-rock-q5,kw:addition,second story addition,34.7465,-92.2896,13,P3
+ar-little-rock-q6,kw:addition,design build remodeling,34.7465,-92.2896,13,P3
+ar-fort-smith-q0,addition,Remodeler,35.3859,-94.3986,13,P1
+ar-fort-smith-q1,addition,General contractor,35.3859,-94.3986,13,P1
+ar-fort-smith-q2,addition,Custom home builder,35.3859,-94.3986,13,P2
+ar-fort-smith-q3,kw:addition,home addition contractor,35.3859,-94.3986,13,P3
+ar-fort-smith-q4,kw:addition,room addition contractor,35.3859,-94.3986,13,P3
+ar-fort-smith-q5,kw:addition,second story addition,35.3859,-94.3986,13,P3
+ar-fort-smith-q6,kw:addition,design build remodeling,35.3859,-94.3986,13,P3
+ar-fayetteville-q0,addition,Remodeler,36.0626,-94.1574,13,P1
+ar-fayetteville-q1,addition,General contractor,36.0626,-94.1574,13,P1
+ar-fayetteville-q2,addition,Custom home builder,36.0626,-94.1574,13,P2
+ar-fayetteville-q3,kw:addition,home addition contractor,36.0626,-94.1574,13,P3
+ar-fayetteville-q4,kw:addition,room addition contractor,36.0626,-94.1574,13,P3
+ar-fayetteville-q5,kw:addition,second story addition,36.0626,-94.1574,13,P3
+ar-fayetteville-q6,kw:addition,design build remodeling,36.0626,-94.1574,13,P3
+ar-jonesboro-q0,addition,Remodeler,35.8423,-90.7043,13,P1
+ar-jonesboro-q1,addition,General contractor,35.8423,-90.7043,13,P1
+ar-jonesboro-q2,addition,Custom home builder,35.8423,-90.7043,13,P2
+ar-jonesboro-q3,kw:addition,home addition contractor,35.8423,-90.7043,13,P3
+ar-jonesboro-q4,kw:addition,room addition contractor,35.8423,-90.7043,13,P3
+ar-jonesboro-q5,kw:addition,second story addition,35.8423,-90.7043,13,P3
+ar-jonesboro-q6,kw:addition,design build remodeling,35.8423,-90.7043,13,P3
+ar-conway-q0,addition,Remodeler,35.0887,-92.4421,13,P1
+ar-conway-q1,addition,General contractor,35.0887,-92.4421,13,P1
+ar-conway-q2,addition,Custom home builder,35.0887,-92.4421,13,P2
+ar-conway-q3,kw:addition,home addition contractor,35.0887,-92.4421,13,P3
+ar-conway-q4,kw:addition,room addition contractor,35.0887,-92.4421,13,P3
+ar-conway-q5,kw:addition,second story addition,35.0887,-92.4421,13,P3
+ar-conway-q6,kw:addition,design build remodeling,35.0887,-92.4421,13,P3
+ar-rogers-q0,addition,Remodeler,36.332,-94.1185,13,P1
+ar-rogers-q1,addition,General contractor,36.332,-94.1185,13,P1
+ar-rogers-q2,addition,Custom home builder,36.332,-94.1185,13,P2
+ar-rogers-q3,kw:addition,home addition contractor,36.332,-94.1185,13,P3
+ar-rogers-q4,kw:addition,room addition contractor,36.332,-94.1185,13,P3
+ar-rogers-q5,kw:addition,second story addition,36.332,-94.1185,13,P3
+ar-rogers-q6,kw:addition,design build remodeling,36.332,-94.1185,13,P3
+ar-pine-bluff-q0,addition,Remodeler,34.2284,-92.0032,13,P1
+ar-pine-bluff-q1,addition,General contractor,34.2284,-92.0032,13,P1
+ar-pine-bluff-q2,addition,Custom home builder,34.2284,-92.0032,13,P2
+ar-pine-bluff-q3,kw:addition,home addition contractor,34.2284,-92.0032,13,P3
+ar-pine-bluff-q4,kw:addition,room addition contractor,34.2284,-92.0032,13,P3
+ar-pine-bluff-q5,kw:addition,second story addition,34.2284,-92.0032,13,P3
+ar-pine-bluff-q6,kw:addition,design build remodeling,34.2284,-92.0032,13,P3
+ar-hot-springs-q0,addition,Remodeler,34.5037,-93.0552,13,P1
+ar-hot-springs-q1,addition,General contractor,34.5037,-93.0552,13,P1
+ar-hot-springs-q2,addition,Custom home builder,34.5037,-93.0552,13,P2
+ar-hot-springs-q3,kw:addition,home addition contractor,34.5037,-93.0552,13,P3
+ar-hot-springs-q4,kw:addition,room addition contractor,34.5037,-93.0552,13,P3
+ar-hot-springs-q5,kw:addition,second story addition,34.5037,-93.0552,13,P3
+ar-hot-springs-q6,kw:addition,design build remodeling,34.5037,-93.0552,13,P3
+ar-benton-q0,addition,Remodeler,34.5645,-92.5868,13,P1
+ar-benton-q1,addition,General contractor,34.5645,-92.5868,13,P1
+ar-benton-q2,addition,Custom home builder,34.5645,-92.5868,13,P2
+ar-benton-q3,kw:addition,home addition contractor,34.5645,-92.5868,13,P3
+ar-benton-q4,kw:addition,room addition contractor,34.5645,-92.5868,13,P3
+ar-benton-q5,kw:addition,second story addition,34.5645,-92.5868,13,P3
+ar-benton-q6,kw:addition,design build remodeling,34.5645,-92.5868,13,P3
+ar-texarkana-q0,addition,Remodeler,33.4418,-94.0377,13,P1
+ar-texarkana-q1,addition,General contractor,33.4418,-94.0377,13,P1
+ar-texarkana-q2,addition,Custom home builder,33.4418,-94.0377,13,P2
+ar-texarkana-q3,kw:addition,home addition contractor,33.4418,-94.0377,13,P3
+ar-texarkana-q4,kw:addition,room addition contractor,33.4418,-94.0377,13,P3
+ar-texarkana-q5,kw:addition,second story addition,33.4418,-94.0377,13,P3
+ar-texarkana-q6,kw:addition,design build remodeling,33.4418,-94.0377,13,P3
+ar-russellville-q0,addition,Remodeler,35.2784,-93.1338,13,P1
+ar-russellville-q1,addition,General contractor,35.2784,-93.1338,13,P1
+ar-russellville-q2,addition,Custom home builder,35.2784,-93.1338,13,P2
+ar-russellville-q3,kw:addition,home addition contractor,35.2784,-93.1338,13,P3
+ar-russellville-q4,kw:addition,room addition contractor,35.2784,-93.1338,13,P3
+ar-russellville-q5,kw:addition,second story addition,35.2784,-93.1338,13,P3
+ar-russellville-q6,kw:addition,design build remodeling,35.2784,-93.1338,13,P3
+ar-paragould-q0,addition,Remodeler,36.0584,-90.4973,13,P1
+ar-paragould-q1,addition,General contractor,36.0584,-90.4973,13,P1
+ar-paragould-q2,addition,Custom home builder,36.0584,-90.4973,13,P2
+ar-paragould-q3,kw:addition,home addition contractor,36.0584,-90.4973,13,P3
+ar-paragould-q4,kw:addition,room addition contractor,36.0584,-90.4973,13,P3
+ar-paragould-q5,kw:addition,second story addition,36.0584,-90.4973,13,P3
+ar-paragould-q6,kw:addition,design build remodeling,36.0584,-90.4973,13,P3
+ar-cabot-q0,addition,Remodeler,34.9745,-92.0165,13,P1
+ar-cabot-q1,addition,General contractor,34.9745,-92.0165,13,P1
+ar-cabot-q2,addition,Custom home builder,34.9745,-92.0165,13,P2
+ar-cabot-q3,kw:addition,home addition contractor,34.9745,-92.0165,13,P3
+ar-cabot-q4,kw:addition,room addition contractor,34.9745,-92.0165,13,P3
+ar-cabot-q5,kw:addition,second story addition,34.9745,-92.0165,13,P3
+ar-cabot-q6,kw:addition,design build remodeling,34.9745,-92.0165,13,P3
+ar-west-memphis-q0,addition,Remodeler,35.1465,-90.1845,13,P1
+ar-west-memphis-q1,addition,General contractor,35.1465,-90.1845,13,P1
+ar-west-memphis-q2,addition,Custom home builder,35.1465,-90.1845,13,P2
+ar-west-memphis-q3,kw:addition,home addition contractor,35.1465,-90.1845,13,P3
+ar-west-memphis-q4,kw:addition,room addition contractor,35.1465,-90.1845,13,P3
+ar-west-memphis-q5,kw:addition,second story addition,35.1465,-90.1845,13,P3
+ar-west-memphis-q6,kw:addition,design build remodeling,35.1465,-90.1845,13,P3
+az-phoenix-q0,addition,Remodeler,33.4484,-112.074,13,P1
+az-phoenix-q1,addition,General contractor,33.4484,-112.074,13,P1
+az-phoenix-q2,addition,Custom home builder,33.4484,-112.074,13,P2
+az-phoenix-q3,kw:addition,home addition contractor,33.4484,-112.074,13,P3
+az-phoenix-q4,kw:addition,room addition contractor,33.4484,-112.074,13,P3
+az-phoenix-q5,kw:addition,second story addition,33.4484,-112.074,13,P3
+az-phoenix-q6,kw:addition,design build remodeling,33.4484,-112.074,13,P3
+az-tucson-q0,addition,Remodeler,32.2217,-110.9265,13,P1
+az-tucson-q1,addition,General contractor,32.2217,-110.9265,13,P1
+az-tucson-q2,addition,Custom home builder,32.2217,-110.9265,13,P2
+az-tucson-q3,kw:addition,home addition contractor,32.2217,-110.9265,13,P3
+az-tucson-q4,kw:addition,room addition contractor,32.2217,-110.9265,13,P3
+az-tucson-q5,kw:addition,second story addition,32.2217,-110.9265,13,P3
+az-tucson-q6,kw:addition,design build remodeling,32.2217,-110.9265,13,P3
+az-chandler-q0,addition,Remodeler,33.3062,-111.8413,13,P1
+az-chandler-q1,addition,General contractor,33.3062,-111.8413,13,P1
+az-chandler-q2,addition,Custom home builder,33.3062,-111.8413,13,P2
+az-chandler-q3,kw:addition,home addition contractor,33.3062,-111.8413,13,P3
+az-chandler-q4,kw:addition,room addition contractor,33.3062,-111.8413,13,P3
+az-chandler-q5,kw:addition,second story addition,33.3062,-111.8413,13,P3
+az-chandler-q6,kw:addition,design build remodeling,33.3062,-111.8413,13,P3
+az-deer-valley-q0,addition,Remodeler,33.6839,-112.1349,13,P1
+az-deer-valley-q1,addition,General contractor,33.6839,-112.1349,13,P1
+az-deer-valley-q2,addition,Custom home builder,33.6839,-112.1349,13,P2
+az-deer-valley-q3,kw:addition,home addition contractor,33.6839,-112.1349,13,P3
+az-deer-valley-q4,kw:addition,room addition contractor,33.6839,-112.1349,13,P3
+az-deer-valley-q5,kw:addition,second story addition,33.6839,-112.1349,13,P3
+az-deer-valley-q6,kw:addition,design build remodeling,33.6839,-112.1349,13,P3
+az-yuma-q0,addition,Remodeler,32.7253,-114.6244,13,P1
+az-yuma-q1,addition,General contractor,32.7253,-114.6244,13,P1
+az-yuma-q2,addition,Custom home builder,32.7253,-114.6244,13,P2
+az-yuma-q3,kw:addition,home addition contractor,32.7253,-114.6244,13,P3
+az-yuma-q4,kw:addition,room addition contractor,32.7253,-114.6244,13,P3
+az-yuma-q5,kw:addition,second story addition,32.7253,-114.6244,13,P3
+az-yuma-q6,kw:addition,design build remodeling,32.7253,-114.6244,13,P3
+az-san-tan-valley-q0,addition,Remodeler,33.1911,-111.528,13,P1
+az-san-tan-valley-q1,addition,General contractor,33.1911,-111.528,13,P1
+az-san-tan-valley-q2,addition,Custom home builder,33.1911,-111.528,13,P2
+az-san-tan-valley-q3,kw:addition,home addition contractor,33.1911,-111.528,13,P3
+az-san-tan-valley-q4,kw:addition,room addition contractor,33.1911,-111.528,13,P3
+az-san-tan-valley-q5,kw:addition,second story addition,33.1911,-111.528,13,P3
+az-san-tan-valley-q6,kw:addition,design build remodeling,33.1911,-111.528,13,P3
+az-avondale-q0,addition,Remodeler,33.4356,-112.3496,13,P1
+az-avondale-q1,addition,General contractor,33.4356,-112.3496,13,P1
+az-avondale-q2,addition,Custom home builder,33.4356,-112.3496,13,P2
+az-avondale-q3,kw:addition,home addition contractor,33.4356,-112.3496,13,P3
+az-avondale-q4,kw:addition,room addition contractor,33.4356,-112.3496,13,P3
+az-avondale-q5,kw:addition,second story addition,33.4356,-112.3496,13,P3
+az-avondale-q6,kw:addition,design build remodeling,33.4356,-112.3496,13,P3
+az-flagstaff-q0,addition,Remodeler,35.1981,-111.6513,13,P1
+az-flagstaff-q1,addition,General contractor,35.1981,-111.6513,13,P1
+az-flagstaff-q2,addition,Custom home builder,35.1981,-111.6513,13,P2
+az-flagstaff-q3,kw:addition,home addition contractor,35.1981,-111.6513,13,P3
+az-flagstaff-q4,kw:addition,room addition contractor,35.1981,-111.6513,13,P3
+az-flagstaff-q5,kw:addition,second story addition,35.1981,-111.6513,13,P3
+az-flagstaff-q6,kw:addition,design build remodeling,35.1981,-111.6513,13,P3
+az-lake-havasu-city-q0,addition,Remodeler,34.4839,-114.3225,13,P1
+az-lake-havasu-city-q1,addition,General contractor,34.4839,-114.3225,13,P1
+az-lake-havasu-city-q2,addition,Custom home builder,34.4839,-114.3225,13,P2
+az-lake-havasu-city-q3,kw:addition,home addition contractor,34.4839,-114.3225,13,P3
+az-lake-havasu-city-q4,kw:addition,room addition contractor,34.4839,-114.3225,13,P3
+az-lake-havasu-city-q5,kw:addition,second story addition,34.4839,-114.3225,13,P3
+az-lake-havasu-city-q6,kw:addition,design build remodeling,34.4839,-114.3225,13,P3
+az-casa-grande-q0,addition,Remodeler,32.8795,-111.7574,13,P1
+az-casa-grande-q1,addition,General contractor,32.8795,-111.7574,13,P1
+az-casa-grande-q2,addition,Custom home builder,32.8795,-111.7574,13,P2
+az-casa-grande-q3,kw:addition,home addition contractor,32.8795,-111.7574,13,P3
+az-casa-grande-q4,kw:addition,room addition contractor,32.8795,-111.7574,13,P3
+az-casa-grande-q5,kw:addition,second story addition,32.8795,-111.7574,13,P3
+az-casa-grande-q6,kw:addition,design build remodeling,32.8795,-111.7574,13,P3
+az-maricopa-q0,addition,Remodeler,33.0581,-112.0476,13,P1
+az-maricopa-q1,addition,General contractor,33.0581,-112.0476,13,P1
+az-maricopa-q2,addition,Custom home builder,33.0581,-112.0476,13,P2
+az-maricopa-q3,kw:addition,home addition contractor,33.0581,-112.0476,13,P3
+az-maricopa-q4,kw:addition,room addition contractor,33.0581,-112.0476,13,P3
+az-maricopa-q5,kw:addition,second story addition,33.0581,-112.0476,13,P3
+az-maricopa-q6,kw:addition,design build remodeling,33.0581,-112.0476,13,P3
+az-sierra-vista-q0,addition,Remodeler,31.5545,-110.3037,13,P1
+az-sierra-vista-q1,addition,General contractor,31.5545,-110.3037,13,P1
+az-sierra-vista-q2,addition,Custom home builder,31.5545,-110.3037,13,P2
+az-sierra-vista-q3,kw:addition,home addition contractor,31.5545,-110.3037,13,P3
+az-sierra-vista-q4,kw:addition,room addition contractor,31.5545,-110.3037,13,P3
+az-sierra-vista-q5,kw:addition,second story addition,31.5545,-110.3037,13,P3
+az-sierra-vista-q6,kw:addition,design build remodeling,31.5545,-110.3037,13,P3
+az-prescott-valley-q0,addition,Remodeler,34.61,-112.3157,13,P1
+az-prescott-valley-q1,addition,General contractor,34.61,-112.3157,13,P1
+az-prescott-valley-q2,addition,Custom home builder,34.61,-112.3157,13,P2
+az-prescott-valley-q3,kw:addition,home addition contractor,34.61,-112.3157,13,P3
+az-prescott-valley-q4,kw:addition,room addition contractor,34.61,-112.3157,13,P3
+az-prescott-valley-q5,kw:addition,second story addition,34.61,-112.3157,13,P3
+az-prescott-valley-q6,kw:addition,design build remodeling,34.61,-112.3157,13,P3
+az-marana-q0,addition,Remodeler,32.4367,-111.2254,13,P1
+az-marana-q1,addition,General contractor,32.4367,-111.2254,13,P1
+az-marana-q2,addition,Custom home builder,32.4367,-111.2254,13,P2
+az-marana-q3,kw:addition,home addition contractor,32.4367,-111.2254,13,P3
+az-marana-q4,kw:addition,room addition contractor,32.4367,-111.2254,13,P3
+az-marana-q5,kw:addition,second story addition,32.4367,-111.2254,13,P3
+az-marana-q6,kw:addition,design build remodeling,32.4367,-111.2254,13,P3
+az-bullhead-city-q0,addition,Remodeler,35.1478,-114.5683,13,P1
+az-bullhead-city-q1,addition,General contractor,35.1478,-114.5683,13,P1
+az-bullhead-city-q2,addition,Custom home builder,35.1478,-114.5683,13,P2
+az-bullhead-city-q3,kw:addition,home addition contractor,35.1478,-114.5683,13,P3
+az-bullhead-city-q4,kw:addition,room addition contractor,35.1478,-114.5683,13,P3
+az-bullhead-city-q5,kw:addition,second story addition,35.1478,-114.5683,13,P3
+az-bullhead-city-q6,kw:addition,design build remodeling,35.1478,-114.5683,13,P3
+az-san-luis-q0,addition,Remodeler,32.487,-114.7822,13,P1
+az-san-luis-q1,addition,General contractor,32.487,-114.7822,13,P1
+az-san-luis-q2,addition,Custom home builder,32.487,-114.7822,13,P2
+az-san-luis-q3,kw:addition,home addition contractor,32.487,-114.7822,13,P3
+az-san-luis-q4,kw:addition,room addition contractor,32.487,-114.7822,13,P3
+az-san-luis-q5,kw:addition,second story addition,32.487,-114.7822,13,P3
+az-san-luis-q6,kw:addition,design build remodeling,32.487,-114.7822,13,P3
+az-kingman-q0,addition,Remodeler,35.1894,-114.053,13,P1
+az-kingman-q1,addition,General contractor,35.1894,-114.053,13,P1
+az-kingman-q2,addition,Custom home builder,35.1894,-114.053,13,P2
+az-kingman-q3,kw:addition,home addition contractor,35.1894,-114.053,13,P3
+az-kingman-q4,kw:addition,room addition contractor,35.1894,-114.053,13,P3
+az-kingman-q5,kw:addition,second story addition,35.1894,-114.053,13,P3
+az-kingman-q6,kw:addition,design build remodeling,35.1894,-114.053,13,P3
+az-sahuarita-q0,addition,Remodeler,31.9576,-110.9557,13,P1
+az-sahuarita-q1,addition,General contractor,31.9576,-110.9557,13,P1
+az-sahuarita-q2,addition,Custom home builder,31.9576,-110.9557,13,P2
+az-sahuarita-q3,kw:addition,home addition contractor,31.9576,-110.9557,13,P3
+az-sahuarita-q4,kw:addition,room addition contractor,31.9576,-110.9557,13,P3
+az-sahuarita-q5,kw:addition,second story addition,31.9576,-110.9557,13,P3
+az-sahuarita-q6,kw:addition,design build remodeling,31.9576,-110.9557,13,P3
+ca-los-angeles-q0,addition,Remodeler,34.0522,-118.2437,13,P1
+ca-los-angeles-q1,addition,General contractor,34.0522,-118.2437,13,P1
+ca-los-angeles-q2,addition,Custom home builder,34.0522,-118.2437,13,P2
+ca-los-angeles-q3,kw:addition,home addition contractor,34.0522,-118.2437,13,P3
+ca-los-angeles-q4,kw:addition,room addition contractor,34.0522,-118.2437,13,P3
+ca-los-angeles-q5,kw:addition,second story addition,34.0522,-118.2437,13,P3
+ca-los-angeles-q6,kw:addition,design build remodeling,34.0522,-118.2437,13,P3
+ca-san-diego-q0,addition,Remodeler,32.7157,-117.1647,13,P1
+ca-san-diego-q1,addition,General contractor,32.7157,-117.1647,13,P1
+ca-san-diego-q2,addition,Custom home builder,32.7157,-117.1647,13,P2
+ca-san-diego-q3,kw:addition,home addition contractor,32.7157,-117.1647,13,P3
+ca-san-diego-q4,kw:addition,room addition contractor,32.7157,-117.1647,13,P3
+ca-san-diego-q5,kw:addition,second story addition,32.7157,-117.1647,13,P3
+ca-san-diego-q6,kw:addition,design build remodeling,32.7157,-117.1647,13,P3
+ca-san-jose-q0,addition,Remodeler,37.3394,-121.895,13,P1
+ca-san-jose-q1,addition,General contractor,37.3394,-121.895,13,P1
+ca-san-jose-q2,addition,Custom home builder,37.3394,-121.895,13,P2
+ca-san-jose-q3,kw:addition,home addition contractor,37.3394,-121.895,13,P3
+ca-san-jose-q4,kw:addition,room addition contractor,37.3394,-121.895,13,P3
+ca-san-jose-q5,kw:addition,second story addition,37.3394,-121.895,13,P3
+ca-san-jose-q6,kw:addition,design build remodeling,37.3394,-121.895,13,P3
+ca-san-francisco-q0,addition,Remodeler,37.7749,-122.4194,13,P1
+ca-san-francisco-q1,addition,General contractor,37.7749,-122.4194,13,P1
+ca-san-francisco-q2,addition,Custom home builder,37.7749,-122.4194,13,P2
+ca-san-francisco-q3,kw:addition,home addition contractor,37.7749,-122.4194,13,P3
+ca-san-francisco-q4,kw:addition,room addition contractor,37.7749,-122.4194,13,P3
+ca-san-francisco-q5,kw:addition,second story addition,37.7749,-122.4194,13,P3
+ca-san-francisco-q6,kw:addition,design build remodeling,37.7749,-122.4194,13,P3
+ca-fresno-q0,addition,Remodeler,36.7477,-119.7724,13,P1
+ca-fresno-q1,addition,General contractor,36.7477,-119.7724,13,P1
+ca-fresno-q2,addition,Custom home builder,36.7477,-119.7724,13,P2
+ca-fresno-q3,kw:addition,home addition contractor,36.7477,-119.7724,13,P3
+ca-fresno-q4,kw:addition,room addition contractor,36.7477,-119.7724,13,P3
+ca-fresno-q5,kw:addition,second story addition,36.7477,-119.7724,13,P3
+ca-fresno-q6,kw:addition,design build remodeling,36.7477,-119.7724,13,P3
+ca-sacramento-q0,addition,Remodeler,38.5816,-121.4944,13,P1
+ca-sacramento-q1,addition,General contractor,38.5816,-121.4944,13,P1
+ca-sacramento-q2,addition,Custom home builder,38.5816,-121.4944,13,P2
+ca-sacramento-q3,kw:addition,home addition contractor,38.5816,-121.4944,13,P3
+ca-sacramento-q4,kw:addition,room addition contractor,38.5816,-121.4944,13,P3
+ca-sacramento-q5,kw:addition,second story addition,38.5816,-121.4944,13,P3
+ca-sacramento-q6,kw:addition,design build remodeling,38.5816,-121.4944,13,P3
+ca-long-beach-q0,addition,Remodeler,33.767,-118.1892,13,P1
+ca-long-beach-q1,addition,General contractor,33.767,-118.1892,13,P1
+ca-long-beach-q2,addition,Custom home builder,33.767,-118.1892,13,P2
+ca-long-beach-q3,kw:addition,home addition contractor,33.767,-118.1892,13,P3
+ca-long-beach-q4,kw:addition,room addition contractor,33.767,-118.1892,13,P3
+ca-long-beach-q5,kw:addition,second story addition,33.767,-118.1892,13,P3
+ca-long-beach-q6,kw:addition,design build remodeling,33.767,-118.1892,13,P3
+ca-bakersfield-q0,addition,Remodeler,35.3733,-119.0187,13,P1
+ca-bakersfield-q1,addition,General contractor,35.3733,-119.0187,13,P1
+ca-bakersfield-q2,addition,Custom home builder,35.3733,-119.0187,13,P2
+ca-bakersfield-q3,kw:addition,home addition contractor,35.3733,-119.0187,13,P3
+ca-bakersfield-q4,kw:addition,room addition contractor,35.3733,-119.0187,13,P3
+ca-bakersfield-q5,kw:addition,second story addition,35.3733,-119.0187,13,P3
+ca-bakersfield-q6,kw:addition,design build remodeling,35.3733,-119.0187,13,P3
+ca-anaheim-q0,addition,Remodeler,33.8353,-117.9145,13,P1
+ca-anaheim-q1,addition,General contractor,33.8353,-117.9145,13,P1
+ca-anaheim-q2,addition,Custom home builder,33.8353,-117.9145,13,P2
+ca-anaheim-q3,kw:addition,home addition contractor,33.8353,-117.9145,13,P3
+ca-anaheim-q4,kw:addition,room addition contractor,33.8353,-117.9145,13,P3
+ca-anaheim-q5,kw:addition,second story addition,33.8353,-117.9145,13,P3
+ca-anaheim-q6,kw:addition,design build remodeling,33.8353,-117.9145,13,P3
+ca-riverside-q0,addition,Remodeler,33.9534,-117.3962,13,P1
+ca-riverside-q1,addition,General contractor,33.9534,-117.3962,13,P1
+ca-riverside-q2,addition,Custom home builder,33.9534,-117.3962,13,P2
+ca-riverside-q3,kw:addition,home addition contractor,33.9534,-117.3962,13,P3
+ca-riverside-q4,kw:addition,room addition contractor,33.9534,-117.3962,13,P3
+ca-riverside-q5,kw:addition,second story addition,33.9534,-117.3962,13,P3
+ca-riverside-q6,kw:addition,design build remodeling,33.9534,-117.3962,13,P3
+ca-stockton-q0,addition,Remodeler,37.9577,-121.2908,13,P1
+ca-stockton-q1,addition,General contractor,37.9577,-121.2908,13,P1
+ca-stockton-q2,addition,Custom home builder,37.9577,-121.2908,13,P2
+ca-stockton-q3,kw:addition,home addition contractor,37.9577,-121.2908,13,P3
+ca-stockton-q4,kw:addition,room addition contractor,37.9577,-121.2908,13,P3
+ca-stockton-q5,kw:addition,second story addition,37.9577,-121.2908,13,P3
+ca-stockton-q6,kw:addition,design build remodeling,37.9577,-121.2908,13,P3
+ca-modesto-q0,addition,Remodeler,37.6391,-120.9969,13,P1
+ca-modesto-q1,addition,General contractor,37.6391,-120.9969,13,P1
+ca-modesto-q2,addition,Custom home builder,37.6391,-120.9969,13,P2
+ca-modesto-q3,kw:addition,home addition contractor,37.6391,-120.9969,13,P3
+ca-modesto-q4,kw:addition,room addition contractor,37.6391,-120.9969,13,P3
+ca-modesto-q5,kw:addition,second story addition,37.6391,-120.9969,13,P3
+ca-modesto-q6,kw:addition,design build remodeling,37.6391,-120.9969,13,P3
+ca-oxnard-q0,addition,Remodeler,34.1975,-119.177,13,P1
+ca-oxnard-q1,addition,General contractor,34.1975,-119.177,13,P1
+ca-oxnard-q2,addition,Custom home builder,34.1975,-119.177,13,P2
+ca-oxnard-q3,kw:addition,home addition contractor,34.1975,-119.177,13,P3
+ca-oxnard-q4,kw:addition,room addition contractor,34.1975,-119.177,13,P3
+ca-oxnard-q5,kw:addition,second story addition,34.1975,-119.177,13,P3
+ca-oxnard-q6,kw:addition,design build remodeling,34.1975,-119.177,13,P3
+ca-santa-clarita-q0,addition,Remodeler,34.3917,-118.5426,13,P1
+ca-santa-clarita-q1,addition,General contractor,34.3917,-118.5426,13,P1
+ca-santa-clarita-q2,addition,Custom home builder,34.3917,-118.5426,13,P2
+ca-santa-clarita-q3,kw:addition,home addition contractor,34.3917,-118.5426,13,P3
+ca-santa-clarita-q4,kw:addition,room addition contractor,34.3917,-118.5426,13,P3
+ca-santa-clarita-q5,kw:addition,second story addition,34.3917,-118.5426,13,P3
+ca-santa-clarita-q6,kw:addition,design build remodeling,34.3917,-118.5426,13,P3
+ca-santa-rosa-q0,addition,Remodeler,38.4405,-122.7144,13,P1
+ca-santa-rosa-q1,addition,General contractor,38.4405,-122.7144,13,P1
+ca-santa-rosa-q2,addition,Custom home builder,38.4405,-122.7144,13,P2
+ca-santa-rosa-q3,kw:addition,home addition contractor,38.4405,-122.7144,13,P3
+ca-santa-rosa-q4,kw:addition,room addition contractor,38.4405,-122.7144,13,P3
+ca-santa-rosa-q5,kw:addition,second story addition,38.4405,-122.7144,13,P3
+ca-santa-rosa-q6,kw:addition,design build remodeling,38.4405,-122.7144,13,P3
+ca-oceanside-q0,addition,Remodeler,33.1959,-117.3795,13,P1
+ca-oceanside-q1,addition,General contractor,33.1959,-117.3795,13,P1
+ca-oceanside-q2,addition,Custom home builder,33.1959,-117.3795,13,P2
+ca-oceanside-q3,kw:addition,home addition contractor,33.1959,-117.3795,13,P3
+ca-oceanside-q4,kw:addition,room addition contractor,33.1959,-117.3795,13,P3
+ca-oceanside-q5,kw:addition,second story addition,33.1959,-117.3795,13,P3
+ca-oceanside-q6,kw:addition,design build remodeling,33.1959,-117.3795,13,P3
+ca-ontario-q0,addition,Remodeler,34.0633,-117.6509,13,P1
+ca-ontario-q1,addition,General contractor,34.0633,-117.6509,13,P1
+ca-ontario-q2,addition,Custom home builder,34.0633,-117.6509,13,P2
+ca-ontario-q3,kw:addition,home addition contractor,34.0633,-117.6509,13,P3
+ca-ontario-q4,kw:addition,room addition contractor,34.0633,-117.6509,13,P3
+ca-ontario-q5,kw:addition,second story addition,34.0633,-117.6509,13,P3
+ca-ontario-q6,kw:addition,design build remodeling,34.0633,-117.6509,13,P3
+ca-lancaster-q0,addition,Remodeler,34.698,-118.1367,13,P1
+ca-lancaster-q1,addition,General contractor,34.698,-118.1367,13,P1
+ca-lancaster-q2,addition,Custom home builder,34.698,-118.1367,13,P2
+ca-lancaster-q3,kw:addition,home addition contractor,34.698,-118.1367,13,P3
+ca-lancaster-q4,kw:addition,room addition contractor,34.698,-118.1367,13,P3
+ca-lancaster-q5,kw:addition,second story addition,34.698,-118.1367,13,P3
+ca-lancaster-q6,kw:addition,design build remodeling,34.698,-118.1367,13,P3
+ca-hayward-q0,addition,Remodeler,37.6688,-122.0808,13,P1
+ca-hayward-q1,addition,General contractor,37.6688,-122.0808,13,P1
+ca-hayward-q2,addition,Custom home builder,37.6688,-122.0808,13,P2
+ca-hayward-q3,kw:addition,home addition contractor,37.6688,-122.0808,13,P3
+ca-hayward-q4,kw:addition,room addition contractor,37.6688,-122.0808,13,P3
+ca-hayward-q5,kw:addition,second story addition,37.6688,-122.0808,13,P3
+ca-hayward-q6,kw:addition,design build remodeling,37.6688,-122.0808,13,P3
+ca-salinas-q0,addition,Remodeler,36.6777,-121.6555,13,P1
+ca-salinas-q1,addition,General contractor,36.6777,-121.6555,13,P1
+ca-salinas-q2,addition,Custom home builder,36.6777,-121.6555,13,P2
+ca-salinas-q3,kw:addition,home addition contractor,36.6777,-121.6555,13,P3
+ca-salinas-q4,kw:addition,room addition contractor,36.6777,-121.6555,13,P3
+ca-salinas-q5,kw:addition,second story addition,36.6777,-121.6555,13,P3
+ca-salinas-q6,kw:addition,design build remodeling,36.6777,-121.6555,13,P3
+ca-escondido-q0,addition,Remodeler,33.1192,-117.0864,13,P1
+ca-escondido-q1,addition,General contractor,33.1192,-117.0864,13,P1
+ca-escondido-q2,addition,Custom home builder,33.1192,-117.0864,13,P2
+ca-escondido-q3,kw:addition,home addition contractor,33.1192,-117.0864,13,P3
+ca-escondido-q4,kw:addition,room addition contractor,33.1192,-117.0864,13,P3
+ca-escondido-q5,kw:addition,second story addition,33.1192,-117.0864,13,P3
+ca-escondido-q6,kw:addition,design build remodeling,33.1192,-117.0864,13,P3
+ca-roseville-q0,addition,Remodeler,38.7521,-121.288,13,P1
+ca-roseville-q1,addition,General contractor,38.7521,-121.288,13,P1
+ca-roseville-q2,addition,Custom home builder,38.7521,-121.288,13,P2
+ca-roseville-q3,kw:addition,home addition contractor,38.7521,-121.288,13,P3
+ca-roseville-q4,kw:addition,room addition contractor,38.7521,-121.288,13,P3
+ca-roseville-q5,kw:addition,second story addition,38.7521,-121.288,13,P3
+ca-roseville-q6,kw:addition,design build remodeling,38.7521,-121.288,13,P3
+ca-visalia-q0,addition,Remodeler,36.3302,-119.2921,13,P1
+ca-visalia-q1,addition,General contractor,36.3302,-119.2921,13,P1
+ca-visalia-q2,addition,Custom home builder,36.3302,-119.2921,13,P2
+ca-visalia-q3,kw:addition,home addition contractor,36.3302,-119.2921,13,P3
+ca-visalia-q4,kw:addition,room addition contractor,36.3302,-119.2921,13,P3
+ca-visalia-q5,kw:addition,second story addition,36.3302,-119.2921,13,P3
+ca-visalia-q6,kw:addition,design build remodeling,36.3302,-119.2921,13,P3
+ca-thousand-oaks-q0,addition,Remodeler,34.1706,-118.8376,13,P1
+ca-thousand-oaks-q1,addition,General contractor,34.1706,-118.8376,13,P1
+ca-thousand-oaks-q2,addition,Custom home builder,34.1706,-118.8376,13,P2
+ca-thousand-oaks-q3,kw:addition,home addition contractor,34.1706,-118.8376,13,P3
+ca-thousand-oaks-q4,kw:addition,room addition contractor,34.1706,-118.8376,13,P3
+ca-thousand-oaks-q5,kw:addition,second story addition,34.1706,-118.8376,13,P3
+ca-thousand-oaks-q6,kw:addition,design build remodeling,34.1706,-118.8376,13,P3
+ca-concord-q0,addition,Remodeler,37.978,-122.0311,13,P1
+ca-concord-q1,addition,General contractor,37.978,-122.0311,13,P1
+ca-concord-q2,addition,Custom home builder,37.978,-122.0311,13,P2
+ca-concord-q3,kw:addition,home addition contractor,37.978,-122.0311,13,P3
+ca-concord-q4,kw:addition,room addition contractor,37.978,-122.0311,13,P3
+ca-concord-q5,kw:addition,second story addition,37.978,-122.0311,13,P3
+ca-concord-q6,kw:addition,design build remodeling,37.978,-122.0311,13,P3
+ca-victorville-q0,addition,Remodeler,34.5361,-117.2912,13,P1
+ca-victorville-q1,addition,General contractor,34.5361,-117.2912,13,P1
+ca-victorville-q2,addition,Custom home builder,34.5361,-117.2912,13,P2
+ca-victorville-q3,kw:addition,home addition contractor,34.5361,-117.2912,13,P3
+ca-victorville-q4,kw:addition,room addition contractor,34.5361,-117.2912,13,P3
+ca-victorville-q5,kw:addition,second story addition,34.5361,-117.2912,13,P3
+ca-victorville-q6,kw:addition,design build remodeling,34.5361,-117.2912,13,P3
+ca-chico-q0,addition,Remodeler,39.7285,-121.8375,13,P1
+ca-chico-q1,addition,General contractor,39.7285,-121.8375,13,P1
+ca-chico-q2,addition,Custom home builder,39.7285,-121.8375,13,P2
+ca-chico-q3,kw:addition,home addition contractor,39.7285,-121.8375,13,P3
+ca-chico-q4,kw:addition,room addition contractor,39.7285,-121.8375,13,P3
+ca-chico-q5,kw:addition,second story addition,39.7285,-121.8375,13,P3
+ca-chico-q6,kw:addition,design build remodeling,39.7285,-121.8375,13,P3
+ca-fairfield-q0,addition,Remodeler,38.2494,-122.04,13,P1
+ca-fairfield-q1,addition,General contractor,38.2494,-122.04,13,P1
+ca-fairfield-q2,addition,Custom home builder,38.2494,-122.04,13,P2
+ca-fairfield-q3,kw:addition,home addition contractor,38.2494,-122.04,13,P3
+ca-fairfield-q4,kw:addition,room addition contractor,38.2494,-122.04,13,P3
+ca-fairfield-q5,kw:addition,second story addition,38.2494,-122.04,13,P3
+ca-fairfield-q6,kw:addition,design build remodeling,38.2494,-122.04,13,P3
+ca-temecula-q0,addition,Remodeler,33.4936,-117.1484,13,P1
+ca-temecula-q1,addition,General contractor,33.4936,-117.1484,13,P1
+ca-temecula-q2,addition,Custom home builder,33.4936,-117.1484,13,P2
+ca-temecula-q3,kw:addition,home addition contractor,33.4936,-117.1484,13,P3
+ca-temecula-q4,kw:addition,room addition contractor,33.4936,-117.1484,13,P3
+ca-temecula-q5,kw:addition,second story addition,33.4936,-117.1484,13,P3
+ca-temecula-q6,kw:addition,design build remodeling,33.4936,-117.1484,13,P3
+ca-west-covina-q0,addition,Remodeler,34.0686,-117.939,13,P1
+ca-west-covina-q1,addition,General contractor,34.0686,-117.939,13,P1
+ca-west-covina-q2,addition,Custom home builder,34.0686,-117.939,13,P2
+ca-west-covina-q3,kw:addition,home addition contractor,34.0686,-117.939,13,P3
+ca-west-covina-q4,kw:addition,room addition contractor,34.0686,-117.939,13,P3
+ca-west-covina-q5,kw:addition,second story addition,34.0686,-117.939,13,P3
+ca-west-covina-q6,kw:addition,design build remodeling,34.0686,-117.939,13,P3
+ca-santa-maria-q0,addition,Remodeler,34.953,-120.4357,13,P1
+ca-santa-maria-q1,addition,General contractor,34.953,-120.4357,13,P1
+ca-santa-maria-q2,addition,Custom home builder,34.953,-120.4357,13,P2
+ca-santa-maria-q3,kw:addition,home addition contractor,34.953,-120.4357,13,P3
+ca-santa-maria-q4,kw:addition,room addition contractor,34.953,-120.4357,13,P3
+ca-santa-maria-q5,kw:addition,second story addition,34.953,-120.4357,13,P3
+ca-santa-maria-q6,kw:addition,design build remodeling,34.953,-120.4357,13,P3
+ca-mission-viejo-q0,addition,Remodeler,33.6,-117.672,13,P1
+ca-mission-viejo-q1,addition,General contractor,33.6,-117.672,13,P1
+ca-mission-viejo-q2,addition,Custom home builder,33.6,-117.672,13,P2
+ca-mission-viejo-q3,kw:addition,home addition contractor,33.6,-117.672,13,P3
+ca-mission-viejo-q4,kw:addition,room addition contractor,33.6,-117.672,13,P3
+ca-mission-viejo-q5,kw:addition,second story addition,33.6,-117.672,13,P3
+ca-mission-viejo-q6,kw:addition,design build remodeling,33.6,-117.672,13,P3
+ca-santa-barbara-q0,addition,Remodeler,34.4208,-119.6982,13,P1
+ca-santa-barbara-q1,addition,General contractor,34.4208,-119.6982,13,P1
+ca-santa-barbara-q2,addition,Custom home builder,34.4208,-119.6982,13,P2
+ca-santa-barbara-q3,kw:addition,home addition contractor,34.4208,-119.6982,13,P3
+ca-santa-barbara-q4,kw:addition,room addition contractor,34.4208,-119.6982,13,P3
+ca-santa-barbara-q5,kw:addition,second story addition,34.4208,-119.6982,13,P3
+ca-santa-barbara-q6,kw:addition,design build remodeling,34.4208,-119.6982,13,P3
+ca-redding-q0,addition,Remodeler,40.5865,-122.3917,13,P1
+ca-redding-q1,addition,General contractor,40.5865,-122.3917,13,P1
+ca-redding-q2,addition,Custom home builder,40.5865,-122.3917,13,P2
+ca-redding-q3,kw:addition,home addition contractor,40.5865,-122.3917,13,P3
+ca-redding-q4,kw:addition,room addition contractor,40.5865,-122.3917,13,P3
+ca-redding-q5,kw:addition,second story addition,40.5865,-122.3917,13,P3
+ca-redding-q6,kw:addition,design build remodeling,40.5865,-122.3917,13,P3
+ca-livermore-q0,addition,Remodeler,37.6819,-121.768,13,P1
+ca-livermore-q1,addition,General contractor,37.6819,-121.768,13,P1
+ca-livermore-q2,addition,Custom home builder,37.6819,-121.768,13,P2
+ca-livermore-q3,kw:addition,home addition contractor,37.6819,-121.768,13,P3
+ca-livermore-q4,kw:addition,room addition contractor,37.6819,-121.768,13,P3
+ca-livermore-q5,kw:addition,second story addition,37.6819,-121.768,13,P3
+ca-livermore-q6,kw:addition,design build remodeling,37.6819,-121.768,13,P3
+ca-indio-q0,addition,Remodeler,33.7207,-116.2168,13,P1
+ca-indio-q1,addition,General contractor,33.7207,-116.2168,13,P1
+ca-indio-q2,addition,Custom home builder,33.7207,-116.2168,13,P2
+ca-indio-q3,kw:addition,home addition contractor,33.7207,-116.2168,13,P3
+ca-indio-q4,kw:addition,room addition contractor,33.7207,-116.2168,13,P3
+ca-indio-q5,kw:addition,second story addition,33.7207,-116.2168,13,P3
+ca-indio-q6,kw:addition,design build remodeling,33.7207,-116.2168,13,P3
+ca-menifee-q0,addition,Remodeler,33.7283,-117.1464,13,P1
+ca-menifee-q1,addition,General contractor,33.7283,-117.1464,13,P1
+ca-menifee-q2,addition,Custom home builder,33.7283,-117.1464,13,P2
+ca-menifee-q3,kw:addition,home addition contractor,33.7283,-117.1464,13,P3
+ca-menifee-q4,kw:addition,room addition contractor,33.7283,-117.1464,13,P3
+ca-menifee-q5,kw:addition,second story addition,33.7283,-117.1464,13,P3
+ca-menifee-q6,kw:addition,design build remodeling,33.7283,-117.1464,13,P3
+ca-tracy-q0,addition,Remodeler,37.7399,-121.4262,13,P1
+ca-tracy-q1,addition,General contractor,37.7399,-121.4262,13,P1
+ca-tracy-q2,addition,Custom home builder,37.7399,-121.4262,13,P2
+ca-tracy-q3,kw:addition,home addition contractor,37.7399,-121.4262,13,P3
+ca-tracy-q4,kw:addition,room addition contractor,37.7399,-121.4262,13,P3
+ca-tracy-q5,kw:addition,second story addition,37.7399,-121.4262,13,P3
+ca-tracy-q6,kw:addition,design build remodeling,37.7399,-121.4262,13,P3
+ca-merced-q0,addition,Remodeler,37.3022,-120.483,13,P1
+ca-merced-q1,addition,General contractor,37.3022,-120.483,13,P1
+ca-merced-q2,addition,Custom home builder,37.3022,-120.483,13,P2
+ca-merced-q3,kw:addition,home addition contractor,37.3022,-120.483,13,P3
+ca-merced-q4,kw:addition,room addition contractor,37.3022,-120.483,13,P3
+ca-merced-q5,kw:addition,second story addition,37.3022,-120.483,13,P3
+ca-merced-q6,kw:addition,design build remodeling,37.3022,-120.483,13,P3
+ca-yuba-city-q0,addition,Remodeler,39.1405,-121.6169,13,P1
+ca-yuba-city-q1,addition,General contractor,39.1405,-121.6169,13,P1
+ca-yuba-city-q2,addition,Custom home builder,39.1405,-121.6169,13,P2
+ca-yuba-city-q3,kw:addition,home addition contractor,39.1405,-121.6169,13,P3
+ca-yuba-city-q4,kw:addition,room addition contractor,39.1405,-121.6169,13,P3
+ca-yuba-city-q5,kw:addition,second story addition,39.1405,-121.6169,13,P3
+ca-yuba-city-q6,kw:addition,design build remodeling,39.1405,-121.6169,13,P3
+ca-santa-cruz-q0,addition,Remodeler,36.9741,-122.0308,13,P1
+ca-santa-cruz-q1,addition,General contractor,36.9741,-122.0308,13,P1
+ca-santa-cruz-q2,addition,Custom home builder,36.9741,-122.0308,13,P2
+ca-santa-cruz-q3,kw:addition,home addition contractor,36.9741,-122.0308,13,P3
+ca-santa-cruz-q4,kw:addition,room addition contractor,36.9741,-122.0308,13,P3
+ca-santa-cruz-q5,kw:addition,second story addition,36.9741,-122.0308,13,P3
+ca-santa-cruz-q6,kw:addition,design build remodeling,36.9741,-122.0308,13,P3
+ca-madera-q0,addition,Remodeler,36.9613,-120.0607,13,P1
+ca-madera-q1,addition,General contractor,36.9613,-120.0607,13,P1
+ca-madera-q2,addition,Custom home builder,36.9613,-120.0607,13,P2
+ca-madera-q3,kw:addition,home addition contractor,36.9613,-120.0607,13,P3
+ca-madera-q4,kw:addition,room addition contractor,36.9613,-120.0607,13,P3
+ca-madera-q5,kw:addition,second story addition,36.9613,-120.0607,13,P3
+ca-madera-q6,kw:addition,design build remodeling,36.9613,-120.0607,13,P3
+ca-brentwood-q0,addition,Remodeler,37.9319,-121.6958,13,P1
+ca-brentwood-q1,addition,General contractor,37.9319,-121.6958,13,P1
+ca-brentwood-q2,addition,Custom home builder,37.9319,-121.6958,13,P2
+ca-brentwood-q3,kw:addition,home addition contractor,37.9319,-121.6958,13,P3
+ca-brentwood-q4,kw:addition,room addition contractor,37.9319,-121.6958,13,P3
+ca-brentwood-q5,kw:addition,second story addition,37.9319,-121.6958,13,P3
+ca-brentwood-q6,kw:addition,design build remodeling,37.9319,-121.6958,13,P3
+ca-woodland-q0,addition,Remodeler,38.6785,-121.7733,13,P1
+ca-woodland-q1,addition,General contractor,38.6785,-121.7733,13,P1
+ca-woodland-q2,addition,Custom home builder,38.6785,-121.7733,13,P2
+ca-woodland-q3,kw:addition,home addition contractor,38.6785,-121.7733,13,P3
+ca-woodland-q4,kw:addition,room addition contractor,38.6785,-121.7733,13,P3
+ca-woodland-q5,kw:addition,second story addition,38.6785,-121.7733,13,P3
+ca-woodland-q6,kw:addition,design build remodeling,38.6785,-121.7733,13,P3
+ca-porterville-q0,addition,Remodeler,36.0652,-119.0168,13,P1
+ca-porterville-q1,addition,General contractor,36.0652,-119.0168,13,P1
+ca-porterville-q2,addition,Custom home builder,36.0652,-119.0168,13,P2
+ca-porterville-q3,kw:addition,home addition contractor,36.0652,-119.0168,13,P3
+ca-porterville-q4,kw:addition,room addition contractor,36.0652,-119.0168,13,P3
+ca-porterville-q5,kw:addition,second story addition,36.0652,-119.0168,13,P3
+ca-porterville-q6,kw:addition,design build remodeling,36.0652,-119.0168,13,P3
+ca-hanford-q0,addition,Remodeler,36.3274,-119.6457,13,P1
+ca-hanford-q1,addition,General contractor,36.3274,-119.6457,13,P1
+ca-hanford-q2,addition,Custom home builder,36.3274,-119.6457,13,P2
+ca-hanford-q3,kw:addition,home addition contractor,36.3274,-119.6457,13,P3
+ca-hanford-q4,kw:addition,room addition contractor,36.3274,-119.6457,13,P3
+ca-hanford-q5,kw:addition,second story addition,36.3274,-119.6457,13,P3
+ca-hanford-q6,kw:addition,design build remodeling,36.3274,-119.6457,13,P3
+ca-novato-q0,addition,Remodeler,38.1074,-122.5697,13,P1
+ca-novato-q1,addition,General contractor,38.1074,-122.5697,13,P1
+ca-novato-q2,addition,Custom home builder,38.1074,-122.5697,13,P2
+ca-novato-q3,kw:addition,home addition contractor,38.1074,-122.5697,13,P3
+ca-novato-q4,kw:addition,room addition contractor,38.1074,-122.5697,13,P3
+ca-novato-q5,kw:addition,second story addition,38.1074,-122.5697,13,P3
+ca-novato-q6,kw:addition,design build remodeling,38.1074,-122.5697,13,P3
+ca-highland-q0,addition,Remodeler,34.1283,-117.2087,13,P1
+ca-highland-q1,addition,General contractor,34.1283,-117.2087,13,P1
+ca-highland-q2,addition,Custom home builder,34.1283,-117.2087,13,P2
+ca-highland-q3,kw:addition,home addition contractor,34.1283,-117.2087,13,P3
+ca-highland-q4,kw:addition,room addition contractor,34.1283,-117.2087,13,P3
+ca-highland-q5,kw:addition,second story addition,34.1283,-117.2087,13,P3
+ca-highland-q6,kw:addition,design build remodeling,34.1283,-117.2087,13,P3
+ca-watsonville-q0,addition,Remodeler,36.9102,-121.7569,13,P1
+ca-watsonville-q1,addition,General contractor,36.9102,-121.7569,13,P1
+ca-watsonville-q2,addition,Custom home builder,36.9102,-121.7569,13,P2
+ca-watsonville-q3,kw:addition,home addition contractor,36.9102,-121.7569,13,P3
+ca-watsonville-q4,kw:addition,room addition contractor,36.9102,-121.7569,13,P3
+ca-watsonville-q5,kw:addition,second story addition,36.9102,-121.7569,13,P3
+ca-watsonville-q6,kw:addition,design build remodeling,36.9102,-121.7569,13,P3
+ca-delano-q0,addition,Remodeler,35.7688,-119.2471,13,P1
+ca-delano-q1,addition,General contractor,35.7688,-119.2471,13,P1
+ca-delano-q2,addition,Custom home builder,35.7688,-119.2471,13,P2
+ca-delano-q3,kw:addition,home addition contractor,35.7688,-119.2471,13,P3
+ca-delano-q4,kw:addition,room addition contractor,35.7688,-119.2471,13,P3
+ca-delano-q5,kw:addition,second story addition,35.7688,-119.2471,13,P3
+ca-delano-q6,kw:addition,design build remodeling,35.7688,-119.2471,13,P3
+ca-palm-springs-q0,addition,Remodeler,33.8303,-116.5453,13,P1
+ca-palm-springs-q1,addition,General contractor,33.8303,-116.5453,13,P1
+ca-palm-springs-q2,addition,Custom home builder,33.8303,-116.5453,13,P2
+ca-palm-springs-q3,kw:addition,home addition contractor,33.8303,-116.5453,13,P3
+ca-palm-springs-q4,kw:addition,room addition contractor,33.8303,-116.5453,13,P3
+ca-palm-springs-q5,kw:addition,second story addition,33.8303,-116.5453,13,P3
+ca-palm-springs-q6,kw:addition,design build remodeling,33.8303,-116.5453,13,P3
+ca-san-luis-obispo-q0,addition,Remodeler,35.2828,-120.6596,13,P1
+ca-san-luis-obispo-q1,addition,General contractor,35.2828,-120.6596,13,P1
+ca-san-luis-obispo-q2,addition,Custom home builder,35.2828,-120.6596,13,P2
+ca-san-luis-obispo-q3,kw:addition,home addition contractor,35.2828,-120.6596,13,P3
+ca-san-luis-obispo-q4,kw:addition,room addition contractor,35.2828,-120.6596,13,P3
+ca-san-luis-obispo-q5,kw:addition,second story addition,35.2828,-120.6596,13,P3
+ca-san-luis-obispo-q6,kw:addition,design build remodeling,35.2828,-120.6596,13,P3
+ca-encino-q0,addition,Remodeler,34.1592,-118.5012,13,P1
+ca-encino-q1,addition,General contractor,34.1592,-118.5012,13,P1
+ca-encino-q2,addition,Custom home builder,34.1592,-118.5012,13,P2
+ca-encino-q3,kw:addition,home addition contractor,34.1592,-118.5012,13,P3
+ca-encino-q4,kw:addition,room addition contractor,34.1592,-118.5012,13,P3
+ca-encino-q5,kw:addition,second story addition,34.1592,-118.5012,13,P3
+ca-encino-q6,kw:addition,design build remodeling,34.1592,-118.5012,13,P3
+ca-lompoc-q0,addition,Remodeler,34.6392,-120.4579,13,P1
+ca-lompoc-q1,addition,General contractor,34.6392,-120.4579,13,P1
+ca-lompoc-q2,addition,Custom home builder,34.6392,-120.4579,13,P2
+ca-lompoc-q3,kw:addition,home addition contractor,34.6392,-120.4579,13,P3
+ca-lompoc-q4,kw:addition,room addition contractor,34.6392,-120.4579,13,P3
+ca-lompoc-q5,kw:addition,second story addition,34.6392,-120.4579,13,P3
+ca-lompoc-q6,kw:addition,design build remodeling,34.6392,-120.4579,13,P3
+ca-el-centro-q0,addition,Remodeler,32.792,-115.5631,13,P1
+ca-el-centro-q1,addition,General contractor,32.792,-115.5631,13,P1
+ca-el-centro-q2,addition,Custom home builder,32.792,-115.5631,13,P2
+ca-el-centro-q3,kw:addition,home addition contractor,32.792,-115.5631,13,P3
+ca-el-centro-q4,kw:addition,room addition contractor,32.792,-115.5631,13,P3
+ca-el-centro-q5,kw:addition,second story addition,32.792,-115.5631,13,P3
+ca-el-centro-q6,kw:addition,design build remodeling,32.792,-115.5631,13,P3
+ca-beaumont-q0,addition,Remodeler,33.9295,-116.9772,13,P1
+ca-beaumont-q1,addition,General contractor,33.9295,-116.9772,13,P1
+ca-beaumont-q2,addition,Custom home builder,33.9295,-116.9772,13,P2
+ca-beaumont-q3,kw:addition,home addition contractor,33.9295,-116.9772,13,P3
+ca-beaumont-q4,kw:addition,room addition contractor,33.9295,-116.9772,13,P3
+ca-beaumont-q5,kw:addition,second story addition,33.9295,-116.9772,13,P3
+ca-beaumont-q6,kw:addition,design build remodeling,33.9295,-116.9772,13,P3
+ca-morgan-hill-q0,addition,Remodeler,37.1305,-121.6544,13,P1
+ca-morgan-hill-q1,addition,General contractor,37.1305,-121.6544,13,P1
+ca-morgan-hill-q2,addition,Custom home builder,37.1305,-121.6544,13,P2
+ca-morgan-hill-q3,kw:addition,home addition contractor,37.1305,-121.6544,13,P3
+ca-morgan-hill-q4,kw:addition,room addition contractor,37.1305,-121.6544,13,P3
+ca-morgan-hill-q5,kw:addition,second story addition,37.1305,-121.6544,13,P3
+ca-morgan-hill-q6,kw:addition,design build remodeling,37.1305,-121.6544,13,P3
+ca-hollister-q0,addition,Remodeler,36.8524,-121.4016,13,P1
+ca-hollister-q1,addition,General contractor,36.8524,-121.4016,13,P1
+ca-hollister-q2,addition,Custom home builder,36.8524,-121.4016,13,P2
+ca-hollister-q3,kw:addition,home addition contractor,36.8524,-121.4016,13,P3
+ca-hollister-q4,kw:addition,room addition contractor,36.8524,-121.4016,13,P3
+ca-hollister-q5,kw:addition,second story addition,36.8524,-121.4016,13,P3
+ca-hollister-q6,kw:addition,design build remodeling,36.8524,-121.4016,13,P3
+ca-los-banos-q0,addition,Remodeler,37.0583,-120.8499,13,P1
+ca-los-banos-q1,addition,General contractor,37.0583,-120.8499,13,P1
+ca-los-banos-q2,addition,Custom home builder,37.0583,-120.8499,13,P2
+ca-los-banos-q3,kw:addition,home addition contractor,37.0583,-120.8499,13,P3
+ca-los-banos-q4,kw:addition,room addition contractor,37.0583,-120.8499,13,P3
+ca-los-banos-q5,kw:addition,second story addition,37.0583,-120.8499,13,P3
+ca-los-banos-q6,kw:addition,design build remodeling,37.0583,-120.8499,13,P3
+ca-menlo-park-q0,addition,Remodeler,37.4538,-122.1822,13,P1
+ca-menlo-park-q1,addition,General contractor,37.4538,-122.1822,13,P1
+ca-menlo-park-q2,addition,Custom home builder,37.4538,-122.1822,13,P2
+ca-menlo-park-q3,kw:addition,home addition contractor,37.4538,-122.1822,13,P3
+ca-menlo-park-q4,kw:addition,room addition contractor,37.4538,-122.1822,13,P3
+ca-menlo-park-q5,kw:addition,second story addition,37.4538,-122.1822,13,P3
+ca-menlo-park-q6,kw:addition,design build remodeling,37.4538,-122.1822,13,P3
+ca-ridgecrest-q0,addition,Remodeler,35.6225,-117.6709,13,P1
+ca-ridgecrest-q1,addition,General contractor,35.6225,-117.6709,13,P1
+ca-ridgecrest-q2,addition,Custom home builder,35.6225,-117.6709,13,P2
+ca-ridgecrest-q3,kw:addition,home addition contractor,35.6225,-117.6709,13,P3
+ca-ridgecrest-q4,kw:addition,room addition contractor,35.6225,-117.6709,13,P3
+ca-ridgecrest-q5,kw:addition,second story addition,35.6225,-117.6709,13,P3
+ca-ridgecrest-q6,kw:addition,design build remodeling,35.6225,-117.6709,13,P3
+ca-paso-robles-q0,addition,Remodeler,35.6266,-120.691,13,P1
+ca-paso-robles-q1,addition,General contractor,35.6266,-120.691,13,P1
+ca-paso-robles-q2,addition,Custom home builder,35.6266,-120.691,13,P2
+ca-paso-robles-q3,kw:addition,home addition contractor,35.6266,-120.691,13,P3
+ca-paso-robles-q4,kw:addition,room addition contractor,35.6266,-120.691,13,P3
+ca-paso-robles-q5,kw:addition,second story addition,35.6266,-120.691,13,P3
+ca-paso-robles-q6,kw:addition,design build remodeling,35.6266,-120.691,13,P3
+ca-eureka-q0,addition,Remodeler,40.8021,-124.1637,13,P1
+ca-eureka-q1,addition,General contractor,40.8021,-124.1637,13,P1
+ca-eureka-q2,addition,Custom home builder,40.8021,-124.1637,13,P2
+ca-eureka-q3,kw:addition,home addition contractor,40.8021,-124.1637,13,P3
+ca-eureka-q4,kw:addition,room addition contractor,40.8021,-124.1637,13,P3
+ca-eureka-q5,kw:addition,second story addition,40.8021,-124.1637,13,P3
+ca-eureka-q6,kw:addition,design build remodeling,40.8021,-124.1637,13,P3
+ca-twentynine-palms-q0,addition,Remodeler,34.1356,-116.0542,13,P1
+ca-twentynine-palms-q1,addition,General contractor,34.1356,-116.0542,13,P1
+ca-twentynine-palms-q2,addition,Custom home builder,34.1356,-116.0542,13,P2
+ca-twentynine-palms-q3,kw:addition,home addition contractor,34.1356,-116.0542,13,P3
+ca-twentynine-palms-q4,kw:addition,room addition contractor,34.1356,-116.0542,13,P3
+ca-twentynine-palms-q5,kw:addition,second story addition,34.1356,-116.0542,13,P3
+ca-twentynine-palms-q6,kw:addition,design build remodeling,34.1356,-116.0542,13,P3
+ca-reedley-q0,addition,Remodeler,36.5963,-119.4504,13,P1
+ca-reedley-q1,addition,General contractor,36.5963,-119.4504,13,P1
+ca-reedley-q2,addition,Custom home builder,36.5963,-119.4504,13,P2
+ca-reedley-q3,kw:addition,home addition contractor,36.5963,-119.4504,13,P3
+ca-reedley-q4,kw:addition,room addition contractor,36.5963,-119.4504,13,P3
+ca-reedley-q5,kw:addition,second story addition,36.5963,-119.4504,13,P3
+ca-reedley-q6,kw:addition,design build remodeling,36.5963,-119.4504,13,P3
+ca-galt-q0,addition,Remodeler,38.2546,-121.2999,13,P1
+ca-galt-q1,addition,General contractor,38.2546,-121.2999,13,P1
+ca-galt-q2,addition,Custom home builder,38.2546,-121.2999,13,P2
+ca-galt-q3,kw:addition,home addition contractor,38.2546,-121.2999,13,P3
+ca-galt-q4,kw:addition,room addition contractor,38.2546,-121.2999,13,P3
+ca-galt-q5,kw:addition,second story addition,38.2546,-121.2999,13,P3
+ca-galt-q6,kw:addition,design build remodeling,38.2546,-121.2999,13,P3
+ca-soledad-q0,addition,Remodeler,36.4247,-121.3263,13,P1
+ca-soledad-q1,addition,General contractor,36.4247,-121.3263,13,P1
+ca-soledad-q2,addition,Custom home builder,36.4247,-121.3263,13,P2
+ca-soledad-q3,kw:addition,home addition contractor,36.4247,-121.3263,13,P3
+ca-soledad-q4,kw:addition,room addition contractor,36.4247,-121.3263,13,P3
+ca-soledad-q5,kw:addition,second story addition,36.4247,-121.3263,13,P3
+ca-soledad-q6,kw:addition,design build remodeling,36.4247,-121.3263,13,P3
+ca-blythe-q0,addition,Remodeler,33.6103,-114.5964,13,P1
+ca-blythe-q1,addition,General contractor,33.6103,-114.5964,13,P1
+ca-blythe-q2,addition,Custom home builder,33.6103,-114.5964,13,P2
+ca-blythe-q3,kw:addition,home addition contractor,33.6103,-114.5964,13,P3
+ca-blythe-q4,kw:addition,room addition contractor,33.6103,-114.5964,13,P3
+ca-blythe-q5,kw:addition,second story addition,33.6103,-114.5964,13,P3
+ca-blythe-q6,kw:addition,design build remodeling,33.6103,-114.5964,13,P3
+ca-susanville-q0,addition,Remodeler,40.4163,-120.653,13,P1
+ca-susanville-q1,addition,General contractor,40.4163,-120.653,13,P1
+ca-susanville-q2,addition,Custom home builder,40.4163,-120.653,13,P2
+ca-susanville-q3,kw:addition,home addition contractor,40.4163,-120.653,13,P3
+ca-susanville-q4,kw:addition,room addition contractor,40.4163,-120.653,13,P3
+ca-susanville-q5,kw:addition,second story addition,40.4163,-120.653,13,P3
+ca-susanville-q6,kw:addition,design build remodeling,40.4163,-120.653,13,P3
+fl-jacksonville-q0,addition,Remodeler,30.3322,-81.6556,13,P1
+fl-jacksonville-q1,addition,General contractor,30.3322,-81.6556,13,P1
+fl-jacksonville-q2,addition,Custom home builder,30.3322,-81.6556,13,P2
+fl-jacksonville-q3,kw:addition,home addition contractor,30.3322,-81.6556,13,P3
+fl-jacksonville-q4,kw:addition,room addition contractor,30.3322,-81.6556,13,P3
+fl-jacksonville-q5,kw:addition,second story addition,30.3322,-81.6556,13,P3
+fl-jacksonville-q6,kw:addition,design build remodeling,30.3322,-81.6556,13,P3
+fl-miami-q0,addition,Remodeler,25.7743,-80.1937,13,P1
+fl-miami-q1,addition,General contractor,25.7743,-80.1937,13,P1
+fl-miami-q2,addition,Custom home builder,25.7743,-80.1937,13,P2
+fl-miami-q3,kw:addition,home addition contractor,25.7743,-80.1937,13,P3
+fl-miami-q4,kw:addition,room addition contractor,25.7743,-80.1937,13,P3
+fl-miami-q5,kw:addition,second story addition,25.7743,-80.1937,13,P3
+fl-miami-q6,kw:addition,design build remodeling,25.7743,-80.1937,13,P3
+fl-tampa-q0,addition,Remodeler,27.9475,-82.4584,13,P1
+fl-tampa-q1,addition,General contractor,27.9475,-82.4584,13,P1
+fl-tampa-q2,addition,Custom home builder,27.9475,-82.4584,13,P2
+fl-tampa-q3,kw:addition,home addition contractor,27.9475,-82.4584,13,P3
+fl-tampa-q4,kw:addition,room addition contractor,27.9475,-82.4584,13,P3
+fl-tampa-q5,kw:addition,second story addition,27.9475,-82.4584,13,P3
+fl-tampa-q6,kw:addition,design build remodeling,27.9475,-82.4584,13,P3
+fl-orlando-q0,addition,Remodeler,28.5383,-81.3792,13,P1
+fl-orlando-q1,addition,General contractor,28.5383,-81.3792,13,P1
+fl-orlando-q2,addition,Custom home builder,28.5383,-81.3792,13,P2
+fl-orlando-q3,kw:addition,home addition contractor,28.5383,-81.3792,13,P3
+fl-orlando-q4,kw:addition,room addition contractor,28.5383,-81.3792,13,P3
+fl-orlando-q5,kw:addition,second story addition,28.5383,-81.3792,13,P3
+fl-orlando-q6,kw:addition,design build remodeling,28.5383,-81.3792,13,P3
+fl-st-petersburg-q0,addition,Remodeler,27.7709,-82.6793,13,P1
+fl-st-petersburg-q1,addition,General contractor,27.7709,-82.6793,13,P1
+fl-st-petersburg-q2,addition,Custom home builder,27.7709,-82.6793,13,P2
+fl-st-petersburg-q3,kw:addition,home addition contractor,27.7709,-82.6793,13,P3
+fl-st-petersburg-q4,kw:addition,room addition contractor,27.7709,-82.6793,13,P3
+fl-st-petersburg-q5,kw:addition,second story addition,27.7709,-82.6793,13,P3
+fl-st-petersburg-q6,kw:addition,design build remodeling,27.7709,-82.6793,13,P3
+fl-tallahassee-q0,addition,Remodeler,30.4383,-84.2807,13,P1
+fl-tallahassee-q1,addition,General contractor,30.4383,-84.2807,13,P1
+fl-tallahassee-q2,addition,Custom home builder,30.4383,-84.2807,13,P2
+fl-tallahassee-q3,kw:addition,home addition contractor,30.4383,-84.2807,13,P3
+fl-tallahassee-q4,kw:addition,room addition contractor,30.4383,-84.2807,13,P3
+fl-tallahassee-q5,kw:addition,second story addition,30.4383,-84.2807,13,P3
+fl-tallahassee-q6,kw:addition,design build remodeling,30.4383,-84.2807,13,P3
+fl-fort-lauderdale-q0,addition,Remodeler,26.1223,-80.1434,13,P1
+fl-fort-lauderdale-q1,addition,General contractor,26.1223,-80.1434,13,P1
+fl-fort-lauderdale-q2,addition,Custom home builder,26.1223,-80.1434,13,P2
+fl-fort-lauderdale-q3,kw:addition,home addition contractor,26.1223,-80.1434,13,P3
+fl-fort-lauderdale-q4,kw:addition,room addition contractor,26.1223,-80.1434,13,P3
+fl-fort-lauderdale-q5,kw:addition,second story addition,26.1223,-80.1434,13,P3
+fl-fort-lauderdale-q6,kw:addition,design build remodeling,26.1223,-80.1434,13,P3
+fl-cape-coral-q0,addition,Remodeler,26.5629,-81.9495,13,P1
+fl-cape-coral-q1,addition,General contractor,26.5629,-81.9495,13,P1
+fl-cape-coral-q2,addition,Custom home builder,26.5629,-81.9495,13,P2
+fl-cape-coral-q3,kw:addition,home addition contractor,26.5629,-81.9495,13,P3
+fl-cape-coral-q4,kw:addition,room addition contractor,26.5629,-81.9495,13,P3
+fl-cape-coral-q5,kw:addition,second story addition,26.5629,-81.9495,13,P3
+fl-cape-coral-q6,kw:addition,design build remodeling,26.5629,-81.9495,13,P3
+fl-port-saint-lucie-q0,addition,Remodeler,27.2939,-80.3503,13,P1
+fl-port-saint-lucie-q1,addition,General contractor,27.2939,-80.3503,13,P1
+fl-port-saint-lucie-q2,addition,Custom home builder,27.2939,-80.3503,13,P2
+fl-port-saint-lucie-q3,kw:addition,home addition contractor,27.2939,-80.3503,13,P3
+fl-port-saint-lucie-q4,kw:addition,room addition contractor,27.2939,-80.3503,13,P3
+fl-port-saint-lucie-q5,kw:addition,second story addition,27.2939,-80.3503,13,P3
+fl-port-saint-lucie-q6,kw:addition,design build remodeling,27.2939,-80.3503,13,P3
+fl-gainesville-q0,addition,Remodeler,29.6516,-82.3248,13,P1
+fl-gainesville-q1,addition,General contractor,29.6516,-82.3248,13,P1
+fl-gainesville-q2,addition,Custom home builder,29.6516,-82.3248,13,P2
+fl-gainesville-q3,kw:addition,home addition contractor,29.6516,-82.3248,13,P3
+fl-gainesville-q4,kw:addition,room addition contractor,29.6516,-82.3248,13,P3
+fl-gainesville-q5,kw:addition,second story addition,29.6516,-82.3248,13,P3
+fl-gainesville-q6,kw:addition,design build remodeling,29.6516,-82.3248,13,P3
+fl-west-palm-beach-q0,addition,Remodeler,26.7153,-80.0534,13,P1
+fl-west-palm-beach-q1,addition,General contractor,26.7153,-80.0534,13,P1
+fl-west-palm-beach-q2,addition,Custom home builder,26.7153,-80.0534,13,P2
+fl-west-palm-beach-q3,kw:addition,home addition contractor,26.7153,-80.0534,13,P3
+fl-west-palm-beach-q4,kw:addition,room addition contractor,26.7153,-80.0534,13,P3
+fl-west-palm-beach-q5,kw:addition,second story addition,26.7153,-80.0534,13,P3
+fl-west-palm-beach-q6,kw:addition,design build remodeling,26.7153,-80.0534,13,P3
+fl-palm-bay-q0,addition,Remodeler,28.0345,-80.5887,13,P1
+fl-palm-bay-q1,addition,General contractor,28.0345,-80.5887,13,P1
+fl-palm-bay-q2,addition,Custom home builder,28.0345,-80.5887,13,P2
+fl-palm-bay-q3,kw:addition,home addition contractor,28.0345,-80.5887,13,P3
+fl-palm-bay-q4,kw:addition,room addition contractor,28.0345,-80.5887,13,P3
+fl-palm-bay-q5,kw:addition,second story addition,28.0345,-80.5887,13,P3
+fl-palm-bay-q6,kw:addition,design build remodeling,28.0345,-80.5887,13,P3
+fl-lakeland-q0,addition,Remodeler,28.0395,-81.9498,13,P1
+fl-lakeland-q1,addition,General contractor,28.0395,-81.9498,13,P1
+fl-lakeland-q2,addition,Custom home builder,28.0395,-81.9498,13,P2
+fl-lakeland-q3,kw:addition,home addition contractor,28.0395,-81.9498,13,P3
+fl-lakeland-q4,kw:addition,room addition contractor,28.0395,-81.9498,13,P3
+fl-lakeland-q5,kw:addition,second story addition,28.0395,-81.9498,13,P3
+fl-lakeland-q6,kw:addition,design build remodeling,28.0395,-81.9498,13,P3
+fl-spring-hill-q0,addition,Remodeler,28.4769,-82.5255,13,P1
+fl-spring-hill-q1,addition,General contractor,28.4769,-82.5255,13,P1
+fl-spring-hill-q2,addition,Custom home builder,28.4769,-82.5255,13,P2
+fl-spring-hill-q3,kw:addition,home addition contractor,28.4769,-82.5255,13,P3
+fl-spring-hill-q4,kw:addition,room addition contractor,28.4769,-82.5255,13,P3
+fl-spring-hill-q5,kw:addition,second story addition,28.4769,-82.5255,13,P3
+fl-spring-hill-q6,kw:addition,design build remodeling,28.4769,-82.5255,13,P3
+fl-boca-raton-q0,addition,Remodeler,26.3587,-80.0831,13,P1
+fl-boca-raton-q1,addition,General contractor,26.3587,-80.0831,13,P1
+fl-boca-raton-q2,addition,Custom home builder,26.3587,-80.0831,13,P2
+fl-boca-raton-q3,kw:addition,home addition contractor,26.3587,-80.0831,13,P3
+fl-boca-raton-q4,kw:addition,room addition contractor,26.3587,-80.0831,13,P3
+fl-boca-raton-q5,kw:addition,second story addition,26.3587,-80.0831,13,P3
+fl-boca-raton-q6,kw:addition,design build remodeling,26.3587,-80.0831,13,P3
+fl-deltona-q0,addition,Remodeler,28.9005,-81.2637,13,P1
+fl-deltona-q1,addition,General contractor,28.9005,-81.2637,13,P1
+fl-deltona-q2,addition,Custom home builder,28.9005,-81.2637,13,P2
+fl-deltona-q3,kw:addition,home addition contractor,28.9005,-81.2637,13,P3
+fl-deltona-q4,kw:addition,room addition contractor,28.9005,-81.2637,13,P3
+fl-deltona-q5,kw:addition,second story addition,28.9005,-81.2637,13,P3
+fl-deltona-q6,kw:addition,design build remodeling,28.9005,-81.2637,13,P3
+fl-lehigh-acres-q0,addition,Remodeler,26.6254,-81.6248,13,P1
+fl-lehigh-acres-q1,addition,General contractor,26.6254,-81.6248,13,P1
+fl-lehigh-acres-q2,addition,Custom home builder,26.6254,-81.6248,13,P2
+fl-lehigh-acres-q3,kw:addition,home addition contractor,26.6254,-81.6248,13,P3
+fl-lehigh-acres-q4,kw:addition,room addition contractor,26.6254,-81.6248,13,P3
+fl-lehigh-acres-q5,kw:addition,second story addition,26.6254,-81.6248,13,P3
+fl-lehigh-acres-q6,kw:addition,design build remodeling,26.6254,-81.6248,13,P3
+fl-palm-coast-q0,addition,Remodeler,29.585,-81.2078,13,P1
+fl-palm-coast-q1,addition,General contractor,29.585,-81.2078,13,P1
+fl-palm-coast-q2,addition,Custom home builder,29.585,-81.2078,13,P2
+fl-palm-coast-q3,kw:addition,home addition contractor,29.585,-81.2078,13,P3
+fl-palm-coast-q4,kw:addition,room addition contractor,29.585,-81.2078,13,P3
+fl-palm-coast-q5,kw:addition,second story addition,29.585,-81.2078,13,P3
+fl-palm-coast-q6,kw:addition,design build remodeling,29.585,-81.2078,13,P3
+fl-homestead-q0,addition,Remodeler,25.4687,-80.4776,13,P1
+fl-homestead-q1,addition,General contractor,25.4687,-80.4776,13,P1
+fl-homestead-q2,addition,Custom home builder,25.4687,-80.4776,13,P2
+fl-homestead-q3,kw:addition,home addition contractor,25.4687,-80.4776,13,P3
+fl-homestead-q4,kw:addition,room addition contractor,25.4687,-80.4776,13,P3
+fl-homestead-q5,kw:addition,second story addition,25.4687,-80.4776,13,P3
+fl-homestead-q6,kw:addition,design build remodeling,25.4687,-80.4776,13,P3
+fl-daytona-beach-q0,addition,Remodeler,29.2108,-81.0228,13,P1
+fl-daytona-beach-q1,addition,General contractor,29.2108,-81.0228,13,P1
+fl-daytona-beach-q2,addition,Custom home builder,29.2108,-81.0228,13,P2
+fl-daytona-beach-q3,kw:addition,home addition contractor,29.2108,-81.0228,13,P3
+fl-daytona-beach-q4,kw:addition,room addition contractor,29.2108,-81.0228,13,P3
+fl-daytona-beach-q5,kw:addition,second story addition,29.2108,-81.0228,13,P3
+fl-daytona-beach-q6,kw:addition,design build remodeling,29.2108,-81.0228,13,P3
+fl-weston-q0,addition,Remodeler,26.1004,-80.3998,13,P1
+fl-weston-q1,addition,General contractor,26.1004,-80.3998,13,P1
+fl-weston-q2,addition,Custom home builder,26.1004,-80.3998,13,P2
+fl-weston-q3,kw:addition,home addition contractor,26.1004,-80.3998,13,P3
+fl-weston-q4,kw:addition,room addition contractor,26.1004,-80.3998,13,P3
+fl-weston-q5,kw:addition,second story addition,26.1004,-80.3998,13,P3
+fl-weston-q6,kw:addition,design build remodeling,26.1004,-80.3998,13,P3
+fl-kissimmee-q0,addition,Remodeler,28.3047,-81.4167,13,P1
+fl-kissimmee-q1,addition,General contractor,28.3047,-81.4167,13,P1
+fl-kissimmee-q2,addition,Custom home builder,28.3047,-81.4167,13,P2
+fl-kissimmee-q3,kw:addition,home addition contractor,28.3047,-81.4167,13,P3
+fl-kissimmee-q4,kw:addition,room addition contractor,28.3047,-81.4167,13,P3
+fl-kissimmee-q5,kw:addition,second story addition,28.3047,-81.4167,13,P3
+fl-kissimmee-q6,kw:addition,design build remodeling,28.3047,-81.4167,13,P3
+fl-north-port-q0,addition,Remodeler,27.0442,-82.2359,13,P1
+fl-north-port-q1,addition,General contractor,27.0442,-82.2359,13,P1
+fl-north-port-q2,addition,Custom home builder,27.0442,-82.2359,13,P2
+fl-north-port-q3,kw:addition,home addition contractor,27.0442,-82.2359,13,P3
+fl-north-port-q4,kw:addition,room addition contractor,27.0442,-82.2359,13,P3
+fl-north-port-q5,kw:addition,second story addition,27.0442,-82.2359,13,P3
+fl-north-port-q6,kw:addition,design build remodeling,27.0442,-82.2359,13,P3
+fl-ocala-q0,addition,Remodeler,29.1872,-82.1401,13,P1
+fl-ocala-q1,addition,General contractor,29.1872,-82.1401,13,P1
+fl-ocala-q2,addition,Custom home builder,29.1872,-82.1401,13,P2
+fl-ocala-q3,kw:addition,home addition contractor,29.1872,-82.1401,13,P3
+fl-ocala-q4,kw:addition,room addition contractor,29.1872,-82.1401,13,P3
+fl-ocala-q5,kw:addition,second story addition,29.1872,-82.1401,13,P3
+fl-ocala-q6,kw:addition,design build remodeling,29.1872,-82.1401,13,P3
+fl-palm-harbor-q0,addition,Remodeler,28.0781,-82.7637,13,P1
+fl-palm-harbor-q1,addition,General contractor,28.0781,-82.7637,13,P1
+fl-palm-harbor-q2,addition,Custom home builder,28.0781,-82.7637,13,P2
+fl-palm-harbor-q3,kw:addition,home addition contractor,28.0781,-82.7637,13,P3
+fl-palm-harbor-q4,kw:addition,room addition contractor,28.0781,-82.7637,13,P3
+fl-palm-harbor-q5,kw:addition,second story addition,28.0781,-82.7637,13,P3
+fl-palm-harbor-q6,kw:addition,design build remodeling,28.0781,-82.7637,13,P3
+fl-sarasota-q0,addition,Remodeler,27.3364,-82.5306,13,P1
+fl-sarasota-q1,addition,General contractor,27.3364,-82.5306,13,P1
+fl-sarasota-q2,addition,Custom home builder,27.3364,-82.5306,13,P2
+fl-sarasota-q3,kw:addition,home addition contractor,27.3364,-82.5306,13,P3
+fl-sarasota-q4,kw:addition,room addition contractor,27.3364,-82.5306,13,P3
+fl-sarasota-q5,kw:addition,second story addition,27.3364,-82.5306,13,P3
+fl-sarasota-q6,kw:addition,design build remodeling,27.3364,-82.5306,13,P3
+fl-east-pensacola-heights-q0,addition,Remodeler,30.4288,-87.18,13,P1
+fl-east-pensacola-heights-q1,addition,General contractor,30.4288,-87.18,13,P1
+fl-east-pensacola-heights-q2,addition,Custom home builder,30.4288,-87.18,13,P2
+fl-east-pensacola-heights-q3,kw:addition,home addition contractor,30.4288,-87.18,13,P3
+fl-east-pensacola-heights-q4,kw:addition,room addition contractor,30.4288,-87.18,13,P3
+fl-east-pensacola-heights-q5,kw:addition,second story addition,30.4288,-87.18,13,P3
+fl-east-pensacola-heights-q6,kw:addition,design build remodeling,30.4288,-87.18,13,P3
+fl-bonita-springs-q0,addition,Remodeler,26.3398,-81.7787,13,P1
+fl-bonita-springs-q1,addition,General contractor,26.3398,-81.7787,13,P1
+fl-bonita-springs-q2,addition,Custom home builder,26.3398,-81.7787,13,P2
+fl-bonita-springs-q3,kw:addition,home addition contractor,26.3398,-81.7787,13,P3
+fl-bonita-springs-q4,kw:addition,room addition contractor,26.3398,-81.7787,13,P3
+fl-bonita-springs-q5,kw:addition,second story addition,26.3398,-81.7787,13,P3
+fl-bonita-springs-q6,kw:addition,design build remodeling,26.3398,-81.7787,13,P3
+fl-the-villages-q0,addition,Remodeler,28.9341,-81.9599,13,P1
+fl-the-villages-q1,addition,General contractor,28.9341,-81.9599,13,P1
+fl-the-villages-q2,addition,Custom home builder,28.9341,-81.9599,13,P2
+fl-the-villages-q3,kw:addition,home addition contractor,28.9341,-81.9599,13,P3
+fl-the-villages-q4,kw:addition,room addition contractor,28.9341,-81.9599,13,P3
+fl-the-villages-q5,kw:addition,second story addition,28.9341,-81.9599,13,P3
+fl-the-villages-q6,kw:addition,design build remodeling,28.9341,-81.9599,13,P3
+fl-titusville-q0,addition,Remodeler,28.6122,-80.8076,13,P1
+fl-titusville-q1,addition,General contractor,28.6122,-80.8076,13,P1
+fl-titusville-q2,addition,Custom home builder,28.6122,-80.8076,13,P2
+fl-titusville-q3,kw:addition,home addition contractor,28.6122,-80.8076,13,P3
+fl-titusville-q4,kw:addition,room addition contractor,28.6122,-80.8076,13,P3
+fl-titusville-q5,kw:addition,second story addition,28.6122,-80.8076,13,P3
+fl-titusville-q6,kw:addition,design build remodeling,28.6122,-80.8076,13,P3
+fl-wesley-chapel-q0,addition,Remodeler,28.2397,-82.3279,13,P1
+fl-wesley-chapel-q1,addition,General contractor,28.2397,-82.3279,13,P1
+fl-wesley-chapel-q2,addition,Custom home builder,28.2397,-82.3279,13,P2
+fl-wesley-chapel-q3,kw:addition,home addition contractor,28.2397,-82.3279,13,P3
+fl-wesley-chapel-q4,kw:addition,room addition contractor,28.2397,-82.3279,13,P3
+fl-wesley-chapel-q5,kw:addition,second story addition,28.2397,-82.3279,13,P3
+fl-wesley-chapel-q6,kw:addition,design build remodeling,28.2397,-82.3279,13,P3
+fl-st-johns-q0,addition,Remodeler,30.0815,-81.5477,13,P1
+fl-st-johns-q1,addition,General contractor,30.0815,-81.5477,13,P1
+fl-st-johns-q2,addition,Custom home builder,30.0815,-81.5477,13,P2
+fl-st-johns-q3,kw:addition,home addition contractor,30.0815,-81.5477,13,P3
+fl-st-johns-q4,kw:addition,room addition contractor,30.0815,-81.5477,13,P3
+fl-st-johns-q5,kw:addition,second story addition,30.0815,-81.5477,13,P3
+fl-st-johns-q6,kw:addition,design build remodeling,30.0815,-81.5477,13,P3
+fl-panama-city-q0,addition,Remodeler,30.1595,-85.6598,13,P1
+fl-panama-city-q1,addition,General contractor,30.1595,-85.6598,13,P1
+fl-panama-city-q2,addition,Custom home builder,30.1595,-85.6598,13,P2
+fl-panama-city-q3,kw:addition,home addition contractor,30.1595,-85.6598,13,P3
+fl-panama-city-q4,kw:addition,room addition contractor,30.1595,-85.6598,13,P3
+fl-panama-city-q5,kw:addition,second story addition,30.1595,-85.6598,13,P3
+fl-panama-city-q6,kw:addition,design build remodeling,30.1595,-85.6598,13,P3
+fl-kendall-west-q0,addition,Remodeler,25.7065,-80.4388,13,P1
+fl-kendall-west-q1,addition,General contractor,25.7065,-80.4388,13,P1
+fl-kendall-west-q2,addition,Custom home builder,25.7065,-80.4388,13,P2
+fl-kendall-west-q3,kw:addition,home addition contractor,25.7065,-80.4388,13,P3
+fl-kendall-west-q4,kw:addition,room addition contractor,25.7065,-80.4388,13,P3
+fl-kendall-west-q5,kw:addition,second story addition,25.7065,-80.4388,13,P3
+fl-kendall-west-q6,kw:addition,design build remodeling,25.7065,-80.4388,13,P3
+fl-merritt-island-q0,addition,Remodeler,28.359,-80.69,13,P1
+fl-merritt-island-q1,addition,General contractor,28.359,-80.69,13,P1
+fl-merritt-island-q2,addition,Custom home builder,28.359,-80.69,13,P2
+fl-merritt-island-q3,kw:addition,home addition contractor,28.359,-80.69,13,P3
+fl-merritt-island-q4,kw:addition,room addition contractor,28.359,-80.69,13,P3
+fl-merritt-island-q5,kw:addition,second story addition,28.359,-80.69,13,P3
+fl-merritt-island-q6,kw:addition,design build remodeling,28.359,-80.69,13,P3
+fl-santa-rosa-beach-q0,addition,Remodeler,30.396,-86.2288,13,P1
+fl-santa-rosa-beach-q1,addition,General contractor,30.396,-86.2288,13,P1
+fl-santa-rosa-beach-q2,addition,Custom home builder,30.396,-86.2288,13,P2
+fl-santa-rosa-beach-q3,kw:addition,home addition contractor,30.396,-86.2288,13,P3
+fl-santa-rosa-beach-q4,kw:addition,room addition contractor,30.396,-86.2288,13,P3
+fl-santa-rosa-beach-q5,kw:addition,second story addition,30.396,-86.2288,13,P3
+fl-santa-rosa-beach-q6,kw:addition,design build remodeling,30.396,-86.2288,13,P3
+fl-clermont-q0,addition,Remodeler,28.5494,-81.7729,13,P1
+fl-clermont-q1,addition,General contractor,28.5494,-81.7729,13,P1
+fl-clermont-q2,addition,Custom home builder,28.5494,-81.7729,13,P2
+fl-clermont-q3,kw:addition,home addition contractor,28.5494,-81.7729,13,P3
+fl-clermont-q4,kw:addition,room addition contractor,28.5494,-81.7729,13,P3
+fl-clermont-q5,kw:addition,second story addition,28.5494,-81.7729,13,P3
+fl-clermont-q6,kw:addition,design build remodeling,28.5494,-81.7729,13,P3
+fl-navarre-q0,addition,Remodeler,30.4016,-86.8636,13,P1
+fl-navarre-q1,addition,General contractor,30.4016,-86.8636,13,P1
+fl-navarre-q2,addition,Custom home builder,30.4016,-86.8636,13,P2
+fl-navarre-q3,kw:addition,home addition contractor,30.4016,-86.8636,13,P3
+fl-navarre-q4,kw:addition,room addition contractor,30.4016,-86.8636,13,P3
+fl-navarre-q5,kw:addition,second story addition,30.4016,-86.8636,13,P3
+fl-navarre-q6,kw:addition,design build remodeling,30.4016,-86.8636,13,P3
+fl-cantonment-q0,addition,Remodeler,30.6085,-87.34,13,P1
+fl-cantonment-q1,addition,General contractor,30.6085,-87.34,13,P1
+fl-cantonment-q2,addition,Custom home builder,30.6085,-87.34,13,P2
+fl-cantonment-q3,kw:addition,home addition contractor,30.6085,-87.34,13,P3
+fl-cantonment-q4,kw:addition,room addition contractor,30.6085,-87.34,13,P3
+fl-cantonment-q5,kw:addition,second story addition,30.6085,-87.34,13,P3
+fl-cantonment-q6,kw:addition,design build remodeling,30.6085,-87.34,13,P3
+fl-key-west-q0,addition,Remodeler,24.5552,-81.7816,13,P1
+fl-key-west-q1,addition,General contractor,24.5552,-81.7816,13,P1
+fl-key-west-q2,addition,Custom home builder,24.5552,-81.7816,13,P2
+fl-key-west-q3,kw:addition,home addition contractor,24.5552,-81.7816,13,P3
+fl-key-west-q4,kw:addition,room addition contractor,24.5552,-81.7816,13,P3
+fl-key-west-q5,kw:addition,second story addition,24.5552,-81.7816,13,P3
+fl-key-west-q6,kw:addition,design build remodeling,24.5552,-81.7816,13,P3
+ga-atlanta-q0,addition,Remodeler,33.749,-84.388,13,P1
+ga-atlanta-q1,addition,General contractor,33.749,-84.388,13,P1
+ga-atlanta-q2,addition,Custom home builder,33.749,-84.388,13,P2
+ga-atlanta-q3,kw:addition,home addition contractor,33.749,-84.388,13,P3
+ga-atlanta-q4,kw:addition,room addition contractor,33.749,-84.388,13,P3
+ga-atlanta-q5,kw:addition,second story addition,33.749,-84.388,13,P3
+ga-atlanta-q6,kw:addition,design build remodeling,33.749,-84.388,13,P3
+ga-savannah-q0,addition,Remodeler,32.0835,-81.0998,13,P1
+ga-savannah-q1,addition,General contractor,32.0835,-81.0998,13,P1
+ga-savannah-q2,addition,Custom home builder,32.0835,-81.0998,13,P2
+ga-savannah-q3,kw:addition,home addition contractor,32.0835,-81.0998,13,P3
+ga-savannah-q4,kw:addition,room addition contractor,32.0835,-81.0998,13,P3
+ga-savannah-q5,kw:addition,second story addition,32.0835,-81.0998,13,P3
+ga-savannah-q6,kw:addition,design build remodeling,32.0835,-81.0998,13,P3
+ga-athens-q0,addition,Remodeler,33.9609,-83.3779,13,P1
+ga-athens-q1,addition,General contractor,33.9609,-83.3779,13,P1
+ga-athens-q2,addition,Custom home builder,33.9609,-83.3779,13,P2
+ga-athens-q3,kw:addition,home addition contractor,33.9609,-83.3779,13,P3
+ga-athens-q4,kw:addition,room addition contractor,33.9609,-83.3779,13,P3
+ga-athens-q5,kw:addition,second story addition,33.9609,-83.3779,13,P3
+ga-athens-q6,kw:addition,design build remodeling,33.9609,-83.3779,13,P3
+ga-south-fulton-q0,addition,Remodeler,33.5926,-84.6729,13,P1
+ga-south-fulton-q1,addition,General contractor,33.5926,-84.6729,13,P1
+ga-south-fulton-q2,addition,Custom home builder,33.5926,-84.6729,13,P2
+ga-south-fulton-q3,kw:addition,home addition contractor,33.5926,-84.6729,13,P3
+ga-south-fulton-q4,kw:addition,room addition contractor,33.5926,-84.6729,13,P3
+ga-south-fulton-q5,kw:addition,second story addition,33.5926,-84.6729,13,P3
+ga-south-fulton-q6,kw:addition,design build remodeling,33.5926,-84.6729,13,P3
+ga-roswell-q0,addition,Remodeler,34.0232,-84.3616,13,P1
+ga-roswell-q1,addition,General contractor,34.0232,-84.3616,13,P1
+ga-roswell-q2,addition,Custom home builder,34.0232,-84.3616,13,P2
+ga-roswell-q3,kw:addition,home addition contractor,34.0232,-84.3616,13,P3
+ga-roswell-q4,kw:addition,room addition contractor,34.0232,-84.3616,13,P3
+ga-roswell-q5,kw:addition,second story addition,34.0232,-84.3616,13,P3
+ga-roswell-q6,kw:addition,design build remodeling,34.0232,-84.3616,13,P3
+ga-macon-q0,addition,Remodeler,32.8407,-83.6324,13,P1
+ga-macon-q1,addition,General contractor,32.8407,-83.6324,13,P1
+ga-macon-q2,addition,Custom home builder,32.8407,-83.6324,13,P2
+ga-macon-q3,kw:addition,home addition contractor,32.8407,-83.6324,13,P3
+ga-macon-q4,kw:addition,room addition contractor,32.8407,-83.6324,13,P3
+ga-macon-q5,kw:addition,second story addition,32.8407,-83.6324,13,P3
+ga-macon-q6,kw:addition,design build remodeling,32.8407,-83.6324,13,P3
+ga-albany-q0,addition,Remodeler,31.5785,-84.1557,13,P1
+ga-albany-q1,addition,General contractor,31.5785,-84.1557,13,P1
+ga-albany-q2,addition,Custom home builder,31.5785,-84.1557,13,P2
+ga-albany-q3,kw:addition,home addition contractor,31.5785,-84.1557,13,P3
+ga-albany-q4,kw:addition,room addition contractor,31.5785,-84.1557,13,P3
+ga-albany-q5,kw:addition,second story addition,31.5785,-84.1557,13,P3
+ga-albany-q6,kw:addition,design build remodeling,31.5785,-84.1557,13,P3
+ga-warner-robins-q0,addition,Remodeler,32.6157,-83.6266,13,P1
+ga-warner-robins-q1,addition,General contractor,32.6157,-83.6266,13,P1
+ga-warner-robins-q2,addition,Custom home builder,32.6157,-83.6266,13,P2
+ga-warner-robins-q3,kw:addition,home addition contractor,32.6157,-83.6266,13,P3
+ga-warner-robins-q4,kw:addition,room addition contractor,32.6157,-83.6266,13,P3
+ga-warner-robins-q5,kw:addition,second story addition,32.6157,-83.6266,13,P3
+ga-warner-robins-q6,kw:addition,design build remodeling,32.6157,-83.6266,13,P3
+ga-valdosta-q0,addition,Remodeler,30.8333,-83.2803,13,P1
+ga-valdosta-q1,addition,General contractor,30.8333,-83.2803,13,P1
+ga-valdosta-q2,addition,Custom home builder,30.8333,-83.2803,13,P2
+ga-valdosta-q3,kw:addition,home addition contractor,30.8333,-83.2803,13,P3
+ga-valdosta-q4,kw:addition,room addition contractor,30.8333,-83.2803,13,P3
+ga-valdosta-q5,kw:addition,second story addition,30.8333,-83.2803,13,P3
+ga-valdosta-q6,kw:addition,design build remodeling,30.8333,-83.2803,13,P3
+ga-augusta-q0,addition,Remodeler,33.471,-81.9748,13,P1
+ga-augusta-q1,addition,General contractor,33.471,-81.9748,13,P1
+ga-augusta-q2,addition,Custom home builder,33.471,-81.9748,13,P2
+ga-augusta-q3,kw:addition,home addition contractor,33.471,-81.9748,13,P3
+ga-augusta-q4,kw:addition,room addition contractor,33.471,-81.9748,13,P3
+ga-augusta-q5,kw:addition,second story addition,33.471,-81.9748,13,P3
+ga-augusta-q6,kw:addition,design build remodeling,33.471,-81.9748,13,P3
+ga-gainesville-q0,addition,Remodeler,34.2979,-83.8241,13,P1
+ga-gainesville-q1,addition,General contractor,34.2979,-83.8241,13,P1
+ga-gainesville-q2,addition,Custom home builder,34.2979,-83.8241,13,P2
+ga-gainesville-q3,kw:addition,home addition contractor,34.2979,-83.8241,13,P3
+ga-gainesville-q4,kw:addition,room addition contractor,34.2979,-83.8241,13,P3
+ga-gainesville-q5,kw:addition,second story addition,34.2979,-83.8241,13,P3
+ga-gainesville-q6,kw:addition,design build remodeling,34.2979,-83.8241,13,P3
+ga-newnan-q0,addition,Remodeler,33.3807,-84.7997,13,P1
+ga-newnan-q1,addition,General contractor,33.3807,-84.7997,13,P1
+ga-newnan-q2,addition,Custom home builder,33.3807,-84.7997,13,P2
+ga-newnan-q3,kw:addition,home addition contractor,33.3807,-84.7997,13,P3
+ga-newnan-q4,kw:addition,room addition contractor,33.3807,-84.7997,13,P3
+ga-newnan-q5,kw:addition,second story addition,33.3807,-84.7997,13,P3
+ga-newnan-q6,kw:addition,design build remodeling,33.3807,-84.7997,13,P3
+ga-rome-q0,addition,Remodeler,34.257,-85.1647,13,P1
+ga-rome-q1,addition,General contractor,34.257,-85.1647,13,P1
+ga-rome-q2,addition,Custom home builder,34.257,-85.1647,13,P2
+ga-rome-q3,kw:addition,home addition contractor,34.257,-85.1647,13,P3
+ga-rome-q4,kw:addition,room addition contractor,34.257,-85.1647,13,P3
+ga-rome-q5,kw:addition,second story addition,34.257,-85.1647,13,P3
+ga-rome-q6,kw:addition,design build remodeling,34.257,-85.1647,13,P3
+ga-dalton-q0,addition,Remodeler,34.7698,-84.9702,13,P1
+ga-dalton-q1,addition,General contractor,34.7698,-84.9702,13,P1
+ga-dalton-q2,addition,Custom home builder,34.7698,-84.9702,13,P2
+ga-dalton-q3,kw:addition,home addition contractor,34.7698,-84.9702,13,P3
+ga-dalton-q4,kw:addition,room addition contractor,34.7698,-84.9702,13,P3
+ga-dalton-q5,kw:addition,second story addition,34.7698,-84.9702,13,P3
+ga-dalton-q6,kw:addition,design build remodeling,34.7698,-84.9702,13,P3
+ga-hinesville-q0,addition,Remodeler,31.8469,-81.596,13,P1
+ga-hinesville-q1,addition,General contractor,31.8469,-81.596,13,P1
+ga-hinesville-q2,addition,Custom home builder,31.8469,-81.596,13,P2
+ga-hinesville-q3,kw:addition,home addition contractor,31.8469,-81.596,13,P3
+ga-hinesville-q4,kw:addition,room addition contractor,31.8469,-81.596,13,P3
+ga-hinesville-q5,kw:addition,second story addition,31.8469,-81.596,13,P3
+ga-hinesville-q6,kw:addition,design build remodeling,31.8469,-81.596,13,P3
+ga-statesboro-q0,addition,Remodeler,32.4488,-81.7832,13,P1
+ga-statesboro-q1,addition,General contractor,32.4488,-81.7832,13,P1
+ga-statesboro-q2,addition,Custom home builder,32.4488,-81.7832,13,P2
+ga-statesboro-q3,kw:addition,home addition contractor,32.4488,-81.7832,13,P3
+ga-statesboro-q4,kw:addition,room addition contractor,32.4488,-81.7832,13,P3
+ga-statesboro-q5,kw:addition,second story addition,32.4488,-81.7832,13,P3
+ga-statesboro-q6,kw:addition,design build remodeling,32.4488,-81.7832,13,P3
+ga-lawrenceville-q0,addition,Remodeler,33.9562,-83.988,13,P1
+ga-lawrenceville-q1,addition,General contractor,33.9562,-83.988,13,P1
+ga-lawrenceville-q2,addition,Custom home builder,33.9562,-83.988,13,P2
+ga-lawrenceville-q3,kw:addition,home addition contractor,33.9562,-83.988,13,P3
+ga-lawrenceville-q4,kw:addition,room addition contractor,33.9562,-83.988,13,P3
+ga-lawrenceville-q5,kw:addition,second story addition,33.9562,-83.988,13,P3
+ga-lawrenceville-q6,kw:addition,design build remodeling,33.9562,-83.988,13,P3
+ga-lagrange-q0,addition,Remodeler,33.0393,-85.0313,13,P1
+ga-lagrange-q1,addition,General contractor,33.0393,-85.0313,13,P1
+ga-lagrange-q2,addition,Custom home builder,33.0393,-85.0313,13,P2
+ga-lagrange-q3,kw:addition,home addition contractor,33.0393,-85.0313,13,P3
+ga-lagrange-q4,kw:addition,room addition contractor,33.0393,-85.0313,13,P3
+ga-lagrange-q5,kw:addition,second story addition,33.0393,-85.0313,13,P3
+ga-lagrange-q6,kw:addition,design build remodeling,33.0393,-85.0313,13,P3
+ga-stockbridge-q0,addition,Remodeler,33.5443,-84.2338,13,P1
+ga-stockbridge-q1,addition,General contractor,33.5443,-84.2338,13,P1
+ga-stockbridge-q2,addition,Custom home builder,33.5443,-84.2338,13,P2
+ga-stockbridge-q3,kw:addition,home addition contractor,33.5443,-84.2338,13,P3
+ga-stockbridge-q4,kw:addition,room addition contractor,33.5443,-84.2338,13,P3
+ga-stockbridge-q5,kw:addition,second story addition,33.5443,-84.2338,13,P3
+ga-stockbridge-q6,kw:addition,design build remodeling,33.5443,-84.2338,13,P3
+ga-carrollton-q0,addition,Remodeler,33.5801,-85.0766,13,P1
+ga-carrollton-q1,addition,General contractor,33.5801,-85.0766,13,P1
+ga-carrollton-q2,addition,Custom home builder,33.5801,-85.0766,13,P2
+ga-carrollton-q3,kw:addition,home addition contractor,33.5801,-85.0766,13,P3
+ga-carrollton-q4,kw:addition,room addition contractor,33.5801,-85.0766,13,P3
+ga-carrollton-q5,kw:addition,second story addition,33.5801,-85.0766,13,P3
+ga-carrollton-q6,kw:addition,design build remodeling,33.5801,-85.0766,13,P3
+ga-canton-q0,addition,Remodeler,34.2368,-84.4908,13,P1
+ga-canton-q1,addition,General contractor,34.2368,-84.4908,13,P1
+ga-canton-q2,addition,Custom home builder,34.2368,-84.4908,13,P2
+ga-canton-q3,kw:addition,home addition contractor,34.2368,-84.4908,13,P3
+ga-canton-q4,kw:addition,room addition contractor,34.2368,-84.4908,13,P3
+ga-canton-q5,kw:addition,second story addition,34.2368,-84.4908,13,P3
+ga-canton-q6,kw:addition,design build remodeling,34.2368,-84.4908,13,P3
+hi-honolulu-q0,addition,Remodeler,21.3069,-157.8583,13,P1
+hi-honolulu-q1,addition,General contractor,21.3069,-157.8583,13,P1
+hi-honolulu-q2,addition,Custom home builder,21.3069,-157.8583,13,P2
+hi-honolulu-q3,kw:addition,home addition contractor,21.3069,-157.8583,13,P3
+hi-honolulu-q4,kw:addition,room addition contractor,21.3069,-157.8583,13,P3
+hi-honolulu-q5,kw:addition,second story addition,21.3069,-157.8583,13,P3
+hi-honolulu-q6,kw:addition,design build remodeling,21.3069,-157.8583,13,P3
+hi-hilo-q0,addition,Remodeler,19.7299,-155.0907,13,P1
+hi-hilo-q1,addition,General contractor,19.7299,-155.0907,13,P1
+hi-hilo-q2,addition,Custom home builder,19.7299,-155.0907,13,P2
+hi-hilo-q3,kw:addition,home addition contractor,19.7299,-155.0907,13,P3
+hi-hilo-q4,kw:addition,room addition contractor,19.7299,-155.0907,13,P3
+hi-hilo-q5,kw:addition,second story addition,19.7299,-155.0907,13,P3
+hi-hilo-q6,kw:addition,design build remodeling,19.7299,-155.0907,13,P3
+hi-kahului-q0,addition,Remodeler,20.8893,-156.4729,13,P1
+hi-kahului-q1,addition,General contractor,20.8893,-156.4729,13,P1
+hi-kahului-q2,addition,Custom home builder,20.8893,-156.4729,13,P2
+hi-kahului-q3,kw:addition,home addition contractor,20.8893,-156.4729,13,P3
+hi-kahului-q4,kw:addition,room addition contractor,20.8893,-156.4729,13,P3
+hi-kahului-q5,kw:addition,second story addition,20.8893,-156.4729,13,P3
+hi-kahului-q6,kw:addition,design build remodeling,20.8893,-156.4729,13,P3
+la-new-orleans-q0,addition,Remodeler,29.9547,-90.0751,13,P1
+la-new-orleans-q1,addition,General contractor,29.9547,-90.0751,13,P1
+la-new-orleans-q2,addition,Custom home builder,29.9547,-90.0751,13,P2
+la-new-orleans-q3,kw:addition,home addition contractor,29.9547,-90.0751,13,P3
+la-new-orleans-q4,kw:addition,room addition contractor,29.9547,-90.0751,13,P3
+la-new-orleans-q5,kw:addition,second story addition,29.9547,-90.0751,13,P3
+la-new-orleans-q6,kw:addition,design build remodeling,29.9547,-90.0751,13,P3
+la-baton-rouge-q0,addition,Remodeler,30.4433,-91.1875,13,P1
+la-baton-rouge-q1,addition,General contractor,30.4433,-91.1875,13,P1
+la-baton-rouge-q2,addition,Custom home builder,30.4433,-91.1875,13,P2
+la-baton-rouge-q3,kw:addition,home addition contractor,30.4433,-91.1875,13,P3
+la-baton-rouge-q4,kw:addition,room addition contractor,30.4433,-91.1875,13,P3
+la-baton-rouge-q5,kw:addition,second story addition,30.4433,-91.1875,13,P3
+la-baton-rouge-q6,kw:addition,design build remodeling,30.4433,-91.1875,13,P3
+la-shreveport-q0,addition,Remodeler,32.5251,-93.7502,13,P1
+la-shreveport-q1,addition,General contractor,32.5251,-93.7502,13,P1
+la-shreveport-q2,addition,Custom home builder,32.5251,-93.7502,13,P2
+la-shreveport-q3,kw:addition,home addition contractor,32.5251,-93.7502,13,P3
+la-shreveport-q4,kw:addition,room addition contractor,32.5251,-93.7502,13,P3
+la-shreveport-q5,kw:addition,second story addition,32.5251,-93.7502,13,P3
+la-shreveport-q6,kw:addition,design build remodeling,32.5251,-93.7502,13,P3
+la-lafayette-q0,addition,Remodeler,30.2241,-92.0198,13,P1
+la-lafayette-q1,addition,General contractor,30.2241,-92.0198,13,P1
+la-lafayette-q2,addition,Custom home builder,30.2241,-92.0198,13,P2
+la-lafayette-q3,kw:addition,home addition contractor,30.2241,-92.0198,13,P3
+la-lafayette-q4,kw:addition,room addition contractor,30.2241,-92.0198,13,P3
+la-lafayette-q5,kw:addition,second story addition,30.2241,-92.0198,13,P3
+la-lafayette-q6,kw:addition,design build remodeling,30.2241,-92.0198,13,P3
+la-lake-charles-q0,addition,Remodeler,30.2131,-93.2044,13,P1
+la-lake-charles-q1,addition,General contractor,30.2131,-93.2044,13,P1
+la-lake-charles-q2,addition,Custom home builder,30.2131,-93.2044,13,P2
+la-lake-charles-q3,kw:addition,home addition contractor,30.2131,-93.2044,13,P3
+la-lake-charles-q4,kw:addition,room addition contractor,30.2131,-93.2044,13,P3
+la-lake-charles-q5,kw:addition,second story addition,30.2131,-93.2044,13,P3
+la-lake-charles-q6,kw:addition,design build remodeling,30.2131,-93.2044,13,P3
+la-monroe-q0,addition,Remodeler,32.5093,-92.1193,13,P1
+la-monroe-q1,addition,General contractor,32.5093,-92.1193,13,P1
+la-monroe-q2,addition,Custom home builder,32.5093,-92.1193,13,P2
+la-monroe-q3,kw:addition,home addition contractor,32.5093,-92.1193,13,P3
+la-monroe-q4,kw:addition,room addition contractor,32.5093,-92.1193,13,P3
+la-monroe-q5,kw:addition,second story addition,32.5093,-92.1193,13,P3
+la-monroe-q6,kw:addition,design build remodeling,32.5093,-92.1193,13,P3
+la-alexandria-q0,addition,Remodeler,31.3113,-92.4451,13,P1
+la-alexandria-q1,addition,General contractor,31.3113,-92.4451,13,P1
+la-alexandria-q2,addition,Custom home builder,31.3113,-92.4451,13,P2
+la-alexandria-q3,kw:addition,home addition contractor,31.3113,-92.4451,13,P3
+la-alexandria-q4,kw:addition,room addition contractor,31.3113,-92.4451,13,P3
+la-alexandria-q5,kw:addition,second story addition,31.3113,-92.4451,13,P3
+la-alexandria-q6,kw:addition,design build remodeling,31.3113,-92.4451,13,P3
+la-houma-q0,addition,Remodeler,29.5958,-90.7195,13,P1
+la-houma-q1,addition,General contractor,29.5958,-90.7195,13,P1
+la-houma-q2,addition,Custom home builder,29.5958,-90.7195,13,P2
+la-houma-q3,kw:addition,home addition contractor,29.5958,-90.7195,13,P3
+la-houma-q4,kw:addition,room addition contractor,29.5958,-90.7195,13,P3
+la-houma-q5,kw:addition,second story addition,29.5958,-90.7195,13,P3
+la-houma-q6,kw:addition,design build remodeling,29.5958,-90.7195,13,P3
+la-new-iberia-q0,addition,Remodeler,30.0035,-91.8187,13,P1
+la-new-iberia-q1,addition,General contractor,30.0035,-91.8187,13,P1
+la-new-iberia-q2,addition,Custom home builder,30.0035,-91.8187,13,P2
+la-new-iberia-q3,kw:addition,home addition contractor,30.0035,-91.8187,13,P3
+la-new-iberia-q4,kw:addition,room addition contractor,30.0035,-91.8187,13,P3
+la-new-iberia-q5,kw:addition,second story addition,30.0035,-91.8187,13,P3
+la-new-iberia-q6,kw:addition,design build remodeling,30.0035,-91.8187,13,P3
+la-laplace-q0,addition,Remodeler,30.067,-90.4815,13,P1
+la-laplace-q1,addition,General contractor,30.067,-90.4815,13,P1
+la-laplace-q2,addition,Custom home builder,30.067,-90.4815,13,P2
+la-laplace-q3,kw:addition,home addition contractor,30.067,-90.4815,13,P3
+la-laplace-q4,kw:addition,room addition contractor,30.067,-90.4815,13,P3
+la-laplace-q5,kw:addition,second story addition,30.067,-90.4815,13,P3
+la-laplace-q6,kw:addition,design build remodeling,30.067,-90.4815,13,P3
+la-slidell-q0,addition,Remodeler,30.2752,-89.7812,13,P1
+la-slidell-q1,addition,General contractor,30.2752,-89.7812,13,P1
+la-slidell-q2,addition,Custom home builder,30.2752,-89.7812,13,P2
+la-slidell-q3,kw:addition,home addition contractor,30.2752,-89.7812,13,P3
+la-slidell-q4,kw:addition,room addition contractor,30.2752,-89.7812,13,P3
+la-slidell-q5,kw:addition,second story addition,30.2752,-89.7812,13,P3
+la-slidell-q6,kw:addition,design build remodeling,30.2752,-89.7812,13,P3
+la-prairieville-q0,addition,Remodeler,30.303,-90.972,13,P1
+la-prairieville-q1,addition,General contractor,30.303,-90.972,13,P1
+la-prairieville-q2,addition,Custom home builder,30.303,-90.972,13,P2
+la-prairieville-q3,kw:addition,home addition contractor,30.303,-90.972,13,P3
+la-prairieville-q4,kw:addition,room addition contractor,30.303,-90.972,13,P3
+la-prairieville-q5,kw:addition,second story addition,30.303,-90.972,13,P3
+la-prairieville-q6,kw:addition,design build remodeling,30.303,-90.972,13,P3
+ms-jackson-q0,addition,Remodeler,32.2988,-90.1848,13,P1
+ms-jackson-q1,addition,General contractor,32.2988,-90.1848,13,P1
+ms-jackson-q2,addition,Custom home builder,32.2988,-90.1848,13,P2
+ms-jackson-q3,kw:addition,home addition contractor,32.2988,-90.1848,13,P3
+ms-jackson-q4,kw:addition,room addition contractor,32.2988,-90.1848,13,P3
+ms-jackson-q5,kw:addition,second story addition,32.2988,-90.1848,13,P3
+ms-jackson-q6,kw:addition,design build remodeling,32.2988,-90.1848,13,P3
+ms-gulfport-q0,addition,Remodeler,30.3674,-89.0928,13,P1
+ms-gulfport-q1,addition,General contractor,30.3674,-89.0928,13,P1
+ms-gulfport-q2,addition,Custom home builder,30.3674,-89.0928,13,P2
+ms-gulfport-q3,kw:addition,home addition contractor,30.3674,-89.0928,13,P3
+ms-gulfport-q4,kw:addition,room addition contractor,30.3674,-89.0928,13,P3
+ms-gulfport-q5,kw:addition,second story addition,30.3674,-89.0928,13,P3
+ms-gulfport-q6,kw:addition,design build remodeling,30.3674,-89.0928,13,P3
+ms-hattiesburg-q0,addition,Remodeler,31.3271,-89.2903,13,P1
+ms-hattiesburg-q1,addition,General contractor,31.3271,-89.2903,13,P1
+ms-hattiesburg-q2,addition,Custom home builder,31.3271,-89.2903,13,P2
+ms-hattiesburg-q3,kw:addition,home addition contractor,31.3271,-89.2903,13,P3
+ms-hattiesburg-q4,kw:addition,room addition contractor,31.3271,-89.2903,13,P3
+ms-hattiesburg-q5,kw:addition,second story addition,31.3271,-89.2903,13,P3
+ms-hattiesburg-q6,kw:addition,design build remodeling,31.3271,-89.2903,13,P3
+ms-meridian-q0,addition,Remodeler,32.3643,-88.7037,13,P1
+ms-meridian-q1,addition,General contractor,32.3643,-88.7037,13,P1
+ms-meridian-q2,addition,Custom home builder,32.3643,-88.7037,13,P2
+ms-meridian-q3,kw:addition,home addition contractor,32.3643,-88.7037,13,P3
+ms-meridian-q4,kw:addition,room addition contractor,32.3643,-88.7037,13,P3
+ms-meridian-q5,kw:addition,second story addition,32.3643,-88.7037,13,P3
+ms-meridian-q6,kw:addition,design build remodeling,32.3643,-88.7037,13,P3
+ms-olive-branch-q0,addition,Remodeler,34.9618,-89.8295,13,P1
+ms-olive-branch-q1,addition,General contractor,34.9618,-89.8295,13,P1
+ms-olive-branch-q2,addition,Custom home builder,34.9618,-89.8295,13,P2
+ms-olive-branch-q3,kw:addition,home addition contractor,34.9618,-89.8295,13,P3
+ms-olive-branch-q4,kw:addition,room addition contractor,34.9618,-89.8295,13,P3
+ms-olive-branch-q5,kw:addition,second story addition,34.9618,-89.8295,13,P3
+ms-olive-branch-q6,kw:addition,design build remodeling,34.9618,-89.8295,13,P3
+ms-tupelo-q0,addition,Remodeler,34.2581,-88.7046,13,P1
+ms-tupelo-q1,addition,General contractor,34.2581,-88.7046,13,P1
+ms-tupelo-q2,addition,Custom home builder,34.2581,-88.7046,13,P2
+ms-tupelo-q3,kw:addition,home addition contractor,34.2581,-88.7046,13,P3
+ms-tupelo-q4,kw:addition,room addition contractor,34.2581,-88.7046,13,P3
+ms-tupelo-q5,kw:addition,second story addition,34.2581,-88.7046,13,P3
+ms-tupelo-q6,kw:addition,design build remodeling,34.2581,-88.7046,13,P3
+ms-greenville-q0,addition,Remodeler,33.409,-91.0598,13,P1
+ms-greenville-q1,addition,General contractor,33.409,-91.0598,13,P1
+ms-greenville-q2,addition,Custom home builder,33.409,-91.0598,13,P2
+ms-greenville-q3,kw:addition,home addition contractor,33.409,-91.0598,13,P3
+ms-greenville-q4,kw:addition,room addition contractor,33.409,-91.0598,13,P3
+ms-greenville-q5,kw:addition,second story addition,33.409,-91.0598,13,P3
+ms-greenville-q6,kw:addition,design build remodeling,33.409,-91.0598,13,P3
+ms-starkville-q0,addition,Remodeler,33.4505,-88.8196,13,P1
+ms-starkville-q1,addition,General contractor,33.4505,-88.8196,13,P1
+ms-starkville-q2,addition,Custom home builder,33.4505,-88.8196,13,P2
+ms-starkville-q3,kw:addition,home addition contractor,33.4505,-88.8196,13,P3
+ms-starkville-q4,kw:addition,room addition contractor,33.4505,-88.8196,13,P3
+ms-starkville-q5,kw:addition,second story addition,33.4505,-88.8196,13,P3
+ms-starkville-q6,kw:addition,design build remodeling,33.4505,-88.8196,13,P3
+ms-greenwood-q0,addition,Remodeler,33.5162,-90.1795,13,P1
+ms-greenwood-q1,addition,General contractor,33.5162,-90.1795,13,P1
+ms-greenwood-q2,addition,Custom home builder,33.5162,-90.1795,13,P2
+ms-greenwood-q3,kw:addition,home addition contractor,33.5162,-90.1795,13,P3
+ms-greenwood-q4,kw:addition,room addition contractor,33.5162,-90.1795,13,P3
+ms-greenwood-q5,kw:addition,second story addition,33.5162,-90.1795,13,P3
+ms-greenwood-q6,kw:addition,design build remodeling,33.5162,-90.1795,13,P3
+ms-natchez-q0,addition,Remodeler,31.5602,-91.4033,13,P1
+ms-natchez-q1,addition,General contractor,31.5602,-91.4033,13,P1
+ms-natchez-q2,addition,Custom home builder,31.5602,-91.4033,13,P2
+ms-natchez-q3,kw:addition,home addition contractor,31.5602,-91.4033,13,P3
+ms-natchez-q4,kw:addition,room addition contractor,31.5602,-91.4033,13,P3
+ms-natchez-q5,kw:addition,second story addition,31.5602,-91.4033,13,P3
+ms-natchez-q6,kw:addition,design build remodeling,31.5602,-91.4033,13,P3
+nc-charlotte-q0,addition,Remodeler,35.2271,-80.8431,13,P1
+nc-charlotte-q1,addition,General contractor,35.2271,-80.8431,13,P1
+nc-charlotte-q2,addition,Custom home builder,35.2271,-80.8431,13,P2
+nc-charlotte-q3,kw:addition,home addition contractor,35.2271,-80.8431,13,P3
+nc-charlotte-q4,kw:addition,room addition contractor,35.2271,-80.8431,13,P3
+nc-charlotte-q5,kw:addition,second story addition,35.2271,-80.8431,13,P3
+nc-charlotte-q6,kw:addition,design build remodeling,35.2271,-80.8431,13,P3
+nc-raleigh-q0,addition,Remodeler,35.7721,-78.6386,13,P1
+nc-raleigh-q1,addition,General contractor,35.7721,-78.6386,13,P1
+nc-raleigh-q2,addition,Custom home builder,35.7721,-78.6386,13,P2
+nc-raleigh-q3,kw:addition,home addition contractor,35.7721,-78.6386,13,P3
+nc-raleigh-q4,kw:addition,room addition contractor,35.7721,-78.6386,13,P3
+nc-raleigh-q5,kw:addition,second story addition,35.7721,-78.6386,13,P3
+nc-raleigh-q6,kw:addition,design build remodeling,35.7721,-78.6386,13,P3
+nc-greensboro-q0,addition,Remodeler,36.0726,-79.792,13,P1
+nc-greensboro-q1,addition,General contractor,36.0726,-79.792,13,P1
+nc-greensboro-q2,addition,Custom home builder,36.0726,-79.792,13,P2
+nc-greensboro-q3,kw:addition,home addition contractor,36.0726,-79.792,13,P3
+nc-greensboro-q4,kw:addition,room addition contractor,36.0726,-79.792,13,P3
+nc-greensboro-q5,kw:addition,second story addition,36.0726,-79.792,13,P3
+nc-greensboro-q6,kw:addition,design build remodeling,36.0726,-79.792,13,P3
+nc-durham-q0,addition,Remodeler,35.994,-78.8986,13,P1
+nc-durham-q1,addition,General contractor,35.994,-78.8986,13,P1
+nc-durham-q2,addition,Custom home builder,35.994,-78.8986,13,P2
+nc-durham-q3,kw:addition,home addition contractor,35.994,-78.8986,13,P3
+nc-durham-q4,kw:addition,room addition contractor,35.994,-78.8986,13,P3
+nc-durham-q5,kw:addition,second story addition,35.994,-78.8986,13,P3
+nc-durham-q6,kw:addition,design build remodeling,35.994,-78.8986,13,P3
+nc-winston-salem-q0,addition,Remodeler,36.0999,-80.2442,13,P1
+nc-winston-salem-q1,addition,General contractor,36.0999,-80.2442,13,P1
+nc-winston-salem-q2,addition,Custom home builder,36.0999,-80.2442,13,P2
+nc-winston-salem-q3,kw:addition,home addition contractor,36.0999,-80.2442,13,P3
+nc-winston-salem-q4,kw:addition,room addition contractor,36.0999,-80.2442,13,P3
+nc-winston-salem-q5,kw:addition,second story addition,36.0999,-80.2442,13,P3
+nc-winston-salem-q6,kw:addition,design build remodeling,36.0999,-80.2442,13,P3
+nc-fayetteville-q0,addition,Remodeler,35.0527,-78.8784,13,P1
+nc-fayetteville-q1,addition,General contractor,35.0527,-78.8784,13,P1
+nc-fayetteville-q2,addition,Custom home builder,35.0527,-78.8784,13,P2
+nc-fayetteville-q3,kw:addition,home addition contractor,35.0527,-78.8784,13,P3
+nc-fayetteville-q4,kw:addition,room addition contractor,35.0527,-78.8784,13,P3
+nc-fayetteville-q5,kw:addition,second story addition,35.0527,-78.8784,13,P3
+nc-fayetteville-q6,kw:addition,design build remodeling,35.0527,-78.8784,13,P3
+nc-wilmington-q0,addition,Remodeler,34.2356,-77.946,13,P1
+nc-wilmington-q1,addition,General contractor,34.2356,-77.946,13,P1
+nc-wilmington-q2,addition,Custom home builder,34.2356,-77.946,13,P2
+nc-wilmington-q3,kw:addition,home addition contractor,34.2356,-77.946,13,P3
+nc-wilmington-q4,kw:addition,room addition contractor,34.2356,-77.946,13,P3
+nc-wilmington-q5,kw:addition,second story addition,34.2356,-77.946,13,P3
+nc-wilmington-q6,kw:addition,design build remodeling,34.2356,-77.946,13,P3
+nc-asheville-q0,addition,Remodeler,35.6009,-82.554,13,P1
+nc-asheville-q1,addition,General contractor,35.6009,-82.554,13,P1
+nc-asheville-q2,addition,Custom home builder,35.6009,-82.554,13,P2
+nc-asheville-q3,kw:addition,home addition contractor,35.6009,-82.554,13,P3
+nc-asheville-q4,kw:addition,room addition contractor,35.6009,-82.554,13,P3
+nc-asheville-q5,kw:addition,second story addition,35.6009,-82.554,13,P3
+nc-asheville-q6,kw:addition,design build remodeling,35.6009,-82.554,13,P3
+nc-greenville-q0,addition,Remodeler,35.6127,-77.3663,13,P1
+nc-greenville-q1,addition,General contractor,35.6127,-77.3663,13,P1
+nc-greenville-q2,addition,Custom home builder,35.6127,-77.3663,13,P2
+nc-greenville-q3,kw:addition,home addition contractor,35.6127,-77.3663,13,P3
+nc-greenville-q4,kw:addition,room addition contractor,35.6127,-77.3663,13,P3
+nc-greenville-q5,kw:addition,second story addition,35.6127,-77.3663,13,P3
+nc-greenville-q6,kw:addition,design build remodeling,35.6127,-77.3663,13,P3
+nc-concord-q0,addition,Remodeler,35.4089,-80.5816,13,P1
+nc-concord-q1,addition,General contractor,35.4089,-80.5816,13,P1
+nc-concord-q2,addition,Custom home builder,35.4089,-80.5816,13,P2
+nc-concord-q3,kw:addition,home addition contractor,35.4089,-80.5816,13,P3
+nc-concord-q4,kw:addition,room addition contractor,35.4089,-80.5816,13,P3
+nc-concord-q5,kw:addition,second story addition,35.4089,-80.5816,13,P3
+nc-concord-q6,kw:addition,design build remodeling,35.4089,-80.5816,13,P3
+nc-gastonia-q0,addition,Remodeler,35.2621,-81.1873,13,P1
+nc-gastonia-q1,addition,General contractor,35.2621,-81.1873,13,P1
+nc-gastonia-q2,addition,Custom home builder,35.2621,-81.1873,13,P2
+nc-gastonia-q3,kw:addition,home addition contractor,35.2621,-81.1873,13,P3
+nc-gastonia-q4,kw:addition,room addition contractor,35.2621,-81.1873,13,P3
+nc-gastonia-q5,kw:addition,second story addition,35.2621,-81.1873,13,P3
+nc-gastonia-q6,kw:addition,design build remodeling,35.2621,-81.1873,13,P3
+nc-jacksonville-q0,addition,Remodeler,34.754,-77.4302,13,P1
+nc-jacksonville-q1,addition,General contractor,34.754,-77.4302,13,P1
+nc-jacksonville-q2,addition,Custom home builder,34.754,-77.4302,13,P2
+nc-jacksonville-q3,kw:addition,home addition contractor,34.754,-77.4302,13,P3
+nc-jacksonville-q4,kw:addition,room addition contractor,34.754,-77.4302,13,P3
+nc-jacksonville-q5,kw:addition,second story addition,34.754,-77.4302,13,P3
+nc-jacksonville-q6,kw:addition,design build remodeling,34.754,-77.4302,13,P3
+nc-rocky-mount-q0,addition,Remodeler,35.9382,-77.7905,13,P1
+nc-rocky-mount-q1,addition,General contractor,35.9382,-77.7905,13,P1
+nc-rocky-mount-q2,addition,Custom home builder,35.9382,-77.7905,13,P2
+nc-rocky-mount-q3,kw:addition,home addition contractor,35.9382,-77.7905,13,P3
+nc-rocky-mount-q4,kw:addition,room addition contractor,35.9382,-77.7905,13,P3
+nc-rocky-mount-q5,kw:addition,second story addition,35.9382,-77.7905,13,P3
+nc-rocky-mount-q6,kw:addition,design build remodeling,35.9382,-77.7905,13,P3
+nc-burlington-q0,addition,Remodeler,36.0957,-79.4378,13,P1
+nc-burlington-q1,addition,General contractor,36.0957,-79.4378,13,P1
+nc-burlington-q2,addition,Custom home builder,36.0957,-79.4378,13,P2
+nc-burlington-q3,kw:addition,home addition contractor,36.0957,-79.4378,13,P3
+nc-burlington-q4,kw:addition,room addition contractor,36.0957,-79.4378,13,P3
+nc-burlington-q5,kw:addition,second story addition,36.0957,-79.4378,13,P3
+nc-burlington-q6,kw:addition,design build remodeling,36.0957,-79.4378,13,P3
+nc-wilson-q0,addition,Remodeler,35.7213,-77.9155,13,P1
+nc-wilson-q1,addition,General contractor,35.7213,-77.9155,13,P1
+nc-wilson-q2,addition,Custom home builder,35.7213,-77.9155,13,P2
+nc-wilson-q3,kw:addition,home addition contractor,35.7213,-77.9155,13,P3
+nc-wilson-q4,kw:addition,room addition contractor,35.7213,-77.9155,13,P3
+nc-wilson-q5,kw:addition,second story addition,35.7213,-77.9155,13,P3
+nc-wilson-q6,kw:addition,design build remodeling,35.7213,-77.9155,13,P3
+nc-hickory-q0,addition,Remodeler,35.7332,-81.3412,13,P1
+nc-hickory-q1,addition,General contractor,35.7332,-81.3412,13,P1
+nc-hickory-q2,addition,Custom home builder,35.7332,-81.3412,13,P2
+nc-hickory-q3,kw:addition,home addition contractor,35.7332,-81.3412,13,P3
+nc-hickory-q4,kw:addition,room addition contractor,35.7332,-81.3412,13,P3
+nc-hickory-q5,kw:addition,second story addition,35.7332,-81.3412,13,P3
+nc-hickory-q6,kw:addition,design build remodeling,35.7332,-81.3412,13,P3
+nc-wake-forest-q0,addition,Remodeler,35.9799,-78.5097,13,P1
+nc-wake-forest-q1,addition,General contractor,35.9799,-78.5097,13,P1
+nc-wake-forest-q2,addition,Custom home builder,35.9799,-78.5097,13,P2
+nc-wake-forest-q3,kw:addition,home addition contractor,35.9799,-78.5097,13,P3
+nc-wake-forest-q4,kw:addition,room addition contractor,35.9799,-78.5097,13,P3
+nc-wake-forest-q5,kw:addition,second story addition,35.9799,-78.5097,13,P3
+nc-wake-forest-q6,kw:addition,design build remodeling,35.9799,-78.5097,13,P3
+nc-mooresville-q0,addition,Remodeler,35.5849,-80.8101,13,P1
+nc-mooresville-q1,addition,General contractor,35.5849,-80.8101,13,P1
+nc-mooresville-q2,addition,Custom home builder,35.5849,-80.8101,13,P2
+nc-mooresville-q3,kw:addition,home addition contractor,35.5849,-80.8101,13,P3
+nc-mooresville-q4,kw:addition,room addition contractor,35.5849,-80.8101,13,P3
+nc-mooresville-q5,kw:addition,second story addition,35.5849,-80.8101,13,P3
+nc-mooresville-q6,kw:addition,design build remodeling,35.5849,-80.8101,13,P3
+nc-goldsboro-q0,addition,Remodeler,35.3849,-77.9928,13,P1
+nc-goldsboro-q1,addition,General contractor,35.3849,-77.9928,13,P1
+nc-goldsboro-q2,addition,Custom home builder,35.3849,-77.9928,13,P2
+nc-goldsboro-q3,kw:addition,home addition contractor,35.3849,-77.9928,13,P3
+nc-goldsboro-q4,kw:addition,room addition contractor,35.3849,-77.9928,13,P3
+nc-goldsboro-q5,kw:addition,second story addition,35.3849,-77.9928,13,P3
+nc-goldsboro-q6,kw:addition,design build remodeling,35.3849,-77.9928,13,P3
+nc-monroe-q0,addition,Remodeler,34.9854,-80.5495,13,P1
+nc-monroe-q1,addition,General contractor,34.9854,-80.5495,13,P1
+nc-monroe-q2,addition,Custom home builder,34.9854,-80.5495,13,P2
+nc-monroe-q3,kw:addition,home addition contractor,34.9854,-80.5495,13,P3
+nc-monroe-q4,kw:addition,room addition contractor,34.9854,-80.5495,13,P3
+nc-monroe-q5,kw:addition,second story addition,34.9854,-80.5495,13,P3
+nc-monroe-q6,kw:addition,design build remodeling,34.9854,-80.5495,13,P3
+nc-salisbury-q0,addition,Remodeler,35.671,-80.4742,13,P1
+nc-salisbury-q1,addition,General contractor,35.671,-80.4742,13,P1
+nc-salisbury-q2,addition,Custom home builder,35.671,-80.4742,13,P2
+nc-salisbury-q3,kw:addition,home addition contractor,35.671,-80.4742,13,P3
+nc-salisbury-q4,kw:addition,room addition contractor,35.671,-80.4742,13,P3
+nc-salisbury-q5,kw:addition,second story addition,35.671,-80.4742,13,P3
+nc-salisbury-q6,kw:addition,design build remodeling,35.671,-80.4742,13,P3
+nc-new-bern-q0,addition,Remodeler,35.1085,-77.0441,13,P1
+nc-new-bern-q1,addition,General contractor,35.1085,-77.0441,13,P1
+nc-new-bern-q2,addition,Custom home builder,35.1085,-77.0441,13,P2
+nc-new-bern-q3,kw:addition,home addition contractor,35.1085,-77.0441,13,P3
+nc-new-bern-q4,kw:addition,room addition contractor,35.1085,-77.0441,13,P3
+nc-new-bern-q5,kw:addition,second story addition,35.1085,-77.0441,13,P3
+nc-new-bern-q6,kw:addition,design build remodeling,35.1085,-77.0441,13,P3
+nc-sanford-q0,addition,Remodeler,35.4799,-79.1803,13,P1
+nc-sanford-q1,addition,General contractor,35.4799,-79.1803,13,P1
+nc-sanford-q2,addition,Custom home builder,35.4799,-79.1803,13,P2
+nc-sanford-q3,kw:addition,home addition contractor,35.4799,-79.1803,13,P3
+nc-sanford-q4,kw:addition,room addition contractor,35.4799,-79.1803,13,P3
+nc-sanford-q5,kw:addition,second story addition,35.4799,-79.1803,13,P3
+nc-sanford-q6,kw:addition,design build remodeling,35.4799,-79.1803,13,P3
+nc-thomasville-q0,addition,Remodeler,35.8826,-80.082,13,P1
+nc-thomasville-q1,addition,General contractor,35.8826,-80.082,13,P1
+nc-thomasville-q2,addition,Custom home builder,35.8826,-80.082,13,P2
+nc-thomasville-q3,kw:addition,home addition contractor,35.8826,-80.082,13,P3
+nc-thomasville-q4,kw:addition,room addition contractor,35.8826,-80.082,13,P3
+nc-thomasville-q5,kw:addition,second story addition,35.8826,-80.082,13,P3
+nc-thomasville-q6,kw:addition,design build remodeling,35.8826,-80.082,13,P3
+nc-asheboro-q0,addition,Remodeler,35.7079,-79.8136,13,P1
+nc-asheboro-q1,addition,General contractor,35.7079,-79.8136,13,P1
+nc-asheboro-q2,addition,Custom home builder,35.7079,-79.8136,13,P2
+nc-asheboro-q3,kw:addition,home addition contractor,35.7079,-79.8136,13,P3
+nc-asheboro-q4,kw:addition,room addition contractor,35.7079,-79.8136,13,P3
+nc-asheboro-q5,kw:addition,second story addition,35.7079,-79.8136,13,P3
+nc-asheboro-q6,kw:addition,design build remodeling,35.7079,-79.8136,13,P3
+nm-albuquerque-q0,addition,Remodeler,35.0845,-106.6511,13,P1
+nm-albuquerque-q1,addition,General contractor,35.0845,-106.6511,13,P1
+nm-albuquerque-q2,addition,Custom home builder,35.0845,-106.6511,13,P2
+nm-albuquerque-q3,kw:addition,home addition contractor,35.0845,-106.6511,13,P3
+nm-albuquerque-q4,kw:addition,room addition contractor,35.0845,-106.6511,13,P3
+nm-albuquerque-q5,kw:addition,second story addition,35.0845,-106.6511,13,P3
+nm-albuquerque-q6,kw:addition,design build remodeling,35.0845,-106.6511,13,P3
+nm-las-cruces-q0,addition,Remodeler,32.3123,-106.7783,13,P1
+nm-las-cruces-q1,addition,General contractor,32.3123,-106.7783,13,P1
+nm-las-cruces-q2,addition,Custom home builder,32.3123,-106.7783,13,P2
+nm-las-cruces-q3,kw:addition,home addition contractor,32.3123,-106.7783,13,P3
+nm-las-cruces-q4,kw:addition,room addition contractor,32.3123,-106.7783,13,P3
+nm-las-cruces-q5,kw:addition,second story addition,32.3123,-106.7783,13,P3
+nm-las-cruces-q6,kw:addition,design build remodeling,32.3123,-106.7783,13,P3
+nm-enchanted-hills-q0,addition,Remodeler,35.3368,-106.593,13,P1
+nm-enchanted-hills-q1,addition,General contractor,35.3368,-106.593,13,P1
+nm-enchanted-hills-q2,addition,Custom home builder,35.3368,-106.593,13,P2
+nm-enchanted-hills-q3,kw:addition,home addition contractor,35.3368,-106.593,13,P3
+nm-enchanted-hills-q4,kw:addition,room addition contractor,35.3368,-106.593,13,P3
+nm-enchanted-hills-q5,kw:addition,second story addition,35.3368,-106.593,13,P3
+nm-enchanted-hills-q6,kw:addition,design build remodeling,35.3368,-106.593,13,P3
+nm-santa-fe-q0,addition,Remodeler,35.687,-105.9378,13,P1
+nm-santa-fe-q1,addition,General contractor,35.687,-105.9378,13,P1
+nm-santa-fe-q2,addition,Custom home builder,35.687,-105.9378,13,P2
+nm-santa-fe-q3,kw:addition,home addition contractor,35.687,-105.9378,13,P3
+nm-santa-fe-q4,kw:addition,room addition contractor,35.687,-105.9378,13,P3
+nm-santa-fe-q5,kw:addition,second story addition,35.687,-105.9378,13,P3
+nm-santa-fe-q6,kw:addition,design build remodeling,35.687,-105.9378,13,P3
+nm-roswell-q0,addition,Remodeler,33.3944,-104.5249,13,P1
+nm-roswell-q1,addition,General contractor,33.3944,-104.5249,13,P1
+nm-roswell-q2,addition,Custom home builder,33.3944,-104.5249,13,P2
+nm-roswell-q3,kw:addition,home addition contractor,33.3944,-104.5249,13,P3
+nm-roswell-q4,kw:addition,room addition contractor,33.3944,-104.5249,13,P3
+nm-roswell-q5,kw:addition,second story addition,33.3944,-104.5249,13,P3
+nm-roswell-q6,kw:addition,design build remodeling,33.3944,-104.5249,13,P3
+nm-farmington-q0,addition,Remodeler,36.7281,-108.2187,13,P1
+nm-farmington-q1,addition,General contractor,36.7281,-108.2187,13,P1
+nm-farmington-q2,addition,Custom home builder,36.7281,-108.2187,13,P2
+nm-farmington-q3,kw:addition,home addition contractor,36.7281,-108.2187,13,P3
+nm-farmington-q4,kw:addition,room addition contractor,36.7281,-108.2187,13,P3
+nm-farmington-q5,kw:addition,second story addition,36.7281,-108.2187,13,P3
+nm-farmington-q6,kw:addition,design build remodeling,36.7281,-108.2187,13,P3
+nm-clovis-q0,addition,Remodeler,34.4048,-103.2052,13,P1
+nm-clovis-q1,addition,General contractor,34.4048,-103.2052,13,P1
+nm-clovis-q2,addition,Custom home builder,34.4048,-103.2052,13,P2
+nm-clovis-q3,kw:addition,home addition contractor,34.4048,-103.2052,13,P3
+nm-clovis-q4,kw:addition,room addition contractor,34.4048,-103.2052,13,P3
+nm-clovis-q5,kw:addition,second story addition,34.4048,-103.2052,13,P3
+nm-clovis-q6,kw:addition,design build remodeling,34.4048,-103.2052,13,P3
+nm-hobbs-q0,addition,Remodeler,32.7026,-103.136,13,P1
+nm-hobbs-q1,addition,General contractor,32.7026,-103.136,13,P1
+nm-hobbs-q2,addition,Custom home builder,32.7026,-103.136,13,P2
+nm-hobbs-q3,kw:addition,home addition contractor,32.7026,-103.136,13,P3
+nm-hobbs-q4,kw:addition,room addition contractor,32.7026,-103.136,13,P3
+nm-hobbs-q5,kw:addition,second story addition,32.7026,-103.136,13,P3
+nm-hobbs-q6,kw:addition,design build remodeling,32.7026,-103.136,13,P3
+nm-alamogordo-q0,addition,Remodeler,32.8995,-105.9603,13,P1
+nm-alamogordo-q1,addition,General contractor,32.8995,-105.9603,13,P1
+nm-alamogordo-q2,addition,Custom home builder,32.8995,-105.9603,13,P2
+nm-alamogordo-q3,kw:addition,home addition contractor,32.8995,-105.9603,13,P3
+nm-alamogordo-q4,kw:addition,room addition contractor,32.8995,-105.9603,13,P3
+nm-alamogordo-q5,kw:addition,second story addition,32.8995,-105.9603,13,P3
+nm-alamogordo-q6,kw:addition,design build remodeling,32.8995,-105.9603,13,P3
+nm-carlsbad-q0,addition,Remodeler,32.4207,-104.2288,13,P1
+nm-carlsbad-q1,addition,General contractor,32.4207,-104.2288,13,P1
+nm-carlsbad-q2,addition,Custom home builder,32.4207,-104.2288,13,P2
+nm-carlsbad-q3,kw:addition,home addition contractor,32.4207,-104.2288,13,P3
+nm-carlsbad-q4,kw:addition,room addition contractor,32.4207,-104.2288,13,P3
+nm-carlsbad-q5,kw:addition,second story addition,32.4207,-104.2288,13,P3
+nm-carlsbad-q6,kw:addition,design build remodeling,32.4207,-104.2288,13,P3
+nm-gallup-q0,addition,Remodeler,35.5281,-108.7426,13,P1
+nm-gallup-q1,addition,General contractor,35.5281,-108.7426,13,P1
+nm-gallup-q2,addition,Custom home builder,35.5281,-108.7426,13,P2
+nm-gallup-q3,kw:addition,home addition contractor,35.5281,-108.7426,13,P3
+nm-gallup-q4,kw:addition,room addition contractor,35.5281,-108.7426,13,P3
+nm-gallup-q5,kw:addition,second story addition,35.5281,-108.7426,13,P3
+nm-gallup-q6,kw:addition,design build remodeling,35.5281,-108.7426,13,P3
+nv-las-vegas-q0,addition,Remodeler,36.175,-115.1372,13,P1
+nv-las-vegas-q1,addition,General contractor,36.175,-115.1372,13,P1
+nv-las-vegas-q2,addition,Custom home builder,36.175,-115.1372,13,P2
+nv-las-vegas-q3,kw:addition,home addition contractor,36.175,-115.1372,13,P3
+nv-las-vegas-q4,kw:addition,room addition contractor,36.175,-115.1372,13,P3
+nv-las-vegas-q5,kw:addition,second story addition,36.175,-115.1372,13,P3
+nv-las-vegas-q6,kw:addition,design build remodeling,36.175,-115.1372,13,P3
+nv-reno-q0,addition,Remodeler,39.5296,-119.8138,13,P1
+nv-reno-q1,addition,General contractor,39.5296,-119.8138,13,P1
+nv-reno-q2,addition,Custom home builder,39.5296,-119.8138,13,P2
+nv-reno-q3,kw:addition,home addition contractor,39.5296,-119.8138,13,P3
+nv-reno-q4,kw:addition,room addition contractor,39.5296,-119.8138,13,P3
+nv-reno-q5,kw:addition,second story addition,39.5296,-119.8138,13,P3
+nv-reno-q6,kw:addition,design build remodeling,39.5296,-119.8138,13,P3
+nv-carson-city-q0,addition,Remodeler,39.1638,-119.7674,13,P1
+nv-carson-city-q1,addition,General contractor,39.1638,-119.7674,13,P1
+nv-carson-city-q2,addition,Custom home builder,39.1638,-119.7674,13,P2
+nv-carson-city-q3,kw:addition,home addition contractor,39.1638,-119.7674,13,P3
+nv-carson-city-q4,kw:addition,room addition contractor,39.1638,-119.7674,13,P3
+nv-carson-city-q5,kw:addition,second story addition,39.1638,-119.7674,13,P3
+nv-carson-city-q6,kw:addition,design build remodeling,39.1638,-119.7674,13,P3
+nv-pahrump-q0,addition,Remodeler,36.2083,-115.9839,13,P1
+nv-pahrump-q1,addition,General contractor,36.2083,-115.9839,13,P1
+nv-pahrump-q2,addition,Custom home builder,36.2083,-115.9839,13,P2
+nv-pahrump-q3,kw:addition,home addition contractor,36.2083,-115.9839,13,P3
+nv-pahrump-q4,kw:addition,room addition contractor,36.2083,-115.9839,13,P3
+nv-pahrump-q5,kw:addition,second story addition,36.2083,-115.9839,13,P3
+nv-pahrump-q6,kw:addition,design build remodeling,36.2083,-115.9839,13,P3
+nv-elko-q0,addition,Remodeler,40.8324,-115.7631,13,P1
+nv-elko-q1,addition,General contractor,40.8324,-115.7631,13,P1
+nv-elko-q2,addition,Custom home builder,40.8324,-115.7631,13,P2
+nv-elko-q3,kw:addition,home addition contractor,40.8324,-115.7631,13,P3
+nv-elko-q4,kw:addition,room addition contractor,40.8324,-115.7631,13,P3
+nv-elko-q5,kw:addition,second story addition,40.8324,-115.7631,13,P3
+nv-elko-q6,kw:addition,design build remodeling,40.8324,-115.7631,13,P3
+ok-oklahoma-city-q0,addition,Remodeler,35.4676,-97.5164,13,P1
+ok-oklahoma-city-q1,addition,General contractor,35.4676,-97.5164,13,P1
+ok-oklahoma-city-q2,addition,Custom home builder,35.4676,-97.5164,13,P2
+ok-oklahoma-city-q3,kw:addition,home addition contractor,35.4676,-97.5164,13,P3
+ok-oklahoma-city-q4,kw:addition,room addition contractor,35.4676,-97.5164,13,P3
+ok-oklahoma-city-q5,kw:addition,second story addition,35.4676,-97.5164,13,P3
+ok-oklahoma-city-q6,kw:addition,design build remodeling,35.4676,-97.5164,13,P3
+ok-tulsa-q0,addition,Remodeler,36.154,-95.9928,13,P1
+ok-tulsa-q1,addition,General contractor,36.154,-95.9928,13,P1
+ok-tulsa-q2,addition,Custom home builder,36.154,-95.9928,13,P2
+ok-tulsa-q3,kw:addition,home addition contractor,36.154,-95.9928,13,P3
+ok-tulsa-q4,kw:addition,room addition contractor,36.154,-95.9928,13,P3
+ok-tulsa-q5,kw:addition,second story addition,36.154,-95.9928,13,P3
+ok-tulsa-q6,kw:addition,design build remodeling,36.154,-95.9928,13,P3
+ok-norman-q0,addition,Remodeler,35.2226,-97.4395,13,P1
+ok-norman-q1,addition,General contractor,35.2226,-97.4395,13,P1
+ok-norman-q2,addition,Custom home builder,35.2226,-97.4395,13,P2
+ok-norman-q3,kw:addition,home addition contractor,35.2226,-97.4395,13,P3
+ok-norman-q4,kw:addition,room addition contractor,35.2226,-97.4395,13,P3
+ok-norman-q5,kw:addition,second story addition,35.2226,-97.4395,13,P3
+ok-norman-q6,kw:addition,design build remodeling,35.2226,-97.4395,13,P3
+ok-lawton-q0,addition,Remodeler,34.6087,-98.3903,13,P1
+ok-lawton-q1,addition,General contractor,34.6087,-98.3903,13,P1
+ok-lawton-q2,addition,Custom home builder,34.6087,-98.3903,13,P2
+ok-lawton-q3,kw:addition,home addition contractor,34.6087,-98.3903,13,P3
+ok-lawton-q4,kw:addition,room addition contractor,34.6087,-98.3903,13,P3
+ok-lawton-q5,kw:addition,second story addition,34.6087,-98.3903,13,P3
+ok-lawton-q6,kw:addition,design build remodeling,34.6087,-98.3903,13,P3
+ok-enid-q0,addition,Remodeler,36.3956,-97.8784,13,P1
+ok-enid-q1,addition,General contractor,36.3956,-97.8784,13,P1
+ok-enid-q2,addition,Custom home builder,36.3956,-97.8784,13,P2
+ok-enid-q3,kw:addition,home addition contractor,36.3956,-97.8784,13,P3
+ok-enid-q4,kw:addition,room addition contractor,36.3956,-97.8784,13,P3
+ok-enid-q5,kw:addition,second story addition,36.3956,-97.8784,13,P3
+ok-enid-q6,kw:addition,design build remodeling,36.3956,-97.8784,13,P3
+ok-stillwater-q0,addition,Remodeler,36.1156,-97.0584,13,P1
+ok-stillwater-q1,addition,General contractor,36.1156,-97.0584,13,P1
+ok-stillwater-q2,addition,Custom home builder,36.1156,-97.0584,13,P2
+ok-stillwater-q3,kw:addition,home addition contractor,36.1156,-97.0584,13,P3
+ok-stillwater-q4,kw:addition,room addition contractor,36.1156,-97.0584,13,P3
+ok-stillwater-q5,kw:addition,second story addition,36.1156,-97.0584,13,P3
+ok-stillwater-q6,kw:addition,design build remodeling,36.1156,-97.0584,13,P3
+ok-muskogee-q0,addition,Remodeler,35.7479,-95.3697,13,P1
+ok-muskogee-q1,addition,General contractor,35.7479,-95.3697,13,P1
+ok-muskogee-q2,addition,Custom home builder,35.7479,-95.3697,13,P2
+ok-muskogee-q3,kw:addition,home addition contractor,35.7479,-95.3697,13,P3
+ok-muskogee-q4,kw:addition,room addition contractor,35.7479,-95.3697,13,P3
+ok-muskogee-q5,kw:addition,second story addition,35.7479,-95.3697,13,P3
+ok-muskogee-q6,kw:addition,design build remodeling,35.7479,-95.3697,13,P3
+ok-bartlesville-q0,addition,Remodeler,36.7473,-95.9808,13,P1
+ok-bartlesville-q1,addition,General contractor,36.7473,-95.9808,13,P1
+ok-bartlesville-q2,addition,Custom home builder,36.7473,-95.9808,13,P2
+ok-bartlesville-q3,kw:addition,home addition contractor,36.7473,-95.9808,13,P3
+ok-bartlesville-q4,kw:addition,room addition contractor,36.7473,-95.9808,13,P3
+ok-bartlesville-q5,kw:addition,second story addition,36.7473,-95.9808,13,P3
+ok-bartlesville-q6,kw:addition,design build remodeling,36.7473,-95.9808,13,P3
+ok-shawnee-q0,addition,Remodeler,35.3273,-96.9253,13,P1
+ok-shawnee-q1,addition,General contractor,35.3273,-96.9253,13,P1
+ok-shawnee-q2,addition,Custom home builder,35.3273,-96.9253,13,P2
+ok-shawnee-q3,kw:addition,home addition contractor,35.3273,-96.9253,13,P3
+ok-shawnee-q4,kw:addition,room addition contractor,35.3273,-96.9253,13,P3
+ok-shawnee-q5,kw:addition,second story addition,35.3273,-96.9253,13,P3
+ok-shawnee-q6,kw:addition,design build remodeling,35.3273,-96.9253,13,P3
+ok-ardmore-q0,addition,Remodeler,34.1743,-97.1436,13,P1
+ok-ardmore-q1,addition,General contractor,34.1743,-97.1436,13,P1
+ok-ardmore-q2,addition,Custom home builder,34.1743,-97.1436,13,P2
+ok-ardmore-q3,kw:addition,home addition contractor,34.1743,-97.1436,13,P3
+ok-ardmore-q4,kw:addition,room addition contractor,34.1743,-97.1436,13,P3
+ok-ardmore-q5,kw:addition,second story addition,34.1743,-97.1436,13,P3
+ok-ardmore-q6,kw:addition,design build remodeling,34.1743,-97.1436,13,P3
+ok-altus-q0,addition,Remodeler,34.6381,-99.334,13,P1
+ok-altus-q1,addition,General contractor,34.6381,-99.334,13,P1
+ok-altus-q2,addition,Custom home builder,34.6381,-99.334,13,P2
+ok-altus-q3,kw:addition,home addition contractor,34.6381,-99.334,13,P3
+ok-altus-q4,kw:addition,room addition contractor,34.6381,-99.334,13,P3
+ok-altus-q5,kw:addition,second story addition,34.6381,-99.334,13,P3
+ok-altus-q6,kw:addition,design build remodeling,34.6381,-99.334,13,P3
+ok-mcalester-q0,addition,Remodeler,34.9334,-95.7697,13,P1
+ok-mcalester-q1,addition,General contractor,34.9334,-95.7697,13,P1
+ok-mcalester-q2,addition,Custom home builder,34.9334,-95.7697,13,P2
+ok-mcalester-q3,kw:addition,home addition contractor,34.9334,-95.7697,13,P3
+ok-mcalester-q4,kw:addition,room addition contractor,34.9334,-95.7697,13,P3
+ok-mcalester-q5,kw:addition,second story addition,34.9334,-95.7697,13,P3
+ok-mcalester-q6,kw:addition,design build remodeling,34.9334,-95.7697,13,P3
+sc-columbia-q0,addition,Remodeler,34.0007,-81.0348,13,P1
+sc-columbia-q1,addition,General contractor,34.0007,-81.0348,13,P1
+sc-columbia-q2,addition,Custom home builder,34.0007,-81.0348,13,P2
+sc-columbia-q3,kw:addition,home addition contractor,34.0007,-81.0348,13,P3
+sc-columbia-q4,kw:addition,room addition contractor,34.0007,-81.0348,13,P3
+sc-columbia-q5,kw:addition,second story addition,34.0007,-81.0348,13,P3
+sc-columbia-q6,kw:addition,design build remodeling,34.0007,-81.0348,13,P3
+sc-charleston-q0,addition,Remodeler,32.7763,-79.9327,13,P1
+sc-charleston-q1,addition,General contractor,32.7763,-79.9327,13,P1
+sc-charleston-q2,addition,Custom home builder,32.7763,-79.9327,13,P2
+sc-charleston-q3,kw:addition,home addition contractor,32.7763,-79.9327,13,P3
+sc-charleston-q4,kw:addition,room addition contractor,32.7763,-79.9327,13,P3
+sc-charleston-q5,kw:addition,second story addition,32.7763,-79.9327,13,P3
+sc-charleston-q6,kw:addition,design build remodeling,32.7763,-79.9327,13,P3
+sc-rock-hill-q0,addition,Remodeler,34.9249,-81.0251,13,P1
+sc-rock-hill-q1,addition,General contractor,34.9249,-81.0251,13,P1
+sc-rock-hill-q2,addition,Custom home builder,34.9249,-81.0251,13,P2
+sc-rock-hill-q3,kw:addition,home addition contractor,34.9249,-81.0251,13,P3
+sc-rock-hill-q4,kw:addition,room addition contractor,34.9249,-81.0251,13,P3
+sc-rock-hill-q5,kw:addition,second story addition,34.9249,-81.0251,13,P3
+sc-rock-hill-q6,kw:addition,design build remodeling,34.9249,-81.0251,13,P3
+sc-greenville-q0,addition,Remodeler,34.8526,-82.394,13,P1
+sc-greenville-q1,addition,General contractor,34.8526,-82.394,13,P1
+sc-greenville-q2,addition,Custom home builder,34.8526,-82.394,13,P2
+sc-greenville-q3,kw:addition,home addition contractor,34.8526,-82.394,13,P3
+sc-greenville-q4,kw:addition,room addition contractor,34.8526,-82.394,13,P3
+sc-greenville-q5,kw:addition,second story addition,34.8526,-82.394,13,P3
+sc-greenville-q6,kw:addition,design build remodeling,34.8526,-82.394,13,P3
+sc-summerville-q0,addition,Remodeler,33.0185,-80.1757,13,P1
+sc-summerville-q1,addition,General contractor,33.0185,-80.1757,13,P1
+sc-summerville-q2,addition,Custom home builder,33.0185,-80.1757,13,P2
+sc-summerville-q3,kw:addition,home addition contractor,33.0185,-80.1757,13,P3
+sc-summerville-q4,kw:addition,room addition contractor,33.0185,-80.1757,13,P3
+sc-summerville-q5,kw:addition,second story addition,33.0185,-80.1757,13,P3
+sc-summerville-q6,kw:addition,design build remodeling,33.0185,-80.1757,13,P3
+sc-sumter-q0,addition,Remodeler,33.9204,-80.3415,13,P1
+sc-sumter-q1,addition,General contractor,33.9204,-80.3415,13,P1
+sc-sumter-q2,addition,Custom home builder,33.9204,-80.3415,13,P2
+sc-sumter-q3,kw:addition,home addition contractor,33.9204,-80.3415,13,P3
+sc-sumter-q4,kw:addition,room addition contractor,33.9204,-80.3415,13,P3
+sc-sumter-q5,kw:addition,second story addition,33.9204,-80.3415,13,P3
+sc-sumter-q6,kw:addition,design build remodeling,33.9204,-80.3415,13,P3
+sc-hilton-head-island-q0,addition,Remodeler,32.1938,-80.7382,13,P1
+sc-hilton-head-island-q1,addition,General contractor,32.1938,-80.7382,13,P1
+sc-hilton-head-island-q2,addition,Custom home builder,32.1938,-80.7382,13,P2
+sc-hilton-head-island-q3,kw:addition,home addition contractor,32.1938,-80.7382,13,P3
+sc-hilton-head-island-q4,kw:addition,room addition contractor,32.1938,-80.7382,13,P3
+sc-hilton-head-island-q5,kw:addition,second story addition,32.1938,-80.7382,13,P3
+sc-hilton-head-island-q6,kw:addition,design build remodeling,32.1938,-80.7382,13,P3
+sc-florence-q0,addition,Remodeler,34.1954,-79.7626,13,P1
+sc-florence-q1,addition,General contractor,34.1954,-79.7626,13,P1
+sc-florence-q2,addition,Custom home builder,34.1954,-79.7626,13,P2
+sc-florence-q3,kw:addition,home addition contractor,34.1954,-79.7626,13,P3
+sc-florence-q4,kw:addition,room addition contractor,34.1954,-79.7626,13,P3
+sc-florence-q5,kw:addition,second story addition,34.1954,-79.7626,13,P3
+sc-florence-q6,kw:addition,design build remodeling,34.1954,-79.7626,13,P3
+sc-spartanburg-q0,addition,Remodeler,34.9496,-81.9321,13,P1
+sc-spartanburg-q1,addition,General contractor,34.9496,-81.9321,13,P1
+sc-spartanburg-q2,addition,Custom home builder,34.9496,-81.9321,13,P2
+sc-spartanburg-q3,kw:addition,home addition contractor,34.9496,-81.9321,13,P3
+sc-spartanburg-q4,kw:addition,room addition contractor,34.9496,-81.9321,13,P3
+sc-spartanburg-q5,kw:addition,second story addition,34.9496,-81.9321,13,P3
+sc-spartanburg-q6,kw:addition,design build remodeling,34.9496,-81.9321,13,P3
+sc-myrtle-beach-q0,addition,Remodeler,33.6891,-78.8867,13,P1
+sc-myrtle-beach-q1,addition,General contractor,33.6891,-78.8867,13,P1
+sc-myrtle-beach-q2,addition,Custom home builder,33.6891,-78.8867,13,P2
+sc-myrtle-beach-q3,kw:addition,home addition contractor,33.6891,-78.8867,13,P3
+sc-myrtle-beach-q4,kw:addition,room addition contractor,33.6891,-78.8867,13,P3
+sc-myrtle-beach-q5,kw:addition,second story addition,33.6891,-78.8867,13,P3
+sc-myrtle-beach-q6,kw:addition,design build remodeling,33.6891,-78.8867,13,P3
+sc-aiken-q0,addition,Remodeler,33.5604,-81.7195,13,P1
+sc-aiken-q1,addition,General contractor,33.5604,-81.7195,13,P1
+sc-aiken-q2,addition,Custom home builder,33.5604,-81.7195,13,P2
+sc-aiken-q3,kw:addition,home addition contractor,33.5604,-81.7195,13,P3
+sc-aiken-q4,kw:addition,room addition contractor,33.5604,-81.7195,13,P3
+sc-aiken-q5,kw:addition,second story addition,33.5604,-81.7195,13,P3
+sc-aiken-q6,kw:addition,design build remodeling,33.5604,-81.7195,13,P3
+sc-anderson-q0,addition,Remodeler,34.5034,-82.6501,13,P1
+sc-anderson-q1,addition,General contractor,34.5034,-82.6501,13,P1
+sc-anderson-q2,addition,Custom home builder,34.5034,-82.6501,13,P2
+sc-anderson-q3,kw:addition,home addition contractor,34.5034,-82.6501,13,P3
+sc-anderson-q4,kw:addition,room addition contractor,34.5034,-82.6501,13,P3
+sc-anderson-q5,kw:addition,second story addition,34.5034,-82.6501,13,P3
+sc-anderson-q6,kw:addition,design build remodeling,34.5034,-82.6501,13,P3
+tn-nashville-q0,addition,Remodeler,36.1659,-86.7844,13,P1
+tn-nashville-q1,addition,General contractor,36.1659,-86.7844,13,P1
+tn-nashville-q2,addition,Custom home builder,36.1659,-86.7844,13,P2
+tn-nashville-q3,kw:addition,home addition contractor,36.1659,-86.7844,13,P3
+tn-nashville-q4,kw:addition,room addition contractor,36.1659,-86.7844,13,P3
+tn-nashville-q5,kw:addition,second story addition,36.1659,-86.7844,13,P3
+tn-nashville-q6,kw:addition,design build remodeling,36.1659,-86.7844,13,P3
+tn-knoxville-q0,addition,Remodeler,35.9606,-83.9207,13,P1
+tn-knoxville-q1,addition,General contractor,35.9606,-83.9207,13,P1
+tn-knoxville-q2,addition,Custom home builder,35.9606,-83.9207,13,P2
+tn-knoxville-q3,kw:addition,home addition contractor,35.9606,-83.9207,13,P3
+tn-knoxville-q4,kw:addition,room addition contractor,35.9606,-83.9207,13,P3
+tn-knoxville-q5,kw:addition,second story addition,35.9606,-83.9207,13,P3
+tn-knoxville-q6,kw:addition,design build remodeling,35.9606,-83.9207,13,P3
+tn-chattanooga-q0,addition,Remodeler,35.0456,-85.3097,13,P1
+tn-chattanooga-q1,addition,General contractor,35.0456,-85.3097,13,P1
+tn-chattanooga-q2,addition,Custom home builder,35.0456,-85.3097,13,P2
+tn-chattanooga-q3,kw:addition,home addition contractor,35.0456,-85.3097,13,P3
+tn-chattanooga-q4,kw:addition,room addition contractor,35.0456,-85.3097,13,P3
+tn-chattanooga-q5,kw:addition,second story addition,35.0456,-85.3097,13,P3
+tn-chattanooga-q6,kw:addition,design build remodeling,35.0456,-85.3097,13,P3
+tn-clarksville-q0,addition,Remodeler,36.5298,-87.3594,13,P1
+tn-clarksville-q1,addition,General contractor,36.5298,-87.3594,13,P1
+tn-clarksville-q2,addition,Custom home builder,36.5298,-87.3594,13,P2
+tn-clarksville-q3,kw:addition,home addition contractor,36.5298,-87.3594,13,P3
+tn-clarksville-q4,kw:addition,room addition contractor,36.5298,-87.3594,13,P3
+tn-clarksville-q5,kw:addition,second story addition,36.5298,-87.3594,13,P3
+tn-clarksville-q6,kw:addition,design build remodeling,36.5298,-87.3594,13,P3
+tn-murfreesboro-q0,addition,Remodeler,35.8456,-86.3903,13,P1
+tn-murfreesboro-q1,addition,General contractor,35.8456,-86.3903,13,P1
+tn-murfreesboro-q2,addition,Custom home builder,35.8456,-86.3903,13,P2
+tn-murfreesboro-q3,kw:addition,home addition contractor,35.8456,-86.3903,13,P3
+tn-murfreesboro-q4,kw:addition,room addition contractor,35.8456,-86.3903,13,P3
+tn-murfreesboro-q5,kw:addition,second story addition,35.8456,-86.3903,13,P3
+tn-murfreesboro-q6,kw:addition,design build remodeling,35.8456,-86.3903,13,P3
+tn-franklin-q0,addition,Remodeler,35.9251,-86.8689,13,P1
+tn-franklin-q1,addition,General contractor,35.9251,-86.8689,13,P1
+tn-franklin-q2,addition,Custom home builder,35.9251,-86.8689,13,P2
+tn-franklin-q3,kw:addition,home addition contractor,35.9251,-86.8689,13,P3
+tn-franklin-q4,kw:addition,room addition contractor,35.9251,-86.8689,13,P3
+tn-franklin-q5,kw:addition,second story addition,35.9251,-86.8689,13,P3
+tn-franklin-q6,kw:addition,design build remodeling,35.9251,-86.8689,13,P3
+tn-jackson-q0,addition,Remodeler,35.6145,-88.814,13,P1
+tn-jackson-q1,addition,General contractor,35.6145,-88.814,13,P1
+tn-jackson-q2,addition,Custom home builder,35.6145,-88.814,13,P2
+tn-jackson-q3,kw:addition,home addition contractor,35.6145,-88.814,13,P3
+tn-jackson-q4,kw:addition,room addition contractor,35.6145,-88.814,13,P3
+tn-jackson-q5,kw:addition,second story addition,35.6145,-88.814,13,P3
+tn-jackson-q6,kw:addition,design build remodeling,35.6145,-88.814,13,P3
+tn-johnson-city-q0,addition,Remodeler,36.3134,-82.3535,13,P1
+tn-johnson-city-q1,addition,General contractor,36.3134,-82.3535,13,P1
+tn-johnson-city-q2,addition,Custom home builder,36.3134,-82.3535,13,P2
+tn-johnson-city-q3,kw:addition,home addition contractor,36.3134,-82.3535,13,P3
+tn-johnson-city-q4,kw:addition,room addition contractor,36.3134,-82.3535,13,P3
+tn-johnson-city-q5,kw:addition,second story addition,36.3134,-82.3535,13,P3
+tn-johnson-city-q6,kw:addition,design build remodeling,36.3134,-82.3535,13,P3
+tn-bartlett-q0,addition,Remodeler,35.2045,-89.874,13,P1
+tn-bartlett-q1,addition,General contractor,35.2045,-89.874,13,P1
+tn-bartlett-q2,addition,Custom home builder,35.2045,-89.874,13,P2
+tn-bartlett-q3,kw:addition,home addition contractor,35.2045,-89.874,13,P3
+tn-bartlett-q4,kw:addition,room addition contractor,35.2045,-89.874,13,P3
+tn-bartlett-q5,kw:addition,second story addition,35.2045,-89.874,13,P3
+tn-bartlett-q6,kw:addition,design build remodeling,35.2045,-89.874,13,P3
+tn-kingsport-q0,addition,Remodeler,36.5484,-82.5618,13,P1
+tn-kingsport-q1,addition,General contractor,36.5484,-82.5618,13,P1
+tn-kingsport-q2,addition,Custom home builder,36.5484,-82.5618,13,P2
+tn-kingsport-q3,kw:addition,home addition contractor,36.5484,-82.5618,13,P3
+tn-kingsport-q4,kw:addition,room addition contractor,36.5484,-82.5618,13,P3
+tn-kingsport-q5,kw:addition,second story addition,36.5484,-82.5618,13,P3
+tn-kingsport-q6,kw:addition,design build remodeling,36.5484,-82.5618,13,P3
+tn-cleveland-q0,addition,Remodeler,35.1595,-84.8766,13,P1
+tn-cleveland-q1,addition,General contractor,35.1595,-84.8766,13,P1
+tn-cleveland-q2,addition,Custom home builder,35.1595,-84.8766,13,P2
+tn-cleveland-q3,kw:addition,home addition contractor,35.1595,-84.8766,13,P3
+tn-cleveland-q4,kw:addition,room addition contractor,35.1595,-84.8766,13,P3
+tn-cleveland-q5,kw:addition,second story addition,35.1595,-84.8766,13,P3
+tn-cleveland-q6,kw:addition,design build remodeling,35.1595,-84.8766,13,P3
+tn-columbia-q0,addition,Remodeler,35.6151,-87.0353,13,P1
+tn-columbia-q1,addition,General contractor,35.6151,-87.0353,13,P1
+tn-columbia-q2,addition,Custom home builder,35.6151,-87.0353,13,P2
+tn-columbia-q3,kw:addition,home addition contractor,35.6151,-87.0353,13,P3
+tn-columbia-q4,kw:addition,room addition contractor,35.6151,-87.0353,13,P3
+tn-columbia-q5,kw:addition,second story addition,35.6151,-87.0353,13,P3
+tn-columbia-q6,kw:addition,design build remodeling,35.6151,-87.0353,13,P3
+tn-gallatin-q0,addition,Remodeler,36.3884,-86.4467,13,P1
+tn-gallatin-q1,addition,General contractor,36.3884,-86.4467,13,P1
+tn-gallatin-q2,addition,Custom home builder,36.3884,-86.4467,13,P2
+tn-gallatin-q3,kw:addition,home addition contractor,36.3884,-86.4467,13,P3
+tn-gallatin-q4,kw:addition,room addition contractor,36.3884,-86.4467,13,P3
+tn-gallatin-q5,kw:addition,second story addition,36.3884,-86.4467,13,P3
+tn-gallatin-q6,kw:addition,design build remodeling,36.3884,-86.4467,13,P3
+tn-cookeville-q0,addition,Remodeler,36.1628,-85.5016,13,P1
+tn-cookeville-q1,addition,General contractor,36.1628,-85.5016,13,P1
+tn-cookeville-q2,addition,Custom home builder,36.1628,-85.5016,13,P2
+tn-cookeville-q3,kw:addition,home addition contractor,36.1628,-85.5016,13,P3
+tn-cookeville-q4,kw:addition,room addition contractor,36.1628,-85.5016,13,P3
+tn-cookeville-q5,kw:addition,second story addition,36.1628,-85.5016,13,P3
+tn-cookeville-q6,kw:addition,design build remodeling,36.1628,-85.5016,13,P3
+tn-morristown-q0,addition,Remodeler,36.214,-83.2949,13,P1
+tn-morristown-q1,addition,General contractor,36.214,-83.2949,13,P1
+tn-morristown-q2,addition,Custom home builder,36.214,-83.2949,13,P2
+tn-morristown-q3,kw:addition,home addition contractor,36.214,-83.2949,13,P3
+tn-morristown-q4,kw:addition,room addition contractor,36.214,-83.2949,13,P3
+tn-morristown-q5,kw:addition,second story addition,36.214,-83.2949,13,P3
+tn-morristown-q6,kw:addition,design build remodeling,36.214,-83.2949,13,P3
+tn-oak-ridge-q0,addition,Remodeler,36.0104,-84.2696,13,P1
+tn-oak-ridge-q1,addition,General contractor,36.0104,-84.2696,13,P1
+tn-oak-ridge-q2,addition,Custom home builder,36.0104,-84.2696,13,P2
+tn-oak-ridge-q3,kw:addition,home addition contractor,36.0104,-84.2696,13,P3
+tn-oak-ridge-q4,kw:addition,room addition contractor,36.0104,-84.2696,13,P3
+tn-oak-ridge-q5,kw:addition,second story addition,36.0104,-84.2696,13,P3
+tn-oak-ridge-q6,kw:addition,design build remodeling,36.0104,-84.2696,13,P3
+tn-bristol-q0,addition,Remodeler,36.5951,-82.1887,13,P1
+tn-bristol-q1,addition,General contractor,36.5951,-82.1887,13,P1
+tn-bristol-q2,addition,Custom home builder,36.5951,-82.1887,13,P2
+tn-bristol-q3,kw:addition,home addition contractor,36.5951,-82.1887,13,P3
+tn-bristol-q4,kw:addition,room addition contractor,36.5951,-82.1887,13,P3
+tn-bristol-q5,kw:addition,second story addition,36.5951,-82.1887,13,P3
+tn-bristol-q6,kw:addition,design build remodeling,36.5951,-82.1887,13,P3
+tx-houston-q0,addition,Remodeler,29.7633,-95.3633,13,P1
+tx-houston-q1,addition,General contractor,29.7633,-95.3633,13,P1
+tx-houston-q2,addition,Custom home builder,29.7633,-95.3633,13,P2
+tx-houston-q3,kw:addition,home addition contractor,29.7633,-95.3633,13,P3
+tx-houston-q4,kw:addition,room addition contractor,29.7633,-95.3633,13,P3
+tx-houston-q5,kw:addition,second story addition,29.7633,-95.3633,13,P3
+tx-houston-q6,kw:addition,design build remodeling,29.7633,-95.3633,13,P3
+tx-san-antonio-q0,addition,Remodeler,29.4241,-98.4936,13,P1
+tx-san-antonio-q1,addition,General contractor,29.4241,-98.4936,13,P1
+tx-san-antonio-q2,addition,Custom home builder,29.4241,-98.4936,13,P2
+tx-san-antonio-q3,kw:addition,home addition contractor,29.4241,-98.4936,13,P3
+tx-san-antonio-q4,kw:addition,room addition contractor,29.4241,-98.4936,13,P3
+tx-san-antonio-q5,kw:addition,second story addition,29.4241,-98.4936,13,P3
+tx-san-antonio-q6,kw:addition,design build remodeling,29.4241,-98.4936,13,P3
+tx-dallas-q0,addition,Remodeler,32.7831,-96.8067,13,P1
+tx-dallas-q1,addition,General contractor,32.7831,-96.8067,13,P1
+tx-dallas-q2,addition,Custom home builder,32.7831,-96.8067,13,P2
+tx-dallas-q3,kw:addition,home addition contractor,32.7831,-96.8067,13,P3
+tx-dallas-q4,kw:addition,room addition contractor,32.7831,-96.8067,13,P3
+tx-dallas-q5,kw:addition,second story addition,32.7831,-96.8067,13,P3
+tx-dallas-q6,kw:addition,design build remodeling,32.7831,-96.8067,13,P3
+tx-fort-worth-q0,addition,Remodeler,32.7254,-97.3208,13,P1
+tx-fort-worth-q1,addition,General contractor,32.7254,-97.3208,13,P1
+tx-fort-worth-q2,addition,Custom home builder,32.7254,-97.3208,13,P2
+tx-fort-worth-q3,kw:addition,home addition contractor,32.7254,-97.3208,13,P3
+tx-fort-worth-q4,kw:addition,room addition contractor,32.7254,-97.3208,13,P3
+tx-fort-worth-q5,kw:addition,second story addition,32.7254,-97.3208,13,P3
+tx-fort-worth-q6,kw:addition,design build remodeling,32.7254,-97.3208,13,P3
+tx-austin-q0,addition,Remodeler,30.2672,-97.7431,13,P1
+tx-austin-q1,addition,General contractor,30.2672,-97.7431,13,P1
+tx-austin-q2,addition,Custom home builder,30.2672,-97.7431,13,P2
+tx-austin-q3,kw:addition,home addition contractor,30.2672,-97.7431,13,P3
+tx-austin-q4,kw:addition,room addition contractor,30.2672,-97.7431,13,P3
+tx-austin-q5,kw:addition,second story addition,30.2672,-97.7431,13,P3
+tx-austin-q6,kw:addition,design build remodeling,30.2672,-97.7431,13,P3
+tx-el-paso-q0,addition,Remodeler,31.7587,-106.4869,13,P1
+tx-el-paso-q1,addition,General contractor,31.7587,-106.4869,13,P1
+tx-el-paso-q2,addition,Custom home builder,31.7587,-106.4869,13,P2
+tx-el-paso-q3,kw:addition,home addition contractor,31.7587,-106.4869,13,P3
+tx-el-paso-q4,kw:addition,room addition contractor,31.7587,-106.4869,13,P3
+tx-el-paso-q5,kw:addition,second story addition,31.7587,-106.4869,13,P3
+tx-el-paso-q6,kw:addition,design build remodeling,31.7587,-106.4869,13,P3
+tx-corpus-christi-q0,addition,Remodeler,27.8006,-97.3964,13,P1
+tx-corpus-christi-q1,addition,General contractor,27.8006,-97.3964,13,P1
+tx-corpus-christi-q2,addition,Custom home builder,27.8006,-97.3964,13,P2
+tx-corpus-christi-q3,kw:addition,home addition contractor,27.8006,-97.3964,13,P3
+tx-corpus-christi-q4,kw:addition,room addition contractor,27.8006,-97.3964,13,P3
+tx-corpus-christi-q5,kw:addition,second story addition,27.8006,-97.3964,13,P3
+tx-corpus-christi-q6,kw:addition,design build remodeling,27.8006,-97.3964,13,P3
+tx-plano-q0,addition,Remodeler,33.0198,-96.6989,13,P1
+tx-plano-q1,addition,General contractor,33.0198,-96.6989,13,P1
+tx-plano-q2,addition,Custom home builder,33.0198,-96.6989,13,P2
+tx-plano-q3,kw:addition,home addition contractor,33.0198,-96.6989,13,P3
+tx-plano-q4,kw:addition,room addition contractor,33.0198,-96.6989,13,P3
+tx-plano-q5,kw:addition,second story addition,33.0198,-96.6989,13,P3
+tx-plano-q6,kw:addition,design build remodeling,33.0198,-96.6989,13,P3
+tx-laredo-q0,addition,Remodeler,27.5064,-99.5075,13,P1
+tx-laredo-q1,addition,General contractor,27.5064,-99.5075,13,P1
+tx-laredo-q2,addition,Custom home builder,27.5064,-99.5075,13,P2
+tx-laredo-q3,kw:addition,home addition contractor,27.5064,-99.5075,13,P3
+tx-laredo-q4,kw:addition,room addition contractor,27.5064,-99.5075,13,P3
+tx-laredo-q5,kw:addition,second story addition,27.5064,-99.5075,13,P3
+tx-laredo-q6,kw:addition,design build remodeling,27.5064,-99.5075,13,P3
+tx-lubbock-q0,addition,Remodeler,33.5779,-101.8552,13,P1
+tx-lubbock-q1,addition,General contractor,33.5779,-101.8552,13,P1
+tx-lubbock-q2,addition,Custom home builder,33.5779,-101.8552,13,P2
+tx-lubbock-q3,kw:addition,home addition contractor,33.5779,-101.8552,13,P3
+tx-lubbock-q4,kw:addition,room addition contractor,33.5779,-101.8552,13,P3
+tx-lubbock-q5,kw:addition,second story addition,33.5779,-101.8552,13,P3
+tx-lubbock-q6,kw:addition,design build remodeling,33.5779,-101.8552,13,P3
+tx-cypress-q0,addition,Remodeler,29.9691,-95.6972,13,P1
+tx-cypress-q1,addition,General contractor,29.9691,-95.6972,13,P1
+tx-cypress-q2,addition,Custom home builder,29.9691,-95.6972,13,P2
+tx-cypress-q3,kw:addition,home addition contractor,29.9691,-95.6972,13,P3
+tx-cypress-q4,kw:addition,room addition contractor,29.9691,-95.6972,13,P3
+tx-cypress-q5,kw:addition,second story addition,29.9691,-95.6972,13,P3
+tx-cypress-q6,kw:addition,design build remodeling,29.9691,-95.6972,13,P3
+tx-amarillo-q0,addition,Remodeler,35.222,-101.8313,13,P1
+tx-amarillo-q1,addition,General contractor,35.222,-101.8313,13,P1
+tx-amarillo-q2,addition,Custom home builder,35.222,-101.8313,13,P2
+tx-amarillo-q3,kw:addition,home addition contractor,35.222,-101.8313,13,P3
+tx-amarillo-q4,kw:addition,room addition contractor,35.222,-101.8313,13,P3
+tx-amarillo-q5,kw:addition,second story addition,35.222,-101.8313,13,P3
+tx-amarillo-q6,kw:addition,design build remodeling,35.222,-101.8313,13,P3
+tx-brownsville-q0,addition,Remodeler,25.9017,-97.4975,13,P1
+tx-brownsville-q1,addition,General contractor,25.9017,-97.4975,13,P1
+tx-brownsville-q2,addition,Custom home builder,25.9017,-97.4975,13,P2
+tx-brownsville-q3,kw:addition,home addition contractor,25.9017,-97.4975,13,P3
+tx-brownsville-q4,kw:addition,room addition contractor,25.9017,-97.4975,13,P3
+tx-brownsville-q5,kw:addition,second story addition,25.9017,-97.4975,13,P3
+tx-brownsville-q6,kw:addition,design build remodeling,25.9017,-97.4975,13,P3
+tx-killeen-q0,addition,Remodeler,31.1171,-97.7278,13,P1
+tx-killeen-q1,addition,General contractor,31.1171,-97.7278,13,P1
+tx-killeen-q2,addition,Custom home builder,31.1171,-97.7278,13,P2
+tx-killeen-q3,kw:addition,home addition contractor,31.1171,-97.7278,13,P3
+tx-killeen-q4,kw:addition,room addition contractor,31.1171,-97.7278,13,P3
+tx-killeen-q5,kw:addition,second story addition,31.1171,-97.7278,13,P3
+tx-killeen-q6,kw:addition,design build remodeling,31.1171,-97.7278,13,P3
+tx-mcallen-q0,addition,Remodeler,26.2034,-98.23,13,P1
+tx-mcallen-q1,addition,General contractor,26.2034,-98.23,13,P1
+tx-mcallen-q2,addition,Custom home builder,26.2034,-98.23,13,P2
+tx-mcallen-q3,kw:addition,home addition contractor,26.2034,-98.23,13,P3
+tx-mcallen-q4,kw:addition,room addition contractor,26.2034,-98.23,13,P3
+tx-mcallen-q5,kw:addition,second story addition,26.2034,-98.23,13,P3
+tx-mcallen-q6,kw:addition,design build remodeling,26.2034,-98.23,13,P3
+tx-midland-q0,addition,Remodeler,31.9974,-102.0779,13,P1
+tx-midland-q1,addition,General contractor,31.9974,-102.0779,13,P1
+tx-midland-q2,addition,Custom home builder,31.9974,-102.0779,13,P2
+tx-midland-q3,kw:addition,home addition contractor,31.9974,-102.0779,13,P3
+tx-midland-q4,kw:addition,room addition contractor,31.9974,-102.0779,13,P3
+tx-midland-q5,kw:addition,second story addition,31.9974,-102.0779,13,P3
+tx-midland-q6,kw:addition,design build remodeling,31.9974,-102.0779,13,P3
+tx-waco-q0,addition,Remodeler,31.5493,-97.1467,13,P1
+tx-waco-q1,addition,General contractor,31.5493,-97.1467,13,P1
+tx-waco-q2,addition,Custom home builder,31.5493,-97.1467,13,P2
+tx-waco-q3,kw:addition,home addition contractor,31.5493,-97.1467,13,P3
+tx-waco-q4,kw:addition,room addition contractor,31.5493,-97.1467,13,P3
+tx-waco-q5,kw:addition,second story addition,31.5493,-97.1467,13,P3
+tx-waco-q6,kw:addition,design build remodeling,31.5493,-97.1467,13,P3
+tx-denton-q0,addition,Remodeler,33.2148,-97.1331,13,P1
+tx-denton-q1,addition,General contractor,33.2148,-97.1331,13,P1
+tx-denton-q2,addition,Custom home builder,33.2148,-97.1331,13,P2
+tx-denton-q3,kw:addition,home addition contractor,33.2148,-97.1331,13,P3
+tx-denton-q4,kw:addition,room addition contractor,33.2148,-97.1331,13,P3
+tx-denton-q5,kw:addition,second story addition,33.2148,-97.1331,13,P3
+tx-denton-q6,kw:addition,design build remodeling,33.2148,-97.1331,13,P3
+tx-abilene-q0,addition,Remodeler,32.4487,-99.7331,13,P1
+tx-abilene-q1,addition,General contractor,32.4487,-99.7331,13,P1
+tx-abilene-q2,addition,Custom home builder,32.4487,-99.7331,13,P2
+tx-abilene-q3,kw:addition,home addition contractor,32.4487,-99.7331,13,P3
+tx-abilene-q4,kw:addition,room addition contractor,32.4487,-99.7331,13,P3
+tx-abilene-q5,kw:addition,second story addition,32.4487,-99.7331,13,P3
+tx-abilene-q6,kw:addition,design build remodeling,32.4487,-99.7331,13,P3
+tx-round-rock-q0,addition,Remodeler,30.5083,-97.6789,13,P1
+tx-round-rock-q1,addition,General contractor,30.5083,-97.6789,13,P1
+tx-round-rock-q2,addition,Custom home builder,30.5083,-97.6789,13,P2
+tx-round-rock-q3,kw:addition,home addition contractor,30.5083,-97.6789,13,P3
+tx-round-rock-q4,kw:addition,room addition contractor,30.5083,-97.6789,13,P3
+tx-round-rock-q5,kw:addition,second story addition,30.5083,-97.6789,13,P3
+tx-round-rock-q6,kw:addition,design build remodeling,30.5083,-97.6789,13,P3
+tx-beaumont-q0,addition,Remodeler,30.0861,-94.1018,13,P1
+tx-beaumont-q1,addition,General contractor,30.0861,-94.1018,13,P1
+tx-beaumont-q2,addition,Custom home builder,30.0861,-94.1018,13,P2
+tx-beaumont-q3,kw:addition,home addition contractor,30.0861,-94.1018,13,P3
+tx-beaumont-q4,kw:addition,room addition contractor,30.0861,-94.1018,13,P3
+tx-beaumont-q5,kw:addition,second story addition,30.0861,-94.1018,13,P3
+tx-beaumont-q6,kw:addition,design build remodeling,30.0861,-94.1018,13,P3
+tx-odessa-q0,addition,Remodeler,31.8457,-102.3676,13,P1
+tx-odessa-q1,addition,General contractor,31.8457,-102.3676,13,P1
+tx-odessa-q2,addition,Custom home builder,31.8457,-102.3676,13,P2
+tx-odessa-q3,kw:addition,home addition contractor,31.8457,-102.3676,13,P3
+tx-odessa-q4,kw:addition,room addition contractor,31.8457,-102.3676,13,P3
+tx-odessa-q5,kw:addition,second story addition,31.8457,-102.3676,13,P3
+tx-odessa-q6,kw:addition,design build remodeling,31.8457,-102.3676,13,P3
+tx-college-station-q0,addition,Remodeler,30.628,-96.3344,13,P1
+tx-college-station-q1,addition,General contractor,30.628,-96.3344,13,P1
+tx-college-station-q2,addition,Custom home builder,30.628,-96.3344,13,P2
+tx-college-station-q3,kw:addition,home addition contractor,30.628,-96.3344,13,P3
+tx-college-station-q4,kw:addition,room addition contractor,30.628,-96.3344,13,P3
+tx-college-station-q5,kw:addition,second story addition,30.628,-96.3344,13,P3
+tx-college-station-q6,kw:addition,design build remodeling,30.628,-96.3344,13,P3
+tx-wichita-falls-q0,addition,Remodeler,33.9137,-98.4934,13,P1
+tx-wichita-falls-q1,addition,General contractor,33.9137,-98.4934,13,P1
+tx-wichita-falls-q2,addition,Custom home builder,33.9137,-98.4934,13,P2
+tx-wichita-falls-q3,kw:addition,home addition contractor,33.9137,-98.4934,13,P3
+tx-wichita-falls-q4,kw:addition,room addition contractor,33.9137,-98.4934,13,P3
+tx-wichita-falls-q5,kw:addition,second story addition,33.9137,-98.4934,13,P3
+tx-wichita-falls-q6,kw:addition,design build remodeling,33.9137,-98.4934,13,P3
+tx-tyler-q0,addition,Remodeler,32.3513,-95.3011,13,P1
+tx-tyler-q1,addition,General contractor,32.3513,-95.3011,13,P1
+tx-tyler-q2,addition,Custom home builder,32.3513,-95.3011,13,P2
+tx-tyler-q3,kw:addition,home addition contractor,32.3513,-95.3011,13,P3
+tx-tyler-q4,kw:addition,room addition contractor,32.3513,-95.3011,13,P3
+tx-tyler-q5,kw:addition,second story addition,32.3513,-95.3011,13,P3
+tx-tyler-q6,kw:addition,design build remodeling,32.3513,-95.3011,13,P3
+tx-san-angelo-q0,addition,Remodeler,31.4638,-100.437,13,P1
+tx-san-angelo-q1,addition,General contractor,31.4638,-100.437,13,P1
+tx-san-angelo-q2,addition,Custom home builder,31.4638,-100.437,13,P2
+tx-san-angelo-q3,kw:addition,home addition contractor,31.4638,-100.437,13,P3
+tx-san-angelo-q4,kw:addition,room addition contractor,31.4638,-100.437,13,P3
+tx-san-angelo-q5,kw:addition,second story addition,31.4638,-100.437,13,P3
+tx-san-angelo-q6,kw:addition,design build remodeling,31.4638,-100.437,13,P3
+tx-league-city-q0,addition,Remodeler,29.5074,-95.0949,13,P1
+tx-league-city-q1,addition,General contractor,29.5074,-95.0949,13,P1
+tx-league-city-q2,addition,Custom home builder,29.5074,-95.0949,13,P2
+tx-league-city-q3,kw:addition,home addition contractor,29.5074,-95.0949,13,P3
+tx-league-city-q4,kw:addition,room addition contractor,29.5074,-95.0949,13,P3
+tx-league-city-q5,kw:addition,second story addition,29.5074,-95.0949,13,P3
+tx-league-city-q6,kw:addition,design build remodeling,29.5074,-95.0949,13,P3
+tx-the-woodlands-q0,addition,Remodeler,30.158,-95.4894,13,P1
+tx-the-woodlands-q1,addition,General contractor,30.158,-95.4894,13,P1
+tx-the-woodlands-q2,addition,Custom home builder,30.158,-95.4894,13,P2
+tx-the-woodlands-q3,kw:addition,home addition contractor,30.158,-95.4894,13,P3
+tx-the-woodlands-q4,kw:addition,room addition contractor,30.158,-95.4894,13,P3
+tx-the-woodlands-q5,kw:addition,second story addition,30.158,-95.4894,13,P3
+tx-the-woodlands-q6,kw:addition,design build remodeling,30.158,-95.4894,13,P3
+tx-sugar-land-q0,addition,Remodeler,29.6197,-95.635,13,P1
+tx-sugar-land-q1,addition,General contractor,29.6197,-95.635,13,P1
+tx-sugar-land-q2,addition,Custom home builder,29.6197,-95.635,13,P2
+tx-sugar-land-q3,kw:addition,home addition contractor,29.6197,-95.635,13,P3
+tx-sugar-land-q4,kw:addition,room addition contractor,29.6197,-95.635,13,P3
+tx-sugar-land-q5,kw:addition,second story addition,29.6197,-95.635,13,P3
+tx-sugar-land-q6,kw:addition,design build remodeling,29.6197,-95.635,13,P3
+tx-longview-q0,addition,Remodeler,32.5007,-94.7405,13,P1
+tx-longview-q1,addition,General contractor,32.5007,-94.7405,13,P1
+tx-longview-q2,addition,Custom home builder,32.5007,-94.7405,13,P2
+tx-longview-q3,kw:addition,home addition contractor,32.5007,-94.7405,13,P3
+tx-longview-q4,kw:addition,room addition contractor,32.5007,-94.7405,13,P3
+tx-longview-q5,kw:addition,second story addition,32.5007,-94.7405,13,P3
+tx-longview-q6,kw:addition,design build remodeling,32.5007,-94.7405,13,P3
+tx-baytown-q0,addition,Remodeler,29.7355,-94.9774,13,P1
+tx-baytown-q1,addition,General contractor,29.7355,-94.9774,13,P1
+tx-baytown-q2,addition,Custom home builder,29.7355,-94.9774,13,P2
+tx-baytown-q3,kw:addition,home addition contractor,29.7355,-94.9774,13,P3
+tx-baytown-q4,kw:addition,room addition contractor,29.7355,-94.9774,13,P3
+tx-baytown-q5,kw:addition,second story addition,29.7355,-94.9774,13,P3
+tx-baytown-q6,kw:addition,design build remodeling,29.7355,-94.9774,13,P3
+tx-temple-q0,addition,Remodeler,31.0982,-97.3428,13,P1
+tx-temple-q1,addition,General contractor,31.0982,-97.3428,13,P1
+tx-temple-q2,addition,Custom home builder,31.0982,-97.3428,13,P2
+tx-temple-q3,kw:addition,home addition contractor,31.0982,-97.3428,13,P3
+tx-temple-q4,kw:addition,room addition contractor,31.0982,-97.3428,13,P3
+tx-temple-q5,kw:addition,second story addition,31.0982,-97.3428,13,P3
+tx-temple-q6,kw:addition,design build remodeling,31.0982,-97.3428,13,P3
+tx-new-braunfels-q0,addition,Remodeler,29.703,-98.1244,13,P1
+tx-new-braunfels-q1,addition,General contractor,29.703,-98.1244,13,P1
+tx-new-braunfels-q2,addition,Custom home builder,29.703,-98.1244,13,P2
+tx-new-braunfels-q3,kw:addition,home addition contractor,29.703,-98.1244,13,P3
+tx-new-braunfels-q4,kw:addition,room addition contractor,29.703,-98.1244,13,P3
+tx-new-braunfels-q5,kw:addition,second story addition,29.703,-98.1244,13,P3
+tx-new-braunfels-q6,kw:addition,design build remodeling,29.703,-98.1244,13,P3
+tx-victoria-q0,addition,Remodeler,28.8053,-97.0036,13,P1
+tx-victoria-q1,addition,General contractor,28.8053,-97.0036,13,P1
+tx-victoria-q2,addition,Custom home builder,28.8053,-97.0036,13,P2
+tx-victoria-q3,kw:addition,home addition contractor,28.8053,-97.0036,13,P3
+tx-victoria-q4,kw:addition,room addition contractor,28.8053,-97.0036,13,P3
+tx-victoria-q5,kw:addition,second story addition,28.8053,-97.0036,13,P3
+tx-victoria-q6,kw:addition,design build remodeling,28.8053,-97.0036,13,P3
+tx-atascocita-q0,addition,Remodeler,29.9988,-95.1766,13,P1
+tx-atascocita-q1,addition,General contractor,29.9988,-95.1766,13,P1
+tx-atascocita-q2,addition,Custom home builder,29.9988,-95.1766,13,P2
+tx-atascocita-q3,kw:addition,home addition contractor,29.9988,-95.1766,13,P3
+tx-atascocita-q4,kw:addition,room addition contractor,29.9988,-95.1766,13,P3
+tx-atascocita-q5,kw:addition,second story addition,29.9988,-95.1766,13,P3
+tx-atascocita-q6,kw:addition,design build remodeling,29.9988,-95.1766,13,P3
+tx-harlingen-q0,addition,Remodeler,26.1906,-97.6961,13,P1
+tx-harlingen-q1,addition,General contractor,26.1906,-97.6961,13,P1
+tx-harlingen-q2,addition,Custom home builder,26.1906,-97.6961,13,P2
+tx-harlingen-q3,kw:addition,home addition contractor,26.1906,-97.6961,13,P3
+tx-harlingen-q4,kw:addition,room addition contractor,26.1906,-97.6961,13,P3
+tx-harlingen-q5,kw:addition,second story addition,26.1906,-97.6961,13,P3
+tx-harlingen-q6,kw:addition,design build remodeling,26.1906,-97.6961,13,P3
+tx-celina-q0,addition,Remodeler,33.3246,-96.7844,13,P1
+tx-celina-q1,addition,General contractor,33.3246,-96.7844,13,P1
+tx-celina-q2,addition,Custom home builder,33.3246,-96.7844,13,P2
+tx-celina-q3,kw:addition,home addition contractor,33.3246,-96.7844,13,P3
+tx-celina-q4,kw:addition,room addition contractor,33.3246,-96.7844,13,P3
+tx-celina-q5,kw:addition,second story addition,33.3246,-96.7844,13,P3
+tx-celina-q6,kw:addition,design build remodeling,33.3246,-96.7844,13,P3
+tx-san-marcos-q0,addition,Remodeler,29.8833,-97.9414,13,P1
+tx-san-marcos-q1,addition,General contractor,29.8833,-97.9414,13,P1
+tx-san-marcos-q2,addition,Custom home builder,29.8833,-97.9414,13,P2
+tx-san-marcos-q3,kw:addition,home addition contractor,29.8833,-97.9414,13,P3
+tx-san-marcos-q4,kw:addition,room addition contractor,29.8833,-97.9414,13,P3
+tx-san-marcos-q5,kw:addition,second story addition,29.8833,-97.9414,13,P3
+tx-san-marcos-q6,kw:addition,design build remodeling,29.8833,-97.9414,13,P3
+tx-port-arthur-q0,addition,Remodeler,29.8852,-93.9423,13,P1
+tx-port-arthur-q1,addition,General contractor,29.8852,-93.9423,13,P1
+tx-port-arthur-q2,addition,Custom home builder,29.8852,-93.9423,13,P2
+tx-port-arthur-q3,kw:addition,home addition contractor,29.8852,-93.9423,13,P3
+tx-port-arthur-q4,kw:addition,room addition contractor,29.8852,-93.9423,13,P3
+tx-port-arthur-q5,kw:addition,second story addition,29.8852,-93.9423,13,P3
+tx-port-arthur-q6,kw:addition,design build remodeling,29.8852,-93.9423,13,P3
+tx-euless-q0,addition,Remodeler,32.8371,-97.082,13,P1
+tx-euless-q1,addition,General contractor,32.8371,-97.082,13,P1
+tx-euless-q2,addition,Custom home builder,32.8371,-97.082,13,P2
+tx-euless-q3,kw:addition,home addition contractor,32.8371,-97.082,13,P3
+tx-euless-q4,kw:addition,room addition contractor,32.8371,-97.082,13,P3
+tx-euless-q5,kw:addition,second story addition,32.8371,-97.082,13,P3
+tx-euless-q6,kw:addition,design build remodeling,32.8371,-97.082,13,P3
+tx-galveston-q0,addition,Remodeler,29.3013,-94.7977,13,P1
+tx-galveston-q1,addition,General contractor,29.3013,-94.7977,13,P1
+tx-galveston-q2,addition,Custom home builder,29.3013,-94.7977,13,P2
+tx-galveston-q3,kw:addition,home addition contractor,29.3013,-94.7977,13,P3
+tx-galveston-q4,kw:addition,room addition contractor,29.3013,-94.7977,13,P3
+tx-galveston-q5,kw:addition,second story addition,29.3013,-94.7977,13,P3
+tx-galveston-q6,kw:addition,design build remodeling,29.3013,-94.7977,13,P3
+tx-cedar-hill-q0,addition,Remodeler,32.5885,-96.9561,13,P1
+tx-cedar-hill-q1,addition,General contractor,32.5885,-96.9561,13,P1
+tx-cedar-hill-q2,addition,Custom home builder,32.5885,-96.9561,13,P2
+tx-cedar-hill-q3,kw:addition,home addition contractor,32.5885,-96.9561,13,P3
+tx-cedar-hill-q4,kw:addition,room addition contractor,32.5885,-96.9561,13,P3
+tx-cedar-hill-q5,kw:addition,second story addition,32.5885,-96.9561,13,P3
+tx-cedar-hill-q6,kw:addition,design build remodeling,32.5885,-96.9561,13,P3
+tx-huntsville-q0,addition,Remodeler,30.7235,-95.5508,13,P1
+tx-huntsville-q1,addition,General contractor,30.7235,-95.5508,13,P1
+tx-huntsville-q2,addition,Custom home builder,30.7235,-95.5508,13,P2
+tx-huntsville-q3,kw:addition,home addition contractor,30.7235,-95.5508,13,P3
+tx-huntsville-q4,kw:addition,room addition contractor,30.7235,-95.5508,13,P3
+tx-huntsville-q5,kw:addition,second story addition,30.7235,-95.5508,13,P3
+tx-huntsville-q6,kw:addition,design build remodeling,30.7235,-95.5508,13,P3
+tx-sherman-q0,addition,Remodeler,33.6357,-96.6089,13,P1
+tx-sherman-q1,addition,General contractor,33.6357,-96.6089,13,P1
+tx-sherman-q2,addition,Custom home builder,33.6357,-96.6089,13,P2
+tx-sherman-q3,kw:addition,home addition contractor,33.6357,-96.6089,13,P3
+tx-sherman-q4,kw:addition,room addition contractor,33.6357,-96.6089,13,P3
+tx-sherman-q5,kw:addition,second story addition,33.6357,-96.6089,13,P3
+tx-sherman-q6,kw:addition,design build remodeling,33.6357,-96.6089,13,P3
+tx-lufkin-q0,addition,Remodeler,31.3382,-94.7291,13,P1
+tx-lufkin-q1,addition,General contractor,31.3382,-94.7291,13,P1
+tx-lufkin-q2,addition,Custom home builder,31.3382,-94.7291,13,P2
+tx-lufkin-q3,kw:addition,home addition contractor,31.3382,-94.7291,13,P3
+tx-lufkin-q4,kw:addition,room addition contractor,31.3382,-94.7291,13,P3
+tx-lufkin-q5,kw:addition,second story addition,31.3382,-94.7291,13,P3
+tx-lufkin-q6,kw:addition,design build remodeling,31.3382,-94.7291,13,P3
+tx-del-rio-q0,addition,Remodeler,29.3627,-100.8968,13,P1
+tx-del-rio-q1,addition,General contractor,29.3627,-100.8968,13,P1
+tx-del-rio-q2,addition,Custom home builder,29.3627,-100.8968,13,P2
+tx-del-rio-q3,kw:addition,home addition contractor,29.3627,-100.8968,13,P3
+tx-del-rio-q4,kw:addition,room addition contractor,29.3627,-100.8968,13,P3
+tx-del-rio-q5,kw:addition,second story addition,29.3627,-100.8968,13,P3
+tx-del-rio-q6,kw:addition,design build remodeling,29.3627,-100.8968,13,P3
+tx-nacogdoches-q0,addition,Remodeler,31.6035,-94.6555,13,P1
+tx-nacogdoches-q1,addition,General contractor,31.6035,-94.6555,13,P1
+tx-nacogdoches-q2,addition,Custom home builder,31.6035,-94.6555,13,P2
+tx-nacogdoches-q3,kw:addition,home addition contractor,31.6035,-94.6555,13,P3
+tx-nacogdoches-q4,kw:addition,room addition contractor,31.6035,-94.6555,13,P3
+tx-nacogdoches-q5,kw:addition,second story addition,31.6035,-94.6555,13,P3
+tx-nacogdoches-q6,kw:addition,design build remodeling,31.6035,-94.6555,13,P3
+tx-cleburne-q0,addition,Remodeler,32.3476,-97.3867,13,P1
+tx-cleburne-q1,addition,General contractor,32.3476,-97.3867,13,P1
+tx-cleburne-q2,addition,Custom home builder,32.3476,-97.3867,13,P2
+tx-cleburne-q3,kw:addition,home addition contractor,32.3476,-97.3867,13,P3
+tx-cleburne-q4,kw:addition,room addition contractor,32.3476,-97.3867,13,P3
+tx-cleburne-q5,kw:addition,second story addition,32.3476,-97.3867,13,P3
+tx-cleburne-q6,kw:addition,design build remodeling,32.3476,-97.3867,13,P3
+tx-big-spring-q0,addition,Remodeler,32.2504,-101.4787,13,P1
+tx-big-spring-q1,addition,General contractor,32.2504,-101.4787,13,P1
+tx-big-spring-q2,addition,Custom home builder,32.2504,-101.4787,13,P2
+tx-big-spring-q3,kw:addition,home addition contractor,32.2504,-101.4787,13,P3
+tx-big-spring-q4,kw:addition,room addition contractor,32.2504,-101.4787,13,P3
+tx-big-spring-q5,kw:addition,second story addition,32.2504,-101.4787,13,P3
+tx-big-spring-q6,kw:addition,design build remodeling,32.2504,-101.4787,13,P3
+tx-eagle-pass-q0,addition,Remodeler,28.7091,-100.4995,13,P1
+tx-eagle-pass-q1,addition,General contractor,28.7091,-100.4995,13,P1
+tx-eagle-pass-q2,addition,Custom home builder,28.7091,-100.4995,13,P2
+tx-eagle-pass-q3,kw:addition,home addition contractor,28.7091,-100.4995,13,P3
+tx-eagle-pass-q4,kw:addition,room addition contractor,28.7091,-100.4995,13,P3
+tx-eagle-pass-q5,kw:addition,second story addition,28.7091,-100.4995,13,P3
+tx-eagle-pass-q6,kw:addition,design build remodeling,28.7091,-100.4995,13,P3
+tx-weatherford-q0,addition,Remodeler,32.7593,-97.7973,13,P1
+tx-weatherford-q1,addition,General contractor,32.7593,-97.7973,13,P1
+tx-weatherford-q2,addition,Custom home builder,32.7593,-97.7973,13,P2
+tx-weatherford-q3,kw:addition,home addition contractor,32.7593,-97.7973,13,P3
+tx-weatherford-q4,kw:addition,room addition contractor,32.7593,-97.7973,13,P3
+tx-weatherford-q5,kw:addition,second story addition,32.7593,-97.7973,13,P3
+tx-weatherford-q6,kw:addition,design build remodeling,32.7593,-97.7973,13,P3
+tx-lake-jackson-q0,addition,Remodeler,29.0339,-95.4344,13,P1
+tx-lake-jackson-q1,addition,General contractor,29.0339,-95.4344,13,P1
+tx-lake-jackson-q2,addition,Custom home builder,29.0339,-95.4344,13,P2
+tx-lake-jackson-q3,kw:addition,home addition contractor,29.0339,-95.4344,13,P3
+tx-lake-jackson-q4,kw:addition,room addition contractor,29.0339,-95.4344,13,P3
+tx-lake-jackson-q5,kw:addition,second story addition,29.0339,-95.4344,13,P3
+tx-lake-jackson-q6,kw:addition,design build remodeling,29.0339,-95.4344,13,P3
+tx-greenville-q0,addition,Remodeler,33.1384,-96.1108,13,P1
+tx-greenville-q1,addition,General contractor,33.1384,-96.1108,13,P1
+tx-greenville-q2,addition,Custom home builder,33.1384,-96.1108,13,P2
+tx-greenville-q3,kw:addition,home addition contractor,33.1384,-96.1108,13,P3
+tx-greenville-q4,kw:addition,room addition contractor,33.1384,-96.1108,13,P3
+tx-greenville-q5,kw:addition,second story addition,33.1384,-96.1108,13,P3
+tx-greenville-q6,kw:addition,design build remodeling,33.1384,-96.1108,13,P3
+tx-kingsville-q0,addition,Remodeler,27.5159,-97.8561,13,P1
+tx-kingsville-q1,addition,General contractor,27.5159,-97.8561,13,P1
+tx-kingsville-q2,addition,Custom home builder,27.5159,-97.8561,13,P2
+tx-kingsville-q3,kw:addition,home addition contractor,27.5159,-97.8561,13,P3
+tx-kingsville-q4,kw:addition,room addition contractor,27.5159,-97.8561,13,P3
+tx-kingsville-q5,kw:addition,second story addition,27.5159,-97.8561,13,P3
+tx-kingsville-q6,kw:addition,design build remodeling,27.5159,-97.8561,13,P3
+tx-pampa-q0,addition,Remodeler,35.5362,-100.9599,13,P1
+tx-pampa-q1,addition,General contractor,35.5362,-100.9599,13,P1
+tx-pampa-q2,addition,Custom home builder,35.5362,-100.9599,13,P2
+tx-pampa-q3,kw:addition,home addition contractor,35.5362,-100.9599,13,P3
+tx-pampa-q4,kw:addition,room addition contractor,35.5362,-100.9599,13,P3
+tx-pampa-q5,kw:addition,second story addition,35.5362,-100.9599,13,P3
+tx-pampa-q6,kw:addition,design build remodeling,35.5362,-100.9599,13,P3
+ut-salt-lake-city-q0,addition,Remodeler,40.7608,-111.8911,13,P1
+ut-salt-lake-city-q1,addition,General contractor,40.7608,-111.8911,13,P1
+ut-salt-lake-city-q2,addition,Custom home builder,40.7608,-111.8911,13,P2
+ut-salt-lake-city-q3,kw:addition,home addition contractor,40.7608,-111.8911,13,P3
+ut-salt-lake-city-q4,kw:addition,room addition contractor,40.7608,-111.8911,13,P3
+ut-salt-lake-city-q5,kw:addition,second story addition,40.7608,-111.8911,13,P3
+ut-salt-lake-city-q6,kw:addition,design build remodeling,40.7608,-111.8911,13,P3
+ut-provo-q0,addition,Remodeler,40.2338,-111.6585,13,P1
+ut-provo-q1,addition,General contractor,40.2338,-111.6585,13,P1
+ut-provo-q2,addition,Custom home builder,40.2338,-111.6585,13,P2
+ut-provo-q3,kw:addition,home addition contractor,40.2338,-111.6585,13,P3
+ut-provo-q4,kw:addition,room addition contractor,40.2338,-111.6585,13,P3
+ut-provo-q5,kw:addition,second story addition,40.2338,-111.6585,13,P3
+ut-provo-q6,kw:addition,design build remodeling,40.2338,-111.6585,13,P3
+ut-ogden-q0,addition,Remodeler,41.223,-111.9738,13,P1
+ut-ogden-q1,addition,General contractor,41.223,-111.9738,13,P1
+ut-ogden-q2,addition,Custom home builder,41.223,-111.9738,13,P2
+ut-ogden-q3,kw:addition,home addition contractor,41.223,-111.9738,13,P3
+ut-ogden-q4,kw:addition,room addition contractor,41.223,-111.9738,13,P3
+ut-ogden-q5,kw:addition,second story addition,41.223,-111.9738,13,P3
+ut-ogden-q6,kw:addition,design build remodeling,41.223,-111.9738,13,P3
+ut-saint-george-q0,addition,Remodeler,37.1041,-113.5841,13,P1
+ut-saint-george-q1,addition,General contractor,37.1041,-113.5841,13,P1
+ut-saint-george-q2,addition,Custom home builder,37.1041,-113.5841,13,P2
+ut-saint-george-q3,kw:addition,home addition contractor,37.1041,-113.5841,13,P3
+ut-saint-george-q4,kw:addition,room addition contractor,37.1041,-113.5841,13,P3
+ut-saint-george-q5,kw:addition,second story addition,37.1041,-113.5841,13,P3
+ut-saint-george-q6,kw:addition,design build remodeling,37.1041,-113.5841,13,P3
+ut-logan-q0,addition,Remodeler,41.7355,-111.8344,13,P1
+ut-logan-q1,addition,General contractor,41.7355,-111.8344,13,P1
+ut-logan-q2,addition,Custom home builder,41.7355,-111.8344,13,P2
+ut-logan-q3,kw:addition,home addition contractor,41.7355,-111.8344,13,P3
+ut-logan-q4,kw:addition,room addition contractor,41.7355,-111.8344,13,P3
+ut-logan-q5,kw:addition,second story addition,41.7355,-111.8344,13,P3
+ut-logan-q6,kw:addition,design build remodeling,41.7355,-111.8344,13,P3
+ut-draper-q0,addition,Remodeler,40.5247,-111.8638,13,P1
+ut-draper-q1,addition,General contractor,40.5247,-111.8638,13,P1
+ut-draper-q2,addition,Custom home builder,40.5247,-111.8638,13,P2
+ut-draper-q3,kw:addition,home addition contractor,40.5247,-111.8638,13,P3
+ut-draper-q4,kw:addition,room addition contractor,40.5247,-111.8638,13,P3
+ut-draper-q5,kw:addition,second story addition,40.5247,-111.8638,13,P3
+ut-draper-q6,kw:addition,design build remodeling,40.5247,-111.8638,13,P3
+ut-tooele-q0,addition,Remodeler,40.5308,-112.2983,13,P1
+ut-tooele-q1,addition,General contractor,40.5308,-112.2983,13,P1
+ut-tooele-q2,addition,Custom home builder,40.5308,-112.2983,13,P2
+ut-tooele-q3,kw:addition,home addition contractor,40.5308,-112.2983,13,P3
+ut-tooele-q4,kw:addition,room addition contractor,40.5308,-112.2983,13,P3
+ut-tooele-q5,kw:addition,second story addition,40.5308,-112.2983,13,P3
+ut-tooele-q6,kw:addition,design build remodeling,40.5308,-112.2983,13,P3
+ut-cedar-city-q0,addition,Remodeler,37.6775,-113.0619,13,P1
+ut-cedar-city-q1,addition,General contractor,37.6775,-113.0619,13,P1
+ut-cedar-city-q2,addition,Custom home builder,37.6775,-113.0619,13,P2
+ut-cedar-city-q3,kw:addition,home addition contractor,37.6775,-113.0619,13,P3
+ut-cedar-city-q4,kw:addition,room addition contractor,37.6775,-113.0619,13,P3
+ut-cedar-city-q5,kw:addition,second story addition,37.6775,-113.0619,13,P3
+ut-cedar-city-q6,kw:addition,design build remodeling,37.6775,-113.0619,13,P3
+ut-eagle-mountain-q0,addition,Remodeler,40.3141,-112.0069,13,P1
+ut-eagle-mountain-q1,addition,General contractor,40.3141,-112.0069,13,P1
+ut-eagle-mountain-q2,addition,Custom home builder,40.3141,-112.0069,13,P2
+ut-eagle-mountain-q3,kw:addition,home addition contractor,40.3141,-112.0069,13,P3
+ut-eagle-mountain-q4,kw:addition,room addition contractor,40.3141,-112.0069,13,P3
+ut-eagle-mountain-q5,kw:addition,second story addition,40.3141,-112.0069,13,P3
+ut-eagle-mountain-q6,kw:addition,design build remodeling,40.3141,-112.0069,13,P3
+va-virginia-beach-q0,addition,Remodeler,36.8529,-75.978,13,P1
+va-virginia-beach-q1,addition,General contractor,36.8529,-75.978,13,P1
+va-virginia-beach-q2,addition,Custom home builder,36.8529,-75.978,13,P2
+va-virginia-beach-q3,kw:addition,home addition contractor,36.8529,-75.978,13,P3
+va-virginia-beach-q4,kw:addition,room addition contractor,36.8529,-75.978,13,P3
+va-virginia-beach-q5,kw:addition,second story addition,36.8529,-75.978,13,P3
+va-virginia-beach-q6,kw:addition,design build remodeling,36.8529,-75.978,13,P3
+va-norfolk-q0,addition,Remodeler,36.8468,-76.2852,13,P1
+va-norfolk-q1,addition,General contractor,36.8468,-76.2852,13,P1
+va-norfolk-q2,addition,Custom home builder,36.8468,-76.2852,13,P2
+va-norfolk-q3,kw:addition,home addition contractor,36.8468,-76.2852,13,P3
+va-norfolk-q4,kw:addition,room addition contractor,36.8468,-76.2852,13,P3
+va-norfolk-q5,kw:addition,second story addition,36.8468,-76.2852,13,P3
+va-norfolk-q6,kw:addition,design build remodeling,36.8468,-76.2852,13,P3
+va-richmond-q0,addition,Remodeler,37.5538,-77.4603,13,P1
+va-richmond-q1,addition,General contractor,37.5538,-77.4603,13,P1
+va-richmond-q2,addition,Custom home builder,37.5538,-77.4603,13,P2
+va-richmond-q3,kw:addition,home addition contractor,37.5538,-77.4603,13,P3
+va-richmond-q4,kw:addition,room addition contractor,37.5538,-77.4603,13,P3
+va-richmond-q5,kw:addition,second story addition,37.5538,-77.4603,13,P3
+va-richmond-q6,kw:addition,design build remodeling,37.5538,-77.4603,13,P3
+va-roanoke-q0,addition,Remodeler,37.271,-79.9414,13,P1
+va-roanoke-q1,addition,General contractor,37.271,-79.9414,13,P1
+va-roanoke-q2,addition,Custom home builder,37.271,-79.9414,13,P2
+va-roanoke-q3,kw:addition,home addition contractor,37.271,-79.9414,13,P3
+va-roanoke-q4,kw:addition,room addition contractor,37.271,-79.9414,13,P3
+va-roanoke-q5,kw:addition,second story addition,37.271,-79.9414,13,P3
+va-roanoke-q6,kw:addition,design build remodeling,37.271,-79.9414,13,P3
+va-suffolk-q0,addition,Remodeler,36.7284,-76.585,13,P1
+va-suffolk-q1,addition,General contractor,36.7284,-76.585,13,P1
+va-suffolk-q2,addition,Custom home builder,36.7284,-76.585,13,P2
+va-suffolk-q3,kw:addition,home addition contractor,36.7284,-76.585,13,P3
+va-suffolk-q4,kw:addition,room addition contractor,36.7284,-76.585,13,P3
+va-suffolk-q5,kw:addition,second story addition,36.7284,-76.585,13,P3
+va-suffolk-q6,kw:addition,design build remodeling,36.7284,-76.585,13,P3
+va-lynchburg-q0,addition,Remodeler,37.4138,-79.1423,13,P1
+va-lynchburg-q1,addition,General contractor,37.4138,-79.1423,13,P1
+va-lynchburg-q2,addition,Custom home builder,37.4138,-79.1423,13,P2
+va-lynchburg-q3,kw:addition,home addition contractor,37.4138,-79.1423,13,P3
+va-lynchburg-q4,kw:addition,room addition contractor,37.4138,-79.1423,13,P3
+va-lynchburg-q5,kw:addition,second story addition,37.4138,-79.1423,13,P3
+va-lynchburg-q6,kw:addition,design build remodeling,37.4138,-79.1423,13,P3
+va-centreville-q0,addition,Remodeler,38.8404,-77.4289,13,P1
+va-centreville-q1,addition,General contractor,38.8404,-77.4289,13,P1
+va-centreville-q2,addition,Custom home builder,38.8404,-77.4289,13,P2
+va-centreville-q3,kw:addition,home addition contractor,38.8404,-77.4289,13,P3
+va-centreville-q4,kw:addition,room addition contractor,38.8404,-77.4289,13,P3
+va-centreville-q5,kw:addition,second story addition,38.8404,-77.4289,13,P3
+va-centreville-q6,kw:addition,design build remodeling,38.8404,-77.4289,13,P3
+va-harrisonburg-q0,addition,Remodeler,38.4496,-78.8689,13,P1
+va-harrisonburg-q1,addition,General contractor,38.4496,-78.8689,13,P1
+va-harrisonburg-q2,addition,Custom home builder,38.4496,-78.8689,13,P2
+va-harrisonburg-q3,kw:addition,home addition contractor,38.4496,-78.8689,13,P3
+va-harrisonburg-q4,kw:addition,room addition contractor,38.4496,-78.8689,13,P3
+va-harrisonburg-q5,kw:addition,second story addition,38.4496,-78.8689,13,P3
+va-harrisonburg-q6,kw:addition,design build remodeling,38.4496,-78.8689,13,P3
+va-leesburg-q0,addition,Remodeler,39.1157,-77.5636,13,P1
+va-leesburg-q1,addition,General contractor,39.1157,-77.5636,13,P1
+va-leesburg-q2,addition,Custom home builder,39.1157,-77.5636,13,P2
+va-leesburg-q3,kw:addition,home addition contractor,39.1157,-77.5636,13,P3
+va-leesburg-q4,kw:addition,room addition contractor,39.1157,-77.5636,13,P3
+va-leesburg-q5,kw:addition,second story addition,39.1157,-77.5636,13,P3
+va-leesburg-q6,kw:addition,design build remodeling,39.1157,-77.5636,13,P3
+va-charlottesville-q0,addition,Remodeler,38.0293,-78.4767,13,P1
+va-charlottesville-q1,addition,General contractor,38.0293,-78.4767,13,P1
+va-charlottesville-q2,addition,Custom home builder,38.0293,-78.4767,13,P2
+va-charlottesville-q3,kw:addition,home addition contractor,38.0293,-78.4767,13,P3
+va-charlottesville-q4,kw:addition,room addition contractor,38.0293,-78.4767,13,P3
+va-charlottesville-q5,kw:addition,second story addition,38.0293,-78.4767,13,P3
+va-charlottesville-q6,kw:addition,design build remodeling,38.0293,-78.4767,13,P3
+va-blacksburg-q0,addition,Remodeler,37.2296,-80.4139,13,P1
+va-blacksburg-q1,addition,General contractor,37.2296,-80.4139,13,P1
+va-blacksburg-q2,addition,Custom home builder,37.2296,-80.4139,13,P2
+va-blacksburg-q3,kw:addition,home addition contractor,37.2296,-80.4139,13,P3
+va-blacksburg-q4,kw:addition,room addition contractor,37.2296,-80.4139,13,P3
+va-blacksburg-q5,kw:addition,second story addition,37.2296,-80.4139,13,P3
+va-blacksburg-q6,kw:addition,design build remodeling,37.2296,-80.4139,13,P3
+va-danville-q0,addition,Remodeler,36.586,-79.395,13,P1
+va-danville-q1,addition,General contractor,36.586,-79.395,13,P1
+va-danville-q2,addition,Custom home builder,36.586,-79.395,13,P2
+va-danville-q3,kw:addition,home addition contractor,36.586,-79.395,13,P3
+va-danville-q4,kw:addition,room addition contractor,36.586,-79.395,13,P3
+va-danville-q5,kw:addition,second story addition,36.586,-79.395,13,P3
+va-danville-q6,kw:addition,design build remodeling,36.586,-79.395,13,P3
+va-petersburg-q0,addition,Remodeler,37.2279,-77.4019,13,P1
+va-petersburg-q1,addition,General contractor,37.2279,-77.4019,13,P1
+va-petersburg-q2,addition,Custom home builder,37.2279,-77.4019,13,P2
+va-petersburg-q3,kw:addition,home addition contractor,37.2279,-77.4019,13,P3
+va-petersburg-q4,kw:addition,room addition contractor,37.2279,-77.4019,13,P3
+va-petersburg-q5,kw:addition,second story addition,37.2279,-77.4019,13,P3
+va-petersburg-q6,kw:addition,design build remodeling,37.2279,-77.4019,13,P3
+va-fredericksburg-q0,addition,Remodeler,38.3032,-77.4605,13,P1
+va-fredericksburg-q1,addition,General contractor,38.3032,-77.4605,13,P1
+va-fredericksburg-q2,addition,Custom home builder,38.3032,-77.4605,13,P2
+va-fredericksburg-q3,kw:addition,home addition contractor,38.3032,-77.4605,13,P3
+va-fredericksburg-q4,kw:addition,room addition contractor,38.3032,-77.4605,13,P3
+va-fredericksburg-q5,kw:addition,second story addition,38.3032,-77.4605,13,P3
+va-fredericksburg-q6,kw:addition,design build remodeling,38.3032,-77.4605,13,P3
+va-winchester-q0,addition,Remodeler,39.1857,-78.1633,13,P1
+va-winchester-q1,addition,General contractor,39.1857,-78.1633,13,P1
+va-winchester-q2,addition,Custom home builder,39.1857,-78.1633,13,P2
+va-winchester-q3,kw:addition,home addition contractor,39.1857,-78.1633,13,P3
+va-winchester-q4,kw:addition,room addition contractor,39.1857,-78.1633,13,P3
+va-winchester-q5,kw:addition,second story addition,39.1857,-78.1633,13,P3
+va-winchester-q6,kw:addition,design build remodeling,39.1857,-78.1633,13,P3
