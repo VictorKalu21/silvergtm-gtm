@@ -24,7 +24,7 @@ function arg(n, d) { const i = process.argv.indexOf('--' + n); return i > -1 ? p
 const OUT = arg('out', __dirname);
 const NSHARDS = parseInt(arg('shards', '8'), 10);
 const STATES_ARG = arg('states', 'warm');
-const QSET = arg('queries', 'core');
+const QSET = arg('queries', 'full'); // operator 2026-10-11: full set for the warm states
 
 const WARM = ['FL','TX','AZ','CA','GA','NV','NC','SC','TN','AL','LA','MS','OK','AR','NM','HI','UT','VA'];
 // STEP 2: 'Swimming pool contractor' is the only native category for the trade (references/google-maps-categories.md).
