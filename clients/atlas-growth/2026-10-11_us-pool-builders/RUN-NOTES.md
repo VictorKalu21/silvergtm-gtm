@@ -36,3 +36,12 @@ Classify prompt: `classify-prompt.md`. All data in this folder is gitignored.
 
 ## Log
 - 2026-10-11 — scaffold; key validated (1 call); qualify rules dry-run on an 18-row fixture (see session transcript).
+
+## fetch-chunks collision (found 2026-10-11, during residue re-fetch)
+Parts 1 and 2 (BASE 200 / 300) ran concurrently and both `split` into the shared `owner/chunks/part-*`
+path, so each process overwrote the other's part files and the `part-*` glob picked up the other's
+`part-NNN.csv` as input (`part-000.csv.csv`). Harmless for merge (merge-fetch.js keys by place_id,
+ok beats failed) but rows may have been fetched twice or skipped. Fix after part 2 ends: chunk dir
+keyed by BASE (`owner/chunks-$BASE/`), then re-run `merge-fetch.js --residue` and fetch the true
+residue serially with CHUNK=100 LIMIT=600. Chunks 300 and 301 stalled at ~10 rows in 900 s
+(worker pool hang on a pathological page) — bisect with the smaller chunk.
