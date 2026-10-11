@@ -3,8 +3,8 @@
 Generated per SKILL.md STEP 6a from `skills/google-maps-scrape/owner-prompt.template.md` on
 2026-10-11, for `2026-10-11_us-pool-builders`. Read by one Haiku reader per batch
 (`owner-read-subagent.md`). Everything below "FIXED" is the template scaffold; the DECISIONS, traps
-and few-shots are reasoned for this trade. **Offer + target role are PROPOSED (ICP-pools.md) until
-the operator signs them off at the read-back gate.**
+and few-shots are reasoned for this trade. **Offer + target role AGREED by the operator 2026-10-11
+("exclude designers"): pool designers / design consultants are the in-home closer and never a contact.**
 
 ## DECISIONS — why these buckets
 

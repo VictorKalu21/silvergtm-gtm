@@ -1,8 +1,8 @@
 # Atlas Growth — ICP: residential in-ground swimming-pool builders (US)
 
-> Opened 2026-10-11. Status: **STEP 1 answered in part (client, qualify, depth); offer + target role PROPOSED, needs sign-off at the read-back gate.** Brief: the operator's GPT-drafted prospect-list prompt (largest possible list of legitimate US builders of new residential in-ground pools; prioritise $30k+ projects; flag Qualified / Review / Exclude with evidence; exclude service-only, retail-only, above-ground retail, commercial-only).
+> Opened 2026-10-11. Status: **STEP 1 + STEP 3 read-back AGREED 2026-10-11 (client atlas, qualify lenient, warm states first, FULL query set, dedupe waived, offer + target role signed off, designers EXCLUDED, DataForSEO probe $1/100 leads). Scrape running.** Brief: the operator's GPT-drafted prospect-list prompt (largest possible list of legitimate US builders of new residential in-ground pools; prioritise $30k+ projects; flag Qualified / Review / Exclude with evidence; exclude service-only, retail-only, above-ground retail, commercial-only).
 
-## The offer (PROPOSED — same family as foundation repair and generators, reworded for the trade)
+## The offer (AGREED 2026-10-11 — same family as foundation repair and generators, reworded for the trade)
 
 > We help swimming pool builders book 10 qualified in-home pool design consultations that turn into
 > construction projects every month using Facebook lead generation.
@@ -64,7 +64,7 @@ Riverbend Sandler, Platinum Pools, manufacturer-dealer networks (Leisure Pools, 
 Pools, Imagine Pools), and the service franchises (ASP, Pool Troopers, Pool Scouts, Poolwerx) so a
 franchise that builds is kept and one that only services is dropped by its site text, not its name.
 
-## Target role — WHO we are trying to reach (PROPOSED — same buyer as foundation repair)
+## Target role — WHO we are trying to reach (AGREED 2026-10-11 — same buyer as foundation repair; operator: "exclude designers")
 
 - **KEEP:** Owner · Co-Owner · President · CEO · Founder · Partner · bare General Manager ·
   Marketing Manager / Director / VP · Operations Manager only at ≤2-location firms.
@@ -90,7 +90,7 @@ discovery state (shard run) · `brand_family` / `location_count` · `place_id`. 
 
 ## Open decisions (answer at the read-back gate)
 
-1. Offer line and target role above — sign off or change.
-2. Query set: `core` (category + 3 keyword rows, 1,448 rows ≈ 3.3k calls) or `full` (category + 6 keyword rows, 2,534 rows ≈ 5.8k calls) for the warm states.
-3. Cross-run dedupe: prior Atlas shipped feeds are not on this container (data is gitignored). Waive as on the last three runs, or supply the tarball.
-4. Owner-finding SERP backend: DataForSEO is reachable but has no credential here and no engine backend exists on any branch — scope credits + approve the engine change, or run the free rungs only (in-session read + BBB registry + WebSearch sweep).
+1. ~~Offer line and target role~~ — signed off 2026-10-11; designers excluded (the in-home closer).
+2. ~~Query set~~ — FULL (2,534 rows) chosen 2026-10-11.
+3. ~~Cross-run dedupe~~ — WAIVED 2026-10-11 (prior shipped feeds not on this container).
+4. ~~Owner-finding SERP backend~~ — DataForSEO backend shipped in `search-owner.js` 2026-10-11 (engine change approved); credentials in the skill `.env`; **probe first: $1 cap on 100 Qualified leads**, then set the real cap.
