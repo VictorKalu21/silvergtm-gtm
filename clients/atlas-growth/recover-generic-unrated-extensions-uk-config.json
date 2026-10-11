@@ -1,0 +1,103 @@
+{
+  "_comment": "Atlas Growth UK extensions :: UNRATED variant of recover-generic-extensions-uk-config.json — same scope gate and same type/name rules, but for rows with NO review data and a live website instead of the >=5 floor. Needed because a row that fails the allow AND has a blank review_count carries drop_reason not_in_icp, which recover-unrated (scope too_small) never sees (OPEN engine limitation, IMPROVEMENTS 2026-09-20). Generated from the rated config 2026-10-11; keep the two in step. Run: node skills/google-maps-scrape/qualify-leads.js --in <run>/maps/excluded_officp.csv --config clients/atlas-growth/recover-generic-unrated-extensions-uk-config.json --out <run>/maps/recover-generic-unrated",
+  "geo": {
+    "country": "gb",
+    "footprint": {
+      "mode": "areas"
+    },
+    "region_from_city": null,
+    "region_default": "UK"
+  },
+  "qualify_rules": [
+    {
+      "_r": "0. RECOVERY SCOPE GATE — two drop reasons, and the second is deliberate. not_in_icp = fell at the allow (trade primaries that never deny). off_icp_primary = removed by the main rule-2 primary deny; this pass reaches into that bucket ONLY for the design/kitchen/glazing types listed in rule 1 — an architect practice, a kitchen fitter or a glazing firm whose name claims building/extension work is a plausible design-and-build or extension specialist that the site-text gate must judge, not a Maps-stage drop. The hard entity deny (hard_off_icp_type), the name deny and the floor are never reversed. Rule 1's type allow is what keeps the off_icp_primary reach narrow: a plumber or a builders merchant also sits in that bucket and carries none of rule 1's types.",
+      "field": "drop_reason",
+      "op": "in",
+      "label": "not_a_recovery_candidate",
+      "value": [
+        "not_in_icp",
+        "off_icp_primary"
+      ]
+    },
+    {
+      "_r": "1. The type net (any tag, substring). Trade primaries a loft/extension specialist is actually given by Google (roofing contractor, carpenter, joiner, masonry contractor, bricklayer, plasterer, handyman, property maintenance, landscaper) + the bare generics as SECONDARY tags ('contractor', 'builder' — substring here is fine because rule 2 demands the name claim the work) + the design/kitchen/glazing types the main pass denied on primary (architect, architectural designer, architecture firm, building designer, design agency, kitchen remodeler, bathroom remodeler, window installation service, glazier) + 'building consultant' and 'property management company', both added after the 2026-10-11 calibration showed real extension firms primaried that way ('CK Design & Build Limited | Building consultant', 18 reviews; 'London Extensions House | Property management company') — still gated by the name rule. A row carrying none of these is refused (not_generic_trade).",
+      "field": "google_types",
+      "op": "allow",
+      "label": "not_generic_trade",
+      "value": [
+        "contractor",
+        "builder",
+        "construction",
+        "building firm",
+        "building company",
+        "roofing contractor",
+        "carpenter",
+        "joiner",
+        "masonry contractor",
+        "bricklayer",
+        "plasterer",
+        "handyman",
+        "property maintenance",
+        "landscaper",
+        "landscape designer",
+        "garden",
+        "architect",
+        "architectural designer",
+        "architecture firm",
+        "building designer",
+        "design agency",
+        "kitchen remodeler",
+        "bathroom remodeler",
+        "window installation service",
+        "glazier",
+        "building consultant",
+        "property management company"
+      ]
+    },
+    {
+      "_r": "2. The NAME must claim the work — the precision half, keep it strict. Extension / loft / conversion vocabulary first; then the design-and-build spellings; then the plain building words ('build' also matches builders / building / rebuild; 'construction'; 'renovation' / 'refurbish' — a renovation firm is an extension builder's closest adjacent and the classify step sorts it). No 'design' alone (every architect), no 'home' / 'property' alone (every estate agent), no 'conversion' alone would be fine but is covered by the two-word forms plus 'conversions'.",
+      "field": "name",
+      "op": "contains_any",
+      "label": "name_not_icp",
+      "value": [
+        "extension",
+        "loft",
+        "garage conversion",
+        "garage conversions",
+        "conversions",
+        "basement conversion",
+        "design and build",
+        "design & build",
+        "design-and-build",
+        "design build",
+        "design+build",
+        "design + build",
+        "design&build",
+        "d&b",
+        "d & b",
+        "build",
+        "construction",
+        "renovation",
+        "refurbish",
+        "build team",
+        "simply extend",
+        "econoloft",
+        "absolute lofts",
+        "landmark lofts",
+        "the loft room"
+      ]
+    },
+    {
+      "_r": "UNRATED ONLY — the blank review band (the 1-4 band stays dropped, as in the unrated pass). This pass exists because of the OPEN qualify-leads.js limitation (IMPROVEMENTS 2026-09-20: a recovery pass sees only the MAIN pass's drop reason): a blank-review row that also fails the allow is recorded not_in_icp, never too_small, so recover-unrated cannot reach it and the rated variant of this pass drops it at the floor. Calibration 2026-10-11: 'Mils Development - Loft Conversions & Extensions', 'Design & Build Scotland Ltd', 'Excel Construction' — bare Contractor, no review data, live website — were falling here.",
+      "field": "review_count",
+      "op": "not_exists",
+      "label": "has_review_count"
+    },
+    {
+      "_r": "A LIVE WEBSITE is the substitute activity signal, exactly as in recover-unrated-extensions-uk-config.json.",
+      "field": "website",
+      "op": "exists",
+      "label": "no_website"
+    }
+  ]
+}

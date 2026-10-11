@@ -1,0 +1,14 @@
+{
+  "_comment": "Atlas Growth UK extensions :: LEVER L4 (OFF unless the operator says so) — the LOW-RATED track: rows the main pass dropped at the review floor that carry 1-4 reviews AND a live website. On the 2026-10-11 calibration (3 dense tiles, 554 rows) the floor removed 157 rows, 94 of them in the 1-4 band, and the names in that band read as the ICP ('London Loft Conversions' 1, 'DB Home Extensions' 3, 'S & W Design & Build' 4, 'RDK Design and Build Limited' 3): this trade has many small or new firms, and the foundation run's floor-5 ghost filter is costing more here. Mirrors clients/atlas-growth/recover-lowrated-au-config.json. The 0-review and blank-no-website rows stay out either way. Run: node skills/google-maps-scrape/qualify-leads.js --in <run>/maps/excluded_officp.csv --config clients/atlas-growth/recover-lowrated-extensions-uk-config.json --out <run>/maps/recover-lowrated",
+
+  "geo": { "country": "gb", "footprint": { "mode": "areas" }, "region_from_city": null, "region_default": "UK" },
+
+  "qualify_rules": [
+    {"_r": "0. RECOVERY SCOPE GATE — too_small only: the row already passed every deny and the allow.",
+     "field": "drop_reason", "op": "in", "label": "not_a_lowrated_candidate", "value": ["too_small"]},
+    {"_r": "1. At least one real review (blank and 0 are refused — blank is the unrated pass's job, 0 is a ghost pin).",
+     "field": "review_count", "op": ">=", "value": 1, "label": "no_reviews"},
+    {"_r": "2. A live website as the second activity signal.",
+     "field": "website", "op": "exists", "label": "no_website"}
+  ]
+}

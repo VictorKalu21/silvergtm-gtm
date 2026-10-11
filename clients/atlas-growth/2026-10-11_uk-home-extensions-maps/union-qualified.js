@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /* union-qualified.js :: STEP 5b bookkeeping for the UK extensions run (deterministic, $0).
  * Inputs (run folder): maps/leads_clean_qualified.csv (main config), maps/excluded_officp.csv (main drops),
- *   maps/recover-baretype/, maps/recover-generic/, maps/recover-unrated/ leads_clean_qualified.csv (the three
- *   recovery passes over the main drops — recover-*-extensions-uk-config.json).
+ *   maps/recover-{baretype,generic,unrated,baretype-unrated,generic-unrated}/ (+ recover-lowrated/ when lever L4 is on)
+ *   leads_clean_qualified.csv — the recovery passes over the main drops, recover-*-extensions-uk-config.json; a missing dir is skipped.
  * Writes: leads_qualified.csv = main KEEP + recovered rows (dedupe on place_id, track column added);
  *         excluded_maps.csv = every other main drop with drop_reason (the GATE 2 drop-reason audit + deliverable).
  * No kw: keyword-candidates track in this run: every query is a keyword (Google has no extension category),
@@ -22,10 +22,10 @@ const H = main.H;
 const seen = new Set(main.rows.map(r => r.place_id));
 const qualified = main.rows.map(r => ({ ...r, track: 'main' }));
 const recCounts = {};
-for (const t of ['baretype', 'generic', 'unrated']) {
+for (const t of ['baretype', 'generic', 'unrated', 'baretype-unrated', 'generic-unrated', 'lowrated']) {
   const rec = load(path.join(RUN, 'maps', `recover-${t}`, 'leads_clean_qualified.csv'));
   let n = 0;
-  for (const r of rec.rows) { if (seen.has(r.place_id)) continue; seen.add(r.place_id); qualified.push({ ...r, track: `recover_${t}` }); n++; }
+  for (const r of rec.rows) { if (seen.has(r.place_id)) continue; seen.add(r.place_id); qualified.push({ ...r, track: `recover_${t.replace('-', '_')}` }); n++; }
   recCounts[t] = n;
 }
 const excluded = drops.rows.filter(r => !seen.has(r.place_id));

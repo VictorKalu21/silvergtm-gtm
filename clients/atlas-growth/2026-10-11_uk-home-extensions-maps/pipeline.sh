@@ -25,9 +25,11 @@ fi
 if want qualify; then
   if [ ! -s $R/leads_qualified.csv ]; then
     node $E/qualify-leads.js --in $R/maps/leads_clean.csv --config $CFG --out $R/maps
-    for t in baretype generic unrated; do
+    for t in baretype generic unrated baretype-unrated generic-unrated; do
       node $E/qualify-leads.js --in $R/maps/excluded_officp.csv --config $C/recover-$t-extensions-uk-config.json --out $R/maps/recover-$t
     done
+    # lever L4 (operator): the 1-4 review band with a website — LOWRATED=1 bash pipeline.sh qualify
+    [ "${LOWRATED:-0}" = 1 ] && node $E/qualify-leads.js --in $R/maps/excluded_officp.csv --config $C/recover-lowrated-extensions-uk-config.json --out $R/maps/recover-lowrated
     node $R/union-qualified.js --run $R
   else echo "[qualify] skip"; fi
 fi
@@ -38,9 +40,10 @@ if want geo; then
 fi
 if want dedupe; then
   if [ ! -s $R/leads_netnew.csv ]; then
-    # MANDATORY per client (SKILL STEP 5c). The 2026-09-16 UK foundation feeds are not on this container:
-    # a result of `ref files used: 0` means the history is missing -> stop and ask (waive or supply), do not copy through.
-    node $E/build-netnew.js --new $R/leads_clean_qualified_infootprint.csv --client $C --out $R/leads_netnew.csv
+    # Cross-run dedupe WAIVED by the operator 2026-10-11 ("waive dedupe": the 2026-09-16 UK foundation feeds are not on
+    # this container). Run for the record; on `ref files used: 0` the in-footprint file passes through unchanged.
+    node $E/build-netnew.js --new $R/leads_clean_qualified_infootprint.csv --client $C --out $R/leads_netnew.csv || true
+    [ -s $R/leads_netnew.csv ] || cp $R/leads_clean_qualified_infootprint.csv $R/leads_netnew.csv
   else echo "[dedupe] skip"; fi
 fi
 if want collapse; then

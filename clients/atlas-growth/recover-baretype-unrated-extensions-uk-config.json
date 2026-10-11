@@ -1,0 +1,47 @@
+{
+  "_comment": "Atlas Growth UK extensions :: UNRATED variant of recover-baretype-extensions-uk-config.json — same scope gate and same type/name rules, but for rows with NO review data and a live website instead of the >=5 floor. Needed because a row that fails the allow AND has a blank review_count carries drop_reason not_in_icp, which recover-unrated (scope too_small) never sees (OPEN engine limitation, IMPROVEMENTS 2026-09-20). Generated from the rated config 2026-10-11; keep the two in step. Run: node skills/google-maps-scrape/qualify-leads.js --in <run>/maps/excluded_officp.csv --config clients/atlas-growth/recover-baretype-unrated-extensions-uk-config.json --out <run>/maps/recover-baretype-unrated",
+  "geo": {
+    "country": "gb",
+    "footprint": {
+      "mode": "areas"
+    },
+    "region_from_city": null,
+    "region_default": "UK"
+  },
+  "qualify_rules": [
+    {
+      "_r": "0. RECOVERY SCOPE GATE — only rows the main pass dropped at its positive allow (drop_reason not_in_icp). A row removed by a deny (hard_off_icp_type / off_icp_primary / name_deny) or the floor (too_small) is refused before any other rule is read; this pass can never re-litigate a deny. CAVEAT (same as every recovery config in this client): pointed at a file with NO drop_reason column, `in` reads an empty string and every row is refused — that is the safe failure.",
+      "field": "drop_reason",
+      "op": "in",
+      "label": "not_a_recovery_candidate",
+      "value": [
+        "not_in_icp"
+      ]
+    },
+    {
+      "_r": "1. The bare generic types, PRIMARY only, exact match. 'contractor' and 'builder' are the two Google types a UK general builder most often carries alone; 'remodeler' / 'remodeller' (Google serves the UK spelling too — calibration 2026-10-11: 'Chins Construction | Remodeller') is the generic (non-kitchen, non-bathroom) remodel type; 'building firm' is already a main-pass allow substring and is listed here only so a primary 'Building firm' row dropped for some other allow reason cannot slip away. A row primaried 'Roofing contractor' does NOT match ('roofing contractor' != 'contractor') — that row belongs to the generic name recovery, where its name must claim loft/extension work.",
+      "field": "primary_type",
+      "op": "in",
+      "label": "not_bare_generic_primary",
+      "value": [
+        "contractor",
+        "builder",
+        "remodeler",
+        "remodeller",
+        "building firm"
+      ]
+    },
+    {
+      "_r": "UNRATED ONLY — the blank review band (the 1-4 band stays dropped, as in the unrated pass). This pass exists because of the OPEN qualify-leads.js limitation (IMPROVEMENTS 2026-09-20: a recovery pass sees only the MAIN pass's drop reason): a blank-review row that also fails the allow is recorded not_in_icp, never too_small, so recover-unrated cannot reach it and the rated variant of this pass drops it at the floor. Calibration 2026-10-11: 'Mils Development - Loft Conversions & Extensions', 'Design & Build Scotland Ltd', 'Excel Construction' — bare Contractor, no review data, live website — were falling here.",
+      "field": "review_count",
+      "op": "not_exists",
+      "label": "has_review_count"
+    },
+    {
+      "_r": "A LIVE WEBSITE is the substitute activity signal, exactly as in recover-unrated-extensions-uk-config.json.",
+      "field": "website",
+      "op": "exists",
+      "label": "no_website"
+    }
+  ]
+}

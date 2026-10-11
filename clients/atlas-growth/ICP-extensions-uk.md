@@ -1,11 +1,10 @@
 # Atlas Growth — ICP: UK residential home-extension contractors
 
-> Opened 2026-10-11. Status: **GATE 1 (STEP 1 + STEP 3 read-back) PENDING.** Brief, in the operator's
-> words: "want to scrape residential home extension contractors in the uk". Client **assumed to be
-> Atlas Growth** — the request arrived without a client name, and it is the same shape as the four
-> Atlas home-services verticals already in this folder (foundation repair US/UK/AU, generators,
-> batteries, pools: a residential trade sold a Facebook lead-gen retainer). The read-back confirms
-> or corrects that; nothing paid has run. Run folder: `2026-10-11_uk-home-extensions-maps/`.
+> Opened 2026-10-11. Status: **GATE 1 read-back AGREED 2026-10-11 (client atlas · default queries ·
+> conservatories OUT · dedupe WAIVED); scraper key validated; 3-row calibration DONE (10 calls, 554
+> unique, 3.33 calls/row on dense tiles); full sheet priced ~5,200 calls — AWAITING GO.** Brief, in
+> the operator's words: "want to scrape residential home extension contractors in the uk". Run
+> folder: `2026-10-11_uk-home-extensions-maps/` (`RUN-NOTES.md` has the calibration and GATE 2 preview).
 
 ## The offer (PROPOSED — same family as foundation repair, generators and pools, reworded)
 
@@ -82,9 +81,10 @@ extensions` @ London centre, `loft conversions` @ Manchester, `design and build`
 foundation config.** Rules run in order; the first failure is the recorded `drop_reason`.
 
 1. **Hard entity deny (any tag).** Charities, colleges, hospitals, places of worship, funeral
-   homes, estate and letting agents, law/insurance offices, car bodyshops — plus the homonym this
-   vertical's own word drags in: **hair and lash "extensions"** (salon / hair-extensions-supplier /
-   beauty / nail / eyelash types).
+   homes, estate and letting agents, law/insurance offices, car bodyshops — plus the two homonyms
+   this vertical's own words drag in: **hair and lash "extensions"** (salon / hairdresser /
+   hair-extensions-supplier / beauty / nail / eyelash types) and **web, graphic and marketing
+   "design"** (`design and build` returned web-design agencies on the calibration).
 2. **Primary-identity deny.** Judged on `google_types[0]` only, so a design-and-build firm carrying
    `Architect` as a second tag survives. **Architects / architectural designers / building
    designers / design agencies** (design-only practices are not the buyer — same call as the
@@ -107,13 +107,19 @@ foundation config.** Rules run in order; the first failure is the recorded `drop
 5. **Review floor 5** (`too_small`) — the ghost-listing filter the UK foundation run validated; 30
    would delete the trade. Blank review counts are taken back by the unrated recovery.
 
-**Three recovery passes over `excluded_officp.csv`, $0, deterministic:**
+**Five recovery passes over `excluded_officp.csv`, $0, deterministic (+ one lever):**
 
 | pass | config | takes back |
 |---|---|---|
-| bare-type | `recover-baretype-extensions-uk-config.json` | rows whose **PRIMARY** type is exactly `Contractor` / `Builder` / `Remodeler` / `Building firm` (exact match via `primary_type in`), no name requirement — the core of the ICP (`J Smith Building Services`, typed Contractor) |
-| name-claims-it | `recover-generic-extensions-uk-config.json` | trade or design primaries (roofer, carpenter, joiner, plasterer, bricklayer, handyman, property maintenance, landscaper, architect, kitchen/bathroom remodeler, glazier) whose **name** says extension / loft / conversion / design-and-build / build / construction / renovation. The only recovery that reaches `off_icp_primary`, and only through that type list |
-| unrated | `recover-unrated-extensions-uk-config.json` | blank `review_count` + a live website (P7 from the foundation run) |
+| bare-type | `recover-baretype-extensions-uk-config.json` | rows whose **PRIMARY** type is exactly `Contractor` / `Builder` / `Remodeler` / `Remodeller` / `Building firm` (exact match via `primary_type in`), ≥ 5 reviews, no name requirement — the core of the ICP (`J Smith Building Services`, typed Contractor) |
+| name-claims-it | `recover-generic-extensions-uk-config.json` | trade or design primaries (roofer, carpenter, joiner, plasterer, bricklayer, handyman, property maintenance, landscaper, architect, kitchen/bathroom remodeler, glazier, building consultant, property management) whose **name** says extension / loft / conversion / design-and-build (incl. `design+build`) / build / construction / renovation, ≥ 5 reviews. The only recovery that reaches `off_icp_primary`, and only through that type list |
+| unrated | `recover-unrated-extensions-uk-config.json` | floor drops with a blank `review_count` + a live website (P7 from the foundation run) |
+| bare-type-unrated · name-unrated | `recover-baretype-unrated-…` · `recover-generic-unrated-…` | the same two nets for rows with a **blank** `review_count` + a live website. Needed because a blank-review row that fails the allow is recorded `not_in_icp`, never `too_small`, so the unrated pass cannot see it (OPEN engine limitation, IMPROVEMENTS 2026-09-20); +17 rows on the calibration |
+| **lever L4** low-rated | `recover-lowrated-extensions-uk-config.json` (**OFF** — operator decision) | floor drops with **1–4 reviews + a live website**: 73 of 554 on the calibration, ICP-looking names; `LOWRATED=1 bash pipeline.sh qualify` |
+
+**Calibration GATE 2 preview (554 real rows, 3 dense tiles, 2026-10-11):** main 208 + recoveries 82 = **290 qualified
+(52%)**; L4 would make it 363 (65%). Remaining drops are architecture practices, engineers, interior designers, web
+designers, hairdressers, 1–3-review trade rows and no-website rows. Full numbers in `RUN-NOTES.md`.
 
 **Dry-run on a 20-row fixture (2026-10-11, scratchpad, output in `RUN-NOTES.md`):** 20 of 20 rows
 landed where the rules intend — design-and-build firm, garage-conversion builder and Build Team
@@ -203,22 +209,22 @@ classify step needs.
 | **FMB — Federation of Master Builders** `fmb.org.uk/find-a-builder` | **page 200, but the only server form is search-by-NAME** (`?name=`); the postcode search is a JS widget and no API path appears in the HTML. FMB membership surfaces through TrustMark's scheme field instead | member name only via the TrustMark join |
 | Checkatrade · MyBuilder · Rated People · Yell | **dead from a datacentre egress** (Cloudflare 403; Yell/Checkatrade render via Firecrawl with no addresses — `library/trade-bodies-and-installer-networks--foundation-repair.md`) | — |
 | Companies House bulk (SIC 41202 construction of domestic buildings, 43390 other building completion) | not probed — a registry of every building company with officers but no trade detail; useful as the owner rung, not as a spine | officers |
-| scraper.tech credential in THIS container | **`{"error":"Access denied"}` on `searchmaps.php`**, with and without a dummy key (4 calls, 2026-10-11) — the proxy-injected ScraperTech credential does not authorise Maps; `skills/google-maps-scrape/.env` has no `SCRAPER_TECH_KEY` (gitignored, not in the clone) | **blocker for STEP 4** |
+| scraper.tech credential in THIS container | the proxy-injected ScraperTech credential answered `{"error":"Access denied"}` (4 calls); **resolved 2026-10-11** — the operator's key, placed in the gitignored `skills/google-maps-scrape/.env`, validated with 1 call and bought the 10-call calibration through the engine | unblocked (rotate the key after the run — it was pasted in chat) |
 
 ## Dedupe universe
 
 Mandatory per client: the 2026-09-16 UK foundation runs (`2026-09-16_uk-foundation-repair` export,
 `2026-09-16_uk-foundation-repair-maps` 898 worked leads) and the 2026-09-30 UK generator / battery
-runs. **None of those lead files is on this container** (gitignored), so `build-netnew.js` will
-report `ref files used: 0` — the operator supplies the feeds or waives, as on the generators run.
-Expected overlap is real but small: basement conversions and general builders with a structural
-line appear in both.
+runs. **None of those lead files is on this container** (gitignored), so `build-netnew.js` reports
+`ref files used: 0`. **WAIVED by the operator 2026-10-11**, as on the generators run; the pipeline
+runs the dedupe for the record and passes through. Expected overlap is real but small: basement
+conversions and general builders with a structural line appear in both.
 
 ## Cost (before any API call)
 
 | item | estimate | basis |
 |---|---|---|
-| Calibration | 3 rows ≈ 8–18 calls | 1–6 pages per dense tile |
-| Full sheet, default queries | 1,770 rows × ~2.6 ≈ **4,600 Maps calls** | UK foundation run measured 2.61 calls/row at the same grid and tuning; `house extensions` at London tiles is denser than `underpinning`, so read the calibration page depth first |
+| Calibration | **10 calls, measured** (pages 3 / 4 / 3) | 3 dense city tiles, 554 unique |
+| Full sheet, default queries | 1,770 rows × 2.61–3.33 = **4,600–5,900 Maps calls, plan on ~5,200** (+ ~6% heal passes ≈ 5,500 all-in) | 2.61 = the foundation run's grid-wide average (town tiles page once or twice); 3.33 = the calibration's dense-tile rate |
 | `--broad` | +354 rows, mostly max-depth ≈ **+1,800 calls** | bare `builders` pages to the 6-page cap in every town |
 | Everything after the scrape | $0 | site text, Companies House, Haiku reads, sweep — same as the foundation run; DataForSEO SERP only with a stated `--max-cost`; MV/BB verification only on an explicit go |
