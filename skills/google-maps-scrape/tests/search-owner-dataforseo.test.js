@@ -70,4 +70,13 @@ check('--resume finishes the rest and keeps the running total', r.status === 0 &
 r = spawnSync(process.execPath, [SO, '--leads', leads, '--out', path.join(tmp, 'o3'), '--env', path.join(tmp, 'none.env')], { env: { ...process.env, SCRAPER_TECH_SEARCH_KEY: '' }, encoding: 'utf8' });
 check('default backend is still scraper_tech and still wants its key', r.status === 1 && /SCRAPER_TECH_SEARCH_KEY/.test(r.stderr));
 
+// 6. standard (batch) mode, stubbed: same records, batches counted, resumable state file
+r = spawnSync(process.execPath, [SO, '--leads', leads, '--config', cfg, '--out', path.join(tmp, 'o4'), '--max-cost', '1', '--mode', 'standard', '--batch-size', '2', '--email-search'], { env: envBase, encoding: 'utf8' });
+const out4 = fs.readFileSync(path.join(tmp, 'o4', 'serp_text.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+const cost4 = JSON.parse(fs.readFileSync(path.join(tmp, 'o4', 'serp_cost.json'), 'utf8'));
+// round 1 = 3 biased + 3 linkedin + 2 email = 8 queries -> 4 batches of 2; round 2 = broad for P2+P3 (both empty) = 2 queries -> 1 batch
+check('standard mode: 10 calls in 5 batches of 2, $0.02, mode tagged', r.status === 0 && out4.length === 3 && cost4.mode === 'standard' && cost4.calls_this_run === 10 && cost4.batches_posted === 5 && Math.abs(cost4.spent_usd_this_run - 0.02) < 1e-9 && out4.every(x => x.mode === 'standard'));
+check('standard mode: P1 still carries the biased + linkedin text', /Jane Doe/.test(out4.find(x => x.place_id === 'P1').biased_text) && fs.existsSync(path.join(tmp, 'o4', 'standard_state.json')));
+check('standard mode: broad ran only for the two empty leads', out4.find(x => x.place_id === 'P1').broad_text === '' );
+
 console.log(fails ? `\n${fails} FAILED` : '\nALL PASS'); process.exit(fails ? 1 : 0);
