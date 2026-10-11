@@ -83,3 +83,7 @@ All data in this folder is gitignored.
 - `assemble.js` now joins `owner/bbb.jsonl` → `bbb_status, bbb_rating, bbb_accredited, bbb_url` (matched + low_confidence rows; miss = blank). Deliverable rebuilt: owner_name 883 (7.6%), bbb_url 5,534 (47.9%) of Qualified.
 - Options to finish owner-finding on the 10,675 unnamed: (a) raise `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` on the environment and resume `sweep3` from batch 0 in waves that fit the new cap; (b) DataForSEO creds + spend go → `search-owner.js --mode standard` (~2 queries/lead, $0.0018 each ≈ $38 for the pool) → `prep-owner-batches.js` with serp text → Haiku re-read (no WebSearch); (c) ship as is: 883 named + phone 99% + generic email 35%.
 - Emails: 4,075 on-site addresses are unverified; `email-waterfall` + MillionVerifier/BounceBan need keys and an explicit go.
+
+### SHIPPED AS IS (operator, 2026-10-11)
+- Hand-off: `deliverable/restoration_qualified.csv` (11,558), `deliverable/restoration_contacts.csv` (copy of `owner/contacts_final.csv`: 883 named leads, 1,246 contacts with evidence), `deliverable/summary.md`, `owner/leads_unnamed.csv` (10,675 — the sweep input for whoever resumes). Review / Exclude files kept.
+- Parked items and their resume paths: `deliverable/PARKED.md`. STATE.md row updated to SHIPPED.
