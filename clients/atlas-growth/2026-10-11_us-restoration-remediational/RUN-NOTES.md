@@ -58,3 +58,8 @@ All data in this folder is gitignored.
 - Batches 0–70 complete and validated (every in-batch place_id present in its out file): 2,840 leads read, 396 with a named contact (~14%).
 - Batches 71–90 in flight (20 concurrent Haiku readers); 91–141 queued.
 - BBB rung at 5,059/11,558, still running in background (`bbb.log`).
+
+### Rung 2 (owner read) complete
+- 142 batches validated (every in-batch place_id present); 5,673 leads read (the leads with site text); 5,885 skipped before the read (5,363 no source text at all, 522 source had no readable text) — these go to the sweep.
+- `merge-owner-reads.js --trade-words …` → `owner/contacts_read.jsonl`: 792 leads named (14.0% of read), 1,114 contacts, 962 owner-level; 28 contacts excluded by title (marketing-rep trap), 3 business-name-as-person and 2 single-token names dropped. All evidence from `website`.
+- Rung 3 sweep: first tranche queued with `prep-sweep-batches.js --limit 200` (10 batches of 20, registry bbb.org); batches 0–5 launched as one wave (session WebSearch budget), 6–9 after.
