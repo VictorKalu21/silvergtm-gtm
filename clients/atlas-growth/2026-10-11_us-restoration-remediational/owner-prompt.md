@@ -3,8 +3,7 @@
 Generated per SKILL.md STEP 6a from `skills/google-maps-scrape/owner-prompt.template.md` on
 2026-10-11, for `2026-10-11_us-restoration-remediational`. Read by one Haiku reader per batch
 (`owner-read-subagent.md`). Everything below "FIXED" is the template scaffold; the DECISIONS, traps
-and few-shots are reasoned for this trade. **Offer + target role PROPOSED (ICP-restoration-us.md);
-the trade-specific exclusion is the restoration "marketing rep" — a route-sales role, never a buyer.**
+and few-shots are reasoned for this trade. **Offer + target role AGREED by the operator 2026-10-11 ("offer and role approved, keep franchises, run owner finding"); the trade-specific exclusion is the restoration "marketing rep" — a route-sales role, never a buyer.**
 
 ## DECISIONS — why these buckets
 

@@ -2,11 +2,11 @@
 
 > Opened 2026-10-11 from the `ICP-damp-mould.md` scoping (US side: mold remediation + water damage
 > restoration). Status: **STEP 1 answered 2026-10-11 by the operator — client atlas-growth, ALL 506
-> metros, review floor 0.** Offer + target role below are PROPOSED (same family as foundation repair,
-> generators and pools); sign-off pending at the read-back. Source: `remediational.com` directory
+> metros, review floor 0.** Offer + target role below AGREED 2026-10-11 (operator: "offer and role approved, keep
+> franchises, run owner finding"); franchise branches KEPT and flagged; testing-only rows stay out. Source: `remediational.com` directory
 > (library profile `remediational-directory--us-restoration-contractors.md`), $0, 29,837 rows.
 
-## The offer (PROPOSED — reworded from `ICP.md` for the trade)
+## The offer (AGREED 2026-10-11 — reworded from `ICP.md` for the trade)
 
 > We help restoration companies book 10 qualified mold and water damage inspection appointments that
 > turn into remediation projects every month using Facebook lead generation.
@@ -62,7 +62,7 @@ Stanley Steemer, Chem-Dry, United Water Restoration, Rytech, All Dry, Bio-One, A
 Duraclean, Roto-Rooter, Mold Busters. A branch site is classified on the brand site (fanned from
 the domain representative); the brand flag is where the operator decides to work or skip them.
 
-## Target role — WHO we are trying to reach (PROPOSED — same buyer as foundation repair)
+## Target role — WHO we are trying to reach (AGREED 2026-10-11 — same buyer as foundation repair)
 
 - **KEEP:** Owner · Co-Owner · President · CEO · Founder · Partner · Principal · bare General
   Manager · Marketing Manager / Director / VP of Marketing · Operations Manager only at ≤2-location
@@ -88,9 +88,8 @@ company name · website · Google Maps URL (`place_link`, from the directory's C
 
 ## Open decisions (answer at the read-back gate)
 
-1. Offer line and target role — PROPOSED above; the "marketing rep" exclusion is new to this trade.
-2. Franchise branches — keep + flag (default), or hold the ~4,300 branch rows as a segment.
-3. Testing/asbestos/lead-only rows (~5,100) — dropped as `not_in_icp`; re-admit at $0 if mold
-   *inspection* firms are wanted as a separate segment.
+1. ~~Offer line and target role~~ — AGREED 2026-10-11.
+2. ~~Franchise branches~~ — KEEP + flag (operator 2026-10-11).
+3. Testing/asbestos/lead-only rows (2,631) — stay out (not raised at the read-back; re-admittable at $0).
 4. Cross-run dedupe — prior shipped feeds are not on this container (same as the pool run); waive or supply.
 5. Owner-finding SERP backend — DataForSEO credentials are in the skill `.env` only if the operator placed them this session; otherwise read + BBB rung only.
