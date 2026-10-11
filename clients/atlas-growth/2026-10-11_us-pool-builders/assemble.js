@@ -56,7 +56,7 @@ function assemble(run) {
   const cdir = path.join(run, 'classify', 'out');
   if (fs.existsSync(cdir)) for (const f of fs.readdirSync(cdir).filter(f => f.endsWith('.json'))) { try { for (const o of JSON.parse(fs.readFileSync(path.join(cdir, f), 'utf8').replace(/^﻿/, ''))) if (o && o.place_id) verdicts.set(o.place_id, o); } catch (e) { console.error('WARN bad classify json ' + f); } }
   const site = new Map(); for (const o of readJsonl(path.join(run, 'owner', 'site_text.jsonl'))) if (o.place_id) site.set(o.place_id, o);
-  let siblings = {}; const sf = path.join(run, 'domain_siblings.json'); if (fs.existsSync(sf)) { try { siblings = JSON.parse(fs.readFileSync(sf, 'utf8').replace(/^﻿/, '')); } catch { } }
+  let siblings = {}; const sf = path.join(run, 'domain_siblings.json'); if (fs.existsSync(sf)) { try { const j = JSON.parse(fs.readFileSync(sf, 'utf8').replace(/^\uFEFF/, '')); if (j && j.reps) { for (const [rep, v] of Object.entries(j.reps)) for (const sib of (v.siblings || [])) siblings[sib] = rep; } else siblings = j || {}; } catch { } } // collapse-domains writes {reps:{rep:{root_domain,siblings[]}}}; a flat sibling->rep map is accepted too
   const serp = new Map(); for (const o of readJsonl(path.join(run, 'owner', 'serp_text.jsonl'))) if (o.place_id) serp.set(o.place_id, o);
   const owners = new Map(); for (const o of readJsonl(path.join(run, 'owner', 'contacts_final.jsonl'))) if (o.place_id) owners.set(o.place_id, o);
   const tiles = readCsv(path.join(run, '..', 'atlas-growth-pools-runsheet.csv')).map(t => ({ id: t.cell_id, lat: +t.lat, lng: +t.lng })).filter(t => isFinite(t.lat));

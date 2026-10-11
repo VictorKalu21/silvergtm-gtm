@@ -70,7 +70,7 @@ if want classify-prep; then
     # prep-classify keys site text by place_id only; fan each representative's record to its domain siblings
     # (domain_siblings.json from collapse-domains) so a branch is classified on its brand site, not as 'unclear'.
     node -e "
-const fs=require('fs');const sib=JSON.parse(fs.readFileSync('$R/domain_siblings.json','utf8'));const recs=fs.readFileSync('$R/owner/site_text.jsonl','utf8').split(/\\r?\\n/).filter(Boolean).map(l=>JSON.parse(l));
+const fs=require('fs');const sj=JSON.parse(fs.readFileSync('$R/domain_siblings.json','utf8'));const sib={};if(sj.reps){for(const [rep,v] of Object.entries(sj.reps))for(const s of (v.siblings||[]))sib[s]=rep}else Object.assign(sib,sj);const recs=fs.readFileSync('$R/owner/site_text.jsonl','utf8').split(/\\r?\\n/).filter(Boolean).map(l=>JSON.parse(l));
 const byId=new Map(recs.map(r=>[r.place_id,r]));let fanned=0;const out=recs.map(r=>JSON.stringify(r));
 for(const [s,rep] of Object.entries(sib)){const r=byId.get(rep);if(r&&!byId.has(s)){out.push(JSON.stringify({...r,place_id:s,fanned_from:rep}));fanned++}}
 fs.writeFileSync('$R/owner/site_text_fanned.jsonl',out.join('\\n')+'\\n');console.log('site_text_fanned.jsonl:',out.length,'records,',fanned,'fanned to siblings')"
