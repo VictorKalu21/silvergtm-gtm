@@ -41,6 +41,38 @@ Compute these from analytics. They beat opinions:
 - **Same near-zero result across many campaigns with different copy/offers/verticals** = systemic (infrastructure), not copy.
 - **Bounce rate low + replies near zero** = lists are fine, mail is landing somewhere (spam), not being rejected.
 - **Open tracking is usually OFF** (correct for deliverability) → you're blind on opens. Use the auto-reply ratio and an EmailGuard test instead of opens.
+- **A provider column that is silent including OOO while another provider replies = placement at that provider.** Run the recipient-provider split (next section) before any country, niche or list verdict.
+
+### The recipient-provider split — a placement verdict without a seed test (added 2026-10-12)
+
+Run this on every email account before grading any campaign, country or niche. It takes one lead export and ten minutes, and it is the only cheap signal that separates "this audience doesn't reply" from "this audience never got the email".
+
+**Method.** For each campaign, take the lead list with its send status, bucket every *contacted* lead by the recipient's mail provider, and count replies of ANY kind per bucket (human + auto-reply + out-of-office together):
+
+| | Google (Gmail / Workspace) | Microsoft 365 | Other / own MX |
+|---|---|---|---|
+| contacted | n | n | n |
+| replied, any kind | n (%) | n (%) | n (%) |
+| of which auto / OOO | n | n | n |
+
+**Reading it.** The decisive shape is **one provider column with hundreds contacted and zero replies of any kind, while another provider column on the same campaign replies at a normal rate.** The "of any kind" matters: Gmail and Microsoft do not fire vacation responders or auto-acknowledgements on mail they file as spam, so a provider column with **no OOO at all** is the spam folder, not a quiet audience. Real audiences always leak some OOO and auto-acks. It works in either direction — Google silent / Microsoft replying (Google-hosted senders with a filtered copy, the Atlas Growth case) or Microsoft silent / Google replying (a Microsoft-tenant rejection or junking pattern, the AI Reserve case in §7 below).
+
+Thresholds: with ≥150 contacted in the silent bucket and a ≥2% any-reply rate in the live bucket, the expected count in the silent bucket is ≥3; zero is placement. Under ~100 contacted, note it and keep counting; don't call it.
+
+**What it overrides.** A country, niche or list verdict is not allowed until this split is done, because provider mix differs by geography and trade: UK trades skew Microsoft 365, US small contractors skew Google Workspace. An account where "UK works and US doesn't" with Google-hosted senders is a Gmail-placement account until the split says otherwise (Atlas Growth 2026-10-12: 357 Google recipients → 0 replies, 0 OOO; 161 Microsoft → 6; the Microsoft slice of the US out-replied both UK campaigns). Corollary: the blended reply rate of a mixed-provider list understates the real reply rate by the share of the dead provider; re-grade the funnel on the live bucket only.
+
+**Where the provider comes from, per sequencer.**
+- **PlusVibe:** the lead export has an `mx` column (`GOOGLE_WORKSPACE` / `MICROSOFT365` / `REGULAR_ACCOUNT`) on every lead. Exclude `status = SKIPPED` (secure-email-gateway rows, never sent). See the PlusVibe lead export note below.
+- **Smartlead:** no provider field; pull `/campaigns/{id}/leads` and resolve MX per recipient domain (§2 under Smartlead).
+- **Instantly:** no provider field; pull `/leads/list` and resolve MX the same way.
+- MX resolution without `dig`: `https://dns.google/resolve?name=<domain>&type=MX` (JSON), bucket on `google|aspmx|googlemail` → Google, `outlook|microsoft|protection.outlook` → Microsoft, else Other. One request per unique domain, cache it.
+
+**Action when a column is dead.**
+1. Keep sending to the live provider: filter the next upload to the live bucket and park (don't delete) the dead-provider rows.
+2. Fix the dead provider in cost order: plain-text copy with no links, no signature domain, no numbers (the cheapest test; a plain-text question has landed where the full copy didn't) → correctly spelled, non-lookalike `.com` sending domains → provider-matched senders (Microsoft-hosted inboxes for Microsoft recipients, Google-hosted for Google) → infra rebuild. Confirm each step with a seed test to the dead provider before releasing the parked rows.
+3. Re-grade the account on the live bucket in the meantime so copy and targeting verdicts aren't polluted by the placement gap.
+
+**Trap.** A low blended reply rate plus a healthy-looking warmup score is exactly how this hides. Warmup scores say nothing about the provider that is filtering you.
 
 ## Grading rubric (apply to every account)
 
