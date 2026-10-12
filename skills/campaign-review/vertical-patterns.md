@@ -39,6 +39,16 @@ Two motions, classify every campaign first:
 
 ## BUYER-ACQUISITION
 
+### Pay-per-appointment lead-gen → Home-services contractors (damp/foundation, battery installers, generator dealers)
+*Atlas Growth, PlusVibe, 2026-09-01 → 10-12, 6 campaigns, 4,254 contacted, 54 human replies, 23 positives, 3 meetings + 1 verbal close. Review: `clients/atlas-growth/2026-10-12_campaign-review/REVIEW.md`.*
+- **Winner: UK damp-proofing contractors, 2.0% positive / 2.8% human reply** on a "10 damp surveys in <town> for <company> in the next 30 days?" opener. UK battery installers 0.77% positive. US generator OEM dealers 0.27% (they already get manufacturer leads; "I don't need a salesman"). A raw, unqualified Google-Maps "foundation" list did 0.07% and replied from charities and a university — **never send a Maps list that skipped the qualify step.**
+- **Owner-operator reply signature confirmed (meta-pattern 1):** "How much?", "call me <number>", "send me a WhatsApp", "Bring it!". **The leak is the bridge:** 6 of 23 positives died when the reply pushed a call/video instead of answering in-channel ("I'd rather email", "cut thru the fluff and tell me on here", "can't call… video meeting?" → silence). Answer price + qualification criteria in the first reply, phone when a number is given.
+- **Offer objection, 5 of 54 humans:** pay-per-survey (£100–£200) vs pay-on-job / revenue share ("unless the customer has accepted my quotation and paid their deposit"). The "10 in 30 days" line reads as a familiar pitch ("a lot of people make that promise") yet still draws replies — hook works, payment model is the close-stage sticking point.
+- **Auto-reply share misleads here:** 60% (UK battery, early-October annual leave + auto-acks) and 71% (raw Maps: ticket bots at charities/utilities) with real human replies and meetings alongside → not spam. Read the bodies.
+- **Recipient-provider skew to watch:** 33 of 54 human repliers on Microsoft 365, 11 on Google (MX-resolved). Denominator (list provider mix) unknown at review time; consistent with the 10-04 Gmail-spam test on a different copy. Resolve with a lead-export MX split + an EmailGuard test on the live copy before scaling US lists. [n=1 account, 6 campaigns]
+- **Copy-fit lesson:** a generic job word ("home energy surveys") confused electrician-led battery firms ("what exactly is this as we are electricians") — the job word must match how the firm describes its own work.
+
+
 ### Local community sponsorship → Healthcare practices (owner-operator)
 *LNP, Smartlead, 2026-06/07.* Offer = category-exclusive local sponsorship $900–2,500/mo to 40k-member community.
 - **Winning subject:** "Quick question" (4.4%). Dead: "beyond Google?" (1.9%). **Winning CTA:** phone/call ("call or text my cell").
