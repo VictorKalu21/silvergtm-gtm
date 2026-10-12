@@ -8,7 +8,7 @@ Built on the review in `REVIEW.md`. One number drives it: UK damp contractors co
 
 | Line | Share | Contacts/month | Expected positives | Expected meetings (30% bridge) |
 |---|---|---|---|---|
-| UK damp / foundation | 50% | 1,250 | 25 | 7–8 |
+| UK trades (extensions next; damp residue) | 50% | 1,250 | 25 | 7–8 |
 | UK battery installers | 25% | 625 | 5 | 1–2 |
 | US (foundation qualified + generator Maps) | 25% | 625 | 3 | 1 |
 | **Total** | | **2,500** | **~33** | **~10** |
@@ -23,22 +23,22 @@ The bridge today is 13–17% (23 positives → 3–4 meetings). Getting it to 30
 4. **UK battery keeps running.** Load the 501 held registry-only rows this week or it runs dry (1,170 of 1,369 contacted). Operator call; the queue is staged. Add a per-segment job word (`job_word`) in `personalize-config-battery-uk.json`: electrician-led and battery-only firms get "battery storage installs", solar-led firms keep "home energy surveys".
 5. **Settle Gmail.** Export each campaign's lead list from PlusVibe; MX-resolve to get the Google share. Spend the last EmailGuard credit on the live Atlas copy. If Google leads are >40% of lists but <20% of repliers, route Gmail-hosted leads to a separate campaign and test a plain-text variant on them.
 
-## Weeks 2–3: scale UK damp
+## Weeks 2–3: scale the UK pattern, not the UK damp list
 
-The current UK list is spent (398 contacted of 435). Three sources, cheapest first:
+The UK damp/foundation run was already nationwide (177 Maps tiles, 898 worked leads, 435 sendable, all sent). What is left there is ~400 leads with no email address; nothing to scale. What scales is the pattern: UK owner-operated trades with a survey-then-quote sales motion convert 3–10× the US lists on the same copy.
 
-1. **PCA members, 397 contractors** (already pulled from the trade body's hidden API, emails unverified). Verify (MillionVerifier → BounceBan, operator key + go), personalise with the existing UK config, upload. ~300 sendable expected.
-2. **Dedicated UK damp-proofing Maps run.** The foundation-repair UK run admitted damp as adjacent and damp is what replied (273 damp-proofing rows carried the campaign). Run `google-maps-scrape` nationwide on damp proofing / timber & damp / basement waterproofing as the primary trade, not the adjacent one. Target 1,500 qualified, same pipeline (qualify → dedupe against the 898 worked leads → site text → owner → emails → verify → upload). Goes through `icp-source-planner` as a new ICP file (`ICP-damp-mould.md` exists; extend it).
-3. **AU foundation upload, 168 rows, built 2026-09-21, never uploaded.** Same offer, new country, no new work. Ship it as its own campaign so the result is readable on its own.
+1. **UK home extensions** (branch `claude/modest-tesla-ezb1ii`, scraped 2026-10-11: 41,689 unique → 24,065 geo-qualified → 16,813 with website + 6,328 without). Same country, same buyer type as damp (owner in a van, survey → quote → job), far bigger ticket (£30–80k). This is the next UK campaign and it is the one that should get the damp-style phone-first reply handling and the trial framing. Pipeline: site-text fit → owner → emails → verify → upload in tranches of ~1,000.
+2. **UK damp residue:** `email-waterfall` on the ~400 worked leads with no address, or phone them; small, cheap, same copy.
+3. **AU foundation upload, 168 rows**, built 2026-09-21, never uploaded. Ship as its own campaign.
 
-Copy: unchanged. The opener works. Only change is the first-reply template above.
+Copy: unchanged opener. First-reply template carries price, qualification criteria, the 10-day trial framing, and "what's your number, I'll call you" for trade verticals.
 
 ## Weeks 2–4: US
 
 - **US foundation qualified:** 1,104 ICP leads exist, 845 named, only 236 had verified emails and went out. Run `email-waterfall` on the named leads without an address (~600), verify, top up the qualified campaign. Judge at 600 contacted.
 - **US generator Maps:** let step 3 send, keep topping up from the 881-row Maps upload (394 contacted). Judge at 800 contacted.
 - **US generator dealers:** pause at 1,500 contacted unless positive rate is above 0.3%. OEM dealers already get manufacturer leads; the data says this is the weakest segment.
-- **US pool builders:** run opened 2026-10-11, continue the build; it does not touch sending capacity until a list exists.
+- **US pool builders, US home additions, US restoration** (branches `clever-cerf`, `sweet-lovelace`, `dreamy-hopper`): builds continue; restoration has 11,558 qualified and 2k verification staged. None touch sending capacity until the Gmail question is settled, because US small trades skew Google-hosted and the 10-04 test put the Silver GTM copy in Gmail spam 4/4.
 
 ## Decision points
 
@@ -47,7 +47,7 @@ Copy: unchanged. The opener works. Only change is the first-reply template above
 | End of week 1 | Gmail share of lists vs repliers | Gmail-only campaign with plain-text variant | nothing changes |
 | UK battery at 1,900 contacted | positive ≥ 0.7% | load the 531 secondary + 80 risky | hold at the registry rows |
 | US gen dealers at 1,500 | positive ≥ 0.3% | continue | pause, move capacity to UK damp |
-| UK damp new list at 600 contacted | positive ≥ 1.5% | add inboxes (reserve `.com` domains, 2–3 inboxes each) | re-read replies before adding volume |
+| UK extensions at 600 contacted | positive ≥ 1.5% | add inboxes (reserve `.com` domains, 2–3 inboxes each) | re-read replies before adding volume |
 | Monthly | meetings ≥ 10 | hold allocation | shift US share to UK damp |
 
 ## For the client conversation
