@@ -21,7 +21,7 @@ The bridge today is 13–17% (23 positives → 3–4 meetings). Getting it to 30
 2. **Work the open positives in the export:** The Damp Group ("send us some samples"), Dry-Guard (WhatsApp), Save Energy UK (email the named inbox), the two US generator Maps leads (answer their questions by email), Spilde Electric (one plain answer, no call times).
 3. **Stop the raw US Maps campaign.** Mark complete. Never top up.
 4. **UK battery keeps running.** Load the 501 held registry-only rows this week or it runs dry (1,170 of 1,369 contacted). Operator call; the queue is staged. Add a per-segment job word (`job_word`) in `personalize-config-battery-uk.json`: electrician-led and battery-only firms get "battery storage installs", solar-led firms keep "home energy surveys".
-5. **Settle Gmail.** Export each campaign's lead list from PlusVibe; MX-resolve to get the Google share. Spend the last EmailGuard credit on the live Atlas copy. If Google leads are >40% of lists but <20% of repliers, route Gmail-hosted leads to a separate campaign and test a plain-text variant on them.
+5. **Gmail is settled (lead exports, same day): 357 Google-hosted US recipients, 0 replies of any kind; 161 Microsoft, 6 replies.** US mail is in Gmail spam. Until a Google seed lands with the live copy: filter US uploads to `mx != GOOGLE_WORKSPACE`, park the Google rows, and test in order (a) plain-text opener, no signature domain, no numbers; (b) correctly spelled `.com` domains; (c) Microsoft-hosted sending inboxes for Google recipients. Spend the last EmailGuard credit on (a).
 
 ## Weeks 2–3: scale the UK pattern, not the UK damp list
 
@@ -44,7 +44,7 @@ Copy: unchanged opener. First-reply template carries price, qualification criter
 
 | When | Check | If yes | If no |
 |---|---|---|---|
-| End of week 1 | Gmail share of lists vs repliers | Gmail-only campaign with plain-text variant | nothing changes |
+| End of week 1 | plain-text opener lands at Gmail (EmailGuard) | release the parked Google rows | try `.com` domains, then Microsoft-hosted senders |
 | UK battery at 1,900 contacted | positive ≥ 0.7% | load the 531 secondary + 80 risky | hold at the registry rows |
 | US gen dealers at 1,500 | positive ≥ 0.3% | continue | pause, move capacity to UK damp |
 | UK extensions at 600 contacted | positive ≥ 1.5% | add inboxes (reserve `.com` domains, 2–3 inboxes each) | re-read replies before adding volume |

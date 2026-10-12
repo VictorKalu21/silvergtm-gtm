@@ -12,6 +12,18 @@ Evidence for "landing": human replies on all 6 campaigns and on all 5 sending do
 
 **One open question (not settled by this export):** 33 of 54 human repliers are on Microsoft 365, 11 on Google, 10 other. Without the recipient-provider mix of the uploaded lists, that skew cannot be read as Gmail suppression, but it is consistent with the 2026-10-04 test (Gmail 4/4 spam on the Silver GTM copy; the Atlas copy was never placement-tested). Resolve it with the two cheap checks in the action list.
 
+## Addendum 2026-10-12 (later the same day): the Gmail question is settled
+
+PlusVibe lead exports for the two cleanest US campaigns carry an `mx` column (recipient provider). Contacted leads by provider, replies of any kind (human + auto + OOO):
+
+| Campaign | Google Workspace | Microsoft 365 | Other |
+|---|---|---|---|
+| US foundation qualified | 114 contacted, **0 replies** | 57 contacted, 2 replies | 25, 0 |
+| US generator Maps | 243 contacted, **0 replies** | 104 contacted, 4 replies | 46, 1 |
+| **Total** | **357 → 0 (0.0%)** | **161 → 6 (3.7%)** | 71 → 1 |
+
+Zero replies of any kind from 357 Google inboxes, including zero vacation responders (Gmail does not auto-reply to mail it files as spam), against 3.7% from Microsoft inboxes on the same campaigns. If Google replied at the Microsoft rate the expected count is ~13; observing 0 is not chance. **US mail is going to Gmail spam.** The US lists are 54–58% Google-hosted, so every US campaign ran at roughly 40% effective reach. The Microsoft slice of the US replies better than either UK campaign. The binding constraint for the US is placement at Google, not the country and not the niche. PlusVibe also skipped 45 leads behind secure email gateways (Proofpoint, Barracuda, Mimecast); that is correct behaviour.
+
 ## Portfolio
 
 | Campaign | Dates | Contacted | Human replies | Auto | Positive (label) | Positive % of contacted | Bounce | Grade |
