@@ -15,3 +15,23 @@ Technical backlog for the skill's engine. Not operator-facing (see SKILL.md for 
 **Cost note.** The new set spends BounceBan credits on the `invalid` slice (~3% of a list here) and on MV failures. At the measured 3-in-4 recovery rate that is the cheapest sendable address in the whole pipeline; if a list is ever dominated by `invalid`, `--bb-on catch_all,unknown,error` turns it off without a code change.
 
 **Job-side precedent:** `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/bb_recover.py` — the hand-rolled version this replaces. Nothing in a run folder should need to re-send a verifier's misses again.
+
+## HIGH: a BounceBan auth failure is checkpointed as a finished result, and an env var silently overrides the key file
+
+**Status:** OPEN · found 2026-10-13 (Atlas Growth US generator run, tranche 06m). The cloud container exported a
+5-character placeholder `BOUNCEBAN_KEY`; `verify-millionverifier-bounceban.js` prefers `process.env` over the
+`email-verification.env` file (line 87), so all 167 BounceBan calls returned `{"msg":"Authorization information is
+missing or invalid."}`. The runner wrote each of those to `bounceban.jsonl` like a real answer, the classifier read
+them as `bb:none`, and the tranche reported **123 risky instead of 26** with no error and no non-zero exit. A rerun
+skipped them too, because `bb.has(email)` treats any checkpoint line as done. The same `{status:"verifying"}` gap: 15
+calls still pending after the 8 polls were checkpointed without a `result` and never re-polled (all 15 resolved later
+via `/v1/verify/single/status?id=`).
+
+**Fix (engine, with a test and an operator go):** (1) before stage 2, one free `GET /v1/account` with the key; abort on
+401 and say which source the key came from (env var or file). (2) Checkpoint a BounceBan line only when it carries
+`result`; write auth/HTTP errors and still-`verifying` ids to a separate retry file that the next run re-polls (by id,
+free) or re-calls. (3) Report the key source (env/file) in the summary line. Test: a fixture BB server answering 401
+must leave `bounceban.jsonl` empty and exit non-zero.
+
+**Until then:** run with `env -u BOUNCEBAN_KEY -u MILLIONVERIFIER_KEY` so the file key is used; after a run, any
+`bounceban.jsonl` line without `result` must be removed (auth errors) or re-polled by id (pending) before finalising.

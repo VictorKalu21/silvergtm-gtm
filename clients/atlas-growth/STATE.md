@@ -46,12 +46,13 @@ also needs `owner/site_text.jsonl` (full archive).
 |---|---|---|---|
 | **01** | 3,000 | dealer-list · 2,187 owner-name addresses + 813 named owners on company mailboxes (top OEM tiers first) | **DONE 2026-09-25: 2,688 leads sendable (89.6%; 1,954 on the owner's own address, 734 company) · 221 risky-only · 87 none.** MV 2,655 ok-or-recovered of 2,996; BB 991 calls (16 recovered from invalid); rank-2 fallback 51 addresses → 43 sendable. In `owner/emails_final.csv` |
 | 02 | 3,000 | dealer-list · named owners on company mailboxes | banked — **next** |
+| **06m** | 600 | 'both' (Maps + dealer-list) leads from tranches 02–03, **non-Google mail host only** (campaign review 2026-10-12: Google-hosted US inboxes 0 replies, Microsoft 365 3.7%). Pool 1,067 → MX (`resolve-mx.py`, dns.google): microsoft 393 · google 428 · other 236 · no MX 10 → Google parked in `owner/verify/parked_google_both.csv`, no-MX in `parked_nomx_both.csv` → 629 non-Google → 600 taken (`make-tranche-06m.py`: named first, microsoft before other; 29 unnamed 'other' left) | **VERIFIED 2026-10-13: 547 sendable · 26 risky · 27 dropped** (microsoft 372/1/20 · other 175/25/7); 328 of the sendable have a named owner (on company mailboxes, so nameless under the name rule). Credits: MV 477 (599 calls), BB 161. No rank-2 fallback (operator cap 600). In `owner/emails_final.csv` (tag `06m`). Plusvibe build in progress: `owner/personalize-both06m/` (13 batches + batch 13 for 40 no-text leads), `company-short.py` adds `company_short`; output will be `owner/plusvibe_upload_both_06m.csv` |
 | 03 | 3,000 | dealer-list · unnamed (38 named) | banked |
 | 04 | 3,000 | dealer-list · unnamed | banked |
 | 05 | 2,260 | 1,299 dealer-list tail + 961 Maps-only (177 personal, 686 named) | banked |
 
 Tranche files are fixed once written (re-running the script appends new rows to the last tranche, never reshuffles).
-Keys: `$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env` (outside the repo; recreate from the operator in a new container). Run one tranche:
+Keys: `$HOME/Silver GTM Systems/ENVs-Secrets/email-verification.env` (outside the repo; recreate from the operator in a new container). **Run the verifier with `env -u BOUNCEBAN_KEY -u MILLIONVERIFIER_KEY`**: this container exports a 5-character placeholder `BOUNCEBAN_KEY` that the script prefers over the file (2026-10-13: every BounceBan call failed auth until unset). Run one tranche:
 ```
 IN=owner/verify/tranche_01.csv OUT_DIR=owner/verify/t01 EMAIL_VERIFY_ENV=<gitignored env with MILLIONVERIFIER_KEY, BOUNCEBAN_KEY> \
   node ../../../skills/email-verify-debounce-bounceban/scripts/verify-millionverifier-bounceban.js --concurrency 4
