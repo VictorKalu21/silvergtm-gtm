@@ -21,11 +21,11 @@ Run folder `2026-09-24_us-generator-dealers/`. ICP `ICP-generators.md`. Config `
 Data is gitignored; this section is how to pick it back up.
 
 ### Restore the data (FIRST, in any new session)
-Operator holds **`atlas-gen-rundata-0925b.part00..05`** (sent 2026-09-25; supersedes the 2026-09-24 parts).
-`cat atlas-gen-rundata-0925b.part0* > rundata.tar.gz` (sha256 starts `0eeaa19e38c66dd0`) →
+Operator holds **`atlas-gen-rundata-1013.part00..05`** (sent 2026-10-13; supersedes the 0925b and 2026-09-24 parts; includes verification, both Plusvibe uploads, the Maps-only work and `personalize-config-generators.json`).
+`cat atlas-gen-rundata-1013.part0* > rundata.tar.gz` (sha256 starts `91bc2907ad345ba5`) →
 `tar -xzf rundata.tar.gz -C clients/atlas-growth/`. Excluded as rebuildable: Maps raw shards, `site_text.main.jsonl`
 (pre-merge; `owner/site_text.jsonl` is the merged best), the owner-new/-render/-retry/-scrapling fetch folders, logs.
-Smaller alternative for verification + Plusvibe only: **`atlas-gen-verify-kit.tar.gz`** (6 MB: `leads_icp.csv`,
+Smaller alternative for verification + Plusvibe only: **`atlas-gen-verify-kit-1013.tar.gz`** (8 MB, also has `emails_final.csv`, both Plusvibe uploads + held files, the side lists: `leads_icp.csv`,
 `owner/contacts_final.*`, `owner/emails_candidates.*`, `owner/leads_unnamed.csv`, `owner/verify/`). Plusvibe `prep`
 also needs `owner/site_text.jsonl` (full archive).
 
