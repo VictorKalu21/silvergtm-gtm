@@ -35,3 +35,11 @@ must leave `bounceban.jsonl` empty and exit non-zero.
 
 **Until then:** run with `env -u BOUNCEBAN_KEY -u MILLIONVERIFIER_KEY` so the file key is used; after a run, any
 `bounceban.jsonl` line without `result` must be removed (auth errors) or re-polled by id (pending) before finalising.
+
+## DONE 2026-10-18 (operator: "write the debounce runner"): DeBounce stage-1 runner, with the 2026-10-13 BounceBan fixes
+
+`scripts/verify-debounce-bounceban.js` + `tests/verify-debounce-dry-run.test.js` (17 checks, no network). SKILL.md named
+this runner but only the MV runner was in the repo (the operator's copy lives on Windows). The new runner carries the
+three fixes the HIGH entry above asks for — file key wins over an env var, free key pre-flight that aborts on a rejected
+key, BounceBan checkpoint only on `result` with pending ids re-polled by id — and adds `--stage1-only` / `--bb-max`.
+The MV runner itself is unchanged; the HIGH entry stays OPEN for it.

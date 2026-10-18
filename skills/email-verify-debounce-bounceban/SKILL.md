@@ -22,7 +22,18 @@ Measured on the Atlas Growth UK run: 3 of the first 4 MV-`invalid` addresses sen
 `bb:recovered_from_invalid`); anything else keeps the MV reason and stays dropped, so the override can only
 ever add sendable addresses. `disposable` is never sent — it is not recoverable. `ok` needs nothing.
 
-## The runner lives in this skill folder
+## The runners live in this skill folder
+
+**DeBounce runner (added 2026-10-18):** `scripts/verify-debounce-bounceban.js`, same IN/OUT_DIR/outputs as the MV runner
+(`debounce.jsonl` is its stage-1 checkpoint). Extra flags: `--stage1-only` (DeBounce only, report
+`would_go_to_bounceban`, stop: use it to size the BounceBan spend before approving it) and `--bb-max N` (hard cap on
+BounceBan calls). The key FILE wins over an env var of the same name, both keys are checked on free endpoints before any
+paid call, and a BounceBan line counts as done only when it has `result` (pending ids re-polled next run). DeBounce
+facts (probed 2026-10-18): `GET https://api.debounce.io/v1/?api=KEY&email=` → `{debounce:{code, result, reason, role,
+free_email}}`, 1 credit per address, balance at `/v1/balance/?api=KEY`; codes 5 ok · 4 accept-all · 7 unknown · 8 role ·
+6 invalid · 3 disposable · 1 syntax · 2 spam trap. Test: `node tests/verify-debounce-dry-run.test.js`.
+
+### MillionVerifier runner
 
 `scripts/verify-millionverifier-bounceban.js` (added 2026-09-12; resumable; `--dry-run` classifies from the
 checkpoints without spending; test in `tests/verify-dry-run.test.js`). The older copies under
