@@ -181,7 +181,7 @@ Three searches on leads the site failed on tell you which registry a vertical us
 | Site fetch | free, network-bound | concurrency 12; large host counts saturate a home network |
 | Model reading | tokens | pay once per lead, on pre-scraped text, never let the model browse |
 | In-session WebSearch | tokens, no key | calls in one message run in parallel; ten at a time is tested. Results vary between runs |
-| SERP vendor | per query | only after the free rungs in `web-scrape-triage` are exhausted at real volume |
+| SERP (Keenable, `--backend keenable`) | free: 100K requests/month with a key (`KEENABLE_KEY`); keyless 1,000/hour per IP, no credits | $0 for a 1,000-lead sweep on the free tier; own index, not Google — A/B named-owner yield on 50 leads against DataForSEO before switching a full sweep |
 | Email finders (QuickEnrich, then paid finders as 50-contact probes) | credits per found address | `email-waterfall`; never spent without an explicit go |
 | Blind email permutations (`pattern` rung) | MillionVerifier credit per candidate (up to 6 per contact) + BounceBan on catch-alls | GATED: `--estimate-pattern` first, operator says go or skip, default skip; ~4 MV credits per owner found when it works |
 | BBB match + principals (`bbb-lookup.js`) | free, keyless (search JSON + Keenable fetch of the profile) | ≤ 4 parallel on search, 1/s on profiles; Firecrawl only as `--profile-backend firecrawl` fallback |

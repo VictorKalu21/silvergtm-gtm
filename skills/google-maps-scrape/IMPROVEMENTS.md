@@ -1405,8 +1405,10 @@ rows `{title, url, description, snippet, published_at}`; fetch returns `{url, ti
 5. `GET /v1/fetch/public?url=<the BBB profile>` → `content` with the principals block (see the DONE entry above).
 **Decision.** Keep DataForSEO as the production SERP for `search-owner.js` (Google ranking, measured $0.006/query) until
 Keenable is compared on the same 50 leads for named-owner yield; but Keenable is already wired where it is strictly
-better: `bbb-lookup.js --profiles` (free fetch of a Cloudflare page). **OPEN (engine, needs a test + operator go):**
-(a) a `serp_backend: keenable` option in `search-owner.js` using `/v1/search/public` (free) with `site` param for the
-LinkedIn/BBB rungs — 50-lead A/B against DataForSEO first; (b) a Keenable-fetch rung in `fetch-sites.js` BEFORE
+better: `bbb-lookup.js --profiles` (free fetch of a Cloudflare page). **DONE 2026-10-19 (operator: "interested in the free tier"):** (a) `search-owner.js --backend keenable` / `owner_query.serp_backend:
+"keenable"` — keyed `/v1/search` with `KEENABLE_KEY` (100K free/month) or the keyless `/v1/search/public` twin when no key
+(1,000/hour per IP, NOTE printed), 429 → sleeps Retry-After once, live-only, `--max-cost` optional (calls metered at $0 in
+`serp_cost.json`); `tests/search-owner-keenable.test.js` (11 checks, stubbed). The 50-lead A/B against DataForSEO for
+named-owner yield is still the gate before a full sweep moves over. **OPEN:** (b) a Keenable-fetch rung in `fetch-sites.js` BEFORE
 Firecrawl for 403/Cloudflare residue (it fetches live, "including URLs that are not indexed" per its docs) — 3-site probe
 on the Atlas 403 residue first; (c) a `web-scrape-triage` Tier-2/Tier-3 entry (done below).
