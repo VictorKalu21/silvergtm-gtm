@@ -11,7 +11,12 @@ LEGAL = r'(?:incorporated|inc|llc|l\.l\.c|ltd|limited|corp|corporation|co|compan
 ACRO = {'HVAC', 'AC', 'A/C', 'USA', 'US', 'LP', 'DC', 'NY', 'NJ', 'TX', 'FL', 'II', 'III', 'IV', 'JR', 'SR', 'GE', 'RV', 'HQ', 'LED', 'MEP'}
 def recase(w):
     core = re.sub(r'[^A-Za-z/]', '', w)
+    if core.upper() in {'ST', 'CO', 'MT', 'FT'}: return w.lower().capitalize()   # Saint / Company / Mount / Fort, never initials
     if core.upper() in ACRO or (2 <= len(core) <= 4 and not re.search(r'[AEIOUY]', core.upper())): return w.upper()
+    # any other 2-letter token is an abbreviation ("Brevard/IR", "EZ Power"), unless it is a small word
+    # ... but real two-letter words keep normal casing ("Power Up", "Charge Me Up", "Allen St.", "AA Service Co.")
+    if len(core) == 2 and core.upper() not in {'OF', 'IN', 'TO', 'AT', 'BY', 'ON', 'OR', 'AN', 'AS', 'IS', 'IT', 'MY', 'OK',
+                                               'UP', 'ME', 'ST', 'CO', 'GO', 'DO', 'SO', 'NO', 'WE', 'BE', 'HE'}: return w.upper()
     if '&' in w or not core: return w
     out = w.lower().capitalize()
     out = re.sub(r"^(Mc)([a-z])", lambda m: m.group(1) + m.group(2).upper(), out)
@@ -25,13 +30,15 @@ def short(name):
     s = re.sub(r'\s*[\(\[][^\)\]]*[\)\]]', '', s)
     s = re.split(r'\s+[-|–—]\s+', s)[0]
     # a legal suffix mid-string ends the trading name: "Schuman Electric Inc. Jacksonville", "PDQ Electric Corp 24/7 …"
-    m = re.search(r'^(.+?\S)[\s,]+(?:inc|llc|l\.l\.c|ltd|corp|pllc)\b\.?(?:\s|,|$)', s, re.I)
+    m = re.search(r'^(.+?\S)[\s,]+(?:inc|llc|l\.l\.c|ltd|corp|pllc)\b\.?(?:\s|,|-|$)', s, re.I)
     if m: s = m.group(1)
     for _ in range(3):
         s = re.sub(r'[\s,]+' + LEGAL + r'\.?\s*$', '', s, flags=re.I).strip(' ,.')
     letters = re.sub(r'[^A-Za-z]', '', s)
     if letters and letters.isupper() and len(letters) > 4:
-        s = ' '.join('-'.join(recase(p) for p in w.split('-')) for w in s.split())
+        s = ' '.join('-'.join('/'.join(recase(q) for q in p.split('/')) for p in w.split('-')) for w in s.split())
+        # small words stay lower case after the first word ("Generator Supercenter of Lawton")
+        s = re.sub(r'(?<=\s)(Of|And|The|At|In|For|By|On|To)(?=\s)', lambda m: m.group(1).lower(), s)
     s = re.sub(r'\s{2,}', ' ', s).strip(' ,.-')
     return s or (name or '').strip()
 if __name__ == '__main__':
