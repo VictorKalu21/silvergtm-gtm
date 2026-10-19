@@ -184,7 +184,7 @@ Three searches on leads the site failed on tell you which registry a vertical us
 | SERP vendor | per query | only after the free rungs in `web-scrape-triage` are exhausted at real volume |
 | Email finders (QuickEnrich, then paid finders as 50-contact probes) | credits per found address | `email-waterfall`; never spent without an explicit go |
 | Blind email permutations (`pattern` rung) | MillionVerifier credit per candidate (up to 6 per contact) + BounceBan on catch-alls | GATED: `--estimate-pattern` first, operator says go or skip, default skip; ~4 MV credits per owner found when it works |
-| BBB search match (`bbb-lookup.js`) | free, keyless | ≤ 4 parallel through the relay; the profile page (where the principal is) is Firecrawl, paid per page |
+| BBB match + principals (`bbb-lookup.js`) | free, keyless (search JSON + Keenable fetch of the profile) | ≤ 4 parallel on search, 1/s on profiles; Firecrawl only as `--profile-backend firecrawl` fallback |
 | Yellow Pages listings (`yp-search.js`) | free, keyless | universe cross-check only — no owner on YP; one page per 1.2 s |
 | SERP (DataForSEO, the wired backend) | standard/batch mode $0.0018 per query, live $0.006 — both measured 2026-10-11 (the pricing page shows a third of each) | a 1,000-lead cascade at 2–3 queries per lead ≈ $4–6 in standard mode (≈ $12–18 live); `--max-cost` caps it; serper ≈ $1/1k and Brave $5/1k are not wired |
 | LinkedIn reverse lookup → personal email | ContactOut ≈ $0.10 · FullEnrich ≈ $0.17 per personal email | 20-contact probe first; US lists only |

@@ -1314,9 +1314,16 @@ match), slim record (rating, accredited, categories, out-of-business, profile UR
 stops on 403/429/503. `--profiles` renders matched profiles through Firecrawl (rate-paced, `FIRECRAWL_KEY`) and
 `parsePrincipals()` reads "Business Management / Principal Contacts / Customer Contact" lines (`Name, Title`).
 Test: `tests/bbb-lookup.test.js` (14 checks, real search fixture).
-**OPEN (needs one paid run):** the principals parser's fixture is SYNTHETIC — no Firecrawl key in this session.
-First `--profiles` run: paste three real markdown renders here (a miss keeps `profile_sample` on the record for
-this), fix the regex to the real shape, flip this to DONE. Until then its names are candidates, not answers.
+**DONE 2026-10-19 — principals parser rebuilt on a REAL render, and the profile fetch is now FREE.** Keenable's keyless fetch
+(`GET https://api.keenable.ai/v1/fetch/public?url=<profile>`, header `X-Keenable-Title`, 200 in ~1 s) returned the
+Cloudflare-walled BBB profile as markdown with the block intact: `Business Management:Mr. Mike Cail, OwnerMr. Logan Knott,
+Member  ### Additional Contact Information  Principal ContactsMr. Mike Cail, OwnerMr. Logan Knott, Member  Customer
+ContactsMr. Mike Cail, Owner  ### Licensing information` — i.e. the people run together with NO separator, which the
+synthetic one-per-line fixture never showed. `parsePrincipals` now cuts the segment at the next heading/header and splits
+entries at an honorific, bullet, line break or the next capitalised name; `tests/bbb-lookup.test.js` carries the exact
+real string (17 checks). `--profiles` defaults to `--profile-backend keenable` (paced 1/s per IP, `KEENABLE_KEY` optional
+for the keyed endpoint); Firecrawl stays as `--profile-backend firecrawl`. Still a candidate for the reader, never an
+answer: a branch profile names the branch's principal, and the city check is the reader's job.
 **Also OPEN:** `prep-owner-batches.js` does not yet read `bbb.jsonl` — pass the principals in the way `--ch` carries
 the Companies House block (same `registry` shape; small change, needs a test).
 
@@ -1375,3 +1382,31 @@ is wired in — Spider would be a cheaper PASS-3 than Firecrawl per page only if
 `applyFirecrawl` now merges `socialLinks(md)` + `socialLinks(html)` into `rec.socials` next to the email merge, so a
 Cloudflare-walled site recovered through Firecrawl carries its footer profiles like a plain-fetched one. Covered by
 `tests/fetch-sites-firecrawl.test.js` (socials assertion on the recovered record).
+
+## NOTE 2026-10-19 — Keenable (keenable.ai): probed keyless, and it is the cheapest SERP + fetch rung we have
+
+Operator asked to check it out. **What it is:** Accel-backed web-search infrastructure for AI agents (own crawler/index,
+100B+ docs, ex-Yandex search leadership). **Pricing page 2026-10-19:** 100K free requests a month on signup; $4 per 1,000
+pay-as-you-go (Agent Builder tier); $1 per 1,000 at 100 RPS+ (Frontier tier, enterprise). **Keyless public twins, no
+signup, no credits, rate-limited per IP:** `POST /v1/search/public` and `GET /v1/fetch/public?url=`, both requiring an
+`X-Keenable-Title: <app name>` header (without it: `400 Missing app identifier`; keyed `/v1/search` without a key: `401`).
+Body `{query, mode, site, acquired_after/before, published_after/before, query_time, snippet_max_length, max_results}`;
+rows `{title, url, description, snippet, published_at}`; fetch returns `{url, title, description, content}` (markdown).
+
+**Probe (5 calls, keyless, 2026-10-19, from the cloud egress — all 200, 0.2–0.6 s):**
+1. `"Logan & Mike Plumbing" Phoenix AZ owner` → #1 the BBB profile (snippet = the profile text), then a licence-verifier
+   page (ROC #337939), a job board, a LinkedIn employee, a jobs page. The owner-query rung works.
+2. `site:georgebrazilplumbingelectrical.com "info@" OR "@gmail.com"` → 5/5 results from that domain: **`site:` in the
+   query IS honoured**; the quoted/OR mailbox terms are soft (pages were generic about/blog pages, no address in the
+   snippets) — the boolean email rung needs the fetch of the contact page, not the snippet, on this backend.
+3. `site:linkedin.com "George Brazil Plumbing" Phoenix` → the company page and **`Marc Erpenbeck | President | ESOP
+   Leader`** as result 3 — the LinkedIn rung names the decision-maker.
+4. `query` + `site: "bbb.org"` parameter → 5/5 BBB pages for the business (profile, more-info, reviews, complaints).
+5. `GET /v1/fetch/public?url=<the BBB profile>` → `content` with the principals block (see the DONE entry above).
+**Decision.** Keep DataForSEO as the production SERP for `search-owner.js` (Google ranking, measured $0.006/query) until
+Keenable is compared on the same 50 leads for named-owner yield; but Keenable is already wired where it is strictly
+better: `bbb-lookup.js --profiles` (free fetch of a Cloudflare page). **OPEN (engine, needs a test + operator go):**
+(a) a `serp_backend: keenable` option in `search-owner.js` using `/v1/search/public` (free) with `site` param for the
+LinkedIn/BBB rungs — 50-lead A/B against DataForSEO first; (b) a Keenable-fetch rung in `fetch-sites.js` BEFORE
+Firecrawl for 403/Cloudflare residue (it fetches live, "including URLs that are not indexed" per its docs) — 3-site probe
+on the Atlas 403 residue first; (c) a `web-scrape-triage` Tier-2/Tier-3 entry (done below).

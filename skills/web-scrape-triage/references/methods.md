@@ -16,6 +16,7 @@ Pulled from: google-maps-scrape skill, the Form D / portfolio / AI-Reserve pipel
 - Uses: find job posts mentioning a tool (`Clay "GTM Engineer" site:jobs.lever.co`), resolve a company's domain (`<name> <city>` → take the company's own site, not an aggregator), surface profile pages.
 
 **Tier 3 — Rendered fetch / anti-bot unlocker (paid, last resort).** Site returns a Cloudflare/anti-bot challenge (403 "Just a moment", "Enable JavaScript")?
+- **Keenable fetch** (`GET api.keenable.ai/v1/fetch/public?url=…` + `X-Keenable-Title`, keyless, free, per-IP rate limit) — returned a Cloudflare-walled bbb.org profile as markdown (probed 2026-10-19). Try it on 3 failing URLs before any paid unlocker.
 - **Firecrawl** (`POST api.firecrawl.dev/v1/scrape {url, formats:["markdown"]}`, `Authorization: Bearer fc-...`) — PROVEN to beat Clutch's Cloudflare. Returns clean markdown/html.
 - Alternatives: ZenRows, ScraperAPI, ScrapingBee (residential proxies + JS render). Per-page cost.
 - **Instant Data Scraper** (Chrome extension) — uses YOUR logged-in browser, so it sidesteps anti-bot for free, but it's manual (good for one-off pulls, not automation).
