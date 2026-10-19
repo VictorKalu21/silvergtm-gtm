@@ -114,6 +114,8 @@ Two motions, classify every campaign first:
 - **The copy was the filter, not the domains:** an Atlas domain that went to Gmail spam with that copy landed **Gmail 3/3 inbox** with a plain-text question (no spintax, no links/signature, no numbers, no offer). Lesson: before blaming domains for an account-wide Gmail-spam result, check whether every domain sent the same copy, then run the copy test.
 - **A Microsoft-365 domain with 17 inboxes on it** was rejected outright by Gmail ("very low reputation of the sending domain", `bounce_type: SENDER`, 17/17) and went to spam at Microsoft 3/3 — the >10-inboxes-per-domain spam-cannon pattern, first-hand. That one IS the domain, whatever the copy.
 - Atlas's own pay-per-inspection copy (home-services contractors) was not tested that day.
+- **CONFIRMED on the Silver GTM domains (2026-10-11):** the same plain-text email from gotsilvergtm.co (Gmail spam with the Silver GTM copy on 10-04) → **Gmail 3/3 inbox, Microsoft 2/2 inbox.** Same email passing from both brands' domains = the domains are fine; the Silver GTM copy was the filter. [n=2 domain sets]
+- **Rewritten Silver GTM pitch PASSED (2026-10-19), gotsilvergtm.co: Gmail 3/3 inbox, Microsoft 3/3 inbox.** Changes from the spam version: all spintax removed, the "2x MQL-to-SQL" and "~25 hours/month" claims cut, the three "free/at no charge/on the house" phrasings cut, the tool name (Clay) dropped, plain "Victor" sign-off instead of a signature merge, one pain question + one yes/no CTA ("Worth discussing?"). Which single change mattered is untested (all changed together).
 
 ## SELLER-SOURCING
 
