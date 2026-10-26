@@ -167,3 +167,12 @@ collapse and fetch.
   loft 4,524 · new build 3,203 · rear/side 2,437 · garage 2,053 · design-and-build 1,568 · double storey 1,028 · kitchen 617 ·
   orangery 549 · basement 541. Next (after the re-fetch lands): re-tier, read tier D-rest (632) + any row newly in A/B,
   re-apply; then Companies House (needs `COMPANIES_HOUSE_KEY`) → owner read.
+- 2026-10-26 — **re-fetch DONE (17,070 domains, 13,526 ok, 10,997 with an on-site email) → re-tier A 9,970 / B 1,317 / D 745 / F 5,038 →
+  916 rows still unread (D-rest 635 + newly-texted A 250 / B 31) → `classify2/` 16 batches, all 16 validated (every place_id, 0 bad files):
+  extension_builder 216 (24%) · trade_only 270 · builder_unconfirmed 126 · unclear 128 · not_builder 72 · commercial_only 43 ·
+  new_build_only 31 · conservatory_glazing_only 26 · design_only 12 — the tier-D remainder reads as the FN sample said (mostly trades).
+  `classify/all_out/` = 185 A+B + 2 D-sample + 16 c2_ files; `apply-classify.js --fallback unclear` re-run → `leads_classified.csv`
+  17,070 rows, 12,090 LLM verdicts: **extension_builder 8,242 (Qualified) · builder_unconfirmed 1,437 (Review) · unclear 5,157
+  (Review; 4,980 = fallback = no site text, checked against `owner/site_text.jsonl`, 177 read-but-unclear) · excluded 2,234**
+  (trade_only 1,118 · commercial_only 405 · not_builder 226 · design_only 204 · new_build_only 169 · conservatory_glazing_only 112).
+  **STEP 5e COMPLETE.** Next: `assemble.js` (deliverable) → Companies House (BLOCKED: no `COMPANIES_HOUSE_KEY` in the skill `.env`) → owner read.
