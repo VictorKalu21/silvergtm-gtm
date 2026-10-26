@@ -1375,3 +1375,11 @@ is wired in — Spider would be a cheaper PASS-3 than Firecrawl per page only if
 `applyFirecrawl` now merges `socialLinks(md)` + `socialLinks(html)` into `rec.socials` next to the email merge, so a
 Cloudflare-walled site recovered through Firecrawl carries its footer profiles like a plain-fetched one. Covered by
 `tests/fetch-sites-firecrawl.test.js` (socials assertion on the recovered record).
+
+## OPEN 2026-10-26 (fetch-sites.js, MEDIUM): the end-of-run report `JSON.stringify` runs out of heap on a ~17k-domain pass and aborts the process (exit 134), losing the free PASS 2 retry
+
+**Status:** OPEN (job-side workaround, no engine change) · found 2026-10-26 (Atlas Growth, UK home-extensions run, 17,070 domains, `--concurrency 12`, default Node heap).
+
+**What happened:** the main pass wrote all 17,070 rows to `site_text.jsonl` (279 MB, every line valid JSON, 13,287 `ok`) and then died with `FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory`, stack top `JsonStringifier::Stringify` — i.e. the process keeps every record (pages text included) in memory and stringifies the lot at the end for the report / retry bookkeeping. Exit 134 from `pipeline.sh fetch`. The incremental JSONL was intact; the **PASS 2 retry of transient failures (850 rows: 503 ×427, AbortError ×325, 500 ×79, 5xx/429 the rest) never ran**, the same loss as the 2026-09-24 hang entry above, by a different route.
+
+**Fix (engine, with a test and an operator go):** stop retaining records after they are written — keep only `{place_id, status}` for the report and the retry queue, and stream the report. Until then: large runs either go with `node --max-old-space-size=6144 fetch-sites.js …`, or the transient rows are re-fetched into a separate `--out` from a CSV of the failed place_ids (this run: `leads_transient.csv` → `owner_retry/`, merged back by status).

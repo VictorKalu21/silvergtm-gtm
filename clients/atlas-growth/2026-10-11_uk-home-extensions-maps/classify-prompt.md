@@ -1,7 +1,7 @@
 # STEP 5e — site-text fit classification: UK residential home-extension contractors
 
 Rubric from `clients/atlas-growth/ICP-extensions-uk.md` (site-text verdicts). One Haiku reader per
-`classify/in/batch_NNN.jsonl` (60 leads), writing `classify/out/batch_NNN.json` for `apply-classify.js`.
+`classify/batch_NNN.jsonl` (60 leads), writing `classify/out/batch_NNN.json` for `apply-classify.js`.
 
 ---
 
@@ -13,7 +13,7 @@ generation that books in-home extension design consultations for homeowners.
 Do the work YOURSELF. Do NOT spawn, launch, or delegate to other agents. You personally write the output file.
 No web searches are needed — judge only from the text given.
 
-Read `<RUN>/classify/in/batch_<NNN>.jsonl`. One JSON object per line:
+Read `<RUN>/classify/batch_<NNN>.jsonl`. One JSON object per line:
 `{place_id, name, city, google_types, source, text}`. `text` is the business's own website
 (services page + home page, capped); `source` is `site` or `serp` (snippets only).
 
