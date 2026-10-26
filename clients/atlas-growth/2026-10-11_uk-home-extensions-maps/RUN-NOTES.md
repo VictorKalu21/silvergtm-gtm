@@ -155,3 +155,15 @@ collapse and fetch.
   also lets the engine's own PASS 2 retry survive the end-of-run `JSON.stringify`, IMPROVEMENTS 2026-10-26). The classify
   batches (`classify/batch_*.jsonl`, 185 for tiers A+B, prepared from pass 1) are unaffected and keep running; tiers are
   re-derived after the re-fetch and any row that newly lands in A/B is read as an extra batch.
+- 2026-10-26 — **STEP 5e classify, tiers A+B DONE: 185 batches (11,074 leads), every output validated against its input (0 bad files).**
+  Verdicts: **extension_builder 8,026 (72% of A+B)** · builder_unconfirmed 1,283 · trade_only 825 · commercial_only 357 ·
+  design_only 189 · not_builder 139 · new_build_only 134 · conservatory_glazing_only 83 · unclear 38. Tier A ran 80–95%
+  extension_builder per batch; tier B (the last ~22 batches) ran 0–15% — the vocabulary tier is doing its job. Tier-D
+  100-row false-negative sample: **0 extension_builder of 100** (trade_only 33 · builder_unconfirmed 28 · not_builder 15 ·
+  unclear 11 · rest 13). `apply-classify.js --fallback unclear` → `leads_classified.csv` (17,070 rows: 8,026 Qualified now;
+  5,945 `unclear`, of which 5,896 are the fallback for tier D-rest (632) + tier F (5,264) awaiting the re-fetch).
+  Spot-check of 12 random extension_builder verdicts: every evidence quote is a genuine build phrase ("We build single and
+  double-storey rear extensions", "loft conversion and extension specialist"). work_types on the 8,026: renovation 6,053 ·
+  loft 4,524 · new build 3,203 · rear/side 2,437 · garage 2,053 · design-and-build 1,568 · double storey 1,028 · kitchen 617 ·
+  orangery 549 · basement 541. Next (after the re-fetch lands): re-tier, read tier D-rest (632) + any row newly in A/B,
+  re-apply; then Companies House (needs `COMPANIES_HOUSE_KEY`) → owner read.
