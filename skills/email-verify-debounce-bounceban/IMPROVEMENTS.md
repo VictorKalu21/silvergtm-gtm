@@ -15,3 +15,18 @@ Technical backlog for the skill's engine. Not operator-facing (see SKILL.md for 
 **Cost note.** The new set spends BounceBan credits on the `invalid` slice (~3% of a list here) and on MV failures. At the measured 3-in-4 recovery rate that is the cheapest sendable address in the whole pipeline; if a list is ever dominated by `invalid`, `--bb-on catch_all,unknown,error` turns it off without a code change.
 
 **Job-side precedent:** `clients/atlas-growth/2026-09-16_uk-foundation-repair-maps/bb_recover.py` — the hand-rolled version this replaces. Nothing in a run folder should need to re-send a verifier's misses again.
+
+## OPEN 2026-10-26 (verify-millionverifier-bounceban.js, HIGH): a BounceBan auth failure is classified as `bb:none` → `risky`, silently; and `process.env` beats the env file even when it holds a proxy placeholder
+
+Found on Atlas Growth UK battery wave 2 (`clients/atlas-growth/2026-09-30_uk-battery-installers-mcs`): 292 BounceBan
+calls all answered `{"msg":"Authorization information is missing or invalid."}`; the run finished with exit 0, a report
+reading `risky: 250`, and no warning. Two causes stacked: (1) the key resolution is `process.env.BOUNCEBAN_KEY ||
+ENV.BOUNCEBAN_KEY`, and the cloud container now injects `BOUNCEBAN_KEY=proxy…` (a 5-char placeholder meant for proxied
+curl) when the operator stores the key as an environment credential — Node's fetch does not go through the proxy, so the
+placeholder is sent raw; (2) `classify()` treats a BounceBan record with no `result` as "BounceBan did not answer" and
+falls back to the MV verdict, so an auth failure looks like a catch-all. **Proposed fix (needs operator approval + a
+test):** (a) probe each key once at startup (`/v1/verify/single/status` or `/api/v3/credits`) and abort with a clear
+message on a non-success; (b) treat a `msg`-only BounceBan record as an `error` that is retried, then counted as
+`bb_auth_failed` in the report and in `verify_detail`, never as `bb:none`; (c) when both an env var and an env-file value
+exist and differ, warn and prefer the one that passes the startup probe. Workaround used: launch with the file key
+exported explicitly.

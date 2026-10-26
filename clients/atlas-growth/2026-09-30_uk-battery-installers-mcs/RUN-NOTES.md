@@ -168,3 +168,26 @@ Deliverable `atlas-growth_uk-battery-installers_plusvibe_2026-09-30.tar.gz` (upl
 send + held lead lists, 491 held addresses unverified, verify + fill reports) — data gitignored, sent to the operator.
 **NOT UPLOADED to Plusvibe.** Open: the 80 risky addresses (send later or drop); the 501 held rows (491 addresses,
 verify + fill when the operator says so — `queue_held.csv` and `city_overrides_held.json` are ready); the 531 secondary.
+
+## Wave 2 — B (held registry-only) + D (secondary), operator go 2026-10-26 ("run b and d")
+Queue `owner/verify/queue_bd.csv` 1,020 (B 491 register addresses · D 529; 2 secondary rows had no/dupe email).
+**Owner read for D first** (never done in wave 1): `prep-owner-batches.js --ch` over the 531 secondary rows → 13 Haiku
+readers → `merge-owner-reads.js` → **441 of 531 named (83.1%)**, 819 contacts (CH 742 · site 77) → `owner_sec/contacts_final.jsonl`;
+`owner/contacts_final_all.jsonl` = wave 1 + D.
+**Verification:** MV 1,020 → BounceBan on 292. **First two BounceBan passes failed silently: every call answered
+"Authorization information is missing or invalid" and the engine classified them `bb:none` → 250 "risky".** Cause: the
+container now exports a `BOUNCEBAN_KEY` env var holding the proxy placeholder (`proxy…`, 5 chars) because the operator
+added BounceBan as an environment credential; the script prefers `process.env` over the env file, and Node's fetch
+bypasses the proxy, so the placeholder reached BounceBan raw. curl with the file key worked throughout. Fix: export the
+file key explicitly (`BOUNCEBAN_KEY=<file value>`) when launching. Third pass → **936 sendable · 55 risky · 29 dropped**
+(13 recovered from MV invalid). Credits: MV 1,020, BB 292 (the two failed passes consumed none). `emails_final.csv`
+now 2,481 rows, 2,305 leads sendable overall.
+**Plusvibe:** `city-clean.js` on secondary (88 fixed) + geocode fixture (23) + hand fixes (6 district answers + Orpington)
+→ `owner/city_overrides_bd.json` 68 → `base` on `leads_bd_cityclean.csv` (1,032 = 501 held + 531 secondary) → 936 rows,
+0 blank city → `prep` 15 batches (14 Haiku over 559 rows with site text + **batch 11 = `registry-fallback-batch.js`,
+377 no-site rows typed from the register's technologies field instead of one blanket fallback**) → `fill` **936 rows, 0
+flags, redo 0, `check` clean, 252 named, 0 duplicate emails, 0 overlap with wave 1**. Mix: solar and battery storage 792 ·
+renewable energy installs 66 · heat pumps and solar 52 · solar pv 23 · home battery storage 3. 6 ALL-CAPS surnames
+title-cased. `bucket` column = B_registry_only 450 / D_secondary 486 so the operator can split the send.
+Deliverable `deliverable/atlas_uk_battery_plusvibe_upload_WAVE2_held_and_secondary.csv` sent 2026-10-26; risky (55) and
+dropped (29) alongside. **NOT UPLOADED.** Open: 80 wave-1 risky + 55 wave-2 risky; nothing else left on this register.
