@@ -176,3 +176,14 @@ collapse and fetch.
   (Review; 4,980 = fallback = no site text, checked against `owner/site_text.jsonl`, 177 read-but-unclear) · excluded 2,234**
   (trade_only 1,118 · commercial_only 405 · not_builder 226 · design_only 204 · new_build_only 169 · conservatory_glazing_only 112).
   **STEP 5e COMPLETE.** Next: `assemble.js` (deliverable) → Companies House (BLOCKED: no `COMPANIES_HOUSE_KEY` in the skill `.env`) → owner read.
+- 2026-10-26 — **DELIVERABLE ASSEMBLED** (`assemble.js`, self-test 9/9; `build-xlsx.py` → `deliverable/extension_builders.xlsx`, 6 tabs, gitignored):
+  40,562 unique collected → Maps-stage excluded 16,209 → 24,353 reached the site gate → **Qualified 8,567** (A 937 · B 3,495 · C 4,135;
+  main 7,678 · bare-type 591 · name 298) · Review 13,447 (no website 5,800 · no usable text 5,963 of which 1,482 are HTTP-200 header-only
+  shells · builder_unconfirmed 1,502 · unclear 182) · site-text excluded 2,339 · in-run dupes 279. Fill on Qualified: phone 97.4% ·
+  email 91.9% (on-site, unverified) · facebook 56% · postcode 74.5% · owner 0%. **2,174 Qualified rows have no address at all
+  (service-area listings) → `backfill-city-nearest-metro.js` before any personalised send.** Two job-side rules found while assembling
+  (both in the source profile): status `ok` with header-only text is tier F, not "no classify verdict"; sibling site text is reached via
+  `rep_place_id`, `domain_siblings.json` is keyed rep → siblings. Source profile written:
+  `skills/icp-source-planner/library/google-maps--uk-home-extensions.md` (+ `_index.md`).
+  **BLOCKED on STEP 6: `companies-house.js` needs `COMPANIES_HOUSE_KEY` in `skills/google-maps-scrape/.env` (free, developer.company-information.service.gov.uk).**
+  Also pending a go: Firecrawl/Playwright render residue (1,482 shells + 1,309 403s), DataForSEO website recovery for the 5,800 no-website rows, MV/BB verify.
