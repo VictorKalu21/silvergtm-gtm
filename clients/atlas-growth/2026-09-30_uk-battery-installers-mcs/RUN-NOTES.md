@@ -191,3 +191,12 @@ renewable energy installs 66 · heat pumps and solar 52 · solar pv 23 · home b
 title-cased. `bucket` column = B_registry_only 450 / D_secondary 486 so the operator can split the send.
 Deliverable `deliverable/atlas_uk_battery_plusvibe_upload_WAVE2_held_and_secondary.csv` sent 2026-10-26; risky (55) and
 dropped (29) alongside. **NOT UPLOADED.** Open: 80 wave-1 risky + 55 wave-2 risky; nothing else left on this register.
+
+## 2026-10-31 — container rebuilt; mail-provider split
+The cloud container was reprovisioned between sessions: **every gitignored file in this run folder (leads, verify
+results, uploads, the key file) is gone**; the operator holds the deliverables (sent 09-30 / 10-26). Re-pulled the MCS
+register to answer "are they all Google or Microsoft": **1,817 unique installers of 2,828 pagination rows** — the API now
+returns overlapping pages (09-30: 2,794 unique of 2,794), so a future pull needs a dedupe-aware resume, not page-skip.
+MX via DNS-over-HTTPS (`mx/lookup.sh`, no `dig` in the container; `mx/classify.py`): **Microsoft 40% · Google 18% ·
+free-mail 15% (Gmail 7.6%, Hotmail/Outlook 5.6%) · IONOS 4% · other hosts 15% · no MX 0.6%.** Business domains only:
+Microsoft 48%, Google 22%, everything else ≤5% each.
