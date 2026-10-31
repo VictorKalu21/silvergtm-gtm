@@ -195,3 +195,16 @@ collapse and fetch.
   remainder ran into `owner/ch_rest/` and both parts were merged with temp-file + `os.replace` into `owner/companies_house.jsonl`.
   `prep-owner-batches.js --ch` → **206 batches × 40 (8,226 items, 16 skipped no_text, 5,239 with ch_directors)**. Owner read launched
   (one Haiku reader per batch, `owner-read-subagent.md` + `owner-prompt.md`, 20 concurrent).
+- 2026-10-31 — **STEP 6 OWNER READ DONE: 206 Haiku batches (8,226 leads with evidence; 16 skipped no_text), every output validated
+  against its input (3 batches re-read for a dropped lead, 1 mistyped place_id key repaired job-side; 0 missing).** `merge-owner-reads.js`
+  (prompt's excluded titles + UK trade words): **5,599 of 8,242 Qualified reps named (67.9%)** — 7,826 contacts, 7,733 owner-level;
+  primary source Companies House 4,842 · website 754 · serp 3; confidence high 3,447 · medium 2,085 · low 67; guards dropped 21 excluded
+  titles, 14 business-names-as-people, 7 single tokens, 2 trade words. `combine-owner-contacts.js` → `owner/contacts_final.jsonl`
+  (5,599 named, 5,188 with a best_send_email). `assemble.js` + `build-xlsx.py` re-run: **owner_name now on 65.2% of the 8,567 Qualified
+  deliverable rows** (siblings inherit nothing; reps only). Readers' recurring judgement calls (for the QA pass): forename-only owners
+  dropped, city-only CH matches rejected unless a distinctive token matches, template/font-foundry addresses skipped for
+  best_send_email, "Md" honorific read as a prefix. Fan-out lesson: Haiku readers given "Read/Write only" still made ~1 stray MCP call
+  per 3 batches (all denied or no-op) — harmless, but a reader prompt should name the two tools and nothing else.
+  **NOT RUN (operator call, each costs): LinkedIn web-search sweep for the 2,643 unnamed (UK measured 21% yield at ~1.4 searches per lead
+  = ~3,700 searches, 200 per session); email-waterfall for named leads without an own-domain address; MV/BB verify; Firecrawl residue;
+  DataForSEO website recovery (5,800 no-website rows).** Next on a go: same-company QA sample → email rank → verify → Plusvibe.

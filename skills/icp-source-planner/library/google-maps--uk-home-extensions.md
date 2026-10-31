@@ -2,8 +2,8 @@
 source: Google Maps (scraper.tech `searchmaps.php`), UK — our own tiled scrape on the validated 177-tile UK grid
 vertical: UK residential home-extension contractors — extension builders, loft / garage / basement conversion specialists, design-and-build firms (conservatories OUT)
 verdict: validated
-last_validated: 2026-10-26
-access: Maps via scraper.tech (paid, keyed, pagination on); site text via fetch-sites.js (plain fetch + PASS 2 retry); verdicts via Haiku-per-batch site-text classify (keyword tiers A/B read, D sampled, F = no text); owner names via Companies House (free key) + owner read — NOT YET RUN
+last_validated: 2026-10-31
+access: Maps via scraper.tech (paid, keyed, pagination on); site text via fetch-sites.js (plain fetch + PASS 2 retry); verdicts via Haiku-per-batch site-text classify (keyword tiers A/B read, D sampled, F = no text); owner names via Companies House Public Data API (free key, 600 req / 5 min) + Haiku owner read with the registry block injected
 dispatch: google-maps-scrape (full pipeline, STEP 2 onward; icp-source-planner front door)
 cost_tier: workaround (Maps calls are paid; every downstream rung so far was free)
 ---
@@ -32,8 +32,10 @@ address at all** — service-area listings — so `town` is blank and a city bac
 **Fill rates (this run, BY DEPTH):** head (Maps) phone 97%, website 100% on the spend rows ·
 mid (site text) **14,191 of 17,070 spend domains fetched `ok` (83%)**, of which **1,482 are
 header-only shells** (HTTP 200, no body: JS-rendered or cookie-walled) → **~70% usable text**;
-residue 403 1,309 · TypeError (TLS/DNS) 1,147 · 404 444 · 503 428 · AbortError 127 · deep (owner
-name) not yet run.
+residue 403 1,309 · TypeError (TLS/DNS) 1,147 · 404 444 · 503 428 · AbortError 127 · deep (owner name) **67.9%: 5,599 of 8,242 Qualified reps named** after Companies House (64% matched: exact_title 4,588 ·
+postcode 383 · name_overlap 22 · city_only 289 demoted) + the Haiku read — 4,842 primaries from the registry, 754 from the site, 3
+from SERP; 7,826 contacts, 5,188 with a send address (unverified). Same rate as the UK foundation run (68.1%), so **Companies House
+is the UK owner registry for this trade too** — the site names an owner on only ~9% of leads. The LinkedIn sweep was NOT run.
 
 **Restrictions:** pagination load-bearing as on the foundation run; **two of the ten queries are
 dead weight** — `single storey extension` 263 rows and `double storey extension` 177 rows over 177
@@ -97,5 +99,11 @@ batches of 60 ($0 to the client, session tokens only). Per 1k Qualified rows: ~4
 - Phones: ~2.6% of Qualified rows carry a truncated (9-digit) or foreign (+91) number from Maps; they
   are kept raw with no E.164.
 
-**Runs:** 2026-10-11/26 — Atlas Growth — 41,689 universe → 8,567 Qualified (+ 13,447 Review) —
-validated through classify; owner-finding (Companies House key needed) and emails next.
+**Runs:** 2026-10-11/31 — Atlas Growth — 41,689 universe → 8,567 Qualified (+ 13,447 Review) → 5,599 named (67.9%) —
+validated through owner-finding; emails (waterfall + verify) and the LinkedIn sweep wait on a go.
+
+**Owner-finding gotchas (2026-10-31):** `companies-house.js` has no resume and truncates its output on start — a killed run is
+restarted on the remainder into a second folder and the parts merged (temp file + `os.replace`); at the API cap the 8,242 leads
+took ~75 min. Haiku readers drop ~1 lead per 70 batches and once mistyped a place_id key — validate every `batch-N-out.json`
+against its input before `merge-owner-reads.js` (the engine counts an unknown key as `dropped_unknown_place_id`, it does not
+repair it). Pass the vertical's EXCLUDE titles and UK trade/place words to the merge; the defaults are US foundation repair.

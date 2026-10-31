@@ -1,4 +1,4 @@
-# UK home-extension builders — deliverable summary (2026-10-26)
+# UK home-extension builders — deliverable summary (2026-10-31)
 
 | metric | count |
 |---|---|
@@ -60,7 +60,7 @@
 | phone | 97.4% |
 | email | 91.9% |
 | facebook | 56% |
-| owner_name | 0% |
+| owner_name | 65.2% |
 | postcode | 74.5% |
 
 ## Verdict reasons (all rows)
