@@ -187,3 +187,11 @@ collapse and fetch.
   `skills/icp-source-planner/library/google-maps--uk-home-extensions.md` (+ `_index.md`).
   **BLOCKED on STEP 6: `companies-house.js` needs `COMPANIES_HOUSE_KEY` in `skills/google-maps-scrape/.env` (free, developer.company-information.service.gov.uk).**
   Also pending a go: Firecrawl/Playwright render residue (1,482 shells + 1,309 403s), DataForSEO website recovery for the 5,800 no-website rows, MV/BB verify.
+- 2026-10-31 — **STEP 6 registry rung DONE.** Operator supplied the Companies House key (in the skill `.env`, 3-search probe HTTP 200 ×3).
+  `companies-house.js` over `leads_icp.csv` (8,242 Qualified reps; 6,180 with an address): **matched 5,282 (64.1%)** — exact_title 4,588 ·
+  postcode 383 · name_overlap 22 · city_only 289 (kept, `low_confidence`) · unmatched 2,960 (low-overlap candidate 2,212 · no name hit 748);
+  **5,239 leads carry ≥1 active director, 7,345 director names.** Job lesson: the first launch (`nohup … &` inside a Bash tool call) was
+  killed with its shell at 707 rows — long jobs go through the Bash tool's `run_in_background`; the script has no resume, so the
+  remainder ran into `owner/ch_rest/` and both parts were merged with temp-file + `os.replace` into `owner/companies_house.jsonl`.
+  `prep-owner-batches.js --ch` → **206 batches × 40 (8,226 items, 16 skipped no_text, 5,239 with ch_directors)**. Owner read launched
+  (one Haiku reader per batch, `owner-read-subagent.md` + `owner-prompt.md`, 20 concurrent).
