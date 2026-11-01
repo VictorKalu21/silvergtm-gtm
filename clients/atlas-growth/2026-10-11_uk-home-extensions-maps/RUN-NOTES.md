@@ -208,3 +208,14 @@ collapse and fetch.
   **NOT RUN (operator call, each costs): LinkedIn web-search sweep for the 2,643 unnamed (UK measured 21% yield at ~1.4 searches per lead
   = ~3,700 searches, 200 per session); email-waterfall for named leads without an own-domain address; MV/BB verify; Firecrawl residue;
   DataForSEO website recovery (5,800 no-website rows).** Next on a go: same-company QA sample → email rank → verify → Plusvibe.
+- 2026-11-01 — **operator go: "2k contacts through MV + BounceBan".** Keys: the cloud environment exports placeholder
+  `MILLIONVERIFIER_KEY` / `BOUNCEBAN_KEY` that the agent proxy swaps for the real keys ONLY on proxied traffic (battery gotcha 1) — curl probes
+  of the free endpoints: MV `/credits` 4,114 · BB `/account` 1,295. Node fetch bypasses the proxy, so the runner is launched with
+  `NODE_USE_ENV_PROXY=1` (Node 22.22 ≥ 22.21; README line 71) and `NODE_EXTRA_CA_CERTS` already points at the proxy CA; the same two free
+  endpoints answered from Node that way before any credit was spent. Queue: `build-verify-queue.js` (modelled on the battery run's
+  `build-email-candidates.js`; engine `email-rank.js` with UK trade words + `country:'gb'`, one rank-1 address per NAMED lead, ordered
+  priority A>B>C → confidence → owner-personal address → reviews) → `owner/emails_candidates.csv` (5,998 ranked addresses over 5,134 named
+  leads; 465 named leads have no rankable address) → **`owner/verify/queue_2k.csv` 2,000 (A 619 · B 1,381; high 1,778 · medium 215 · low 7;
+  own-domain 1,488; owner-personal local part 323; 254 carry a rank-2 fallback)** + `queue_rest.csv` 3,134 banked. Runner launched
+  (`owner/verify/run_2k/`, concurrency 4; artefact-watched on `report.json`, battery gotcha 4). Budget: ≤2,000 MV credits; BounceBan takes
+  catch_all/unknown/error/invalid, expected ~40% ≈ 800 of the 1,295 available.
