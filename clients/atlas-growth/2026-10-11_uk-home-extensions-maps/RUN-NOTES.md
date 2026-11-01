@@ -250,3 +250,13 @@ collapse and fetch.
   **FULL FILL WAITS ON THE OPERATOR'S WORDING SIGN-OFF** (STEP 7b gate): (a) name rule as above, (b) 'design consultations' as the visit
   noun and 'paid <trade> jobs' as the outcome. Then: `prep --batch 40` (~34 batches) → one Haiku per batch → `fill` → `redo` loop →
   `check --csv` → `owner/plusvibe_upload.csv`; report fallback_only + blank_city before upload; NOT uploaded without a go.
+- 2026-11-01 — **PLUSVIBE UPLOAD BUILT (operator: "yes to both, run the full fill").** 34 Haiku batches of 40 (`owner/personalize/batches/`),
+  every `batch-N-out.json` validated against its input before the fill (all place_ids present, every business_type on the six-value list;
+  readers made a handful of stray read-only tool calls, all denied or harmless). `fill` → **1,356 personalised, 0 fallback_only, 0
+  flag_visit_repeats_trade / 0 outcome_off_trade / 0 word_used_3x / 0 free_in_visit, `redo` 0, `check` 0 name-rule violations.** Trade mix:
+  renovations and extensions 520 · home extensions 476 · design and build 171 · loft conversions 163 · garage conversions 19 · basement
+  conversions 7; visit noun 'design consultations' 1,184 · 'home consultations' 171 · 'site visits' 1. **`owner/plusvibe_upload.csv` 1,354
+  rows** (240 named under the name rule, 0 ALL-CAPS surnames, 8 rows carry a county as the city because the site names no town — 'around
+  Wiltshire' reads fine in UK usage); the 2 blank-city rows are held in `plusvibe_upload_blankcity.csv`. Copies in `deliverable/`. **NOT
+  UPLOADED TO PLUSVIBE** — needs a go. Parked unchanged: BounceBan on the 542 unverified · rank-2 fallback (17) · wave 2 (3,134) · LinkedIn
+  sweep (2,643 unnamed) · key rotation (scraper.tech, Companies House).
