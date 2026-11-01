@@ -1,0 +1,53 @@
+{
+  "template": "Hi,\n\nNoticed you do {{business_type}} around {{city}}.\n\nWe can book you 10 qualified {{inspection_type}} that turn into paid {{project_type}} jobs, in under 30 days.\n\nYou only pay when I book you a qualified, confirmed {{inspection_singular}}.\n\nOpen to a 15-minute chat?",
+  "instructions": {
+    "business_type": "the trade this company leads with on its own website, lowercase, EXACTLY one of: home extensions, loft conversions, garage conversions, basement conversions, design and build, renovations and extensions. Use the one the site LEADS with (hero line, page title, the first service listed), not one of many further down. NAME RULE: when the business_name itself names one of the six trades ('... Extensions Ltd', '... Lofts', '... Loft Conversions', '... Garage Conversions', '... Basement ...', '... Design and Build', '... Renovations'), that trade wins over a hero line that lists several trades — a firm called 'BHM Extensions' is home extensions even if its hero reads 'from loft conversions to side and rear extensions'. The site overrides the name only when the site plainly no longer does that trade. Map what the site actually says onto the six: single/double storey extension, rear or side extension, wrap-around, kitchen extension, orangery built in brick -> home extensions; loft conversion, dormer, hip-to-gable, mansard, attic conversion -> loft conversions; garage conversion -> garage conversions; basement conversion, cellar conversion, basement dig-out -> basement conversions; a firm that sells the whole project from drawings to completion and calls itself design and build / design & build / architect-led builder -> design and build; a general builder whose hero is refurbishment, renovation or remodelling and lists extensions among its services -> renovations and extensions. Never any other phrase, NEVER 'construction', 'building services', 'general building', 'building contractor' or 'home improvements', and NEVER a US label ('home additions', 'remodeling', 'general contractor').",
+    "inspection_type": "the FIRST VISIT to a homeowner, plural, UK usage: for home extensions, loft conversions, garage conversions, basement conversions and renovations and extensions it is ALWAYS 'design consultations'; for design and build it is 'home consultations'. A UK homeowner books a consultation or a site visit for this trade, not an inspection, an estimate or a quote. If the company's own site consistently calls the first visit 'site survey' or 'site visit', you may use 'site visits' instead. NEVER 'free'. NEVER 'inspection', 'estimate', 'quote' or 'quotation'. NEVER the whole business_type phrase inside this value.",
+    "inspection_singular": "the singular of inspection_type: 'design consultation', 'home consultation' or 'site visit' (whichever was used). It reads after 'a qualified, confirmed', so it must be one bookable thing.",
+    "project_type": "the OUTCOME NOUN the homeowner pays for, singular, reading immediately before the word 'jobs'. By business_type: home extensions -> extension; loft conversions -> loft conversion; garage conversions -> garage conversion; basement conversions -> basement; design and build -> build; renovations and extensions -> renovation. Never plural, never 'project', 'build project', 'construction' or 'installation'.",
+    "city": "ONLY if the 'city' known fact is blank: the UK town or city this company is based in, read from the website. Give the TOWN, never the county — 'Maidstone' not 'Kent', 'Solihull' not 'West Midlands', 'Bolton' not 'Greater Manchester' — and never a region ('the South East') or a service-area phrase ('covering Essex and London'). A base reads as the town in the footer address or postcode line, a 'based in X' phrase, or the town in the page headline — never one of the towns in an 'areas we cover' list. For a London firm give the London area if the site names one ('Wimbledon', 'Ealing'), else 'London'. Use a county name ONLY when the site names no town at all. Otherwise repeat the known city exactly, with no trailing token of any kind."
+  },
+  "rules": "Decide business_type first — EXACTLY one of the six allowed UK trades, the one the site leads with, the business name winning when it names a trade — then derive inspection_type, inspection_singular and project_type from the tables above; do not invent a seventh combination. No single word may appear in ALL THREE of business_type, inspection_type and project_type ('design and build' + 'home consultations' + 'build' is why the design-and-build visit noun differs), and inspection_type must never contain the whole business_type phrase. Never the word 'free' anywhere in inspection_type. UK spelling and UK vocabulary throughout ('storey', 'renovation', 'loft'). A builder does not get 'basement conversions' because the word appears somewhere on its site; the hero trade decides.",
+  "fallbacks": {
+    "business_type": "home extensions",
+    "inspection_type": "design consultations",
+    "inspection_singular": "design consultation",
+    "project_type": "extension",
+    "city": ""
+  },
+  "context_cols": [
+    "city",
+    "google_types",
+    "business_name"
+  ],
+  "max_value_len": 60,
+  "outcome_by_type": {
+    "home extensions": [
+      "extension"
+    ],
+    "loft conversions": [
+      "loft conversion"
+    ],
+    "garage conversions": [
+      "garage conversion"
+    ],
+    "basement conversions": [
+      "basement"
+    ],
+    "design and build": [
+      "build"
+    ],
+    "renovations and extensions": [
+      "renovation"
+    ]
+  },
+  "_r": {
+    "_": "OPERATOR NOTES — not instructions to the personalisation subagent. Derived from personalize-config-uk.json (UK foundation repair, wording approved 2026-09-17) and personalize-config-battery-uk.json (approved 2026-09-30) for the UK home-extension list (ICP-extensions-uk.md). WORDING NOT YET APPROVED — the 3-lead and 7-lead tests gate the full fill (SKILL STEP 7b).",
+    "offer": "ICP-extensions-uk.md offer line: 'book 10 qualified extension design consultations that turn into build projects every month'. In the template it reads 'We can book you 10 qualified design consultations that turn into paid extension jobs, in under 30 days.' 'design consultation' is the trade's own phrase for the first homeowner visit (the free design visit every extension site advertises) — which is also why 'free' is banned: it is the word the whole trade already spams.",
+    "business_type": "Six values from what the site-text classify actually returned on the 8,567 Qualified: work_types named on their sites were renovation/refurb 6,432 · loft 4,834 · rear/side extension 2,608 · garage 2,222 · design-and-build 1,678 · basement 582. 'renovations and extensions' is the catch-all for the general builder whose hero is refurbishment — the single biggest group — so the reader never invents 'building services'. 'construction' and 'home improvements' are banned: they are what Google types say, not what a homeowner buys. NAME RULE added after the 8-lead test (2026-11-01): BHM Extensions Ltd read as 'loft conversions' off a hero that listed lofts first; the name is the trade the homeowner searched for, so it wins over a multi-trade hero.",
+    "inspection_type": "One visit noun for five of the six trades on purpose ('design consultations'); only design-and-build firms take 'home consultations' so that 'design' is not in all three values. 'site visits' is allowed when the firm's own site says so.",
+    "project_type": "The outcome the homeowner pays for, reading before 'jobs': 'paid extension jobs', 'paid loft conversion jobs', 'paid build jobs', 'paid renovation jobs'. 'basement' rather than 'basement conversion' so the two-word trade phrase is not repeated whole.",
+    "city": "25% of the Qualified rows are service-area listings with no address (2,174 of 8,567; 253 of the 1,356 verified-sendable). Order of repair: `city-fallback` (Nominatim reverse geocode on the listing's lat/lng, district answers rejected) → the reader's city instruction above on what is still blank → hand overrides for London rows. Read `blank_city` in fill_report.json before upload."
+  },
+  "_test_plan": "OPERATOR NOTE — per SKILL STEP 7b. (1) THREE-LEAD TEST: one home-extensions lead, one loft-conversions lead, one design-and-build lead; one subagent over a 3-item batch; read the three emails to the operator — voice check ('design consultations', 'paid loft conversion jobs', 'paid build jobs'). (2) SEVEN-LEAD TEST: all six trades + one brand-family branch (Build Team / The Loft Room / Absolute Lofts) + one blank-city lead; `fill` and read fill_report.json: expect 0 flag_visit_repeats_trade, 0 flag_word_used_3x, 0 flag_free_in_visit, 0 flag_outcome_off_trade. (3) FULL FILL only after both sign-offs: prep -> one Haiku per batch -> fill -> redo loop -> check --csv; report fallback_only and blank_city before any upload."
+}

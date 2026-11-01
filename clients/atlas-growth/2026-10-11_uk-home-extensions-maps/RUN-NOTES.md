@@ -230,3 +230,23 @@ collapse and fetch.
   0 ALL-CAPS surnames — the readers already wrote First Last. BounceBan auth verified BEFORE stage 2 with one real verify call from Node via
   the proxy (battery gotcha 1 did not recur; `NODE_USE_ENV_PROXY=1` is the fix for Node ≥ 22.21). Next on a go: resume BounceBan (542),
   rank-2 fallback (17), wave 2 from `queue_rest.csv` (3,134), Plusvibe build (city backfill first — 25% of rows have no town).
+- 2026-11-01 — **PLUSVIBE STEP 7b STARTED (operator: "park them with notes in github, lets start plusvibe build").** Config
+  `personalize-config-extensions-uk.json` (six UK trades: home extensions · loft conversions · garage conversions · basement conversions ·
+  design and build · renovations and extensions; visit noun 'design consultations', 'home consultations' for design-and-build; outcome
+  'paid extension / loft conversion / garage conversion / basement / build / renovation jobs'; `outcome_by_type` mirrors it). `base` →
+  `owner/plusvibe_base.csv` **1,356 rows, 240 named under the name rule, 802 role mailboxes, 253 blank cities (service-area listings)**.
+  City repair: `city-fallback` (Nominatim reverse geocode, districts rejected) resolved 243 — but 44 came back 'Greater London' and 26 more
+  as a county/district ('Devon', "King's Lynn and West Norfolk", 'City of Edinburgh') + 10 unresolved. Those 80 went through the engine's
+  rung 1, a focused site re-read (`city-read-prompt.md` at the run root; 2 Haiku batches of 40, validated 80/80): 54 towns read from the
+  site (footer / 'based in' / headline, 29 of them 'London' or a London area), 15 took the London hint, 6 kept the county (site names no
+  town), 3 hand-mapped (Edinburgh, London, Norfolk), **2 still blank** (Carbis Construction Group, A SINGH Builders — no address anywhere;
+  hold out of the upload). `owner/city_overrides.json` 251 (geocode-only version kept as `city_overrides.geocode.json`; log in
+  `owner/city-read/city_reread_log.csv`) → `base --city-overrides` → **blank_city 2**.
+  **3-lead test: 0 flags, check clean** (My Extension PM → loft conversions/London; CSW Loft Conversions → loft conversions/Bristol/named;
+  Ashton Paul Design and Build → home extensions/Godstone/named). **8-lead test (all six trades + a 3-location firm + a blank-city lead):
+  pass 1 gave BHM Extensions Ltd 'loft conversions' off a hero that listed lofts first → NAME RULE added to the config (the business name
+  wins when it names a trade) → pass 2: 8/8 personalised, 0 flag_visit_repeats_trade / 0 outcome_off_trade / 0 word_used_3x / 0
+  free_in_visit, blank-city lead read 'London' from its site, `check` 0 name-rule violations.** Readings in `owner/personalize-test7/`.
+  **FULL FILL WAITS ON THE OPERATOR'S WORDING SIGN-OFF** (STEP 7b gate): (a) name rule as above, (b) 'design consultations' as the visit
+  noun and 'paid <trade> jobs' as the outcome. Then: `prep --batch 40` (~34 batches) → one Haiku per batch → `fill` → `redo` loop →
+  `check --csv` → `owner/plusvibe_upload.csv`; report fallback_only + blank_city before upload; NOT uploaded without a go.
