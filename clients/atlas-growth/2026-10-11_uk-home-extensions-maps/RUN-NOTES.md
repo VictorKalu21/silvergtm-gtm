@@ -219,3 +219,14 @@ collapse and fetch.
   own-domain 1,488; owner-personal local part 323; 254 carry a rank-2 fallback)** + `queue_rest.csv` 3,134 banked. Runner launched
   (`owner/verify/run_2k/`, concurrency 4; artefact-watched on `report.json`, battery gotcha 4). Budget: ≤2,000 MV credits; BounceBan takes
   catch_all/unknown/error/invalid, expected ~40% ≈ 800 of the 1,295 available.
+- 2026-11-01 — **VERIFY WAVE 1 STOPPED BY THE OPERATOR ("stop here, pick whatever is deliverable") and classified from the checkpoints
+  (`--dry-run`, $0).** MillionVerifier finished: 1,998 unique of 2,000 → ok 1,288 · catch_all 482 · unknown 142 · invalid 85 · error 1
+  (MV credits 4,114 → 2,771). BounceBan reached 89 of its 710-address stage-2 queue before the stop: deliverable 67 · risky 10 ·
+  undeliverable 7 · 5 still `verifying` (BB credits 1,295 → 1,204 incl. the 1-credit auth probe). Verdicts: **sendable 1,356** (mv:ok
+  1,288 — of which 810 role addresses, 320 free-mail — + 68 BB-recovered catch-alls) · risky 16 · dropped 86 (17 carry a rank-2
+  fallback address, not yet verified) · **unverified 542** (catch_all 412 · unknown 129 · error 1 awaiting BounceBan — RESUMABLE: rerun the
+  same command without `--dry-run`, MV spend stays at zero). Deliverable `deliverable/send_list_2k_sendable.csv` (1,356 rows: Email, named
+  contact, title, company, town, postcode, nation, priority A 469 / B 887, verify detail, alt_email). Name casing checked (battery gotcha 8):
+  0 ALL-CAPS surnames — the readers already wrote First Last. BounceBan auth verified BEFORE stage 2 with one real verify call from Node via
+  the proxy (battery gotcha 1 did not recur; `NODE_USE_ENV_PROXY=1` is the fix for Node ≥ 22.21). Next on a go: resume BounceBan (542),
+  rank-2 fallback (17), wave 2 from `queue_rest.csv` (3,134), Plusvibe build (city backfill first — 25% of rows have no town).
