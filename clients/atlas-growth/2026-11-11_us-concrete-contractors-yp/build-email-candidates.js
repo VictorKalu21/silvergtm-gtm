@@ -48,7 +48,7 @@ function tiedFree(email, lead, people) {         // is this free-mail address ti
   if (nameToks.some(t => local.includes(t))) return 'business_name_token';
   const lab = letters(labelOf(lead.root_domain));
   if (lab.length >= 5 && (lab.includes(local) || local.includes(lab))) return 'domain_label';
-  for (const p of people) { const [f, ...l] = p.name.trim().split(/\s+/); if (localOwns(email, f, l.join(' '))) return 'contact_name'; const lt = letters(l.join(' ')), fi = letters(f); const at = local.indexOf(lt); if (lt.length >= 4 && at >= 0) { const pre = local.slice(0, at); if (pre.length <= 2 || (pre && fi.startsWith(pre))) return 'contact_surname'; } }   // 'brianpermenter' is NOT tied to owner Robert Permenter
+  for (const p of people) { const [f, ...l] = p.name.trim().split(/\s+/); if (localOwns(email, f, l.join(' '))) return 'contact_name'; const lt = letters(l.join(' ')), fi = letters(f); const at = local.indexOf(lt); if (lt.length >= 4 && at >= 0) { const pre = local.slice(0, at); if (pre.length <= 2 || (pre && fi.startsWith(pre))) return 'contact_surname'; } }   // a different first name before the surname is NOT tied to the owner
   if (COMPANYISH_LOCAL.test(local)) return 'company_style_local';
   return '';
 }
