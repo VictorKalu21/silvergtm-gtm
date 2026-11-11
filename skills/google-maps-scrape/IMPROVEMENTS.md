@@ -1375,3 +1375,20 @@ is wired in — Spider would be a cheaper PASS-3 than Firecrawl per page only if
 `applyFirecrawl` now merges `socialLinks(md)` + `socialLinks(html)` into `rec.socials` next to the email merge, so a
 Cloudflare-walled site recovered through Firecrawl carries its footer profiles like a plain-fetched one. Covered by
 `tests/fetch-sites-firecrawl.test.js` (socials assertion on the recovered record).
+
+## DONE 2026-11-11 (search-owner.js): `--backend keenable` (additive; operator-approved "DataForSEO or Keenable", key supplied same day)
+
+Atlas Growth US concrete-contractor probe (`2026-11-11_us-concrete-contractors-yp`): the SERP rung had only the
+DataForSEO backend (no credentials in this container) plus the dead scraper.tech default. Added a third backend, no
+change to the other two. `POST https://api.keenable.ai/v1/search` with `X-API-Key` (`KEENABLE_API_KEY` in the skill
+`.env`) when a key is set, else the keyless `POST /v1/search/public` with `X-Keenable-Title: Research Agent` (generic
+by rule: never the client / operator / project name); body `{query, max_results}`; results `{title,url,snippet}` are
+normalised to the cascade's `{title,description,url}`. 1 credit per keyed search (`usage.credits`, summed into
+`serp_cost.json` as `credits_used_this_run`, with `errors_by_http`). Live only; `--max-calls <n>` is REQUIRED (the
+credit scope, exit 3 at the cap, `--resume` continues; with concurrency up to 4 the stop can overshoot by up to 3
+in-flight calls); concurrency capped at 4; 429 / 402 / 5xx / network error back off (Retry-After, else 2 s, 6 s, 18 s)
+and retry, 3 retries. Same `https` path the DataForSEO backend uses (probed: works through this container's egress).
+Live 3-call probe through the backend, keyed: 3 searches, 3 credits, 3 of 3 with results, `errors: {}`.
+Test: `tests/search-owner-keenable.test.js` (local fake server, no live calls): normalisation, keyed vs keyless
+endpoint and headers, required cap, live-only, 429 retry, credits, key never written to output, cap + resume.
+Existing suite re-run: all 26 test files pass.

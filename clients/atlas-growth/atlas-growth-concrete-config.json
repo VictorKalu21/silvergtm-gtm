@@ -1,0 +1,16 @@
+{
+  "_comment": "Atlas Growth :: US residential concrete contractors (ICP-concrete.md). Source = Yellow Pages (yp-search.js), not Maps, so there are no tile/qualify rules: the universe is cut by the normaliser (concrete categories, own website, dedupe) and the real fit verdict is the site-text gate (STEP 5e, classify-prompt.md). Job-specific values live ONLY here.",
+  "geo": { "country": "us", "footprint": { "mode": "areas" }, "region_from_city": ",\\s*([A-Z]{2})\\b", "region_default": "US" },
+  "owner_query": {
+    "serp_backend": "keenable",
+    "bias_terms": ["owner", "president", "founder"],
+    "use_linkedin": true
+  },
+  "brand_families": {
+    "Concrete Craft": ["concrete craft"],
+    "Surecrete": ["surecrete"],
+    "Decorative Concrete Kingdom": ["decorative concrete kingdom"],
+    "Duraamen": ["duraamen"],
+    "Garage Floor Coating Franchise": ["epoxy-coat", "gforce", "granite garage floor", "garagetek", "xtreme polishing"]
+  }
+}

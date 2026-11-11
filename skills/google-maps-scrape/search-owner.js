@@ -31,8 +31,16 @@
  *                  at a third of Live). Broad fallbacks go in a second round. Posted ids are kept in
  *                  <out>/standard_state.json so an interrupted poll resumes without re-posting (--resume).
  *
+ *   keenable     — POST api.keenable.ai/v1/search (header X-API-Key, KEENABLE_API_KEY in the skill .env or process env;
+ *                  1 credit per search, reported as usage.credits) when a key is set, else the keyless tier
+ *                  POST /v1/search/public (header X-Keenable-Title: Research Agent; ~1,000 requests/hour per IP shared).
+ *                  Body {query, max_results}; results [{title,url,snippet}] -> {title,description,url}. Live only
+ *                  (no standard/batch mode). --max-calls <n> is REQUIRED (searches, the credit scope); the run stops at
+ *                  the cap (exit 3), --resume continues. Concurrency is capped at 4. 429/402 backs off and retries.
+ *                  Totals in <out>/serp_cost.json (credits_used, calls). Added 2026-11-11 (IMPROVEMENTS.md).
+ *
  * Usage: node search-owner.js --leads <leads.csv> --config <config.json> --out <dir>
- *          [--backend dataforseo] [--mode live|standard] [--batch-size 100] [--max-cost <usd>] [--resume] [--concurrency 6] [--limit N]
+ *          [--backend dataforseo|keenable] [--max-calls <n>] [--mode live|standard] [--batch-size 100] [--max-cost <usd>] [--resume] [--concurrency 6] [--limit N]
  *          [--email-search] [--email-search-only] [--site <owner/site_text.jsonl>]
  * Output: <dir>/serp_text.jsonl (+ <dir>/serp_cost.json on the dataforseo backend)
  * Test hook: SEARCH_OWNER_STUB=<json file> maps query -> raw backend response (no network). Tests only.
@@ -93,13 +101,19 @@ function bundle(query, r) { const rs = Array.isArray(r.results) ? r.results.slic
 function n(r) { return Array.isArray(r.results) ? r.results.length : 0; }
 function failed(r) { return r.status !== 'ok'; }
 
-module.exports = { locationCode, parseDataforseo, emailsFromText, buildEmailQueries, overBudget, bundle, hostOf, DFS_LOCATIONS, MAILBOX_TERMS };
+// Keenable /v1/search[/public] response -> {status, results:[{title,description,url}], cost:0, credits}
+function parseKeenable(json) {
+  if (!json || typeof json !== 'object' || !Array.isArray(json.results)) return { status: 'parse_error', results: [], cost: 0, credits: 0 };
+  const credits = Number(json.usage && json.usage.credits || 0);
+  return { status: 'ok', results: json.results.map(it => ({ title: it.title || '', description: it.snippet || it.description || '', url: it.url || '' })), cost: 0, credits };
+}
+module.exports = { parseKeenable, locationCode, parseDataforseo, emailsFromText, buildEmailQueries, overBudget, bundle, hostOf, DFS_LOCATIONS, MAILBOX_TERMS };
 if (require.main !== module) return;
 
 // ---------------- main ----------------
 const LEADS = arg('leads'), CFG = arg('config'), OUT = arg('out', '.');
 const ENVPATH = arg('env', path.join(__dirname, '.env'));
-const CONC = parseInt(arg('concurrency', '6'), 10);
+let CONC = parseInt(arg('concurrency', '6'), 10);
 const RESUME = process.argv.includes('--resume');
 const EMAIL_SEARCH = process.argv.includes('--email-search') || process.argv.includes('--email-search-only');
 const EMAIL_ONLY = process.argv.includes('--email-search-only');
@@ -123,6 +137,7 @@ const REGION_RE = GEO.region_from_city ? new RegExp(GEO.region_from_city) : null
 const REGION_DEFAULT = GEO.region_default || OQ.state || '';
 const biasGroup = '(' + BIAS_TERMS.map(t => '"' + t + '"').join(' OR ') + ')';
 const MAX_COST = arg('max-cost') != null ? Number(arg('max-cost')) : (OQ.serp_max_cost_usd != null ? Number(OQ.serp_max_cost_usd) : Infinity);
+const MAX_CALLS = arg('max-calls') != null ? Number(arg('max-calls')) : Infinity;
 const STUB = process.env.SEARCH_OWNER_STUB ? JSON.parse(fs.readFileSync(process.env.SEARCH_OWNER_STUB, 'utf8')) : null;
 
 let KEY = '', DFS_AUTH = '', DFS_LOCATION = 2840, DFS_LANG = 'en', DFS_DEPTH = LIMIT, DFS_PATH = '/v3/serp/google/organic/live/advanced';
@@ -137,16 +152,39 @@ if (BACKEND === 'dataforseo') {
   DFS_LANG = OQ.serp_language_code || 'en';
   DFS_DEPTH = Number(OQ.serp_depth || LIMIT);
   if (OQ.serp_endpoint) DFS_PATH = OQ.serp_endpoint;
+} else if (BACKEND === 'keenable') {
+  KEY = env('KEENABLE_API_KEY');
+  if (MODE !== 'live') { console.error('ERROR: the keenable backend is live-only (no --mode standard)'); process.exit(1); }
+  if (!Number.isFinite(MAX_CALLS)) { console.error('ERROR: --max-calls <n> is REQUIRED on the keenable backend — state the search scope before anything is spent.'); process.exit(1); }
+  CONC = Math.min(CONC, 4);
 } else if (BACKEND === 'scraper_tech') {
   KEY = env('SCRAPER_TECH_SEARCH_KEY');
   if (!STUB && !KEY) { console.error('ERROR: SCRAPER_TECH_SEARCH_KEY not in ' + ENVPATH + ' (NOTE: this backend was discontinued by the vendor; use --backend dataforseo)'); process.exit(1); }
-} else { console.error('ERROR: unknown backend "' + BACKEND + '" (scraper_tech | dataforseo)'); process.exit(1); }
+} else { console.error('ERROR: unknown backend "' + BACKEND + '" (scraper_tech | dataforseo | keenable)'); process.exit(1); }
 
 let spent = 0, calls = 0, batchesPosted = 0;
 function dfsRequest(method, p, bodyObj) {
   const body = bodyObj == null ? '' : JSON.stringify(bodyObj);
   const opts = { host: 'api.dataforseo.com', path: p, method, headers: { 'Authorization': 'Basic ' + DFS_AUTH, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }, timeout: CALL_TIMEOUT };
   return new Promise(res => { const req = https.request(opts, r => { let b = ''; r.on('data', d => b += d); r.on('end', () => { try { res(JSON.parse(b)); } catch { res({ status_code: 0, status_message: 'parse_error' }); } }); }); req.on('error', e => res({ status_code: 0, status_message: 'error:' + e.message })); req.on('timeout', () => { req.destroy(); res({ status_code: 0, status_message: 'timeout' }); }); if (body) req.write(body); req.end(); });
+}
+const KEEN_BASE = process.env.KEENABLE_BASE_URL || 'https://api.keenable.ai'; // tests point this at a local fake server
+let credits = 0, keenErrors = {};
+async function keenSearch(query) {
+  const u = new URL(KEEN_BASE + (KEY ? '/v1/search' : '/v1/search/public'));
+  const headers = KEY ? { 'Content-Type': 'application/json', 'X-API-Key': KEY } : { 'Content-Type': 'application/json', 'X-Keenable-Title': 'Research Agent' };
+  const body = JSON.stringify({ query, max_results: LIMIT });
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const r = await new Promise(res => {
+      const mod = u.protocol === 'http:' ? require('http') : https;
+      const req = mod.request({ host: u.hostname, port: u.port || undefined, path: u.pathname, method: 'POST', headers: { ...headers, 'Content-Length': Buffer.byteLength(body) }, timeout: CALL_TIMEOUT }, x => { let b = ''; x.on('data', d => b += d); x.on('end', () => { let j = null; try { j = JSON.parse(b); } catch { } res({ http: x.statusCode, j, ra: Number(x.headers['retry-after']) || 0 }); }); });
+      req.on('error', e => res({ http: 0, err: e.message })); req.on('timeout', () => { req.destroy(); res({ http: 0, err: 'timeout' }); }); req.write(body); req.end();
+    });
+    if (r.http === 200) { const p = parseKeenable(r.j); credits += p.credits; return p; }
+    keenErrors[r.http || r.err] = (keenErrors[r.http || r.err] || 0) + 1;
+    if (r.http === 429 || r.http === 402 || r.http === 0 || r.http >= 500) { if (attempt < 3) { await sleep(r.ra ? r.ra * 1000 : Math.min(60000, 2000 * Math.pow(3, attempt))); continue; } }
+    return { status: 'failed:' + (r.http || r.err), results: [], cost: 0 };
+  }
 }
 function stubSearch(query) {
   const raw = STUB[query] || STUB['*'];
@@ -161,7 +199,7 @@ function stSearch(query) {
 const taskBody = q => ({ keyword: q, location_code: DFS_LOCATION, language_code: DFS_LANG, depth: DFS_DEPTH, device: 'desktop', os: 'windows' });
 async function dfsLive(query) { const j = await dfsRequest('POST', DFS_PATH, [taskBody(query)]); return parseDataforseo(j); }
 async function searchLive(query) {
-  const r = STUB ? stubSearch(query) : (BACKEND === 'dataforseo' ? await dfsLive(query) : await stSearch(query));
+  const r = STUB ? stubSearch(query) : (BACKEND === 'dataforseo' ? await dfsLive(query) : BACKEND === 'keenable' ? await keenSearch(query) : await stSearch(query));
   calls++; spent += Number(r.cost || 0);
   return r;
 }
@@ -239,8 +277,8 @@ try { sharedHost = require('./shared-hosts').isSharedHost; } catch { sharedHost 
   const spentBefore = spent;
   const targets = leads.filter(l => !doneIds.has(l.place_id)).slice(0, LEAD_LIMIT);
   let done = 0, hadName = 0, hadEmail = 0, budgetHit = false;
-  const stopFn = () => { if (overBudget(spent, MAX_COST)) { budgetHit = true; return true; } return false; };
-  const writeCost = () => { if (BACKEND !== 'dataforseo') return; fs.writeFileSync(costFile, JSON.stringify({ backend: BACKEND, mode: MODE, calls_this_run: calls, batches_posted: batchesPosted, spent_usd_this_run: +(spent - spentBefore).toFixed(4), spent_usd_total_before_this_run_included: +spent.toFixed(4), max_cost_usd: MAX_COST, budget_hit: budgetHit, leads_done_this_run: done, leads_targeted: targets.length, location_code: DFS_LOCATION, depth: DFS_DEPTH, updated: new Date().toISOString() }, null, 2)); };
+  const stopFn = () => { if (calls >= MAX_CALLS || overBudget(spent, MAX_COST)) { budgetHit = true; return true; } return false; };
+  const writeCost = () => { if (BACKEND === 'keenable') { fs.writeFileSync(costFile, JSON.stringify({ backend: 'keenable', endpoint: KEY ? 'keyed' : 'public', calls_this_run: calls, credits_used_this_run: credits, errors_by_http: keenErrors, max_calls: MAX_CALLS, budget_hit: budgetHit, leads_done_this_run: done, leads_targeted: targets.length, updated: new Date().toISOString() }, null, 2)); return; } if (BACKEND !== 'dataforseo') return; fs.writeFileSync(costFile, JSON.stringify({ backend: BACKEND, mode: MODE, calls_this_run: calls, batches_posted: batchesPosted, spent_usd_this_run: +(spent - spentBefore).toFixed(4), spent_usd_total_before_this_run_included: +spent.toFixed(4), max_cost_usd: MAX_COST, budget_hit: budgetHit, leads_done_this_run: done, leads_targeted: targets.length, location_code: DFS_LOCATION, depth: DFS_DEPTH, updated: new Date().toISOString() }, null, 2)); };
 
   // query plan per lead
   const plan = targets.map(l => {
@@ -291,9 +329,10 @@ try { sharedHost = require('./shared-hosts').isSharedHost; } catch { sharedHost 
     done++; if (anyOk) hadName++; if (emailsFound.length) hadEmail++;
   }
   writeCost();
-  const why = budgetHit ? `STOPPED: --max-cost $${MAX_COST} reached ($${spent.toFixed(4)} spent) — re-run with --resume and a new cap` : 'DONE';
+  const why = budgetHit && BACKEND === 'keenable' ? `STOPPED: --max-calls ${MAX_CALLS} reached (${calls} searches) — re-run with --resume and a new cap` : budgetHit ? `STOPPED: --max-cost $${MAX_COST} reached ($${spent.toFixed(4)} spent) — re-run with --resume and a new cap` : 'DONE';
   console.log(`\n${why}: ${done} leads this run -> ${outFile}`);
   console.log(`  with results: ${hadName} | empty: ${done - hadName}${EMAIL_SEARCH ? ` | with an email candidate: ${hadEmail}` : ''}`);
   if (BACKEND === 'dataforseo') console.log(`  mode: ${MODE} | calls: ${calls}${MODE === 'standard' ? ' | batches posted: ' + batchesPosted : ''} | spent this run: $${(spent - spentBefore).toFixed(4)} | cap: $${MAX_COST} | ${costFile}`);
+  if (BACKEND === 'keenable') console.log(`  keenable: ${calls} searches | credits used: ${credits} | errors: ${JSON.stringify(keenErrors)} | ${costFile}`);
   if (budgetHit) process.exit(3);
 })();
