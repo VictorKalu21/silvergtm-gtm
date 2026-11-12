@@ -1392,3 +1392,16 @@ Live 3-call probe through the backend, keyed: 3 searches, 3 credits, 3 of 3 with
 Test: `tests/search-owner-keenable.test.js` (local fake server, no live calls): normalisation, keyed vs keyless
 endpoint and headers, required cap, live-only, 429 retry, credits, key never written to output, cap + resume.
 Existing suite re-run: all 26 test files pass.
+
+## OPEN 2026-11-12 (fetch-sites.js, HIGH): the transient-retry rewrite OOM-crashes on a large site_text.jsonl (22,716 records / 301 MB)
+
+Found on the Atlas Growth US concrete Maps run (`2026-11-12_us-concrete-contractors-maps`). The main pass finished and
+`owner/site_text.jsonl` was intact (22,716 lines, 0 unparseable, 19,404 ok), then `RETRY: re-fetching 2340 transient
+failures` ran and the process died with `FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory`
+in `JsonStringifier::Stringify` — line 591 builds `records.map(JSON.stringify).join('\n')` for the whole file in memory.
+The DONE summary (counts) was never printed. No data was lost (the incremental file stands), but the engine's own free
+retry rung cannot run at this scale. **Job-side workaround used:** `retry-http.js` in the run folder retries ONLY the failed
+rows (3,312) through `fetch-sites.js` on a small file with `website = http://<host>/` and merges back with a streaming
+line-by-line rewrite. **Proposed engine fix (needs operator approval + a test):** write the retry results by streaming (append
+or per-record replace via a temp file), never one `join` over all records; same for line 479's `entries.map(...).join`.
+Also consider `--max-old-space-size` guidance in the skill for runs above ~10k domains.

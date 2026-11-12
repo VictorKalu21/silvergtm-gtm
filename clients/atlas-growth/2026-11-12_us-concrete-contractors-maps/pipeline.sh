@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Post-scrape chain, SKILL STEP 5 -> 6 step 1, every step through the engine. Idempotent: a step whose
 # output exists is skipped (delete the output to redo). Run from anywhere: bash <run>/pipeline.sh [step]
-# Steps: merge | qualify | geo | dedupe | collapse | fetch | classify-prep   (no arg = all, in order)
+# Steps: merge | qualify | geo | split | dedupe | collapse | fetch | classify-prep   (no arg = all, in order)
 set -euo pipefail
 cd "$(dirname "$0")/../../.."          # repo root
 E=skills/google-maps-scrape
@@ -35,22 +35,29 @@ const fs=require('fs');const a=fs.readFileSync('$R/excluded_maps.csv','utf8').tr
 if(g.length>1){const ha=a[0].split(','),hg=g[0].split(',');const di=hg.indexOf('drop_reason');const out=[a[0],...a.slice(1)];for(const l of g.slice(1)){out.push(l)}fs.writeFileSync('$R/excluded_maps.csv',out.join('\n')+'\n');console.log('excluded_maps += geo drops',g.length-1)}"
   else echo "[geo] skip"; fi
 fi
+if want split; then
+  # operator 2026-11-12: tag state; only the 18 warm states continue, the rest is HELD (not fetched/classified)
+  if [ ! -s $R/leads_warm.csv ]; then
+    [ -f $R/kw/leads_clean_qualified_infootprint.csv ] && cp $R/kw/leads_clean_qualified_infootprint.csv $R/keyword_candidates_infootprint.csv
+    (cd $R && node split-warm.js)
+  else echo "[split] skip"; fi
+fi
 if want dedupe; then
   if [ ! -s $R/leads_netnew.csv ]; then
     # Cross-run dedupe WAIVED by the operator 2026-10-11 (prior shipped feeds not on this container); run for the record.
-    node $E/build-netnew.js --new $R/leads_clean_qualified_infootprint.csv --client $C --out $R/leads_netnew.csv || true
-    [ -s $R/leads_netnew.csv ] || cp $R/leads_clean_qualified_infootprint.csv $R/leads_netnew.csv
+    node $E/build-netnew.js --new $R/leads_warm.csv --client $C --out $R/leads_netnew.csv || true
+    [ -s $R/leads_netnew.csv ] || cp $R/leads_warm.csv $R/leads_netnew.csv
   else echo "[dedupe] skip"; fi
 fi
 if want collapse; then
   if [ ! -s $R/leads_domains.csv ]; then
-    # keyword candidates ride the same collapse so their sites are fetched for classify
+    # keyword candidates (warm only) ride the same collapse so their sites are fetched for classify; merged BY HEADER NAME
     node -e "
-const fs=require('fs');const a=fs.readFileSync('$R/leads_netnew.csv','utf8').trimEnd().split('\n');const k=fs.existsSync('$R/kw/leads_clean_qualified_infootprint.csv')?fs.readFileSync('$R/kw/leads_clean_qualified_infootprint.csv','utf8').trimEnd().split('\n'):[];
-const H=a[0].split(',');const hk=k.length?k[0].split(','):[];const idx=hk.map(h=>H.indexOf(h));
-// keyword rows carry drop_reason as an extra trailing column; re-project onto the netnew header by position (same leads_clean columns first)
-const rows=[...a];for(const l of k.slice(1)){rows.push(l.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).slice(0,H.length).join(','))}
-fs.writeFileSync('$R/leads_for_collapse.csv',rows.join('\n')+'\n');console.log('collapse input rows',rows.length-1,'(keyword candidates',Math.max(0,k.length-1)+')')"
+const fs=require('fs');const {csv}=require('./$E/build-plusvibe.js');
+const a=csv('$R/leads_netnew.csv');const k=fs.existsSync('$R/keyword_candidates_warm.csv')?csv('$R/keyword_candidates_warm.csv'):[];
+const H=Object.keys(a[0]);const esc=v=>{v=v==null?'':String(v);return /[\",\n]/.test(v)?'\"'+v.replace(/\"/g,'\"\"')+'\"':v};
+const seen=new Set(a.map(r=>r.place_id));const rows=[...a];for(const r of k)if(!seen.has(r.place_id)){rows.push(r);seen.add(r.place_id)}
+fs.writeFileSync('$R/leads_for_collapse.csv',[H.join(',')].concat(rows.map(r=>H.map(h=>esc(r[h])).join(','))).join('\n')+'\n');console.log('collapse input rows',rows.length,'(keyword candidates',k.length+')')"
     node $E/collapse-domains.js --in $R/leads_for_collapse.csv --out $R --config $CFG
   else echo "[collapse] skip"; fi
 fi
