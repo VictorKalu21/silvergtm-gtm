@@ -1,0 +1,100 @@
+{
+  "_comment": "Atlas Growth :: concrete Maps RECOVERY pass over excluded_officp.csv: takes back rows the main allow-list dropped (no concrete/masonry/paving tag) ONLY when the business NAME claims concrete flatwork and the type is a generic trade a pour crew gets typed as. Deterministic, $0, no re-scrape; recovered rows go to the site-text gate like every other row. Modelled on recover-generic-pools-config.json.",
+  "geo": {
+    "country": "us",
+    "footprint": {
+      "mode": "areas"
+    },
+    "region_from_city": ",\\s*([A-Z]{2})\\b",
+    "region_default": "US"
+  },
+  "qualify_rules": [
+    {
+      "_r": "Same name deny as the main config, repeated here so a recovered row cannot re-enter past it (2026-11-12 calibration: 'Texan Concrete Ready Mix' was name-denied in the main pass and re-admitted by this one before this rule). 2. Must-drop by NAME (fires on primary or secondary type): big-box and rental chains, cement / ready-mix majors and bagged-mix brands, ready-mix plants, civic bodies. Every term is multi-word or a distinctive brand (substring trap).",
+      "field": "name",
+      "op": "not_contains_any",
+      "label": "name_deny",
+      "value": [
+        "home depot",
+        "lowe's",
+        "lowes",
+        "menards",
+        "ace hardware",
+        "tractor supply",
+        "walmart",
+        "costco",
+        "sam's club",
+        "harbor freight",
+        "u-haul",
+        "sunbelt rentals",
+        "united rentals",
+        "herc rentals",
+        "hertz equipment",
+        "cemex",
+        "martin marietta",
+        "vulcan materials",
+        "lafarge",
+        "holcim",
+        "argos usa",
+        "heidelberg materials",
+        "quikrete",
+        "sakrete",
+        "ready mix",
+        "ready-mix",
+        "readymix",
+        "redi-mix",
+        "redi mix",
+        "city of",
+        "county of",
+        "department of",
+        "parks and recreation"
+      ]
+    },
+    {
+      "_r": "Generic trades a concrete contractor gets typed as. Deny-listed supplier/plant primaries never reach this file with the allow label.",
+      "field": "google_types",
+      "op": "allow",
+      "label": "not_generic_contractor",
+      "value": [
+        "contractor",
+        "construction company",
+        "general contractor",
+        "landscaper",
+        "landscape designer",
+        "landscaping",
+        "excavating contractor",
+        "demolition contractor",
+        "foundation",
+        "deck builder",
+        "fence contractor",
+        "home builder",
+        "remodeler",
+        "handyman",
+        "pressure washing service",
+        "flooring contractor",
+        "floor refinishing service",
+        "service establishment",
+        "outdoor",
+        "corporate office"
+      ]
+    },
+    {
+      "_r": "The name must claim the trade. Multi-letter stems only (substring trap).",
+      "field": "name",
+      "op": "contains_any",
+      "label": "name_not_concrete",
+      "value": [
+        "concrete",
+        "cement",
+        "stamped",
+        "driveway",
+        "flatwork",
+        "hardscape",
+        "masonry",
+        "paving",
+        "pavers",
+        "patio"
+      ]
+    }
+  ]
+}
