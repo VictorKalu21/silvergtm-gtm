@@ -281,3 +281,30 @@ redo prompts needed, so the next run's first pass should flag stragglers, not ba
 | 2026-09-17 | 2026-09-16_uk-foundation-repair-maps | final: `deliverable/atlas_uk_plusvibe_upload.csv` (**435 rows**, 409 personalised, 29 named, 0 blank cities, check passed), `deliverable/emails_final.csv` (495 rows: **435 sendable** / 49 risky / 11 dropped; 25 MV + 4 BB credits for the new addresses, 35 BB credits for the invalid/error recovery) | sent in session |
 | 2026-09-17 | 2026-09-16_uk-foundation-repair-maps | after the Firecrawl residue pass: `deliverable/atlas_uk_foundation_repair_maps_qualified.csv` (**898 rows**, 610 named, 495 with email), `deliverable/emails_final.csv` (495 rows: 392 sendable / 40 risky / 36 dropped / **27 unverified**), `verify/verify_input_residue.csv` (25 new addresses, awaiting go) | sent in session |
 | 2026-09-17 | 2026-09-16_uk-foundation-repair-maps | `deliverable/emails_final.csv` (468 rows: **392 sendable** / 40 risky / 36 dropped after MillionVerifier → BounceBan), `deliverable/atlas_uk_plusvibe_upload.csv` (**391 rows**, one per lead; 27 with first/last; personalized_email on every row, 364 from site text, 27 fallbacks; 0 blank cities), `deliverable/city_overrides.json` (42 job-side city fixes) | sent in session |
+
+## Concrete — standard Maps run (2026-11-12), CLASSIFIED, at the owner-search gate
+
+Run folder `2026-11-12_us-concrete-contractors-maps/`. 18 warm states, 362 anchors, 1,448 run-sheet rows, 3,354 Maps
+calls (2.32/row), all 8 shards COMPLETE.
+
+| stage | count |
+|---|---|
+| unique place_ids | 47,682 |
+| qualified (main 25,845 + recovered 2,395) | 28,240 |
+| warm-state qualified / held out of state | 25,058 / 3,172 (ON HOLD, untouched; 1,331 of them state unknown) |
+| keyword candidates warm / held | 11,502 / 925 |
+| domains fetched / with text | 22,716 / 19,857 (87.4%) |
+| no-website + shared-host track (not classified) | 11,208 |
+| main set read by Haiku (264 batches) | 15,840 |
+| residential_flatwork (IN) | 5,724 rows = 5,330 domains (36%) |
+| keyword tail, deferred unread | 9,074 |
+
+- Other verdicts: unclear 6,915 (2,920 no text), pumping_cutting 973, commercial_only 856, foundation_or_lifting_only 703,
+  supplier_or_readymix 473, franchise 196. 59 IN rows flagged `needs_review` (evidence quote not verbatim).
+- IN by state: CA 1,403, TX 1,034, FL 832, NC 428, TN 275, GA 272, UT 229, VA 205, AZ 204, SC 199, LA 138, OK 123,
+  AL 109, NV 89, AR 86, NM 53, MS 27, HI 18. Review count: blank 815, <5 1,279, 5-14 1,491, 15-49 1,436, 50+ 703.
+- State for ~10,400 service-area rows is a nearest-neighbour guess (30 km); border rows may be mislabelled.
+- YP probe dedupe done (271 removed); 2 probe IN leads recur under a different domain (phone match) — dedupe before send.
+- NOT done: owner read + Keenable sweep (awaiting operator scope), emails, verification (MV/BB need an explicit go),
+  keyword tail, held states, no-website track.
+- Engine bug OPEN: fetch-sites.js heap OOM on the 301 MB retry rewrite (IMPROVEMENTS.md).
