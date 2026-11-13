@@ -13,8 +13,9 @@ const wr = (f, H, rs) => fs.writeFileSync(f, [H.join(',')].concat(rs.map(r => H.
 const ok = csv('verify/mv_results_1000.csv').filter(r => r.mv_result === 'ok');
 const EH = ['verdict', 'email', 'place_id', 'contact_name', 'email_kind', 'found_by'];
 wr('upload/emails_final_601.csv', EH, ok.map(r => ({ verdict: 'sendable', email: r.Email.toLowerCase(), place_id: r.place_id, contact_name: r.contact_name || '', email_kind: r.name_tied === 'yes' ? 'personal' : 'company', found_by: r.source })));
-const b = spawnSync(process.execPath, [E + 'build-plusvibe.js', 'base', '--leads', 'leads_in_domains.csv', '--emails', 'upload/emails_final_601.csv', '--contacts', 'owner_in/contacts_final.jsonl', '--out', 'upload/plusvibe_base_601.csv'], { encoding: 'utf8' });
+const b = spawnSync(process.execPath, [E + 'build-plusvibe.js', 'base', '--leads', 'leads_in_domains.csv', '--emails', 'upload/emails_final_601.csv', '--contacts', 'owner_in/contacts_final.jsonl', '--out', 'upload/plusvibe_base_601.csv', '--city-overrides', 'upload/city_overrides.json'], { encoding: 'utf8' });
 console.log('base:', b.stdout.trim(), b.stderr.trim());
+const OVR = JSON.parse(fs.readFileSync('upload/city_overrides.json', 'utf8'));
 const base = new Map(csv('upload/plusvibe_base_601.csv').map(r => [r.place_id, r]));
 const L = new Map(csv('leads_in_domains.csv').map(r => [r.place_id, r]));
 const C = new Map(); for (const l of fs.readFileSync('owner_in/contacts_final.jsonl', 'utf8').split('\n').filter(Boolean)) { const d = JSON.parse(l); C.set(d.place_id, d); }
@@ -38,7 +39,7 @@ for (const r of ok) {
   let fn = bs.first_name, ln = bs.last_name, nb = bs.name_basis;
   if (fn) { const loc = bs.email.split('@')[0].toLowerCase().replace(/[^a-z]/g, ''), la = ln.toLowerCase().replace(/[^a-z]/g, ''), fa = fn.toLowerCase().replace(/[^a-z]/g, ''); const at = la.length >= 4 ? loc.indexOf(la) : -1; if (at > 2) { const pre = loc.slice(0, at); if (!(fa.startsWith(pre) || pre.startsWith(fa))) { fn = ''; ln = ''; nb = 'none_guarded'; } } }
   out.push({ first_name: fn, last_name: ln, email: bs.email, company_name_clean: cn, company_name_raw: l.name, city: bs.city, state: bs.state || l.state, website: bs.website, phone: dig(l.phone_number).length >= 10 ? l.phone_number : '', review_count: l.review_count, rating: l.rating,
-    owner_flag: c ? (c.primary_is_owner ? 'owner' : 'not_owner') : 'unknown_owner', email_type: r.email_type, email_kind: r.email_kind, name_basis: nb, needs_review: r.needs_review, company_name_flags: fl.join('|'), personalized_email: '', business_type: '', project_type: '', mv_result: r.mv_result, mv_role: r.mv_role, place_id: r.place_id, root_domain: l.root_domain });
+    owner_flag: c ? (c.primary_is_owner ? 'owner' : 'not_owner') : 'unknown_owner', email_type: r.email_type, email_kind: r.email_kind, name_basis: nb, city_source: !bs.city ? 'blank' : OVR[r.place_id] ? (/\b(county|parish|borough)\b/i.test(OVR[r.place_id]) ? 'fallback_county' : 'fallback_geocode') : 'maps',  needs_review: r.needs_review, company_name_flags: fl.join('|'), personalized_email: '', business_type: '', project_type: '', mv_result: r.mv_result, mv_role: r.mv_role, place_id: r.place_id, root_domain: l.root_domain });
 }
 const H = Object.keys(out[0]); wr('upload/plusvibe_601.csv', H, out);
 const cnt = (a, f) => a.reduce((m, x) => { const k = f(x); m[k] = (m[k] || 0) + 1; return m; }, {});

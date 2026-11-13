@@ -282,7 +282,7 @@ redo prompts needed, so the next run's first pass should flag stragglers, not ba
 | 2026-09-17 | 2026-09-16_uk-foundation-repair-maps | after the Firecrawl residue pass: `deliverable/atlas_uk_foundation_repair_maps_qualified.csv` (**898 rows**, 610 named, 495 with email), `deliverable/emails_final.csv` (495 rows: 392 sendable / 40 risky / 36 dropped / **27 unverified**), `verify/verify_input_residue.csv` (25 new addresses, awaiting go) | sent in session |
 | 2026-09-17 | 2026-09-16_uk-foundation-repair-maps | `deliverable/emails_final.csv` (468 rows: **392 sendable** / 40 risky / 36 dropped after MillionVerifier → BounceBan), `deliverable/atlas_uk_plusvibe_upload.csv` (**391 rows**, one per lead; 27 with first/last; personalized_email on every row, 364 from site text, 27 fallbacks; 0 blank cities), `deliverable/city_overrides.json` (42 job-side city fixes) | sent in session |
 
-## Concrete — standard Maps run (2026-11-12), CLASSIFIED, at the owner-search gate
+## Concrete — standard Maps run (2026-11-12), 601 verified addresses BUILT for upload, NOT yet uploaded
 
 Run folder `2026-11-12_us-concrete-contractors-maps/`. 18 warm states, 362 anchors, 1,448 run-sheet rows, 3,354 Maps
 calls (2.32/row), all 8 shards COMPLETE.
@@ -305,6 +305,38 @@ calls (2.32/row), all 8 shards COMPLETE.
   AL 109, NV 89, AR 86, NM 53, MS 27, HI 18. Review count: blank 815, <5 1,279, 5-14 1,491, 15-49 1,436, 50+ 703.
 - State for ~10,400 service-area rows is a nearest-neighbour guess (30 km); border rows may be mislabelled.
 - YP probe dedupe done (271 removed); 2 probe IN leads recur under a different domain (phone match) — dedupe before send.
-- NOT done: owner read + Keenable sweep (awaiting operator scope), emails, verification (MV/BB need an explicit go),
-  keyword tail, held states, no-website track.
 - Engine bug OPEN: fetch-sites.js heap OOM on the 301 MB retry rewrite (IMPROVEMENTS.md).
+
+### Since the classify gate (owner finding -> emails -> MillionVerifier -> upload file)
+| stage | count |
+|---|---|
+| IN domains (one representative row per root domain) | 5,330 |
+| named by the owner site read (134 Haiku batches) | 850 |
+| unnamed with 5+ reviews, swept with Keenable (2 searches per lead; 73 reader batches) | 2,894 |
+| Keenable credits for the sweep | 5,782 (+6 probe) |
+| named from the sweep after guards | 1,251 |
+| **named total** | **2,101 of 5,330 (39.4%)** (site 850, snippets 1,251) |
+| leads with a rank-1 address after exclusions | 3,601 (named 1,613, unnamed 1,988) |
+| rank-1 by type | own-domain 1,789 / free-mail 1,532 / other-domain 280 (flagged) |
+| rank-2 fallbacks | 628 |
+| needs_review rows in the queue | 435 |
+
+- Email rules: addresses already on the site or in search snippets only (no finders, no pattern guessing); removed placeholders (410),
+  web-vendor / agency / foundry (90), free-mail not tied to the business (489), other-firm domains from snippets (435), duplicates (171),
+  role noise (27), wrong-site leads (46 leads), addresses already in the YP probe queue (7). Script `build-email-candidates.js`.
+- **MillionVerifier on a seeded random 1,000 of the 3,601 (seed 20261113; 1,000 credits, 0 errors): ok 601, catch_all 235, unknown 65,
+  invalid 99.** By type: free-mail ok 391/422, own-domain ok 187/496, other-domain ok 23/82. BounceBan SKIPPED by operator decision
+  (the runner was guarded so no BounceBan request could be sent); only the 601 `ok` addresses go forward.
+- **Upload file built: `upload/plusvibe_601.csv` (601 rows, 601 unique addresses, 0 overlap with the YP probe queue, warm states only).**
+  First name on 90 rows (engine name rule + a guard), none on 511; 62 needs_review; engine `check` clean. Blank cities were filled by the
+  engine's city-fallback (Nominatim): 179 town/city, 123 "<County>" fallback, 8 still blank (column `city_source`).
+  **NOT uploaded to PlusVibe - awaiting the campaign and the copy (no concrete personalize-config exists; the placeholder columns are blank).**
+
+### Parked (counts only)
+- 2,601 rank-1 addresses not yet verified (`verify/queue_remaining.csv`); 300 catch-all / unknown from the sample (BounceBan, not run).
+- 3,172 qualified + 925 keyword-candidate rows out of the 18 warm states, ON HOLD (`leads_held_other_states.csv`, `keyword_candidates_held_other_states.csv`).
+- 9,074 keyword-tail leads classified-unread (`leads_deferred_unread.csv`).
+- 11,208 no-website / shared-host rows (recovery track not run).
+- 1,586 unnamed IN domains with fewer than 5 reviews or a blank count, not searched (`sweep_in/leads_unnamed_below5_or_blank.csv`).
+- YP probe: 140 rank-1 + 26 rank-2 addresses still unverified; the probe's 459 held tranche-2 leads (batches 108-115) unclassified.
+- 99 invalid and 235 + 65 non-ok addresses from the sample are not in the upload file.
