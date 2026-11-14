@@ -282,7 +282,7 @@ redo prompts needed, so the next run's first pass should flag stragglers, not ba
 | 2026-09-17 | 2026-09-16_uk-foundation-repair-maps | after the Firecrawl residue pass: `deliverable/atlas_uk_foundation_repair_maps_qualified.csv` (**898 rows**, 610 named, 495 with email), `deliverable/emails_final.csv` (495 rows: 392 sendable / 40 risky / 36 dropped / **27 unverified**), `verify/verify_input_residue.csv` (25 new addresses, awaiting go) | sent in session |
 | 2026-09-17 | 2026-09-16_uk-foundation-repair-maps | `deliverable/emails_final.csv` (468 rows: **392 sendable** / 40 risky / 36 dropped after MillionVerifier → BounceBan), `deliverable/atlas_uk_plusvibe_upload.csv` (**391 rows**, one per lead; 27 with first/last; personalized_email on every row, 364 from site text, 27 fallbacks; 0 blank cities), `deliverable/city_overrides.json` (42 job-side city fixes) | sent in session |
 
-## Concrete — standard Maps run (2026-11-12), 601 verified addresses BUILT for upload, NOT yet uploaded
+## Concrete — standard Maps run (2026-11-12), 597 verified + PERSONALISED rows built for upload, NOT yet uploaded
 
 Run folder `2026-11-12_us-concrete-contractors-maps/`. 18 warm states, 362 anchors, 1,448 run-sheet rows, 3,354 Maps
 calls (2.32/row), all 8 shards COMPLETE.
@@ -327,10 +327,15 @@ calls (2.32/row), all 8 shards COMPLETE.
 - **MillionVerifier on a seeded random 1,000 of the 3,601 (seed 20261113; 1,000 credits, 0 errors): ok 601, catch_all 235, unknown 65,
   invalid 99.** By type: free-mail ok 391/422, own-domain ok 187/496, other-domain ok 23/82. BounceBan SKIPPED by operator decision
   (the runner was guarded so no BounceBan request could be sent); only the 601 `ok` addresses go forward.
-- **Upload file built: `upload/plusvibe_601.csv` (601 rows, 601 unique addresses, 0 overlap with the YP probe queue, warm states only).**
-  First name on 90 rows (engine name rule + a guard), none on 511; 62 needs_review; engine `check` clean. Blank cities were filled by the
-  engine's city-fallback (Nominatim): 179 town/city, 123 "<County>" fallback, 8 still blank (column `city_source`).
-  **NOT uploaded to PlusVibe - awaiting the campaign and the copy (no concrete personalize-config exists; the placeholder columns are blank).**
+- **Upload file built: `upload/plusvibe_upload_concrete.csv` - 597 rows (601 MillionVerifier-ok minus 4 held for no town and no county), 597 unique
+  addresses, 0 overlap with the YP probe queue, warm states only (18).** Personalised per SKILL STEP 7b with `personalize-config-concrete.json`
+  (3-lead and 7-lead tests signed off; 16 Haiku batches; `fill` flags 0, redo empty, fallback_only 0). business_type mix: concrete flatwork 394,
+  concrete and masonry 73, decorative concrete 72, stamped concrete 23, concrete driveways 18, concrete patios 9, concrete work 8; visit word:
+  estimates 423, quotes 173, consultations 1 (off-list, left). First name on 90 rows (engine name rule + a guard), 61 needs_review (in the audit file).
+  City source: Maps 291, geocode (Nominatim) 179, read from the site by the reader 95 (each verified to appear in the site text), county fallback
+  32 ("in <Name> County", operator-approved wording), 4 rows held (`upload/plusvibe_held_blank_city.csv`). Companion `plusvibe_upload_concrete_audit.csv`
+  carries the working columns. Engine `check` clean.
+  **NOT uploaded to PlusVibe - awaiting the campaign.**
 
 ### Parked (counts only)
 - 2,601 rank-1 addresses not yet verified (`verify/queue_remaining.csv`); 300 catch-all / unknown from the sample (BounceBan, not run).
