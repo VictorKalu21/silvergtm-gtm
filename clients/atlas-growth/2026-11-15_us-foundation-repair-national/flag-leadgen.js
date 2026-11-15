@@ -3,6 +3,9 @@
  * Signals, each across DISTINCT root domains (a brand's own branches share one domain and never trip them):
  *   shared_phone   — the same 10-digit phone on >= 2 root domains (call-tracking / referral networks)
  *   shared_text    — >= 2 root domains whose site text shares >= 40% of its 8-word shingles (one template, many sites)
+ *   homoglyph_text — Latin words written with Cyrillic look-alike letters (>= 5 mixed-script words): spun copy built to
+ *                    dodge duplicate detection (2026-11-15 national run: FL/WI "<Town> Crawl Space Repair" networks, each
+ *                    with its own tracking phone). Look-alikes are folded to Latin BEFORE shingling so shared_text sees them.
  * Usage: node flag-leadgen.js --leads <leads_annotated.csv> --site <owner/site_text.jsonl> --out <dir>
  * Writes <dir>/leadgen_flags.csv (place_id, root_domain, leadgen_flags, leadgen_cluster) + leadgen_report.json.
  * The model-read half (referral-service language) lives in classify-prompt.md (`lead_gen` field).
@@ -22,8 +25,12 @@ for(const r of L){const p=(r.phone_number||'').replace(/\D/g,'').slice(-10);cons
 // site text shingles per domain (representative text)
 const text=new Map();
 for(const ln of fs.readFileSync(SITE,'utf8').split('\n')){if(!ln.trim())continue;try{const o=JSON.parse(ln);if(o.status==='ok'&&o.text){const r=L.find(x=>x.place_id===o.place_id);if(r&&dom(r))text.set(dom(r),o.text);}}catch{}}
+const HG={'а':'a','е':'e','о':'o','р':'p','с':'c','у':'y','х':'x','і':'i','ј':'j','ѕ':'s','ԁ':'d','ɡ':'g','һ':'h','ո':'n','А':'A','В':'B','Е':'E','К':'K','М':'M','Н':'H','О':'O','Р':'P','С':'C','Т':'T','Х':'X','І':'I'};
+const fold=t=>t.replace(/[\u0400-\u04FF\u0500-\u052F\u0261\u0570-\u058F]/g,c=>HG[c]??c);
+const homoglyph=new Set();
+for(const [d,t] of text){const m=t.match(/[a-zA-Z][\u0400-\u04FF]|[\u0400-\u04FF][a-zA-Z]/g);if(m&&m.length>=5)homoglyph.add(d);}
 const sh=new Map();
-for(const [d,t] of text){const w=t.toLowerCase().replace(/[^a-z0-9 ]+/g,' ').split(/\s+/).filter(Boolean);const s=new Set();for(let i=0;i+8<=w.length;i+=2)s.add(w.slice(i,i+8).join(' '));if(s.size>=30)sh.set(d,s);}
+for(const [d,t0] of text){const t=fold(t0);const w=t.toLowerCase().replace(/[^a-z0-9 ]+/g,' ').split(/\s+/).filter(Boolean);const s=new Set();for(let i=0;i+8<=w.length;i+=2)s.add(w.slice(i,i+8).join(' '));if(s.size>=30)sh.set(d,s);}
 // inverted index shingle -> domains, skip boilerplate shared by very many (cookie banners, widgets)
 const inv=new Map();for(const [d,s] of sh)for(const x of s){if(!inv.has(x))inv.set(x,[]);inv.get(x).push(d);}
 const pair=new Map();
@@ -41,11 +48,12 @@ for(const ds of byPhone.values())if(ds.size>=2){const a=[...ds];const sameName=n
   a.forEach(d=>add(d,sameName?'same_business_multi_domain':'shared_phone'));if(!sameName)for(let i=1;i<a.length;i++)u(a[0],a[i]);}
 // dealer networks (brand_families) publish one template per dealer by design: exempt from shared_text
 for(const [d,m] of textMates){if(brand.has(d))continue;const mates=[...m].filter(y=>!brand.has(y));if(!mates.length)continue;add(d,'shared_text');for(const y of mates)u(d,y);}
-// a row is a lead-gen SUSPECT only on shared_phone or shared_text; same_business_multi_domain is a dedupe hint
+for(const d of homoglyph){add(d,'homoglyph_text');u(d,d);}
+// a row is a lead-gen SUSPECT on shared_phone, shared_text or homoglyph_text; same_business_multi_domain is a dedupe hint
 const out=[['place_id','root_domain','leadgen_flags','leadgen_cluster','leadgen_cluster_size']];
 const csize=new Map();for(const d of flags.keys())if(!(flags.get(d).size===1&&flags.get(d).has('same_business_multi_domain'))){const c=f(d);csize.set(c,(csize.get(c)||0)+1);}
 let flaggedRows=0;
 for(const r of L){const d=dom(r);const fl=flags.get(d);if(fl){flaggedRows++;out.push([r.place_id,d,[...fl].sort().join('|'),csize.has(f(d))?f(d):'',csize.get(f(d))||'']);}}
 fs.writeFileSync(path.join(OUT,'leadgen_flags.csv'),out.map(r=>r.map(esc).join(',')).join('\n')+'\n');
-const rep={domains_flagged:flags.size,leadgen_suspect_domains:[...flags.values()].filter(s=>s.has('shared_phone')||s.has('shared_text')).length,same_business_multi_domain:[...flags.values()].filter(s=>s.has('same_business_multi_domain')).length,rows_flagged:flaggedRows,shared_phone_domains:[...flags.values()].filter(s=>s.has('shared_phone')).length,shared_text_domains:[...flags.values()].filter(s=>s.has('shared_text')).length,clusters:csize.size,largest_clusters:[...csize.entries()].sort((a,b)=>b[1]-a[1]).slice(0,10)};
+const rep={domains_flagged:flags.size,leadgen_suspect_domains:[...flags.values()].filter(s=>s.has('shared_phone')||s.has('shared_text')||s.has('homoglyph_text')).length,homoglyph_domains:homoglyph.size,same_business_multi_domain:[...flags.values()].filter(s=>s.has('same_business_multi_domain')).length,rows_flagged:flaggedRows,shared_phone_domains:[...flags.values()].filter(s=>s.has('shared_phone')).length,shared_text_domains:[...flags.values()].filter(s=>s.has('shared_text')).length,clusters:csize.size,largest_clusters:[...csize.entries()].sort((a,b)=>b[1]-a[1]).slice(0,10)};
 fs.writeFileSync(path.join(OUT,'leadgen_report.json'),JSON.stringify(rep,null,2));console.log(JSON.stringify(rep));
