@@ -1395,3 +1395,30 @@ searchmaps.php ignores (`{"error":"Access denied"}` on no header / `Authorizatio
 secret was re-saved on header `scraper-key`). `scrape.js` uses `https.request`, which only honours `HTTPS_PROXY` under
 `NODE_USE_ENV_PROXY=1` (Node ≥ 22.21) — set it on every engine command in a proxied container, and put a placeholder
 `SCRAPER_TECH_KEY` in `.env` (the proxy overwrites the header).
+
+## OPEN 2026-11-15 (STEP 5e reader dispatch, MEDIUM): Haiku readers call session tools they were told not to — give the reader a tool-restricted agent type
+
+Atlas Growth national foundation run, 81 Haiku fit-read agents. The prompt says "do the work yourself, no web
+searches, do not message other agents or sessions". Even so, 4 readers called session tools: send_message ×2 (denied),
+list_sessions, list_events, and a Docs guide call (denied). One reader wrote its verdicts through a scratch `.py` in
+`full/classify/`; the file held business names and was deleted. Nothing was sent anywhere. Wording does not
+restrict tools, though. **Fix:** a `.claude/agents/fit-reader.md` definition with `tools: Read, Write` (and the
+model pinned to haiku), used by every STEP 5e / owner-read dispatch. Until then, check `git status -uall` after each wave.
+
+## OPEN 2026-11-15 (lead-gen flag, job-side for now): rank-and-rent networks evade the shared-phone and shared-text joins — homoglyph copy + per-town tracking numbers
+
+Same run. The 2026-11-15 run's `flag-leadgen.js` (run folder) caught 286 domains on shared phone or shared 8-word
+shingles. It missed Florida/Wisconsin "<Town> Crawl Space Repair" networks for two reasons: each town has its own
+tracking phone, and the copy uses Cyrillic look-alike letters ("Kаukаunа"), which strip to nothing under
+`[^a-z0-9]`. Added `homoglyph_text` (≥5 mixed-script words) and fold look-alikes before shingling: +15 domains.
+The Haiku `lead_gen` field caught a further ~295 fit domains at ~80% precision (20-row sample). False positives were
+a real contractor's per-city pages and a dealer-network corporate site. **Promote to engine** (a `flag-leadgen.js`
+next to `collapse-domains.js`, with a test fixture of 3 homoglyph + 2 shared-phone + 1 brand-family rows) once a second
+vertical shows the same pattern.
+
+## OPEN 2026-11-15 (collapse / reporting, LOW): 36% of US foundation rows are service-area listings with no address — state must come from coordinates
+
+Same run. 3,769 of 11,117 qualified rows have an empty `full_address` / `city` / `zip` but carry lat/lng. Any per-state
+cut (and the Plusvibe `{{city}}` merge) needs a state. `report-full.js` uses the nearest runsheet anchor, which is wrong
+near state lines. **Fix:** in collapse, emit `state` = address state, else a reverse geocode of lat/lng against a
+state-polygon file (no API). Covered by a 4-row fixture straddling Kansas City.

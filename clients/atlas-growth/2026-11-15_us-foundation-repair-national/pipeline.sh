@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Post-scrape chain for the national run (same steps the 2026-11-15 test ran), every step through the engine.
 # Idempotent: a step whose output exists is skipped (delete it to redo). Usage: bash <run>/pipeline.sh [step]
-# Steps: merge | qualify | geo | collapse | fetch | classify-prep | leadgen   (no arg = all, in order)
+# Steps: merge | qualify | geo | collapse | fetch | classify-prep | apply | leadgen   (no arg = all, in order;
+#        apply needs the Haiku fit read done first, so a bare run stops being useful after classify-prep)
 set -euo pipefail
 cd "$(dirname "$0")/../../.."          # repo root
 E=skills/google-maps-scrape
@@ -43,6 +44,10 @@ fi
 if want classify-prep; then
   [ -d $F/classify ] && echo "[classify-prep] skip" || \
     node $E/prep-classify.js --leads $F/leads_domains.csv --site $F/owner/site_text.jsonl --out $F/classify --batch 90
+fi
+if want apply; then
+  # only after every classify/out/batch_NNN.json exists; rows with no verdict get 'unclassified' (confidence=fallback)
+  node $E/apply-classify.js --leads $F/leads_domains.csv --llm-out $F/classify/out --out $F/leads_domains_classified.csv --fallback unclassified
 fi
 if want leadgen; then
   node $R/flag-leadgen.js --leads $F/leads_annotated.csv --site $F/owner/site_text.jsonl --out $F

@@ -2,7 +2,7 @@
 source: Google Maps (scraper.tech searchmaps.php)
 vertical: US residential foundation repair / basement waterproofing contractors (home services)
 verdict: validated
-last_validated: 2026-09-12
+last_validated: 2026-11-15
 access: Maps tiling via google-maps-scrape; owner names via BBB (SERP discovery, WA-08) + dealer-network team pages (plain fetch)
 dispatch: google-maps-scrape
 cost_tier: paid (Maps API per tile); owner registry free
@@ -10,7 +10,7 @@ cost_tier: paid (Maps API per tile); owner registry free
 
 # Google Maps × US residential foundation repair
 
-**Verdict:** VALIDATED. Scrape + qualify + owner-finding run to completion (845/1,104 named, 76.5%). `last_validated: 2026-09-12`. Client first run: Atlas Growth (offer: Facebook lead-gen for inspection appointments).
+**Verdict:** VALIDATED. Scrape + qualify + owner-finding run to completion (845/1,104 named, 76.5%). `last_validated: 2026-11-15`. Client first run: Atlas Growth (offer: Facebook lead-gen for inspection appointments).
 
 ## ICP
 Residential foundation repair, piering, basement waterproofing, crawlspace, mudjacking/slab lifting contractors. Keep roll-ups and franchise branches (flag `brand_family`); drop commercial-only, general contractors, waterproofing product suppliers, engineers.
@@ -39,3 +39,16 @@ Residential foundation repair, piering, basement waterproofing, crawlspace, mudj
 
 ## Runs
 - 2026-09-11 — Atlas Growth — 1,104 ICP / 1,521 spine — 845 named (76.5%); emails: 236 leads with a verified sendable address (21%), 172 personal (16%), via on-site + QuickEnrich + LA/AR licence boards + seeded pattern; closed out 2026-09-13.
+
+## National run, no review floor (2026-11-15, Atlas Growth)
+- **Coverage:** 586 anchors (all 50 states + DC) × 10 queries (3 foundation + 7 adjacent: waterproofing, crawl space ×2, concrete leveling, mudjacking, house leveling, structural repair) at zoom 13, 20 shards. **13,269 calls (2.26 per row)** → 81,687 unique → 11,117 qualified in-US → 7,240 website domains.
+- **Fit read:** **4,001 residential-foundation domains** (55%), 5,301 rows incl. branches. That is ~3.6× the 2026-09-11 10-state, floor-30 run (1,104). Removing the floor accounts for ~2.6× of it.
+- **Floor:** reviews barely predict fit here. The fit rate is 61% at 30+ and 5–29, and 50–52% under 5. A floor buys precision only in the 0–4 band.
+- **Rank-and-rent is the cost of no floor.** On the fit set: strong lead-gen flags (shared phone / shared copy / homoglyph copy) 215, soft (model-only, ~80% precise) 295.
+  - The networks cluster in TX, TN, FL and the Midwest basement belt.
+  - Some use **Cyrillic look-alike letters** and a tracking number per town to evade duplicate joins.
+  - Some invent a brand per city.
+  - Flag them, don't drop: a real contractor's per-city pages look the same.
+- **Category leak:** "Waterproofing service" and bare "Foundation" categories bring in roofers, landscapers, plumbers, HVAC and charities. The main path fit is 52% against 62% on the generic-contractor + foundation-name recovery path. The fit read is the gate, not the category.
+- **Service-area listings:** 36% of rows have no street address (coordinates only). Take state from coordinates.
+- **State mix (fit companies):** TX 753 · FL 307 · NC 238 · OH 192 · NY 159 · CA 154 · IL 150 · PA 135. The West outside CA/WA is thin.
