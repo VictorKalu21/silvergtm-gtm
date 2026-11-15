@@ -1,0 +1,121 @@
+cell_id,icp_type,query,lat,lng,zoom,priority
+az-phoenix-q0,foundation,foundation repair,33.4484,-112.074,13,P1
+az-phoenix-q1,foundation,foundation contractor,33.4484,-112.074,13,P1
+az-phoenix-q2,foundation,foundation repair company,33.4484,-112.074,13,P1
+az-phoenix-q3,adjacent,basement waterproofing,33.4484,-112.074,13,P2
+az-phoenix-q4,adjacent,crawl space repair,33.4484,-112.074,13,P2
+az-phoenix-q5,adjacent,crawl space encapsulation,33.4484,-112.074,13,P2
+az-phoenix-q6,adjacent,concrete leveling,33.4484,-112.074,13,P2
+az-phoenix-q7,adjacent,mudjacking,33.4484,-112.074,13,P2
+az-phoenix-q8,adjacent,house leveling,33.4484,-112.074,13,P2
+az-phoenix-q9,adjacent,structural repair,33.4484,-112.074,13,P2
+ca-sacramento-q0,foundation,foundation repair,38.5816,-121.4944,13,P1
+ca-sacramento-q1,foundation,foundation contractor,38.5816,-121.4944,13,P1
+ca-sacramento-q2,foundation,foundation repair company,38.5816,-121.4944,13,P1
+ca-sacramento-q3,adjacent,basement waterproofing,38.5816,-121.4944,13,P2
+ca-sacramento-q4,adjacent,crawl space repair,38.5816,-121.4944,13,P2
+ca-sacramento-q5,adjacent,crawl space encapsulation,38.5816,-121.4944,13,P2
+ca-sacramento-q6,adjacent,concrete leveling,38.5816,-121.4944,13,P2
+ca-sacramento-q7,adjacent,mudjacking,38.5816,-121.4944,13,P2
+ca-sacramento-q8,adjacent,house leveling,38.5816,-121.4944,13,P2
+ca-sacramento-q9,adjacent,structural repair,38.5816,-121.4944,13,P2
+fl-tampa-q0,foundation,foundation repair,27.9475,-82.4584,13,P1
+fl-tampa-q1,foundation,foundation contractor,27.9475,-82.4584,13,P1
+fl-tampa-q2,foundation,foundation repair company,27.9475,-82.4584,13,P1
+fl-tampa-q3,adjacent,basement waterproofing,27.9475,-82.4584,13,P2
+fl-tampa-q4,adjacent,crawl space repair,27.9475,-82.4584,13,P2
+fl-tampa-q5,adjacent,crawl space encapsulation,27.9475,-82.4584,13,P2
+fl-tampa-q6,adjacent,concrete leveling,27.9475,-82.4584,13,P2
+fl-tampa-q7,adjacent,mudjacking,27.9475,-82.4584,13,P2
+fl-tampa-q8,adjacent,house leveling,27.9475,-82.4584,13,P2
+fl-tampa-q9,adjacent,structural repair,27.9475,-82.4584,13,P2
+mi-detroit-q0,foundation,foundation repair,42.3314,-83.0457,13,P1
+mi-detroit-q1,foundation,foundation contractor,42.3314,-83.0457,13,P1
+mi-detroit-q2,foundation,foundation repair company,42.3314,-83.0457,13,P1
+mi-detroit-q3,adjacent,basement waterproofing,42.3314,-83.0457,13,P2
+mi-detroit-q4,adjacent,crawl space repair,42.3314,-83.0457,13,P2
+mi-detroit-q5,adjacent,crawl space encapsulation,42.3314,-83.0457,13,P2
+mi-detroit-q6,adjacent,concrete leveling,42.3314,-83.0457,13,P2
+mi-detroit-q7,adjacent,mudjacking,42.3314,-83.0457,13,P2
+mi-detroit-q8,adjacent,house leveling,42.3314,-83.0457,13,P2
+mi-detroit-q9,adjacent,structural repair,42.3314,-83.0457,13,P2
+mn-minneapolis-q0,foundation,foundation repair,44.98,-93.2638,13,P1
+mn-minneapolis-q1,foundation,foundation contractor,44.98,-93.2638,13,P1
+mn-minneapolis-q2,foundation,foundation repair company,44.98,-93.2638,13,P1
+mn-minneapolis-q3,adjacent,basement waterproofing,44.98,-93.2638,13,P2
+mn-minneapolis-q4,adjacent,crawl space repair,44.98,-93.2638,13,P2
+mn-minneapolis-q5,adjacent,crawl space encapsulation,44.98,-93.2638,13,P2
+mn-minneapolis-q6,adjacent,concrete leveling,44.98,-93.2638,13,P2
+mn-minneapolis-q7,adjacent,mudjacking,44.98,-93.2638,13,P2
+mn-minneapolis-q8,adjacent,house leveling,44.98,-93.2638,13,P2
+mn-minneapolis-q9,adjacent,structural repair,44.98,-93.2638,13,P2
+nc-charlotte-q0,foundation,foundation repair,35.2271,-80.8431,13,P1
+nc-charlotte-q1,foundation,foundation contractor,35.2271,-80.8431,13,P1
+nc-charlotte-q2,foundation,foundation repair company,35.2271,-80.8431,13,P1
+nc-charlotte-q3,adjacent,basement waterproofing,35.2271,-80.8431,13,P2
+nc-charlotte-q4,adjacent,crawl space repair,35.2271,-80.8431,13,P2
+nc-charlotte-q5,adjacent,crawl space encapsulation,35.2271,-80.8431,13,P2
+nc-charlotte-q6,adjacent,concrete leveling,35.2271,-80.8431,13,P2
+nc-charlotte-q7,adjacent,mudjacking,35.2271,-80.8431,13,P2
+nc-charlotte-q8,adjacent,house leveling,35.2271,-80.8431,13,P2
+nc-charlotte-q9,adjacent,structural repair,35.2271,-80.8431,13,P2
+ny-buffalo-q0,foundation,foundation repair,42.8865,-78.8784,13,P1
+ny-buffalo-q1,foundation,foundation contractor,42.8865,-78.8784,13,P1
+ny-buffalo-q2,foundation,foundation repair company,42.8865,-78.8784,13,P1
+ny-buffalo-q3,adjacent,basement waterproofing,42.8865,-78.8784,13,P2
+ny-buffalo-q4,adjacent,crawl space repair,42.8865,-78.8784,13,P2
+ny-buffalo-q5,adjacent,crawl space encapsulation,42.8865,-78.8784,13,P2
+ny-buffalo-q6,adjacent,concrete leveling,42.8865,-78.8784,13,P2
+ny-buffalo-q7,adjacent,mudjacking,42.8865,-78.8784,13,P2
+ny-buffalo-q8,adjacent,house leveling,42.8865,-78.8784,13,P2
+ny-buffalo-q9,adjacent,structural repair,42.8865,-78.8784,13,P2
+oh-columbus-q0,foundation,foundation repair,39.9612,-82.9988,13,P1
+oh-columbus-q1,foundation,foundation contractor,39.9612,-82.9988,13,P1
+oh-columbus-q2,foundation,foundation repair company,39.9612,-82.9988,13,P1
+oh-columbus-q3,adjacent,basement waterproofing,39.9612,-82.9988,13,P2
+oh-columbus-q4,adjacent,crawl space repair,39.9612,-82.9988,13,P2
+oh-columbus-q5,adjacent,crawl space encapsulation,39.9612,-82.9988,13,P2
+oh-columbus-q6,adjacent,concrete leveling,39.9612,-82.9988,13,P2
+oh-columbus-q7,adjacent,mudjacking,39.9612,-82.9988,13,P2
+oh-columbus-q8,adjacent,house leveling,39.9612,-82.9988,13,P2
+oh-columbus-q9,adjacent,structural repair,39.9612,-82.9988,13,P2
+pa-pittsburgh-q0,foundation,foundation repair,40.4406,-79.9959,13,P1
+pa-pittsburgh-q1,foundation,foundation contractor,40.4406,-79.9959,13,P1
+pa-pittsburgh-q2,foundation,foundation repair company,40.4406,-79.9959,13,P1
+pa-pittsburgh-q3,adjacent,basement waterproofing,40.4406,-79.9959,13,P2
+pa-pittsburgh-q4,adjacent,crawl space repair,40.4406,-79.9959,13,P2
+pa-pittsburgh-q5,adjacent,crawl space encapsulation,40.4406,-79.9959,13,P2
+pa-pittsburgh-q6,adjacent,concrete leveling,40.4406,-79.9959,13,P2
+pa-pittsburgh-q7,adjacent,mudjacking,40.4406,-79.9959,13,P2
+pa-pittsburgh-q8,adjacent,house leveling,40.4406,-79.9959,13,P2
+pa-pittsburgh-q9,adjacent,structural repair,40.4406,-79.9959,13,P2
+tn-nashville-q0,foundation,foundation repair,36.1659,-86.7844,13,P1
+tn-nashville-q1,foundation,foundation contractor,36.1659,-86.7844,13,P1
+tn-nashville-q2,foundation,foundation repair company,36.1659,-86.7844,13,P1
+tn-nashville-q3,adjacent,basement waterproofing,36.1659,-86.7844,13,P2
+tn-nashville-q4,adjacent,crawl space repair,36.1659,-86.7844,13,P2
+tn-nashville-q5,adjacent,crawl space encapsulation,36.1659,-86.7844,13,P2
+tn-nashville-q6,adjacent,concrete leveling,36.1659,-86.7844,13,P2
+tn-nashville-q7,adjacent,mudjacking,36.1659,-86.7844,13,P2
+tn-nashville-q8,adjacent,house leveling,36.1659,-86.7844,13,P2
+tn-nashville-q9,adjacent,structural repair,36.1659,-86.7844,13,P2
+tx-dallas-q0,foundation,foundation repair,32.7831,-96.8067,13,P1
+tx-dallas-q1,foundation,foundation contractor,32.7831,-96.8067,13,P1
+tx-dallas-q2,foundation,foundation repair company,32.7831,-96.8067,13,P1
+tx-dallas-q3,adjacent,basement waterproofing,32.7831,-96.8067,13,P2
+tx-dallas-q4,adjacent,crawl space repair,32.7831,-96.8067,13,P2
+tx-dallas-q5,adjacent,crawl space encapsulation,32.7831,-96.8067,13,P2
+tx-dallas-q6,adjacent,concrete leveling,32.7831,-96.8067,13,P2
+tx-dallas-q7,adjacent,mudjacking,32.7831,-96.8067,13,P2
+tx-dallas-q8,adjacent,house leveling,32.7831,-96.8067,13,P2
+tx-dallas-q9,adjacent,structural repair,32.7831,-96.8067,13,P2
+wa-seattle-q0,foundation,foundation repair,47.6062,-122.3321,13,P1
+wa-seattle-q1,foundation,foundation contractor,47.6062,-122.3321,13,P1
+wa-seattle-q2,foundation,foundation repair company,47.6062,-122.3321,13,P1
+wa-seattle-q3,adjacent,basement waterproofing,47.6062,-122.3321,13,P2
+wa-seattle-q4,adjacent,crawl space repair,47.6062,-122.3321,13,P2
+wa-seattle-q5,adjacent,crawl space encapsulation,47.6062,-122.3321,13,P2
+wa-seattle-q6,adjacent,concrete leveling,47.6062,-122.3321,13,P2
+wa-seattle-q7,adjacent,mudjacking,47.6062,-122.3321,13,P2
+wa-seattle-q8,adjacent,house leveling,47.6062,-122.3321,13,P2
+wa-seattle-q9,adjacent,structural repair,47.6062,-122.3321,13,P2
