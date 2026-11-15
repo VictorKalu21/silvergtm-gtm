@@ -1375,3 +1375,23 @@ is wired in — Spider would be a cheaper PASS-3 than Firecrawl per page only if
 `applyFirecrawl` now merges `socialLinks(md)` + `socialLinks(html)` into `rec.socials` next to the email merge, so a
 Cloudflare-walled site recovered through Firecrawl carries its footer profiles like a plain-fetched one. Covered by
 `tests/fetch-sites-firecrawl.test.js` (socials assertion on the recovered record).
+
+## OPEN 2026-11-15 (scrape.js, MEDIUM): records carry no `query` — per-query yield cannot be measured, so a query cannot be justified or cut
+
+Found on the Atlas Growth full-US foundation test (`clients/atlas-growth/2026-11-15_us-foundation-repair-national/`).
+`leads_raw.json` / `leads_clean.csv` keep `_icp` / `icp_type` but not the runsheet `query` (or `cell_id`) that returned
+the record, and dedupe keeps one row per `place_id`. `run_log.per_cell[].count` gives RAW rows per query (e.g. 120-row
+test: "foundation contractor" 2,794 raw, "mudjacking" 185), not how many UNIQUE or QUALIFIED leads only that query
+found — which is the number that decides whether a 586-anchor national run keeps all 10 queries (~14k calls) or drops
+the low-yield ones. **Fix (engine, test + operator go):** accumulate a `queries` set per `place_id` across tiles in
+`scrape.js` and emit it as a `queries` column (pipe-joined) through `leads_clean.csv`; then `qualify-leads.js` passes
+it through untouched. A query's marginal value = qualified rows whose `queries` set is that query alone.
+**Until then:** per-query value is read off `run_log` raw counts only.
+
+## OPEN 2026-11-15 (run-scrape.js / scrape.js, HOW-TO): proxied container needs `NODE_USE_ENV_PROXY=1`, and scraper.tech reads only `scraper-key`
+
+Same run. In the cloud container the proxy-injected ScraperTech secret was stored on `Authorization`, which
+searchmaps.php ignores (`{"error":"Access denied"}` on no header / `Authorization: Bearer` / `x-api-key`; ok once the
+secret was re-saved on header `scraper-key`). `scrape.js` uses `https.request`, which only honours `HTTPS_PROXY` under
+`NODE_USE_ENV_PROXY=1` (Node ≥ 22.21) — set it on every engine command in a proxied container, and put a placeholder
+`SCRAPER_TECH_KEY` in `.env` (the proxy overwrites the header).
