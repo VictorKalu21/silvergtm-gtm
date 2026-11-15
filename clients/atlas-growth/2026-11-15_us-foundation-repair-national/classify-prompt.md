@@ -36,6 +36,13 @@ Also return, for every lead:
 - `services`: array from `["foundation_repair","piering","leveling","basement_waterproofing","crawl_space","slab_lifting","wall_repair","drainage","concrete_flatwork","other"]` — only services the text itself names; `[]` when none.
 - `evidence`: a VERBATIM quote from the text, at most 25 words, supporting the verdict; `""` for `unclear`.
 - `out_of_business`: `true` only when the text says the business has closed / retired / is no longer operating.
+- `lead_gen`: `true` when the text reads as a lead-generation / referral site rather than a contractor's own site —
+  it says it connects homeowners with "local contractors", "our network", "independent contractors", "partner
+  companies", is "a referral service", "not a contractor", has a disclaimer that work is performed by third parties,
+  or is a city-name template ("<Town> Foundation Repair Experts — the top foundation repair company in <Town>") with no
+  owner, crew, history, licence or street address anywhere. `false` otherwise. This is a FLAG, not a verdict: still
+  give the `business_type` the services text supports (a lead-gen site selling foundation repair stays
+  `residential_foundation` with `lead_gen: true`).
 
 `confidence`: `high` when the text states it plainly, `medium` when inferred.
 
@@ -48,5 +55,5 @@ Rules learned on this vertical (2026-09-11 US, UK and AU runs):
 - A bot-check / captcha page is no text: use `unclear`.
 
 Write `<RUN>/classify/out/batch_<NNN>.json` as a JSON ARRAY, one object per input line (every place_id present):
-`[{"place_id":"…","business_type":"residential_foundation","confidence":"high","why":"≤12 words","services":["piering","leveling"],"evidence":"verbatim ≤25 words","out_of_business":false}, …]`
+`[{"place_id":"…","business_type":"residential_foundation","confidence":"high","why":"≤12 words","services":["piering","leveling"],"evidence":"verbatim ≤25 words","out_of_business":false,"lead_gen":false}, …]`
 Return the counts per business_type.

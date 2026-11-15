@@ -3,7 +3,8 @@
 const fs=require('fs'),path=require('path');
 function pc(t){const R=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++;}else q=false;}else c+=ch;}else{if(ch==='"')q=true;else if(ch===','){r.push(c);c='';}else if(ch==='\n'){r.push(c);R.push(r);r=[];c='';}else if(ch==='\r'){}else c+=ch;}}if(c!==''||r.length){r.push(c);R.push(r);}return R;}
 const esc=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
-const T=path.join(__dirname,'test');
+function arg(n,d){const i=process.argv.indexOf('--'+n);return i>-1?process.argv[i+1]:d;}
+const T=path.resolve(__dirname,arg('dir','test'));
 const load=f=>{const rows=pc(fs.readFileSync(f,'utf8')).filter(r=>r.length>1);const h=rows.shift();return {h,rows:rows.map(r=>Object.fromEntries(h.map((k,i)=>[k,r[i]??''])))};};
 const main=load(path.join(T,'leads_clean_qualified.csv')), rec=load(path.join(T,'recover','leads_clean_qualified.csv'));
 const H=[...main.h.filter(k=>k!=='drop_reason'),'qualify_path'];const out=new Map();let skipped=0;
