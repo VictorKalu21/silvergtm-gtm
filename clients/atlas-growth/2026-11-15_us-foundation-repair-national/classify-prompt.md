@@ -1,6 +1,6 @@
 # STEP 5e — site-text fit classification: US residential foundation repair (national, no review floor)
 
-Rubric from `clients/atlas-growth/ICP.md`. One Haiku reader per `classify/in/batch_NNN.jsonl` (60 leads),
+Rubric from `clients/atlas-growth/ICP.md`. One Haiku reader per `classify/batch_NNN.jsonl` (90 leads),
 writing `classify/out/batch_NNN.json` for `apply-classify.js --fallback unclassified`.
 With no review floor (operator 2026-11-15) this read is the ONLY quality gate, so it is strict on fit
 and neutral on size: a one-truck operator that does residential foundation work is `residential_foundation`.
@@ -15,7 +15,7 @@ is Facebook lead generation that books foundation inspection appointments with h
 Do the work YOURSELF. Do NOT spawn, launch, or delegate to other agents. You personally write the output file.
 No web searches are needed — judge only from the text given.
 
-Read `<RUN>/classify/in/batch_<NNN>.jsonl`. One JSON object per line:
+Read `<RUN>/classify/batch_<NNN>.jsonl`. One JSON object per line:
 `{place_id, name, city, google_types, source, text}`. `text` is the business's own website
 (services page + home page, capped); `source` is `site` or `serp` (snippets only).
 
