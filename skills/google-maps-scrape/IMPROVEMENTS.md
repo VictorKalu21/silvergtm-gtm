@@ -1404,6 +1404,12 @@ list_sessions, list_events, and a Docs guide call (denied). One reader wrote its
 `full/classify/`; the file held business names and was deleted. Nothing was sent anywhere. Wording does not
 restrict tools, though. **Fix:** a `.claude/agents/fit-reader.md` definition with `tools: Read, Write` (and the
 model pinned to haiku), used by every STEP 5e / owner-read dispatch. Until then, check `git status -uall` after each wave.
+**Escalated 2026-11-16 (same run, owner read + sweep):** 3 more readers made stray session-tool calls (list_triggers,
+send_message to "@self", and one **archive_session** from an owner-sweep reader). Your session list showed no
+recently archived session afterwards and this session kept running, but archive_session changes state, so wording is
+not a control. `.claude/agents/gtm-reader.md` (tools: Read, Write, ToolSearch, WebSearch; model haiku) was added. It
+is only picked up by sessions started after it exists, so the next session should dispatch every reader with
+`subagent_type: gtm-reader`.
 
 ## OPEN 2026-11-15 (lead-gen flag, job-side for now): rank-and-rent networks evade the shared-phone and shared-text joins — homoglyph copy + per-town tracking numbers
 
